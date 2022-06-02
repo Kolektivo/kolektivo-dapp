@@ -56,7 +56,7 @@
     "build": "rimraf dist && webpack --env production",
     "analyze": "rimraf dist && webpack --env production --analyze",
     "test": "jest",
-    "cypress": "cypress run",
+    "cypress": "CYPRESS_BASE_URL=https://kolektivo-dapp.vercel.app cypress run",
     "test:e2e": "cross-env CI=1 start-server-and-test start http://localhost:9000 cypress"
   },
   "jest": {
