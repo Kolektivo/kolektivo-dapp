@@ -12,4 +12,4 @@ jobs:
   e2e:
     needs: setup
     steps:
-      -run: npm run cypress
+      - run: npm run cypress
