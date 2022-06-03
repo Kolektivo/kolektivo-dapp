@@ -16,5 +16,5 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - run: npm i cypress@9.6.1 -g
+      - run: npm ci
       - run: npm run cypress
