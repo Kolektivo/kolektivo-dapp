@@ -9,12 +9,12 @@ jobs:
         with:
           node-version: "16"
       - run: npm ci
-  e2e:
-    runs-on: ubuntu-latest
+  cypress-run:
+    name: Cypress run
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "16"
-      - run: npm ci
-      - run: npm run cypress
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
