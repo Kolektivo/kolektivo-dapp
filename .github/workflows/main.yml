@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Install Cypress
         run: npm i cypress@9.6.1
 
