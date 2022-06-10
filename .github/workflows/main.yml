@@ -2,6 +2,7 @@ name: main
 on: [push]
 jobs:
   setup:
+    name: Install dependencies and lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -31,6 +32,7 @@ jobs:
   #         PRODUCTION: false
 
   deploy:
+    name: Deploy to Vercel
     runs-on: ubuntu-latest
     outputs:
       DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
@@ -47,7 +49,8 @@ jobs:
         id: vercel-deploy
         run: |
           npm i -g vercel
-          vercel --token ${{ secrets.VERCEL_TOKEN }} > deployment-url.txt
+          vercel --token ${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
+          pbpaste > deployment-url.txt
           DEPLOYMENT_URL=$(cat deployment-url.txt)
           echo $DEPLOYMENT_URL
           echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
@@ -64,8 +67,9 @@ jobs:
         with:
           config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
 
-  alias-domain:
+  domain-alias:
     needs: [deploy, cypress-run]
+    name: Assign branch specific domain
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v3
@@ -73,3 +77,20 @@ jobs:
           node-version: "16"
       - run: npm i -g vercel
       - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.ref_name }}.vercel.app" --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
+
+  update-pr:
+    needs: [deploy, cypress-run, domain-alias]
+    name: Comment on PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: |
+            | Name | Status | Preview | Updated |
+            | :--- | :----- | :------ | :------ |
+            | **kolektivo-dapp** | ✅ Ready ([Inspect](https://vercel.com/${{ secrets.VERCEL_TEAM_SLUG }}/kolektivo-dapp/ID)) | [Visit Preview](kolektivo-dapp-${{ github.ref_name }}.vercel.app) | DATE |
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
