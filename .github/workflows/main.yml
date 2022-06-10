@@ -8,6 +8,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
+          cache: "npm"
       - run: npm ci
 
   deploy:
@@ -15,7 +16,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Deploy to Vercel Action
+        id: vercel-deploy
         uses: BetaHuhn/deploy-to-vercel-action@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
@@ -23,14 +26,40 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
+      - run: echo ${{ steps.vercel-deploy.outputs.PREVIEW_URL }} > ${{ github.ref }}-deployment-url.txt
+
+      - name: Upload branch deployment URL
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.ref }}-deployment-url
+          path: ${{ github.ref }}-deployment-url.txt
+
   cypress-run:
+    needs: deploy
     name: Cypress run
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Download branch deployment URL
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.ref }}-deployment-url
+      - shell: bash
+        run: |
+          deploymentUrl=`cat ${{ github.ref }}-deployment-url.txt`
+
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          config: pageLoadTimeout=100000,baseUrl=https://kolektivo-dapp.vercel.app
+          config: pageLoadTimeout=100000,baseUrl=$deploymentUrl
+
+  # alias-domain:
+  #   needs: cypress-run
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: "16"
+  #     - run: npm i -g vercel
