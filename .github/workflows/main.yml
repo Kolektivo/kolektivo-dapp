@@ -58,7 +58,6 @@ jobs:
       #     echo $DEPLOYMENT_URL
 
       - name: Cypress run
-        run: DEPLOYMENT_URL=$(cat ${{ github.ref_name }}-deployment-url.txt)
         uses: cypress-io/github-action@v4
         with:
           config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.PREVIEW_URL}}
