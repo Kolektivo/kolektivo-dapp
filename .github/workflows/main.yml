@@ -49,16 +49,17 @@ jobs:
         with:
           name: ${{ github.ref_name }}-deployment-url
 
-      - name: Get deployment URL
-        id: get-deployment-url
-        run: |
-          DEPLOYMENT_URL=$(cat ${{ github.ref_name }}-deployment-url.txt)
-          echo $DEPLOYMENT_URL
+      # - name: Get deployment URL
+      #   id: get-deployment-url
+      #   run: |
+      #     DEPLOYMENT_URL=$(cat ${{ github.ref_name }}-deployment-url.txt)
+      #     echo $DEPLOYMENT_URL
 
       - name: Cypress run
+        run: DEPLOYMENT_URL=$(cat ${{ github.ref_name }}-deployment-url.txt)
         uses: cypress-io/github-action@v4
         with:
-          config: pageLoadTimeout=100000,baseUrl=${{steps.get-deployment-url.outputs.DEPLOYMENT_URL}}
+          config: pageLoadTimeout=100000,baseUrl=$DEPLOYMENT_URL
 
   # alias-domain:
   #   needs: cypress-run
