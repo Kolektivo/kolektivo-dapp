@@ -26,13 +26,15 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      - run: echo ${{ steps.vercel-deploy.outputs.PREVIEW_URL }} > ${{ github.ref }}-deployment-url.txt
+      - shell: bash
+        run: |
+          echo ${{ steps.vercel-deploy.outputs.PREVIEW_URL }} > ${{ github.ref_name }}-deployment-url.txt
 
       - name: Upload branch deployment URL
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.ref }}-deployment-url
-          path: ${{ github.ref }}-deployment-url.txt
+          name: ${{ github.ref_name }}-deployment-url
+          path: ${{ github.ref_name }}-deployment-url.txt
 
   cypress-run:
     needs: deploy
@@ -45,10 +47,10 @@ jobs:
       - name: Download branch deployment URL
         uses: actions/download-artifact@v3
         with:
-          name: ${{ github.ref }}-deployment-url
+          name: ${{ github.ref_name }}-deployment-url
       - shell: bash
         run: |
-          deploymentUrl=`cat ${{ github.ref }}-deployment-url.txt`
+          deploymentUrl=`cat ${{ github.ref_name }}-deployment-url.txt`
 
       - name: Cypress run
         uses: cypress-io/github-action@v4
