@@ -65,11 +65,12 @@ jobs:
         with:
           config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
 
-  # alias-domain:
-  #   needs: cypress-run
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: "16"
-  #     - run: npm i -g vercel
+  alias-domain:
+    needs: [deploy, cypress-run]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - run: npm i -g vercel
+      - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.ref_name }}.vercel.app"
