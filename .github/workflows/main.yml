@@ -48,14 +48,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ github.ref_name }}-deployment-url
-      - shell: bash
-        run: |
-          deploymentUrl=`cat ${{ github.ref_name }}-deployment-url.txt`
+      - run: cat ${{ github.ref_name }}-deployment-url.txt >> $DEPLOYMENT_URL
 
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          config: pageLoadTimeout=100000,baseUrl=$deploymentUrl
+          config: pageLoadTimeout=100000,baseUrl=$DEPLOYMENT_URL
 
   # alias-domain:
   #   needs: cypress-run
