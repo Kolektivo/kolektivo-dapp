@@ -12,6 +12,24 @@ jobs:
       - run: npm ci
       - run: npm run lint
 
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+  #     - name: Deploy to Vercel Action
+  #       id: vercel-deploy
+  #       uses: BetaHuhn/deploy-to-vercel-action@v1
+  #       with:
+  #         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  #         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  #         VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  #         PRODUCTION: false
+
   deploy:
     runs-on: ubuntu-latest
     outputs:
@@ -19,16 +37,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Deploy to Vercel Action
+      - name: Deploy to Vercel
         id: vercel-deploy
-        uses: BetaHuhn/deploy-to-vercel-action@v1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          PRODUCTION: false
+        run: |
+          npm i -g vercel
+          vercel > deployment-url.txt
+          DEPLOYMENT_URL=(cat deployment-url.txt)
+          echo "::set-output name=test::${{$DEPLOYMENT_URL}}"
 
   cypress-run:
     needs: deploy
