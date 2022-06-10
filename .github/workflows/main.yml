@@ -52,6 +52,7 @@ jobs:
       - name: Set variables
         run: |
           DEPLOYMENT_URL=$(cat ${{ github.ref_name }}-deployment-url.txt)
+        run: echo $DEPLOYMENT_URL
 
       - name: Cypress run
         uses: cypress-io/github-action@v4
