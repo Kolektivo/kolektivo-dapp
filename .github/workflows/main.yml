@@ -37,6 +37,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Create .vercel directory
+        run: |
+          pwd
+          ls
       - name: Deploy to Vercel
         id: vercel-deploy
         run: |
