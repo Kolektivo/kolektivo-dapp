@@ -39,8 +39,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Create .vercel directory
         run: |
-          pwd
-          ls
+          mkdir .vercel
+          cd .vercel
+          touch project.json
+          echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' >> project.json
       - name: Deploy to Vercel
         id: vercel-deploy
         run: |
