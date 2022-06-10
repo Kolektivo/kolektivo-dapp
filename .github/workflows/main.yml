@@ -14,7 +14,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     outputs:
-      PREVIEW_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
+      DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,16 +28,6 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      # - shell: bash
-      #   run: |
-      #     echo ${{ steps.vercel-deploy.outputs.PREVIEW_URL }} > ${{ github.ref_name }}-deployment-url.txt
-
-      # - name: Upload branch deployment URL
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: ${{ github.ref_name }}-deployment-url
-      #     path: ${{ github.ref_name }}-deployment-url.txt
-
   cypress-run:
     needs: deploy
     name: Cypress run
@@ -46,21 +36,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # - name: Download branch deployment URL
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: ${{ github.ref_name }}-deployment-url
-
-      # - name: Get deployment URL
-      #   id: get-deployment-url
-      #   run: |
-      #     DEPLOYMENT_URL=$(cat ${{ github.ref_name }}-deployment-url.txt)
-      #     echo $DEPLOYMENT_URL
-
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.PREVIEW_URL}}
+          config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
 
   # alias-domain:
   #   needs: cypress-run
