@@ -43,7 +43,7 @@ jobs:
           npm i -g vercel
           vercel > deployment-url.txt
           DEPLOYMENT_URL=(cat deployment-url.txt)
-          echo "::set-output name=test::${{DEPLOYMENT_URL}}"
+          echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
 
   cypress-run:
     needs: deploy
