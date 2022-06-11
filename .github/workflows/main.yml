@@ -93,7 +93,7 @@ jobs:
         uses: thollander/actions-comment-pull-request@v1
         with:
           message: |
-            | Name | Status | Preview | Updated |
+            | Type | Status | URL | Date |
             | :--- | :----- | :------ | :------ |
-            | **kolektivo-dapp** | ✅ Ready ([Inspect](https://vercel.com/${{ secrets.VERCEL_TEAM_SLUG }}/kolektivo-dapp/ID)) | [Visit Preview](kolektivo-dapp-${{ github.ref_name }}.vercel.app) | DATE |
+            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](kolektivo-dapp-${{ github.ref_name }}.vercel.app) | ${{date -u}} |
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
