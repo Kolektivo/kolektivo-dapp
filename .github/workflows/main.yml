@@ -95,5 +95,5 @@ jobs:
           message: |
             | Type | Status | URL | Date |
             | :--- | :----- | :------ | :------ |
-            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](kolektivo-dapp-${{ github.head_ref }}.vercel.app) | ${{date -u}} |
+            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](kolektivo-dapp-${{ github.head_ref }}.vercel.app) | $(date -u) |
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
