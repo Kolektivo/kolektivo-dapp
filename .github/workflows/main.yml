@@ -91,8 +91,7 @@ jobs:
 
       - name: Get current date
         run: |
-          export CURRENT_DATE=$(date -u)
-          echo "::set-env name=CURRENT_DATE::$CURRENT_DATE"
+          echo "::set-output name=CURRENT_DATE::$(date -u)"
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v1
