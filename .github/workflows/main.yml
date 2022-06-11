@@ -52,6 +52,8 @@ jobs:
           vercel --token ${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
           DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
           echo $DEPLOYMENT_URL
+          INSPECT_URL=$(grep -m 1 -o 'https://vercel[^"]*[[:blank:]]' deployment-output.txt)
+          echo $INSPECT_URL
           echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
 
   cypress-run:
