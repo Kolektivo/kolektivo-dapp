@@ -1,5 +1,5 @@
 name: main
-on: [pull_request]
+on: [push]
 jobs:
   setup:
     name: Install dependencies and Lint
@@ -10,7 +10,6 @@ jobs:
         with:
           node-version: "16"
           cache: "npm"
-      - run: printf github
       - run: npm ci
       - run: npm run lint
 
@@ -71,10 +70,11 @@ jobs:
         with:
           node-version: "16"
       - run: npm i -g vercel
-      - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.head_ref }}.vercel.app" --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
+      - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.ref_name }}.vercel.app" --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
 
   comment-pr:
     name: Comment on the Pull Request
+    if: ${{ github.event_name == 'pull_request' }}
     needs: [deploy, cypress-run, assign-branch-url]
     runs-on: ubuntu-latest
     steps:
