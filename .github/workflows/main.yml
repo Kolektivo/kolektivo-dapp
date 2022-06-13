@@ -1,7 +1,8 @@
 name: main
-on: [push]
+on: [pull_request]
 jobs:
   setup:
+    name: Install dependencies and lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -10,23 +11,52 @@ jobs:
           node-version: "16"
           cache: "npm"
       - run: npm ci
+      - run: npm run lint
+
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+  #     - name: Deploy to Vercel Action
+  #       id: vercel-deploy
+  #       uses: BetaHuhn/deploy-to-vercel-action@v1
+  #       with:
+  #         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  #         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  #         VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  #         PRODUCTION: false
 
   deploy:
+    name: Deploy to Vercel
     runs-on: ubuntu-latest
     outputs:
       DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
+      INSPECT_URL: ${{ steps.vercel-deploy.outputs.INSPECT_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Deploy to Vercel Action
+      - name: Create .vercel directory
+        run: |
+          mkdir .vercel
+          cd .vercel
+          touch project.json
+          echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' >> project.json
+      - name: Deploy to Vercel
         id: vercel-deploy
-        uses: BetaHuhn/deploy-to-vercel-action@v1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          npm i -g vercel
+          vercel --token ${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
+          DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
+          echo $DEPLOYMENT_URL
+          INSPECT_URL=$(grep -m 1 -o 'https://vercel[^"]*[[:blank:]]' deployment-output.txt)
+          echo $INSPECT_URL
+          echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
+          echo "::set-output name=INSPECT_URL::$INSPECT_URL"
 
   cypress-run:
     needs: deploy
@@ -35,17 +65,41 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
           config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
 
-  # alias-domain:
-  #   needs: cypress-run
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: "16"
-  #     - run: npm i -g vercel
+  domain-alias:
+    needs: [deploy, cypress-run]
+    name: Assign branch specific domain
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - run: npm i -g vercel
+      - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.head_ref }}.vercel.app" --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
+
+  update-pr:
+    needs: [deploy, cypress-run, domain-alias]
+    name: Comment on PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get current date
+        id: get-current-date
+        run: |
+          echo "::set-output name=CURRENT_DATE::$(date -u)"
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: |
+            | Type | Status | URL | Date |
+            | :--- | :----- | :------ | :------ |
+            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://kolektivo-dapp-${{ github.head_ref }}.vercel.app) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+          comment_includes: "Latest successful deployment"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
