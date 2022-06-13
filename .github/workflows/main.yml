@@ -1,5 +1,5 @@
 name: main
-on: [push]
+on: [pull_request]
 jobs:
   setup:
     name: Install dependencies and Lint
@@ -22,16 +22,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+        # .vercel directory with project.json is necessary for Vercel CLI to work
       - name: Create .vercel directory
         run: |
           mkdir .vercel
           cd .vercel
           touch project.json
           echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' >> project.json
+
+      - name: Install Vercel
+        run: npm i -g vercel
+
       - name: Deploy to Vercel
         id: vercel-deploy
         run: |
-          npm i -g vercel
           vercel --token ${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
           DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
           echo $DEPLOYMENT_URL
@@ -47,13 +52,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      # Run e2e tests against Vercel deployment
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
           config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
 
-  domain-alias:
-    name: Assign branch specific domain
+  # If the e2e tests were successful, assign a branch specific URL to the Vercel deployment
+  # Otherwise the latest successful deployment for that branch will be still available under the branch specific URL
+  assign-branch-url:
+    name: Assign branch specific URL
     needs: [deploy, cypress-run]
     runs-on: ubuntu-latest
     steps:
@@ -61,11 +70,11 @@ jobs:
         with:
           node-version: "16"
       - run: npm i -g vercel
-      - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.ref_name }}.vercel.app" --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
+      - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.head_ref }}.vercel.app" --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
 
   comment-pr:
-    name: Comment on PR
-    needs: [deploy, cypress-run, domain-alias]
+    name: Comment on the Pull Request
+    needs: [deploy, cypress-run, assign-branch-url]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -73,15 +82,19 @@ jobs:
 
       - name: Get current date
         id: get-current-date
+        # Stores current date as variable to use in the next step
         run: |
           echo "::set-output name=CURRENT_DATE::$(date -u)"
 
-      - name: Comment PR
+      - name: Comment on the Pull Request
         uses: thollander/actions-comment-pull-request@v1
         with:
+          # Content of the comment
           message: |
             | Type | Status | URL | Date |
             | :--- | :----- | :------ | :------ |
-            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://kolektivo-dapp-${{ github.ref_name }}.vercel.app) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://kolektivo-dapp-${{ github.head_ref }}.vercel.app) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+          # This is going to replace the already existing comment based and string matching
           comment_includes: "Latest successful deployment"
+          # Pass Github token so it's possible to comment on a PR
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
