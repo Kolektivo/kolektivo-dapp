@@ -71,9 +71,14 @@ jobs:
           node-version: "16"
       - name: Get branch deployment URL
         run: |
-          BRANCH_NAME=${{ github.event_name == 'pull_request' ? github.head_ref : github.ref_name }}
+          BRANCH_NAME=${{ github.ref_name }}
+          if ${{ github.event_name == 'pull_request' }}
+          then 
+            BRANCH_NAME=${{ github.head_ref }}
+          fi
+
           echo $BRANCH_NAME
-          BRANCH_URL="kolektivo-dapp-${{ github.ref_name }}.vercel.app"
+          BRANCH_URL="kolektivo-dapp-${{ $BRANCH_NAME }}.vercel.app"
           echo $BRANCH_URL
       - run: npm i -g vercel
       - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.ref_name }}.vercel.app" --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
