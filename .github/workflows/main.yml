@@ -1,8 +1,14 @@
 name: main
-on: [pull_request]
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - development
+  pull_request:
 jobs:
   setup:
-    name: Install dependencies and lint
+    name: Install dependencies and Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -13,24 +19,6 @@ jobs:
       - run: npm ci
       - run: npm run lint
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-
-  #     - name: Deploy to Vercel Action
-  #       id: vercel-deploy
-  #       uses: BetaHuhn/deploy-to-vercel-action@v1
-  #       with:
-  #         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  #         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  #         VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  #         PRODUCTION: false
-
   deploy:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
@@ -40,16 +28,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+        # .vercel directory with project.json is necessary for Vercel CLI to work
       - name: Create .vercel directory
         run: |
           mkdir .vercel
           cd .vercel
           touch project.json
           echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' >> project.json
+
+      - name: Install Vercel
+        run: npm i -g vercel
+
       - name: Deploy to Vercel
         id: vercel-deploy
         run: |
-          npm i -g vercel
           vercel --token ${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
           DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
           echo $DEPLOYMENT_URL
@@ -59,31 +52,49 @@ jobs:
           echo "::set-output name=INSPECT_URL::$INSPECT_URL"
 
   cypress-run:
-    needs: deploy
     name: Cypress run
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      # Run e2e tests against Vercel deployment
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
           config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
 
-  domain-alias:
+  # If the e2e tests were successful, assign a branch specific URL to the Vercel deployment
+  # Otherwise the latest successful deployment for that branch will be still available under the branch specific URL
+  assign-branch-url:
+    name: Assign branch specific URL
     needs: [deploy, cypress-run]
-    name: Assign branch specific domain
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - run: npm i -g vercel
-      - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.head_ref }}.vercel.app" --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
 
-  update-pr:
-    needs: [deploy, cypress-run, domain-alias]
-    name: Comment on PR
+      - name: Get branch deployment URL
+        id: branch-deployment-url
+        run: |
+          BRANCH_NAME=${{ github.ref_name }}
+          if ${{ github.event_name == 'pull_request' }}
+          then 
+            BRANCH_NAME=${{ github.head_ref }}
+          fi
+
+          echo "::set-output name=BRANCH_URL::kolektivo-dapp-$BRANCH_NAME.vercel.app"
+
+      - run: npm i -g vercel
+
+      - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} ${{ steps.branch-deployment-url.outputs.BRANCH_URL }} --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
+
+  comment-pr:
+    name: Comment on the Pull Request
+    if: ${{ github.event_name == 'pull_request' }}
+    needs: [deploy, cypress-run, assign-branch-url]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -91,15 +102,19 @@ jobs:
 
       - name: Get current date
         id: get-current-date
+        # Stores current date as variable to use in the next step
         run: |
           echo "::set-output name=CURRENT_DATE::$(date -u)"
 
-      - name: Comment PR
+      - name: Comment on the Pull Request
         uses: thollander/actions-comment-pull-request@v1
         with:
+          # Content of the comment
           message: |
             | Type | Status | URL | Date |
             | :--- | :----- | :------ | :------ |
             | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://kolektivo-dapp-${{ github.head_ref }}.vercel.app) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+          # This is going to replace the already existing comment based and string matching
           comment_includes: "Latest successful deployment"
+          # Pass Github token so it's possible to comment on a PR
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
