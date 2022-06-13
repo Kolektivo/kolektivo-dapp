@@ -1,8 +1,8 @@
 name: main
-on: [pull_request]
+on: [push]
 jobs:
   setup:
-    name: Install dependencies and lint
+    name: Install dependencies and Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -12,24 +12,6 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm run lint
-
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-
-  #     - name: Deploy to Vercel Action
-  #       id: vercel-deploy
-  #       uses: BetaHuhn/deploy-to-vercel-action@v1
-  #       with:
-  #         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  #         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  #         VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  #         PRODUCTION: false
 
   deploy:
     name: Deploy to Vercel
@@ -59,8 +41,8 @@ jobs:
           echo "::set-output name=INSPECT_URL::$INSPECT_URL"
 
   cypress-run:
-    needs: deploy
     name: Cypress run
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -71,8 +53,8 @@ jobs:
           config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
 
   domain-alias:
-    needs: [deploy, cypress-run]
     name: Assign branch specific domain
+    needs: [deploy, cypress-run]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v3
@@ -82,8 +64,8 @@ jobs:
       - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} "kolektivo-dapp-${{ github.head_ref }}.vercel.app" --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
 
   update-pr:
-    needs: [deploy, cypress-run, domain-alias]
     name: Comment on PR
+    needs: [deploy, cypress-run, domain-alias]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
