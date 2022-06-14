@@ -26,8 +26,11 @@ jobs:
       DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
       INSPECT_URL: ${{ steps.vercel-deploy.outputs.INSPECT_URL }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "npm"
 
         # .vercel directory with project.json is necessary for Vercel CLI to work
       - name: Create .vercel directory
@@ -39,6 +42,7 @@ jobs:
 
       - name: Install Vercel
         run: npm i -g vercel@25.1.0
+        run: npm list -g --depth=0
 
       - name: Deploy to Vercel
         id: vercel-deploy
