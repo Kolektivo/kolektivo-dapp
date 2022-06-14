@@ -38,7 +38,7 @@ jobs:
           echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' >> project.json
 
       - name: Install Vercel
-        run: npm i -g vercel
+        run: npm i -g vercel@25.1.0
 
       - name: Deploy to Vercel
         id: vercel-deploy
@@ -87,7 +87,7 @@ jobs:
 
           echo "::set-output name=BRANCH_URL::kolektivo-dapp-$BRANCH_NAME.vercel.app"
 
-      - run: npm i -g vercel
+      - run: npm i -g vercel@25.1.0
 
       - run: vercel alias set ${{needs.deploy.outputs.DEPLOYMENT_URL}} ${{ steps.branch-deployment-url.outputs.BRANCH_URL }} --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_TEAM_SLUG }}
 
