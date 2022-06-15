@@ -44,8 +44,6 @@ jobs:
           node-version: "16"
           cache: "npm"
 
-      - run: npm list
-
         # .vercel directory with project.json is necessary for Vercel CLI to work
       - name: Create .vercel directory
         run: |
