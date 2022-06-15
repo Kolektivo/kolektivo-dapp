@@ -59,7 +59,8 @@
     "test": "jest",
     "cypress": "CYPRESS_BASE_URL=https://kolektivo-dapp.vercel.app cypress run",
     "test:e2e": "cross-env CI=1 start-server-and-test start http://localhost:9000 cypress",
-    "vercel:deploy": "vercel --token $npm_config_token"
+    "vercel:deploy": "vercel --token $npm_config_token",
+    "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope"
   },
   "jest": {
     "testEnvironment": "jsdom",
