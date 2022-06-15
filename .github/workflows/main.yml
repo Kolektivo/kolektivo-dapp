@@ -58,7 +58,7 @@ jobs:
       - name: Deploy to Vercel
         id: vercel-deploy
         run: |
-          npm run vercel:deploy --token ${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
+          npm run vercel:deploy --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
           DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
           echo Deployment URL: $DEPLOYMENT_URL
           INSPECT_URL=$(grep -m 1 -o 'https://vercel[^"]*[[:blank:]]' deployment-output.txt)
