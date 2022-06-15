@@ -27,6 +27,8 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
 
+      - run: npm list
+
       - run: npm run lint
 
   deploy:
