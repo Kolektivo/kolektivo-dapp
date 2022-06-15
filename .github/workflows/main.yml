@@ -50,24 +50,17 @@ jobs:
           touch project.json
           echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' >> project.json
 
-      - uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install Vercel
-        run: npm i -g vercel@25.1.0
+      # - name: Install Vercel
+      #   run: npm i -g vercel@25.1.0
 
       - name: Deploy to Vercel
         id: vercel-deploy
         run: |
           vercel --token ${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
           DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
-          echo $DEPLOYMENT_URL
+          echo Deployment URL: $DEPLOYMENT_URL
           INSPECT_URL=$(grep -m 1 -o 'https://vercel[^"]*[[:blank:]]' deployment-output.txt)
-          echo $INSPECT_URL
+          echo INSPECT_URL: $INSPECT_URL
           echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
           echo "::set-output name=INSPECT_URL::$INSPECT_URL"
 
