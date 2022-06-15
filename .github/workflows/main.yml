@@ -84,7 +84,7 @@ jobs:
     needs: [deploy, cypress-run]
     runs-on: ubuntu-latest
     outputs:
-      BRANCH_URL: ${{ steps.branch-deployment-url.outputs.BRANCH_URL }}
+      BRANCH_SUBDOMAIN: ${{ steps.branch-deployment-url.outputs.BRANCH_SUBDOMAIN }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
@@ -102,9 +102,9 @@ jobs:
 
           BRANCH_NAME="${BRANCH_NAME//[^a-zA-Z0-9]/-}"
 
-          echo "::set-output name=BRANCH_URL::https://kolektivo-dapp-$BRANCH_NAME.vercel.app"
+          echo "::set-output name=BRANCH_SUBDOMAIN::kolektivo-dapp-$BRANCH_NAME.vercel.app"
 
-      - run: npm run vercel:alias --deployment=${{needs.deploy.outputs.DEPLOYMENT_URL}} --branch=${{ steps.branch-deployment-url.outputs.BRANCH_URL }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_TEAM_SLUG }}
+      - run: npm run vercel:alias --deployment=${{needs.deploy.outputs.DEPLOYMENT_URL}} --branch=${{ steps.branch-deployment-url.outputs.BRANCH_SUBDOMAIN }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_TEAM_SLUG }}
 
   comment-pr:
     name: Comment on the Pull Request
@@ -128,7 +128,7 @@ jobs:
           message: |
             | Type | Status | URL | Date |
             | :--- | :----- | :------ | :------ |
-            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](${{needs.assign-branch-url.outputs.BRANCH_URL}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://${{needs.assign-branch-url.outputs.BRANCH_SUBDOMAIN}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
           # This is going to replace the already existing comment based and string matching
           comment_includes: "Latest successful deployment"
           # Pass Github token so it's possible to comment on a PR
