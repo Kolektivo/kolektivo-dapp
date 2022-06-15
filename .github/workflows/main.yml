@@ -98,6 +98,8 @@ jobs:
             BRANCH_NAME=${{ github.head_ref }}
           fi
 
+          BRANCH_NAME="${BRANCH_NAME//[^a-zA-Z0-9]/-}"
+
           echo "::set-output name=BRANCH_URL::kolektivo-dapp-$BRANCH_NAME.vercel.app"
 
       - run: npm run vercel:alias --deployment=${{needs.deploy.outputs.DEPLOYMENT_URL}} --branch=${{ steps.branch-deployment-url.outputs.BRANCH_URL }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_TEAM_SLUG }}
