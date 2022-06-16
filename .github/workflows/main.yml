@@ -105,7 +105,7 @@ jobs:
           BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:63}
           BRANCH_SUBDOMAIN_LENGTH=${#BRANCH_SUBDOMAIN}
 
-          if [[ "$BRANCH_SUBDOMAIN_LENGTH" -eq 63 ]]; then $BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:58}asdfg;  fi
+          if [[ "$BRANCH_SUBDOMAIN_LENGTH" -eq 63 ]]; then BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:58}asdfg;  fi
 
           echo "::set-output name=BRANCH_DOMAIN::$BRANCH_SUBDOMAIN.vercel.app"
 
