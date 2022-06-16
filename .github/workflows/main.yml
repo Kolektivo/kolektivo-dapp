@@ -103,11 +103,11 @@ jobs:
           BRANCH_NAME="${BRANCH_NAME//[^a-zA-Z0-9]/-}"
           BRANCH_SUBDOMAIN=kolektivo-dapp-$BRANCH_NAME
           BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:63}
-          BRANCH_SUBDOMAIN_LENGTH=${#BR}
+          BRANCH_SUBDOMAIN_LENGTH=${#BRANCH_SUBDOMAIN}
 
           if $BRANCH_SUBDOMAIN_LENGTH == 63
           then
-            $BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:48}asdfg
+            $BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:58}asdfg
           fi
 
           echo "::set-output name=BRANCH_DOMAIN::$BRANCH_SUBDOMAIN.vercel.app"
