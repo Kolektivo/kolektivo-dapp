@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: "16"
           cache: "npm"
+
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v2
@@ -84,7 +85,7 @@ jobs:
     needs: [deploy, cypress-run]
     runs-on: ubuntu-latest
     outputs:
-      BRANCH_SUBDOMAIN: ${{ steps.branch-deployment-url.outputs.BRANCH_SUBDOMAIN }}
+      BRANCH_DOMAIN: ${{ steps.branch-deployment-url.outputs.BRANCH_DOMAIN }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
@@ -93,6 +94,7 @@ jobs:
 
       - name: Get branch deployment URL
         id: branch-deployment-url
+        shell: bash
         run: |
           BRANCH_NAME=${{ github.ref_name }}
           if ${{ github.event_name == 'pull_request' }}
@@ -101,10 +103,14 @@ jobs:
           fi
 
           BRANCH_NAME="${BRANCH_NAME//[^a-zA-Z0-9]/-}"
+          BRANCH_SUBDOMAIN=kolektivo-dapp-$BRANCH_NAME
+          BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:57};
+          SUFFIX=$(echo -n "$BRANCH_NAME" | md5sum | head -c 6)
+          BRANCH_SUBDOMAIN+=$SUFFIX;
 
-          echo "::set-output name=BRANCH_SUBDOMAIN::kolektivo-dapp-$BRANCH_NAME.vercel.app"
+          echo "::set-output name=BRANCH_DOMAIN::$BRANCH_SUBDOMAIN.vercel.app"
 
-      - run: npm run vercel:alias --deployment=${{needs.deploy.outputs.DEPLOYMENT_URL}} --branch=${{ steps.branch-deployment-url.outputs.BRANCH_SUBDOMAIN }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_TEAM_SLUG }}
+      - run: npm run vercel:alias --deployment=${{needs.deploy.outputs.DEPLOYMENT_URL}} --branch=${{ steps.branch-deployment-url.outputs.BRANCH_DOMAIN }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_TEAM_SLUG }}
 
   comment-pr:
     name: Comment on the Pull Request
@@ -128,7 +134,7 @@ jobs:
           message: |
             | Type | Status | URL | Date |
             | :--- | :----- | :------ | :------ |
-            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://${{needs.assign-branch-url.outputs.BRANCH_SUBDOMAIN}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://${{needs.assign-branch-url.outputs.BRANCH_DOMAIN}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
           # This is going to replace the already existing comment based and string matching
           comment_includes: "Latest successful deployment"
           # Pass Github token so it's possible to comment on a PR
