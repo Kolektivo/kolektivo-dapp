@@ -1,0 +1,31 @@
+:host {
+  > div {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--Border01);
+    border-radius: 11px;
+    height: 100%;
+    > div {
+      background-color: var(--Green);
+      height: 100%;
+    }
+    .success {
+      background-color: var(--Green);
+    }
+    .warning {
+      background-color: var(--Orange);
+    }
+    .info {
+      background-color: var(--Teal);
+    }
+    .danger {
+      background-color: var(--Red);
+    }
+    .secondary {
+      background-color: var(--Magenta);
+    }
+    .dark {
+      background-color: var(--Grey);
+    }
+  }
+}
