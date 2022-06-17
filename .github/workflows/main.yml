@@ -16,6 +16,34 @@ jobs:
         with:
           node-version: "16"
           cache: "npm"
+
+      - name: Get branch deployment URL
+        shell: bash
+        run: |
+          BRANCH_NAME=${{ github.ref_name }}
+          if ${{ github.event_name == 'pull_request' }}
+          then 
+            BRANCH_NAME=${{ github.head_ref }}
+          fi
+
+          BRANCH_NAME="${BRANCH_NAME//[^a-zA-Z0-9]/-}"
+          BRANCH_SUBDOMAIN=kolektivo-dapp-$BRANCH_NAME
+          BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:63}
+          BRANCH_SUBDOMAIN_LENGTH=${#BRANCH_SUBDOMAIN}
+          SUFFIX=$RANDOM | md5sum | head -c 6
+
+          echo $SUFFIX
+
+          if [[ "$BRANCH_SUBDOMAIN_LENGTH" -eq 63 ]]; then BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:57}; fi
+
+          TES="${BRANCH_SUBDOMAIN}${SUFFIX}"
+          BRANCH_SUBDOMAIN+=$SUFFIX;
+          echo $SUFFIX
+
+          echo $BRANCH_SUBDOMAIN
+          echo $TES
+
+          echo "::set-output name=BRANCH_DOMAIN::$BRANCH_SUBDOMAIN.vercel.app"
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v2
