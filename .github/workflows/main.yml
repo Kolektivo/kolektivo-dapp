@@ -31,12 +31,11 @@ jobs:
           BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:63}
           BRANCH_SUBDOMAIN_LENGTH=${#BRANCH_SUBDOMAIN}
           SUFFIX=echo $RANDOM | md5sum | head -c 6; echo;
+          md5HASH=($($RANDOM | md5sum | cut -d ' ' -f 1))
 
-          echo $SUFFIX
 
           TES="${BRANCH_SUBDOMAIN}${SUFFIX}"
           BRANCH_SUBDOMAIN+=$SUFFIX;
-          echo $SUFFIX
 
           echo $BRANCH_SUBDOMAIN
           echo $TES
