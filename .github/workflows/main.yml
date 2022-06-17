@@ -93,6 +93,7 @@ jobs:
 
       - name: Get branch deployment URL
         id: branch-deployment-url
+        shell: bash
         run: |
           BRANCH_NAME=${{ github.ref_name }}
           if ${{ github.event_name == 'pull_request' }}
