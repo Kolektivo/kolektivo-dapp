@@ -26,11 +26,11 @@ jobs:
             BRANCH_NAME=${{ github.head_ref }}
           fi
 
+          SUFFIX=$(echo -n "$BRANCH_NAME" | md5sum | head -c 6)
           BRANCH_NAME="${BRANCH_NAME//[^a-zA-Z0-9]/-}"
           BRANCH_SUBDOMAIN=kolektivo-dapp-$BRANCH_NAME
           BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:63}
           BRANCH_SUBDOMAIN_LENGTH=${#BRANCH_SUBDOMAIN}
-          SUFFIX=$(echo -n "myhashedstring" | md5sum | head -c 6)
           echo $SUFFIX
 
 
