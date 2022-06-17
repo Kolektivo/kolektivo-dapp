@@ -1,0 +1,8 @@
+{
+  "exportall.config.relExclusion": [
+    "/src/design-system"
+  ],
+  "exportall.config.folderListener": [
+    "/src/design-system/elements"
+  ],
+}

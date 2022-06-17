@@ -1,7 +1,14 @@
+@import "./design-system/styles/main";
+
 nav {
-  background: #eee;
+  background: #red;
   display: flex;
 }
+
+.test{
+  color: var(--success-dark)
+}
+
 
 a {
   padding: 10px;

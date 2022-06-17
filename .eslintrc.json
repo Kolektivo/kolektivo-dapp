@@ -10,7 +10,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "parserOptions": {
-    "ecmaVersion": 2019,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "env": {

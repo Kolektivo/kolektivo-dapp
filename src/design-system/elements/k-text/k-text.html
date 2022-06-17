@@ -1,0 +1,11 @@
+<template>
+  <div></div>
+  <template switch.bind="tag">
+    <h1 case="h1" ...$attrs>
+      <slot></slot>
+    </h1>
+    <h2  case="h2" ...$attrs>
+      <slot></slot>
+    </h2>
+  </template>
+</template>
