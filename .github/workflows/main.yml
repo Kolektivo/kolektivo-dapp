@@ -36,33 +36,33 @@ jobs:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
     outputs:
-      DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
-      INSPECT_URL: ${{ steps.vercel-deploy.outputs.INSPECT_URL }}
+      DEPLOYMENT_URL: https://kolektivo-dapp-handling-failing-tests1eb570.vercel.app # ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
+      INSPECT_URL: https://vercel.com/curvelabs/kolektivo-dapp/8VdjhUq1MbTJV33fajo1PKaZyCg1 # ${{ steps.vercel-deploy.outputs.INSPECT_URL }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "16"
-          cache: "npm"
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: "16"
+      #     cache: "npm"
 
-        # .vercel directory with project.json is necessary for Vercel CLI to work
-      - name: Create .vercel directory
-        run: |
-          mkdir .vercel
-          cd .vercel
-          touch project.json
-          echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' >> project.json
+      #   # .vercel directory with project.json is necessary for Vercel CLI to work
+      # - name: Create .vercel directory
+      #   run: |
+      #     mkdir .vercel
+      #     cd .vercel
+      #     touch project.json
+      #     echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' >> project.json
 
-      - name: Deploy to Vercel
-        id: vercel-deploy
-        run: |
-          npm run vercel:deploy --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
-          DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
-          echo Deployment URL: $DEPLOYMENT_URL
-          INSPECT_URL=$(grep -m 1 -o 'https://vercel[^"]*[[:blank:]]' deployment-output.txt)
-          echo Inspect URL: $INSPECT_URL
-          echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
-          echo "::set-output name=INSPECT_URL::$INSPECT_URL"
+      # - name: Deploy to Vercel
+      #   id: vercel-deploy
+      #   run: |
+      #     npm run vercel:deploy --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
+      #     DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
+      #     echo Deployment URL: $DEPLOYMENT_URL
+      #     INSPECT_URL=$(grep -m 1 -o 'https://vercel[^"]*[[:blank:]]' deployment-output.txt)
+      #     echo Inspect URL: $INSPECT_URL
+      #     echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
+      #     echo "::set-output name=INSPECT_URL::$INSPECT_URL"
 
   cypress-run:
     name: Cypress run
