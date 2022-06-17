@@ -94,7 +94,7 @@ jobs:
           message: |
             | Type | Status | URL | Date |
             | :--- | :----- | :------ | :------ |
-            | **Latest failed e2e tests** | ❌ Failed ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://${{needs.assign-branch-url.outputs.BRANCH_DOMAIN}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+            | **Latest failed e2e tests** | ❌ Failed ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://${{needs.deploy.outputs.DEPLOYMENT_URL}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
           # This is going to replace the already existing comment based and string matching
           comment_includes: "Latest failed e2e tests"
           # Pass Github token so it's possible to comment on a PR
