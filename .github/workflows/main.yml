@@ -30,7 +30,9 @@ jobs:
           BRANCH_SUBDOMAIN=kolektivo-dapp-$BRANCH_NAME
           BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:63}
           BRANCH_SUBDOMAIN_LENGTH=${#BRANCH_SUBDOMAIN}
-          SUFFIX=($RANDOM | md5sum | head -c 6)
+          SUFFIX=asdf # ($RANDOM | md5sum | head -c 6)
+          md5hash=$(echo -n "myhashedstring" | md5sum | head -c 32)
+          echo $md5hash
 
 
           TES="${BRANCH_SUBDOMAIN}${SUFFIX}"
