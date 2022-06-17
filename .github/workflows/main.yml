@@ -31,7 +31,6 @@ jobs:
           BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:63}
           BRANCH_SUBDOMAIN_LENGTH=${#BRANCH_SUBDOMAIN}
           SUFFIX=$RANDOM | md5sum | head -c 6
-          md5HASH=($($RANDOM | md5sum | cut -d ' ' -f 1))
 
 
           TES="${BRANCH_SUBDOMAIN}${SUFFIX}"
