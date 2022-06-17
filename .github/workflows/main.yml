@@ -106,7 +106,11 @@ jobs:
           BRANCH_SUBDOMAIN_LENGTH=${#BRANCH_SUBDOMAIN}
           RANDOM_STRING=$RANDOM | md5sum | head -c 6
 
+          echo $RANDOM_STRING
+
           if [[ "$BRANCH_SUBDOMAIN_LENGTH" -eq 63 ]]; then BRANCH_SUBDOMAIN=${BRANCH_SUBDOMAIN:0:57}$RANDOM_STRING;  fi
+
+          echo $BRANCH_SUBDOMAIN
 
           echo "::set-output name=BRANCH_DOMAIN::$BRANCH_SUBDOMAIN.vercel.app"
 
