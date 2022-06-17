@@ -78,6 +78,18 @@ jobs:
         with:
           config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
 
+  failed-e2e:
+    name: Comment on PR with failing tests details
+    needs: cypress-run
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - run: |
+          echo "After failure"
+
   # If the e2e tests were successful, assign a branch specific URL to the Vercel deployment
   # Otherwise the latest successful deployment for that branch will be still available under the branch specific URL
   assign-branch-url:
