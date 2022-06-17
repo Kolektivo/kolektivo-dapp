@@ -82,7 +82,7 @@ jobs:
     name: Comment on PR with failing tests details
     needs: cypress-run
     runs-on: ubuntu-latest
-    if: failure() && ${{ github.event_name == 'pull_request' }}
+    if: failure() # && ${{ github.event_name == 'pull_request' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
