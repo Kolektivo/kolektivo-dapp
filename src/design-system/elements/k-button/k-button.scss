@@ -1,0 +1,65 @@
+@mixin standardBackground {
+  border: none;
+  background-image: var(--Gradient08);
+  background-size: 200% auto;
+  color: var(--Neutral04);
+}
+
+@mixin standardButton {
+  
+
+}
+:host {
+
+  button {
+    background-color: var(--ocean-blue);
+    padding: 10px 20px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: .5px;
+    align-items: center;
+    border-radius: 8px;
+    &.xs{
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 2px;
+      padding: 4px 8px;
+    }
+  } 
+}
+
+:host-context(.button-group) {
+  button {
+    flex: 1;
+    gap: 0;
+  }
+}
+
+:host(:first-child) {
+  button {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+:host(:last-child) {
+  button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+:host(:not(:first-child):not(:last-child)) {
+  button {
+    border-radius: 0;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

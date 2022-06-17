@@ -1,7 +1,5 @@
-import { Prefix } from '../../config';
-import { alias, bindable, } from "aurelia";
-import { autoSlot } from '../../utils';
-import { customElement, processContent } from '@aurelia/runtime-html';
+import { bindable, CustomElement, } from "aurelia";
+import { IfExistsThenTrue } from '../../../utils';
 /**
  * Usage:
  *    <pbutton type="primary">Primary</pbutton>
@@ -16,13 +14,12 @@ import { customElement, processContent } from '@aurelia/runtime-html';
 */
 export type ButtonType = "primary" | "secondary" | "tertiary" | "formfield";
 
-export class PButton {
+export class KButton {
   @bindable type: ButtonType = 'primary';
-  @bindable disabled = false;
-  @bindable noAnimation = false;
+  @bindable size: "" | "xs" | "s" | "l" | "xl" = '';
+  @bindable({set: IfExistsThenTrue}) disabled = false;
+  @bindable({set: IfExistsThenTrue}) noAnimation = false;
+  @bindable({set: IfExistsThenTrue}) fullWidth = false;
   @bindable isLoading = false;
-  @bindable fullWidth = false;
-
-
 }
-
+(CustomElement.getDefinition(KButton) as { capture: boolean }).capture = true;

@@ -75,7 +75,7 @@ module.exports = function(env, { analyze }) {
     module: {
       rules: [
         { test: /\.(png|svg|jpg|jpeg|gif)$/i, type: 'asset' },
-        { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,  type: 'asset' },
+        { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,  type: 'asset/resource' },
         {
           test: /\.css$/i,
           // For style loaded in src/main.js, it's not loaded by style-loader.

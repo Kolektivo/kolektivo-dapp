@@ -1,7 +1,83 @@
 :root {
-    --success-light: lighten(var(--success), 10%);
-    --success:gray;
-    --success-dark:darken(var(--success), 10%);
+    //Base Colors from Figma
+    --cheese: #FFBF86;
+    --sandy-brown: #F5A14A;
+    --terra-cotta: #F07C4B;
+    --dark-coral: #D55C38;
+    --don-juan: #5C4C4C;
+    --breaker-bay: #307582;
+    
+    --ocean-blue: #2AA6A1;
+    --green-apple: #68DB88;
+    --ice-cold: #8EF0CD;
+    --tranquil: #E1EDE7;
+    --concrete: #F3F1F1;
+    --white: #FFFFFF;
 
+    //Tints/Shades for specific brand colors
+    --ocean-blue-025: #F4FAFA;
+    --ocean-blue-050: #EAF6F6;
+    --ocean-blue-100: #D4EDEC;
+    --ocean-blue-200: #AADBD9;
+    --ocean-blue-300: #7FCAC7;
+    --ocean-blue-400: #55B8B4;
+    --ocean-blue-500: var(--ocean-blue);
+    --ocean-blue-600: #228581;
+    --ocean-blue-700: #196461;
+    --ocean-blue-800: #114240;
+    --ocean-blue-900: #082120;
+
+    --dark-coral-025: #FDF8F6;
+    --dark-coral-050: #FBEFEB;
+    --dark-coral-100: #F7DED7;
+    --dark-coral-200: #EEBEAF;
+    --dark-coral-300: #E69D88;
+    --dark-coral-400: #DD7D60;
+    --dark-coral-500: var(--dark-coral);
+    --dark-coral-600: #AA4A2D;
+    --dark-coral-700: #803722;
+    --dark-coral-800: #552516;
+    --dark-coral-900: #2B120B;
+    
+    --don-juan-025: #F6F4F4;
+    --don-juan-050: #EFEDED;
+    --don-juan-100: #DEDBDB;
+    --don-juan-200: #BEB7B7;
+    --don-juan-300: #9D9494;
+    --don-juan-400: #7D7070;
+    --don-juan-500: #5C4C4C;
+    --don-juan-600: #4A3D3D;
+    --don-juan-700: #372E2E;
+    --don-juan-800: #251E1E;
+    --don-juan-900: #120F0F;
+    
+    --san-juan-025: #F4F5F5;
+    --san-juan-050: #EDEEEF;
+    --san-juan-100: #DBDDDE;
+    --san-juan-200: #B7BCBE;
+    --san-juan-300: #949A9D;
+    --san-juan-400: #70797D;
+    --san-juan-500: #4C575C;
+    --san-juan-600: #3D464A;
+    --san-juan-700: #2E3437;
+    --san-juan-800: #1E2325;
+    --san-juan-900: #0F1112;
+    
+    //Utitliy Colors
+   
+    --success: #00A04C;
+    --success-light: #EBFAEE;
+    --success-dark: #006B33;
+
+    --error: #DC4D4D;
+    --error-light: #FFEFEF;
+    --error-dark: #8C3434;
+
+    --warning: #DB7B0A;
+    --warning-light: #FEF8ED;
+    --warning-dark: #B46303;
+
+    --info: #3F8FDA;
+    --info-light: #E5EFF9;
+    --info-dark: #1E5B94;
 }
-

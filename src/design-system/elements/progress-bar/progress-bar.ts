@@ -1,12 +1,8 @@
-import { alias } from "@aurelia/runtime";
 import { bindable } from "aurelia";
-import { Prefix } from "../../config";
 
-
-@alias(Prefix + 'progress-bar')
 export class ProgressBar {
-  @bindable({ type: Number }) public max: number = 100;
-  @bindable({ type: Number }) public current: number = 0;
+  @bindable({ type: Number }) public max?: number = 100;
+  @bindable({ type: Number }) public current?: number = 0;
   @bindable({ type: Number }) public percent?: number;
   @bindable public color?: string;
 

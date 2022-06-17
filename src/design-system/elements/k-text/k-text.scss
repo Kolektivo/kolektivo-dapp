@@ -1,10 +1,41 @@
+@import "../../../shared.scss";
+
 :host {
   h1 {
-    font-family: var(--header-font);
-    font-weight: 700;
-    font-size: var(--huge);
+    @extend .header-text;
+    font-size: 64px;
     line-height: 76px;
-    letter-spacing: -0.002em;
+    letter-spacing: -0.2%;
+  }
+  h2 {
+    @extend .header-text;
+    font-size: 48px;
+    line-height: 60px;
+    letter-spacing: -0.1%;
+  }
+  h3 {
+    @extend .header-text;
+    font-size: 40px;
+    line-height: 52px;
+    letter-spacing: 0%;
+  }
+  h4 {
+    @extend .header-text;
+    font-size: 32px;
+    line-height: 44px;
+    letter-spacing: 0%;
+  }
+  h5 {
+    @extend .header-text;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0%;
+  }
+  h6 {
+    @extend .header-text;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0%;
   }
 }
 

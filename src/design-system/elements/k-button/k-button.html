@@ -1,0 +1,6 @@
+<button part="button" class="${size} ${type} ${fullWidth?'full-width':''} ${noAnimation? 'no-animation': ''}" disabled.bind="disabled" role="button" ...$attrs>
+  <slot></slot>
+  <span part="icon" class="icon ${isLoading? 'is-loading': ''}" if.bind="isLoading">
+    <i class="spinner fas fa-sync-alt"></i>
+  </span>
+</button>

@@ -1,25 +1,73 @@
-@import "./design-system/styles/main";
-
+@font-face {
+  font-family: 'Kaleko';
+  src: url('../static/Kaleko105Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+//global tags
 nav {
-  background: #red;
+  position: relative;
   display: flex;
-}
+  width: 100%;
+  max-width: 1110px;
+  margin: 20px auto 10px;
+  padding-right: 80px;
+  padding-left: 80px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  .nav-box{
+    display: flex;
+    padding-top: 0;
+    -webkit-box-align: center;
+    align-items: center;
+    a{
+      padding:10px;
 
-.test{
-  color: var(--success-dark)
-}
-
-
-a {
-  padding: 10px;
-  text-decoration: none;
-  color: black;
-
-  &:hover {
-    background-color: darkgray;
+    }
+    .logo{
+      width: 100%;
+      max-width: 60px;
+      padding-top: 3px;
+      img{
+        border: 0;
+        vertical-align: middle;
+        display: inline-block;
+      }
+    }
   }
 }
-
-.active {
-  background-color: lightgray;
+body{
+  background-color: var(--concrete);
+  color: var(--san-juan-800);
+  font-family: var(--font);
+  margin: 0;
+  min-height: 100%;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
 }
+footer{
+  padding-top: 30px;
+  padding-bottom: 80px;
+  border-bottom-width: 4px;
+  background-image: url(https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a962555cd420d95853a054_patter%20background%20kolektivo.png);
+  background-position: 0 0;
+  background-size: auto;
+}
+a {
+  text-decoration: none;
+  color: var(--san-juan-700);
+}
+//global utitliy classes
+.container{
+  position: relative;
+  width: 100%;
+  max-width: 1110px;
+  margin-top: 0;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 40px 10px 0;
+}
+
+
