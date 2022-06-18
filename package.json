@@ -55,6 +55,7 @@
   },
   "scripts": {
     "lint:js": "eslint src test --ext .js,.ts",
+    "lint:fix": "eslint src test --fix",
     "lint:css": "sass-lint -c .sass-lint.yml \"src/**/*.scss\"",
     "lint:html": "htmlhint -c .htmlhintrc src",
     "lint": "npm run lint:js && npm run lint:html && npm run lint:css",

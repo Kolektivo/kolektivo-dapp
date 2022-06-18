@@ -1,1 +1,1 @@
-export const IfExistsThenTrue = (value: unknown, _: unknown) => value !== 'false' && (value === '' || value);
+export const IfExistsThenTrue = (value: unknown) => value !== 'false' && (value === '' || value);

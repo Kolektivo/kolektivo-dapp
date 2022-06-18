@@ -1,4 +1,2 @@
-import "./storybook.scss";
-export class Storybook {
-
-}
+import './storybook.scss';
+export class Storybook {}
