@@ -1,4 +1,4 @@
-import { bindable, CustomElement, ICustomElementViewModel } from 'aurelia';
+import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
 
 export class KText implements ICustomElementViewModel {
   @bindable tag = 'h1';

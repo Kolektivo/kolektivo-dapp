@@ -1,8 +1,18 @@
 {
-  "exportall.config.relExclusion": [
-    "/src/design-system"
-  ],
-  "exportall.config.folderListener": [
-    "/src/design-system/elements"
-  ],
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "**/.webpack": true
+  },
+  "prettier.requireConfig": true,
+  "eslint.format.enable": false,
+  "eslint.lintTask.enable": true,
+  "eslint.validate": ["javascript", "typescript"],
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "exportall.config.relExclusion": ["/src/design-system"],
+  "exportall.config.folderListener": ["/src/design-system/elements"],
+  "javascript.format.enable": false,
+  "typescript.format.enable": false
 }

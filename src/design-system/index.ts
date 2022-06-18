@@ -1,38 +1,39 @@
 import { IContainer, IRegistry } from 'aurelia';
 
+import './styles/main.scss';
+import './styles/shared.scss';
 import * as elements from './elements';
-
 interface DesignSystemConfiguration {
-    components?: [];
-    includeAllComponents?: boolean;
+  components?: [];
+  includeAllComponents?: boolean;
 }
 
 class DesignSystemPlugin implements IRegistry {
-    #configuration?: DesignSystemConfiguration;
+  #configuration?: DesignSystemConfiguration;
 
-    public static configure(...args: [config: (config: DesignSystemPlugin) => void] | [config: DesignSystemConfiguration]): DesignSystemPlugin {
-        const instance = new DesignSystemPlugin();
+  public static configure(...args: [config: (config: DesignSystemPlugin) => void] | [config: DesignSystemConfiguration]): DesignSystemPlugin {
+    const instance = new DesignSystemPlugin();
 
-        if (typeof args[0] === 'function') {
-            args[0](instance);
-        } else {
-            instance.#configuration = args[0];
-        }
-        return instance;
+    if (typeof args[0] === 'function') {
+      args[0](instance);
+    } else {
+      instance.#configuration = args[0];
     }
+    return instance;
+  }
 
-    register(container: IContainer): IContainer {
-        container.register(elements);
+  register(container: IContainer): IContainer {
+    container.register(elements);
 
-        // container = container.register(AppTask.beforeCreate(IContainer, async c => {
-        //     // console
-        //     console.log(this.#configuration)
-        //     c.register(elements);
-        //     c.register(attributes);
-        // }));
+    // container = container.register(AppTask.beforeCreate(IContainer, async c => {
+    //     // console
+    //     console.log(this.#configuration)
+    //     c.register(elements);
+    //     c.register(attributes);
+    // }));
 
-        return container;
-    }
+    return container;
+  }
 }
 
 const plugin = DesignSystemPlugin.configure;

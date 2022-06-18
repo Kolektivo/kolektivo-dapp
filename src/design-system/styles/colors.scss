@@ -1,83 +1,83 @@
 :root {
-    //Base Colors from Figma
-    --cheese: #FFBF86;
-    --sandy-brown: #F5A14A;
-    --terra-cotta: #F07C4B;
-    --dark-coral: #D55C38;
-    --don-juan: #5C4C4C;
-    --breaker-bay: #307582;
-    
-    --ocean-blue: #2AA6A1;
-    --green-apple: #68DB88;
-    --ice-cold: #8EF0CD;
-    --tranquil: #E1EDE7;
-    --concrete: #F3F1F1;
-    --white: #FFFFFF;
+  //Base Colors from Figma
+  --cheese: #ffbf86;
+  --sandy-brown: #f5a14a;
+  --terra-cotta: #f07c4b;
+  --dark-coral: #d55c38;
+  --don-juan: #5c4c4c;
+  --breaker-bay: #307582;
 
-    //Tints/Shades for specific brand colors
-    --ocean-blue-025: #F4FAFA;
-    --ocean-blue-050: #EAF6F6;
-    --ocean-blue-100: #D4EDEC;
-    --ocean-blue-200: #AADBD9;
-    --ocean-blue-300: #7FCAC7;
-    --ocean-blue-400: #55B8B4;
-    --ocean-blue-500: var(--ocean-blue);
-    --ocean-blue-600: #228581;
-    --ocean-blue-700: #196461;
-    --ocean-blue-800: #114240;
-    --ocean-blue-900: #082120;
+  --ocean-blue: #2aa6a1;
+  --green-apple: #68db88;
+  --ice-cold: #8ef0cd;
+  --tranquil: #e1ede7;
+  --concrete: #f3f1f1;
+  --white: #ffffff;
 
-    --dark-coral-025: #FDF8F6;
-    --dark-coral-050: #FBEFEB;
-    --dark-coral-100: #F7DED7;
-    --dark-coral-200: #EEBEAF;
-    --dark-coral-300: #E69D88;
-    --dark-coral-400: #DD7D60;
-    --dark-coral-500: var(--dark-coral);
-    --dark-coral-600: #AA4A2D;
-    --dark-coral-700: #803722;
-    --dark-coral-800: #552516;
-    --dark-coral-900: #2B120B;
-    
-    --don-juan-025: #F6F4F4;
-    --don-juan-050: #EFEDED;
-    --don-juan-100: #DEDBDB;
-    --don-juan-200: #BEB7B7;
-    --don-juan-300: #9D9494;
-    --don-juan-400: #7D7070;
-    --don-juan-500: #5C4C4C;
-    --don-juan-600: #4A3D3D;
-    --don-juan-700: #372E2E;
-    --don-juan-800: #251E1E;
-    --don-juan-900: #120F0F;
-    
-    --san-juan-025: #F4F5F5;
-    --san-juan-050: #EDEEEF;
-    --san-juan-100: #DBDDDE;
-    --san-juan-200: #B7BCBE;
-    --san-juan-300: #949A9D;
-    --san-juan-400: #70797D;
-    --san-juan-500: #4C575C;
-    --san-juan-600: #3D464A;
-    --san-juan-700: #2E3437;
-    --san-juan-800: #1E2325;
-    --san-juan-900: #0F1112;
-    
-    //Utitliy Colors
-   
-    --success: #00A04C;
-    --success-light: #EBFAEE;
-    --success-dark: #006B33;
+  //Tints/Shades for specific brand colors
+  --ocean-blue-025: #f4fafa;
+  --ocean-blue-050: #eaf6f6;
+  --ocean-blue-100: #d4edec;
+  --ocean-blue-200: #aadbd9;
+  --ocean-blue-300: #7fcac7;
+  --ocean-blue-400: #55b8b4;
+  --ocean-blue-500: var(--ocean-blue);
+  --ocean-blue-600: #228581;
+  --ocean-blue-700: #196461;
+  --ocean-blue-800: #114240;
+  --ocean-blue-900: #082120;
 
-    --error: #DC4D4D;
-    --error-light: #FFEFEF;
-    --error-dark: #8C3434;
+  --dark-coral-025: #fdf8f6;
+  --dark-coral-050: #fbefeb;
+  --dark-coral-100: #f7ded7;
+  --dark-coral-200: #eebeaf;
+  --dark-coral-300: #e69d88;
+  --dark-coral-400: #dd7d60;
+  --dark-coral-500: var(--dark-coral);
+  --dark-coral-600: #aa4a2d;
+  --dark-coral-700: #803722;
+  --dark-coral-800: #552516;
+  --dark-coral-900: #2b120b;
 
-    --warning: #DB7B0A;
-    --warning-light: #FEF8ED;
-    --warning-dark: #B46303;
+  --don-juan-025: #f6f4f4;
+  --don-juan-050: #efeded;
+  --don-juan-100: #dedbdb;
+  --don-juan-200: #beb7b7;
+  --don-juan-300: #9d9494;
+  --don-juan-400: #7d7070;
+  --don-juan-500: #5c4c4c;
+  --don-juan-600: #4a3d3d;
+  --don-juan-700: #372e2e;
+  --don-juan-800: #251e1e;
+  --don-juan-900: #120f0f;
 
-    --info: #3F8FDA;
-    --info-light: #E5EFF9;
-    --info-dark: #1E5B94;
+  --san-juan-025: #f4f5f5;
+  --san-juan-050: #edeeef;
+  --san-juan-100: #dbddde;
+  --san-juan-200: #b7bcbe;
+  --san-juan-300: #949a9d;
+  --san-juan-400: #70797d;
+  --san-juan-500: #4c575c;
+  --san-juan-600: #3d464a;
+  --san-juan-700: #2e3437;
+  --san-juan-800: #1e2325;
+  --san-juan-900: #0f1112;
+
+  //Utitliy Colors
+
+  --success: #00a04c;
+  --success-light: #ebfaee;
+  --success-dark: #006b33;
+
+  --error: #dc4d4d;
+  --error-light: #ffefef;
+  --error-dark: #8c3434;
+
+  --warning: #db7b0a;
+  --warning-light: #fef8ed;
+  --warning-dark: #b46303;
+
+  --info: #3f8fda;
+  --info-light: #e5eff9;
+  --info-dark: #1e5b94;
 }
