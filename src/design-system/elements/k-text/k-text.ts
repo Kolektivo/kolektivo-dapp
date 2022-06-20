@@ -1,7 +1,7 @@
 import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
 
 export class KText implements ICustomElementViewModel {
-  @bindable tag = 'h1';
+  @bindable tag = '';
   constructor() {
     // you can inject the element or any DI in the constructor
   }

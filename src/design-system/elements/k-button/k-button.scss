@@ -1,8 +1,9 @@
 :host {
   button {
-    background-color: var(--ocean-blue);
+    
     border: 0;
     color: var(--white);
+    background-color: var(--ocean-blue);
     padding: 10px 20px;
     font-size: 16px;
     font-weight: 600;
@@ -12,7 +13,7 @@
     align-items: center;
     border-radius: 8px;
     cursor: pointer;
-    width: 100%;
+    width: 100%;    
 
     &.xs, &.sm {
       font-size: 14px;
@@ -31,6 +32,7 @@
       line-height: 24px;
       padding: 16px 24px;
     }
+    //primary colors
     &:hover{
       background-color: var(--ocean-blue-600);
     }
@@ -44,7 +46,20 @@
       background-color: var(--don-juan-200);
       cursor: inherit;
     }
+    //secondary colors
     &.secondary{
+      &:hover{
+        background-color: var(--dark-coral-600);  
+      }
+      &:active{
+        background-color: var(--dark-coral-700);  
+      }
+      &:focus, &:focus-visible, &:focus-within{
+        outline: 2px solid var(--dark-coral-300);
+      }
+      background-color: var(--dark-coral);
+    }
+    &.outlined{
       color: var(--ocean-blue);
       border: 1px solid var(--ocean-blue);
       background-color: var(--white);
@@ -56,6 +71,18 @@
         background-color: var(--ocean-blue-700);
         color: var(--white);
       } 
+      &.secondary{
+        color: var(--dark-coral);
+        border: 1px solid var(--dark-coral);
+        &:hover{
+          background-color: var(--dark-coral-600);
+          color: var(--white);
+        }
+        &:active{
+          background-color: var(--dark-coral-700);
+          color: var(--white);
+        } 
+      }
       &:disabled{
         border-color: var(--don-juan-200);
         color: var(--don-juan-200);
@@ -67,7 +94,7 @@
         }
       } 
     }
-    &.tertiary{
+    &.link{
       border-color: transparent;
       background-color: transparent;
       color: var(--ocean-blue);
@@ -78,7 +105,18 @@
       &:active{
         background-color: var(--ocean-blue-700);
         color: var(--white);
-      } 
+      }
+      &.secondary{
+        color: var(--dark-coral);
+        &:hover{
+          background-color: var(--dark-coral-600);
+          color: var(--white);
+        }
+        &:active{
+          background-color: var(--dark-coral-700);
+          color: var(--white);
+        }
+      }
       &:disabled{
         border-color: transparent;
         color: var(--don-juan-200);

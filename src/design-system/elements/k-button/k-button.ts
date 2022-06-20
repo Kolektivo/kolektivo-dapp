@@ -11,11 +11,13 @@ import { CustomElement, bindable } from 'aurelia';
  *    <pbutton type="primary" no-animation>Not Animated</pbutton>
  *    <pbutton ... full-width>Full-Width</pbutton>
  */
-export type ButtonType = 'primary' | 'secondary' | 'tertiary' | 'formfield';
+export type ButtonType = '' | 'outlined' | 'link';
+export type ButtonColor = 'primary' | 'secondary';
 
 export class KButton {
   @bindable fullWidth = false;
-  @bindable type: ButtonType = 'primary';
+  @bindable type: ButtonType = '';
+  @bindable color: ButtonColor = 'primary';
   @bindable size: '' | 'xs' | 'sm' | 'lg' | 'xl' = '';
   @bindable isLoading = false;
   @bindable class = '';

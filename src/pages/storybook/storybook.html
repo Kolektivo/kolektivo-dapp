@@ -4,62 +4,47 @@
     <k-accordion>
       <span slot="header">Typography</span>
       <div class="typography">
-        <k-code>
-          <k-text tag="h1">Heading 1</k-text>
-        </k-code>
-        <k-code>
-          <k-text tag="h2">Heading 2</k-text>
-        </k-code>
-        <k-code>
-          <k-text tag="h3">Heading 3</k-text>
-        </k-code>
-        <k-code>
-          <k-text tag="h4">Heading 4</k-text>
-        </k-code>
-        <k-code>
-          <k-text tag="h5">Heading 5</k-text>
-        </k-code>
-        <k-code>
-          <k-text tag="h6">Heading 6</k-text>
-        </k-code>
+        <k-code><k-text tag="h1">Heading 1</k-text></k-code>
+        <k-code><k-text tag="h2">Heading 2</k-text></k-code>
+        <k-code><k-text tag="h3">Heading 3</k-text></k-code>
+        <k-code><k-text tag="h4">Heading 4</k-text></k-code>
+        <k-code><k-text tag="h5">Heading 5</k-text></k-code>
+        <k-code><k-text tag="h6">Heading 6</k-text></k-code>
+        <k-code><k-text tag="span">text in a span tag</k-text></k-code>
+        <k-code><k-text type="small">small text</k-text></k-code>
+        <k-code><k-text tag="label">text in a label tag</k-text></k-code>
+        <k-code><k-text tag="span" class="caption">caption text in span</k-text></k-code>
+        <k-code><k-text tag="span" class="caption small">small caption text in span</k-text></k-code>
+        <k-code><k-text tag="span" class="overline">overline text in span</k-text></k-code>
       </div>
     </k-accordion>
     <k-accordion>
       <span slot="header">Buttons</span>
       <div class="buttons">
-        <k-code>
-          <k-button size="xs">XS Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button size="sm">Small Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button>Base Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button size="lg">Large Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button size="xl">XL Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button disabled>Disabled Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="secondary">Secondary Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="secondary" disabled>Secondary Disabled</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="tertiary">Tertiary Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="tertiary" disabled>Tertiary Disabled</k-button>
-        </k-code>
-        <k-code>
-          <k-button full-width>Full Width</k-button>
-        </k-code>
+        <k-code><k-button size="xs">XS Button</k-button></k-code>
+        <k-code><k-button size="sm">Small Button</k-button></k-code>
+        <k-code><k-button>Base Button</k-button></k-code>
+        <k-code><k-button color="secondary">Secondary Button</k-button></k-code>
+        <k-code><k-button size="lg">Large Button</k-button></k-code>
+        <k-code><k-button size="xl">XL Button</k-button></k-code>
+        <k-code><k-button disabled>Disabled Button</k-button></k-code>
+        <k-code><k-button type="outlined">Outlined Button</k-button></k-code>
+        <k-code><k-button type="outlined" color="secondary">Secondary Outline</k-button></k-code>
+        <k-code><k-button type="outlined" disabled>Outlined Disabled</k-button></k-code>
+        <k-code><k-button type="link">Link Button</k-button></k-code>
+        <k-code><k-button type="link" color="secondary">Link Secondary</k-button></k-code>
+        <k-code><k-button type="link" disabled>Link Disabled</k-button></k-code>
+        <k-code><k-button full-width>Full Width</k-button></k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Form Fields</span>
+      <div class="formFields">
+        <k-form-field label="test" max="60" helper-text="helper text"></k-form-field>
+        <k-form-field>
+          <label slot="label">chad</label>
+          <k-input></k-input>
+        </k-form-field>
       </div>
     </k-accordion>
   </div>

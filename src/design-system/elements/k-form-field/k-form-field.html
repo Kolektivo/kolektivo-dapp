@@ -1,0 +1,20 @@
+<div class="form-field">
+  <div class="field-text">
+    <slot name="label">
+      <label>${label}</lab>
+    </slot>
+    <slot name="max">
+      <label if.bind="max">${maxText}</label>
+    </slot>
+  </div>
+  <div>
+    <slot>
+      <k-input max.two-way="max" value.two-way="value" ...$attrs></k-input>
+    </slot>
+  </div>
+  <div class="helper-text">
+    <slot name="helper">
+      <label if.bind="helperText">${helperText}</label>
+    </slot>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+:host{
+    input{
+        border: 1px solid var(--don-juan);
+        background: var(--white);
+        border-radius: 8px;
+        min-width: 280px;
+        padding: 12px 16px;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        color: var(--don-juan-700)
+    }
+}
