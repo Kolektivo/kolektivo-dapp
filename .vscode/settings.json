@@ -4,7 +4,7 @@
     "**/.webpack": true
   },
   "prettier.requireConfig": true,
-  "eslint.format.enable": false,
+  "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
   "eslint.validate": ["javascript", "typescript"],
   "eslint.alwaysShowStatus": true,
