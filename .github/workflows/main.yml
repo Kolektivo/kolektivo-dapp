@@ -71,6 +71,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - run: pwd
 
       # Run e2e tests against Vercel deployment
       - name: Cypress run
