@@ -1,53 +1,94 @@
 :host {
   button {
     background-color: var(--ocean-blue);
+    border: 0;
+    color: var(--white);
     padding: 10px 20px;
     font-size: 16px;
+    font-weight: 600;
+    font-family: 'Lato';
     line-height: 24px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.005em;
     align-items: center;
     border-radius: 8px;
-    &.xs {
+    cursor: pointer;
+    width: 100%;
+
+    &.xs, &.sm {
       font-size: 14px;
       line-height: 20px;
-      letter-spacing: 2px;
+      letter-spacing: 0.02em;
       padding: 4px 8px;
     }
-  }
-}
-
-:host-context(k-button-group) {
-  button {
-    flex: 1;
-    gap: 0;
-  }
-}
-
-:host(:first-child) {
-  button {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-}
-
-:host(:last-child) {
-  button {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-}
-
-:host(:not(:first-child):not(:last-child)) {
-  button {
-    border-radius: 0;
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+    &.sm {
+      padding: 8px 12px;
+    }
+    &.lg {
+      padding: 12px 24px;
+    }
+    &.xl {
+      font-size: 20px;
+      line-height: 24px;
+      padding: 16px 24px;
+    }
+    &:hover{
+      background-color: var(--ocean-blue-600);
+    }
+    &:active{
+      background-color: var(--ocean-blue-700);
+    }
+    &:focus, &:focus-visible, &:focus-within{
+      outline: 2px solid var(--ocean-blue-300);
+    }
+    &:disabled{
+      background-color: var(--don-juan-200);
+      cursor: inherit;
+    }
+    &.secondary{
+      color: var(--ocean-blue);
+      border: 1px solid var(--ocean-blue);
+      background-color: var(--white);
+      &:hover{
+        background-color: var(--ocean-blue-600);
+        color: var(--white);
+      }
+      &:active{
+        background-color: var(--ocean-blue-700);
+        color: var(--white);
+      } 
+      &:disabled{
+        border-color: var(--don-juan-200);
+        color: var(--don-juan-200);
+        cursor: inherit;
+        &:hover{
+          background-color: inherit;
+          border-color: var(--don-juan-200);
+          color: var(--don-juan-200);
+        }
+      } 
+    }
+    &.tertiary{
+      border-color: transparent;
+      background-color: transparent;
+      color: var(--ocean-blue);
+      &:hover{
+        background-color: var(--ocean-blue-600);
+        color: var(--white);
+      }
+      &:active{
+        background-color: var(--ocean-blue-700);
+        color: var(--white);
+      } 
+      &:disabled{
+        border-color: transparent;
+        color: var(--don-juan-200);
+        cursor: inherit;
+        &:hover{
+          background-color: inherit;
+          border-color: transparent;
+          color: var(--don-juan-200);
+        }
+      } 
+    }
   }
 }

@@ -1,5 +1,4 @@
 import { CustomElement, bindable } from 'aurelia';
-import { IfExistsThenTrue } from '../../../utils';
 /**
  * Usage:
  *    <pbutton type="primary">Primary</pbutton>
@@ -15,11 +14,10 @@ import { IfExistsThenTrue } from '../../../utils';
 export type ButtonType = 'primary' | 'secondary' | 'tertiary' | 'formfield';
 
 export class KButton {
+  @bindable fullWidth = false;
   @bindable type: ButtonType = 'primary';
-  @bindable size: '' | 'xs' | 's' | 'l' | 'xl' = '';
-  @bindable({ set: IfExistsThenTrue }) disabled = false;
-  @bindable({ set: IfExistsThenTrue }) noAnimation = false;
-  @bindable({ set: IfExistsThenTrue }) fullWidth = false;
+  @bindable size: '' | 'xs' | 'sm' | 'lg' | 'xl' = '';
   @bindable isLoading = false;
+  @bindable class = '';
 }
 (CustomElement.getDefinition(KButton) as { capture: boolean }).capture = true;

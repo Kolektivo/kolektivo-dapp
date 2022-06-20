@@ -59,6 +59,25 @@ a {
   text-decoration: none;
   color: var(--san-juan-700);
 }
+pre{
+  display: block;
+  width: 100%;
+}
+code{
+  background-color: var(--san-juan-800);
+  color: var(--san-juan-050);
+  padding-right: 25px;
+  display: block;
+  font-size: 14px;
+  position: relative;
+  i{
+    color: var(--white);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+  }
+}
 //global utitliy classes
 .container{
   position: relative;

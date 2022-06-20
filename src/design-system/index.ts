@@ -2,6 +2,7 @@ import { IContainer, IRegistry } from 'aurelia';
 
 import './styles/main.scss';
 import './styles/shared.scss';
+import * as attributes from './attributes';
 import * as elements from './elements';
 interface DesignSystemConfiguration {
   components?: [];
@@ -23,6 +24,7 @@ class DesignSystemPlugin implements IRegistry {
   }
 
   register(container: IContainer): IContainer {
+    container.register(attributes);
     container.register(elements);
 
     // container = container.register(AppTask.beforeCreate(IContainer, async c => {

@@ -1,4 +1,15 @@
 #storybook{
-    
-
+    k-code{
+        display: grid;
+        margin-bottom: 10px;
+        justify-items: start;
+        align-items: center;
+        grid-column-gap: 20px;
+    }
+    .buttons k-code{        
+        grid-template-columns: minmax(100px, 20%) 1fr;
+    }    
+    .typography k-code{        
+        grid-template-columns: minmax(375px, 35%) 1fr;
+    }    
 }

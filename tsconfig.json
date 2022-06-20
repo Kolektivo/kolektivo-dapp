@@ -5,7 +5,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "target": "ES2017",
+    "target": "ESNext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importHelpers": true,
