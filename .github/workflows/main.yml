@@ -88,6 +88,15 @@ jobs:
           name: cypress-screenshots
           path: test/e2e/screenshots
 
+      - uses: actions/download-artifact@v3
+        id: download
+        with:
+          name: "cypress-screenshots"
+          path: test/e2e/screenshots
+
+      - name: "Echo download path"
+        run: echo ${{steps.download.outputs.download-path}}
+
   failed-e2e:
     name: Comment on PR with failing tests details
     needs: [deploy, cypress-run]
