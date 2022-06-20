@@ -71,7 +71,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: pwd
+      - run: echo '${{ toJSON(github) }}'
 
       # Run e2e tests against Vercel deployment
       - name: Cypress run
@@ -82,20 +82,11 @@ jobs:
       # store videos and any screenshots
       # NOTE: screenshots will be generated only if E2E test failed
       # thus we store screenshots only on failures
-      # Alternative: create and commit an empty cypress/screenshots folder
-      # to always have something to upload
-      - run: pwd
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: cypress-screenshots
           path: test/e2e/screenshots
-      # Test run video was always captured, so this action uses "always()" condition
-      - uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: cypress-videos
-          path: test/e2e/videos
 
   failed-e2e:
     name: Comment on PR with failing tests details
