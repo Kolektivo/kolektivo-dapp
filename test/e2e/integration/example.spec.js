@@ -8,6 +8,10 @@
 describe("Testing Test", () => {
   it("App is deployed on vercel.com subdomain", () => {
     cy.visit("/");
-    cy.url().should("include", ".asd.app");
+    cy.url().should("include", ".vercel.app");
+  });
+  it("Homepage", () => {
+    cy.visit("/");
+    cy.contains("p", "asdf");
   });
 });
