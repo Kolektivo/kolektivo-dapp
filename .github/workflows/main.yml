@@ -107,7 +107,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: echo ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Comment on the Pull Request
         uses: thollander/actions-comment-pull-request@v1
@@ -117,6 +116,8 @@ jobs:
             | Type | Status | URL | Date |
             | :--- | :----- | :------ | :------ |
             | **Latest failed e2e tests** | ❌ Failed ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](${{needs.deploy.outputs.DEPLOYMENT_URL}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+
+            Download Failing tests screenshots, from the workflow details page: [${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
           # This is going to replace the already existing comment based and string matching
           comment_includes: "Latest failed e2e tests"
           # Pass Github token so it's possible to comment on a PR
