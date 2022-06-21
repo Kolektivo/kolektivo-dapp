@@ -4,6 +4,7 @@ import './styles/main.scss';
 import './styles/shared.scss';
 import * as attributes from './attributes';
 import * as elements from './elements';
+import { ValidationHtmlConfiguration, ValidationTrigger } from '@aurelia/validation-html';
 interface DesignSystemConfiguration {
   components?: [];
   includeAllComponents?: boolean;
@@ -26,6 +27,11 @@ class DesignSystemPlugin implements IRegistry {
   register(container: IContainer): IContainer {
     container.register(attributes);
     container.register(elements);
+    container.register(
+      ValidationHtmlConfiguration.customize(options => {
+        options.DefaultTrigger = ValidationTrigger.changeOrFocusout;
+      }),
+    );
 
     // container = container.register(AppTask.beforeCreate(IContainer, async c => {
     //     // console

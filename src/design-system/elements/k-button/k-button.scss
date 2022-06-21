@@ -1,6 +1,5 @@
 :host {
   button {
-    
     border: 0;
     color: var(--white);
     background-color: var(--ocean-blue);
@@ -11,11 +10,12 @@
     line-height: 24px;
     letter-spacing: 0.005em;
     align-items: center;
-    border-radius: 8px;
+    border-radius: var(--rounded);
     cursor: pointer;
-    width: 100%;    
+    width: 100%;
 
-    &.xs, &.sm {
+    &.xs,
+    &.sm {
       font-size: 14px;
       line-height: 20px;
       letter-spacing: 0.02em;
@@ -33,100 +33,104 @@
       padding: 16px 24px;
     }
     //primary colors
-    &:hover{
+    &:hover {
       background-color: var(--ocean-blue-600);
     }
-    &:active{
+    &:active {
       background-color: var(--ocean-blue-700);
     }
-    &:focus, &:focus-visible, &:focus-within{
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
       outline: 2px solid var(--ocean-blue-300);
     }
-    &:disabled{
+    &:disabled {
       background-color: var(--don-juan-200);
       cursor: inherit;
     }
     //secondary colors
-    &.secondary{
-      &:hover{
-        background-color: var(--dark-coral-600);  
+    &.secondary {
+      &:hover {
+        background-color: var(--dark-coral-600);
       }
-      &:active{
-        background-color: var(--dark-coral-700);  
+      &:active {
+        background-color: var(--dark-coral-700);
       }
-      &:focus, &:focus-visible, &:focus-within{
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
         outline: 2px solid var(--dark-coral-300);
       }
       background-color: var(--dark-coral);
     }
-    &.outlined{
+    &.outlined {
       color: var(--ocean-blue);
       border: 1px solid var(--ocean-blue);
       background-color: var(--white);
-      &:hover{
+      &:hover {
         background-color: var(--ocean-blue-600);
         color: var(--white);
       }
-      &:active{
+      &:active {
         background-color: var(--ocean-blue-700);
         color: var(--white);
-      } 
-      &.secondary{
+      }
+      &.secondary {
         color: var(--dark-coral);
         border: 1px solid var(--dark-coral);
-        &:hover{
+        &:hover {
           background-color: var(--dark-coral-600);
           color: var(--white);
         }
-        &:active{
+        &:active {
           background-color: var(--dark-coral-700);
           color: var(--white);
-        } 
+        }
       }
-      &:disabled{
+      &:disabled {
         border-color: var(--don-juan-200);
         color: var(--don-juan-200);
         cursor: inherit;
-        &:hover{
+        &:hover {
           background-color: inherit;
           border-color: var(--don-juan-200);
           color: var(--don-juan-200);
         }
-      } 
+      }
     }
-    &.link{
+    &.link {
       border-color: transparent;
       background-color: transparent;
       color: var(--ocean-blue);
-      &:hover{
+      &:hover {
         background-color: var(--ocean-blue-600);
         color: var(--white);
       }
-      &:active{
+      &:active {
         background-color: var(--ocean-blue-700);
         color: var(--white);
       }
-      &.secondary{
+      &.secondary {
         color: var(--dark-coral);
-        &:hover{
+        &:hover {
           background-color: var(--dark-coral-600);
           color: var(--white);
         }
-        &:active{
+        &:active {
           background-color: var(--dark-coral-700);
           color: var(--white);
         }
       }
-      &:disabled{
+      &:disabled {
         border-color: transparent;
         color: var(--don-juan-200);
         cursor: inherit;
-        &:hover{
+        &:hover {
           background-color: inherit;
           border-color: transparent;
           color: var(--don-juan-200);
         }
-      } 
+      }
     }
   }
 }

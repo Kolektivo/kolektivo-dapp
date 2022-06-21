@@ -1,6 +1,9 @@
-import { CustomElement, ICustomElementViewModel } from 'aurelia';
+import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
 
 export class KInput implements ICustomElementViewModel {
+  @bindable type = 'text';
+  @bindable name = '';
+
   constructor() {
     // you can inject the element or any DI in the constructor
   }

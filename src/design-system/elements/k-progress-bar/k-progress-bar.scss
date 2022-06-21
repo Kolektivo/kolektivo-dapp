@@ -3,7 +3,7 @@
     width: 100%;
     overflow: hidden;
     background-color: var(--Border01);
-    border-radius: 11px;
+    border-radius: var(--rounded);
     height: 100%;
     > div {
       background-color: var(--Green);

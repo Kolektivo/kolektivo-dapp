@@ -1,20 +1,21 @@
-<div class="form-field">
-  <div class="field-text">
+<div class="form-field ${isError || errors.length && 'error'}">
+  <div part="label" class="field-text">
     <slot name="label">
-      <label>${label}</lab>
+      <label for="${name}">${label}</label>
     </slot>
     <slot name="max">
       <label if.bind="max">${maxText}</label>
     </slot>
   </div>
-  <div>
+  <div part="main">
     <slot>
-      <k-input max.two-way="max" value.two-way="value" ...$attrs></k-input>
+      <k-input maxlength.bind="max" id="${name}" name="${name}" value.two-way="value" ...$attrs></k-input>
     </slot>
   </div>
-  <div class="helper-text">
-    <slot name="helper">
-      <label if.bind="helperText">${helperText}</label>
+  <div part="helper" class="helper-text">
+    <k-text if.bind="errors.length"> ${errors[0].result.message} </k-text>
+    <slot else name="helper">
+      <k-text tag="caption" if.bind="helperText">${helperText}</k-text>
     </slot>
   </div>
 </div>

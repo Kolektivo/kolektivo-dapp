@@ -39,13 +39,38 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Form Fields</span>
-      <div class="formFields">
-        <k-form-field label="test" max="60" helper-text="helper text"></k-form-field>
-        <k-form-field>
-          <label slot="label">chad</label>
-          <k-input></k-input>
-        </k-form-field>
-      </div>
+      <form class="formFields">
+        <!-- <k-code>
+          <k-form-field label="test" helper-text="helper text"></k-form-field>
+        </k-code> -->
+        <k-code validation-errors.from-view="errors">
+          <k-form-field name="test" errors.bind="errors" value.bind="data.name & validate" max="50" label="test" helper-text="helper text"></k-form-field>
+        </k-code>
+        <k-code validation-errors.from-view="errors">
+          <k-form-field name="test" errors.bind="errors" value.bind="data.name & validate" label="test" helper-text="helper text"></k-form-field>
+        </k-code>
+        <!-- <k-code>
+          <k-form-field max="50" label="test" helper-text="helper text"></k-form-field>
+        </k-code> -->
+
+        <k-code>
+          <k-form-field>
+            <label slot="label">chad</label>
+            <k-input>
+              <span slot="start">test</span>
+              <span slot="end">test</span>
+            </k-input>
+          </k-form-field>
+        </k-code>
+        <k-code>
+          <k-select value.bind="selectTest" options.bind="[1,2,3]"></k-select>
+        </k-code>
+        ${selectTest}
+        <k-code>
+          <k-select value.bind="selectTest2" options.bind="[{value:1, display:'test'},2,3]"></k-select>
+        </k-code>
+        ${selectTest2}
+      </form>
     </k-accordion>
   </div>
 </div>

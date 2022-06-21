@@ -8,7 +8,8 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "aurelia": "^2.0.0-alpha.35"
+    "aurelia": "^2.0.0-alpha.35",
+    "@aurelia/validation-html": "^2.0.0-alpha.35"
   },
   "devDependencies": {
     "@aurelia/testing": "^2.0.0-alpha.35",
