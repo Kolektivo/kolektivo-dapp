@@ -14,8 +14,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16"
-          cache: "npm"
+          node-version: '16'
+          cache: 'npm'
 
       - name: Cache dependencies
         id: cache
@@ -39,11 +39,11 @@ jobs:
       DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
       INSPECT_URL: ${{ steps.vercel-deploy.outputs.INSPECT_URL }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16"
-          cache: "npm"
+          node-version: '16'
+          cache: 'npm'
 
         # .vercel directory with project.json is necessary for Vercel CLI to work
       - name: Create .vercel directory
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Run e2e tests against Vercel deployment
       - name: Cypress run
@@ -94,7 +94,7 @@ jobs:
     if: failure() && (github.event_name == 'pull_request')
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get workflow run URL
         id: workflow-url
@@ -116,7 +116,7 @@ jobs:
 
             Download Failing tests screenshots, from the workflow details page: [${{ steps.workflow-url.outputs.WORKFLOW_RUN_URL }}](${{ steps.workflow-url.outputs.WORKFLOW_RUN_URL }})
           # This is going to replace the already existing comment based and string matching
-          comment_includes: "Latest failed e2e tests"
+          comment_includes: 'Latest failed e2e tests'
           # Pass Github token so it's possible to comment on a PR
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -129,10 +129,10 @@ jobs:
     outputs:
       BRANCH_DOMAIN: ${{ steps.branch-deployment-url.outputs.BRANCH_DOMAIN }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: '16'
 
       - name: Get branch deployment URL
         id: branch-deployment-url
@@ -180,6 +180,6 @@ jobs:
             | :--- | :----- | :------ | :------ |
             | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://${{needs.assign-branch-url.outputs.BRANCH_DOMAIN}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
           # This is going to replace the already existing comment based and string matching
-          comment_includes: "Latest successful deployment"
+          comment_includes: 'Latest successful deployment'
           # Pass Github token so it's possible to comment on a PR
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
