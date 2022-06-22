@@ -10,4 +10,8 @@ describe('Testing Test', () => {
     cy.visit('/');
     cy.url().should('include', '.vercel.app');
   });
+  it('Homepage', () => {
+    cy.visit('/');
+    cy.contains('h1', 'Welcome to Kolektivo');
+  });
 });
