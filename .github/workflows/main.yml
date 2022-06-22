@@ -71,7 +71,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: echo '${{ toJSON(github) }}'
 
       # Run e2e tests against Vercel deployment
       - name: Cypress run
@@ -108,6 +107,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Get workflow run URL
+        id: workflow-url
+        run: echo "::set-output name=WORKFLOW_RUN_URL::${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Get current date
+        id: get-current-date
+        # Stores current date as variable to use in the next step
+        run: echo "::set-output name=CURRENT_DATE::$(date -u)"
+
       - name: Comment on the Pull Request
         uses: thollander/actions-comment-pull-request@v1
         with:
@@ -115,9 +123,9 @@ jobs:
           message: |
             | Type | Status | URL | Date |
             | :--- | :----- | :------ | :------ |
-            | **Latest failed e2e tests** | ❌ Failed ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](${{needs.deploy.outputs.DEPLOYMENT_URL}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+            | **Latest failed e2e tests** | ❌ Failed ([Inspect](${{ steps.workflow-url.outputs.WORKFLOW_RUN_URL }})) | [Visit Preview](${{needs.deploy.outputs.DEPLOYMENT_URL}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
 
-            Download Failing tests screenshots, from the workflow details page: [${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            Download Failing tests screenshots, from the workflow details page: [${{ steps.workflow-url.outputs.WORKFLOW_RUN_URL }}](${{ steps.workflow-url.outputs.WORKFLOW_RUN_URL }})
           # This is going to replace the already existing comment based and string matching
           comment_includes: "Latest failed e2e tests"
           # Pass Github token so it's possible to comment on a PR
