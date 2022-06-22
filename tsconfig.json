@@ -5,17 +5,19 @@
     "module": "esnext",
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "target": "ES2017",
+    "target": "ESNext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "pages/*": ["./src/pages/*"],
+      "design-system/*": ["./src/design-system/*"],
+      "utils": ["./src/utils"]
+    }
   },
-  "include": [
-    "test",
-    "src"
-  ],
-  "files": [
-    "src/resource.d.ts"
-  ]
+  "include": ["test", "src"],
+  "files": ["src/resource.d.ts"]
 }

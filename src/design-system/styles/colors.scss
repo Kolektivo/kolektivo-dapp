@@ -1,0 +1,83 @@
+:root {
+  //Base Colors from Figma
+  --cheese: #ffbf86;
+  --sandy-brown: #f5a14a;
+  --terra-cotta: #f07c4b;
+  --dark-coral: #d55c38;
+  --don-juan: #5c4c4c;
+  --breaker-bay: #307582;
+
+  --ocean-blue: #2aa6a1;
+  --green-apple: #68db88;
+  --ice-cold: #8ef0cd;
+  --tranquil: #e1ede7;
+  --concrete: #f3f1f1;
+  --white: #ffffff;
+
+  //Tints/Shades for specific brand colors
+  --ocean-blue-025: #f4fafa;
+  --ocean-blue-050: #eaf6f6;
+  --ocean-blue-100: #d4edec;
+  --ocean-blue-200: #aadbd9;
+  --ocean-blue-300: #7fcac7;
+  --ocean-blue-400: #55b8b4;
+  --ocean-blue-500: var(--ocean-blue);
+  --ocean-blue-600: #228581;
+  --ocean-blue-700: #196461;
+  --ocean-blue-800: #114240;
+  --ocean-blue-900: #082120;
+
+  --dark-coral-025: #fdf8f6;
+  --dark-coral-050: #fbefeb;
+  --dark-coral-100: #f7ded7;
+  --dark-coral-200: #eebeaf;
+  --dark-coral-300: #e69d88;
+  --dark-coral-400: #dd7d60;
+  --dark-coral-500: var(--dark-coral);
+  --dark-coral-600: #aa4a2d;
+  --dark-coral-700: #803722;
+  --dark-coral-800: #552516;
+  --dark-coral-900: #2b120b;
+
+  --don-juan-025: #f6f4f4;
+  --don-juan-050: #efeded;
+  --don-juan-100: #dedbdb;
+  --don-juan-200: #beb7b7;
+  --don-juan-300: #9d9494;
+  --don-juan-400: #7d7070;
+  --don-juan-500: #5c4c4c;
+  --don-juan-600: #4a3d3d;
+  --don-juan-700: #372e2e;
+  --don-juan-800: #251e1e;
+  --don-juan-900: #120f0f;
+
+  --san-juan-025: #f4f5f5;
+  --san-juan-050: #edeeef;
+  --san-juan-100: #dbddde;
+  --san-juan-200: #b7bcbe;
+  --san-juan-300: #949a9d;
+  --san-juan-400: #70797d;
+  --san-juan-500: #4c575c;
+  --san-juan-600: #3d464a;
+  --san-juan-700: #2e3437;
+  --san-juan-800: #1e2325;
+  --san-juan-900: #0f1112;
+
+  //Utitliy Colors
+
+  --success: #00a04c;
+  --success-light: #ebfaee;
+  --success-dark: #006b33;
+
+  --error: #dc4d4d;
+  --error-light: #ffefef;
+  --error-dark: #8c3434;
+
+  --warning: #db7b0a;
+  --warning-light: #fef8ed;
+  --warning-dark: #b46303;
+
+  --info: #3f8fda;
+  --info-light: #e5eff9;
+  --info-dark: #1e5b94;
+}

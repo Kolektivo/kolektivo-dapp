@@ -1,0 +1,76 @@
+<div class="container">
+  <h1>Kolektivo Design System</h1>
+  <div id="storybook">
+    <k-accordion>
+      <span slot="header">Typography</span>
+      <div class="typography">
+        <k-code><k-text tag="h1">Heading 1</k-text></k-code>
+        <k-code><k-text tag="h2">Heading 2</k-text></k-code>
+        <k-code><k-text tag="h3">Heading 3</k-text></k-code>
+        <k-code><k-text tag="h4">Heading 4</k-text></k-code>
+        <k-code><k-text tag="h5">Heading 5</k-text></k-code>
+        <k-code><k-text tag="h6">Heading 6</k-text></k-code>
+        <k-code><k-text tag="span">text in a span tag</k-text></k-code>
+        <k-code><k-text type="small">small text</k-text></k-code>
+        <k-code><k-text tag="label">text in a label tag</k-text></k-code>
+        <k-code><k-text tag="span" class="caption">caption text in span</k-text></k-code>
+        <k-code><k-text tag="span" class="caption small">small caption text in span</k-text></k-code>
+        <k-code><k-text tag="span" class="overline">overline text in span</k-text></k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Buttons</span>
+      <div class="buttons">
+        <k-code><k-button size="xs">XS Button</k-button></k-code>
+        <k-code><k-button size="sm">Small Button</k-button></k-code>
+        <k-code><k-button>Base Button</k-button></k-code>
+        <k-code><k-button color="secondary">Secondary Button</k-button></k-code>
+        <k-code><k-button size="lg">Large Button</k-button></k-code>
+        <k-code><k-button size="xl">XL Button</k-button></k-code>
+        <k-code><k-button disabled>Disabled Button</k-button></k-code>
+        <k-code><k-button type="outlined">Outlined Button</k-button></k-code>
+        <k-code><k-button type="outlined" color="secondary">Secondary Outline</k-button></k-code>
+        <k-code><k-button type="outlined" disabled>Outlined Disabled</k-button></k-code>
+        <k-code><k-button type="link">Link Button</k-button></k-code>
+        <k-code><k-button type="link" color="secondary">Link Secondary</k-button></k-code>
+        <k-code><k-button type="link" disabled>Link Disabled</k-button></k-code>
+        <k-code><k-button full-width>Full Width</k-button></k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Form Fields</span>
+      <form class="formFields">
+        <!-- <k-code>
+          <k-form-field label="test" helper-text="helper text"></k-form-field>
+        </k-code> -->
+        <k-code validation-errors.from-view="errors">
+          <k-form-field name="test" errors.bind="errors" value.bind="data.name & validate" max="50" label="test" helper-text="helper text"></k-form-field>
+        </k-code>
+        <k-code validation-errors.from-view="errors">
+          <k-form-field name="test" errors.bind="errors" value.bind="data.name & validate" label="test" helper-text="helper text"></k-form-field>
+        </k-code>
+        <!-- <k-code>
+          <k-form-field max="50" label="test" helper-text="helper text"></k-form-field>
+        </k-code> -->
+
+        <k-code>
+          <k-form-field>
+            <label slot="label">chad</label>
+            <k-input>
+              <span slot="start">test</span>
+              <span slot="end">test</span>
+            </k-input>
+          </k-form-field>
+        </k-code>
+        <k-code>
+          <k-select value.bind="selectTest" options.bind="[1,2,3]"></k-select>
+        </k-code>
+        ${selectTest}
+        <k-code>
+          <k-select value.bind="selectTest2" options.bind="[{value:1, display:'test'},2,3]"></k-select>
+        </k-code>
+        ${selectTest2}
+      </form>
+    </k-accordion>
+  </div>
+</div>

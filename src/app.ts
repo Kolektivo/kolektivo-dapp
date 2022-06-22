@@ -1,2 +1,3 @@
-export class App {
-}
+import './app.scss';
+import './shared.scss';
+export class App {}

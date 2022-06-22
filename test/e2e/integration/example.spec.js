@@ -5,10 +5,10 @@
 // check out the link below and learn how to write your first test:
 // https://on.cypress.io/writing-first-test
 
-describe("Testing Test", () => {
-  it("App is deployed on vercel.com subdomain", () => {
-    cy.visit("/");
-    cy.url().should("include", ".vercel.app");
+describe('Testing Test', () => {
+  it('App is deployed on vercel.com subdomain', () => {
+    cy.visit('/');
+    cy.url().should('include', '.vercel.app');
   });
   it("Homepage", () => {
     cy.visit("/");

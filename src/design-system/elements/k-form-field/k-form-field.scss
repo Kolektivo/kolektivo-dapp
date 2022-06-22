@@ -1,0 +1,26 @@
+:host {
+  .field-text {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr auto;
+    justify-content: space-between;
+    align-items: end;
+  }
+  .form-field {
+    label {
+      overflow-wrap: break-word;
+    }
+
+    &.error {
+      .helper-text {
+        ::part(content) {
+          color: var(--error);
+        }
+      }
+
+      ::part(input) {
+        border: 1px solid var(--error);
+      }
+    }
+  }
+}

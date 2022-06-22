@@ -1,0 +1,15 @@
+:host {
+  .button-group {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+
+    * {
+      margin: 50px;
+    }
+  }
+}
+
+::slotted(*) {
+  margin: 50px;
+}

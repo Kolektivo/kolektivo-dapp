@@ -1,3 +1,1 @@
-export class Home {
-  public message = 'Welcome to Aurelia 2!';
-}
+export class Home {}
