@@ -38,6 +38,7 @@ jobs:
     outputs:
       DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
       INSPECT_URL: ${{ steps.vercel-deploy.outputs.INSPECT_URL }}
+      DEPLOYMENT_ENVIRONMENT: ${{ steps.get-deployment-environment.outputs.DEPLOYMENT_ENVIRONMENT }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -141,6 +142,7 @@ jobs:
     name: Assign branch specific URL
     needs: [deploy, cypress-run]
     runs-on: ubuntu-latest
+    if: ${{needs.deploy.outputs.DEPLOYMENT_ENVIRONMENT == 'Preview' }}
     outputs:
       BRANCH_DOMAIN: ${{ steps.branch-deployment-url.outputs.BRANCH_DOMAIN }}
     steps:
