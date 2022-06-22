@@ -52,7 +52,7 @@ jobs:
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             echo "::set-output name=DEPLOYMENT_ENVIRONMENT::Production"
           else
-              echo "::set-output name=DEPLOYMENT_ENVIRONMENT::Preview"
+            echo "::set-output name=DEPLOYMENT_ENVIRONMENT::Preview"
           fi
 
         # .vercel directory with project.json is necessary for Vercel CLI to work
@@ -66,7 +66,7 @@ jobs:
       - name: Deploy to Vercel
         id: vercel-deploy
         run: |
-          if ["${{ steps.get-deployment-environment.outputs.DEPLOYMENT_ENVIRONMENT }}" = "Production"]; then
+          if [[ "${{ steps.get-deployment-environment.outputs.DEPLOYMENT_ENVIRONMENT }}" = "Production" ]]; then
             npm run vercel:deploy:production --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
           else
             npm run vercel:deploy --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
