@@ -45,6 +45,16 @@ jobs:
           node-version: '16'
           cache: 'npm'
 
+      - name: Get deployment environment
+        id: get-deployment-environment
+        run: |
+          echo "Running on branch ${{ github.ref }}"
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "::set-output name=DEPLOYMENT_ENVIRONMENT::Production"
+          else
+              echo "::set-output name=DEPLOYMENT_ENVIRONMENT::Preview"
+          fi
+
         # .vercel directory with project.json is necessary for Vercel CLI to work
       - name: Create .vercel directory
         run: |
@@ -56,7 +66,12 @@ jobs:
       - name: Deploy to Vercel
         id: vercel-deploy
         run: |
-          npm run vercel:deploy --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
+          if ["${{ steps.get-deployment-environment.outputs.DEPLOYMENT_ENVIRONMENT }}" = "Production"]; then
+            npm run vercel:deploy:production --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
+          else
+            npm run vercel:deploy --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
+          fi
+
           DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
           echo Deployment URL: $DEPLOYMENT_URL
           INSPECT_URL=$(grep -m 1 -o 'https://vercel[^"]*[[:blank:]]' deployment-output.txt)
