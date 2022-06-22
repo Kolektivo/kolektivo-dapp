@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-      - run: echo ${{ github }}
+      - run: echo '${{ toJSON(github) }}'
 
       - name: Cache dependencies
         id: cache
