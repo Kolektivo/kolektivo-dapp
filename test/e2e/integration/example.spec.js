@@ -12,6 +12,6 @@ describe("Testing Test", () => {
   });
   it("Homepage", () => {
     cy.visit("/");
-    cy.contains("p", "asdf");
+    cy.contains("h1", "Welcome to Aurelia 2!");
   });
 });
