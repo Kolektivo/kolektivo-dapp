@@ -1,4 +1,4 @@
-<select ...$attrs>
-  <option if.bind="allowEmpty" value.bind="undefined"></option>
-  <option repeat.for="option of options" value.bind="option.value == null ? option : option.value">${option.display == null ? option : option.display}</option>
+<select onchange.bind="changed" ...$attrs>
+  <option if.bind="placeholder" value="" hidden>${placeholder}</option>
+  <option click.bind="optionClicked" repeat.for="option of options" value.bind="option.value == null ? option : option.value">${option.display == null ? option : option.display}</option>
 </select>

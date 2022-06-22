@@ -90,5 +90,17 @@ code{
   margin-left: auto;
   padding: 40px 10px 0;
 }
-
-
+//scrollbar styles
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 12px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--ocean-blue);
+  border-radius: 12px;
+}

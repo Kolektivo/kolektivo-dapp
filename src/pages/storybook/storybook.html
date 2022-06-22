@@ -37,6 +37,7 @@
         <k-code><k-button full-width>Full Width</k-button></k-code>
       </div>
     </k-accordion>
+    <k-code><k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Select an option"></k-select></k-code>
     <k-accordion>
       <span slot="header">Form Fields</span>
       <form class="formFields">
@@ -62,14 +63,10 @@
             </k-input>
           </k-form-field>
         </k-code>
-        <k-code>
-          <k-select value.bind="selectTest" options.bind="[1,2,3]"></k-select>
-        </k-code>
-        ${selectTest}
+
         <k-code>
           <k-select value.bind="selectTest2" options.bind="[{value:1, display:'test'},2,3]"></k-select>
         </k-code>
-        ${selectTest2}
       </form>
     </k-accordion>
   </div>

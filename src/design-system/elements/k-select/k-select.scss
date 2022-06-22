@@ -1,8 +1,27 @@
 :host {
   select {
-    padding: 10px;
-    font-size: 1.2rem;
-    box-shadow: 5px 5px 5px black;
+    padding: 12px 20px;
+    font-family: 'Lato';
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    border: 1px solid var(--don-juan);
     border-radius: var(--rounded);
+    width: 100%;
+    color: var(--don-juan-300);    
+
+    background: var(--white) url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat;
+    background-position: calc(100% - 0.75rem) center !important;
+    -moz-appearance:none !important;
+    -webkit-appearance: none !important; 
+    appearance: none !important;
+    padding-right: 2rem !important;
+    
+    &:focus{
+      background: var(--white) url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>') no-repeat;
+    }
+    option{
+      color: var(--don-juan);
+    }
   }
 }
