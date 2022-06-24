@@ -1,3 +1,4 @@
+@import '../src/design-system/styles/mixins.scss';
 @font-face {
   font-family: 'Kaleko';
   src: url('../static/Kaleko105Bold.ttf') format('truetype');
@@ -46,6 +47,7 @@ body{
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
+  @include scrollbars(8px, 12px,  var(--ocean-blue));
 }
 footer{
   padding-top: 30px;
@@ -91,16 +93,3 @@ code{
   padding: 40px 10px 0;
 }
 //scrollbar styles
-/* width */
-::-webkit-scrollbar {
-  width: 8px;
-}
-/* Track */
-::-webkit-scrollbar-track {
-  border-radius: 12px;
-}
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: var(--ocean-blue);
-  border-radius: 12px;
-}

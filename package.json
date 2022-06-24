@@ -9,7 +9,10 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@aurelia/validation-html": "^2.0.0-alpha.35",
-    "aurelia": "^2.0.0-alpha.35"
+    "@microsoft/fast-components": "^2.30.6",
+    "@microsoft/fast-element": "^1.10.2",
+    "aurelia": "^2.0.0-alpha.35",
+    "aurelia-fast-adapter": "^1.0.5"
   },
   "devDependencies": {
     "@aurelia/testing": "^2.0.0-alpha.35",
