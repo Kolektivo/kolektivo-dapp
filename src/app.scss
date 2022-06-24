@@ -17,20 +17,19 @@ nav {
   justify-content: space-between;
   -webkit-box-align: center;
   align-items: center;
-  .nav-box{
+  .nav-box {
     display: flex;
     padding-top: 0;
     -webkit-box-align: center;
     align-items: center;
-    a{
-      padding:10px;
-
+    a {
+      padding: 10px;
     }
-    .logo{
+    .logo {
       width: 100%;
       max-width: 60px;
       padding-top: 3px;
-      img{
+      img {
         border: 0;
         vertical-align: middle;
         display: inline-block;
@@ -38,7 +37,7 @@ nav {
     }
   }
 }
-body{
+body {
   background-color: var(--concrete);
   color: var(--san-juan-800);
   font-family: var(--font);
@@ -47,9 +46,9 @@ body{
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-  @include scrollbars(8px, 12px,  var(--ocean-blue));
+  @include scrollbars(8px, 12px, var(--ocean-blue));
 }
-footer{
+footer {
   padding-top: 30px;
   padding-bottom: 80px;
   border-bottom-width: 4px;
@@ -61,11 +60,11 @@ a {
   text-decoration: none;
   color: var(--san-juan-700);
 }
-pre{
+pre {
   display: block;
   width: 100%;
 }
-code{
+code {
   background-color: var(--san-juan-800);
   color: var(--san-juan-050);
   padding-right: 25px;
@@ -73,7 +72,7 @@ code{
   font-size: 14px;
   position: relative;
   padding: 15px;
-  i{
+  i {
     color: var(--white);
     position: absolute;
     right: 10px;
@@ -83,7 +82,7 @@ code{
 }
 
 //global utitliy classes
-.container{
+.container {
   position: relative;
   width: 100%;
   max-width: 1110px;

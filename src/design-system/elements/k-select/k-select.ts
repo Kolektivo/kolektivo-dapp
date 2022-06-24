@@ -9,8 +9,6 @@ export class KSelect implements ICustomElementViewModel {
   changed() {
     (document.activeElement as HTMLElement).blur();
   }
-  attached(): void | Promise<void> {
-
-  }
+  attached(): void | Promise<void> {}
 }
 (CustomElement.getDefinition(KSelect) as { capture: boolean }).capture = true;
