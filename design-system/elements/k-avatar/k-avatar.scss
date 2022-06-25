@@ -1,0 +1,10 @@
+@import '../../styles/shared.scss';
+
+:host {
+  div {
+    display: grid;
+    place-items: center;
+    margin-top: 50%;
+    margin-right: 50%;
+  }
+}

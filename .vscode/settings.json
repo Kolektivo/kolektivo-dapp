@@ -1,7 +1,8 @@
 {
   "editor.formatOnSave": true,
   "files.exclude": {
-    "**/.webpack": true
+    "**/.webpack": true,
+    "**/node_modules": true
   },
   "prettier.requireConfig": true,
   "eslint.format.enable": true,
@@ -12,7 +13,7 @@
     "source.fixAll.eslint": true
   },
   "exportall.config.relExclusion": ["/src/design-system"],
-  "exportall.config.folderListener": ["/src/design-system/elements"],
+  "exportall.config.folderListener": ["/src/design-system/elements", "/src/resources/**/*", "/src/pages"],
   "javascript.format.enable": false,
   "typescript.format.enable": false
 }

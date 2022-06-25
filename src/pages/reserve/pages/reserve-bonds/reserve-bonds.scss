@@ -1,0 +1,15 @@
+#reserve-bonds {
+  div {
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+  nav {
+    display: grid;
+    grid-template-columns: auto auto;
+    place-items: center;
+  }
+
+  a.active {
+    text-decoration: underline;
+  }
+}

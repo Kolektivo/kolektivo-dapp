@@ -1,5 +1,25 @@
-//extended classes used throughout the dapp
-.header-text {
-  font-family: var(--header-font);
-  font-weight: 700;
+a {
+  text-decoration: none;
+  color: var(--san-juan-700);
+}
+
+pre {
+  display: block;
+  width: 100%;
+}
+code {
+  background-color: var(--san-juan-800);
+  color: var(--san-juan-050);
+  padding-right: 25px;
+  display: block;
+  font-size: 14px;
+  position: relative;
+  padding: 15px;
+  i {
+    color: var(--white);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+  }
 }

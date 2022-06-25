@@ -117,6 +117,20 @@ module.exports = function (env, { analyze }) {
               // If you turn on "closed" mode, there will be difficulty to perform e2e
               // tests (such as Cypress). Because shadowRoot is not accessible through
               // standard DOM APIs in "closed" mode.
+              // defaultShadowOptions: { mode: 'open' },
+            },
+          },
+          exclude: /node_modules/,
+        },
+        {
+          test: /[/\\]design-system[/\\].+\.html$/i,
+          use: {
+            loader: '@aurelia/webpack-loader',
+            options: {
+              // The other possible Shadow DOM mode is 'closed'.
+              // If you turn on "closed" mode, there will be difficulty to perform e2e
+              // tests (such as Cypress). Because shadowRoot is not accessible through
+              // standard DOM APIs in "closed" mode.
               defaultShadowOptions: { mode: 'open' },
             },
           },

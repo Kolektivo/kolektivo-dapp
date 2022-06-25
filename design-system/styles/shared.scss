@@ -1,0 +1,16 @@
+*[full-width] {
+  width: 100%;
+}
+
+//extended classes used throughout the dapp
+.header-text {
+  font-family: var(--header-font);
+  font-weight: 700;
+}
+
+.circle {
+  border-radius: 100%;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+}

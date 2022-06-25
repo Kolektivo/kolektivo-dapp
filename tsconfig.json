@@ -14,10 +14,10 @@
     "baseUrl": ".",
     "paths": {
       "pages/*": ["./src/pages/*"],
-      "design-system/*": ["./src/design-system/*"],
+      "design-system/*": ["src/design-system/*"],
       "utils": ["./src/utils"]
     }
   },
-  "include": ["test", "src"],
+  "include": ["test", "src", "design-system", "design-system"],
   "files": ["src/resource.d.ts"]
 }

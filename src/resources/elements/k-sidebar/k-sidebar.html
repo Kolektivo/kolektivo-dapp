@@ -1,0 +1,6 @@
+<use-shadow-dom></use-shadow-dom>
+<k-button part="button" click.trigger="open = !open">${open ? 'Collapse' : 'Open'}</k-button>
+
+<nav part="nav">
+  <a repeat.for="route of routes" load="${route.path}"> <k-text tag="h3"> ${route.name} </k-text></a>
+</nav>

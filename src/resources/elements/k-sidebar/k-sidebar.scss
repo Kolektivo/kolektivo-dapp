@@ -1,0 +1,17 @@
+:host {
+  position: relative;
+  background-color: var(--san-juan-200);
+  button {
+    position: absolute;
+    right: 0;
+  }
+  nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align: left;
+    padding-left: 31px;
+    .active {
+      text-decoration: underline;
+    }
+  }
+}

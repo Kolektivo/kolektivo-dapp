@@ -1,20 +1,8 @@
-<import from="./pages/home/home"></import>
-<import from="./pages/about/about.html"></import>
-<import from="./pages/storybook/storybook"></import>
-<import from="./pages/not-found/not-found"></import>
-<header>
-  <nav>
-    <div class="nav-box">
-      <a load="home">
-        <img src="https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg" alt="" class="logo">
-      </a>
-      <a load="about">About</a>
-      <a load="storybook">Storybook</a>
-    </div>
-  </nav>
-</header>
-<au-viewport default="home" fallback="not-found"></au-viewport>
-<footer>
-  <div class="container">
-  </div>
-</footer>
+<div class="app">
+  <k-sidebar style.bind="sidebarStyle" open.bind="sidebarOpen"></k-sidebar>
+  <main>
+    <k-header></k-header>
+    <au-viewport default="map" fallback="not-found"></au-viewport>
+    <k-footer></k-footer>
+  </main>
+</div>

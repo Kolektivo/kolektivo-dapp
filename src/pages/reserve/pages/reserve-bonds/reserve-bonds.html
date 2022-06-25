@@ -1,0 +1,9 @@
+<import from="./pages"></import>
+
+<div id="reserve-bonds">
+  <nav>
+    <a repeat.for="route of routes" load="${route.path}"> <k-text tag="h5"> ${route.name} </k-text></a>
+  </nav>
+
+  <au-viewport default="active-bonds"></au-viewport>
+</div>
