@@ -1,0 +1,8 @@
+:host {
+  > div {
+    width: 100%;
+    > slot {
+      display: flex;
+    }
+  }
+}

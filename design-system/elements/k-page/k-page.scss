@@ -1,2 +1,14 @@
-#k-page {
+:host {
+  div {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: repeat(3, auto) 1fr;
+  }
+
+  slot[name='instruction-text'],
+  slot[name='additional-text'],
+  slot:last-of-type {
+    grid-column: 1 / 2;
+  }
 }

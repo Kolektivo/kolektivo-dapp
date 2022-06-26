@@ -1,5 +1,5 @@
 import { BindingMode, CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
-import { IfExistsThenTrue } from 'utils';
+import { IfExistsThenTrue } from '../../common';
 import { ValidationResult } from '@aurelia/validation';
 
 export class KFormField implements ICustomElementViewModel {

@@ -8,4 +8,5 @@ export * from './k-input';
 export * from './k-page';
 export * from './k-paper';
 export * from './k-select';
+export * from './k-stack';
 export * from './k-text';
