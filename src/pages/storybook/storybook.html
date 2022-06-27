@@ -10,12 +10,12 @@
         <k-code><k-text tag="h4">Heading 4</k-text></k-code>
         <k-code><k-text tag="h5">Heading 5</k-text></k-code>
         <k-code><k-text tag="h6">Heading 6</k-text></k-code>
-        <k-code><k-text tag="span">text in a span tag</k-text></k-code>
+        <k-code><k-text>text in a span tag</k-text></k-code>
         <k-code><k-text type="small">small text</k-text></k-code>
         <k-code><k-text tag="label">text in a label tag</k-text></k-code>
-        <k-code><k-text tag="span" class="caption">caption text in span</k-text></k-code>
-        <k-code><k-text tag="span" class="caption small">small caption text in span</k-text></k-code>
-        <k-code><k-text tag="span" class="overline">overline text in span</k-text></k-code>
+        <k-code><k-text type="caption">caption text in span</k-text></k-code>
+        <k-code><k-text type="small-caption">small caption text in span</k-text></k-code>
+        <k-code><k-text type="overline">overline text in span</k-text></k-code>
       </div>
     </k-accordion>
     <k-accordion>
@@ -37,7 +37,9 @@
         <k-code><k-button full-width>Full Width</k-button></k-code>
       </div>
     </k-accordion>
-    <k-code><k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3']" placeholder="Select an option"></k-select></k-code>
+    <k-code>
+      <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3']" placeholder="Select an option"> </k-select>
+    </k-code>
     <k-accordion>
       <span slot="header">Form Fields</span>
       <form class="formFields">
