@@ -1,6 +1,7 @@
 export * from './k-accordion';
 export * from './k-avatar';
 export * from './k-button';
+export * from './k-card';
 export * from './k-code';
 export * from './k-form-field';
 export * from './k-grid';

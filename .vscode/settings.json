@@ -13,7 +13,7 @@
     "source.fixAll.eslint": true
   },
   "exportall.config.relExclusion": ["/src/design-system"],
-  "exportall.config.folderListener": ["/src/design-system/elements", "/src/resources/**/*", "/src/pages"],
+  "exportall.config.folderListener": ["/src/design-system/elements", "/src/pages"],
   "javascript.format.enable": false,
   "typescript.format.enable": false
 }

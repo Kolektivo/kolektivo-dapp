@@ -1,14 +1,15 @@
 :host {
-  div {
-    display: grid;
-    height: 100%;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: repeat(3, auto) 1fr;
-  }
+  display: block;
+  padding: var(--padding);
+  > k-stack {
+    > slot[name='instruction-text'],
+    > slot[name='additional-text'],
+    > slot:last-of-type {
+      grid-column: 1 / 2;
+    }
 
-  slot[name='instruction-text'],
-  slot[name='additional-text'],
-  slot:last-of-type {
-    grid-column: 1 / 2;
+    > k-stack::part(main) {
+      justify-content: space-between;
+    }
   }
 }
