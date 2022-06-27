@@ -6,15 +6,20 @@ import { gridTemplateRowSetter } from './../../common';
 export class KGrid extends Grid implements ICustomElementViewModel {
   $controller?: ICustomElementController<this>;
   @bindable({ set: gridTemplateRowSetter }) rows: number;
-  @bindable({ set: gridTemplateRowSetter }) columns: number;
+  @bindable({ set: gridTemplateRowSetter }) cols: number;
 
   constructor() {
     super();
   }
 
   get slotStyle() {
-    const { $controller, ...viewModelProps } = this.$controller.viewModel;
-    return viewModelProps;
+    const { $controller, rows, cols, ...viewModelProps } = this.$controller.viewModel;
+    return {
+      display: 'grid',
+      gridTemplateRows: rows,
+      gridTemplateColumns: cols,
+      viewModelProps,
+    };
   }
 }
 (CustomElement.getDefinition(KGrid) as { capture: boolean }).capture = true;

@@ -1,6 +1,7 @@
-import { CustomElement, ICustomElementViewModel } from 'aurelia';
+import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
 
 export class KPage implements ICustomElementViewModel {
+  @bindable title?: string;
   constructor() {
     // you can inject the element or any DI in the constructor
   }

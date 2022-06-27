@@ -1,0 +1,11 @@
+#treasury-page {
+  k-card {
+    &:nth-child(2) {
+      height: 100%;
+      grid-area: 1/2/3/2;
+    }
+    &:nth-child(n + 4) {
+      grid-column: 1/3;
+    }
+  }
+}

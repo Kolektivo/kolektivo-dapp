@@ -7,12 +7,11 @@ export class KProgressBar {
   @bindable public color?: string;
 
   constructor() {
-    console.log(this.percent);
     // you can inject the element or any DI in the constructor
   }
 
   attached() {
-    console.log(this.percent);
+    // noop
   }
 
   get progressBarStyle() {

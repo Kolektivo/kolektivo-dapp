@@ -8,7 +8,10 @@ export class KStack extends Grid implements ICustomElementViewModel {
 
   constructor() {
     super();
-    if (this.direction === 'column') {
+  }
+
+  binding() {
+    if (this.direction === 'row') {
       this.alignItems = 'center';
       return;
     }
@@ -18,9 +21,13 @@ export class KStack extends Grid implements ICustomElementViewModel {
     }
   }
 
-  get divStyle() {
-    const { $controller, ...viewModelProps } = this.$controller.viewModel;
-    return viewModelProps;
+  get slotStyle() {
+    const { $controller, direction, ...viewModelProps } = this.$controller.viewModel;
+    return {
+      flexDirection: direction,
+      flexWrap: 'wrap',
+      ...viewModelProps,
+    };
   }
 }
 (CustomElement.getDefinition(KStack) as { capture: boolean }).capture = true;

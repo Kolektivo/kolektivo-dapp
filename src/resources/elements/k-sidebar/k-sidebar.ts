@@ -10,8 +10,5 @@ export class KSidebar implements ICustomElementViewModel {
   ];
   @bindable({ mode: BindingMode.twoWay }) open = true;
 
-  constructor(@IRouter private readonly router: IRouter) {
-    // you can inject the element or any DI in the constructor
-    console.log(this.router);
-  }
+  constructor(@IRouter private readonly router: IRouter) {}
 }
