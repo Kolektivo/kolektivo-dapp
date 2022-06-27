@@ -9,7 +9,7 @@
     border: 1px solid var(--don-juan);
     border-radius: var(--rounded);
     width: 100%;
-    color: var(--don-juan-300);
+    color: var(--don-juan-700);
 
     background: var(--white) url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat;
     background-position: calc(100% - 0.75rem) center !important;
@@ -69,6 +69,16 @@
     margin: 0;
     &:hover {
       background-color: var(--ocean-blue-050);
+    }
+    &:active, &:focus-visible{
+      background-color: var(--ocean-blue);
+      color: var(--white);
+    }
+    &[aria-selected="true"]{
+      border:none;
+      box-shadow: none;
+      background-color: var(--ocean-blue);
+      color: var(--white);
     }
   }
 }

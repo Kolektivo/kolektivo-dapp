@@ -1,8 +1,7 @@
-<fast-select placeholder="testing">
-  <au-slot></au-slot>
-  <fast-option repeat.for="option of options" value.bind="option.value == null ? option : option.value">${option.display == null ? option : option.display}</fast-option>\asdfasfd
+<fast-select>
+  <fast-option if.to-view="placeholder">${placeholder}</fast-option>
+  <fast-option repeat.for="option of options" value.bind="option.value == null ? option : option.value">${option.display == null ? option : option.display}</fast-option>
 </fast-select>
-${open} ${value}
 
 <!-- <select ref="dropdown" ...$attrs>
   <option if.bind="placeholder" value="" hidden>${placeholder}</option>
