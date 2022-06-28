@@ -10,3 +10,18 @@ export const gridTemplateRowSetter = (value?: string | number) => {
 };
 
 export const IfExistsThenTrue = (value: unknown) => value !== 'false' && (value === '' || value);
+
+export function uid(): string {
+  return Math.random().toString(36).substring(2);
+}
+
+export type DisplayValue<T = number> = { display: string; value: T };
+
+export const autoSlot = (node, platform) => {
+  const template = platform.document.createElement('template');
+  while (node.firstChild) {
+    template.content.appendChild(node.firstChild);
+  }
+  template.setAttribute('au-slot', '');
+  node.appendChild(template);
+};

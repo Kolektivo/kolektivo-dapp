@@ -2,6 +2,25 @@
   <h1>Kolektivo Design System</h1>
   <div id="storybook">
     <k-accordion>
+      <span slot="header">Checkboxes</span>
+      <k-code><k-check>Heading 1</k-check></k-code>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Radios</span>
+      <k-code><k-radio>Heading 1</k-radio></k-code>
+      <k-code
+        ><k-radio-group name="test">
+          <k-radio name="test">Heading 1</k-radio>
+          <k-radio name="test">Heading 2</k-radio>
+        </k-radio-group></k-code
+      >
+      <k-code
+        ><k-radio-group value.bind="radioGroup" name="test" items.bind="[{display:'test', value: 1}, {display:'test', value: 1}]"></k-radio-group>
+        ${radioGroup}
+      </k-code>
+    </k-accordion>
+
+    <k-accordion>
       <span slot="header">Typography</span>
       <div class="typography">
         <k-code><k-text tag="h1">Heading 1</k-text></k-code>
