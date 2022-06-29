@@ -3,7 +3,24 @@
   <div id="storybook">
     <k-accordion>
       <span slot="header">Checkboxes</span>
-      <k-code><k-check disabled>Heading 1</k-check></k-code>
+      <div class="checkboxes">
+        <k-code><k-check>Enabled Checkbox</k-check></k-code>
+        <k-code><k-check disabled>Disabled Checkbox</k-check></k-code>
+        <k-code>
+          <k-stack gap="var(--padding-sm)">
+            <k-check checked.bind="check1">Vertical List 1</k-check>
+            <k-check checked.bind="check2">Vertical List 2</k-check>
+            <k-check checked.bind="check3">Vertical List 3</k-check>
+          </k-stack>
+        </k-code>
+        <k-code>
+          <k-stack direction="row" gap="var(--padding-xl)">
+            <k-check checked.bind="check4">Horizontal List 1</k-check>
+            <k-check checked.bind="check5">Horizontal List 2</k-check>
+            <k-check checked.bind="check6">Horizontal List 3</k-check>
+          </k-stack>
+        </k-code>
+      </div>
     </k-accordion>
     <k-accordion>
       <span slot="header">Radios</span>

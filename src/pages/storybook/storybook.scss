@@ -1,15 +1,18 @@
-#storybook{
-    k-code{
-        display: grid;
-        margin-bottom: 10px;
-        justify-items: start;
-        align-items: center;
-        grid-column-gap: 20px;
-    }
-    .buttons k-code{        
-        grid-template-columns: minmax(150px, 25%) 1fr;
-    }    
-    .typography k-code{        
-        grid-template-columns: minmax(375px, 35%) 1fr;
-    }    
+#storybook {
+  k-code {
+    display: grid;
+    margin-bottom: 10px;
+    justify-items: start;
+    align-items: center;
+    grid-column-gap: 20px;
+  }
+  .checkboxes k-code {
+    grid-template-columns: minmax(550px, 25%) 1fr;
+  }
+  .buttons k-code {
+    grid-template-columns: minmax(150px, 25%) 1fr;
+  }
+  .typography k-code {
+    grid-template-columns: minmax(375px, 35%) 1fr;
+  }
 }
