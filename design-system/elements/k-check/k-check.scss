@@ -1,6 +1,9 @@
 :host {
-  place-content: center;
-  display: grid;
+  > k-text::slotted(label) {
+    place-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
   input {
     -webkit-appearance: none;
     background-color: var(--white);

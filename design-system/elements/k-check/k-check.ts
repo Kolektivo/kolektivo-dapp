@@ -1,4 +1,4 @@
-import { ICustomElementViewModel, bindable } from 'aurelia';
+import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
 import { uid } from '../../common';
 
 export class KCheck implements ICustomElementViewModel {
@@ -7,3 +7,4 @@ export class KCheck implements ICustomElementViewModel {
     // you can inject the element or any DI in the constructor
   }
 }
+(CustomElement.getDefinition(KCheck) as { capture: boolean }).capture = true;

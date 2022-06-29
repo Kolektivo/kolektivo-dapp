@@ -1,8 +1,6 @@
 <div role="radiogroup" ...$attrs>
-  <slot>
     <k-radio
     change.trigger="radioChanged(item, $event)" name.bind="name" repeat.for="item of items">
       ${item.display}
     </k-radio>
-  </slot>
 </fieldset>

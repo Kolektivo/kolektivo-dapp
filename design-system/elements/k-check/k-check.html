@@ -1,4 +1,10 @@
-<k-text click.trigger="input.checked = !input.checked" tag="label">
-  <input ref="input" type="checkbox" ...$attrs />
-  <slot>${label}</slot>
+<k-text tag="label">
+  <k-stack direction="row">
+    <input ref="input" type="checkbox" ...$attrs />
+    <slot
+      click.trigger="input.checked = input.disabled  ? input.checked : 
+  !input.checked"
+      >${label}</slot
+    >
+  </k-stack>
 </k-text>
