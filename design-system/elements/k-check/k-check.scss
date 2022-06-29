@@ -48,5 +48,13 @@
       left: 2px;
       color: var(--white);
     }
+    &:disabled {
+      border-color: var(--don-juan-050);
+      background-color: var(--white);
+    }
+    &:disabled:checked {
+      border-color: var(--don-juan-050);
+      background-color: var(--don-juan-050);
+    }
   }
 }

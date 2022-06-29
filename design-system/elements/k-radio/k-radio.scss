@@ -45,5 +45,18 @@
     &:active:after {
       background-color: var(--ocean-blue-800);
     }
+    &:disabled {
+      border-color: var(--don-juan-050);
+      background-color: var(--white);
+    }
+    &:disabled:checked {
+      background-color: var(--white);
+    }
+    &:disabled:checked:after {
+      background-color: var(--don-juan-050);
+    }
+    &:disabled:checked:hover {
+      border-color: var(--don-juan-050);
+    }
   }
 }
