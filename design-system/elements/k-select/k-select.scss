@@ -28,6 +28,7 @@
     &:focus-within {
       border: 2px solid var(--ocean-blue);
       outline: 2px solid var(--ocean-blue-200);
+      margin: -1px;
     }
     &[open] {
       background: var(--white) url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>') no-repeat;
@@ -61,6 +62,26 @@
       }
       @include scrollbars(8px, 12px, var(--ocean-blue));
     }
+    &:disabled {
+      color: var(--don-juan-300);
+      background-color: var(--don-juan-025);
+      border: 1px solid var(--don-juan-050);
+      &:hover {
+        border: 1px solid var(--don-juan-050);
+      }
+      opacity: 1;
+    }
+    &[error] {
+      color: var(--error);
+      border-color: var(--error);
+      background-color: var(--error-light);
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        border: 2px solid var(--error);
+        outline: 2px solid var(--error-light);
+      }
+    }
   }
   fast-option {
     background-color: var(--white);
@@ -70,12 +91,13 @@
     &:hover {
       background-color: var(--ocean-blue-050);
     }
-    &:active, &:focus-visible{
+    &:active,
+    &:focus-visible {
       background-color: var(--ocean-blue);
       color: var(--white);
     }
-    &[aria-selected="true"]{
-      border:none;
+    &[aria-selected='true'] {
+      border: none;
       box-shadow: none;
       background-color: var(--ocean-blue);
       color: var(--white);

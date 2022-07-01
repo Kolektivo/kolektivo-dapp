@@ -12,6 +12,12 @@
   .buttons k-code {
     grid-template-columns: minmax(150px, 25%) 1fr;
   }
+  .selects k-code {
+    grid-template-columns: minmax(150px, 25%) 1fr;
+  }
+  .inputs k-code {
+    grid-template-columns: minmax(150px, 35%) 1fr;
+  }
   .typography k-code {
     grid-template-columns: minmax(375px, 35%) 1fr;
   }

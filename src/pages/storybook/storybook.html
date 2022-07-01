@@ -2,6 +2,94 @@
   <h1>Kolektivo Design System</h1>
   <div id="storybook">
     <k-accordion>
+      <span slot="header">Colors</span>
+      <div>
+        <k-text tag="h6">Base Colors</k-text>
+        <k-grid gap="var(--padding-lg)" cols="3">
+          <k-color var="cheese"></k-color>
+          <k-color var="sandy-brown"></k-color>
+          <k-color var="terra-cotta"></k-color>
+          <k-color var="dark-coral"></k-color>
+          <k-color var="don-juan"></k-color>
+          <k-color var="breaker-bay"></k-color>
+          <k-color var="ocean-blue"></k-color>
+          <k-color var="green-apple"></k-color>
+          <k-color var="ice-cold"></k-color>
+          <k-color var="tranquil"></k-color>
+          <k-color var="concrete"></k-color>
+          <k-color var="white"></k-color>
+        </k-grid>
+        <k-text tag="h6">Brand Colors</k-text>
+
+        <k-grid gap="var(--padding-lg)" cols="2">
+          <k-color var="ocean-blue-025"></k-color>
+          <k-color var="dark-coral-025"></k-color>
+          <k-color var="ocean-blue-050"></k-color>
+          <k-color var="dark-coral-050"></k-color>
+          <k-color var="ocean-blue-100"></k-color>
+          <k-color var="dark-coral-100"></k-color>
+          <k-color var="ocean-blue-200"></k-color>
+          <k-color var="dark-coral-200"></k-color>
+          <k-color var="ocean-blue-300"></k-color>
+          <k-color var="dark-coral-300"></k-color>
+          <k-color var="ocean-blue-400"></k-color>
+          <k-color var="dark-coral-400"></k-color>
+          <k-color var="ocean-blue-500"></k-color>
+          <k-color var="dark-coral-500"></k-color>
+          <k-color var="ocean-blue-600"></k-color>
+          <k-color var="dark-coral-600"></k-color>
+          <k-color var="ocean-blue-700"></k-color>
+          <k-color var="dark-coral-700"></k-color>
+          <k-color var="ocean-blue-800"></k-color>
+          <k-color var="dark-coral-800"></k-color>
+          <k-color var="ocean-blue-900"></k-color>
+          <k-color var="dark-coral-900"></k-color>
+        </k-grid>
+        <k-text tag="h6">Shades</k-text>
+
+        <k-grid gap="var(--padding-lg)" cols="2">
+          <k-color var="don-juan-025"></k-color>
+          <k-color var="san-juan-025"></k-color>
+          <k-color var="don-juan-050"></k-color>
+          <k-color var="san-juan-050"></k-color>
+          <k-color var="don-juan-100"></k-color>
+          <k-color var="san-juan-100"></k-color>
+          <k-color var="don-juan-200"></k-color>
+          <k-color var="san-juan-200"></k-color>
+          <k-color var="don-juan-300"></k-color>
+          <k-color var="san-juan-300"></k-color>
+          <k-color var="don-juan-400"></k-color>
+          <k-color var="san-juan-400"></k-color>
+          <k-color var="don-juan-500"></k-color>
+          <k-color var="san-juan-500"></k-color>
+          <k-color var="don-juan-600"></k-color>
+          <k-color var="san-juan-600"></k-color>
+          <k-color var="don-juan-700"></k-color>
+          <k-color var="san-juan-700"></k-color>
+          <k-color var="don-juan-800"></k-color>
+          <k-color var="san-juan-800"></k-color>
+          <k-color var="don-juan-900"></k-color>
+          <k-color var="san-juan-900"></k-color>
+        </k-grid>
+        <k-text tag="h6">Utility Colors</k-text>
+
+        <k-grid gap="var(--padding-lg)" cols="2">
+          <k-color var="success-light"></k-color>
+          <k-color var="info-light"></k-color>
+          <k-color var="success"></k-color>
+          <k-color var="info"></k-color>
+          <k-color var="success-dark"></k-color>
+          <k-color var="info-dark"></k-color>
+          <k-color var="error-light"></k-color>
+          <k-color var="warning-light"></k-color>
+          <k-color var="error"></k-color>
+          <k-color var="warning"></k-color>
+          <k-color var="error-dark"></k-color>
+          <k-color var="warning-dark"></k-color>
+        </k-grid>
+      </div>
+    </k-accordion>
+    <k-accordion>
       <span slot="header">Checkboxes</span>
       <div class="checkboxes">
         <k-code><k-check>Enabled Checkbox</k-check></k-code>
@@ -36,7 +124,6 @@
         ${radioGroup}
       </k-code>
     </k-accordion>
-
     <k-accordion>
       <span slot="header">Typography</span>
       <div class="typography">
@@ -73,9 +160,48 @@
         <k-code><k-button full-width>Full Width</k-button></k-code>
       </div>
     </k-accordion>
-    <k-code>
-      <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3','Option 1','Option 2','Option 3']" placeholder="Select an option"> </k-select>
-    </k-code>
+    <k-accordion>
+      <span slot="header">Selects</span>
+      <div class="selects">
+        <k-code>
+          <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Default Select"> </k-select>
+        </k-code>
+        <k-code>
+          <k-select disabled value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Disabled Select"> </k-select>
+        </k-code>
+        <k-code>
+          <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Error Select"> </k-select>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Inputs</span>
+      <div class="inputs">
+        <k-code>
+          <k-input value="normal input"></k-input>
+        </k-code>
+        <k-code>
+          <k-input value="disabled" disabled></k-input>
+        </k-code>
+        <k-code>
+          <k-input value="error" error></k-input>
+        </k-code>
+        <k-code>
+          <k-input maxlength="20" value="20 max chars"></k-input>
+        </k-code>
+        <k-code>
+          <k-input type="number" value="123456789"></k-input>
+        </k-code>
+        <k-code>
+          <k-input type="tel" value="123456789"></k-input>
+        </k-code>
+        <k-code>
+          <k-input value="pre text" start>
+            <span slot="start">test</span>
+          </k-input>
+        </k-code>
+      </div>
+    </k-accordion>
     <k-accordion>
       <span slot="header">Form Fields</span>
       <form class="formFields">
