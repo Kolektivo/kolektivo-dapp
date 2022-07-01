@@ -2,6 +2,77 @@
   <h1>Kolektivo Design System</h1>
   <div id="storybook">
     <k-accordion>
+      <span slot="header">Layouts</span>
+      <div class="gridsystem">
+        <k-text tag="h6">Stacks</k-text>
+        <k-code>
+          <k-stack cols="auto 1fr auto">
+            <div>header content</div>
+            <div>body<br />with<br />more<br />content</div>
+            <div>footer content</div>
+          </k-stack>
+        </k-code>
+
+        <k-text tag="h6">Grids</k-text>
+        <k-code>
+          <k-grid place-items="center">
+            <div>Perfectly centered</div>
+          </k-grid>
+        </k-code>
+        <k-code>
+          <k-grid cols="auto 1fr" gap="var(--padding-lg)">
+            <div>fit content</div>
+            <div>fill the rest</div>
+          </k-grid>
+        </k-code>
+
+        <k-code>
+          <k-grid cols="3" gap="var(--padding-lg)">
+            <div>This</div>
+            <div>grid</div>
+            <div>has</div>
+            <div>three</div>
+            <div>columns</div>
+            <div>with gaps</div>
+          </k-grid>
+        </k-code>
+        <k-code>
+          <k-grid cols="3" justify-items="center">
+            <div>This</div>
+            <div>grid</div>
+            <div>has</div>
+            <div>centered</div>
+            <div>content</div>
+            <div>with no gaps</div>
+          </k-grid>
+        </k-code>
+        <k-code>
+          <k-grid cols="3">
+            <k-stack>
+              <ul>
+                <li>first</li>
+                <li>second</li>
+                <li>third</li>
+              </ul>
+            </k-stack>
+            <k-stack>
+              <ul>
+                <li>fourth</li>
+                <li>fifth</li>
+                <li>sixth</li>
+              </ul>
+            </k-stack>
+            <k-stack>
+              <ul>
+                <li>seventh</li>
+                <li>eigth</li>
+              </ul>
+            </k-stack>
+          </k-grid>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
       <span slot="header">Colors</span>
       <div>
         <k-text tag="h6">Base Colors</k-text>
@@ -196,8 +267,18 @@
           <k-input type="tel" value="123456789"></k-input>
         </k-code>
         <k-code>
-          <k-input value="pre text" start>
-            <span slot="start">test</span>
+          <k-input value="1234567">
+            <span slot="start">+599 9</span>
+          </k-input>
+        </k-code>
+        <k-code>
+          <k-input value="pre text">
+            <span slot="start"><i class="fa fa-calendar"></i></span>
+          </k-input>
+        </k-code>
+        <k-code>
+          <k-input value="email error" error>
+            <span slot="start"><i class="fas fa-at"></i></span>
           </k-input>
         </k-code>
       </div>

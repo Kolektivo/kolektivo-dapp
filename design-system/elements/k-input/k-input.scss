@@ -3,13 +3,20 @@
     position: absolute;
     background-color: var(--don-juan-025);
     color: var(--don-juan-300);
-    padding: 12px;
+    padding: 12px 15px;
     border-radius: 8px 0px 0px 8px;
     margin: 1px;
+  }
+  [name='start'].error::slotted(*) {
+    background-color: var(--error);
+    color: var(--white);
+    margin: 0;
+    padding-top: 13px;
   }
   ::slotted([slot='end']) {
     align-self: center;
     border-radius: 0 2px 2px 0;
+    border: 1px solid blue;
   }
   input {
     flex: 1;
@@ -48,10 +55,7 @@
         border: 1px solid var(--don-juan-050);
       }
     }
-    &[start] {
-      padding-left: 66px;
-    }
-    &[error] {
+    &.error {
       color: var(--error);
       border-color: var(--error);
       background-color: var(--error-light);

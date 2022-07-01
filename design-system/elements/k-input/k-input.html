@@ -1,5 +1,5 @@
-<div class="input-add-on">
-  <slot name="start"></slot>
-  <input name="${name}" part="input" type="${type}" ...$attrs />
-  <slot name="end"></slot>
-</div>
+<k-stack direction="row" class="input-add-on">
+  <slot name="start" ref="start" error.bind="error" click.trigger="focusInput()" class="${error && 'error'}"></slot>
+  <input name="${name}" ref="input" style="padding-left: ${startWidth}px" part="input" type="${type}" class="${error && 'error'}" ...$attrs />
+  <slot name="end" ref="end" error.bind="error" class="${error && 'error'}"></slot>
+</k-stack>

@@ -1,11 +1,22 @@
-import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
+import { CustomElement, ICustomElementViewModel, LifecycleFlags, bindable } from 'aurelia';
+import { IHydratedController } from '@aurelia/runtime-html';
+import { IfExistsThenTrue } from './../../common';
 
 export class KInput implements ICustomElementViewModel {
   @bindable type = 'text';
   @bindable name = '';
-
+  @bindable({ set: IfExistsThenTrue }) error = false;
+  start: HTMLSlotElement;
+  input: HTMLInputElement;
+  startWidth: number;
   constructor() {
     // you can inject the element or any DI in the constructor
+  }
+  attached(initiator: IHydratedController, flags: LifecycleFlags): void | Promise<void> {
+    this.startWidth = this.start.assignedElements()[0]?.clientWidth + 16;
+  }
+  focusInput() {
+    this.input.focus();
   }
 }
 (CustomElement.getDefinition(KInput) as { capture: boolean }).capture = true;

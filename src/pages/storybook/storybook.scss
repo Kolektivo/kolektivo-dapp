@@ -6,6 +6,12 @@
     align-items: center;
     grid-column-gap: 20px;
   }
+  .gridsystem k-code {
+    grid-template-columns: minmax(550px, 25%) 1fr;
+    div {
+      border: 1px solid var(--ocean-blue);
+    }
+  }
   .checkboxes k-code {
     grid-template-columns: minmax(550px, 25%) 1fr;
   }
