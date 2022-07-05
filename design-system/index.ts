@@ -8,15 +8,17 @@ import * as elements from './elements';
 import { ValidationHtmlConfiguration, ValidationTrigger } from '@aurelia/validation-html';
 import Fast from './fast';
 
-interface DesignSystemConfiguration {
+export interface DesignSystemConfiguration {
   components?: [];
   includeAllComponents?: boolean;
+  icons?: string[];
 }
 
-class DesignSystemPlugin implements IRegistry {
+export class DesignSystemPlugin implements IRegistry {
   #configuration?: DesignSystemConfiguration;
 
-  public static configure(): DesignSystemPlugin;
+  public static readonly iconMap = new Map<string, string>();
+
   public static configure(...args: [config: (config: DesignSystemPlugin) => void] | [config: DesignSystemConfiguration]): DesignSystemPlugin {
     const instance = new DesignSystemPlugin();
 
@@ -29,6 +31,7 @@ class DesignSystemPlugin implements IRegistry {
   }
 
   register(container: IContainer): IContainer {
+    container.register();
     container.register(attributes);
     container.register(elements);
     container.register(Fast);
@@ -48,8 +51,3 @@ class DesignSystemPlugin implements IRegistry {
     return container;
   }
 }
-
-const plugin = DesignSystemPlugin.configure;
-
-export { plugin as DesignSystemPlugin, DesignSystemConfiguration };
-export default plugin;

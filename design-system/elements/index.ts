@@ -8,6 +8,7 @@ export * from './k-code';
 export * from './k-color';
 export * from './k-form-field';
 export * from './k-grid';
+export * from './k-icon';
 export * from './k-input';
 export * from './k-page';
 export * from './k-paper';

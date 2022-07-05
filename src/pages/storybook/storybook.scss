@@ -27,4 +27,9 @@
   .typography k-code {
     grid-template-columns: minmax(375px, 35%) 1fr;
   }
+
+  .red-icon svg {
+    stroke: red;
+    fill: red;
+  }
 }
