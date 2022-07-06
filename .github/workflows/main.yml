@@ -105,7 +105,7 @@ jobs:
 
   failed-e2e:
     name: Comment on PR with failing tests details
-    needs: [deploy, cypress-run]
+    needs: [cypress-run]
     runs-on: ubuntu-latest
     if: failure() && (github.event_name == 'pull_request')
     steps:
