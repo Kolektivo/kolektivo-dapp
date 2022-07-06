@@ -12,6 +12,6 @@ describe('Testing Test', () => {
   });
   it('Homepage', () => {
     cy.visit('/');
-    cy.contains('h1', 'Welcome to Kolektivo');
+    cy.contains('p', 'Map works!');
   });
 });

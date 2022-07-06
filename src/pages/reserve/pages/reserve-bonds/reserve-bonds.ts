@@ -6,6 +6,4 @@ export class ReserveBonds implements ICustomElementViewModel {
     { name: 'Active Bonds', path: 'active-bonds' },
     { name: 'Active Redemptions', path: 'active-redemptions' },
   ];
-
-  constructor() {}
 }
