@@ -12,6 +12,6 @@ describe('Testing Test', () => {
   });
   it('Homepage', () => {
     cy.visit('/');
-    cy.contains('button', 'connect wallet');
+    cy.contains('p', 'Map works!');
   });
 });
