@@ -1,21 +1,24 @@
-<div class="form-field ${isError || errors.length && 'error'}">
+<div class="form-field ${error || errors.length && 'error'}">
   <div part="label" class="field-text">
-    <slot name="label">
-      <label for="${name}">${label}</label>
+    <slot name="label" click.trigger="focusInput()">
+      <k-text tag="label" for="${name}"> ${label} </k-text>
     </slot>
     <slot name="max">
       <label if.bind="max">${maxText}</label>
     </slot>
   </div>
   <div part="main">
-    <slot>
-      <k-input maxlength.bind="max" id="${name}" name="${name}" value.two-way="value" ...$attrs></k-input>
+    <slot ref="slot">
+      <k-input ref="input" maxlength.bind="max || 12345678" id="${name}" name="${name}" value.two-way="value" ...$attrs error.bind="errors.length"></k-input>
     </slot>
   </div>
   <div part="helper" class="helper-text">
-    <k-text if.bind="errors.length"> ${errors[0].result.message} </k-text>
+    <k-grid if.bind="errors.length" cols="auto 1fr" gap="var(--padding-sm)">
+      <k-icon name="error_filled" size="16" color="var(--error)" top="5"></k-icon>
+      <k-text type="caption"> ${errors[0].result.message} </k-text>
+    </k-grid>
     <slot else name="helper">
-      <k-text tag="caption" if.bind="helperText">${helperText}</k-text>
+      <k-text type="caption" if.bind="helperText">${helperText}</k-text>
     </slot>
   </div>
 </div>

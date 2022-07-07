@@ -1,11 +1,9 @@
 @import '../../styles/shared.scss';
-:host  {
-  font-size:16px;
-  line-height: 24px;
+:host {
   font-family: 'Lato';
-  font-weight: 400;
 
   *[type='small'] {
+    font-weight: 400;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 1%;
@@ -15,6 +13,7 @@
     font-weight: 600;
     line-height: 20px;
     letter-spacing: 2%;
+    color: var(--don-juan-600);
   }
   *[type='small-caption'] {
     font-size: 12px;
@@ -29,9 +28,11 @@
     letter-spacing: 3%;
     text-transform: uppercase;
   }
+  label,
   *[type='label'] {
-    font-weight: 600;
+    font-size: 16px;
     line-height: 20px;
+    color: var(--don-juan-900);
   }
   h1,
   *[type='h1'] {

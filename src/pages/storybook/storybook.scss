@@ -12,24 +12,22 @@
       border: 1px solid var(--ocean-blue);
     }
   }
-  .checkboxes k-code {
-    grid-template-columns: minmax(550px, 25%) 1fr;
+  .icons k-code {
+    grid-template-columns: 48px 1fr;
   }
-  .buttons k-code {
-    grid-template-columns: minmax(150px, 25%) 1fr;
-  }
+  .progress k-code,
+  .accordions k-code,
+  .alerts k-code,
+  .checkboxes k-code,
+  .buttons k-code,
   .selects k-code {
     grid-template-columns: minmax(150px, 25%) 1fr;
   }
+  .formFields k-code,
   .inputs k-code {
-    grid-template-columns: minmax(150px, 35%) 1fr;
+    grid-template-columns: minmax(150px, 15%) 1fr;
   }
   .typography k-code {
     grid-template-columns: minmax(375px, 35%) 1fr;
-  }
-
-  .red-icon svg {
-    stroke: red;
-    fill: red;
   }
 }

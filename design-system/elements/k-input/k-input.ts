@@ -5,6 +5,7 @@ import { IfExistsThenTrue } from './../../common';
 export class KInput implements ICustomElementViewModel {
   @bindable type = 'text';
   @bindable name = '';
+  @bindable({ set: IfExistsThenTrue }) multiline = false;
   @bindable({ set: IfExistsThenTrue }) error = false;
   start: HTMLSlotElement;
   input: HTMLInputElement;
@@ -13,10 +14,14 @@ export class KInput implements ICustomElementViewModel {
     // you can inject the element or any DI in the constructor
   }
   attached(initiator: IHydratedController, flags: LifecycleFlags): void | Promise<void> {
-    this.startWidth = this.start.assignedElements()[0]?.clientWidth + 16;
+    setTimeout(() => (this.startWidth = this.start.assignedElements()[0]?.clientWidth + 16), 1);
   }
   focusInput() {
     this.input.focus();
   }
+  focused() {
+    this.input.select();
+  }
 }
+
 (CustomElement.getDefinition(KInput) as { capture: boolean }).capture = true;

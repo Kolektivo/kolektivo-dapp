@@ -1,31 +1,36 @@
 :host {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  align-content: center;
   > div {
-    width: 100%;
-    overflow: hidden;
-    background-color: var(--Border01);
-    border-radius: var(--rounded);
-    height: 100%;
-    > div {
-      background-color: var(--Green);
-      height: 100%;
+    align-self: flex-end;
+    border-radius: 8px;
+    background-color: var(--don-juan-100);
+    &.warning {
+      background-color: var(--dark-coral-300);
     }
-    .success {
-      background-color: var(--Green);
+    &.error {
+      background-color: var(--error-light);
+      div {
+        background-color: var(--error);
+      }
     }
-    .warning {
-      background-color: var(--Orange);
+    div {
+      border-radius: 8px;
+      background-color: var(--ocean-blue);
     }
-    .info {
-      background-color: var(--Teal);
+  }
+  span {
+    font-family: 'Lato';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    &.error {
+      color: var(--error);
     }
-    .danger {
-      background-color: var(--Red);
-    }
-    .secondary {
-      background-color: var(--Magenta);
-    }
-    .dark {
-      background-color: var(--Grey);
+    &.warning {
+      color: var(--dark-coral-300);
     }
   }
 }

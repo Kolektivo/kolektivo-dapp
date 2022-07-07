@@ -1,4 +1,5 @@
 export * from './k-accordion';
+export * from './k-alert';
 export * from './k-avatar';
 export * from './k-button';
 export * from './k-card';
@@ -12,6 +13,7 @@ export * from './k-icon';
 export * from './k-input';
 export * from './k-page';
 export * from './k-paper';
+export * from './k-progress';
 export * from './k-radio';
 export * from './k-radio-group';
 export * from './k-select';

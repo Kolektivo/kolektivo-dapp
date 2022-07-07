@@ -1,15 +1,21 @@
 :host {
+  width: 100%;
   ::slotted([slot='start']) {
     position: absolute;
     background-color: var(--don-juan-025);
     color: var(--don-juan-300);
+    fill: var(--don-juan-300);
     padding: 12px 15px;
     border-radius: 8px 0px 0px 8px;
+    height: 24px;
     margin: 1px;
+    display: grid;
+    place-items: center;
   }
   [name='start'].error::slotted(*) {
     background-color: var(--error);
     color: var(--white);
+    fill: var(--white);
     margin: 0;
     padding-top: 13px;
   }
@@ -18,8 +24,10 @@
     border-radius: 0 2px 2px 0;
     border: 1px solid blue;
   }
-  input {
+  input,
+  textarea {
     flex: 1;
+    caret-color: var(--ocean-blue);
     border: 1px solid var(--don-juan);
     background: var(--white);
     border-radius: var(--rounded);
@@ -30,7 +38,9 @@
     font-weight: 400;
     color: var(--don-juan-700);
     width: 100%;
-
+    &::selection {
+      background: var(--ocean-blue-100);
+    }
     &:hover {
       border-color: var(--ocean-blue);
     }
@@ -65,6 +75,10 @@
         border: 2px solid var(--error);
         outline: 2px solid var(--error-light);
         margin: -1px;
+      }
+      &::selection {
+        background: var(--error);
+        color: var(--white);
       }
     }
   }

@@ -1,6 +1,10 @@
 <use-shadow-dom></use-shadow-dom>
-<k-button part="button" click.trigger="open = !open">${open ? 'Collapse' : 'Open'}</k-button>
+<k-button if.bind="collapsible" part="button" click.trigger="open = !open">${open ? 'Collapse' : 'Open'}</k-button>
 
+<a load="map" class="logo">
+  <img src="https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg" />
+  <div>Kolektivo</div>
+</a>
 <nav part="nav">
   <a repeat.for="route of routes" load="${route.path}"> <k-text tag="h3"> ${route.name} </k-text></a>
 </nav>

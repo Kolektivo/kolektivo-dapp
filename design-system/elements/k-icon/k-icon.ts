@@ -4,7 +4,9 @@ import { DesignSystemPlugin } from './../../index';
 
 export class KIcon implements ICustomElementViewModel {
   @bindable name = '';
-  @bindable color = 'black';
+  @bindable color = '';
+  @bindable top = 0;
+  @bindable size = 0;
   object: HTMLObjectElement;
   view: string;
 
@@ -16,7 +18,10 @@ export class KIcon implements ICustomElementViewModel {
 
   get styles() {
     return {
-      fill: this.color,
+      fill: this.color && this.color,
+      width: this.size > 0 && this.size + 'px',
+      height: this.size > 0 && this.size + 'px',
+      marginTop: this.top > 0 && this.top + 'px',
     };
   }
 

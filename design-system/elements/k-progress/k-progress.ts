@@ -1,21 +1,19 @@
 import { CustomElement, bindable } from 'aurelia';
-
-export class KProgressBar {
+export type ProgressType = 'error' | 'warning';
+export class KProgress {
   @bindable public max?: number = 100;
-  @bindable public current?: number = 0;
-  @bindable public percent?: number;
+  @bindable public value?: number = 0;
+  @bindable public height = 4;
+  @bindable public type = '';
   @bindable public color?: string;
-
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
-
-  attached() {
-    // noop
-  }
+  @bindable public background?: string;
+  @bindable public subText?: string;
 
   get progressBarStyle() {
-    return `width:${this.percent || (this.current / this.max) * 100}%;background-color:${this.color}`;
+    return `width:${(this.value / this.max) * 100}%;background-color:${this.color};height:${this.height}px`;
+  }
+  get barStyle() {
+    return `background-color:${this.background};height:${this.height}px`;
   }
 }
-(CustomElement.getDefinition(KProgressBar) as { capture: boolean }).capture = true;
+(CustomElement.getDefinition(KProgress) as { capture: boolean }).capture = true;
