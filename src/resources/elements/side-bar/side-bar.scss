@@ -1,0 +1,40 @@
+:host {
+  position: relative;
+  background-color: var(--san-juan-800);
+  height: 100%;
+  a.logo {
+    place-self: center;
+    margin-top: var(--spacing-lg);
+    font-size: var(--text-xl);
+    img {
+      filter: brightness(0) invert(1);
+      width: 40px;
+    }
+  }
+  button {
+    position: absolute;
+    right: 0;
+  }
+
+  k-grid {
+    height: 100%;
+  }
+
+  a,
+  k-text::part(content) {
+    color: var(--white);
+  }
+  nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align: left;
+    padding-left: 40px;
+    .active {
+      text-decoration: underline;
+    }
+  }
+
+  #footer-nav {
+    align-content: flex-end;
+  }
+}

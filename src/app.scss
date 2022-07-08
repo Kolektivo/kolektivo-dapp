@@ -1,24 +1,24 @@
 @import '../design-system/styles/mixins.scss';
 @font-face {
   font-family: 'Kaleko';
-  src: url('../static/Kaleko105Bold.ttf') format('truetype');
+  src: url('../static/Kaleko105-Bold.woff2') format('woff2');
   font-weight: bold;
 }
 
 @font-face {
   font-family: 'Kaleko';
-  src: url('../static/Kaleko105Heavy.ttf') format('truetype');
+  src: url('../static/Kaleko105-Heavy.woff2') format('woff2');
   font-weight: bolder;
 }
 
 @font-face {
   font-family: 'Kaleko';
-  src: url('../static/Kaleko105Light.ttf') format('truetype');
+  src: url('../static/Kaleko105-Light.woff2') format('woff2');
   font-weight: normal;
 }
 @font-face {
   font-family: 'Kaleko';
-  src: url('../static/Kaleko105Thin.ttf') format('truetype');
+  src: url('../static/Kaleko105-Thin.woff2') format('woff2');
   font-weight: lighter;
 }
 
@@ -39,11 +39,13 @@ body {
 
 .app {
   display: grid;
-  grid-template-columns: minmax(auto, 300px) 1fr;
+  grid-template-columns: minmax(auto, 288px) 1fr;
   height: 100%;
-  gap: 10px;
   main {
+    header {
+      background-color: var(--san-juan-800);
+    }
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: 80px 1fr auto;
   }
 }

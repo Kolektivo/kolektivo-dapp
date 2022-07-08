@@ -1,3 +1,3 @@
 export * from './k-footer';
-export * from './k-header';
-export * from './k-sidebar';
+export * from './header';
+export * from './side-bar';

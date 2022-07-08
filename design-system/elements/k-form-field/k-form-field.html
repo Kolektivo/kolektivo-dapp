@@ -13,7 +13,7 @@
     </slot>
   </div>
   <div part="helper" class="helper-text">
-    <k-grid if.bind="errors.length" cols="auto 1fr" gap="var(--padding-sm)">
+    <k-grid if.bind="errors.length" cols="auto 1fr" gap="var(--spacing-sm)">
       <k-icon name="error_filled" size="16" color="var(--error)" top="5"></k-icon>
       <k-text type="caption"> ${errors[0].result.message} </k-text>
     </k-grid>

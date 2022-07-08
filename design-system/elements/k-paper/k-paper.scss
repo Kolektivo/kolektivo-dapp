@@ -3,7 +3,7 @@
   background-color: var(--san-juan-200);
   position: relative;
   > slot {
-    padding: var(--padding);
+    padding: var(--spacing);
     display: block;
   }
 }

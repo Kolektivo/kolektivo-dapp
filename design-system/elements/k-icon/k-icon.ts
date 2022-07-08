@@ -1,6 +1,6 @@
 import './k-icon.scss';
 import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
-import { DesignSystemPlugin } from './../../index';
+import { IDesignSystemConfiguration } from '../../configuration';
 
 export class KIcon implements ICustomElementViewModel {
   @bindable name = '';
@@ -10,8 +10,10 @@ export class KIcon implements ICustomElementViewModel {
   object: HTMLObjectElement;
   view: string;
 
+  constructor(@IDesignSystemConfiguration private readonly configuration: IDesignSystemConfiguration) {}
+
   nameChanged() {
-    fetch(DesignSystemPlugin.iconMap.get(this.name)).then(x => {
+    fetch(this.configuration.iconMap.get(this.name)).then(x => {
       x.text().then(y => (this.view = y));
     });
   }

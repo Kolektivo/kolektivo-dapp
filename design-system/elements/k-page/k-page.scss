@@ -1,6 +1,6 @@
 :host {
   display: block;
-  padding: var(--padding);
+  padding: var(--spacing-xxl);
   > k-stack {
     > slot[name='instruction-text'],
     > slot[name='additional-text'],

@@ -1,5 +1,8 @@
 #treasury-page {
   k-card {
+    > * {
+      padding: var(--spacing-xl);
+    }
     &:nth-child(3) {
       min-height: 200px;
     }

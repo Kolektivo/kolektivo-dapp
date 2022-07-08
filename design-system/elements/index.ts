@@ -7,6 +7,7 @@ export * from './k-chart';
 export * from './k-check';
 export * from './k-code';
 export * from './k-color';
+export * from './k-data-grid';
 export * from './k-form-field';
 export * from './k-grid';
 export * from './k-icon';

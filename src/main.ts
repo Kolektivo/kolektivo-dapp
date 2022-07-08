@@ -22,14 +22,14 @@ import scss from './shared.scss';
 
 Aurelia.register(
   DesignSystemPlugin.configure(x => {
-    DesignSystemPlugin.iconMap.set('alternate_email', alternate_email);
-    DesignSystemPlugin.iconMap.set('calendar_today', calendar_today);
-    DesignSystemPlugin.iconMap.set('check_circle_filled', check_circle_filled);
-    DesignSystemPlugin.iconMap.set('content_copy', content_copy);
-    DesignSystemPlugin.iconMap.set('error_filled', error_filled);
-    DesignSystemPlugin.iconMap.set('info_filled', info_filled);
-    DesignSystemPlugin.iconMap.set('link', link);
-    DesignSystemPlugin.iconMap.set('warning_filled', warning_filled);
+    x.iconMap.set('alternate_email', alternate_email);
+    x.iconMap.set('calendar_today', calendar_today);
+    x.iconMap.set('check_circle_filled', check_circle_filled);
+    x.iconMap.set('content_copy', content_copy);
+    x.iconMap.set('error_filled', error_filled);
+    x.iconMap.set('info_filled', info_filled);
+    x.iconMap.set('link', link);
+    x.iconMap.set('warning_filled', warning_filled);
   }),
 )
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [scss, designScss] }))

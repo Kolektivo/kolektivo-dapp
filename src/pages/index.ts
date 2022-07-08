@@ -1,4 +1,7 @@
 export * from './about';
+export * from './contact';
+export * from './documentation';
+export * from './download';
 export * from './map';
 export * from './not-found';
 export * from './reserve';

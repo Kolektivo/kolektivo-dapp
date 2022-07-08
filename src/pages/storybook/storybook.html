@@ -28,7 +28,15 @@
           <k-progress value="60" height="10" sub-text="Height with text"></k-progress>
         </k-code>
         <k-code>
+          <k-progress value="60" height="10">Height with text</k-progress>
+        </k-code>
+        <k-code>
           <k-progress type="warning" value="60" sub-text="Warning with text"></k-progress>
+        </k-code>
+        <k-code>
+          <k-progress type="warning" value="60">
+            <k-text color="var(--dark-coral-300)"> Warning with text (slotted) </k-text>
+          </k-progress>
         </k-code>
         <k-code>
           <k-progress type="error" value="60" sub-text="Error with text"></k-progress>
@@ -50,7 +58,7 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Icons</span>
-      <k-alert type="info" bottom="var(--padding-xl)">
+      <k-alert type="info" bottom="var(--spacing-xl)">
         To keep the bundle size to a minimum, we only import the icons we need. To import a new icon:
         <ol>
           <li>Go to <a href="//fonts.google.com/icons" target="_blank">https://fonts.google.com/icons</a> and find the icon name you need</li>
@@ -64,7 +72,7 @@
         <k-text tag="h6">Colors with icons</k-text>
         <k-code><k-icon name="info_filled" color="var(--ocean-blue)" size="48"></k-icon></k-code>
         <k-text tag="h6">All available icons</k-text>
-        <k-grid gap="var(--padding-lg)" cols="3">
+        <k-grid gap="var(--spacing-lg)" cols="3">
           <k-code><k-icon name="alternate_email" size="48"></k-icon></k-code>
           <k-code><k-icon name="calendar_today" size="48"></k-icon></k-code>
           <k-code><k-icon name="check_circle_filled" size="48"></k-icon></k-code>
@@ -95,14 +103,14 @@
           </k-grid>
         </k-code>
         <k-code>
-          <k-grid cols="auto 1fr" gap="var(--padding-lg)">
+          <k-grid cols="auto 1fr" gap="var(--spacing-lg)">
             <div>fit content</div>
             <div>fill the rest</div>
           </k-grid>
         </k-code>
 
         <k-code>
-          <k-grid cols="3" gap="var(--padding-lg)">
+          <k-grid cols="3" gap="var(--spacing-lg)">
             <div>This</div>
             <div>grid</div>
             <div>has</div>
@@ -151,7 +159,7 @@
       <span slot="header">Colors</span>
       <div>
         <k-text tag="h6">Base Colors</k-text>
-        <k-grid gap="var(--padding-lg)" cols="3">
+        <k-grid gap="var(--spacing-lg)" cols="3">
           <k-color var="cheese"></k-color>
           <k-color var="sandy-brown"></k-color>
           <k-color var="terra-cotta"></k-color>
@@ -167,7 +175,7 @@
         </k-grid>
         <k-text tag="h6">Brand Colors</k-text>
 
-        <k-grid gap="var(--padding-lg)" cols="2">
+        <k-grid gap="var(--spacing-lg)" cols="2">
           <k-color var="ocean-blue-025"></k-color>
           <k-color var="dark-coral-025"></k-color>
           <k-color var="ocean-blue-050"></k-color>
@@ -193,7 +201,7 @@
         </k-grid>
         <k-text tag="h6">Shades</k-text>
 
-        <k-grid gap="var(--padding-lg)" cols="2">
+        <k-grid gap="var(--spacing-lg)" cols="2">
           <k-color var="don-juan-025"></k-color>
           <k-color var="san-juan-025"></k-color>
           <k-color var="don-juan-050"></k-color>
@@ -219,7 +227,7 @@
         </k-grid>
         <k-text tag="h6">Utility Colors</k-text>
 
-        <k-grid gap="var(--padding-lg)" cols="2">
+        <k-grid gap="var(--spacing-lg)" cols="2">
           <k-color var="success-light"></k-color>
           <k-color var="info-light"></k-color>
           <k-color var="success"></k-color>
@@ -241,14 +249,14 @@
         <k-code><k-check>Enabled Checkbox</k-check></k-code>
         <k-code><k-check disabled>Disabled Checkbox</k-check></k-code>
         <k-code>
-          <k-stack gap="var(--padding-sm)">
+          <k-stack gap="var(--spacing-sm)">
             <k-check checked.bind="check1">Vertical List 1</k-check>
             <k-check checked.bind="check2">Vertical List 2</k-check>
             <k-check checked.bind="check3">Vertical List 3</k-check>
           </k-stack>
         </k-code>
         <k-code>
-          <k-stack direction="row" gap="var(--padding-xl)">
+          <k-stack direction="row" gap="var(--spacing-xl)">
             <k-check checked.bind="check4">Horizontal List 1</k-check>
             <k-check checked.bind="check5">Horizontal List 2</k-check>
             <k-check checked.bind="check6">Horizontal List 3</k-check>
@@ -258,7 +266,7 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Radios</span>
-      <k-alert type="info" bottom="var(--padding-xl)">This is a work in progress still</k-alert>
+      <k-alert type="info" bottom="var(--spacing-xl)">This is a work in progress still</k-alert>
 
       <div class="checkboxes">
         <k-code><k-radio>Heading 1</k-radio></k-code>
@@ -312,7 +320,7 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Selects</span>
-      <k-alert type="info" bottom="var(--padding-xl)">NOTE: This is using the Fast Select component currently, and we might need to code our own select element if Fast doesn't allow us to style it exactly how the designers want it styled</k-alert>
+      <k-alert type="info" bottom="var(--spacing-xl)">NOTE: This is using the Fast Select component currently, and we might need to code our own select element if Fast doesn't allow us to style it exactly how the designers want it styled</k-alert>
 
       <div class="selects">
         <k-code>
@@ -376,7 +384,7 @@
         <k-code>
           <k-input multiline placeholder="This is a multi line text area"></k-input>
         </k-code>
-        <k-alert type="info" bottom="var(--padding-xl)">Unable to pass a default value to a textarea tag. Have to use value.bind and define the value in the .ts file. See storybook.ts for example</k-alert>
+        <k-alert type="info" bottom="var(--spacing-xl)">Unable to pass a default value to a textarea tag. Have to use value.bind and define the value in the .ts file. See storybook.ts for example</k-alert>
         <k-code>
           <k-input multiline value.bind="data.textareaInitialValue"></k-input>
         </k-code>
@@ -397,7 +405,7 @@
         <k-code>
           <k-form-field name="longlabelmax" value.bind="data.longlabelmax" max="50" label="This is a very very very long label with a max char count"></k-form-field>
         </k-code>
-        <k-alert type="info" bottom="var(--padding-xl)">For validation code behind, look at storybook.ts</k-alert>
+        <k-alert type="info" bottom="var(--spacing-xl)">For validation code behind, look at storybook.ts</k-alert>
         <k-code validation-errors.from-view="birthdateError">
           <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate" label="Date of birth (Validation)" helper-text="DD/MM/YY"></k-form-field>
         </k-code>

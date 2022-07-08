@@ -1,14 +1,15 @@
 <div id="treasury-page">
-  <k-page title="Treasury">
-    <k-stack gap="var(--padding)" slot="instruction-text">
-      <k-text>asdfasdfasdfasdfasd</k-text>
+  <k-page padding="20" title="Kolektivo Ecosystem Treasury">
+    <k-stack gap="var(--spacing)" slot="instruction-text">
+      <k-text type="caption">This is a basic & accessible description that the public can read to understand what it is.</k-text>
       <a underline load="something">
         <k-text>Learn More</k-text>
       </a>
     </k-stack>
-    <k-grid gap="var(--padding-lg)" cols="2">
+    <k-grid gap="var(--spacing-lg)" cols="2">
       <k-card>
         <k-text type="h3" slot="header">Treasury Value</k-text>
+        <k-text> ${3000000 | currency} </k-text>
       </k-card>
       <k-card>
         <k-text type="h3" slot="header">KTT</k-text>
@@ -26,12 +27,31 @@
         </k-grid>
       </k-card>
       <k-card>
-        <k-chart type="doughnut" colors.bind="['blue', 'red','yellow']" data.bind="[1,2,3]" labels.bind="['Test','Test 2','Test 3']"></k-chart>
+        <k-text type="h3" slot="header">Value by Asset Type</k-text>
+        <k-stack direction="row">
+          <k-chart type="doughnut" colors.bind="['darkgreen', 'salmon','orange']" data.bind="[60,20,20]"></k-chart>
+          <k-stack gap="20">
+            <k-stack gap="20" direction="row">
+              <k-avatar color="darkgreen" size="20"></k-avatar>
+              <k-text>60% Ecological</k-text>
+            </k-stack>
+            <k-stack gap="20" direction="row">
+              <k-avatar color="var(--cheese)" size="20"></k-avatar>
+              <k-text>20% Stablecoins</k-text>
+            </k-stack>
+            <k-stack gap="20" direction="row">
+              <k-avatar color="salmon" size="20"></k-avatar>
+              <k-text>20% Non Stablecoins</k-text>
+            </k-stack>
+          </k-stack>
+        </k-stack>
       </k-card>
       <k-card>
         <!-- <k-skeleton></k-skeleton> -->
       </k-card>
-      <k-card></k-card>
+      <k-card>
+        <k-data-grid rows.bind="testData" columns.bind="testColumns"></k-data-grid>
+      </k-card>
       <k-card></k-card>
       <k-card></k-card>
     </k-grid>

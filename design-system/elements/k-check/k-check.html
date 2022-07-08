@@ -1,5 +1,5 @@
 <k-text tag="label">
-  <k-stack direction="row" gap="var(--padding)">
+  <k-stack direction="row" gap="var(--spacing)">
     <input ref="input" type="checkbox" ...$attrs />
     <slot
       click.trigger="input.checked = input.disabled  ? input.checked : 

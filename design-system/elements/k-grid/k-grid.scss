@@ -1,4 +1,7 @@
 :host {
   display: block;
-  width: 100%;
+  slot {
+    width: 100%;
+    height: 100%;
+  }
 }

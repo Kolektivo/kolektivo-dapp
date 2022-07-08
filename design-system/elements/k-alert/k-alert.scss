@@ -2,8 +2,8 @@
   > div {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: var(--padding);
-    padding: var(--padding-lg);
+    gap: var(--spacing);
+    padding: var(--spacing-lg);
     border-radius: 8px;
     &.danger {
       k-icon {

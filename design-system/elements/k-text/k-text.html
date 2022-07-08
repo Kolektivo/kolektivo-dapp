@@ -1,27 +1,27 @@
 <template>
   <template switch.bind="tag">
-    <span part="content" default-case ...$attrs>
+    <span style.bind="styles" part="content" default-case ...$attrs>
       <slot></slot>
     </span>
-    <label part="content" case="label" ...$attrs>
+    <label style.bind="styles" part="content" case="label" ...$attrs>
       <slot></slot>
     </label>
-    <h1 part="content" case="h1" ...$attrs>
+    <h1 style.bind="styles" part="content" case="h1" ...$attrs>
       <slot></slot>
     </h1>
-    <h2 part="content" case="h2" ...$attrs>
+    <h2 style.bind="styles" part="content" case="h2" ...$attrs>
       <slot></slot>
     </h2>
-    <h3 part="content" case="h3" ...$attrs>
+    <h3 style.bind="styles" part="content" case="h3" ...$attrs>
       <slot></slot>
     </h3>
-    <h4 part="content" case="h4" ...$attrs>
+    <h4 style.bind="styles" part="content" case="h4" ...$attrs>
       <slot></slot>
     </h4>
-    <h5 part="content" case="h5" ...$attrs>
+    <h5 style.bind="styles" part="content" case="h5" ...$attrs>
       <slot></slot>
     </h5>
-    <h6 part="content" case="h6" ...$attrs>
+    <h6 style.bind="styles" part="content" case="h6" ...$attrs>
       <slot></slot>
     </h6>
   </template>

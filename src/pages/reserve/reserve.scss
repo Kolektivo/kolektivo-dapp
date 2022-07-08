@@ -1,11 +1,14 @@
 #reserve-main {
   display: grid;
   grid-template-rows: auto 1fr;
-  > k-paper nav {
-    display: grid;
-    grid-template-columns: repeat(12, auto);
-    a.active {
-      text-decoration: underline;
+  > k-paper {
+    padding-left: var(--spacing-xxl);
+    nav {
+      display: grid;
+      grid-template-columns: repeat(12, auto);
+      a.active {
+        text-decoration: underline;
+      }
     }
   }
 }

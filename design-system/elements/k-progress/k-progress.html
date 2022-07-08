@@ -1,4 +1,6 @@
+<slot name="above" class="${type}"></slot>
 <div class="${type}" style.bind="barStyle">
   <div class.bind="color" style.bind="progressBarStyle"></div>
 </div>
 <span if.bind="subText" class="${type}">${subText}</span>
+<slot else class="${type}"></slot>
