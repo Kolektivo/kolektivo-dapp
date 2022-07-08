@@ -19,18 +19,25 @@
   k-grid {
     height: 100%;
   }
-
   a,
   k-text::part(content) {
     color: var(--white);
+    text-decoration: none;
   }
   nav {
     display: grid;
     grid-template-columns: 1fr;
     text-align: left;
     padding-left: 40px;
-    .active {
-      text-decoration: underline;
+    a,
+    k-text::part(content) {
+      color: var(--white);
+      text-decoration: none;
+    }
+    a.active,
+    a.active k-text::part(content) {
+      color: var(--ocean-blue);
+      text-decoration: none;
     }
   }
 

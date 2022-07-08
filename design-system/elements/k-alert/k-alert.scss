@@ -1,5 +1,6 @@
 :host {
   > div {
+    font-family: 'Lato';
     display: grid;
     grid-template-columns: auto 1fr;
     gap: var(--spacing);

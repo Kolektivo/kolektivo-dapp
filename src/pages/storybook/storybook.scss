@@ -12,8 +12,14 @@
       border: 1px solid var(--ocean-blue);
     }
   }
+  .datagrids k-code {
+    grid-template-columns: minmax(550px, 25%) 1fr;
+  }
   .icons k-code {
     grid-template-columns: 48px 1fr;
+  }
+  k-grid {
+    width: 100%;
   }
   .progress k-code,
   .accordions k-code,

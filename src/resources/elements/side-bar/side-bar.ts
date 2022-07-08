@@ -11,7 +11,7 @@ const routes: RouteLink[] = [
   { name: 'Documentation', path: 'documentation', location: 'bottom' },
   { name: 'Contact Kolektivo', path: 'contact', location: 'bottom' },
   { name: 'Download Wallet', path: 'download', location: 'bottom' },
-  { name: 'Kolektivo.cw', path: 'swap', location: 'bottom' },
+  { name: 'Kolektivo.cw', path: 'cw', location: 'bottom' },
 ];
 export class SideBar implements ICustomElementViewModel {
   @bindable({ mode: BindingMode.twoWay }) open = true;
