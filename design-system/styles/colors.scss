@@ -1,85 +1,85 @@
 :root {
   //Base Colors from Figma
-  --cheese: #ffbf86;
-  --sandy-brown: #f5a14a;
-  --terra-cotta: #f07c4b;
-  --dark-coral: #d55c38;
-  --don-juan: #5c4c4c;
-  --breaker-bay: #307582;
+  --cheese: rgb(255, 191, 134);
+  --sandy-brown: rgb(245, 161, 74);
+  --terra-cotta: rgb(240, 124, 75);
+  --dark-coral: rgb(213, 92, 56);
+  --don-juan: rgb(92, 76, 76);
+  --breaker-bay: rgb(48, 117, 130);
 
-  --ocean-blue: #2aa6a1;
-  --green-apple: #68db88;
-  --ice-cold: #8ef0cd;
-  --tranquil: #e1ede7;
-  --concrete: #f3f1f1;
-  --white: #ffffff;
+  --ocean-blue: rgb(42, 166, 161);
+  --green-apple: rgb(104, 219, 136);
+  --ice-cold: rgb(142, 240, 205);
+  --tranquil: rgb(225, 237, 231);
+  --concrete: rgb(243, 241, 241);
+  --white: rgb(255, 255, 255);
 
   //Tints/Shades for specific brand colors
-  --ocean-blue-025: #f4fafa;
-  --ocean-blue-050: #eaf6f6;
-  --ocean-blue-100: #d4edec;
-  --ocean-blue-200: #aadbd9;
-  --ocean-blue-300: #7fcac7;
-  --ocean-blue-400: #55b8b4;
+  --ocean-blue-025: rgb(244, 250, 250);
+  --ocean-blue-050: rgb(234, 246, 246);
+  --ocean-blue-100: rgb(212, 237, 236);
+  --ocean-blue-200: rgb(170, 219, 217);
+  --ocean-blue-300: rgb(127, 202, 199);
+  --ocean-blue-400: rgb(85, 184, 180);
   --ocean-blue-500: var(--ocean-blue);
-  --ocean-blue-600: #228581;
-  --ocean-blue-700: #196461;
-  --ocean-blue-800: #114240;
-  --ocean-blue-900: #082120;
+  --ocean-blue-600: rgb(34, 133, 129);
+  --ocean-blue-700: rgb(25, 100, 97);
+  --ocean-blue-800: rgb(17, 66, 64);
+  --ocean-blue-900: rgb(8, 33, 32);
 
-  --dark-coral-025: #fdf8f6;
-  --dark-coral-050: #fbefeb;
-  --dark-coral-100: #f7ded7;
-  --dark-coral-200: #eebeaf;
-  --dark-coral-300: #e69d88;
-  --dark-coral-400: #dd7d60;
+  --dark-coral-025: rgb(253, 248, 246);
+  --dark-coral-050: rgb(251, 239, 235);
+  --dark-coral-100: rgb(247, 222, 215);
+  --dark-coral-200: rgb(238, 190, 175);
+  --dark-coral-300: rgb(230, 157, 136);
+  --dark-coral-400: rgb(221, 125, 96);
   --dark-coral-500: var(--dark-coral);
-  --dark-coral-600: #aa4a2d;
-  --dark-coral-700: #803722;
-  --dark-coral-800: #552516;
-  --dark-coral-900: #2b120b;
+  --dark-coral-600: rgb(170, 74, 45);
+  --dark-coral-700: rgb(128, 55, 34);
+  --dark-coral-800: rgb(85, 37, 22);
+  --dark-coral-900: rgb(43, 18, 11);
 
-  --don-juan-025: #f6f4f4;
-  --don-juan-050: #efeded;
-  --don-juan-100: #dedbdb;
-  --don-juan-200: #beb7b7;
-  --don-juan-300: #9d9494;
-  --don-juan-400: #7d7070;
-  --don-juan-500: #5c4c4c;
-  --don-juan-600: #4a3d3d;
-  --don-juan-700: #372e2e;
-  --don-juan-800: #251e1e;
-  --don-juan-900: #120f0f;
+  --don-juan-025: rgb(246, 244, 244);
+  --don-juan-050: rgb(239, 237, 237);
+  --don-juan-100: rgb(222, 219, 219);
+  --don-juan-200: rgb(190, 183, 183);
+  --don-juan-300: rgb(157, 148, 148);
+  --don-juan-400: rgb(125, 112, 112);
+  --don-juan-500: rgb(92, 76, 76);
+  --don-juan-600: rgb(74, 61, 61);
+  --don-juan-700: rgb(55, 46, 46);
+  --don-juan-800: rgb(37, 30, 30);
+  --don-juan-900: rgb(18, 15, 15);
 
-  --san-juan-025: #f4f5f5;
-  --san-juan-050: #edeeef;
-  --san-juan-100: #dbddde;
-  --san-juan-200: #b7bcbe;
-  --san-juan-300: #949a9d;
-  --san-juan-400: #70797d;
-  --san-juan-500: #4c575c;
-  --san-juan-600: #3d464a;
-  --san-juan-700: #2e3437;
-  --san-juan-800: #1e2325;
-  --san-juan-900: #0f1112;
+  --san-juan-025: rgb(244, 245, 245);
+  --san-juan-050: rgb(237, 238, 239);
+  --san-juan-100: rgb(219, 221, 222);
+  --san-juan-200: rgb(183, 188, 190);
+  --san-juan-300: rgb(148, 154, 157);
+  --san-juan-400: rgb(112, 121, 125);
+  --san-juan-500: rgb(76, 87, 92);
+  --san-juan-600: rgb(61, 70, 74);
+  --san-juan-700: rgb(46, 52, 55);
+  --san-juan-800: rgb(30, 35, 37);
+  --san-juan-900: rgb(15, 17, 18);
 
   //Utitliy Colors
 
-  --success: #00a04c;
-  --success-light: #ebfaee;
-  --success-dark: #006b33;
+  --success: rgb(0, 160, 76);
+  --success-light: rgb(235, 250, 238);
+  --success-dark: rgb(0, 107, 51);
 
-  --error: #dc4d4d;
-  --error-light: #ffefef;
-  --error-dark: #8c3434;
+  --error: rgb(220, 77, 77);
+  --error-light: rgb(255, 239, 239);
+  --error-dark: rgb(140, 52, 52);
 
-  --warning: #db7b0a;
-  --warning-light: #fef8ed;
-  --warning-dark: #b46303;
+  --warning: rgb(219, 123, 10);
+  --warning-light: rgb(254, 248, 237);
+  --warning-dark: rgb(180, 99, 3);
 
-  --info: #3f8fda;
-  --info-light: #e5eff9;
-  --info-dark: #1e5b94;
+  --info: rgb(63, 143, 218);
+  --info-light: rgb(229, 239, 249);
+  --info-dark: rgb(30, 91, 148);
 
   --primary: var(--ocean-blue);
   --primary-text: var(--don-juan-900);
