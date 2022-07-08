@@ -8,9 +8,9 @@ const routes: RouteLink[] = [
   { name: 'Treasury', path: 'treasury', location: 'top' },
   { name: 'Reserve', path: 'reserve', location: 'top' },
   { name: 'Swap', path: 'swap', location: 'top' },
-  { name: 'Documentation', path: 'swap', location: 'bottom' },
-  { name: 'Contact Kolektivo', path: 'swap', location: 'bottom' },
-  { name: 'Download Wallet', path: 'swap', location: 'bottom' },
+  { name: 'Documentation', path: 'documentation', location: 'bottom' },
+  { name: 'Contact Kolektivo', path: 'contact', location: 'bottom' },
+  { name: 'Download Wallet', path: 'download', location: 'bottom' },
   { name: 'Kolektivo.cw', path: 'swap', location: 'bottom' },
 ];
 export class SideBar implements ICustomElementViewModel {
