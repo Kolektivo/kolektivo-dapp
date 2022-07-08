@@ -10,14 +10,14 @@
   <div>
     <nav id="main-nav" part="nav">
       <k-stack direction="row" column-gap="20" repeat.for="route  of getRoutes('top')">
-        <k-avatar></k-avatar>
+        <k-avatar size="32"></k-avatar>
         <a load="${route.path}"> <k-text tag="h5"> ${route.name} </k-text></a>
       </k-stack>
     </nav>
   </div>
   <nav id="footer-nav" part="footer-nav">
     <k-grid cols="auto 1fr" gap="20" align-items="center" repeat.for="route of getRoutes('bottom')">
-      <k-avatar></k-avatar>
+      <k-avatar size="32"></k-avatar>
       <a load="${route.path}"> <k-text tag="h6"> ${route.name} </k-text></a>
     </k-grid>
   </nav>
