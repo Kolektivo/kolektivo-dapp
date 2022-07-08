@@ -1,12 +1,20 @@
 {
-  "name": "kolektivo-dapp",
-  "description": "An Aurelia 2 client application.",
+  "name": "@kolektivo/dapp",
+  "description": "A collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "???"
+    "url": "https://github.com/Kolektivo/dapp"
   },
-  "license": "UNLICENSED",
+  "author": "CL Cybernetix GmbH",
+  "homepage": "./",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0 < 17"
+  },
+  "browser": {
+    "http": false
+  },
   "dependencies": {
     "@aurelia/validation-html": "dev",
     "@material-design-icons/svg": "^0.11.4",
