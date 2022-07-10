@@ -32,7 +32,7 @@ Aurelia.register(
     x.iconMap.set('warning_filled', warning_filled);
   }),
 )
-  .register(StyleConfiguration.shadowDOM({ sharedStyles: [scss, designScss] }))
+  .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(pages)
   .register(resources)
   .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
