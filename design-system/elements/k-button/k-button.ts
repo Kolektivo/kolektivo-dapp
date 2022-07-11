@@ -1,3 +1,4 @@
+import { ButtonSize } from './button-size';
 import { CustomElement, bindable } from 'aurelia';
 /**
  * Usage:
@@ -18,7 +19,7 @@ export class KButton {
   @bindable fullWidth = false;
   @bindable type: ButtonType = '';
   @bindable color: ButtonColor = 'primary';
-  @bindable size: '' | 'xs' | 'sm' | 'lg' | 'xl' = '';
+  @bindable size: ButtonSize | '' = '';
   @bindable isLoading = false;
   @bindable class = '';
 }

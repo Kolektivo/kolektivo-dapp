@@ -5,9 +5,9 @@ import './styles/main.scss';
 import './styles/shared.scss';
 import * as attributes from './attributes';
 import * as elements from './elements';
-import * as services from './services';
 import * as valueConverters from './value-converters';
 import { IDesignSystemConfiguration } from './configuration';
+import { NotificationService } from './services';
 import { ValidationHtmlConfiguration, ValidationTrigger } from '@aurelia/validation-html';
 import Fast from './fast';
 
@@ -50,7 +50,7 @@ export class DesignSystemPlugin implements IRegistry {
   }
 
   register(container: IContainer): IContainer {
-    container.register(services);
+    container.register(NotificationService);
     container.register(attributes);
     container.register(elements);
     container.register(valueConverters);

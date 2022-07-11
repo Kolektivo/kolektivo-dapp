@@ -1,8 +1,8 @@
 import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
+import { NotificationType } from '../../services/notification/notification-type';
 
-export type AlertType = 'danger' | 'success' | 'warning' | 'info' | 'secondary' | 'dark';
 export class KAlert implements ICustomElementViewModel {
-  @bindable type: AlertType = 'warning';
+  @bindable type: NotificationType = 'warning';
   @bindable icon = '';
   @bindable top = '';
   @bindable bottom = '';

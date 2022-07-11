@@ -1,6 +1,6 @@
 import './app.scss';
 import './shared.scss';
-import { INotificationService } from '../design-system/services/notification-service';
+import { INotificationService } from '../design-system/services/notification/notification-service';
 export class App {
   width = 200;
   sidebarOpen = true;
@@ -11,10 +11,10 @@ export class App {
     };
   }
 
-  constructor(@INotificationService private readonly confirmService: INotificationService) {
-    setTimeout(async () => {
-      alert(await this.confirmService.confirm('This is a test confirmation DOOD'));
-    }, 1000);
+  constructor(@INotificationService private readonly confirmService: INotificationService) {}
+
+  attached() {
+    const closeMethod = this.confirmService.toast({ message: 'This is some test?', type: 'danger', actions: [{ content: 'Some crazy shit for closing this sun bith', onClick: () => closeMethod() }] });
   }
 
   cancel() {
