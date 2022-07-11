@@ -1,8 +1,21 @@
-# kolektivo-dapp
+# Kolektivo
+
+A collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
 
 A collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
 
 This project is bootstrapped by [aurelia/new](https://github.com/aurelia/new).
+
+## Development
+
+### Prerequisites
+Make sure you have [node.js version >= 14.11.0 < 15](https://nodejs.org/en/)
+
+### Install
+Install dependencies with the following command:
+```
+npm ci
+```
 
 ## Start dev web server
 
