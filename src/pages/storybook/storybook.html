@@ -1,8 +1,10 @@
 <k-page title="Kolektivo Design System">
+  <k-countdown color="white" countdown="5"></k-countdown>
 
   <div id="storybook">
     <k-accordion>
       <span slot="header">Progress Bars</span>
+
       <div class="progress">
         <k-code>
           <k-progress value="10"></k-progress>
@@ -64,12 +66,10 @@
           <k-alert type="dark">This is a very dark alert. Come to the dark side!!!</k-alert>
         </k-code>
         <k-code>
-          <k-alert type="success" icon="calendar_today">This is an alert that you can pass in any icon you want to into
-            it</k-alert>
+          <k-alert type="success" icon="calendar_today">This is an alert that you can pass in any icon you want to into it</k-alert>
         </k-code>
         <k-code>
-          <k-alert type="info">This is an alert that has a lot of text in it to show how the text will wrap when the
-            text is long. We want this to look good when there is a lot of text.</k-alert>
+          <k-alert type="info">This is an alert that has a lot of text in it to show how the text will wrap when the text is long. We want this to look good when there is a lot of text.</k-alert>
         </k-code>
       </div>
     </k-accordion>
@@ -84,11 +84,9 @@
       <k-alert type="info" bottom="var(--spacing-xl)">
         To keep the bundle size to a minimum, we only import the icons we need. To import a new icon:
         <ol>
-          <li>Go to <a href="//fonts.google.com/icons" target="_blank">https://fonts.google.com/icons</a> and find the
-            icon name you need</li>
+          <li>Go to <a href="//fonts.google.com/icons" target="_blank">https://fonts.google.com/icons</a> and find the icon name you need</li>
           <li>Open ./main.js</li>
-          <li>Import the icon from the @material-design-icons package (you can import the icon from whichever folder you
-            need [filled, outlined, round, sharp, two-tone])</li>
+          <li>Import the icon from the @material-design-icons package (you can import the icon from whichever folder you need [filled, outlined, round, sharp, two-tone])</li>
           <li>Register that icon in the DesignSystemPlugin</li>
           <li>Add the newly imported icon to this section so we can all see :)</li>
         </ol>
@@ -326,8 +324,7 @@
           </k-radio-group>
         </k-code>
         <k-code>
-          <k-radio-group value.bind="radioGroup" name="test"
-            items.bind="[{display:'test', value: 1}, {display:'test', value: 1}]"></k-radio-group>
+          <k-radio-group value.bind="radioGroup" name="test" items.bind="[{display:'test', value: 1}, {display:'test', value: 1}]"></k-radio-group>
           ${radioGroup}
         </k-code>
       </div>
@@ -422,22 +419,17 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Selects</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">NOTE: This is using the Fast Select component currently, and we
-        might need to code our own select element if Fast doesn't allow us to style it exactly how the designers want it
-        styled</k-alert>
+      <k-alert type="info" bottom="var(--spacing-xl)">NOTE: This is using the Fast Select component currently, and we might need to code our own select element if Fast doesn't allow us to style it exactly how the designers want it styled</k-alert>
 
       <div class="selects">
         <k-code>
-          <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
-            placeholder="Default Select"> </k-select>
+          <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Default Select"> </k-select>
         </k-code>
         <k-code>
-          <k-select disabled value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
-            placeholder="Disabled Select"> </k-select>
+          <k-select disabled value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Disabled Select"> </k-select>
         </k-code>
         <k-code>
-          <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
-            placeholder="Error Select"> </k-select>
+          <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Error Select"> </k-select>
         </k-code>
       </div>
     </k-accordion>
@@ -491,8 +483,7 @@
         <k-code>
           <k-input multiline placeholder="This is a multi line text area"></k-input>
         </k-code>
-        <k-alert type="info" bottom="var(--spacing-xl)">Unable to pass a default value to a textarea tag. Have to use
-          value.bind and define the value in the .ts file. See storybook.ts for example</k-alert>
+        <k-alert type="info" bottom="var(--spacing-xl)">Unable to pass a default value to a textarea tag. Have to use value.bind and define the value in the .ts file. See storybook.ts for example</k-alert>
         <k-code>
           <k-input multiline value.bind="data.textareaInitialValue"></k-input>
         </k-code>
@@ -505,25 +496,20 @@
           <k-form-field name="name" value.bind="data.name" max="50" label="Normal form field"></k-form-field>
         </k-code>
         <k-code validation-errors.from-view="requiredError">
-          <k-form-field name="required" errors.bind="requiredError" value.bind="data.required & validate"
-            label="Required"></k-form-field>
+          <k-form-field name="required" errors.bind="requiredError" value.bind="data.required & validate" label="Required"></k-form-field>
         </k-code>
         <k-code>
-          <k-form-field name="longlabel" value.bind="data.longlabel"
-            label="This is a very very very long label that someone who has very bad jugdement wrote"></k-form-field>
+          <k-form-field name="longlabel" value.bind="data.longlabel" label="This is a very very very long label that someone who has very bad jugdement wrote"></k-form-field>
         </k-code>
         <k-code>
-          <k-form-field name="longlabelmax" value.bind="data.longlabelmax" max="50"
-            label="This is a very very very long label with a max char count"></k-form-field>
+          <k-form-field name="longlabelmax" value.bind="data.longlabelmax" max="50" label="This is a very very very long label with a max char count"></k-form-field>
         </k-code>
         <k-alert type="info" bottom="var(--spacing-xl)">For validation code behind, look at storybook.ts</k-alert>
         <k-code validation-errors.from-view="birthdateError">
-          <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate"
-            label="Date of birth (Validation)" helper-text="DD/MM/YY"></k-form-field>
+          <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate" label="Date of birth (Validation)" helper-text="DD/MM/YY"></k-form-field>
         </k-code>
         <k-code validation-errors.from-view="emailError">
-          <k-form-field name="email" errors.bind="emailError" value.bind="data.email & validate"
-            label="Email address (Validation)" helper-text="example@domain.com"></k-form-field>
+          <k-form-field name="email" errors.bind="emailError" value.bind="data.email & validate" label="Email address (Validation)" helper-text="example@domain.com"></k-form-field>
         </k-code>
       </form>
     </k-accordion>

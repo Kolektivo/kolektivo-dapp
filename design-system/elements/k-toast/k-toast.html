@@ -2,9 +2,8 @@
   <k-alert type.bind="type">
     <k-stack>
       ${message}
-
       <k-stack direction="row">
-        <k-button click.trigger="action.onClick()" color.bind="action.color" size.bind="action.size" type.bind="action.type" repeat.for="action of   actions">${action.content}</k-button>
+        <k-button click.trigger="action.onClick()" color.bind="action.color" size.bind="action.size" type.bind="action.type" repeat.for="action of actions">${action.content}</k-button>
       </k-stack>
     </k-stack>
   </k-alert>

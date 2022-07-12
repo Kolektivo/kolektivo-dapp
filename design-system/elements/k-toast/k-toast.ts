@@ -1,6 +1,6 @@
 import './k-toast.scss';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { NotificationAction, NotificationType } from 'design-system/services';
+import { NotificationAction, NotificationType } from '../../../design-system/services';
 import { Position } from './../../types';
 import { ToastOptions } from './toast-options';
 import template from './k-toast.html';
@@ -18,9 +18,6 @@ export class KToast implements ICustomElementViewModel, ToastOptions {
   @bindable type?: NotificationType = 'info';
   @bindable actions?: NotificationAction[];
   @bindable position?: Position;
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
 
   get styles() {
     return {

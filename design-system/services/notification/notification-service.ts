@@ -5,8 +5,10 @@ import { KToast } from './../../elements/k-toast/k-toast';
 import { ToastOptions } from 'design-system/elements/k-toast/toast-options';
 
 export type INotificationService = NotificationService;
-export const INotificationService = DI.createInterface<INotificationService>('NotificationService');
+export const INotificationService = DI.createInterface<INotificationService>('INotificationService');
 export class NotificationService {
+  activeToasts: KToast[] = [];
+
   constructor(@IAurelia private readonly aurelia: IAurelia, @IContainer private readonly container: IContainer) {}
 
   async confirm(message?: string, component?: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }>) {
@@ -45,10 +47,15 @@ export class NotificationService {
     const definition = CustomElement.getDefinition(KToast);
     const controller = Controller.$el(this.container, instance, this.aurelia.root.host, null, definition);
     controller.activate(controller, null, LifecycleFlags.none, controller.scope);
+    this.activeToasts.push(instance);
 
     if (options.timeOut) {
       setTimeout(() => {
         this.remove(controller);
+        this.activeToasts.splice(
+          this.activeToasts.findIndex(x => x == instance),
+          1,
+        );
       }, options.timeOut);
     }
 

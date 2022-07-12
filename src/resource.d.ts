@@ -14,6 +14,6 @@ declare module '*.css';
 declare module '*.scss';
 
 declare module '*.svg' {
-  const value: unknown;
+  const value: string;
   export = value;
 }
