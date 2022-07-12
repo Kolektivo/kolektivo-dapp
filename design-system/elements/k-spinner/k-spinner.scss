@@ -1,0 +1,32 @@
+:host {
+  svg {
+    transform: rotateY(-180deg) rotateZ(-90deg);
+  }
+  svg circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    fill: none;
+  }
+
+  @keyframes countdown {
+    from {
+      stroke-dashoffset: 0px;
+    }
+    to {
+      stroke-dashoffset: 113px;
+    }
+  }
+
+  @keyframes spinner {
+    0% {
+      transform: rotate(1080deg);
+      stroke-dashoffset: (0.3 * 113px);
+    }
+    100% {
+      transform: rotate(0deg);
+      stroke-dashoffset: (0.3 * 113px);
+    }
+  }
+}

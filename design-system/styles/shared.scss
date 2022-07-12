@@ -12,3 +12,14 @@
   border-radius: 100%;
   overflow: hidden;
 }
+
+.k-overlay {
+  background-color: rgb(var(--san-juan-800-rgb), var(--alpha-xl));
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: grid;
+  place-content: center;
+}

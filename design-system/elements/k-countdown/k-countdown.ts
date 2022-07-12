@@ -30,23 +30,6 @@ export class KCountdown implements ICustomElementViewModel {
     return this.currentCount <= 0;
   }
 
-  get circleStyle() {
-    return {
-      stroke: this.finished ? this.finishedColor ?? this.color : this.color,
-      animation: !this.finished && `countdown ${this.countdown}s linear infinite forwards`,
-      animationPlayState: this.hovering && 'paused',
-      transform: `scale(${this.size / 40})`,
-    };
-  }
-  get svgStyle() {
-    return {
-      width: numberToPixels(this.size),
-      height: numberToPixels(this.size),
-      marginTop: numberToPixels(this.size * -1),
-      visibility: this.hovering && 'hidden',
-    };
-  }
-
   get divStyle() {
     return {
       lineHeight: numberToPixels(this.size),
