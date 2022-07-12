@@ -25,3 +25,8 @@ export const autoSlot = (node, platform) => {
   template.setAttribute('au-slot', '');
   node.appendChild(template);
 };
+export const noop = (e: Event) => {
+  e.stopImmediatePropagation();
+  e.preventDefault();
+  return false;
+};

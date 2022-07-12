@@ -1,9 +1,9 @@
-<div>
+<div mouseenter.trigger="mouseEnter()" mouseleave.trigger="mouseLeave()">
   <div style.bind="divStyle">
-    <span if.bind="currentCount"> ${currentCount} </span>
-    <k-icon color.bind="divStyle.color" else name="check" size.bind="size"></k-icon>
+    <k-text if.bind="currentCount && !hovering" size="${size/2}"> ${currentCount} </k-text>
+    <k-icon color.bind="divStyle.color" else name.bind="finishedIcon" size.bind="size"></k-icon>
   </div>
-  <svg style.bind="svgStyle">
+  <svg style.bind="svgStyle" if.bind="currentCount">
     <circle style.bind="circleStyle" r="18" cx="20" cy="20"></circle>
   </svg>
 </div>

@@ -1,5 +1,5 @@
 <div click.trigger="overlayClicked()" class="k-modal" portal="${portalElement}">
-  <k-card>
+  <k-card click.trigger="cardClicked($event)">
     <div slot="header">
       <au-slot name="header">Are you sure?</au-slot>
     </div>

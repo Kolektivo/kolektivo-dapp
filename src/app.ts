@@ -11,20 +11,6 @@ export class App {
       transform: this.sidebarOpen ? false : 'translateX(-80%)',
     };
   }
-
   header: HTMLElement;
-
-  constructor(@INotificationService private readonly confirmService: INotificationService, @IAnimationService private readonly animationService: IAnimationService) {
-    setTimeout(() => {
-      this.sidebarOpen = false;
-    }, 2000);
-  }
-
-  cancel() {
-    alert('cancel');
-  }
-
-  ok() {
-    alert('ok');
-  }
+  constructor(@INotificationService private readonly confirmService: INotificationService, @IAnimationService private readonly animationService: IAnimationService) {}
 }

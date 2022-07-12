@@ -1,10 +1,7 @@
 <k-page title="Kolektivo Design System">
-  <k-countdown color="white" countdown="5"></k-countdown>
-
   <div id="storybook">
     <k-accordion>
       <span slot="header">Progress Bars</span>
-
       <div class="progress">
         <k-code>
           <k-progress value="10"></k-progress>
@@ -24,7 +21,6 @@
         <k-code>
           <k-progress type="error" value="50"></k-progress>
         </k-code>
-
         <k-code>
           <k-progress value="60" height="10" sub-text="Height with text"></k-progress>
         </k-code>
@@ -512,6 +508,63 @@
           <k-form-field name="email" errors.bind="emailError" value.bind="data.email & validate" label="Email address (Validation)" helper-text="example@domain.com"></k-form-field>
         </k-code>
       </form>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Modals</span>
+      <k-alert type="info" bottom="var(--spacing-xl)">We don't know what the modal styles will be yet so the modals don't look great until we know more from the designers</k-alert>
+      <div class="modals">
+        <k-code>
+          <k-modal close-on-click if.bind="isOpen" cancel.call="cancel()" ok.call="ok()">
+            <div au-slot="header">Header</div>
+            Modal content
+          </k-modal>
+        </k-code>
+        <k-button click.trigger="openModal()">Inline Modal</k-button>
+
+        <k-alert type="info" bottom="var(--spacing-xl)">The code for the confirm modal is in storybook.ts</k-alert>
+        <k-code>
+          <k-button click.trigger="openConfirmModal()">Confirm Modal</k-button>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Countdowns</span>
+      <k-button click.trigger="resetCountdowns()">Reset All Countdowns</k-button>
+      <div class="countdowns">
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns"></k-countdown>
+        </k-code>
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns" color="var(--error)" finished-color="var(--info)"></k-countdown>
+        </k-code>
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns" countdown="10"></k-countdown>
+        </k-code>
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns" finished-icon="close"></k-countdown>
+        </k-code>
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns" size="100"></k-countdown>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Animations</span>
+      <k-alert type="info" bottom="var(--spacing-xl)">Animation examples have styles (storybook.scss) and javascript (storybook.ts) code associated with them. They might require more code than the k-code shows.</k-alert>
+      <div class="animation">
+        <k-code>
+          <k-stack gap="10">
+            <div if.bind="showAnimate1" class="animate" animate animate-end-class="fade-out" animate-start-class="fade-in">This will fade in when bound and fade out when unbound.</div>
+          </k-stack>
+        </k-code>
+        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation1()">${showAnimate1 ? "Hide" : "Show"}</k-button>
+        <k-code>
+          <k-stack gap="10">
+            <div class="animate" if.bind="showAnimate2" animate-out="true" animate-from="0" animate-to="40" animate-duration="1000" animate="padding">This div starts at 0px padding and animates to 40px padding over 1 second</div>
+          </k-stack>
+        </k-code>
+        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation2()">${showAnimate2 ? "Hide" : "Show"}</k-button>
+      </div>
     </k-accordion>
   </div>
 </k-page>
