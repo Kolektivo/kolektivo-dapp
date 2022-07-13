@@ -3,5 +3,5 @@
     <k-text if.bind="currentCount && !hovering" size="${size/2}"> ${currentCount} </k-text>
     <k-icon color.bind="divStyle.color" else name.bind="finishedIcon" size.bind="size"></k-icon>
   </div>
-  <k-spinner animation="countdown" size.bind="size" color.bind="color" speed.bind="countdown" if.bind="currentCount"></k-spinner>
+  <k-spinner color.bind="divStyle.color" paused.bind="hovering" animation="countdown" size.bind="size" color.bind="color" speed.bind="countdown" if.bind="currentCount"></k-spinner>
 </div>

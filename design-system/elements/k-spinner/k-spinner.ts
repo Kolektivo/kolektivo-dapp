@@ -1,9 +1,10 @@
 import { ICustomElementViewModel, bindable } from 'aurelia';
+import { IfExistsThenTrue } from './../../common';
 import { numberToPixels } from '../../../design-system/common';
 
 export class KSpinner implements ICustomElementViewModel {
   @bindable color = 'var(--primary-text)';
-  @bindable isPaused = false;
+  @bindable({ set: IfExistsThenTrue }) paused = false;
   @bindable size = 40;
   @bindable speed = 2;
   @bindable animation = 'spinner';
@@ -16,7 +17,7 @@ export class KSpinner implements ICustomElementViewModel {
     return {
       stroke: this.color,
       animation: this.animation && `${this.animation} ${this.speed}s linear infinite forwards`,
-      animationPlayState: this.isPaused && 'paused',
+      animationPlayState: this.paused && 'paused',
       transformOrigin: this.animation === 'spinner' && `20px 20px 0`,
     };
   }
@@ -25,8 +26,8 @@ export class KSpinner implements ICustomElementViewModel {
       width: numberToPixels(this.size),
       height: numberToPixels(this.size),
       marginTop: this.animation === 'countdown' && numberToPixels(this.size * -1),
-      visibility: this.isPaused && 'hidden',
-      transform: `scale(${this.size / 40}) rotateY(-180deg) rotateZ(-90deg)`,
+      visibility: this.paused && 'hidden',
+      transform: `rotateY(-180deg) rotateZ(-90deg)`,
     };
   }
 }
