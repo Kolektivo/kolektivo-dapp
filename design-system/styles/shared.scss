@@ -27,3 +27,22 @@
 .k-overlay {
   position: absolute;
 }
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 113px;
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(1080deg);
+    stroke-dashoffset: (0.3 * 113px);
+  }
+  100% {
+    transform: rotate(0deg);
+    stroke-dashoffset: (0.3 * 113px);
+  }
+}

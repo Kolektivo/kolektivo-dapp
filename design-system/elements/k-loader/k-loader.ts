@@ -8,6 +8,7 @@ export class KLoader implements ICustomElementViewModel {
   @bindable fill: LoaderFill = 'page';
   @bindable({ set: numberToPixels }) size = '75';
   @bindable({ set: IfExistsThenTrue }) overlay = false;
+  @bindable color = 'var(--primary-text)';
 
   constructor() {
     // you can inject the element or any DI in the constructor

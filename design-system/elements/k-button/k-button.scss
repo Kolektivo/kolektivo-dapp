@@ -64,6 +64,12 @@
         outline: 2px solid var(--dark-coral-300);
       }
       background-color: var(--dark-coral);
+      &:disabled {
+        background-color: var(--don-juan-200);
+        border-color: var(--don-juan-200);
+        color: var(--white);
+        cursor: inherit;
+      }
     }
     &.outlined {
       color: var(--ocean-blue);

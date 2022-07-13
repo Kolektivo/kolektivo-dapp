@@ -7,6 +7,11 @@ import { newInstanceForScope } from '@aurelia/kernel';
 export class Storybook {
   showAnimate1 = true;
   showCountdowns = true;
+  showLoader1 = false;
+  toggleLoader1() {
+    this.showLoader1 = !this.showLoader1;
+    setTimeout(() => (this.showLoader1 = !this.showLoader1), 2000);
+  }
   isOpen = false;
   toggleAnimation1() {
     this.showAnimate1 = !this.showAnimate1;

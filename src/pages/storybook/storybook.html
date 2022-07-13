@@ -307,24 +307,19 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Radios</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">This is a work in progress still</k-alert>
-
       <div class="checkboxes">
         <k-code>
-          <k-radio>Heading 1</k-radio>
-        </k-code>
-        <k-code>
-          <k-radio-group name="test">
+          <k-radio-group name="example1">
             <k-stack gap="var(--spacing)">
-              <k-radio model.bind="1" checked.bind="meow" name="test">Heading 1</k-radio>
-              <k-radio model.bind="2" checked.bind="meow" name="test">Heading 2</k-radio>
+              <k-radio model.bind="1" checked.bind="meow" name="example1">Choice 1</k-radio>
+              <k-radio model.bind="2" checked.bind="meow" name="example1">Choice 2</k-radio>
             </k-stack>
           </k-radio-group>
         </k-code>
         ${meow}
 
         <k-code>
-          <k-radio-group value.bind="radioGroup" name="test" items.bind="[{display:'test', value: 1}, {display:'test 2', value: 2}]"></k-radio-group>
+          <k-radio-group value.bind="radioGroup" name="example2" items.bind="[{display:'Choice 1', value: 1}, {display:'Choice 2', value: 2}]"></k-radio-group>
         </k-code>
         ${radioGroup}
       </div>
@@ -532,6 +527,38 @@
       </div>
     </k-accordion>
     <k-accordion>
+      <span slot="header">Loaders</span>
+      <div class="loaders">
+        <k-code>
+          <k-spinner></k-spinner>
+        </k-code>
+        <k-code>
+          <k-spinner color="var(--primary)"></k-spinner>
+        </k-code>
+        <k-code>
+          <k-spinner paused></k-spinner>
+        </k-code>
+        <k-code>
+          <k-spinner size="100"></k-spinner>
+        </k-code>
+        <k-code>
+          <k-spinner speed="10"></k-spinner>
+        </k-code>
+        <k-code>
+          <k-spinner speed="1"></k-spinner>
+        </k-code>
+        <k-code>
+          <k-spinner icon="close" color="var(--primary)"></k-spinner>
+        </k-code>
+        <k-code>
+          <div>
+            <k-loader if.bind="showLoader1" color="var(--primary)"></k-loader>
+            <k-button click.trigger="toggleLoader1()">Show Full Screen Loader for 2 seconds</k-button>
+          </div>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
       <span slot="header">Countdowns</span>
       <k-button click.trigger="resetCountdowns()">Reset All Countdowns</k-button>
       <div class="countdowns">
@@ -549,9 +576,6 @@
         </k-code>
         <k-code strip='if.bind="showCountdowns"'>
           <k-countdown if.bind="showCountdowns" countdown="500" size="100"></k-countdown>
-        </k-code>
-        <k-code strip='if.bind="showCountdowns"'>
-          <k-spinner></k-spinner>
         </k-code>
       </div>
     </k-accordion>

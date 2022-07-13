@@ -8,11 +8,18 @@ export class KSpinner implements ICustomElementViewModel {
   @bindable size = 40;
   @bindable speed = 2;
   @bindable animation = 'spinner';
+  @bindable icon = '';
 
   constructor() {
     // you can inject the element or any DI in the constructor
   }
-
+  get iconStyle() {
+    return {
+      animation: this.animation && `${this.animation} ${this.speed}s linear infinite reverse`,
+      animationPlayState: this.paused && 'paused',
+      transform: `rotateY(-180deg) rotateZ(-90deg)`,
+    };
+  }
   get circleStyle() {
     return {
       stroke: this.color,
@@ -26,7 +33,6 @@ export class KSpinner implements ICustomElementViewModel {
       width: numberToPixels(this.size),
       height: numberToPixels(this.size),
       marginTop: this.animation === 'countdown' && numberToPixels(this.size * -1),
-      visibility: this.paused && 'hidden',
       transform: `rotateY(-180deg) rotateZ(-90deg)`,
     };
   }
