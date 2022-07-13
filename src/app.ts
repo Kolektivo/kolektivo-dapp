@@ -1,5 +1,6 @@
 import './app.scss';
 import './shared.scss';
+import { IAnimationService } from '../design-system/services/animation/animation-service';
 import { INotificationService } from '../design-system/services/notification/notification-service';
 export class App {
   width = 200;
@@ -10,18 +11,6 @@ export class App {
       transform: this.sidebarOpen ? false : 'translateX(-80%)',
     };
   }
-
-  constructor(@INotificationService private readonly confirmService: INotificationService) {}
-
-  attached() {
-    const closeMethod = this.confirmService.toast({ message: 'This is some test?', type: 'danger', actions: [{ content: 'Some crazy shit for closing this sun bith', onClick: () => closeMethod() }] });
-  }
-
-  cancel() {
-    alert('cancel');
-  }
-
-  ok() {
-    alert('ok');
-  }
+  header: HTMLElement;
+  constructor(@INotificationService private readonly confirmService: INotificationService, @IAnimationService private readonly animationService: IAnimationService) {}
 }

@@ -1,5 +1,6 @@
 import { ButtonSize } from './button-size';
 import { CustomElement, bindable } from 'aurelia';
+import { IfExistsThenTrue } from './../../common';
 /**
  * Usage:
  *    <pbutton type="primary">Primary</pbutton>
@@ -20,7 +21,8 @@ export class KButton {
   @bindable type: ButtonType = '';
   @bindable color: ButtonColor = 'primary';
   @bindable size: ButtonSize | '' = '';
-  @bindable isLoading = false;
+  @bindable({ set: IfExistsThenTrue }) loading = false;
   @bindable class = '';
+  @bindable({ set: IfExistsThenTrue }) disabled;
 }
 (CustomElement.getDefinition(KButton) as { capture: boolean }).capture = true;

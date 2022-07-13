@@ -12,3 +12,37 @@
   border-radius: 100%;
   overflow: hidden;
 }
+
+.k-page-overlay,
+.k-overlay {
+  background-color: rgb(var(--san-juan-800-rgb), var(--alpha-xl));
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: grid;
+  place-content: center;
+}
+.k-overlay {
+  position: absolute;
+}
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 113px;
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(1080deg);
+    stroke-dashoffset: (0.3 * 113px);
+  }
+  100% {
+    transform: rotate(0deg);
+    stroke-dashoffset: (0.3 * 113px);
+  }
+}
