@@ -1,7 +1,7 @@
 :host {
-  svg {
-    transform: rotateY(-180deg) rotateZ(-90deg);
-  }
+  display: grid;
+  place-content: center;
+
   svg circle {
     stroke-dasharray: 113px;
     stroke-dashoffset: 0px;

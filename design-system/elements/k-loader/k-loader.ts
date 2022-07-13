@@ -1,12 +1,12 @@
-import { CustomElement, ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { IfExistsThenTrue } from './../../common';
+import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
+import { IfExistsThenTrue, numberToPixels } from './../../common';
 export type LoaderType = 'spinner';
 export type LoaderFill = 'page' | 'parent';
 
-@customElement({ name: 'k-loader' })
 export class KLoader implements ICustomElementViewModel {
   @bindable type: LoaderType = 'spinner';
   @bindable fill: LoaderFill = 'page';
+  @bindable({ set: numberToPixels }) size = '75';
   @bindable({ set: IfExistsThenTrue }) overlay = false;
 
   constructor() {

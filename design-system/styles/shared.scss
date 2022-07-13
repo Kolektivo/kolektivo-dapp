@@ -13,6 +13,7 @@
   overflow: hidden;
 }
 
+.k-page-overlay,
 .k-overlay {
   background-color: rgb(var(--san-juan-800-rgb), var(--alpha-xl));
   position: fixed;
@@ -22,4 +23,7 @@
   bottom: 0;
   display: grid;
   place-content: center;
+}
+.k-overlay {
+  position: absolute;
 }

@@ -17,7 +17,6 @@ export class KSpinner implements ICustomElementViewModel {
       stroke: this.color,
       animation: this.animation && `${this.animation} ${this.speed}s linear infinite forwards`,
       animationPlayState: this.isPaused && 'paused',
-      transform: `scale(${this.size / 40})`,
       transformOrigin: this.animation === 'spinner' && `20px 20px 0`,
     };
   }
@@ -27,6 +26,7 @@ export class KSpinner implements ICustomElementViewModel {
       height: numberToPixels(this.size),
       marginTop: this.animation === 'countdown' && numberToPixels(this.size * -1),
       visibility: this.isPaused && 'hidden',
+      transform: `scale(${this.size / 40}) rotateY(-180deg) rotateZ(-90deg)`,
     };
   }
 }

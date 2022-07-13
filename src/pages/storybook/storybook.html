@@ -315,14 +315,18 @@
         </k-code>
         <k-code>
           <k-radio-group name="test">
-            <k-radio name="test">Heading 1</k-radio>
-            <k-radio name="test">Heading 2</k-radio>
+            <k-stack gap="var(--spacing)">
+              <k-radio model.bind="1" checked.bind="meow" name="test">Heading 1</k-radio>
+              <k-radio model.bind="2" checked.bind="meow" name="test">Heading 2</k-radio>
+            </k-stack>
           </k-radio-group>
         </k-code>
+        ${meow}
+
         <k-code>
-          <k-radio-group value.bind="radioGroup" name="test" items.bind="[{display:'test', value: 1}, {display:'test', value: 1}]"></k-radio-group>
-          ${radioGroup}
+          <k-radio-group value.bind="radioGroup" name="test" items.bind="[{display:'test', value: 1}, {display:'test 2', value: 2}]"></k-radio-group>
         </k-code>
+        ${radioGroup}
       </div>
     </k-accordion>
     <k-accordion>

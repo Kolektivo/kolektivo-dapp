@@ -1,4 +1,4 @@
-<div if.bind="type === page" class="k-loader" portal="body">
-  <k-spinner></k-spinner>
+<div if.bind="fill === 'page'" class="k-overlay" portal="body">
+  <k-spinner size.bind="size"></k-spinner>
 </div>
-<div else></div>
+<div class="k-overlay" else></div>
