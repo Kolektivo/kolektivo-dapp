@@ -10,6 +10,10 @@ export class KModal implements ICustomElementViewModel {
   @bindable ok: () => void;
   @bindable cancel: () => void;
   @bindable({ set: IfExistsThenTrue }) closeOnClick = false;
+  @bindable({ set: IfExistsThenTrue }) closeButton = false;
+  @bindable okButtonText = 'Ok';
+  @bindable cancelButtonText = 'Cancel';
+  @bindable title = 'Are you sure?';
   constructor() {
     // you can inject the element or any DI in the constructor
   }

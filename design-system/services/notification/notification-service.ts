@@ -11,7 +11,7 @@ export class NotificationService {
 
   constructor(@IAurelia private readonly aurelia: IAurelia, @IContainer private readonly container: IContainer) {}
 
-  async confirm(message?: string, component?: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }>) {
+  public async confirm(message?: string, component?: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }>): Promise<boolean> {
     return new Promise(res => {
       component ??= KConfirm;
       const instance = this.container.get(component);
@@ -31,7 +31,7 @@ export class NotificationService {
     });
   }
 
-  private async remove(controller: ICustomElementController) {
+  private async remove(controller: ICustomElementController): Promise<void> {
     await controller.deactivate(controller, null, LifecycleFlags.none);
     await controller.dispose();
   }
@@ -41,7 +41,7 @@ export class NotificationService {
    * @param options
    * @returns A function to close the toast with
    */
-  toast(options: ToastOptions) {
+  public toast(options: ToastOptions): () => void {
     const instance = this.container.get(KToast);
     Object.assign(instance, options);
     const definition = CustomElement.getDefinition(KToast);
@@ -64,7 +64,7 @@ export class NotificationService {
     };
   }
 
-  public static register(container: IContainer) {
+  public static register(container: IContainer): void {
     Registration.singleton(INotificationService, NotificationService).register(container);
   }
 }

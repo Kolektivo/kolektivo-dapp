@@ -1,46 +1,6 @@
 <k-page title="Kolektivo Design System">
   <div id="storybook">
     <k-accordion>
-      <span slot="header">Progress Bars</span>
-      <div class="progress">
-        <k-code>
-          <k-progress value="10"></k-progress>
-        </k-code>
-        <k-code>
-          <k-progress value="50" max="250" sub-text="Sub text is here"></k-progress>
-        </k-code>
-        <k-code>
-          <k-progress value="20" color="red" sub-text="Different bar color"></k-progress>
-        </k-code>
-        <k-code>
-          <k-progress value="30" background="var(--cheese)" sub-text="Different background color"></k-progress>
-        </k-code>
-        <k-code>
-          <k-progress type="warning" value="40"></k-progress>
-        </k-code>
-        <k-code>
-          <k-progress type="error" value="50"></k-progress>
-        </k-code>
-        <k-code>
-          <k-progress value="60" height="10" sub-text="Height with text"></k-progress>
-        </k-code>
-        <k-code>
-          <k-progress value="60" height="10">Height with text</k-progress>
-        </k-code>
-        <k-code>
-          <k-progress type="warning" value="60" sub-text="Warning with text"></k-progress>
-        </k-code>
-        <k-code>
-          <k-progress type="warning" value="60">
-            <k-text color="var(--dark-coral-300)"> Warning with text (slotted) </k-text>
-          </k-progress>
-        </k-code>
-        <k-code>
-          <k-progress type="error" value="60" sub-text="Error with text"></k-progress>
-        </k-code>
-      </div>
-    </k-accordion>
-    <k-accordion>
       <span slot="header">Alerts</span>
       <div class="alerts">
         <k-code>
@@ -70,125 +30,92 @@
       </div>
     </k-accordion>
     <k-accordion>
-      <span slot="header">Data Grid</span>
-      <div class="datagrids">
-        <k-alert type="info">Data grids are coming!</k-alert>
-      </div>
-    </k-accordion>
-    <k-accordion>
-      <span slot="header">Icons</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">
-        To keep the bundle size to a minimum, we only import the icons we need. To import a new icon:
-        <ol>
-          <li>Go to <a href="//fonts.google.com/icons" target="_blank">https://fonts.google.com/icons</a> and find the icon name you need</li>
-          <li>Open ./main.js</li>
-          <li>Import the icon from the @material-design-icons package (you can import the icon from whichever folder you need [filled, outlined, round, sharp, two-tone])</li>
-          <li>Register that icon in the DesignSystemPlugin</li>
-          <li>Add the newly imported icon to this section so we can all see :)</li>
-        </ol>
-      </k-alert>
-      <div class="icons">
-        <k-text tag="h6">Colors with icons</k-text>
+      <span slot="header">Animations</span>
+      <k-alert type="info" bottom="var(--spacing-xl)">Animation examples have styles (storybook.scss) and javascript (storybook.ts) code associated with them. They might require more code than the k-code shows.</k-alert>
+      <div class="animation">
         <k-code>
-          <k-icon name="info_filled" color="var(--ocean-blue)" size="48"></k-icon>
-        </k-code>
-        <k-text tag="h6">All available icons</k-text>
-        <k-grid gap="var(--spacing-lg)" cols="3">
-          <k-code>
-            <k-icon name="alternate_email" size="48"></k-icon>
-          </k-code>
-          <k-code>
-            <k-icon name="calendar_today" size="48"></k-icon>
-          </k-code>
-          <k-code>
-            <k-icon name="check_circle_filled" size="48"></k-icon>
-          </k-code>
-          <k-code>
-            <k-icon name="content_copy" size="48"></k-icon>
-          </k-code>
-          <k-code>
-            <k-icon name="error_filled" size="48"></k-icon>
-          </k-code>
-          <k-code>
-            <k-icon name="info_filled" size="48"></k-icon>
-          </k-code>
-          <k-code>
-            <k-icon name="link" size="48"></k-icon>
-          </k-code>
-          <k-code>
-            <k-icon name="warning_filled" size="48"></k-icon>
-          </k-code>
-        </k-grid>
-      </div>
-    </k-accordion>
-    <k-accordion>
-      <span slot="header">Layouts</span>
-      <div class="gridsystem">
-        <k-text tag="h6">Stacks</k-text>
-        <k-code>
-          <k-stack cols="auto 1fr auto">
-            <div>header content</div>
-            <div>body<br />with<br />more<br />content</div>
-            <div>footer content</div>
+          <k-stack gap="10">
+            <div if.bind="showAnimate1" class="animate" animate animate-end-class="fade-out" animate-start-class="fade-in">This will fade in when bound and fade out when unbound.</div>
           </k-stack>
         </k-code>
-
-        <k-text tag="h6">Grids</k-text>
+        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation1()">${showAnimate1 ? "Hide" : "Show"}</k-button>
         <k-code>
-          <k-grid place-items="center">
-            <div>Perfectly centered</div>
-          </k-grid>
+          <k-stack gap="10">
+            <div class="animate" if.bind="showAnimate2" animate-out="true" animate-from="0" animate-to="40" animate-duration="1000" animate="padding">This div starts at 0px padding and animates to 40px padding over 1 second</div>
+          </k-stack>
+        </k-code>
+        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation2()">${showAnimate2 ? "Hide" : "Show"}</k-button>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Buttons</span>
+      <div class="buttons">
+        <k-code>
+          <k-button size="xs">XS Button</k-button>
         </k-code>
         <k-code>
-          <k-grid cols="auto 1fr" gap="var(--spacing-lg)">
-            <div>fit content</div>
-            <div>fill the rest</div>
-          </k-grid>
-        </k-code>
-
-        <k-code>
-          <k-grid cols="3" gap="var(--spacing-lg)">
-            <div>This</div>
-            <div>grid</div>
-            <div>has</div>
-            <div>three</div>
-            <div>columns</div>
-            <div>with gaps</div>
-          </k-grid>
+          <k-button size="sm">Small Button</k-button>
         </k-code>
         <k-code>
-          <k-grid cols="3" justify-items="center">
-            <div>This</div>
-            <div>grid</div>
-            <div>has</div>
-            <div>centered</div>
-            <div>content</div>
-            <div>with no gaps</div>
-          </k-grid>
+          <k-button>Base Button</k-button>
         </k-code>
         <k-code>
-          <k-grid cols="3">
-            <k-stack>
-              <ul>
-                <li>first</li>
-                <li>second</li>
-                <li>third</li>
-              </ul>
-            </k-stack>
-            <k-stack>
-              <ul>
-                <li>fourth</li>
-                <li>fifth</li>
-                <li>sixth</li>
-              </ul>
-            </k-stack>
-            <k-stack>
-              <ul>
-                <li>seventh</li>
-                <li>eigth</li>
-              </ul>
-            </k-stack>
-          </k-grid>
+          <k-button color="secondary">Secondary Button</k-button>
+        </k-code>
+        <k-code>
+          <k-button size="lg">Large Button</k-button>
+        </k-code>
+        <k-code>
+          <k-button size="xl">XL Button</k-button>
+        </k-code>
+        <k-code>
+          <k-button disabled>Disabled Button</k-button>
+        </k-code>
+        <k-code>
+          <k-button type="outlined">Outlined Button</k-button>
+        </k-code>
+        <k-code>
+          <k-button type="outlined" color="secondary">Secondary Outline</k-button>
+        </k-code>
+        <k-code>
+          <k-button type="outlined" disabled>Outlined Disabled</k-button>
+        </k-code>
+        <k-code>
+          <k-button type="link">Link Button</k-button>
+        </k-code>
+        <k-code>
+          <k-button type="link" color="secondary">Link Secondary</k-button>
+        </k-code>
+        <k-code>
+          <k-button type="link" disabled>Link Disabled</k-button>
+        </k-code>
+        <k-code>
+          <k-button full-width>Full Width</k-button>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Checkboxes</span>
+      <div class="checkboxes">
+        <k-code>
+          <k-check>Enabled Checkbox</k-check>
+        </k-code>
+        <k-code>
+          <k-check disabled>Disabled Checkbox</k-check>
+        </k-code>
+        <k-code>
+          <k-stack gap="var(--spacing-sm)">
+            <k-check checked.bind="check1">Vertical List 1</k-check>
+            <k-check checked.bind="check2">Vertical List 2</k-check>
+            <k-check checked.bind="check3">Vertical List 3</k-check>
+          </k-stack>
+        </k-code>
+        <k-code>
+          <k-stack direction="row" gap="var(--spacing-xl)">
+            <k-check checked.bind="check4">Horizontal List 1</k-check>
+            <k-check checked.bind="check5">Horizontal List 2</k-check>
+            <k-check checked.bind="check6">Horizontal List 3</k-check>
+          </k-stack>
         </k-code>
       </div>
     </k-accordion>
@@ -281,151 +208,100 @@
       </div>
     </k-accordion>
     <k-accordion>
-      <span slot="header">Checkboxes</span>
-      <div class="checkboxes">
-        <k-code>
-          <k-check>Enabled Checkbox</k-check>
+      <span slot="header">Countdowns</span>
+      <k-button click.trigger="resetCountdowns()">Reset All Countdowns</k-button>
+      <div class="countdowns">
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns"></k-countdown>
         </k-code>
-        <k-code>
-          <k-check disabled>Disabled Checkbox</k-check>
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns" color="var(--error)" finished-color="var(--info)"></k-countdown>
         </k-code>
-        <k-code>
-          <k-stack gap="var(--spacing-sm)">
-            <k-check checked.bind="check1">Vertical List 1</k-check>
-            <k-check checked.bind="check2">Vertical List 2</k-check>
-            <k-check checked.bind="check3">Vertical List 3</k-check>
-          </k-stack>
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns"></k-countdown>
         </k-code>
-        <k-code>
-          <k-stack direction="row" gap="var(--spacing-xl)">
-            <k-check checked.bind="check4">Horizontal List 1</k-check>
-            <k-check checked.bind="check5">Horizontal List 2</k-check>
-            <k-check checked.bind="check6">Horizontal List 3</k-check>
-          </k-stack>
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns" finished-icon="close"></k-countdown>
+        </k-code>
+        <k-code strip='if.bind="showCountdowns"'>
+          <k-countdown if.bind="showCountdowns" countdown="500" size="100"></k-countdown>
         </k-code>
       </div>
     </k-accordion>
     <k-accordion>
-      <span slot="header">Radios</span>
-      <div class="checkboxes">
-        <k-code>
-          <k-radio-group name="example1">
-            <k-stack gap="var(--spacing)">
-              <k-radio model.bind="1" checked.bind="meow" name="example1">Choice 1</k-radio>
-              <k-radio model.bind="2" checked.bind="meow" name="example1">Choice 2</k-radio>
-            </k-stack>
-          </k-radio-group>
-        </k-code>
-        ${meow}
-
-        <k-code>
-          <k-radio-group value.bind="radioGroup" name="example2" items.bind="[{display:'Choice 1', value: 1}, {display:'Choice 2', value: 2}]"></k-radio-group>
-        </k-code>
-        ${radioGroup}
+      <span slot="header">Data Grid</span>
+      <div class="datagrids">
+        <k-alert type="info">Data grids are coming!</k-alert>
       </div>
     </k-accordion>
     <k-accordion>
-      <span slot="header">Typography</span>
-      <div class="typography">
+      <span slot="header">Form Fields</span>
+      <form class="formFields">
         <k-code>
-          <k-text tag="h1">Heading 1</k-text>
+          <k-form-field name="name" value.bind="data.name" max="50" label="Normal form field"></k-form-field>
+        </k-code>
+        <k-code validation-errors.from-view="requiredError">
+          <k-form-field name="required" errors.bind="requiredError" value.bind="data.required & validate" label="Required"></k-form-field>
         </k-code>
         <k-code>
-          <k-text tag="h2">Heading 2</k-text>
+          <k-form-field name="longlabel" value.bind="data.longlabel" label="This is a very very very long label that someone who has very bad jugdement wrote"></k-form-field>
         </k-code>
         <k-code>
-          <k-text tag="h3">Heading 3</k-text>
+          <k-form-field name="longlabelmax" value.bind="data.longlabelmax" max="50" label="This is a very very very long label with a max char count"></k-form-field>
         </k-code>
-        <k-code>
-          <k-text tag="h4">Heading 4</k-text>
+        <k-alert type="info" bottom="var(--spacing-xl)">For validation code behind, look at storybook.ts</k-alert>
+        <k-code validation-errors.from-view="birthdateError">
+          <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate" label="Date of birth (Validation)" helper-text="DD/MM/YY"></k-form-field>
         </k-code>
-        <k-code>
-          <k-text tag="h5">Heading 5</k-text>
+        <k-code validation-errors.from-view="emailError">
+          <k-form-field name="email" errors.bind="emailError" value.bind="data.email & validate" label="Email address (Validation)" helper-text="example@domain.com"></k-form-field>
         </k-code>
-        <k-code>
-          <k-text tag="h6">Heading 6</k-text>
-        </k-code>
-        <k-code>
-          <k-text>text in a span tag</k-text>
-        </k-code>
-        <k-code>
-          <k-text type="small">small text</k-text>
-        </k-code>
-        <k-code>
-          <k-text tag="label">text in a label tag</k-text>
-        </k-code>
-        <k-code>
-          <k-text type="caption">caption text in span</k-text>
-        </k-code>
-        <k-code>
-          <k-text type="small-caption">small caption text in span</k-text>
-        </k-code>
-        <k-code>
-          <k-text type="overline">overline text in span</k-text>
-        </k-code>
-      </div>
+      </form>
     </k-accordion>
     <k-accordion>
-      <span slot="header">Buttons</span>
-      <div class="buttons">
+      <span slot="header">Icons</span>
+      <k-alert type="info" bottom="var(--spacing-xl)">
+        To keep the bundle size to a minimum, we only import the icons we need. To import a new icon:
+        <ol>
+          <li>Go to <a href="//fonts.google.com/icons" target="_blank">https://fonts.google.com/icons</a> and find the icon name you need</li>
+          <li>Open ./main.js</li>
+          <li>Import the icon from the @material-design-icons package (you can import the icon from whichever folder you need [filled, outlined, round, sharp, two-tone])</li>
+          <li>Register that icon in the DesignSystemPlugin</li>
+          <li>Add the newly imported icon to this section so we can all see :)</li>
+        </ol>
+      </k-alert>
+      <div class="icons">
+        <k-text tag="h6">Colors with icons</k-text>
         <k-code>
-          <k-button size="xs">XS Button</k-button>
+          <k-icon name="info_filled" color="var(--ocean-blue)" size="48"></k-icon>
         </k-code>
-        <k-code>
-          <k-button size="sm">Small Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button>Base Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button color="secondary">Secondary Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button size="lg">Large Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button size="xl">XL Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button disabled>Disabled Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="outlined">Outlined Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="outlined" color="secondary">Secondary Outline</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="outlined" disabled>Outlined Disabled</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="link">Link Button</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="link" color="secondary">Link Secondary</k-button>
-        </k-code>
-        <k-code>
-          <k-button type="link" disabled>Link Disabled</k-button>
-        </k-code>
-        <k-code>
-          <k-button full-width>Full Width</k-button>
-        </k-code>
-      </div>
-    </k-accordion>
-    <k-accordion>
-      <span slot="header">Selects</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">NOTE: This is using the Fast Select component currently, and we might need to code our own select element if Fast doesn't allow us to style it exactly how the designers want it styled</k-alert>
-
-      <div class="selects">
-        <k-code>
-          <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Default Select"> </k-select>
-        </k-code>
-        <k-code>
-          <k-select disabled value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Disabled Select"> </k-select>
-        </k-code>
-        <k-code>
-          <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Error Select"> </k-select>
-        </k-code>
+        <k-text tag="h6">All available icons</k-text>
+        <k-grid gap="var(--spacing-lg)" cols="3">
+          <k-code>
+            <k-icon name="alternate_email" size="48"></k-icon>
+          </k-code>
+          <k-code>
+            <k-icon name="calendar_today" size="48"></k-icon>
+          </k-code>
+          <k-code>
+            <k-icon name="check_circle_filled" size="48"></k-icon>
+          </k-code>
+          <k-code>
+            <k-icon name="content_copy" size="48"></k-icon>
+          </k-code>
+          <k-code>
+            <k-icon name="error_filled" size="48"></k-icon>
+          </k-code>
+          <k-code>
+            <k-icon name="info_filled" size="48"></k-icon>
+          </k-code>
+          <k-code>
+            <k-icon name="link" size="48"></k-icon>
+          </k-code>
+          <k-code>
+            <k-icon name="warning_filled" size="48"></k-icon>
+          </k-code>
+        </k-grid>
       </div>
     </k-accordion>
     <k-accordion>
@@ -485,44 +361,73 @@
       </div>
     </k-accordion>
     <k-accordion>
-      <span slot="header">Form Fields</span>
-      <form class="formFields">
+      <span slot="header">Layouts</span>
+      <div class="gridsystem">
+        <k-text tag="h6">Stacks</k-text>
         <k-code>
-          <k-form-field name="name" value.bind="data.name" max="50" label="Normal form field"></k-form-field>
+          <k-stack cols="auto 1fr auto">
+            <div>header content</div>
+            <div>body<br />with<br />more<br />content</div>
+            <div>footer content</div>
+          </k-stack>
         </k-code>
-        <k-code validation-errors.from-view="requiredError">
-          <k-form-field name="required" errors.bind="requiredError" value.bind="data.required & validate" label="Required"></k-form-field>
-        </k-code>
-        <k-code>
-          <k-form-field name="longlabel" value.bind="data.longlabel" label="This is a very very very long label that someone who has very bad jugdement wrote"></k-form-field>
-        </k-code>
-        <k-code>
-          <k-form-field name="longlabelmax" value.bind="data.longlabelmax" max="50" label="This is a very very very long label with a max char count"></k-form-field>
-        </k-code>
-        <k-alert type="info" bottom="var(--spacing-xl)">For validation code behind, look at storybook.ts</k-alert>
-        <k-code validation-errors.from-view="birthdateError">
-          <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate" label="Date of birth (Validation)" helper-text="DD/MM/YY"></k-form-field>
-        </k-code>
-        <k-code validation-errors.from-view="emailError">
-          <k-form-field name="email" errors.bind="emailError" value.bind="data.email & validate" label="Email address (Validation)" helper-text="example@domain.com"></k-form-field>
-        </k-code>
-      </form>
-    </k-accordion>
-    <k-accordion>
-      <span slot="header">Modals</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">We don't know what the modal styles will be yet so the modals don't look great until we know more from the designers</k-alert>
-      <div class="modals">
-        <k-code>
-          <k-modal close-on-click if.bind="isOpen" cancel.call="cancel()" ok.call="ok()">
-            <div au-slot="header">Header</div>
-            Modal content
-          </k-modal>
-        </k-code>
-        <k-button click.trigger="openModal()">Inline Modal</k-button>
 
-        <k-alert type="info" bottom="var(--spacing-xl)">The code for the confirm modal is in storybook.ts</k-alert>
+        <k-text tag="h6">Grids</k-text>
         <k-code>
-          <k-button click.trigger="openConfirmModal()">Confirm Modal</k-button>
+          <k-grid place-items="center">
+            <div>Perfectly centered</div>
+          </k-grid>
+        </k-code>
+        <k-code>
+          <k-grid cols="auto 1fr" gap="var(--spacing-lg)">
+            <div>fit content</div>
+            <div>fill the rest</div>
+          </k-grid>
+        </k-code>
+
+        <k-code>
+          <k-grid cols="3" gap="var(--spacing-lg)">
+            <div>This</div>
+            <div>grid</div>
+            <div>has</div>
+            <div>three</div>
+            <div>columns</div>
+            <div>with gaps</div>
+          </k-grid>
+        </k-code>
+        <k-code>
+          <k-grid cols="3" justify-items="center">
+            <div>This</div>
+            <div>grid</div>
+            <div>has</div>
+            <div>centered</div>
+            <div>content</div>
+            <div>with no gaps</div>
+          </k-grid>
+        </k-code>
+        <k-code>
+          <k-grid cols="3">
+            <k-stack>
+              <ul>
+                <li>first</li>
+                <li>second</li>
+                <li>third</li>
+              </ul>
+            </k-stack>
+            <k-stack>
+              <ul>
+                <li>fourth</li>
+                <li>fifth</li>
+                <li>sixth</li>
+              </ul>
+            </k-stack>
+            <k-stack>
+              <ul>
+                <li>seventh</li>
+                <li>eigth</li>
+              </ul>
+            </k-stack>
+          </k-grid>
         </k-code>
       </div>
     </k-accordion>
@@ -559,42 +464,151 @@
       </div>
     </k-accordion>
     <k-accordion>
-      <span slot="header">Countdowns</span>
-      <k-button click.trigger="resetCountdowns()">Reset All Countdowns</k-button>
-      <div class="countdowns">
-        <k-code strip='if.bind="showCountdowns"'>
-          <k-countdown if.bind="showCountdowns"></k-countdown>
+      <span slot="header">Modals</span>
+      <k-alert type="info" bottom="var(--spacing-xl)">We don't know what the modal styles will be yet so the modals don't look great until we know more from the designers</k-alert>
+      <div class="modals">
+        <k-code>
+          <k-modal close-on-click if.bind="isOpen1" cancel.call="cancel1()" ok.call="ok1()"></k-modal>
         </k-code>
-        <k-code strip='if.bind="showCountdowns"'>
-          <k-countdown if.bind="showCountdowns" color="var(--error)" finished-color="var(--info)"></k-countdown>
+        <k-button click.trigger="openModal1()">Default Inline Modal</k-button>
+        <k-code>
+          <k-modal close-on-click if.bind="isOpen2" cancel.call="cancel2()" ok.call="ok2()" title="This is a different title" ok-button-text="Sounds good!" cancel-button-text="No way!">
+            This is a bunch of text for a modal. We're using a lot of text so we can show how it looks like in the modal when there is a lot. I'm not sure how much text we should have used here, but this is what we've got so far. What do you think? Is this enough text?
+          </k-modal>
         </k-code>
-        <k-code strip='if.bind="showCountdowns"'>
-          <k-countdown if.bind="showCountdowns"></k-countdown>
+        <k-button click.trigger="openModal2()">Attribute Modal</k-button>
+        <k-code>
+          <k-modal if.bind="isOpen3" cancel.call="cancel3()" close-button>
+            <div au-slot="header">
+              <k-grid gap="var(--spacing)" cols="auto 1fr"> <k-icon name="calendar_today"></k-icon><k-text type="overline">Custom header text</k-text> </k-grid>
+            </div>
+            <div style="border: 1px solid red">Html for a modal can go here. We can add anything we want to here like a button. <k-button click.trigger="customClick()">Click me!</k-button></div>
+            <div au-slot="footer">
+              <k-button click.trigger="ok3()">Custom close button</k-button>
+            </div>
+          </k-modal>
         </k-code>
-        <k-code strip='if.bind="showCountdowns"'>
-          <k-countdown if.bind="showCountdowns" finished-icon="close"></k-countdown>
-        </k-code>
-        <k-code strip='if.bind="showCountdowns"'>
-          <k-countdown if.bind="showCountdowns" countdown="500" size="100"></k-countdown>
+        <k-button click.trigger="openModal3()">Slotted Modal</k-button>
+        <k-alert type="info" bottom="var(--spacing-xl)">The code for the confirm modal is in storybook.ts</k-alert>
+        <k-code>
+          <k-button click.trigger="openConfirmModal()">Confirm Modal</k-button>
         </k-code>
       </div>
     </k-accordion>
     <k-accordion>
-      <span slot="header">Animations</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">Animation examples have styles (storybook.scss) and javascript (storybook.ts) code associated with them. They might require more code than the k-code shows.</k-alert>
-      <div class="animation">
+      <span slot="header">Progress Bars</span>
+      <div class="progress">
         <k-code>
-          <k-stack gap="10">
-            <div if.bind="showAnimate1" class="animate" animate animate-end-class="fade-out" animate-start-class="fade-in">This will fade in when bound and fade out when unbound.</div>
-          </k-stack>
+          <k-progress value="10"></k-progress>
         </k-code>
-        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation1()">${showAnimate1 ? "Hide" : "Show"}</k-button>
         <k-code>
-          <k-stack gap="10">
-            <div class="animate" if.bind="showAnimate2" animate-out="true" animate-from="0" animate-to="40" animate-duration="1000" animate="padding">This div starts at 0px padding and animates to 40px padding over 1 second</div>
-          </k-stack>
+          <k-progress value="50" max="250" sub-text="Sub text is here"></k-progress>
         </k-code>
-        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation2()">${showAnimate2 ? "Hide" : "Show"}</k-button>
+        <k-code>
+          <k-progress value="20" color="red" sub-text="Different bar color"></k-progress>
+        </k-code>
+        <k-code>
+          <k-progress value="30" background="var(--cheese)" sub-text="Different background color"></k-progress>
+        </k-code>
+        <k-code>
+          <k-progress type="warning" value="40"></k-progress>
+        </k-code>
+        <k-code>
+          <k-progress type="error" value="50"></k-progress>
+        </k-code>
+        <k-code>
+          <k-progress value="60" height="10" sub-text="Height with text"></k-progress>
+        </k-code>
+        <k-code>
+          <k-progress value="60" height="10">Height with text</k-progress>
+        </k-code>
+        <k-code>
+          <k-progress type="warning" value="60" sub-text="Warning with text"></k-progress>
+        </k-code>
+        <k-code>
+          <k-progress type="warning" value="60">
+            <k-text color="var(--dark-coral-300)"> Warning with text (slotted) </k-text>
+          </k-progress>
+        </k-code>
+        <k-code>
+          <k-progress type="error" value="60" sub-text="Error with text"></k-progress>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Radios</span>
+      <div class="checkboxes">
+        <k-code>
+          <k-radio-group name="example1">
+            <k-stack gap="var(--spacing)">
+              <k-radio model.bind="1" checked.bind="meow" name="example1">Choice 1</k-radio>
+              <k-radio model.bind="2" checked.bind="meow" name="example1">Choice 2</k-radio>
+            </k-stack>
+          </k-radio-group>
+        </k-code>
+        ${meow}
+
+        <k-code>
+          <k-radio-group value.bind="radioGroup" name="example2" items.bind="[{display:'Choice 1', value: 1}, {display:'Choice 2', value: 2}]"></k-radio-group>
+        </k-code>
+        ${radioGroup}
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Selects</span>
+      <k-alert type="info" bottom="var(--spacing-xl)">NOTE: This is using the Fast Select component currently, and we might need to code our own select element if Fast doesn't allow us to style it exactly how the designers want it styled</k-alert>
+
+      <div class="selects">
+        <k-code>
+          <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Default Select"> </k-select>
+        </k-code>
+        <k-code>
+          <k-select disabled value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Disabled Select"> </k-select>
+        </k-code>
+        <k-code>
+          <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Error Select"> </k-select>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Typography</span>
+      <div class="typography">
+        <k-code>
+          <k-text tag="h1">Heading 1</k-text>
+        </k-code>
+        <k-code>
+          <k-text tag="h2">Heading 2</k-text>
+        </k-code>
+        <k-code>
+          <k-text tag="h3">Heading 3</k-text>
+        </k-code>
+        <k-code>
+          <k-text tag="h4">Heading 4</k-text>
+        </k-code>
+        <k-code>
+          <k-text tag="h5">Heading 5</k-text>
+        </k-code>
+        <k-code>
+          <k-text tag="h6">Heading 6</k-text>
+        </k-code>
+        <k-code>
+          <k-text>text in a span tag</k-text>
+        </k-code>
+        <k-code>
+          <k-text type="small">small text</k-text>
+        </k-code>
+        <k-code>
+          <k-text tag="label">text in a label tag</k-text>
+        </k-code>
+        <k-code>
+          <k-text type="caption">caption text in span</k-text>
+        </k-code>
+        <k-code>
+          <k-text type="small-caption">small caption text in span</k-text>
+        </k-code>
+        <k-code>
+          <k-text type="overline">overline text in span</k-text>
+        </k-code>
       </div>
     </k-accordion>
   </div>
