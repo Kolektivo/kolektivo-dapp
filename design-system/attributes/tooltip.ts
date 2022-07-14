@@ -15,7 +15,14 @@ export class Tooltip implements ICustomAttributeViewModel {
 
   onHover = () => {
     if (this.controller) return;
-    const { controller } = createCustomElement(KTooltip, this.container, this.element, { message: this.value });
+    const tooltip = document.createElement('k-tooltip');
+    this.element.insertAdjacentElement('beforebegin', tooltip);
+    const { controller, instance } = createCustomElement(KTooltip, this.container, tooltip, { message: this.value });
+
+    instance.top = this.element.offsetTop + -10;
+    // instance.left = this.element.offsetLeft;
+    instance.left = this.element.offsetLeft + this.element.offsetWidth / 2;
+
     this.controller = controller;
   };
 
