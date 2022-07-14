@@ -59,6 +59,8 @@ module.exports = {
         mode: 'minimum',
       },
     ],
+    'semi-style': ['error', 'last'],
+    'arrow-parens': ['error', 'as-needed'],
     'semi-spacing': 'error',
     'comma-spacing': 'error',
     'no-multi-spaces': 'error',
