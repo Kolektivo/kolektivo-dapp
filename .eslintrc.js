@@ -34,7 +34,15 @@ module.exports = {
 
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
-    'max-len': 'off',
+    'max-len': ['error', {
+      'code': 350,
+      'tabWidth': 2,
+      'ignoreUrls': true,
+      'ignoreStrings': true,
+      'ignoreTemplateLiterals': true,
+      'ignoreRegExpLiterals': true,
+    },
+    ],
     'sort-imports': 'off',
     'require-atomic-updates': 'warn',
     'no-console': 'warn',
