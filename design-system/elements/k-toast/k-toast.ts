@@ -1,8 +1,8 @@
 import './k-toast.scss';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { NotificationAction, NotificationType } from '../../../design-system/services';
+import { INotificationAction, NotificationType } from '../../../design-system/services';
+import { IToastOptions } from './toast-options';
 import { Position } from './../../types';
-import { ToastOptions } from './toast-options';
 import template from './k-toast.html';
 
 function getFlexFromPosition(position: Position) {
@@ -13,10 +13,10 @@ function getFlexFromPosition(position: Position) {
 }
 
 @customElement({ name: 'k-toast', template })
-export class KToast implements ICustomElementViewModel, ToastOptions {
+export class KToast implements ICustomElementViewModel, IToastOptions {
   @bindable message?: string;
   @bindable type?: NotificationType = 'info';
-  @bindable actions?: NotificationAction[];
+  @bindable actions?: INotificationAction[];
   @bindable position?: Position;
 
   get styles() {

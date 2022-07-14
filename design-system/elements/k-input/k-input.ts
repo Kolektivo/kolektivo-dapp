@@ -13,7 +13,7 @@ export class KInput implements ICustomElementViewModel {
   constructor() {
     // you can inject the element or any DI in the constructor
   }
-  attached(initiator: IHydratedController, flags: LifecycleFlags): void | Promise<void> {
+  attached(_initiator: IHydratedController, _flags: LifecycleFlags): void | Promise<void> {
     setTimeout(() => (this.startWidth = this.start.assignedElements()[0]?.clientWidth + 16), 1);
   }
   focusInput() {
