@@ -12,6 +12,7 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   @bindable public out: boolean;
   @bindable public startClass: string;
   @bindable public endClass: string;
+  @bindable public animationStarted: boolean;
   resolve: (value: void | PromiseLike<void>) => void;
 
   constructor(private readonly element: HTMLElement, @IAnimationService private readonly animationService: IAnimationService) {}
@@ -30,6 +31,7 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   attached(): void | Promise<void> {
     if (this.startClass) {
       this.element.onanimationend = this.onAnimationEnd;
+      this.element.onanimationstart = () => (this.animationStarted = true);
       this.element.classList.add(this.startClass);
     }
     this.animationService.animateCSS(this.element, this.value, 'px', this.from, this.to, this.duration, this.easing as keyof typeof easings);
@@ -48,6 +50,10 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
       if (this.endClass) {
         this.element.classList.add(this.endClass);
         this.element.onanimationend = this.onAnimationEnd;
+      }
+      // not started or no end class
+      if (!this.animationStarted || !this.endClass) {
+        res();
       }
 
       if (this.out) {
