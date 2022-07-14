@@ -12,7 +12,7 @@ export class Storybook {
     this.showLoader1 = !this.showLoader1;
     setTimeout(() => (this.showLoader1 = !this.showLoader1), 2000);
   }
-  isOpen = false;
+
   toggleAnimation1() {
     this.showAnimate1 = !this.showAnimate1;
   }
@@ -44,13 +44,43 @@ export class Storybook {
     const result = await this.notificationService.confirm('Is this cool?');
     this.notificationService.toast({ message: result + ' was clicked' });
   }
-  openModal() {
-    this.isOpen = !this.isOpen;
+
+  //modal example #1
+  isOpen1 = false;
+  openModal1() {
+    this.isOpen1 = !this.isOpen1;
   }
-  cancel() {
-    this.isOpen = !this.isOpen;
+  cancel1() {
+    this.isOpen1 = !this.isOpen1;
   }
-  ok() {
-    this.isOpen = !this.isOpen;
+  ok1() {
+    this.isOpen1 = !this.isOpen1;
+  }
+
+  //modal example #2
+  isOpen2 = false;
+  openModal2() {
+    this.isOpen2 = !this.isOpen2;
+  }
+  cancel2() {
+    this.isOpen2 = !this.isOpen2;
+  }
+  ok2() {
+    this.isOpen2 = !this.isOpen2;
+  }
+
+  //modal example #3
+  isOpen3 = false;
+  openModal3() {
+    this.isOpen3 = !this.isOpen3;
+  }
+  ok3() {
+    this.isOpen3 = !this.isOpen3;
+  }
+  cancel3() {
+    this.isOpen3 = !this.isOpen3;
+  }
+  customClick() {
+    alert('custom modal content button clicked!');
   }
 }

@@ -34,7 +34,6 @@ body {
   line-height: 24px;
   font-weight: 400;
   @include scrollbars(8px, 12px, var(--ocean-blue));
-  overflow-y: overlay;
 }
 
 .app {

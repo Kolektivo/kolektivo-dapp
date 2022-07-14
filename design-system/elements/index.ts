@@ -27,3 +27,4 @@ export * from './k-spinner';
 export * from './k-stack';
 export * from './k-text';
 export * from './k-toast';
+export * from './k-tooltip';
