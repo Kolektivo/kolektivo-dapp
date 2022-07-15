@@ -1,13 +1,13 @@
 import { Constructable, DI, IAurelia, IContainer, Registration } from 'aurelia';
+import { IToastOptions } from 'design-system/elements/k-toast/toast-options';
 import { KConfirm } from '../../elements/k-confirm/k-confirm';
 import { KToast } from './../../elements/k-toast/k-toast';
-import { ToastOptions } from 'design-system/elements/k-toast/toast-options';
 import { createCustomElement, destroyCustomElement } from './../../aurelia-helpers';
 
 export type INotificationService = NotificationService;
 export const INotificationService = DI.createInterface<INotificationService>('INotificationService');
 export class NotificationService {
-  activeToasts: KToast[] = [];
+  private activeToasts: KToast[] = [];
 
   constructor(@IAurelia private readonly aurelia: IAurelia, @IContainer private readonly container: IContainer) {}
 
@@ -34,7 +34,7 @@ export class NotificationService {
    * @param options
    * @returns A function to close the toast with
    */
-  public toast(options: ToastOptions): () => void {
+  public toast(options: IToastOptions): () => void {
     const { controller, instance } = createCustomElement(KToast, this.container, this.aurelia.root.host, options);
     this.activeToasts.push(instance);
 
@@ -42,7 +42,7 @@ export class NotificationService {
       setTimeout(() => {
         destroyCustomElement(controller);
         this.activeToasts.splice(
-          this.activeToasts.findIndex(x => x == instance),
+          this.activeToasts.findIndex(x => x === instance),
           1,
         );
       }, options.timeOut);
