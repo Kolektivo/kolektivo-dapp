@@ -4,5 +4,50 @@
     background: var(--don-juan-800);
     color: var(--white);
     padding: var(--spacing);
+    border-radius: 8px;
+
+    &.tooltip--top::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--don-juan-800) transparent transparent transparent;
+    }
+
+    &.tooltip--bottom::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent var(--don-juan-800) transparent;
+    }
+
+    &.tooltip--right::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -10px;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent var(--don-juan-800) transparent transparent;
+    }
+
+    &.tooltip--left::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent var(--don-juan-800);
+    }
   }
 }
