@@ -1,8 +1,8 @@
 import './treasury.scss';
+import { GridColumn } from './../../../design-system/elements/k-data-grid/grid-column';
 import { ICustomElementViewModel } from 'aurelia';
-import { IGridColumn } from './../../../design-system/elements/k-data-grid/grid-column';
 export class Treasury implements ICustomElementViewModel {
-  testColumns: IGridColumn[] = [
+  testColumns: GridColumn[] = [
     { headerText: 'Token', field: 'token', width: '1fr' },
     { headerText: 'Price', field: 'price', width: '1fr' },
     { headerText: 'Quantity', field: 'quantity', width: '1fr' },

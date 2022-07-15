@@ -1,11 +1,11 @@
+import { GridColumn } from './grid-column';
 import { ICustomElementViewModel, bindable } from 'aurelia';
-import { IGridColumn } from './grid-column';
 
 export class KDataGrid implements ICustomElementViewModel {
   @bindable id?: string;
   @bindable condensed = false;
   @bindable public rows: [] = [];
-  @bindable public columns: IGridColumn[] = [];
+  @bindable public columns: GridColumn[] = [];
   @bindable public selectable = false;
   @bindable public sortColumn: string;
   @bindable public sortDirection: 'asc' | 'desc';

@@ -11,6 +11,6 @@ export class KRadioGroup implements ICustomElementViewModel {
     // you can inject the element or any DI in the constructor
   }
 
-  radioChanged(_item: DisplayValue, _element: HTMLInputElement) {}
+  radioChanged(item: DisplayValue, element: HTMLInputElement) {}
 }
 (CustomElement.getDefinition(KRadioGroup) as { capture: boolean }).capture = true;

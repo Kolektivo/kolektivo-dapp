@@ -22,7 +22,7 @@ export class KStack extends Grid implements ICustomElementViewModel {
   }
 
   get slotStyle() {
-    const { direction, ...viewModelProps } = this.$controller.viewModel;
+    const { $controller, direction, ...viewModelProps } = this.$controller.viewModel;
     return {
       flexDirection: direction,
       flexWrap: 'wrap',

@@ -22,37 +22,29 @@
           <k-alert type="dark">This is a very dark alert. Come to the dark side!!!</k-alert>
         </k-code>
         <k-code>
-          <k-alert type="success" icon="calendar_today">This is an alert that you can pass in any icon you want to into
-            it</k-alert>
+          <k-alert type="success" icon="calendar_today">This is an alert that you can pass in any icon you want to into it</k-alert>
         </k-code>
         <k-code>
-          <k-alert type="info">This is an alert that has a lot of text in it to show how the text will wrap when the
-            text is long. We want this to look good when there is a lot of text.</k-alert>
+          <k-alert type="info">This is an alert that has a lot of text in it to show how the text will wrap when the text is long. We want this to look good when there is a lot of text.</k-alert>
         </k-code>
       </div>
     </k-accordion>
     <k-accordion>
       <span slot="header">Animations</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">Animation examples have styles (storybook.scss) and javascript
-        (storybook.ts) code associated with them. They might require more code than the k-code shows.</k-alert>
+      <k-alert type="info" bottom="var(--spacing-xl)">Animation examples have styles (storybook.scss) and javascript (storybook.ts) code associated with them. They might require more code than the k-code shows.</k-alert>
       <div class="animation">
         <k-code>
           <k-stack gap="10">
-            <div if.bind="showAnimate1" class="animate" animate animate-end-class="fade-out"
-              animate-start-class="fade-in">This will fade in when bound and fade out when unbound.</div>
+            <div if.bind="showAnimate1" class="animate" animate animate-end-class="fade-out" animate-start-class="fade-in">This will fade in when bound and fade out when unbound.</div>
           </k-stack>
         </k-code>
-        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation1()">${showAnimate1 ? "Hide" : "Show"}
-        </k-button>
+        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation1()">${showAnimate1 ? "Hide" : "Show"}</k-button>
         <k-code>
           <k-stack gap="10">
-            <div class="animate" if.bind="showAnimate2" animate-out="true" animate-from="0" animate-to="40"
-              animate-duration="1000" animate="padding">This div starts at 0px padding and animates to 40px padding over
-              1 second</div>
+            <div class="animate" if.bind="showAnimate2" animate-out="true" animate-from="0" animate-to="40" animate-duration="1000" animate="padding">This div starts at 0px padding and animates to 40px padding over 1 second</div>
           </k-stack>
         </k-code>
-        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation2()">${showAnimate2 ? "Hide" : "Show"}
-        </k-button>
+        <k-button type="outlined" color="secondary" click.trigger="toggleAnimation2()">${showAnimate2 ? "Hide" : "Show"}</k-button>
       </div>
     </k-accordion>
     <k-accordion>
@@ -219,19 +211,19 @@
       <span slot="header">Countdowns</span>
       <k-button click.trigger="resetCountdowns()">Reset All Countdowns</k-button>
       <div class="countdowns">
-        <k-code strip="if.bind='showCountdowns'">
+        <k-code strip='if.bind="showCountdowns"'>
           <k-countdown if.bind="showCountdowns"></k-countdown>
         </k-code>
-        <k-code strip="if.bind='showCountdowns'">
+        <k-code strip='if.bind="showCountdowns"'>
           <k-countdown if.bind="showCountdowns" color="var(--error)" finished-color="var(--info)"></k-countdown>
         </k-code>
-        <k-code strip="if.bind='showCountdowns'">
+        <k-code strip='if.bind="showCountdowns"'>
           <k-countdown if.bind="showCountdowns"></k-countdown>
         </k-code>
-        <k-code strip="if.bind='showCountdowns'">
+        <k-code strip='if.bind="showCountdowns"'>
           <k-countdown if.bind="showCountdowns" finished-icon="close"></k-countdown>
         </k-code>
-        <k-code strip="if.bind='showCountdowns'">
+        <k-code strip='if.bind="showCountdowns"'>
           <k-countdown if.bind="showCountdowns" countdown="500" size="100"></k-countdown>
         </k-code>
       </div>
@@ -249,25 +241,20 @@
           <k-form-field name="name" value.bind="data.name" max="50" label="Normal form field"></k-form-field>
         </k-code>
         <k-code validation-errors.from-view="requiredError">
-          <k-form-field name="required" errors.bind="requiredError" value.bind="data.required & validate"
-            label="Required"></k-form-field>
+          <k-form-field name="required" errors.bind="requiredError" value.bind="data.required & validate" label="Required"></k-form-field>
         </k-code>
         <k-code>
-          <k-form-field name="longlabel" value.bind="data.longlabel"
-            label="This is a very very very long label that someone who has very bad jugdement wrote"></k-form-field>
+          <k-form-field name="longlabel" value.bind="data.longlabel" label="This is a very very very long label that someone who has very bad jugdement wrote"></k-form-field>
         </k-code>
         <k-code>
-          <k-form-field name="longlabelmax" value.bind="data.longlabelmax" max="50"
-            label="This is a very very very long label with a max char count"></k-form-field>
+          <k-form-field name="longlabelmax" value.bind="data.longlabelmax" max="50" label="This is a very very very long label with a max char count"></k-form-field>
         </k-code>
         <k-alert type="info" bottom="var(--spacing-xl)">For validation code behind, look at storybook.ts</k-alert>
         <k-code validation-errors.from-view="birthdateError">
-          <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate"
-            label="Date of birth (Validation)" helper-text="DD/MM/YY"></k-form-field>
+          <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate" label="Date of birth (Validation)" helper-text="DD/MM/YY"></k-form-field>
         </k-code>
         <k-code validation-errors.from-view="emailError">
-          <k-form-field name="email" errors.bind="emailError" value.bind="data.email & validate"
-            label="Email address (Validation)" helper-text="example@domain.com"></k-form-field>
+          <k-form-field name="email" errors.bind="emailError" value.bind="data.email & validate" label="Email address (Validation)" helper-text="example@domain.com"></k-form-field>
         </k-code>
       </form>
     </k-accordion>
@@ -276,11 +263,9 @@
       <k-alert type="info" bottom="var(--spacing-xl)">
         To keep the bundle size to a minimum, we only import the icons we need. To import a new icon:
         <ol>
-          <li>Go to <a href="//fonts.google.com/icons" target="_blank">https://fonts.google.com/icons</a> and find the
-            icon name you need</li>
+          <li>Go to <a href="//fonts.google.com/icons" target="_blank">https://fonts.google.com/icons</a> and find the icon name you need</li>
           <li>Open ./main.js</li>
-          <li>Import the icon from the @material-design-icons package (you can import the icon from whichever folder you
-            need [filled, outlined, round, sharp, two-tone])</li>
+          <li>Import the icon from the @material-design-icons package (you can import the icon from whichever folder you need [filled, outlined, round, sharp, two-tone])</li>
           <li>Register that icon in the DesignSystemPlugin</li>
           <li>Add the newly imported icon to this section so we can all see :)</li>
         </ol>
@@ -369,8 +354,7 @@
         <k-code>
           <k-input multiline placeholder="This is a multi line text area"></k-input>
         </k-code>
-        <k-alert type="info" bottom="var(--spacing-xl)">Unable to pass a default value to a textarea tag. Have to use
-          value.bind and define the value in the .ts file. See storybook.ts for example</k-alert>
+        <k-alert type="info" bottom="var(--spacing-xl)">Unable to pass a default value to a textarea tag. Have to use value.bind and define the value in the .ts file. See storybook.ts for example</k-alert>
         <k-code>
           <k-input multiline value.bind="data.textareaInitialValue"></k-input>
         </k-code>
@@ -481,33 +465,24 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Modals</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">We don't know what the modal styles will be yet so the modals
-        don't look great until we know more from the designers</k-alert>
+      <k-alert type="info" bottom="var(--spacing-xl)">We don't know what the modal styles will be yet so the modals don't look great until we know more from the designers</k-alert>
       <div class="modals">
         <k-code>
           <k-modal close-on-click if.bind="isOpen1" cancel.call="cancel1()" ok.call="ok1()"></k-modal>
         </k-code>
         <k-button click.trigger="openModal1()">Default Inline Modal</k-button>
         <k-code>
-          <k-modal close-on-click if.bind="isOpen2" cancel.call="cancel2()" ok.call="ok2()"
-            title="This is a different title" ok-button-text="Sounds good!" cancel-button-text="No way!">
-            This is a bunch of text for a modal. We're using a lot of text so we can show how it looks like in the modal
-            when there is a lot. I'm not sure how much text we should have used here, but this is what we've got so far.
-            What do you think? Is this enough text?
+          <k-modal close-on-click if.bind="isOpen2" cancel.call="cancel2()" ok.call="ok2()" title="This is a different title" ok-button-text="Sounds good!" cancel-button-text="No way!">
+            This is a bunch of text for a modal. We're using a lot of text so we can show how it looks like in the modal when there is a lot. I'm not sure how much text we should have used here, but this is what we've got so far. What do you think? Is this enough text?
           </k-modal>
         </k-code>
         <k-button click.trigger="openModal2()">Attribute Modal</k-button>
         <k-code>
           <k-modal if.bind="isOpen3" cancel.call="cancel3()" close-button>
             <div au-slot="header">
-              <k-grid gap="var(--spacing)" cols="auto 1fr">
-                <k-icon name="calendar_today"></k-icon>
-                <k-text type="overline">Custom header text</k-text>
-              </k-grid>
+              <k-grid gap="var(--spacing)" cols="auto 1fr"> <k-icon name="calendar_today"></k-icon><k-text type="overline">Custom header text</k-text> </k-grid>
             </div>
-            <div style="border: 1px solid red">Html for a modal can go here. We can add anything we want to here like a
-              button. <k-button click.trigger="customClick()">Click me!</k-button>
-            </div>
+            <div style="border: 1px solid red">Html for a modal can go here. We can add anything we want to here like a button. <k-button click.trigger="customClick()">Click me!</k-button></div>
             <div au-slot="footer">
               <k-button click.trigger="ok3()">Custom close button</k-button>
             </div>
@@ -574,30 +549,24 @@
         ${meow}
 
         <k-code>
-          <k-radio-group value.bind="radioGroup" name="example2"
-            items.bind="[{display:'Choice 1', value: 1}, {display:'Choice 2', value: 2}]"></k-radio-group>
+          <k-radio-group value.bind="radioGroup" name="example2" items.bind="[{display:'Choice 1', value: 1}, {display:'Choice 2', value: 2}]"></k-radio-group>
         </k-code>
         ${radioGroup}
       </div>
     </k-accordion>
     <k-accordion>
       <span slot="header">Selects</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">NOTE: This is using the Fast Select component currently, and we
-        might need to code our own select element if Fast doesn't allow us to style it exactly how the designers want it
-        styled</k-alert>
+      <k-alert type="info" bottom="var(--spacing-xl)">NOTE: This is using the Fast Select component currently, and we might need to code our own select element if Fast doesn't allow us to style it exactly how the designers want it styled</k-alert>
 
       <div class="selects">
         <k-code>
-          <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
-            placeholder="Default Select"> </k-select>
+          <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Default Select"> </k-select>
         </k-code>
         <k-code>
-          <k-select disabled value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
-            placeholder="Disabled Select"> </k-select>
+          <k-select disabled value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Disabled Select"> </k-select>
         </k-code>
         <k-code>
-          <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
-            placeholder="Error Select"> </k-select>
+          <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']" placeholder="Error Select"> </k-select>
         </k-code>
       </div>
     </k-accordion>
