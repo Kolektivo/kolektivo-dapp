@@ -13,6 +13,11 @@ export class KGrid extends Grid implements ICustomElementViewModel {
   }
 
   get slotStyle() {
+    /**
+     * do not remove $controller, for some reason removing $controller causes a stack overflow in
+     * au at load time.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { $controller, rows, cols, ...viewModelProps } = this.$controller.viewModel;
     return {
       display: 'grid',

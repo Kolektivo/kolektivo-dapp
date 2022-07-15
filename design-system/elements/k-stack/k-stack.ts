@@ -22,6 +22,11 @@ export class KStack extends Grid implements ICustomElementViewModel {
   }
 
   get slotStyle() {
+    /**
+     * do not remove $controller, for some reason removing $controller causes a stack overflow in
+     * au at load time.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { $controller, direction, ...viewModelProps } = this.$controller.viewModel;
     return {
       flexDirection: direction,
