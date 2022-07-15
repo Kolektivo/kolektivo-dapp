@@ -104,6 +104,9 @@
           <k-check disabled>Disabled Checkbox</k-check>
         </k-code>
         <k-code>
+          <k-check checked disabled>Disabled Checkbox</k-check>
+        </k-code>
+        <k-code>
           <k-stack gap="var(--spacing-sm)">
             <k-check checked.bind="check1">Vertical List 1</k-check>
             <k-check checked.bind="check2">Vertical List 2</k-check>
@@ -354,6 +357,12 @@
         <k-code>
           <k-input multiline placeholder="This is a multi line text area"></k-input>
         </k-code>
+        <k-code>
+          <k-input multiline maxlength="20"></k-input>
+        </k-code>
+        <k-code>
+          <k-input multiline rows="12"></k-input>
+        </k-code>
         <k-alert type="info" bottom="var(--spacing-xl)">Unable to pass a default value to a textarea tag. Have to use value.bind and define the value in the .ts file. See storybook.ts for example</k-alert>
         <k-code>
           <k-input multiline value.bind="data.textareaInitialValue"></k-input>
@@ -553,6 +562,46 @@
         </k-code>
         ${radioGroup}
       </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Scrollbars</span>
+      <k-code>
+        <div style="height: 100px; width: 100px; overflow: auto" class="scrollbar">
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+          Testing<br />
+        </div>
+      </k-code>
     </k-accordion>
     <k-accordion>
       <span slot="header">Selects</span>

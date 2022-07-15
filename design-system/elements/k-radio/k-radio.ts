@@ -6,8 +6,13 @@ import template from './k-radio.html';
 @customElement({ name: 'k-radio', template })
 export class KRadio implements ICustomElementViewModel {
   @bindable id = uid();
+  input: HTMLInputElement;
   constructor() {
     // you can inject the element or any DI in the constructor
+  }
+  select() {
+    this.input.click();
+    this.input.focus();
   }
 }
 (CustomElement.getDefinition(KRadio) as { capture: boolean }).capture = true;

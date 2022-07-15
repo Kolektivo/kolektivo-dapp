@@ -7,6 +7,7 @@ export class KInput implements ICustomElementViewModel {
   @bindable name = '';
   @bindable({ set: IfExistsThenTrue }) multiline = false;
   @bindable({ set: IfExistsThenTrue }) error = false;
+  @bindable rows = 4;
   start: HTMLSlotElement;
   input: HTMLInputElement;
   startWidth: number;

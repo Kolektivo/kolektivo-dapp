@@ -36,6 +36,7 @@ k-radio {
       &:focus-visible {
         border-color: var(--ocean-blue);
         box-shadow: 0px 0px 0px 3px rgba(69, 173, 168, 0.4);
+        outline-color: var(--ocean-blue-200);
       }
       &:checked {
         background-color: var(--white);
