@@ -14,7 +14,21 @@ module.exports = {
     jest: true,
   },
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        semi: true,
+        trailingComma: 'all',
+        singleQuote: true,
+        printWidth: 350,
+        tabWidth: 2,
+        endOfLine: 'auto',
+        arrowParens: 'avoid',
+      },
+      {
+        usePrettierrc: false,
+      },
+    ],
     'no-tabs': ['error', { allowIndentationTabs: true }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
