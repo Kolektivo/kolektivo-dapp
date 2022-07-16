@@ -35,7 +35,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'no-useless-escape': 'off',
     '@typescript-eslint/indent': 'off',
-    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
     '@typescript-eslint/no-unused-expressions': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/ban-ts-comment': 'warn',

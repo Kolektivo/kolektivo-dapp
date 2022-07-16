@@ -22,6 +22,7 @@ export class KStack extends Grid implements ICustomElementViewModel {
   }
 
   get slotStyle() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { $controller, direction, ...viewModelProps } = this.$controller.viewModel;
     return {
       flexDirection: direction,
