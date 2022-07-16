@@ -1,13 +1,28 @@
-import { ICustomElementViewModel, bindable } from 'aurelia';
+import { ICustomElementViewModel, IPlatform, bindable } from 'aurelia';
 import { numberToPixels } from './../../common';
+
+export type TooltipPosition = 'top' | 'start' | 'end' | 'bottom';
+
 export class KTooltip implements ICustomElementViewModel {
   @bindable message: string;
-  @bindable({ set: numberToPixels }) top = 0;
-  @bindable({ set: numberToPixels }) bottom = 0;
-  @bindable({ set: numberToPixels }) right = 0;
-  @bindable({ set: numberToPixels }) left = 0;
-  constructor(private readonly element: HTMLElement) {
-    // you can inject the element or any DI in the constructor
+  @bindable host: HTMLElement;
+  @bindable position: TooltipPosition = 'top';
+  left: string;
+  top: string;
+
+  constructor(@IPlatform private readonly platform: IPlatform) {}
+
+  attaching() {
+    this.platform.window.addEventListener('resize', this.recalc);
+  }
+
+  recalc = () => {
+    this.top = numberToPixels(this.host.offsetTop);
+    this.left = numberToPixels(this.host.offsetLeft + this.host.offsetWidth / 2);
+  };
+
+  binding() {
+    this.recalc();
   }
 
   get style() {

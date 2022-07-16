@@ -5,11 +5,28 @@
     color: var(--white);
     padding: var(--spacing);
     border-radius: 8px;
+    z-index: 999;
 
-    &.tooltip--top::after {
+    &.top {
+      transform: translate(-50%, -110%);
+    }
+
+    &.bottom {
+      transform: translate(-50%, 55%);
+    }
+
+    &.start {
+      transform: translate(-130%, -25%);
+    }
+
+    &.end {
+      transform: translate(30%, -25%);
+    }
+
+    &.top::after {
       content: '';
       position: absolute;
-      top: 100%;
+      top: 99%;
       left: 50%;
       margin-left: -5px;
       border-width: 5px;
@@ -17,10 +34,10 @@
       border-color: var(--don-juan-800) transparent transparent transparent;
     }
 
-    &.tooltip--bottom::after {
+    &.bottom::after {
       content: '';
       position: absolute;
-      top: -10px;
+      top: -9px;
       left: 50%;
       margin-left: -5px;
       border-width: 5px;
@@ -28,22 +45,22 @@
       border-color: transparent transparent var(--don-juan-800) transparent;
     }
 
-    &.tooltip--right::after {
+    &.end::after {
       content: '';
       position: absolute;
       top: 50%;
-      left: -10px;
+      left: -9px;
       margin-top: -5px;
       border-width: 5px;
       border-style: solid;
       border-color: transparent var(--don-juan-800) transparent transparent;
     }
 
-    &.tooltip--left::after {
+    &.start::after {
       content: '';
       position: absolute;
       top: 50%;
-      left: 100%;
+      left: 99%;
       margin-top: -5px;
       border-width: 5px;
       border-style: solid;

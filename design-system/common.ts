@@ -1,5 +1,5 @@
-export const numberToPixels = (value?: string | number) => {
-  if (!value || isNaN(Number(value))) return value;
+export const numberToPixels = (value?: string | number): string => {
+  if (!value || isNaN(Number(value))) return String(value);
   return value + 'px';
 };
 

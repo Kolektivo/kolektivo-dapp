@@ -8,6 +8,7 @@ export class Storybook {
   showAnimate1 = true;
   showCountdowns = true;
   showLoader1 = false;
+
   toggleLoader1() {
     this.showLoader1 = !this.showLoader1;
     setTimeout(() => (this.showLoader1 = !this.showLoader1), 2000);
@@ -16,17 +17,22 @@ export class Storybook {
   toggleAnimation1() {
     this.showAnimate1 = !this.showAnimate1;
   }
+
   showAnimate2 = true;
+
   toggleAnimation2() {
     this.showAnimate2 = !this.showAnimate2;
   }
+
   data = {
     textareaInitialValue: 'Default value passed into text area',
   };
+
   resetCountdowns() {
     this.showCountdowns = false;
     this.showCountdowns = true;
   }
+
   constructor(@IValidationRules validationRules: IValidationRules, @newInstanceForScope(IValidationController) private controller: IValidationController, @INotificationService private readonly notificationService: INotificationService) {
     validationRules
       .on(this.data)
