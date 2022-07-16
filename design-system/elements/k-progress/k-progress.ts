@@ -10,10 +10,10 @@ export class KProgress {
   @bindable public background?: string;
   @bindable public subText?: string;
 
-  get progressBarStyle() {
+  get progressBarStyle(): string {
     return `width:${(this.value / this.max) * 100}%;background-color:${this.color};height:${numberToPixels(this.height)}`;
   }
-  get barStyle() {
+  get barStyle(): string {
     return `background-color:${this.background};height:${numberToPixels(this.height)}`;
   }
 }

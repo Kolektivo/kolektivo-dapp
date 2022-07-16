@@ -12,7 +12,7 @@ export class KGrid extends Grid implements ICustomElementViewModel {
     super();
   }
 
-  get slotStyle() {
+  get slotStyle(): Record<string, unknown> {
     const { $controller, rows, cols, ...viewModelProps } = this.$controller.viewModel;
     return {
       display: 'grid',

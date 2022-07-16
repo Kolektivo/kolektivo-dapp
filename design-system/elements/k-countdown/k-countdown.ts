@@ -15,7 +15,7 @@ export class KCountdown implements ICustomElementViewModel {
     // you can inject the element or any DI in the constructor
   }
 
-  binding() {
+  binding(): void {
     this.currentCount = this.countdown;
     this.interval = setInterval(() => {
       if (this.hovering) return;
@@ -26,24 +26,24 @@ export class KCountdown implements ICustomElementViewModel {
     }, 1000);
   }
 
-  get finished() {
+  get finished(): boolean {
     return this.currentCount <= 0;
   }
 
-  get divStyle() {
+  get divStyle(): Record<string, unknown> {
     return {
       lineHeight: numberToPixels(this.size),
       color: this.finished ? this.finishedColor ?? this.color : this.color,
       height: numberToPixels(this.size),
     };
   }
-  mouseEnter() {
+  mouseEnter(): void {
     this.hovering = true;
   }
-  mouseLeave() {
+  mouseLeave(): void {
     this.hovering = false;
   }
-  detaching() {
+  detaching(): void {
     clearInterval(this.interval);
   }
 }

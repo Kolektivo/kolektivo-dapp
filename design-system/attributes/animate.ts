@@ -31,13 +31,13 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   attached(): void | Promise<void> {
     if (this.startClass) {
       this.element.onanimationend = this.onAnimationEnd;
-      this.element.onanimationstart = () => (this.animationStarted = true);
+      this.element.onanimationstart = (): boolean => (this.animationStarted = true);
       this.element.classList.add(this.startClass);
     }
     this.animationService.animateCSS(this.element, this.value, 'px', this.from, this.to, this.duration, this.easing as keyof typeof easings);
   }
 
-  onAnimationEnd = () => {
+  onAnimationEnd = (): void => {
     this.element.classList.remove(this.startClass);
     this.element.classList.remove(this.endClass);
     this.resolve?.();

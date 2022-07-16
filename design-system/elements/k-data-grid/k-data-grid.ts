@@ -17,7 +17,7 @@ export class KDataGrid implements ICustomElementViewModel {
     // you can inject the element or any DI in the constructor
   }
 
-  get cols() {
+  get cols(): string {
     return this.columns?.map(y => y.width).join(' ');
   }
 

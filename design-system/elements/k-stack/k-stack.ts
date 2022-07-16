@@ -10,7 +10,7 @@ export class KStack extends Grid implements ICustomElementViewModel {
     super();
   }
 
-  binding() {
+  binding(): void {
     if (this.direction === 'row') {
       this.alignItems = 'center';
       return;
@@ -21,8 +21,7 @@ export class KStack extends Grid implements ICustomElementViewModel {
     }
   }
 
-  get slotStyle() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  get slotStyle(): Record<string, unknown> {
     const { $controller, direction, ...viewModelProps } = this.$controller.viewModel;
     return {
       flexDirection: direction,

@@ -6,7 +6,7 @@ export class KSelect implements ICustomElementViewModel {
   constructor() {
     // you can inject the element or any DI in the constructor
   }
-  changed() {
+  changed(): void {
     (document.activeElement as HTMLElement).blur();
   }
 }

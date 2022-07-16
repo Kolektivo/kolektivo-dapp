@@ -12,19 +12,20 @@ export class KTooltip implements ICustomElementViewModel {
 
   constructor(@IPlatform private readonly platform: IPlatform) {}
 
-  attaching() {
+  attaching(): void {
     this.platform.window.addEventListener('resize', this.recalc);
   }
 
-  recalc = () => {
+  recalc = (): void => {
     this.top = numberToPixels(this.host.offsetTop);
     this.left = numberToPixels(this.host.offsetLeft + this.host.offsetWidth / 2);
   };
 
-  binding() {
+  binding(): void {
     this.recalc();
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   get style() {
     return {
       top: this.top,

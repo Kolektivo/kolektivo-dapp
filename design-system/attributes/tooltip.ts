@@ -2,7 +2,7 @@ import { IContainer, ICustomAttributeViewModel, bindable, customAttribute } from
 import { ICustomElementController } from '@aurelia/runtime-html';
 import { KTooltip } from '../../design-system/elements';
 import { Position } from './../types';
-import { createCustomElement } from '../../design-system/aurelia-helpers';
+import { createCustomElement, destroyCustomElement } from '../../design-system/aurelia-helpers';
 
 @customAttribute({ name: 'tooltip' })
 export class Tooltip implements ICustomAttributeViewModel {
@@ -16,7 +16,7 @@ export class Tooltip implements ICustomAttributeViewModel {
     this.element.onmouseout = this.onHoverOut;
   }
 
-  onHover = () => {
+  onHover = (): void => {
     if (this.controller) return;
     this.host = document.createElement('k-tooltip');
     this.element.insertAdjacentElement('beforebegin', this.host);
@@ -25,9 +25,9 @@ export class Tooltip implements ICustomAttributeViewModel {
     this.controller = controller;
   };
 
-  onHoverOut = async () => {
-    // await destroyCustomElement(this.controller);
-    // this.host.remove();
-    // this.controller = void 0;
+  onHoverOut = async (): Promise<void> => {
+    await destroyCustomElement(this.controller);
+    this.host.remove();
+    this.controller = void 0;
   };
 }

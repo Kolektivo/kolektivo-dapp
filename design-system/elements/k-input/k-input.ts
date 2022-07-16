@@ -16,10 +16,10 @@ export class KInput implements ICustomElementViewModel {
   attached(): void | Promise<void> {
     setTimeout(() => (this.startWidth = this.start.assignedElements()[0]?.clientWidth + 16), 1);
   }
-  focusInput() {
+  focusInput(): void {
     this.input.focus();
   }
-  focused() {
+  focused(): void {
     this.input.select();
   }
 }

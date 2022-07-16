@@ -13,14 +13,14 @@ export class KSpinner implements ICustomElementViewModel {
   constructor() {
     // you can inject the element or any DI in the constructor
   }
-  get iconStyle() {
+  get iconStyle(): Record<string, unknown> {
     return {
       animation: this.animation && `${this.animation} ${this.speed}s linear infinite reverse`,
       animationPlayState: this.paused && 'paused',
       transform: `rotateY(-180deg) rotateZ(-90deg)`,
     };
   }
-  get circleStyle() {
+  get circleStyle(): Record<string, unknown> {
     return {
       stroke: this.color,
       animation: this.animation && `${this.animation} ${this.speed}s linear infinite forwards`,
@@ -28,7 +28,7 @@ export class KSpinner implements ICustomElementViewModel {
       transformOrigin: this.animation === 'spinner' && `20px 20px 0`,
     };
   }
-  get svgStyle() {
+  get svgStyle(): Record<string, unknown> {
     return {
       width: numberToPixels(this.size),
       height: numberToPixels(this.size),

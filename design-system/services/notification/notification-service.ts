@@ -20,7 +20,7 @@ export class NotificationService {
         instance.message = message;
       }
       const confirm = instance.confirm;
-      instance.confirm = async value => {
+      instance.confirm = async (value): Promise<boolean> => {
         const result = await confirm(value);
         await destroyCustomElement(controller);
         res(result);
