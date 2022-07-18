@@ -1,7 +1,8 @@
 :host {
   au-compose {
+    --color: var(--don-juan-800);
     position: absolute;
-    background: var(--don-juan-800);
+    background: var(--color);
     color: var(--white);
     padding: var(--spacing);
     border-radius: 8px;
@@ -31,7 +32,7 @@
       margin-left: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: var(--don-juan-800) transparent transparent transparent;
+      border-color: var(--color) transparent transparent transparent;
     }
 
     &.bottom::after {
@@ -42,7 +43,7 @@
       margin-left: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: transparent transparent var(--don-juan-800) transparent;
+      border-color: transparent transparent var(--color) transparent;
     }
 
     &.end::after {
@@ -53,18 +54,18 @@
       margin-top: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: transparent var(--don-juan-800) transparent transparent;
+      border-color: transparent var(--color) transparent transparent;
     }
 
     &.start::after {
       content: '';
       position: absolute;
       top: 50%;
-      left: 99%;
+      left: 100%;
       margin-top: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: transparent transparent transparent var(--don-juan-800);
+      border-color: transparent transparent transparent var(--color);
     }
   }
 }

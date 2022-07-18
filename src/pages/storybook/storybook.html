@@ -1,13 +1,5 @@
 <k-page title="Kolektivo Design System">
   <div id="storybook">
-    <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:top" name="calendar_today">
-    </k-icon>
-    <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:start" name="calendar_today">
-    </k-icon>
-    <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:end" name="calendar_today">
-    </k-icon>
-    <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:bottom" name="calendar_today">
-    </k-icon>
     <k-accordion>
       <span slot="header">Alerts</span>
       <div class="alerts">
@@ -661,14 +653,34 @@
     <k-accordion>
       <span slot="header">Tooltips</span>
       <div class="tooltips">
-        <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:top" name="calendar_today">
-        </k-icon>
-        <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:start" name="calendar_today">
-        </k-icon>
-        <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:end" name="calendar_today">
-        </k-icon>
-        <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:bottom" name="calendar_today">
-        </k-icon>
+        <k-code>
+          <k-text tooltip="This is some additional information">This is a standard tooltip</k-text>
+        </k-code>
+        <k-code>
+          <k-text tooltip="value:This is some additional information;position:bottom">This is a bottom tooltip</k-text>
+        </k-code>
+        <k-code>
+          <k-text tooltip="value:This is some additional information;position:start">This is a left tooltip</k-text>
+        </k-code>
+        <k-code>
+          <k-text tooltip="value:This is some additional information;position:end">This is a right tooltip</k-text>
+        </k-code>
+        <k-code>
+          <k-icon tooltip="<k-spinner color='var(--white)'></k-spinner>" name="calendar_today">
+          </k-icon>
+        </k-code>
+        <k-code>
+          <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:start" name="calendar_today">
+          </k-icon>
+        </k-code>
+        <k-code>
+          <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:end" name="calendar_today">
+          </k-icon>
+        </k-code>
+        <k-code>
+          <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:bottom" name="calendar_today">
+          </k-icon>
+        </k-code>
       </div>
     </k-accordion>
     <k-accordion>

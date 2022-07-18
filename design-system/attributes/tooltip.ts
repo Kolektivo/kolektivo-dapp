@@ -7,7 +7,9 @@ import { createCustomElement, destroyCustomElement } from '../../design-system/a
 @customAttribute({ name: 'tooltip' })
 export class Tooltip implements ICustomAttributeViewModel {
   @bindable value: string;
-  @bindable position: Position;
+  @bindable position: Position = 'top';
+  @bindable color = 'var(--don-juan-800)';
+
   controller?: ICustomElementController;
   host: HTMLElement;
 
@@ -20,7 +22,7 @@ export class Tooltip implements ICustomAttributeViewModel {
     if (this.controller) return;
     this.host = document.createElement('k-tooltip');
     this.element.insertAdjacentElement('beforebegin', this.host);
-    const { controller } = createCustomElement(KTooltip, this.container, this.host, { message: this.value, host: this.element, position: this.position });
+    const { controller } = createCustomElement(KTooltip, this.container, this.host, { message: this.value, host: this.element, position: this.position, color: this.color });
 
     this.controller = controller;
   };

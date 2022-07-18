@@ -6,6 +6,7 @@ export type TooltipPosition = 'top' | 'start' | 'end' | 'bottom';
 export class KTooltip implements ICustomElementViewModel {
   @bindable message: string;
   @bindable host: HTMLElement;
+  @bindable color = 'var(--don-juan-800)';
   @bindable position: TooltipPosition = 'top';
   left: string;
   top: string;
@@ -17,8 +18,10 @@ export class KTooltip implements ICustomElementViewModel {
   }
 
   recalc = (): void => {
-    this.top = numberToPixels(this.host.offsetTop);
-    this.left = numberToPixels(this.host.offsetLeft + this.host.offsetWidth / 2);
+    const horizontalAdjustment = this.position === 'start' ? 6 : this.position === 'end' ? -6 : 0;
+    const verticalAdjustment = this.position === 'top' ? 6 : this.position === 'bottom' ? -5 : 0;
+    this.top = numberToPixels(this.host.offsetTop - verticalAdjustment);
+    this.left = numberToPixels(this.host.offsetLeft + this.host.offsetWidth / 2 - horizontalAdjustment);
   };
 
   binding(): void {
