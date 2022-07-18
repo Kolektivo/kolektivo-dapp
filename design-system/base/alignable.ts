@@ -10,4 +10,18 @@ export abstract class Alignable {
   @bindable justifySelf?: CSSStyleDeclaration['justifySelf'];
   @bindable justifyItems?: CSSStyleDeclaration['justifyItems'];
   @bindable justifyContent?: CSSStyleDeclaration['justifyContent'];
+
+  get alignableStyle(): Record<string, string> {
+    return {
+      alignItems: this.alignItems,
+      alignContent: this.alignContent,
+      alignSelf: this.alignSelf,
+      placeSelf: this.placeSelf,
+      placeItems: this.placeItems,
+      placeContent: this.placeContent,
+      justifySelf: this.justifySelf,
+      justifyItems: this.justifyItems,
+      justifyContent: this.justifyContent,
+    };
+  }
 }

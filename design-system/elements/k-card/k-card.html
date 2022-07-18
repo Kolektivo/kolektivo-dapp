@@ -1,7 +1,9 @@
-<k-paper ...$attrs>
-  <k-grid gap="var(--spacing)" rows="auto 1fr auto">
-    <slot name="header"></slot>
-    <slot></slot>
-    <slot name="footer"></slot>
-  </k-grid>
+<k-paper part="paper" ...$attrs>
+  <div part="grid">
+    <k-grid gap="var(--spacing)" rows="auto 1fr auto">
+      <slot part="header" name="header"></slot>
+      <slot part="content"></slot>
+      <slot part="footer" name="footer"></slot>
+    </k-grid>
+  </div>
 </k-paper>

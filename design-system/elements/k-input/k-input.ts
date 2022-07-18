@@ -7,6 +7,7 @@ export class KInput implements ICustomElementViewModel {
   @bindable({ set: IfExistsThenTrue }) multiline = false;
   @bindable({ set: IfExistsThenTrue }) error = false;
   @bindable rows = 4;
+  @bindable({ set: IfExistsThenTrue }) noSpinner = true;
   start: HTMLSlotElement;
   input: HTMLInputElement;
   startWidth: number;
@@ -21,6 +22,9 @@ export class KInput implements ICustomElementViewModel {
   }
   focused(): void {
     this.input.select();
+  }
+  get spinner() {
+    return this.noSpinner;
   }
 }
 

@@ -1,10 +1,6 @@
 <import from="./pages"></import>
 
-<div id="reserve-main">
-  <k-paper>
-    <nav>
-      <a repeat.for="route of routes" load="${route.path}"> <k-text tag="h6"> ${route.name} </k-text></a>
-    </nav>
-  </k-paper>
+<div id="reserve-page">
+  <inner-nav routes.bind></inner-nav>
   <au-viewport default="dashboard"></au-viewport>
 </div>

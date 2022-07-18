@@ -1,5 +1,6 @@
 :host {
   width: 100%;
+
   ::slotted([slot='start']) {
     position: absolute;
     background-color: var(--don-juan-025);
@@ -12,6 +13,7 @@
     display: grid;
     place-items: center;
   }
+
   [name='start'].error::slotted(*) {
     background-color: var(--error);
     color: var(--white);
@@ -19,11 +21,13 @@
     margin: 0;
     padding-top: 13px;
   }
+
   ::slotted([slot='end']) {
     align-self: center;
     border-radius: 0 2px 2px 0;
     border: 1px solid blue;
   }
+
   input,
   textarea {
     flex: 1;
@@ -38,23 +42,33 @@
     font-weight: 400;
     color: var(--don-juan-700);
     width: 100%;
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
+
+    &[no-spinner] {
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        appearance: none;
+        margin: 0;
+      }
     }
+
     &[type='number'] {
       -moz-appearance: textfield;
     }
+
     &::selection {
       background: var(--ocean-blue-100);
     }
+
     &:hover {
       border-color: var(--ocean-blue);
     }
+
     &:active {
       border: 2px solid var(--ocean-blue);
     }
+
     &:focus,
     &:focus-visible,
     &:focus-within {
@@ -62,10 +76,12 @@
       outline: 2px solid var(--ocean-blue-200);
       margin: -1px;
     }
+
     &:disabled {
       background-color: var(--don-juan-025);
       border: 1px solid var(--don-juan-050);
       color: var(--don-juan-300);
+
       &:active,
       &:focus,
       &:focus-visible,
@@ -73,10 +89,12 @@
         border: 1px solid var(--don-juan-050);
       }
     }
+
     &.error {
       color: var(--error);
       border-color: var(--error);
       background-color: var(--error-light);
+
       &:focus,
       &:focus-visible,
       &:focus-within {
@@ -84,6 +102,7 @@
         outline: 2px solid var(--error-light);
         margin: -1px;
       }
+
       &::selection {
         background: var(--error);
         color: var(--white);

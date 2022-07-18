@@ -1,9 +1,7 @@
 import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
-import { Grid } from '../../grid';
-import { ICustomElementController } from '@aurelia/runtime-html';
+import { Grid } from '../../base/grid';
 
 export class KStack extends Grid implements ICustomElementViewModel {
-  $controller?: ICustomElementController<this>;
   @bindable direction = 'column';
 
   constructor() {
@@ -22,11 +20,10 @@ export class KStack extends Grid implements ICustomElementViewModel {
   }
 
   get slotStyle(): Record<string, unknown> {
-    const { $controller, direction, ...viewModelProps } = this.$controller.viewModel;
     return {
-      flexDirection: direction,
+      flexDirection: this.direction,
       flexWrap: 'wrap',
-      ...viewModelProps,
+      ...this.gridStyle,
     };
   }
 }
