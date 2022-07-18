@@ -48,9 +48,7 @@ module.exports = {
     'no-console': 'warn',
     '@typescript-eslint/ban-ts-comment': [
       'warn',
-      {
-        'ts-ignore': false,
-      },
+      { 'ts-ignore': false },
     ],
     '@typescript-eslint/no-inferrable-types': [
       'off',
@@ -63,9 +61,7 @@ module.exports = {
     'arrow-spacing': 'error',
     'key-spacing': [
       'error',
-      {
-        mode: 'minimum',
-      },
+      { mode: 'minimum' },
     ],
     'semi-style': ['error', 'last'],
     'arrow-parens': ['error', 'as-needed'],
@@ -73,7 +69,19 @@ module.exports = {
     'comma-spacing': 'error',
     'no-multi-spaces': 'error',
     'no-trailing-spaces': 'error',
-    indent: 'off', // to not interfere with @typescript just below
+    'space-before-blocks': 'error',
+    'space-before-function-paren': [
+      'error',
+      {
+        anonymous: 'never',
+        named: 'never',
+        asyncArrow: 'ignore',
+      },
+    ],
+    'object-curly-newline': 'error',
+    'space-in-parens': ['error', 'never'],
+    'indent': 'off', // to not interfere with @typescript just below
+    'no-whitespace-before-property': 'error',
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/prefer-for-of': 'error',
     '@typescript-eslint/consistent-type-assertions': [
@@ -99,9 +107,7 @@ module.exports = {
     'no-unused-vars': 'off', // to not interfere with @typescript just below
     '@typescript-eslint/no-unused-vars': [
       'error',
-      {
-        argsIgnorePattern: '[_].*',
-      },
+      { argsIgnorePattern: '[_].*' },
     ],
     quotes: ['error', 'single'],
     'no-prototype-builtins': 0,
