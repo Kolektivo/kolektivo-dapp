@@ -1,4 +1,5 @@
 <k-page title="Kolektivo Design System">
+
   <div id="storybook">
     <k-accordion>
       <span slot="header">Alerts</span>
@@ -242,7 +243,10 @@
     <k-accordion>
       <span slot="header">Data Grid</span>
       <div class="datagrids">
-        <k-alert type="info">Data grids are coming!</k-alert>
+        <k-alert type="info">Look at storybook.ts to see how to pass data into the data grids</k-alert>
+        <k-code>
+          <k-data-grid rows.bind="testData1" columns.bind="testColumns1"></k-data-grid>
+        </k-code>
       </div>
     </k-accordion>
     <k-accordion>
