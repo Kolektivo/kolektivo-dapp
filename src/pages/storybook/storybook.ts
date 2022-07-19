@@ -122,4 +122,21 @@ export class Storybook {
     { token: 'XXX', price: '7', quantity: 400 },
     { token: 'XXX', price: '8', quantity: 400 },
   ];
+
+  //toast examples
+  public toast1(): void {
+    this.notificationService.toast({ message: 'This is a normal toast. It will stay for 5 seconds by default.' });
+  }
+
+  public toast2(): void {
+    this.notificationService.toast({ message: 'This toast will hide after 10 seconds', timeOut: 10000 });
+  }
+
+  public toast3(): void {
+    this.notificationService.toast({ message: 'This is a dangerous toast! =O', type: 'danger' });
+  }
+
+  public toast4(): void {
+    this.notificationService.toast({ message: 'This is a bottom toast', position: 'bottom' });
+  }
 }

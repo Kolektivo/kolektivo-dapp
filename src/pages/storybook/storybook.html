@@ -131,6 +131,14 @@
       </div>
     </k-accordion>
     <k-accordion>
+      <span slot="header">Chips</span>
+      <div class="chips">
+        <k-code>
+          <k-chip>Testing</k-chip>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
       <span slot="header">Colors</span>
       <div>
         <k-text tag="h6">Base Colors</k-text>
@@ -657,6 +665,24 @@
         <k-code>
           <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
             placeholder="Error Select"> </k-select>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Toasts</span>
+      <k-alert type="info" bottom="var(--spacing-xl)">Toasts use the notification service in the storybook.ts file</k-alert>
+      <div class="toasts">
+        <k-code>
+          <k-button click.trigger="toast1()">Normal Toast</k-button>
+        </k-code>
+        <k-code>
+          <k-button click.trigger="toast2()">Long Toast</k-button>
+        </k-code>
+        <k-code>
+          <k-button click.trigger="toast3()">Dangerous Toast</k-button>
+        </k-code>
+        <k-code>
+          <k-button click.trigger="toast4()">Bottom Toast</k-button>
         </k-code>
       </div>
     </k-accordion>

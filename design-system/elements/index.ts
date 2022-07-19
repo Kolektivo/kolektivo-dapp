@@ -5,6 +5,7 @@ export * from './k-button';
 export * from './k-card';
 export * from './k-chart';
 export * from './k-check';
+export * from './k-chip';
 export * from './k-code';
 export * from './k-color';
 export * from './k-confirm';
