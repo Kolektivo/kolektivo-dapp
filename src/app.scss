@@ -1,4 +1,5 @@
 @import '../design-system/styles/mixins.scss';
+
 @font-face {
   font-family: 'Kaleko';
   src: url('../static/Kaleko105-Bold.woff2') format('woff2');
@@ -16,6 +17,7 @@
   src: url('../static/Kaleko105-Light.woff2') format('woff2');
   font-weight: normal;
 }
+
 @font-face {
   font-family: 'Kaleko';
   src: url('../static/Kaleko105-Thin.woff2') format('woff2');
@@ -35,6 +37,7 @@ body {
   font-weight: 400;
   @include scrollbars(8px, 12px, var(--ocean-blue));
 }
+
 .scrollbar {
   @include scrollbars(8px, 12px, var(--ocean-blue));
 }
@@ -43,10 +46,12 @@ body {
   display: grid;
   grid-template-columns: minmax(auto, 288px) 1fr;
   height: 100%;
+
   main {
     header {
       background-color: var(--san-juan-800);
     }
+
     display: grid;
     grid-template-rows: 80px 1fr auto;
   }
@@ -96,6 +101,7 @@ body {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -105,6 +111,7 @@ body {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -113,6 +120,7 @@ body {
 .fade-in {
   animation: FadeIn 1s;
 }
+
 .fade-out {
   animation: FadeOut 1s;
 }
