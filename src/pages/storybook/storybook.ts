@@ -1,5 +1,5 @@
 import './storybook.scss';
-import { GridColumn } from './../../../design-system/elements/k-data-grid/grid-column';
+import { IGridColumn } from './../../../design-system/elements/k-data-grid/grid-column';
 import { INotificationService } from '../../../design-system/services';
 import { IValidationController } from '@aurelia/validation-html';
 import { IValidationRules } from '@aurelia/validation';
@@ -96,7 +96,7 @@ export class Storybook {
   }
 
   //data grid example
-  testColumns1: GridColumn[] = [
+  testColumns1: IGridColumn[] = [
     { headerText: 'Token', field: 'token', width: '1fr', template: '<k-grid cols="auto 1fr" gap="var(--spacing-lg)"><k-icon tooltip="this is cool" name="calendar_today"></k-icon>${token}</k-grid>' },
     { headerText: 'Price', field: 'price', width: '1fr', align: 'right', template: '${price | currency}' },
     { headerText: 'Quantity', field: 'quantity', width: '1fr', align: 'right' },

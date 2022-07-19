@@ -1,5 +1,6 @@
 import { Constructable, DI, IAurelia, IContainer, Registration } from 'aurelia';
 import { IDesignSystemConfiguration } from '../../../design-system/configuration';
+import { IToastOptions } from 'design-system/elements/k-toast/toast-options';
 import { KConfirm } from '../../elements/k-confirm/k-confirm';
 import { KToast } from './../../elements/k-toast/k-toast';
 import { createCustomElement, destroyCustomElement } from './../../aurelia-helpers';
