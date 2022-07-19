@@ -1,21 +1,35 @@
-import { ICustomElementViewModel, bindable } from 'aurelia';
+import { ICustomElementViewModel, IPlatform, bindable } from 'aurelia';
 import { numberToPixels } from './../../common';
+
+export type TooltipPosition = 'top' | 'start' | 'end' | 'bottom';
+
 export class KTooltip implements ICustomElementViewModel {
-  @bindable message:
+  @bindable message: string;
+  @bindable host: HTMLElement;
+  @bindable color = 'var(--don-juan-800)';
+  @bindable position: TooltipPosition = 'top';
+  left: string;
+  top: string;
 
-  string;
-  @bindable({ set: numberToPixels }) top
+  constructor(@IPlatform private readonly platform: IPlatform) {}
 
-    = 0;
-  @bindable({ set: numberToPixels,
-  }) bottom = 0;
-  @bindable({ set: numberToPixels }) right = 0;
-  @bindable({ set: numberToPixels }) left = 0;
-  constructor(private readonly element: HTMLElement) {
-    // you can inject the element or any DI in the constructor
+  attaching(): void {
+    this.platform.window.addEventListener('resize', this.recalc);
   }
 
-  get style () {
+  recalc = (): void => {
+    const horizontalAdjustment = this.position === 'start' ? 6 : this.position === 'end' ? -6 : 0;
+    const verticalAdjustment = this.position === 'top' ? 6 : this.position === 'bottom' ? -5 : 0;
+    this.top = numberToPixels(this.host.offsetTop - verticalAdjustment);
+    this.left = numberToPixels(this.host.offsetLeft + this.host.offsetWidth / 2 - horizontalAdjustment);
+  };
+
+  binding(): void {
+    this.recalc();
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  get style() {
     return {
       top:
       this.top,

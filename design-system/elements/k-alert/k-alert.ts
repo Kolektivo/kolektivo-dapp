@@ -7,7 +7,7 @@ export class KAlert implements ICustomElementViewModel {
   @bindable top = '';
   @bindable bottom = '';
 
-  getIconName() {
+  getIconName(): 'error_filled' | 'check_circle_filled' | 'warning_filled' | 'info_filled' {
     switch (this.type) {
       case 'danger':
         return 'error_filled';
@@ -21,7 +21,7 @@ export class KAlert implements ICustomElementViewModel {
         return 'check_circle_filled';
     }
   }
-  margin() {
+  margin(): string {
     let styles = '';
     if (this.top) styles += `margin-top: ${this.top};`;
     if (this.bottom) styles += `margin-bottom: ${this.bottom};`;

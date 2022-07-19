@@ -12,13 +12,13 @@ export class KIcon implements ICustomElementViewModel {
 
   constructor(@IDesignSystemConfiguration private readonly configuration: IDesignSystemConfiguration) {}
 
-  nameChanged() {
+  nameChanged(): void {
     fetch(this.configuration.iconMap.get(this.name)).then(x => {
       x.text().then(y => (this.view = y));
     });
   }
 
-  get styles() {
+  get styles(): Record<string, unknown> {
     return {
       fill: this.color && this.color,
       width: this.size > 0 && this.size + 'px',
@@ -27,7 +27,7 @@ export class KIcon implements ICustomElementViewModel {
     };
   }
 
-  attached() {
+  attached(): void {
     this.nameChanged();
   }
 }

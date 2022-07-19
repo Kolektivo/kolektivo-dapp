@@ -11,4 +11,5 @@ export interface IDesignSystemConfiguration {
   formatDateTime?: (value?: string | number | Date) => string;
   formatDate?: (value?: string | number | Date) => string;
   iconMap?: Map<string, string>;
+  defaultToastTimeout?: number;
 }

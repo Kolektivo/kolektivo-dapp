@@ -9,7 +9,7 @@ export class KText implements ICustomElementViewModel {
     // you can inject the element or any DI in the constructor
   }
 
-  get styles() {
+  get styles(): Record<string, unknown> {
     return { color: this.color, fontSize: numberToPixels(this.size) };
   }
 }

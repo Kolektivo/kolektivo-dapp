@@ -1,4 +1,5 @@
 <k-page title="Kolektivo Design System">
+
   <div id="storybook">
     <k-accordion>
       <span slot="header">Alerts</span>
@@ -242,7 +243,10 @@
     <k-accordion>
       <span slot="header">Data Grid</span>
       <div class="datagrids">
-        <k-alert type="info">Data grids are coming!</k-alert>
+        <k-alert type="info">Look at storybook.ts to see how to pass data into the data grids</k-alert>
+        <k-code>
+          <k-data-grid rows.bind="testData1" columns.bind="testColumns1"></k-data-grid>
+        </k-code>
       </div>
     </k-accordion>
     <k-accordion>
@@ -378,7 +382,8 @@
         <k-code>
           <k-input multiline rows="12"></k-input>
         </k-code>
-        <k-alert type="info" bottom="var(--spacing-xl)">Unable to pass a default value to a textarea tag. Have to use value.bind and define the value in the .ts file. See storybook.ts for example</k-alert>
+        <k-alert type="info" bottom="var(--spacing-xl)">Unable to pass a default value to a textarea tag. Have to use
+          value.bind and define the value in the .ts file. See storybook.ts for example</k-alert>
         <k-code>
           <k-input multiline value.bind="data.textareaInitialValue"></k-input>
         </k-code>
@@ -652,7 +657,34 @@
     <k-accordion>
       <span slot="header">Tooltips</span>
       <div class="tooltips">
-        <k-icon tooltip="asfdasdfas" name="calendar_today"></k-icon>
+        <k-code>
+          <k-text tooltip="This is some additional information">This is a standard tooltip</k-text>
+        </k-code>
+        <k-code>
+          <k-text tooltip="value:This is some additional information;position:bottom">This is a bottom tooltip</k-text>
+        </k-code>
+        <k-code>
+          <k-text tooltip="value:This is some additional information;position:start">This is a left tooltip</k-text>
+        </k-code>
+        <k-code>
+          <k-text tooltip="value:This is some additional information;position:end">This is a right tooltip</k-text>
+        </k-code>
+        <k-code>
+          <k-icon tooltip="<k-spinner color='var(--white)'></k-spinner>" name="calendar_today">
+          </k-icon>
+        </k-code>
+        <k-code>
+          <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:start" name="calendar_today">
+          </k-icon>
+        </k-code>
+        <k-code>
+          <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:end" name="calendar_today">
+          </k-icon>
+        </k-code>
+        <k-code>
+          <k-icon tooltip="value:<k-spinner color='var(--white)'></k-spinner>;position:bottom" name="calendar_today">
+          </k-icon>
+        </k-code>
       </div>
     </k-accordion>
     <k-accordion>

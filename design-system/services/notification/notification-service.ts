@@ -1,5 +1,5 @@
 import { Constructable, DI, IAurelia, IContainer, Registration } from 'aurelia';
-import { IToastOptions } from 'design-system/elements/k-toast/toast-options';
+import { IDesignSystemConfiguration } from '../../../design-system/configuration';
 import { KConfirm } from '../../elements/k-confirm/k-confirm';
 import { KToast } from './../../elements/k-toast/k-toast';
 import { createCustomElement, destroyCustomElement } from './../../aurelia-helpers';
@@ -9,7 +9,7 @@ export const INotificationService = DI.createInterface<INotificationService>('IN
 export class NotificationService {
   private activeToasts: KToast[] = [];
 
-  constructor(@IAurelia private readonly aurelia: IAurelia, @IContainer private readonly container: IContainer) {}
+  constructor(@IAurelia private readonly aurelia: IAurelia, @IContainer private readonly container: IContainer, @IDesignSystemConfiguration private readonly config: IDesignSystemConfiguration) {}
 
   public async confirm(message?: string, component?: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }>): Promise<boolean> {
     return new Promise(res => {
@@ -20,7 +20,7 @@ export class NotificationService {
         instance.message = message;
       }
       const confirm = instance.confirm;
-      instance.confirm = async value => {
+      instance.confirm = async (value): Promise<boolean> => {
         const result = await confirm(value);
         await destroyCustomElement(controller);
         res(result);
@@ -37,15 +37,14 @@ export class NotificationService {
   public toast(options: IToastOptions): () => void {
     const { controller, instance } = createCustomElement(KToast, this.container, this.aurelia.root.host, options);
     this.activeToasts.push(instance);
-
-    if (options.timeOut) {
+    if (options.timeOut || this.config.defaultToastTimeout) {
       setTimeout(() => {
         destroyCustomElement(controller);
         this.activeToasts.splice(
           this.activeToasts.findIndex(x => x === instance),
           1,
         );
-      }, options.timeOut);
+      }, options.timeOut ?? this.config.defaultToastTimeout);
     }
 
     return () => {

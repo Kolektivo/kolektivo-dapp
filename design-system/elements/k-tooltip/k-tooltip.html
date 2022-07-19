@@ -1,1 +1,4 @@
-<au-compose style.bind="style" view.bind="message"></au-compose>
+<slot name="tooltip">
+  <au-compose class="${position}" style.bind="style" view.bind="message"></au-compose>
+</slot>
+<slot> </slot>

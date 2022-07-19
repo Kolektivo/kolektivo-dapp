@@ -10,7 +10,7 @@ export class KRadio implements ICustomElementViewModel {
   constructor() {
     // you can inject the element or any DI in the constructor
   }
-  select() {
+  select(): void {
     this.input.click();
     this.input.focus();
   }

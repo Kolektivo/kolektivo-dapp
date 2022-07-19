@@ -18,7 +18,7 @@ export class KModal implements ICustomElementViewModel {
     // you can inject the element or any DI in the constructor
   }
 
-  overlayClicked() {
+  overlayClicked(): void {
     this.closeOnClick && this.cancel?.();
   }
   cardClicked = noop;

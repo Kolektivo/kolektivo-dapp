@@ -5,7 +5,7 @@ import { IToastOptions } from './toast-options';
 import { Position } from './../../types';
 import template from './k-toast.html';
 
-function getFlexFromPosition(position: Position) {
+function getFlexFromPosition(position: Position): string {
   const alignContent = position.startsWith('top') ? 'flex-start' : position.startsWith('bottom') ? 'flex-end' : 'center';
   const justifyContent = position.endsWith('start') ? 'flex-start' : position.endsWith('end') ? 'flex-end' : 'center';
 
@@ -19,7 +19,7 @@ export class KToast implements ICustomElementViewModel, IToastOptions {
   @bindable actions?: INotificationAction[];
   @bindable position?: Position;
 
-  get styles() {
+  get styles(): Record<string, unknown> {
     return {
       placeContent: this.position ? getFlexFromPosition(this.position) : 'flex-start flex-end',
     };

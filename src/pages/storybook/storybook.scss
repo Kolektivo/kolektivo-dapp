@@ -13,7 +13,7 @@
     }
   }
   .datagrids k-code {
-    grid-template-columns: minmax(550px, 25%) 1fr;
+    grid-template-columns: minmax(750px, 55%) 1fr;
   }
   .icons k-code {
     grid-template-columns: 48px 1fr;
@@ -21,6 +21,7 @@
   k-grid {
     width: 100%;
   }
+  .tooltips k-code,
   .loaders k-code,
   .countdowns k-code,
   .animation k-code,

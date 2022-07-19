@@ -72,7 +72,7 @@ export class KChart implements ICustomElementViewModel {
     // you can inject the element or any DI in the constructor
   }
 
-  createChart() {
+  createChart(): void {
     const dataSets: ChartDataset[] = [];
     if (!isNaN(this.data[0] as number)) {
       dataSets.push({ data: this.data as DataType[], backgroundColor: this.colors });
@@ -102,12 +102,12 @@ export class KChart implements ICustomElementViewModel {
     });
   }
 
-  dataChanged() {
+  dataChanged(): void {
     this.chartJsInstance.destroy();
     this.attaching();
   }
 
-  attaching() {
+  attaching(): void {
     this.createChart();
   }
 

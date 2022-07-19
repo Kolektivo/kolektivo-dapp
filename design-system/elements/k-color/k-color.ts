@@ -5,7 +5,7 @@ export class KColor implements ICustomElementViewModel {
   constructor() {
     // you can inject the element or any DI in the constructor
   }
-  copyCode() {
+  copyCode(): void {
     navigator.clipboard.writeText(`var(--${this.var})`);
   }
 }
