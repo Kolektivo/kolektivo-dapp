@@ -6,4 +6,6 @@ export interface ToastOptions {
   actions?: NotificationAction[];
   timeOut?: number;
   position?: Position;
+  animate?: boolean;
+  countdown?: number;
 }

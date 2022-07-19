@@ -18,10 +18,30 @@ export class KToast implements ICustomElementViewModel, ToastOptions {
   @bindable type?: NotificationType = 'info';
   @bindable actions?: NotificationAction[];
   @bindable position?: Position;
+  @bindable animate = true;
+  @bindable countdown?: number;
 
   get styles(): Record<string, unknown> {
     return {
       placeContent: this.position ? getFlexFromPosition(this.position) : 'flex-start flex-end',
     };
+  }
+
+  get startClass(): string | undefined {
+    if (!this.animate) return undefined;
+    if (this.position === 'bottom') return 'slide-in-bottom';
+    if (!this.position || this.position?.includes('end')) return 'slide-in-end';
+    if (this.position?.includes('start')) return 'slide-in-start';
+    if (this.position === 'top') return 'slide-in-top';
+    return undefined;
+  }
+
+  get endClass(): string | undefined {
+    if (!this.animate) return undefined;
+    if (this.position === 'bottom') return 'slide-out-bottom';
+    if (!this.position || this.position?.includes('end')) return 'slide-out-end';
+    if (this.position?.includes('start')) return 'slide-out-start';
+    if (this.position === 'top') return 'slide-out-top';
+    return undefined;
   }
 }
