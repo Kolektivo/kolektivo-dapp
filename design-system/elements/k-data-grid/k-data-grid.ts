@@ -1,5 +1,6 @@
 import { ICustomAttributeViewModel, ICustomElementViewModel, bindable } from 'aurelia';
 import { ICustomElementController, ViewModelKind } from '@aurelia/runtime-html';
+import { IGridColumn } from './grid-column';
 
 export class KDataGrid implements ICustomElementViewModel {
   @bindable id?: string;
@@ -32,7 +33,7 @@ export class KDataGrid implements ICustomElementViewModel {
       controller = controller.parent as ICustomElementController<this>;
     }
   }
-  getBuffedVm(row: any): unknown {
+  getBuffedVm(row: Record<string | number | symbol, unknown>): unknown {
     const vm = { ...(this.context ?? {}), ...row, row: row };
     if (this.context) {
       Object.keys(Object.getOwnPropertyDescriptors(Object.getPrototypeOf(this.context)))

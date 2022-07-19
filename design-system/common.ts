@@ -1,5 +1,5 @@
 export const numberToPixels = (value?: string | number): string | undefined => {
-  if (value == null) return undefined;
+  if (value === null) return undefined;
   if (typeof value === 'string' && value?.trim().includes(' ')) {
     value
       .trim()

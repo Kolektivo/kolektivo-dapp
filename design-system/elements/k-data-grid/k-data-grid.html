@@ -4,9 +4,9 @@
     click.trigger="column.sortable && sort(column.field)">
     <k-text type="h6">
       ${column.headerText === undefined ? column.field : column.headerText}
-      <i if.bind="column.sortable && $parent.sortColumn === column.field && $parent.sortDirection == 1"
+      <i if.bind="column.sortable && $parent.sortColumn === column.field && $parent.sortDirection === 1"
         class="fas fa-arrow-down" aria-hidden="true"></i>
-      <i if.bind="column.sortable && $parent.sortColumn === column.field && $parent.sortDirection == -1"
+      <i if.bind="column.sortable && $parent.sortColumn === column.field && $parent.sortDirection === -1"
         class="fas fa-arrow-up" aria-hidden="true"></i>
     </k-text>
   </div>
