@@ -1,15 +1,18 @@
 :host {
   background-color: var(--san-juan-800);
   height: 100%;
+
   a.logo {
     margin-left: 40px;
     margin-top: var(--spacing-lg);
     font-size: var(--text-xl);
+
     img {
       filter: brightness(0) invert(1);
       width: 40px;
     }
   }
+
   button {
     position: absolute;
     right: 0;
@@ -18,21 +21,25 @@
   k-grid {
     height: 100%;
   }
+
   a,
   k-text::part(content) {
     color: var(--white);
     text-decoration: none;
   }
+
   nav {
     display: grid;
     grid-template-columns: 1fr;
     text-align: left;
     padding-left: 40px;
+
     a,
     k-text::part(content) {
       color: var(--white);
       text-decoration: none;
     }
+
     a.active,
     a.active k-text::part(content) {
       color: var(--ocean-blue);

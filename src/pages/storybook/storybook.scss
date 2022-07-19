@@ -6,21 +6,27 @@
     align-items: center;
     grid-column-gap: 20px;
   }
+
   .gridsystem k-code {
     grid-template-columns: minmax(550px, 25%) 1fr;
+
     div {
       border: 1px solid var(--ocean-blue);
     }
   }
+
   .datagrids k-code {
     grid-template-columns: minmax(550px, 25%) 1fr;
   }
+
   .icons k-code {
     grid-template-columns: 48px 1fr;
   }
+
   k-grid {
     width: 100%;
   }
+
   .tooltips k-code,
   .loaders k-code,
   .countdowns k-code,
@@ -33,13 +39,16 @@
   .selects k-code {
     grid-template-columns: minmax(150px, 25%) 1fr;
   }
+
   .formFields k-code,
   .inputs k-code {
     grid-template-columns: minmax(150px, 15%) 1fr;
   }
+
   .typography k-code {
     grid-template-columns: minmax(375px, 35%) 1fr;
   }
+
   .animate {
     display: grid;
     place-items: center;

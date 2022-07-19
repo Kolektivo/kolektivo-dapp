@@ -10,8 +10,9 @@ export class KTooltip implements ICustomElementViewModel {
   @bindable position: TooltipPosition = 'top';
   left: string;
   top: string;
+  compose: HTMLElement;
 
-  constructor(@IPlatform private readonly platform: IPlatform) {}
+  constructor(@IPlatform private readonly platform: IPlatform, private readonly element: HTMLElement) {}
 
   attaching(): void {
     this.platform.window.addEventListener('resize', this.recalc);
@@ -23,6 +24,10 @@ export class KTooltip implements ICustomElementViewModel {
     this.top = numberToPixels(this.host.offsetTop - verticalAdjustment);
     this.left = numberToPixels(this.host.offsetLeft + this.host.offsetWidth / 2 - horizontalAdjustment);
   };
+
+  attached(): void {
+    (this.element.getRootNode() as HTMLElement).style.setProperty('--tooltip-color', 'red');
+  }
 
   binding(): void {
     this.recalc();

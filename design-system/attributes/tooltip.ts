@@ -2,13 +2,13 @@ import { IContainer, ICustomAttributeViewModel, bindable, customAttribute } from
 import { ICustomElementController } from '@aurelia/runtime-html';
 import { KTooltip } from '../../design-system/elements';
 import { Position } from './../types';
-import { createCustomElement, destroyCustomElement } from '../../design-system/aurelia-helpers';
+import { createCustomElement } from '../../design-system/aurelia-helpers';
 
 @customAttribute({ name: 'tooltip' })
 export class Tooltip implements ICustomAttributeViewModel {
   @bindable value: string;
   @bindable position: Position = 'top';
-  @bindable color = 'var(--don-juan-800)';
+  @bindable color = 'red';
 
   controller?: ICustomElementController;
   host: HTMLElement;
@@ -28,8 +28,8 @@ export class Tooltip implements ICustomAttributeViewModel {
   };
 
   onHoverOut = async (): Promise<void> => {
-    await destroyCustomElement(this.controller);
-    this.host.remove();
-    this.controller = void 0;
+    // await destroyCustomElement(this.controller);
+    // this.host.remove();
+    // this.controller = void 0;
   };
 }

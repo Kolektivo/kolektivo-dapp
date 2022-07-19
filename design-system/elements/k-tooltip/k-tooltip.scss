@@ -1,8 +1,9 @@
 :host {
+  --toolip-color: var(--don-juan-800);
+
   au-compose {
-    --color: var(--don-juan-800);
     position: absolute;
-    background: var(--color);
+    background: var(--toolip-color);
     color: var(--white);
     padding: var(--spacing);
     border-radius: 8px;
@@ -32,7 +33,7 @@
       margin-left: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: var(--color) transparent transparent transparent;
+      border-color: var(--toolip-color) transparent transparent transparent;
     }
 
     &.bottom::after {
@@ -43,7 +44,7 @@
       margin-left: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: transparent transparent var(--color) transparent;
+      border-color: transparent transparent var(--toolip-color) transparent;
     }
 
     &.end::after {
@@ -54,7 +55,7 @@
       margin-top: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: transparent var(--color) transparent transparent;
+      border-color: transparent var(--toolip-color) transparent transparent;
     }
 
     &.start::after {
@@ -65,7 +66,7 @@
       margin-top: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: transparent transparent transparent var(--color);
+      border-color: transparent transparent transparent var(--toolip-color);
     }
   }
 }
