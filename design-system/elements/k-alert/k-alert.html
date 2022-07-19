@@ -1,6 +1,12 @@
 <div class="${type}" style.bind="margin()">
-  <k-icon name.bind="icon || getIconName()" size="16" top="4"></k-icon>
-  <div>
-    <slot></slot>
-  </div>
+  <k-stack gap="var(--spacing)" direction="row">
+    <slot part="start" name="start">
+      <k-icon name.bind="icon || getIconName()" size="16" top="4"></k-icon>
+    </slot>
+    <div part="content">
+      <slot></slot>
+    </div>
+    <slot part="end" name="end"></slot>
+  </k-stack>
+  <slot part="close" name="close"></slot>
 </div>
