@@ -1,4 +1,5 @@
 import './storybook.scss';
+import { GridColumn } from './../../../design-system/elements/k-data-grid/grid-column';
 import { INotificationService } from '../../../design-system/services';
 import { IValidationController } from '@aurelia/validation-html';
 import { IValidationRules } from '@aurelia/validation';
@@ -91,6 +92,30 @@ export class Storybook {
     this.isOpen3 = !this.isOpen3;
   }
   customClick(): void {
-    alert('custom modal content button clicked!');
+    this.notificationService.toast({ message: 'custom modal content button clicked!' });
   }
+
+  //data grid example
+  testColumns1: GridColumn[] = [
+    { headerText: 'Token', field: 'token', width: '1fr', template: '<k-grid cols="auto 1fr" gap="var(--spacing-lg)"><k-icon tooltip="this is cool" name="calendar_today"></k-icon>${token}</k-grid>' },
+    { headerText: 'Price', field: 'price', width: '1fr', align: 'right', template: '${price | currency}' },
+    { headerText: 'Quantity', field: 'quantity', width: '1fr', align: 'right' },
+    { headerText: 'Total Value', field: 'totalValue', width: '1fr', align: 'right', template: '${price * quantity | currency}' },
+    { headerText: 'Action', field: 'action', width: '1fr', template: '<k-button size="xs" click.delegate="veto(price)">Veto</k-button>' },
+  ];
+
+  public veto(price: string): void {
+    this.notificationService.toast({ message: `Price is ${price}` });
+  }
+
+  testData1 = [
+    { token: 'XXX', price: '1', quantity: 400 },
+    { token: 'XXX', price: '2', quantity: 400 },
+    { token: 'XXX', price: '3', quantity: 400 },
+    { token: 'XXX', price: '4', quantity: 400 },
+    { token: 'XXX', price: '5', quantity: 400 },
+    { token: 'XXX', price: '6', quantity: 400 },
+    { token: 'XXX', price: '7', quantity: 400 },
+    { token: 'XXX', price: '8', quantity: 400 },
+  ];
 }
