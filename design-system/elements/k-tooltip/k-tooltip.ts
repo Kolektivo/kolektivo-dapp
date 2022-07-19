@@ -25,10 +25,6 @@ export class KTooltip implements ICustomElementViewModel {
     this.left = numberToPixels(this.host.offsetLeft + this.host.offsetWidth / 2 - horizontalAdjustment);
   };
 
-  attached(): void {
-    (this.element.getRootNode() as HTMLElement).style.setProperty('--tooltip-color', 'red');
-  }
-
   binding(): void {
     this.recalc();
   }

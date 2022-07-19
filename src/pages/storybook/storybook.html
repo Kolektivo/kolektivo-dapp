@@ -1,5 +1,4 @@
 <k-page title="Kolektivo Design System">
-
   <div id="storybook">
     <k-accordion>
       <span slot="header">Alerts</span>
@@ -272,6 +271,10 @@
           <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate"
             label="Date of birth (Validation)" helper-text="DD/MM/YY"></k-form-field>
         </k-code>
+        <k-code validation-errors.from-view="birthdateError">
+          <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate"
+            label="Date of birth (Validation)"></k-form-field>
+        </k-code>
         <k-code validation-errors.from-view="emailError">
           <k-form-field name="email" errors.bind="emailError" value.bind="data.email & validate"
             label="Email address (Validation)" helper-text="example@domain.com"></k-form-field>
@@ -331,6 +334,9 @@
       <div class="inputs">
         <k-code>
           <k-input value="normal input"></k-input>
+        </k-code>
+        <k-code>
+          <k-input placeholder="placeholder text"></k-input>
         </k-code>
         <k-code>
           <k-input value="disabled" disabled></k-input>

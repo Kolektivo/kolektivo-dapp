@@ -48,7 +48,11 @@ export class Storybook {
       .withMessage('Please enter an email address with the following format: name@example.com')
       .ensure('birthdate')
       .satisfies(x => !isNaN(Date.parse(x)))
-      .withMessage('Date of birth is required in the following format: DD/MM/YYYY');
+      .withMessage('Date of birth is required in the following format: DD/MM/YYYY')
+      .satisfies(x => new Date(x) < new Date())
+      .withMessage("Date of birth can't be in the future")
+      .satisfies(x => new Date(x) < new Date())
+      .withMessage('Another condition that triggers multiple errors');
     this.controller.addObject(this.data);
   }
   async openConfirmModal(): Promise<void> {

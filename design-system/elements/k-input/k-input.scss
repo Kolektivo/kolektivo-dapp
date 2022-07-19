@@ -42,7 +42,9 @@
     font-weight: 400;
     color: var(--don-juan-700);
     width: 100%;
-
+    &::placeholder{
+      color: var(--don-juan-200);
+    }
     &[no-spinner] {
 
       &::-webkit-outer-spin-button,
