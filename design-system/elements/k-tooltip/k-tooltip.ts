@@ -31,10 +31,8 @@ export class KTooltip implements ICustomElementViewModel {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   get style() {
     return {
-      top:
-      this.top,
-      left: this.left
-      ,
+      top: this.top,
+      left: this.left,
     };
   }
 }
