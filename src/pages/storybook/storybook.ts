@@ -35,9 +35,9 @@ export class Storybook {
   }
 
   constructor(
-  @IValidationRules validationRules: IValidationRules,
+    @IValidationRules validationRules: IValidationRules,
     @newInstanceForScope(IValidationController) private controller: IValidationController,
-    @INotificationService private readonly notificationService: INotificationService,
+    @INotificationService private readonly notificationService: INotificationService
   ) {
     validationRules
       .on(this.data)

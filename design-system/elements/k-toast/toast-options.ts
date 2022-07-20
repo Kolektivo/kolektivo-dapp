@@ -1,9 +1,9 @@
-import { INotificationAction, NotificationType } from '../../services/notification';
+import { NotificationAction, NotificationType } from '../../services/notification';
 import { Position } from './../../types';
 export interface IToastOptions {
   message?: string;
   type?: NotificationType;
-  actions?: INotificationAction[];
+  actions?: NotificationAction[];
   timeOut?: number;
   position?: Position;
 }

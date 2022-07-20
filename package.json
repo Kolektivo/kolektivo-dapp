@@ -40,6 +40,8 @@
     "aurelia": "dev",
     "aurelia-fast-adapter": "^1.0.5",
     "chart.js": "^3.8.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "html-loader": "^3.1.2"
   },
   "devDependencies": {

@@ -6,7 +6,7 @@ export function createCustomElement<T extends Constructable>(
   container: IContainer,
   host?: HTMLElement,
   // eslint-disable-next-line @typescript-eslint/ban-types
-  values?: Object | Constructable | Record<string | number, unknown>,
+  values?: Object | Constructable | Record<string | number, unknown>
 ): { instance: Resolved<T>; controller: ICustomElementController<Resolved<T>>; definition: CustomElementDefinition<T> } {
   const instance = container.get(component);
   Object.assign(instance, values);

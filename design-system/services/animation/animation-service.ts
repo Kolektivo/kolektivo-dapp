@@ -14,7 +14,7 @@ export class AnimationService {
     if (typeof from !== 'number' || typeof to !== 'number' || typeof duration !== 'number' || typeof update !== 'function') return;
     const easingFunc = typeof easing === 'string' ? easings[easing] ?? easings.linear : easings.linear;
 
-    done ??= function(): void {
+    done ??= (): void => {
       /*noop*/
     };
 
@@ -34,7 +34,7 @@ export class AnimationService {
           done();
         }
       },
-      { persistent: true },
+      { persistent: true }
     );
     return task;
   }
@@ -47,9 +47,9 @@ export class AnimationService {
     to: Parameters<AnimationService['animate']>[1],
     duration: Parameters<AnimationService['animate']>[2],
     easing?: Parameters<AnimationService['animate']>[4],
-    done?: Parameters<AnimationService['animate']>[5],
+    done?: Parameters<AnimationService['animate']>[5]
   ): Task<void> {
-    const update = function(value: string): void {
+    const update = (value: string): void => {
       element.style[property] = value + (unit ?? '');
     };
     return this.animate(from, to, duration, update, easing, done);

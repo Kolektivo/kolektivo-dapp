@@ -1,8 +1,9 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'unused-imports', 'sort-imports-es6-autofix'],
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/eslint-recommended', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint', 'unused-imports', 'sort-imports-es6-autofix', 'prettier'],
+  // prettier here overrides all eslint commands that it can do itself.
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/eslint-recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
@@ -14,8 +15,23 @@ module.exports = {
     jest: true,
   },
   rules: {
-    'no-tabs': ['error', { allowIndentationTabs: true }],
+    'prettier/prettier': [
+      'error',
+      // these cannot be overridden by prettier, so must pull them in here explicitly from prettier
+      {
+        singleQuote: true,
+        printWidth: 225,
+        arrowParens: 'avoid',
+      },
+      {
+        usePrettierrc: false,
+      },
+    ],
+    /**
+     * define only code-related lint rules and leave formatting up to prettier
+     */
     '@typescript-eslint/explicit-function-return-type': 'off',
+    'no-tabs': ['error', { allowIndentationTabs: true }],
     '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'no-useless-escape': 'off',
@@ -30,26 +46,12 @@ module.exports = {
         memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
       },
     ],
-    'object-curly-spacing': ['error', 'always'],
-
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
-    'max-len': ['error', {
-      'code': 350,
-      'tabWidth': 2,
-      'ignoreUrls': true,
-      'ignoreStrings': true,
-      'ignoreTemplateLiterals': true,
-      'ignoreRegExpLiterals': true,
-    },
-    ],
     'sort-imports': 'off',
     'require-atomic-updates': 'warn',
     'no-console': 'warn',
-    '@typescript-eslint/ban-ts-comment': [
-      'warn',
-      { 'ts-ignore': false },
-    ],
+    '@typescript-eslint/ban-ts-comment': ['warn', { 'ts-ignore': false }],
     '@typescript-eslint/no-inferrable-types': [
       'off',
       {
@@ -57,32 +59,6 @@ module.exports = {
         ignoreProperties: false,
       },
     ],
-    'keyword-spacing': 'error',
-    'arrow-spacing': 'error',
-    'key-spacing': [
-      'error',
-      { mode: 'minimum' },
-    ],
-    'semi-style': ['error', 'last'],
-    'arrow-parens': ['error', 'as-needed'],
-    'semi-spacing': 'error',
-    'comma-spacing': 'error',
-    'no-multi-spaces': 'error',
-    'no-trailing-spaces': 'error',
-    'space-before-blocks': 'error',
-    'space-before-function-paren': [
-      'error',
-      {
-        anonymous: 'never',
-        named: 'never',
-        asyncArrow: 'ignore',
-      },
-    ],
-    'object-curly-newline': 'error',
-    'space-in-parens': ['error', 'never'],
-    'indent': 'off', // to not interfere with @typescript just below
-    'no-whitespace-before-property': 'error',
-    '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/prefer-for-of': 'error',
     '@typescript-eslint/consistent-type-assertions': [
       'error',
@@ -92,8 +68,6 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-empty-function': 'off',
-    'one-var': ['error', 'never'],
-    'no-var': 'error',
     'no-bitwise': 'error',
     '@typescript-eslint/naming-convention': [
       'error',
@@ -105,23 +79,8 @@ module.exports = {
     ],
     'prefer-const': 'error',
     'no-unused-vars': 'off', // to not interfere with @typescript just below
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      { argsIgnorePattern: '[_].*' },
-    ],
-    quotes: ['error', 'single'],
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '[_].*' }],
     'no-prototype-builtins': 0,
-    'comma-dangle': ['error', 'always-multiline'],
-    semi: ['error', 'always'],
-    'eol-last': 'error',
-    'no-multiple-empty-lines': [
-      'error',
-      {
-        max: 1,
-        maxEOF: 0,
-        maxBOF: 0,
-      },
-    ],
     eqeqeq: 'error',
     'getter-return': 0,
     'linebreak-style': ['error', 'unix'],

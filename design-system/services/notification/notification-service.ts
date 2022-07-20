@@ -43,7 +43,7 @@ export class NotificationService {
         destroyCustomElement(controller);
         this.activeToasts.splice(
           this.activeToasts.findIndex(x => x === instance),
-          1,
+          1
         );
       }, options.timeOut ?? this.config.defaultToastTimeout);
     }
