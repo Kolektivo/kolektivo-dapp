@@ -8,7 +8,7 @@ import { createCustomElement, destroyCustomElement } from '../../design-system/a
 export class Tooltip implements ICustomAttributeViewModel {
   @bindable value: string;
   @bindable position: Position = 'top';
-  @bindable color = 'var(--don-juan-800)';
+  @bindable color = 'red';
 
   controller?: ICustomElementController;
   host: HTMLElement;

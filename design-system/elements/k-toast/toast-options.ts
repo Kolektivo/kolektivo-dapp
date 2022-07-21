@@ -6,4 +6,6 @@ export interface IToastOptions {
   actions?: NotificationAction[];
   timeOut?: number;
   position?: Position;
+  animate?: boolean;
+  countdown?: number;
 }

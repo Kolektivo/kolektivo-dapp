@@ -10,8 +10,9 @@ export class KTooltip implements ICustomElementViewModel {
   @bindable position: TooltipPosition = 'top';
   left: string;
   top: string;
+  compose: HTMLElement;
 
-  constructor(@IPlatform private readonly platform: IPlatform) {}
+  constructor(@IPlatform private readonly platform: IPlatform, private readonly element: HTMLElement) {}
 
   attaching(): void {
     this.platform.window.addEventListener('resize', this.recalc);

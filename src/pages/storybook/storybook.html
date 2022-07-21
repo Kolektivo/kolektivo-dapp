@@ -1,5 +1,4 @@
 <k-page title="Kolektivo Design System">
-
   <div id="storybook">
     <k-accordion>
       <span slot="header">Alerts</span>
@@ -128,6 +127,41 @@
             <k-check checked.bind="check5">Horizontal List 2</k-check>
             <k-check checked.bind="check6">Horizontal List 3</k-check>
           </k-stack>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Chips</span>
+      <div class="chips">        
+        <k-code>
+          <k-chip type="danger">Danger</k-chip>
+        </k-code>
+        <k-code>
+          <k-chip type="success">Success</k-chip>
+        </k-code>
+        <k-code>
+          <k-chip type="warning">Warning</k-chip>
+        </k-code>
+        <k-code>
+          <k-chip type="info">Info</k-chip>
+        </k-code>
+        <k-code>
+          <k-chip type="primary">Primary</k-chip>
+        </k-code>
+        <k-code>
+          <k-chip type="secondary">Secondary</k-chip>
+        </k-code>
+        <k-code>
+          <k-chip type="dark">Dark</k-chip>
+        </k-code>
+        <k-code>
+          <k-chip border>Bordered</k-chip>
+        </k-code>
+        <k-code>
+          <k-chip tooltip="This is some extra content">With tooltip</k-chip>
+        </k-code>
+        <k-code>
+          <k-chip icon="error_filled" type="danger">With icon</k-chip>
         </k-code>
       </div>
     </k-accordion>
@@ -272,6 +306,10 @@
           <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate"
             label="Date of birth (Validation)" helper-text="DD/MM/YY"></k-form-field>
         </k-code>
+        <k-code validation-errors.from-view="birthdateError">
+          <k-form-field name="birthdate" errors.bind="birthdateError" value.bind="data.birthdate & validate"
+            label="Date of birth (Validation)"></k-form-field>
+        </k-code>
         <k-code validation-errors.from-view="emailError">
           <k-form-field name="email" errors.bind="emailError" value.bind="data.email & validate"
             label="Email address (Validation)" helper-text="example@domain.com"></k-form-field>
@@ -331,6 +369,9 @@
       <div class="inputs">
         <k-code>
           <k-input value="normal input"></k-input>
+        </k-code>
+        <k-code>
+          <k-input placeholder="placeholder text"></k-input>
         </k-code>
         <k-code>
           <k-input value="disabled" disabled></k-input>
@@ -651,6 +692,24 @@
         <k-code>
           <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
             placeholder="Error Select"> </k-select>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Toasts</span>
+      <k-alert type="info" bottom="var(--spacing-xl)">Toasts use the notification service in the storybook.ts file</k-alert>
+      <div class="toasts">
+        <k-code>
+          <k-button click.trigger="toast1()">Normal Toast</k-button>
+        </k-code>
+        <k-code>
+          <k-button click.trigger="toast2()">Long Toast</k-button>
+        </k-code>
+        <k-code>
+          <k-button click.trigger="toast3()">Dangerous Toast</k-button>
+        </k-code>
+        <k-code>
+          <k-button click.trigger="toast4()">Bottom Toast</k-button>
         </k-code>
       </div>
     </k-accordion>

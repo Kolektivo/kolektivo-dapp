@@ -11,7 +11,6 @@ export class KGrid extends Grid implements ICustomElementViewModel {
   }
 
   get slotStyle(): Record<string, unknown> {
-    // console.log(this.gridStyle);
     return {
       display: 'grid',
       gridTemplateRows: this.rows,
