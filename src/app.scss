@@ -1,25 +1,25 @@
 @import '../design-system/styles/mixins.scss';
 
 @font-face {
-  font-family: 'Kaleko';
+  font-family: Kaleko;
   src: url('../static/Kaleko105-Bold.woff2') format('woff2');
   font-weight: bold;
 }
 
 @font-face {
-  font-family: 'Kaleko';
+  font-family: Kaleko;
   src: url('../static/Kaleko105-Heavy.woff2') format('woff2');
   font-weight: bolder;
 }
 
 @font-face {
-  font-family: 'Kaleko';
+  font-family: Kaleko;
   src: url('../static/Kaleko105-Light.woff2') format('woff2');
   font-weight: normal;
 }
 
 @font-face {
-  font-family: 'Kaleko';
+  font-family: Kaleko;
   src: url('../static/Kaleko105-Thin.woff2') format('woff2');
   font-weight: lighter;
 }

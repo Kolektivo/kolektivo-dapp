@@ -3,6 +3,7 @@
   "files.exclude": {
     "**/.webpack": true
   },
+  "prettier.requireConfig": true,
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
   "eslint.validate": [

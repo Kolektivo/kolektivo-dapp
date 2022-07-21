@@ -67,7 +67,6 @@ module.exports = {
         objectLiteralTypeAssertions: 'allow-as-parameter',
       },
     ],
-    '@typescript-eslint/no-empty-function': 'off',
     'no-bitwise': 'error',
     '@typescript-eslint/naming-convention': [
       'error',
@@ -77,7 +76,6 @@ module.exports = {
         prefix: ['I'],
       },
     ],
-    'prefer-const': 'error',
     'no-unused-vars': 'off', // to not interfere with @typescript just below
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '[_].*' }],
     'no-prototype-builtins': 0,

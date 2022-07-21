@@ -18,9 +18,10 @@
   "scripts": {
     "lint:js": "eslint src design-system test --ext .js,.ts",
     "lint:fix": "eslint src design-system test --fix",
-    "lint:scss": "stylelint \"src/**/*.scss\" \"design-system /**/*.scss\"",
+    "lint:scss": "stylelint \"src/**/*.scss\" \"design-system/**/*.scss\"",
     "lint:html": "htmlhint -c .htmlhintrc src design-system ",
-    "lint": "npm run lint:js && npm run lint:html && npm run lint:css",
+    "lint": "npm run lint:js && npm run lint:html && npm run lint:scss",
+    "lint": "npm run lint:js && npm run lint:html",
     "pretest": "npm run lint",
     "start": "webpack serve",
     "build": "rimraf dist && webpack --env production",

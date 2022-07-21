@@ -140,15 +140,18 @@ export const easings = {
     return a * Math.pow(2, -10 * (time -= 1)) * Math.sin(((time * duration - speed) * (2 * Math.PI)) / p) * 0.5 + change + from;
   },
   easeInBack: (time: number, from: number, change: number, duration: number, speed: number): number => {
-    if (speed === undefined) speed = 1.70158;
+    // eslint-disable-next-line eqeqeq
+    if (speed == undefined) speed = 1.70158;
     return change * (time /= duration) * time * ((speed + 1) * time - speed) + from;
   },
   easeOutBack: (time: number, from: number, change: number, duration: number, speed: number): number => {
-    if (speed === undefined) speed = 1.70158;
+    // eslint-disable-next-line eqeqeq
+    if (speed == undefined) speed = 1.70158;
     return change * ((time = time / duration - 1) * time * ((speed + 1) * time + speed) + 1) + from;
   },
   easeInOutBack: (time: number, from: number, change: number, duration: number, speed: number): number => {
-    if (speed === undefined) speed = 1.70158;
+    // eslint-disable-next-line eqeqeq
+    if (speed == undefined) speed = 1.70158;
     if ((time /= duration / 2) < 1) return (change / 2) * (time * time * (((speed *= 1.525) + 1) * time - speed)) + from;
     return (change / 2) * ((time -= 2) * time * (((speed *= 1.525) + 1) * time + speed) + 2) + from;
   },
