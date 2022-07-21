@@ -83,6 +83,9 @@ module.exports = {
     'getter-return': 0,
     'linebreak-style': ['error', 'unix'],
   },
+  /**
+   * require services to be explicit about public/private access
+   */
   overrides: [
     {
       files: ['*Service.ts', '*-service.ts'],
