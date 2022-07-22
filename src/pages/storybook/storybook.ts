@@ -129,7 +129,7 @@ export class Storybook {
   }
 
   public toast2(): void {
-    this.notificationService.toast({ message: 'This toast will hide after 10 seconds', timeOut: 10000 });
+    this.notificationService.toast({ message: 'This toast will hide after 10 seconds', timeOut: 100000 });
   }
 
   public toast3(): void {

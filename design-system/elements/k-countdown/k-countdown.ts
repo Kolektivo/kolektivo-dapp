@@ -1,29 +1,33 @@
-import { ICustomElementViewModel, bindable } from 'aurelia';
-import { numberToPixels } from './../../common';
+import { ICustomElementViewModel, IPlatform, Task, bindable } from 'aurelia';
+import { IfExistsThenTrue, numberToPixels } from './../../common';
 
 export class KCountdown implements ICustomElementViewModel {
   @bindable countdown = 5;
   @bindable color = 'var(--primary-text)';
   @bindable finishedColor = 'var(--primary)';
-  @bindable finishedIcon = 'check';
+  @bindable icon = 'check';
   @bindable size = 40;
-  interval: NodeJS.Timer;
+  @bindable({ set: IfExistsThenTrue }) hovering = false;
+  @bindable({ set: IfExistsThenTrue }) inheritHover = false;
+  task: Task;
   currentCount: number;
-  hovering = false;
 
-  constructor() {
+  constructor(@IPlatform private readonly platform: IPlatform) {
     // you can inject the element or any DI in the constructor
   }
 
   binding(): void {
     this.currentCount = this.countdown;
-    this.interval = setInterval(() => {
-      if (this.hovering) return;
-      this.currentCount--;
-      if (this.finished) {
-        this.detaching();
-      }
-    }, 1000);
+    this.task = this.platform.taskQueue.queueTask(
+      () => {
+        if (this.hovering) return;
+        this.currentCount -= 1;
+        if (this.currentCount <= 0) {
+          this.detaching();
+        }
+      },
+      { delay: 1000, persistent: true /* runs until canceled */ }
+    );
   }
 
   get finished(): boolean {
@@ -44,6 +48,6 @@ export class KCountdown implements ICustomElementViewModel {
     this.hovering = false;
   }
   detaching(): void {
-    clearInterval(this.interval);
+    this.task.cancel();
   }
 }

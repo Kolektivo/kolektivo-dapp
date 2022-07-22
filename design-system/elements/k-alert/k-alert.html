@@ -1,5 +1,5 @@
 <div class="${type}" style.bind="margin()">
-  <k-stack gap="var(--spacing)" direction="row">
+  <k-grid gap="var(--spacing)" cols="auto 1fr">
     <slot part="start" name="start">
       <k-icon name.bind="icon || getIconName()" size="16" top="4"></k-icon>
     </slot>
@@ -7,6 +7,6 @@
       <slot></slot>
     </div>
     <slot part="end" name="end"></slot>
-  </k-stack>
+  </k-grid>
   <slot part="close" name="close"></slot>
 </div>

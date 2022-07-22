@@ -1,8 +1,9 @@
 import { Constructable, DI, IAurelia, IContainer, IPlatform, Registration } from 'aurelia';
+import { ICustomElementController } from '@aurelia/runtime-html';
 import { IDesignSystemConfiguration } from '../../../design-system/configuration';
-import { IToastOptions } from 'design-system/elements/k-toast/toast-options';
 import { KConfirm } from '../../elements/k-confirm/k-confirm';
 import { KToast } from './../../elements/k-toast/k-toast';
+import { ToastOptions } from 'design-system/elements/k-toast/toast-options';
 import { createCustomElement, destroyCustomElement } from './../../aurelia-helpers';
 
 export type INotificationService = NotificationService;
@@ -40,8 +41,8 @@ export class NotificationService {
    * @param options
    * @returns A function to close the toast with
    */
-  public toast(options: IToastOptions | string): Promise<() => void> {
-    let toastOptions = options as IToastOptions;
+  public toast(options: ToastOptions | string): Promise<() => void> {
+    let toastOptions = options as ToastOptions;
     if (typeof options === 'string') {
       toastOptions = { message: options };
     }
@@ -63,20 +64,32 @@ export class NotificationService {
       );
     }).then(_x => {
       const { controller, instance } = createCustomElement(KToast, this.container, this.aurelia.root.host, toastOptions);
+      instance.close = () => this.destroyToast(controller);
       if (toastOptions.timeOut !== 0 && (toastOptions.timeOut || this.config.defaultToastTimeout)) {
         this.activeToast = instance;
-        setTimeout(() => {
-          destroyCustomElement(controller);
-          this.activeToast = undefined;
-        }, toastOptions.timeOut ?? this.config.defaultToastTimeout);
+        let timeout = toastOptions.timeOut ?? this.config.defaultToastTimeout;
+        const expireTask = this.platform.taskQueue.queueTask(
+          () => {
+            if (instance.hovering) return;
+            timeout -= 100;
+            if (timeout <= 0) {
+              expireTask.cancel();
+              this.destroyToast(controller);
+            }
+          },
+          { delay: 100, persistent: true /* runs until canceled */ }
+        );
       }
-
       return () => {
-        destroyCustomElement(controller);
+        this.destroyToast(controller);
       };
     });
   }
 
+  private destroyToast(controller: ICustomElementController) {
+    destroyCustomElement(controller);
+    this.activeToast = undefined;
+  }
   public static register(container: IContainer): void {
     Registration.singleton(INotificationService, NotificationService).register(container);
   }
