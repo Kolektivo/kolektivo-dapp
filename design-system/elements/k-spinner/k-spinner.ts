@@ -17,7 +17,7 @@ export class KSpinner implements ICustomElementViewModel {
     return {
       animation: this.animation && `${this.animation} ${this.speed}s linear infinite reverse`,
       animationPlayState: this.paused && 'paused',
-      transform: `rotateY(-180deg) rotateZ(-90deg)`,
+      transform: 'rotateY(-180deg) rotateZ(-90deg)',
     };
   }
   get circleStyle(): Record<string, unknown> {
@@ -25,7 +25,7 @@ export class KSpinner implements ICustomElementViewModel {
       stroke: this.color,
       animation: this.animation && `${this.animation} ${this.speed}s linear infinite forwards`,
       animationPlayState: this.paused && 'paused',
-      transformOrigin: this.animation === 'spinner' && `20px 20px 0`,
+      transformOrigin: this.animation === 'spinner' && '20px 20px 0',
     };
   }
   get svgStyle(): Record<string, unknown> {
@@ -33,7 +33,7 @@ export class KSpinner implements ICustomElementViewModel {
       width: numberToPixels(this.size),
       height: numberToPixels(this.size),
       marginTop: this.animation === 'countdown' && numberToPixels(this.size * -1),
-      transform: `rotateY(-180deg) rotateZ(-90deg)`,
+      transform: 'rotateY(-180deg) rotateZ(-90deg)',
     };
   }
 }

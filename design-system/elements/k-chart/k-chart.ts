@@ -55,7 +55,7 @@ Chart.register(
   Legend,
   Title,
   Tooltip,
-  SubTitle,
+  SubTitle
 );
 
 export type DataType = number | ScatterDataPoint | BubbleDataPoint;

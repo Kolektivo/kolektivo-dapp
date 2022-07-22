@@ -60,7 +60,7 @@ export class DesignSystemPlugin implements IRegistry {
     container.register(
       ValidationHtmlConfiguration.customize(options => {
         options.DefaultTrigger = ValidationTrigger.changeOrFocusout;
-      }),
+      })
     );
 
     // container = container.register(AppTask.beforeCreate(IContainer, async c => {

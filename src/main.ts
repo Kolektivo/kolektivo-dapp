@@ -36,7 +36,7 @@ Aurelia.register(
     x.iconMap.set('link', link);
     x.iconMap.set('warning_filled', warning_filled);
     x.defaultToastTimeout = 5000;
-  }),
+  })
 )
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(pages)

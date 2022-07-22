@@ -26,6 +26,7 @@
   k-grid {
     width: 100%;
   }
+  
   .chips k-code,
   .toasts k-code,
   .tooltips k-code,
@@ -41,7 +42,7 @@
     grid-template-columns: minmax(150px, 25%) 1fr;
   }
 
-  .formFields k-code,
+  .form-fields k-code,
   .inputs k-code {
     grid-template-columns: minmax(150px, 15%) 1fr;
   }

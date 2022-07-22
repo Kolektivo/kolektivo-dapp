@@ -1,8 +1,8 @@
 import { Constructable, DI, IAurelia, IContainer, IPlatform, Registration } from 'aurelia';
 import { IDesignSystemConfiguration } from '../../../design-system/configuration';
+import { IToastOptions } from 'design-system/elements/k-toast/toast-options';
 import { KConfirm } from '../../elements/k-confirm/k-confirm';
 import { KToast } from './../../elements/k-toast/k-toast';
-import { ToastOptions } from 'design-system/elements/k-toast/toast-options';
 import { createCustomElement, destroyCustomElement } from './../../aurelia-helpers';
 
 export type INotificationService = NotificationService;
@@ -14,7 +14,7 @@ export class NotificationService {
     @IPlatform private readonly platform: IPlatform,
     @IAurelia private readonly aurelia: IAurelia,
     @IContainer private readonly container: IContainer,
-    @IDesignSystemConfiguration private readonly config: IDesignSystemConfiguration,
+    @IDesignSystemConfiguration private readonly config: IDesignSystemConfiguration
   ) {}
 
   public async confirm(message?: string, component?: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }>): Promise<boolean> {
@@ -40,8 +40,8 @@ export class NotificationService {
    * @param options
    * @returns A function to close the toast with
    */
-  public toast(options: ToastOptions | string): Promise<() => void> {
-    let toastOptions = options as ToastOptions;
+  public toast(options: IToastOptions | string): Promise<() => void> {
+    let toastOptions = options as IToastOptions;
     if (typeof options === 'string') {
       toastOptions = { message: options };
     }
@@ -59,9 +59,9 @@ export class NotificationService {
             task.cancel();
           }
         },
-        { delay: 100, persistent: true /* runs until canceled */ },
+        { delay: 100, persistent: true /* runs until canceled */ }
       );
-    }).then(x => {
+    }).then(_x => {
       const { controller, instance } = createCustomElement(KToast, this.container, this.aurelia.root.host, toastOptions);
       if (toastOptions.timeOut !== 0 && (toastOptions.timeOut || this.config.defaultToastTimeout)) {
         this.activeToast = instance;

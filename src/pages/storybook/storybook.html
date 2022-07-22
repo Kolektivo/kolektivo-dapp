@@ -132,7 +132,7 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Chips</span>
-      <div class="chips">        
+      <div class="chips">
         <k-code>
           <k-chip type="danger">Danger</k-chip>
         </k-code>
@@ -285,7 +285,7 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Form Fields</span>
-      <form class="formFields">
+      <form class="form-fields">
         <k-code>
           <k-form-field name="name" value.bind="data.name" max="50" label="Normal form field"></k-form-field>
         </k-code>
@@ -697,7 +697,8 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Toasts</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">Toasts use the notification service in the storybook.ts file</k-alert>
+      <k-alert type="info" bottom="var(--spacing-xl)">Toasts use the notification service in the storybook.ts file
+      </k-alert>
       <div class="toasts">
         <k-code>
           <k-button click.trigger="toast1()">Normal Toast</k-button>
