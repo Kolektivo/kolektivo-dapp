@@ -34,6 +34,7 @@
     "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope"
   },
   "dependencies": {
+    "@aurelia/i18n": "^2.0.0-alpha.35",
     "@aurelia/validation-html": "dev",
     "@material-design-icons/svg": "^0.11.4",
     "@microsoft/fast-components": "^2.30.6",
@@ -43,7 +44,8 @@
     "chart.js": "^3.8.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "html-loader": "^3.1.2"
+    "html-loader": "^3.1.2",
+    "i18next-intervalplural-postprocessor": "^3.0.0"
   },
   "devDependencies": {
     "@aurelia/testing": "dev",

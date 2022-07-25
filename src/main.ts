@@ -1,5 +1,8 @@
+import * as en from '/locales/en/translation.json';
+import * as intervalPlural from 'i18next-intervalplural-postprocessor';
 import { App } from './app';
 import { DesignSystemPlugin } from '../design-system';
+import { I18nConfiguration } from '@aurelia/i18n';
 import { RouterConfiguration } from '@aurelia/router';
 import { StyleConfiguration } from 'aurelia';
 import Aurelia /*, { StyleConfiguration }*/ from 'aurelia';
@@ -42,6 +45,16 @@ Aurelia.register(
   .register(pages)
   .register(resources)
   .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
+  .register(
+    I18nConfiguration.customize(options => {
+      options.initOptions = {
+        resources: {
+          en: { translation: en },
+        },
+        plugins: [intervalPlural],
+      };
+    })
+  )
 
   .app(App)
   .start();
