@@ -1,4 +1,3 @@
-import * as designSystem_en from 'locales/design-system/en/translation.json';
 import * as en from 'locales/en/translation.json';
 import * as intervalPlural from 'i18next-intervalplural-postprocessor';
 import { App } from './app';
@@ -50,7 +49,7 @@ Aurelia.register(
     I18nConfiguration.customize(options => {
       options.initOptions = {
         resources: {
-          en: { translation: Object.assign(designSystem_en, en) },
+          en: { translation: en },
         },
         plugins: [intervalPlural],
       };
