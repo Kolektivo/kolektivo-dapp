@@ -48,6 +48,7 @@ Aurelia.register(
   .register(
     I18nConfiguration.customize(options => {
       options.initOptions = {
+        fallbackLng: { default: ['en'] },
         resources: {
           en: { translation: en },
         },
