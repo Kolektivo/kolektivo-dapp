@@ -2,8 +2,8 @@
   display: block;
   background-color: var(--san-juan-200);
   position: relative;
-  > slot {
-    padding: var(--spacing);
+
+  >slot {
     display: block;
   }
 }

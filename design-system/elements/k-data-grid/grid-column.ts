@@ -1,4 +1,4 @@
-export interface GridColumn {
+export interface IGridColumn {
   field: string;
   headerText?: string;
   sortable?: boolean;

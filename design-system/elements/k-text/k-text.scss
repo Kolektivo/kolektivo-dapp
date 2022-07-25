@@ -1,7 +1,9 @@
 @import '../../styles/shared.scss';
 :host {
   font-family: 'Lato';
-
+  .right{
+    text-align: right;
+  }
   *[type='small'] {
     font-weight: 400;
     font-size: 14px;

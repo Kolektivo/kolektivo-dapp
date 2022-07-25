@@ -1,1 +1,2 @@
-export { NotificationService } from './notification-service';
+export * from './animation';
+export * from './notification';

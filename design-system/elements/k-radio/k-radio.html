@@ -1,2 +1,4 @@
-<input role="radio" ref="input" type="radio" ...$attrs />
-<au-slot> <k-text click.trigger="input.checked = true" tag="label"> ${label} </k-text></au-slot>
+<div>
+  <input role="radio" ref="input" type="radio" ...$attrs />
+  <k-text click.trigger="select()" tag="label"> <au-slot> ${label} </au-slot> </k-text>
+</div>

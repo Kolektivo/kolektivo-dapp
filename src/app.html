@@ -1,12 +1,8 @@
 <div class="app">
   <side-bar style.bind="sidebarStyle" open.bind="sidebarOpen"></side-bar>
   <main>
-    <header></header>
+    <header if.bind="sidebarOpen" ref="header"></header>
     <au-viewport default="map" fallback="not-found"></au-viewport>
     <footer></footer>
   </main>
 </div>
-<!-- <k-modal cancel.call="cancel()" ok.call="ok()">
-  <div au-slot="header">affadsdsaafdsfdasadfsafsdafsd</div>
-  TEST
-</k-modal> -->

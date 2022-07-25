@@ -1,16 +1,14 @@
 import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
-import { Grid } from '../../grid';
-import { ICustomElementController } from '@aurelia/runtime-html';
+import { Grid } from '../../base/grid';
 
 export class KStack extends Grid implements ICustomElementViewModel {
-  $controller?: ICustomElementController<this>;
   @bindable direction = 'column';
 
   constructor() {
     super();
   }
 
-  binding() {
+  binding(): void {
     if (this.direction === 'row') {
       this.alignItems = 'center';
       return;
@@ -21,12 +19,11 @@ export class KStack extends Grid implements ICustomElementViewModel {
     }
   }
 
-  get slotStyle() {
-    const { $controller, direction, ...viewModelProps } = this.$controller.viewModel;
+  get slotStyle(): Record<string, unknown> {
     return {
-      flexDirection: direction,
+      flexDirection: this.direction,
       flexWrap: 'wrap',
-      ...viewModelProps,
+      ...this.gridStyle,
     };
   }
 }

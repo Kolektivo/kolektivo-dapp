@@ -17,9 +17,13 @@ export class SideBar implements ICustomElementViewModel {
   @bindable({ mode: BindingMode.twoWay }) open = true;
   @bindable({ set: IfExistsThenTrue }) collapsible = false;
 
-  constructor(@IRouter private readonly router: IRouter) {}
+  constructor(@IRouter private readonly router: IRouter) {
+    if (process.env.NODE_ENV === 'development') {
+      routes.push({ name: 'Storybook', path: 'storybook', location: 'bottom' });
+    }
+  }
 
-  getRoutes(location: RouteLink['location']) {
+  getRoutes(location: RouteLink['location']): RouteLink[] {
     return routes.filter(y => y.location === location);
   }
 }

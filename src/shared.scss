@@ -10,6 +10,7 @@ body {
     margin-block-end: 0;
     margin-block-start: 0;
   }
+
   a {
     text-decoration: none;
     color: var(--san-juan-700);
@@ -19,15 +20,16 @@ body {
     display: block;
     width: 100%;
   }
+
   code {
     background-color: var(--san-juan-800);
     color: var(--san-juan-050);
-    padding-right: 25px;
     font-family: monospace;
     display: block;
     font-size: 14px;
     position: relative;
     padding: 15px 40px 15px 15px;
+
     k-icon {
       fill: var(--white);
       position: absolute;

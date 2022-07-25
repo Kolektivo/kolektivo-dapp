@@ -1,0 +1,20 @@
+.k-toast-container {
+  position: fixed;
+  display: grid;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5rem;
+  visibility: hidden;
+  > div {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    visibility: initial;
+    padding: 10px;
+    border-radius: 10px;
+    row-gap: 8px;
+    column-gap: 12px;
+    
+  }
+}

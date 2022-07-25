@@ -16,7 +16,7 @@ export class KFormField implements ICustomElementViewModel {
   get maxText(): string {
     return `${this.value?.length ?? 0}/${this.max}`;
   }
-  focusInput() {
+  focusInput(): void {
     this.input.focus();
     (this.slot.firstElementChild as HTMLInputElement).focus();
   }
