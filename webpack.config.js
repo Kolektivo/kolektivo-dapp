@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 const cssLoader = 'css-loader';
 
@@ -45,7 +46,21 @@ module.exports = function (env, { analyze }) {
             // add your production aliasing here
           }
         : {
-            ...['fetch-client', 'kernel', 'metadata', 'platform', 'platform-browser', 'plugin-conventions', 'route-recognizer', 'router', 'router-lite', 'runtime', 'runtime-html', 'testing', 'webpack-loader'].reduce(
+            ...[
+              'fetch-client',
+              'kernel',
+              'metadata',
+              'platform',
+              'platform-browser',
+              'plugin-conventions',
+              'route-recognizer',
+              'router',
+              'router-lite',
+              'runtime',
+              'runtime-html',
+              'testing',
+              'webpack-loader',
+            ].reduce(
               (map, pkg) => {
                 const name = `@aurelia/${pkg}`;
                 map[name] = path.resolve(__dirname, 'node_modules', name, 'dist/esm/index.dev.mjs');
@@ -57,6 +72,22 @@ module.exports = function (env, { analyze }) {
               },
             ),
           },
+      fallback: {
+        // this is needed for packages that use native nodejs modules like 'fs', 'os', etc.
+        fs: false,
+        tls: false,
+        os: false,
+        assert: false,
+        url: false,
+        net: false,
+        path: false,
+        zlib: false,
+        http: false,
+        https: false,
+        stream: false,
+        crypto: false,
+        'crypto-browserify': require.resolve('crypto-browserify'), //if you want to use this module also don't forget npm i crypto-browserify
+      },
     },
     devServer: {
       historyApiFallback: true,
@@ -142,6 +173,10 @@ module.exports = function (env, { analyze }) {
       new HtmlWebpackPlugin({ template: 'index.html' }),
       new Dotenv({
         path: `./.env${production ? '' : '.' + (process.env.NODE_ENV || 'development')}`,
+      }),
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+        process: 'process/browser',
       }),
       analyze && new BundleAnalyzerPlugin(),
     ].filter(p => p),

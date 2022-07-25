@@ -8,3 +8,4 @@ export * from './reserve';
 export * from './storybook';
 export * from './swap';
 export * from './treasury';
+export * from './playground';

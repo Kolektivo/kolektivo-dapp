@@ -1,13 +1,14 @@
 import { App } from './app';
+import { ConsoleSink, LogLevel, LoggerConfiguration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from '../design-system';
 import { RouterConfiguration } from '@aurelia/router';
-import { StyleConfiguration } from 'aurelia';
 import Aurelia /*, { StyleConfiguration }*/ from 'aurelia';
 // Css files imported in this main file are NOT processed by style-loader
 // They are for sharedStyles in shadowDOM.
 // However, css files imported in other js/ts files are processed by style-loader.
 import * as pages from './pages';
 import * as resources from './resources';
+import * as services from './services';
 import alternate_email from '@material-design-icons/svg/outlined/alternate_email.svg';
 import calendar_today from '@material-design-icons/svg/outlined/calendar_today.svg';
 import check_circle_filled from '@material-design-icons/svg/filled/check_circle.svg';
@@ -35,6 +36,13 @@ Aurelia.register(
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(pages)
   .register(resources)
+  .register(services)
+  .register(
+    LoggerConfiguration.create({
+      level: LogLevel.trace,
+      sinks: [ConsoleSink],
+    }),
+  )
   .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
 
   .app(App)

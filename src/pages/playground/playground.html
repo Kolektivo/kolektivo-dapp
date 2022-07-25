@@ -1,0 +1,36 @@
+<div id="playground">
+  <h1>Welcome to playground!</h1>
+
+  <div>
+    <h3>BrowserStorageService</h3>
+
+    Local Storage
+    <k-button click.delegate="lsSet()">lsSet</k-button>
+    <k-button click.delegate="lsGet()">lsGet</k-button>
+    <k-button click.delegate="lsRemove()">lsRemove</k-button>
+
+    Session Storage
+    <k-button click.delegate="ssSet()">ssSet</k-button>
+    <k-button click.delegate="ssGet()">ssGet</k-button>
+    <k-button click.delegate="ssRemove()">ssRemove</k-button>
+  </div>
+
+  <div>
+    <h3>Axios</h3>
+    <k-button click.delegate="axiosTest('success')">axiosTest success</k-button>
+    <k-button click.delegate="axiosTest('error')">axiosTest error</k-button>
+  </div>
+
+  <div>
+    <h3>disclaimerService</h3>
+    <k-input value.bind="disclaimerAddress" placeholder="Disclaim for this address"></k-input>
+    <k-button click.delegate="ensureDappDisclaimed(disclaimerAddress)">Disclaim for ${disclaimerAddress}</k-button>
+    <k-button click.delegate="isDappDisclaimed(disclaimerAddress)">isDappDisclaimed</k-button>
+  </div>
+
+  <div>
+    <h3>Celo Service</h3>
+    <k-button click.delegate="connect()">ensureWeb3Modal</k-button>
+  </div>
+
+</div>
