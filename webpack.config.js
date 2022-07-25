@@ -46,21 +46,7 @@ module.exports = function (env, { analyze }) {
             // add your production aliasing here
           }
         : {
-            ...[
-              'fetch-client',
-              'kernel',
-              'metadata',
-              'platform',
-              'platform-browser',
-              'plugin-conventions',
-              'route-recognizer',
-              'router',
-              'router-lite',
-              'runtime',
-              'runtime-html',
-              'testing',
-              'webpack-loader',
-            ].reduce(
+            ...['fetch-client', 'kernel', 'metadata', 'platform', 'platform-browser', 'plugin-conventions', 'route-recognizer', 'router', 'router-lite', 'runtime', 'runtime-html', 'testing', 'webpack-loader'].reduce(
               (map, pkg) => {
                 const name = `@aurelia/${pkg}`;
                 map[name] = path.resolve(__dirname, 'node_modules', name, 'dist/esm/index.dev.mjs');
@@ -69,7 +55,7 @@ module.exports = function (env, { analyze }) {
               {
                 aurelia: path.resolve(__dirname, 'node_modules/aurelia/dist/esm/index.dev.mjs'),
                 // add your development aliasing here
-              },
+              }
             ),
           },
       fallback: {
@@ -86,6 +72,7 @@ module.exports = function (env, { analyze }) {
         https: false,
         stream: false,
         crypto: false,
+        util: require.resolve('util/'),
         'crypto-browserify': require.resolve('crypto-browserify'), //if you want to use this module also don't forget npm i crypto-browserify
       },
     },

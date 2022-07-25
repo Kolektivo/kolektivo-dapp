@@ -1,21 +1,16 @@
 import { Address } from './types';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IBrowserStorageService } from './BrowserStorageService';
-import { INotificationService } from '../../design-system/services/notification-service';
+import { INotificationService } from '../../design-system/services/notification/notification-service';
 
 export type IDisclaimerService = DisclaimerService;
 export const IDisclaimerService = DI.createInterface<IDisclaimerService>('DisclaimerService');
 
 export class DisclaimerService {
-  constructor(
-    @INotificationService private readonly notificationService: INotificationService,
-    @IBrowserStorageService private readonly storageService: IBrowserStorageService,
-  ) {}
+  constructor(@INotificationService private readonly notificationService: INotificationService, @IBrowserStorageService private readonly storageService: IBrowserStorageService) {}
 
   public isDappDisclaimed(accountAddress: Address): boolean {
-    return (
-      accountAddress && this.storageService.lsGet(this.getDappDisclaimerStatusKey(accountAddress), 'false') === 'true'
-    );
+    return accountAddress && this.storageService.lsGet(this.getDappDisclaimerStatusKey(accountAddress), 'false') === 'true';
   }
 
   public async ensureDappDisclaimed(account: string): Promise<boolean> {
