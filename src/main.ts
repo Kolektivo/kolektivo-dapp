@@ -1,4 +1,4 @@
-const en = require('/locales/en/translation.json');
+import * as en from '/locales/en/translation.json';
 import * as intervalPlural from 'i18next-intervalplural-postprocessor';
 import { App } from './app';
 import { DesignSystemPlugin } from '../design-system';
