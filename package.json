@@ -20,7 +20,6 @@
     "lint:fix": "eslint src design-system test --fix",
     "lint:scss": "stylelint \"src/**/*.scss\" \"design-system/**/*.scss\"",
     "lint:html": "htmlhint -c .htmlhintrc src design-system ",
-    "lint": "npm run lint:js && npm run lint:html && npm run lint:scss",
     "lint": "npm run lint:js && npm run lint:html",
     "pretest": "npm run lint",
     "start": "webpack serve",
@@ -44,6 +43,7 @@
     "chart.js": "^3.8.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "ethers": "^5.6.9",
     "html-loader": "^3.1.2",
     "i18next-intervalplural-postprocessor": "^3.0.0"
   },
