@@ -11,6 +11,6 @@ export class App {
       transform: this.sidebarOpen ? false : 'translateX(-80%)',
     };
   }
-  header: HTMLElement;
+  header?: HTMLElement;
   constructor(@INotificationService private readonly confirmService: INotificationService, @IAnimationService private readonly animationService: IAnimationService) {}
 }

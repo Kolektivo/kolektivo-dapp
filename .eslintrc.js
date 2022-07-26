@@ -2,11 +2,16 @@ module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'unused-imports', 'sort-imports-es6-autofix', 'prettier'],
-  // prettier here overrides all eslint commands that it can do itself.
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/eslint-recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:@typescript-eslint/strict',
+    'prettier'],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
+    project: ['tsconfig.json']
   },
   env: {
     es6: true,
@@ -17,26 +22,31 @@ module.exports = {
   rules: {
     'prettier/prettier': [
       'error',
-      // these cannot be overridden by prettier, so must pull them in here explicitly from prettier
       {
+        semi: true,
+        trailingComma: 'all',
         singleQuote: true,
-        printWidth: 225,
+        printWidth: 350,
+        tabWidth: 2,
+        endOfLine: 'auto',
         arrowParens: 'avoid',
       },
       {
         usePrettierrc: false,
       },
     ],
-    /**
-     * define only code-related lint rules and leave formatting up to prettier
-     */
-    '@typescript-eslint/explicit-function-return-type': 'off',
     'no-tabs': ['error', { allowIndentationTabs: true }],
+    '@typescript-eslint/consistent-type-definitions': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'no-useless-escape': 'off',
+    '@typescript-eslint/no-extraneous-class': 'off',
+    '@typescript-eslint/indent': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-unused-expressions': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'warn',
     'unused-imports/no-unused-imports': 'error',
     'sort-imports-es6-autofix/sort-imports-es6': [
       2,
@@ -46,64 +56,6 @@ module.exports = {
         memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
       },
     ],
-    '@typescript-eslint/no-var-requires': 'off',
-    '@typescript-eslint/explicit-member-accessibility': 'off',
-    'sort-imports': 'off',
-    'require-atomic-updates': 'warn',
-    'no-console': 'warn',
-    '@typescript-eslint/ban-ts-comment': ['warn', { 'ts-ignore': false }],
-    '@typescript-eslint/no-inferrable-types': [
-      'off',
-      {
-        ignoreParameters: false,
-        ignoreProperties: false,
-      },
-    ],
-    '@typescript-eslint/prefer-for-of': 'error',
-    '@typescript-eslint/consistent-type-assertions': [
-      'error',
-      {
-        assertionStyle: 'as',
-        objectLiteralTypeAssertions: 'allow-as-parameter',
-      },
-    ],
-    'no-bitwise': 'error',
-    '@typescript-eslint/naming-convention': [
-      'error',
-      {
-        selector: 'interface',
-        format: ['PascalCase'],
-        prefix: ['I'],
-      },
-    ],
-    'no-unused-vars': 'off', // to not interfere with @typescript just below
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '[_].*' }],
-    'no-prototype-builtins': 0,
-    eqeqeq: 'error',
-    'getter-return': 0,
-    'linebreak-style': ['error', 'unix'],
+    'object-curly-spacing': ['error', 'always'],
   },
-  /**
-   * require services to be explicit about public/private access
-   */
-  overrides: [
-    {
-      files: ['*Service.ts', '*-service.ts'],
-      rules: {
-        '@typescript-eslint/explicit-member-accessibility': [
-          'error',
-          {
-            accessibility: 'explicit',
-            overrides: {
-              accessors: 'explicit',
-              constructors: 'no-public',
-              methods: 'explicit',
-              properties: 'explicit',
-              parameterProperties: 'explicit',
-            },
-          },
-        ],
-      },
-    },
-  ],
 };

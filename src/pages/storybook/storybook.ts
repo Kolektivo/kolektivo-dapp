@@ -34,11 +34,7 @@ export class Storybook {
     this.showCountdowns = true;
   }
 
-  constructor(
-    @IValidationRules validationRules: IValidationRules,
-    @newInstanceForScope(IValidationController) private controller: IValidationController,
-    @INotificationService private readonly notificationService: INotificationService
-  ) {
+  constructor(@IValidationRules validationRules: IValidationRules, @newInstanceForScope(IValidationController) private controller: IValidationController, @INotificationService private readonly notificationService: INotificationService) {
     validationRules
       .on(this.data)
       .ensure('required')
@@ -47,17 +43,17 @@ export class Storybook {
       .email()
       .withMessage('Please enter an email address with the following format: name@example.com')
       .ensure('birthdate')
-      .satisfies(x => !isNaN(Date.parse(x)))
+      .satisfies(x => !isNaN(Date.parse(String(x))))
       .withMessage('Date of birth is required in the following format: DD/MM/YYYY')
-      .satisfies(x => new Date(x) < new Date())
+      .satisfies(x => new Date(String(x)) < new Date())
       .withMessage("Date of birth can't be in the future")
-      .satisfies(x => new Date(x) < new Date())
+      .satisfies(x => new Date(String(x)) < new Date())
       .withMessage('Another condition that triggers multiple errors');
     this.controller.addObject(this.data);
   }
   async openConfirmModal(): Promise<void> {
     const result = await this.notificationService.confirm('Is this cool?');
-    this.notificationService.toast({ message: result + ' was clicked' });
+    void this.notificationService.toast({ message: `${String(result)} was clicked` });
   }
 
   //modal example #1
@@ -96,7 +92,7 @@ export class Storybook {
     this.isOpen3 = !this.isOpen3;
   }
   customClick(): void {
-    this.notificationService.toast({ message: 'custom modal content button clicked!' });
+    void this.notificationService.toast({ message: 'custom modal content button clicked!' });
   }
 
   //data grid example
@@ -109,7 +105,7 @@ export class Storybook {
   ];
 
   public veto(price: string): void {
-    this.notificationService.toast({ message: `Price is ${price}` });
+    void this.notificationService.toast({ message: `Price is ${price}` });
   }
 
   testData1 = [
@@ -125,18 +121,18 @@ export class Storybook {
 
   //toast examples
   public toast1(): void {
-    this.notificationService.toast({ message: 'This is a normal toast. It will stay for 5 seconds by default.' });
+    void this.notificationService.toast({ message: 'This is a normal toast. It will stay for 5 seconds by default.' });
   }
 
   public toast2(): void {
-    this.notificationService.toast({ message: 'This toast will hide after 10 seconds', timeOut: 100000 });
+    void this.notificationService.toast({ message: 'This toast will hide after 10 seconds', timeOut: 100000 });
   }
 
   public toast3(): void {
-    this.notificationService.toast({ message: 'This is a dangerous toast! =O', type: 'danger' });
+    void this.notificationService.toast({ message: 'This is a dangerous toast! =O', type: 'danger' });
   }
 
   public toast4(): void {
-    this.notificationService.toast({ message: 'This is a bottom toast', position: 'bottom' });
+    void this.notificationService.toast({ message: 'This is a bottom toast', position: 'bottom' });
   }
 }

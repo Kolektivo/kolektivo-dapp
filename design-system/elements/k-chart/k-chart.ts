@@ -55,7 +55,7 @@ Chart.register(
   Legend,
   Title,
   Tooltip,
-  SubTitle
+  SubTitle,
 );
 
 export type DataType = number | ScatterDataPoint | BubbleDataPoint;
@@ -67,18 +67,17 @@ export class KChart implements ICustomElementViewModel {
   @bindable colors: string[] | string;
 
   chart: HTMLCanvasElement;
-  chartJsInstance: Chart<ChartType, DataType[], string>;
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
+  chartJsInstance: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
 
   createChart(): void {
     const dataSets: ChartDataset[] = [];
     if (!isNaN(this.data[0] as number)) {
       dataSets.push({ data: this.data as DataType[], backgroundColor: this.colors });
     }
+    const context = this.chart.getContext('2d');
+    if (!context) return;
 
-    this.chartJsInstance = new Chart(this.chart.getContext('2d'), {
+    this.chartJsInstance = new Chart(context, {
       type: this.type,
       data: {
         labels: this.labels,

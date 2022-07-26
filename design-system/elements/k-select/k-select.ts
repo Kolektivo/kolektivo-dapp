@@ -1,13 +1,9 @@
-import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
+import { ICustomElementViewModel, bindable, capture } from 'aurelia';
+@capture()
 export class KSelect implements ICustomElementViewModel {
   @bindable options = [];
-  @bindable placeholder: string;
-  private dropdown: HTMLSelectElement;
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
+  @bindable placeholder?: string;
   changed(): void {
     (document.activeElement as HTMLElement).blur();
   }
 }
-(CustomElement.getDefinition(KSelect) as { capture: boolean }).capture = true;

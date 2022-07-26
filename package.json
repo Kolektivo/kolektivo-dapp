@@ -21,7 +21,6 @@
     "lint:scss": "stylelint \"src/**/*.scss\" \"design-system/**/*.scss\"",
     "lint:html": "htmlhint -c .htmlhintrc src design-system ",
     "lint": "npm run lint:js && npm run lint:html && npm run lint:scss",
-    "lint": "npm run lint:js && npm run lint:html",
     "pretest": "npm run lint",
     "start": "webpack serve",
     "build": "rimraf dist && webpack --env production",

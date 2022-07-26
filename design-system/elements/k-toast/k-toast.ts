@@ -3,7 +3,7 @@ import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { NotificationAction, NotificationType } from '../../../design-system/services';
 import { Position } from './../../types';
 import { ToastOptions } from './toast-options';
-import { Utils } from '../../../src/utils';
+import { getColorByType } from 'utils';
 import template from './k-toast.html';
 
 function getFlexFromPosition(position: Position): string {
@@ -18,7 +18,7 @@ export class KToast implements ICustomElementViewModel, ToastOptions {
   @bindable title?: string;
   @bindable message?: string;
   @bindable icon?: string;
-  @bindable type?: NotificationType = 'info';
+  @bindable type: NotificationType = 'info';
   @bindable actions?: NotificationAction[];
   @bindable position?: Position;
   @bindable animate = true;
@@ -64,14 +64,14 @@ export class KToast implements ICustomElementViewModel, ToastOptions {
   }
 
   get closeColor(): string {
-    return Utils.getColorByType(this.type);
+    return getColorByType(this.type);
   }
 
   get startClass(): string | undefined {
     if (!this.animate) return undefined;
     if (this.position === 'bottom') return 'slide-in-bottom';
-    if (!this.position || this.position?.includes('end')) return 'slide-in-end';
-    if (this.position?.includes('start')) return 'slide-in-start';
+    if (!this.position || this.position.includes('end')) return 'slide-in-end';
+    if (this.position.includes('start')) return 'slide-in-start';
     if (this.position === 'top') return 'slide-in-top';
     return undefined;
   }
@@ -79,17 +79,20 @@ export class KToast implements ICustomElementViewModel, ToastOptions {
   get endClass(): string | undefined {
     if (!this.animate) return undefined;
     if (this.position === 'bottom') return 'slide-out-bottom';
-    if (!this.position || this.position?.includes('end')) return 'slide-out-end';
-    if (this.position?.includes('start')) return 'slide-out-start';
+    if (!this.position || this.position.includes('end')) return 'slide-out-end';
+    if (this.position.includes('start')) return 'slide-out-start';
     if (this.position === 'top') return 'slide-out-top';
     return undefined;
   }
+
   closeToast(): void {
-    this.close();
+    this.close?.();
   }
+
   mouseEnter(): void {
     this.hovering = true;
   }
+
   mouseLeave(): void {
     this.hovering = false;
   }

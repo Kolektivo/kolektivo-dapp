@@ -10,7 +10,4 @@ const routes = [
 ];
 export class Reserve implements ICustomElementViewModel {
   routes = routes;
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
 }

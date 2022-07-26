@@ -5,8 +5,4 @@ export class Treasury implements ICustomElementViewModel {
     { name: 'Overview', path: 'overview' },
     { name: 'Governance', path: 'governance' },
   ];
-
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
 }

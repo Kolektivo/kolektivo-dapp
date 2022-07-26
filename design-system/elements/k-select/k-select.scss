@@ -1,4 +1,5 @@
 @import './../../styles/mixins.scss';
+
 :host {
   fast-select {
     padding: 12px 11px;
@@ -17,12 +18,15 @@
     -webkit-appearance: none !important;
     appearance: none !important;
     padding-right: 2rem !important;
+
     &:hover {
       border-color: var(--ocean-blue);
     }
+
     &:active {
       border: 2px solid var(--ocean-blue);
     }
+
     &:focus,
     &:focus-visible,
     &:focus-within {
@@ -30,17 +34,21 @@
       outline: 2px solid var(--ocean-blue-200);
       margin: -1px;
     }
+
     &[open] {
       background: var(--white) url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>') no-repeat;
     }
+
     option {
       color: var(--don-juan);
     }
+
     &::part(control) {
       padding: 0;
       background-color: transparent;
       border-color: transparent;
       border-radius: 0;
+
       &:empty {
         &::before {
           color: red;
@@ -48,33 +56,42 @@
         }
       }
     }
+
     &::part(indicator) {
       display: none;
     }
+
     &::part(listbox) {
       border: 2px solid var(--ocean-blue);
       border-radius: var(--rounded);
       background: var(--white);
       padding: 6px 0;
+
       &::-webkit-scrollbar-thumb {
         background-color: var(--ocean-blue);
         border-radius: 12px;
       }
+
       @include scrollbars(8px, 12px, var(--ocean-blue));
     }
+
     &:disabled {
       color: var(--don-juan-300);
       background-color: var(--don-juan-025);
       border: 1px solid var(--don-juan-050);
+
       &:hover {
         border: 1px solid var(--don-juan-050);
       }
+
       opacity: 1;
     }
+
     &[error] {
       color: var(--error);
       border-color: var(--error);
       background-color: var(--error-light);
+
       &:focus,
       &:focus-visible,
       &:focus-within {
@@ -83,19 +100,23 @@
       }
     }
   }
+
   fast-option {
     background-color: var(--white);
     color: var(--don-juan-700);
     border-radius: 0;
     margin: 0;
+
     &:hover {
       background-color: var(--ocean-blue-050);
     }
+
     &:active,
     &:focus-visible {
       background-color: var(--ocean-blue);
       color: var(--white);
     }
+
     &[aria-selected='true'] {
       border: none;
       box-shadow: none;

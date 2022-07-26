@@ -22,8 +22,9 @@ import warning_filled from '@material-design-icons/svg/filled/warning.svg';
 import designScss from '../design-system/styles/shared.scss';
 import scss from './shared.scss';
 
-Aurelia.register(
+void Aurelia.register(
   DesignSystemPlugin.configure(x => {
+    x.iconMap ??= new Map<string, string>();
     x.iconMap.set('alternate_email', alternate_email);
     x.iconMap.set('alternate_email', alternate_email);
     x.iconMap.set('calendar_today', calendar_today);
@@ -36,9 +37,9 @@ Aurelia.register(
     x.iconMap.set('link', link);
     x.iconMap.set('warning_filled', warning_filled);
     x.defaultToastTimeout = 5000;
-  })
+  }),
 )
-  .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
+  .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss as string, scss as string] }))
   .register(pages)
   .register(resources)
   .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
