@@ -52,7 +52,7 @@ export class NumberService {
     const isCurrency = options?.isCurrency ?? false;
     // eslint-disable-next-line eqeqeq
     const fractionDigits = options?.fractionDigits == undefined ? 2 : this.fromString(options.fractionDigits);
-    const format = isCurrency ? { style: 'currency', unit: 'en-US' } : isPercentage ? { style: 'percent' } : { style: 'decimal' };
+    const format = isCurrency ? { style: 'currency', currency: 'USD' } : isPercentage ? { style: 'percent' } : { style: 'decimal' };
 
     return this.i18n.nf(
       value,
