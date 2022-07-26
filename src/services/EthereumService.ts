@@ -6,7 +6,7 @@ import { BigNumber, BigNumberish, Signer, ethers } from 'ethers';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
 import { IBrowserStorageService } from './BrowserStorageService';
 import { IConsoleLogService } from './ConsoleLogService';
-import { IDisclaimerService } from './DisclaimerService';
+// import { IDisclaimerService } from './DisclaimerService';
 import { Utils } from './utils';
 import { SafeAppWeb3Modal as Web3Modal } from '@gnosis.pm/safe-apps-web3modal';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
@@ -76,10 +76,9 @@ export class EthereumService {
   constructor(
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     @IConsoleLogService private readonly consoleLogService: IConsoleLogService,
-    @IDisclaimerService private readonly disclaimerService: IDisclaimerService,
+    // @IDisclaimerService private readonly disclaimerService: IDisclaimerService,
     @IBrowserStorageService private readonly storageService: IBrowserStorageService
   ) {}
-  // constructor(private eventAggregator: EventAggregator, private disclaimerService: DisclaimerService, private consoleLogService: ConsoleLogService, private storageService: BrowserStorageService) {}
 
   public static ProviderEndpoints = {
     mainnet: `https://forno.celo.org`,
@@ -186,10 +185,10 @@ export class EthereumService {
   }
 
   private async fireAccountsChangedHandler(account: Address) {
-    if (account && !(await this.disclaimerService.ensureDappDisclaimed(account))) {
-      this.disconnect({ code: -1, message: 'User declined the Prime Deals disclaimer' });
-      account = null;
-    }
+    // if (account && !(await this.disclaimerService.ensureDappDisclaimed(account))) {
+    this.disconnect({ code: -1, message: 'User declined the Prime Deals disclaimer' });
+    account = null;
+    // }
     console.info(`account changed: ${account}`);
     this.eventAggregator.publish('Network.Changed.Account', account);
   }
@@ -286,15 +285,15 @@ export class EthereumService {
          * Expected flow: When Disclaimer not accepted, always pop up.
          * In the Safe App case, we need to call ensure extra, else it does not show up.
          */
-        await this.disclaimerService.ensureDappDisclaimed(account);
+        // await this.disclaimerService.ensureDappDisclaimed(account);
         /**
          * Dev note: For the Gnosis safe we could remove this if, because for a Safe app it is _expected_ to autoconnect.
          *   The disclaimer is ensured during `setProvider`. Of course we can make extra sure though.
          */
-        if (this.disclaimerService.isDappDisclaimed(account)) {
-          this.consoleLogService.logMessage(`autoconnecting to ${account}`, 'info');
-          return this.setProvider(this.safeProvider as any);
-        }
+        // if (this.disclaimerService.isDappDisclaimed(account)) {
+        this.consoleLogService.logMessage(`autoconnecting to ${account}`, 'info');
+        return this.setProvider(this.safeProvider as any);
+        // }
       }
     }
   }
@@ -329,10 +328,10 @@ export class EthereumService {
         const accounts = await provider.request({ method: 'eth_accounts' });
         if (accounts?.length) {
           const account = getAddress(accounts[0]);
-          if (this.disclaimerService.isDappDisclaimed(account)) {
-            this.consoleLogService.logMessage(`autoconnecting to ${account}`, 'info');
-            return this.setProvider(provider);
-          }
+          // if (this.disclaimerService.isDappDisclaimed(account)) {
+          this.consoleLogService.logMessage(`autoconnecting to ${account}`, 'info');
+          return this.setProvider(provider);
+          // }
         }
       }
     }
