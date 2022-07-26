@@ -3,7 +3,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 /* eslint-disable no-console */
 import { BaseProvider, ExternalProvider, Network, Web3Provider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish, Signer, ethers } from 'ethers';
-import { DI, IEventAggregator } from 'aurelia';
+import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
 import { IBrowserStorageService } from './BrowserStorageService';
 import { IConsoleLogService } from './ConsoleLogService';
 import { IDisclaimerService } from './DisclaimerService';
@@ -771,6 +771,10 @@ export class EthereumService {
       this.consoleLogService.logObject(error.message, error, 'error');
       return false;
     }
+  }
+
+  public static register(container: IContainer) {
+    Registration.singleton(IEthereumService, EthereumService).register(container);
   }
 }
 

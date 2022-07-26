@@ -1,4 +1,4 @@
-import { Address } from './types';
+import { Address } from './EthereumService';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IBrowserStorageService } from './BrowserStorageService';
 import { INotificationService } from '../../design-system/services/notification/notification-service';
