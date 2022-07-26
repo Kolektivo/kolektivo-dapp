@@ -29,8 +29,7 @@ import designScss from '../design-system/styles/shared.scss';
 import scss from './shared.scss';
 
 const container = DI.createContainer();
-Registration.singleton(INumberService, NumberService).register(container);
-
+container.register(Registration.singleton(INumberService, NumberService));
 const numberService = container.get(INumberService);
 
 container
