@@ -1,6 +1,6 @@
 import './app.scss';
 import './shared.scss';
-import { AllowedNetworks, ICeloService, Networks } from './services';
+import { AllowedNetworks, IEthereumService, Networks } from './services';
 import { IAnimationService } from '../design-system/services/animation/animation-service';
 import { INotificationService } from '../design-system/services/notification/notification-service';
 export class App {
@@ -13,11 +13,15 @@ export class App {
     };
   }
   header: HTMLElement;
-  constructor(@INotificationService private readonly confirmService: INotificationService, @IAnimationService private readonly animationService: IAnimationService, @ICeloService private readonly celoService: ICeloService) {}
+  constructor(
+    @INotificationService private readonly confirmService: INotificationService,
+    @IAnimationService private readonly animationService: IAnimationService,
+    @IEthereumService private readonly ethereumService: IEthereumService
+  ) {}
 
   async binding() {
     const network = process.env.NETWORK as AllowedNetworks;
     const inDev = process.env.NODE_ENV === 'development';
-    this.celoService.initialize(network ?? (inDev ? Networks.Alfajores : Networks.Mainnet));
+    this.ethereumService.initialize(network ?? (inDev ? Networks.Alfajores : Networks.Mainnet));
   }
 }

@@ -1,4 +1,4 @@
-import { IAxiosService, IBrowserStorageService, ICeloService, IDisclaimerService } from '../../services';
+import { IAxiosService, IBrowserStorageService, IDisclaimerService, IEthereumService } from '../../services';
 import { ICustomElementViewModel } from 'aurelia';
 import axios from 'axios';
 
@@ -7,7 +7,7 @@ export class Playground implements ICustomElementViewModel {
     @IBrowserStorageService private readonly browserStorageService: IBrowserStorageService,
     @IAxiosService private readonly axiosService: IAxiosService,
     @IDisclaimerService private readonly disclaimerService: IDisclaimerService,
-    @ICeloService private readonly celoService: ICeloService,
+    @IEthereumService private readonly ethereumService: IEthereumService
   ) {}
 
   lsSet() {
@@ -62,6 +62,6 @@ export class Playground implements ICustomElementViewModel {
   }
 
   connect() {
-    this.celoService.connect();
+    this.ethereumService.connect();
   }
 }
