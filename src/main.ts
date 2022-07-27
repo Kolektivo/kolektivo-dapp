@@ -46,7 +46,7 @@ container
       options.initOptions = {
         fallbackLng: { default: ['en'] },
         resources: {
-          en: { translation: en },
+          en: { translation: en as string },
         },
         plugins: [intervalPlural],
       };
