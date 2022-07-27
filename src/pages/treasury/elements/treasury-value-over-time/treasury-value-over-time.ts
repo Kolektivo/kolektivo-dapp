@@ -1,7 +1,6 @@
-import './overview.scss';
+import './treasury-value-over-time.scss';
 import { ICustomElementViewModel } from 'aurelia';
-
-export class Overview implements ICustomElementViewModel {
+export class TreasuryValueOverTime implements ICustomElementViewModel {
   constructor() {
     // you can inject the element or any DI in the constructor
   }
