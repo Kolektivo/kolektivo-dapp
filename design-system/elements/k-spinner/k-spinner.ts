@@ -1,18 +1,15 @@
 import { ICustomElementViewModel, bindable } from 'aurelia';
-import { IfExistsThenTrue } from './../../common';
+import { ifExistsThenTrue } from './../../common';
 import { numberToPixels } from '../../../design-system/common';
 
 export class KSpinner implements ICustomElementViewModel {
   @bindable color = 'var(--primary-text)';
-  @bindable({ set: IfExistsThenTrue }) paused = false;
+  @bindable({ set: ifExistsThenTrue }) paused = false;
   @bindable size = 40;
   @bindable speed = 2;
   @bindable animation = 'spinner';
   @bindable icon = '';
 
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
   get iconStyle(): Record<string, unknown> {
     return {
       animation: this.animation && `${this.animation} ${this.speed}s linear infinite reverse`,

@@ -1,11 +1,8 @@
 import { ICustomElementViewModel, bindable } from 'aurelia';
 
 export class KColor implements ICustomElementViewModel {
-  @bindable var;
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
+  @bindable var?: string;
   copyCode(): void {
-    navigator.clipboard.writeText(`var(--${this.var})`);
+    this.var && void navigator.clipboard.writeText(`var(--${this.var})`);
   }
 }

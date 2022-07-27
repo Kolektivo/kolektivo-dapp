@@ -1,14 +1,10 @@
-import { BindingMode, CustomElement, ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { BindingMode, ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { DisplayValue } from './../../common';
 import template from './k-radio-group.html';
 
-@customElement({ name: 'k-radio-group', template })
+@customElement({ name: 'k-radio-group', template, capture: true })
 export class KRadioGroup implements ICustomElementViewModel {
-  @bindable({ mode: BindingMode.twoWay }) value: DisplayValue;
-  @bindable name: string;
-  @bindable items: DisplayValue[];
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
+  @bindable({ mode: BindingMode.twoWay }) value?: DisplayValue;
+  @bindable name?: string;
+  @bindable items?: DisplayValue[];
 }
-(CustomElement.getDefinition(KRadioGroup) as { capture: boolean }).capture = true;

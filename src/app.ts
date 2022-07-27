@@ -5,12 +5,18 @@ import { INotificationService } from '../design-system/services/notification/not
 export class App {
   width = 200;
   sidebarOpen = true;
+
   get sidebarStyle(): Record<string, unknown> {
     return {
       transition: 'transform .5s',
       transform: this.sidebarOpen ? false : 'translateX(-80%)',
     };
   }
-  header: HTMLElement;
-  constructor(@INotificationService private readonly confirmService: INotificationService, @IAnimationService private readonly animationService: IAnimationService) {}
+
+  header?: HTMLElement;
+
+  constructor(
+    @INotificationService private readonly confirmService: INotificationService,
+    @IAnimationService private readonly animationService: IAnimationService,
+  ) {}
 }

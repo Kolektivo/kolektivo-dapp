@@ -23,7 +23,7 @@ export const customSelect = Select.compose({
 });
 provideFASTDesignSystem().register(customSelect(), fastOption(), fastAvatar());
 
-export default AppTask.beforeCreate(IContainer, container => {
+export default AppTask.beforeCreate(IContainer, (container) => {
   const attrMapper = container.get(IAttrMapper);
   const nodeObserverLocator = container.get(NodeObserverLocator);
   attrMapper.useTwoWay((el, property) => {

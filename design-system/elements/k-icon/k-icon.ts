@@ -1,29 +1,34 @@
 import './k-icon.scss';
-import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
+import { ICustomElementViewModel, bindable, capture } from 'aurelia';
 import { IDesignSystemConfiguration } from '../../configuration';
+import { numberToPixelsInterceptor } from './../../common';
 
+@capture()
 export class KIcon implements ICustomElementViewModel {
   @bindable name = '';
   @bindable color = '';
-  @bindable top = 0;
-  @bindable size = 0;
-  object: HTMLObjectElement;
-  view: string;
+  @bindable({ set: numberToPixelsInterceptor }) top = 0;
+  @bindable({ set: numberToPixelsInterceptor }) size = 0;
+  object?: HTMLObjectElement;
+  view?: string;
 
   constructor(@IDesignSystemConfiguration private readonly configuration: IDesignSystemConfiguration) {}
 
   nameChanged(): void {
-    fetch(this.configuration.iconMap.get(this.name)).then(x => {
-      x.text().then(y => (this.view = y));
+    const url = this.configuration.iconMap?.get(this.name);
+    if (!url) return;
+
+    void fetch(url).then((x) => {
+      void x.text().then((y) => (this.view = y));
     });
   }
 
   get styles(): Record<string, unknown> {
     return {
       fill: this.color && this.color,
-      width: this.size > 0 && this.size + 'px',
-      height: this.size > 0 && this.size + 'px',
-      marginTop: this.top > 0 && this.top + 'px',
+      width: this.size,
+      height: this.size,
+      marginTop: this.top,
     };
   }
 
@@ -31,4 +36,3 @@ export class KIcon implements ICustomElementViewModel {
     this.nameChanged();
   }
 }
-(CustomElement.getDefinition(KIcon) as { capture: boolean }).capture = true;

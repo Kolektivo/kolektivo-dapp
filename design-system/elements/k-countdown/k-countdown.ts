@@ -1,16 +1,16 @@
 import { ICustomElementViewModel, IPlatform, Task, bindable } from 'aurelia';
-import { IfExistsThenTrue, numberToPixels } from './../../common';
+import { ifExistsThenTrue, numberToPixels } from './../../common';
 
 export class KCountdown implements ICustomElementViewModel {
   @bindable countdown = 5;
-  @bindable color = 'var(--primary-text)';
-  @bindable finishedColor = 'var(--primary)';
+  @bindable color?: string = 'var(--primary-text)';
+  @bindable finishedColor?: string = 'var(--primary)';
   @bindable icon = 'check';
   @bindable size = 40;
-  @bindable({ set: IfExistsThenTrue }) hovering = false;
-  @bindable({ set: IfExistsThenTrue }) inheritHover = false;
-  task: Task;
-  currentCount: number;
+  @bindable({ set: ifExistsThenTrue }) hovering = false;
+  @bindable({ set: ifExistsThenTrue }) inheritHover = false;
+  task?: Task;
+  currentCount: number = this.countdown;
 
   constructor(@IPlatform private readonly platform: IPlatform) {
     // you can inject the element or any DI in the constructor
@@ -26,7 +26,7 @@ export class KCountdown implements ICustomElementViewModel {
           this.detaching();
         }
       },
-      { delay: 1000, persistent: true /* runs until canceled */ }
+      { delay: 1000, persistent: true /* runs until canceled */ },
     );
   }
 
@@ -48,6 +48,6 @@ export class KCountdown implements ICustomElementViewModel {
     this.hovering = false;
   }
   detaching(): void {
-    this.task.cancel();
+    this.task?.cancel();
   }
 }

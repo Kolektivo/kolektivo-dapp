@@ -8,7 +8,7 @@ import { processContent } from '@aurelia/runtime-html';
     .replaceAll('>', '&gt;')
     .replaceAll('=""', '')
     .trim()} <a href='#' onclick='navigator.clipboard.writeText(this.closest("code").textContent)'><k-icon name="content_copy"></k-icon></a>`;
-  let strip: string;
+  let strip: string | null;
   if ((strip = (node as HTMLElement).getAttribute('strip'))) {
     code.innerHTML = code.innerHTML.replaceAll(strip, '');
   }

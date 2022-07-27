@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "esnext",
@@ -12,6 +13,7 @@
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
+    "strictNullChecks": true,
     "paths": {
       "pages/*": ["./src/pages/*"],
       "design-system/*": ["design-system/*"],

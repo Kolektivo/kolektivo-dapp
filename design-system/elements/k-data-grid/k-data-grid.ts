@@ -1,30 +1,27 @@
+import { ICustomAttributeController, ICustomElementController, ViewModelKind } from '@aurelia/runtime-html';
 import { ICustomAttributeViewModel, ICustomElementViewModel, bindable } from 'aurelia';
-import { ICustomElementController, ViewModelKind } from '@aurelia/runtime-html';
 import { IGridColumn } from './grid-column';
-
+type ElementOrAttributeViewModel<T> = ICustomElementController<T> | ICustomAttributeController<T>;
 export class KDataGrid implements ICustomElementViewModel {
   @bindable id?: string;
   @bindable condensed = false;
   @bindable public rows: [] = [];
   @bindable public columns: IGridColumn[] = [];
   @bindable public selectable = false;
-  @bindable public sortColumn: string;
-  @bindable public sortDirection: 'asc' | 'desc';
+  @bindable public sortColumn?: string;
+  @bindable public sortDirection?: 'asc' | 'desc';
   @bindable public numberToShow = 10;
   @bindable public hideMore = true;
   private seeingMore = false;
-  context: ICustomElementViewModel | ICustomAttributeViewModel;
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
+  context?: ICustomElementViewModel | ICustomAttributeViewModel;
 
   get cols(): string {
-    return this.columns?.map(y => y.width).join(' ');
+    return this.columns.map((y) => y.width).join(' ');
   }
-  binding(top: ICustomElementController<this>, direct: ICustomElementController<this>): void {
+
+  binding(top: ElementOrAttributeViewModel<this>, direct: ElementOrAttributeViewModel<this>): void {
     this.context = direct.viewModel;
-    if (this.context) return;
-    let controller: ICustomElementController<this> = top;
+    let controller: ElementOrAttributeViewModel<this> = top;
     for (let i = 0; i < 4; i++) {
       if (controller.vmKind === ViewModelKind.customElement) {
         this.context = controller.viewModel;
@@ -34,16 +31,17 @@ export class KDataGrid implements ICustomElementViewModel {
     }
   }
   getBuffedVm(row: Record<string | number | symbol, unknown>): unknown {
-    const vm = { ...(this.context ?? {}), ...row, row: row };
+    const vm = { ...(this.context ?? {}), ...row, row: row } as Record<string, unknown>;
     if (this.context) {
       Object.keys(Object.getOwnPropertyDescriptors(Object.getPrototypeOf(this.context)))
-        .filter(y => y !== 'constructor' && y !== 'bind' && y !== '__metadata__' && y !== 'activate')
-        .forEach(y => {
-          vm[y] = this.context[y];
+        .filter((y) => y !== 'constructor' && y !== 'bind' && y !== '__metadata__' && y !== 'activate')
+        .forEach((y) => {
+          vm[y] = (this.context as Record<string, unknown>)[y];
         });
     }
     return vm;
   }
+
   /**
    * This allows for more rows to be displayed on the grid
    * @param yesNo

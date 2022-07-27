@@ -1,7 +1,8 @@
-import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
+import { ICustomElementViewModel, bindable, capture } from 'aurelia';
 import { uid } from '../../common';
 
 export type ContentLoaderType = 'list' | 'code' | 'facebook' | 'instagram' | 'bullet-list';
+@capture()
 export class KSkeleton implements ICustomElementViewModel {
   @bindable type: ContentLoaderType = 'list';
   @bindable primaryColor = '#f9f9f9';
@@ -14,9 +15,9 @@ export class KSkeleton implements ICustomElementViewModel {
   @bindable secondaryColor = '#ecebeb';
   @bindable primaryOpacity = 1;
   @bindable secondaryOpacity = 1;
-  @bindable uniqueKey;
-  @bindable rtl;
-  @bindable style;
+  @bindable uniqueKey?: string;
+  @bindable rtl?: string;
+  @bindable style?: string;
   @bindable ignoreBaseUrl = false;
 
   idClip = uid();
@@ -41,4 +42,3 @@ export class KSkeleton implements ICustomElementViewModel {
     return `url(#${this.idClip})`;
   }
 }
-(CustomElement.getDefinition(KSkeleton) as { capture: boolean }).capture = true;

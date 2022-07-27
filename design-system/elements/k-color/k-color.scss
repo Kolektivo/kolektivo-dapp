@@ -7,6 +7,7 @@
     grid-column-gap: 10px;
     width: auto;
     cursor: pointer;
+
     div {
       &:hover {
         border: 5px solid var(--ocean-blue);
@@ -15,6 +16,7 @@
         content: 'copy';
       }
     }
+
     span {
       width: 75px;
       height: 50px;

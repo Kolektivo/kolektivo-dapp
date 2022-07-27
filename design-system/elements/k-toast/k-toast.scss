@@ -7,7 +7,8 @@
   bottom: 0;
   padding: 5rem;
   visibility: hidden;
-  > div {
+
+  >div {
     display: grid;
     grid-template-columns: auto 1fr auto;
     visibility: initial;
@@ -15,6 +16,6 @@
     border-radius: 10px;
     row-gap: 8px;
     column-gap: 12px;
-    
+
   }
 }
