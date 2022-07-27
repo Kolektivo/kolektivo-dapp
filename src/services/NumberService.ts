@@ -82,17 +82,4 @@ export class NumberService {
 
     return this.i18n.uf(value);
   }
-
-  /**
-   * @param value
-   * @returns true if value is a number.  BigNumber is not considered a number.
-   */
-  public stringIsNumber(value?: string | number): boolean {
-    try {
-      this.fromString(value);
-      return true;
-    } catch {
-      return false;
-    }
-  }
 }
