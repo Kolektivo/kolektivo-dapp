@@ -1,4 +1,4 @@
-@import '../../styles/shared.scss';
+@import '../../styles/shared';
 
 :host {
   div {
@@ -6,6 +6,7 @@
     height: 24px;
     width: 24px;
   }
+
   img,
   ::slotted(*) {
     vertical-align: middle;

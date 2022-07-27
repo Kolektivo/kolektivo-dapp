@@ -35,7 +35,11 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
       this.element.onanimationstart = (): boolean => (this.animationStarted = true);
       this.element.classList.add(this.startClass);
     }
-    this.animationService.animateCSS(this.element, this.value, 'px', this.from, this.to, this.duration, this.easing as keyof typeof easings);
+    this.value &&
+      this.from &&
+      this.to &&
+      this.duration &&
+      this.animationService.animateCSS(this.element, this.value, 'px', this.from, this.to, this.duration, this.easing as keyof typeof easings);
   }
 
   onAnimationEnd = (): void => {
@@ -45,7 +49,7 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   };
 
   detaching(): void | Promise<void> {
-    return new Promise(res => {
+    return new Promise((res) => {
       this.resolve = res;
 
       if (this.endClass) {
@@ -57,8 +61,10 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
         res();
       }
 
-      if (this.out) {
-        this.animationService.animateCSS(this.element, this.value, 'px', this.to, this.from, this.duration, this.easing as keyof typeof easings, () => this.resolve());
+      if (this.out && this.value && this.to && this.from && this.duration) {
+        this.animationService.animateCSS(this.element, this.value, 'px', this.to, this.from, this.duration, this.easing as keyof typeof easings, () =>
+          this.resolve?.(),
+        );
       }
     });
   }

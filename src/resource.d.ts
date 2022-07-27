@@ -12,7 +12,10 @@ declare module '*.html' {
 
 declare module '*.css';
 declare module '*.scss';
-declare module '*.json';
+declare module '*.json' {
+  const value: string;
+  export = value;
+}
 
 declare module '*.svg' {
   const value: string;

@@ -4,25 +4,31 @@ k-radio {
     grid-template-columns: auto 1fr;
     gap: var(--spacing);
     align-items: center;
+    place-content: center;
 
     >k-text {
       cursor: pointer;
     }
 
-    place-content: center;
-    display: grid;
 
     input {
       margin: 0;
-      -webkit-appearance: none;
+      appearance: none;
       background-color: var(--white);
       border: 2px solid var(--don-juan);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 1px 2px rgb(0 0 0 / 5%), inset 0 -15px 10px -12px rgb(0 0 0 / 5%);
       width: 18px;
       height: 18px;
       border-radius: 10px;
       display: inline-block;
       position: relative;
+
+      &:focus,
+      &:focus-visible {
+        border-color: var(--ocean-blue);
+        box-shadow: 0 0 0 3px rgb(69 173 168 / 40%);
+        outline-color: var(--ocean-blue-200);
+      }
 
       &:hover {
         border-color: var(--ocean-blue);
@@ -32,19 +38,8 @@ k-radio {
         border-color: var(--ocean-blue-800);
       }
 
-      &:checked:hover {
-        border-color: var(--ocean-blue-600);
-      }
-
-      &:checked:active {
-        border-color: var(--ocean-blue-800);
-      }
-
-      &:focus,
-      &:focus-visible {
-        border-color: var(--ocean-blue);
-        box-shadow: 0px 0px 0px 3px rgba(69, 173, 168, 0.4);
-        outline-color: var(--ocean-blue-200);
+      &:active::after {
+        background-color: var(--ocean-blue-800);
       }
 
       &:checked {
@@ -52,7 +47,7 @@ k-radio {
         border-color: var(--ocean-blue);
       }
 
-      &:checked:after {
+      &:checked::after {
         content: ' ';
         width: 10px;
         height: 10px;
@@ -61,10 +56,6 @@ k-radio {
         top: 2px;
         left: 2px;
         background-color: var(--ocean-blue);
-      }
-
-      &:active:after {
-        background-color: var(--ocean-blue-800);
       }
 
       &:disabled {
@@ -76,8 +67,16 @@ k-radio {
         background-color: var(--white);
       }
 
-      &:disabled:checked:after {
+      &:disabled:checked::after {
         background-color: var(--don-juan-050);
+      }
+
+      &:checked:hover {
+        border-color: var(--ocean-blue-600);
+      }
+
+      &:checked:active {
+        border-color: var(--ocean-blue-800);
       }
 
       &:disabled:checked:hover {

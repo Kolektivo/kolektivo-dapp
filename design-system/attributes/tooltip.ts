@@ -6,12 +6,12 @@ import { createCustomElement, destroyCustomElement } from '../../design-system/a
 
 @customAttribute({ name: 'tooltip' })
 export class Tooltip implements ICustomAttributeViewModel {
-  @bindable value: string;
+  @bindable value?: string;
   @bindable position: Position = 'top';
   @bindable color = 'red';
 
   controller?: ICustomElementController;
-  host: HTMLElement;
+  host?: HTMLElement;
 
   constructor(private readonly element: HTMLElement, @IContainer private readonly container: IContainer) {
     this.element.onmouseover = this.onHover;
@@ -22,14 +22,19 @@ export class Tooltip implements ICustomAttributeViewModel {
     if (this.controller) return;
     this.host = document.createElement('k-tooltip');
     this.element.insertAdjacentElement('beforebegin', this.host);
-    const { controller } = createCustomElement(KTooltip, this.container, this.host, { message: this.value, host: this.element, position: this.position, color: this.color });
+    const { controller } = createCustomElement(KTooltip, this.container, this.host, {
+      message: this.value,
+      host: this.element,
+      position: this.position,
+      color: this.color,
+    });
 
     this.controller = controller;
   };
 
   onHoverOut = async (): Promise<void> => {
-    await destroyCustomElement(this.controller);
-    this.host.remove();
+    this.controller && (await destroyCustomElement(this.controller));
+    this.host?.remove();
     this.controller = void 0;
   };
 }

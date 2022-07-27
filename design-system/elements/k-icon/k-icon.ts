@@ -1,14 +1,14 @@
 import './k-icon.scss';
 import { ICustomElementViewModel, bindable, capture } from 'aurelia';
 import { IDesignSystemConfiguration } from '../../configuration';
-import { numberToPixels } from './../../common';
+import { numberToPixelsInterceptor } from './../../common';
 
 @capture()
 export class KIcon implements ICustomElementViewModel {
   @bindable name = '';
   @bindable color = '';
-  @bindable({ set: numberToPixels }) top = 0;
-  @bindable({ set: numberToPixels }) size = 0;
+  @bindable({ set: numberToPixelsInterceptor }) top = 0;
+  @bindable({ set: numberToPixelsInterceptor }) size = 0;
   object?: HTMLObjectElement;
   view?: string;
 
@@ -18,8 +18,8 @@ export class KIcon implements ICustomElementViewModel {
     const url = this.configuration.iconMap?.get(this.name);
     if (!url) return;
 
-    void fetch(url).then(x => {
-      void x.text().then(y => (this.view = y));
+    void fetch(url).then((x) => {
+      void x.text().then((y) => (this.view = y));
     });
   }
 
