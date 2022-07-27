@@ -46,14 +46,14 @@ container
       options.initOptions = {
         fallbackLng: { default: ['en'] },
         resources: {
-          en: { translation: en as string },
+          en: { translation: en },
         },
         plugins: [intervalPlural],
       };
     }),
   )
   .register(
-    DesignSystemPlugin.configure(x => {
+    DesignSystemPlugin.configure((x) => {
       x.iconMap ??= new Map<string, string>();
       x.iconMap.set('alternate_email', alternate_email);
       x.iconMap.set('alternate_email', alternate_email);
