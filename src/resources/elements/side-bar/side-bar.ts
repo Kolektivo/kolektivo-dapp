@@ -1,7 +1,7 @@
 import { BindingMode, ICustomElementViewModel, bindable } from 'aurelia';
 import { IRouter } from '@aurelia/router';
-import { IfExistsThenTrue } from '../../../../design-system/common';
 import { RouteLink } from '../../../models/common';
+import { ifExistsThenTrue } from '../../../../design-system/common';
 
 const routes: RouteLink[] = [
   { name: 'Map', path: 'map', location: 'top' },
@@ -15,7 +15,7 @@ const routes: RouteLink[] = [
 ];
 export class SideBar implements ICustomElementViewModel {
   @bindable({ mode: BindingMode.twoWay }) open = true;
-  @bindable({ set: IfExistsThenTrue }) collapsible = false;
+  @bindable({ set: ifExistsThenTrue }) collapsible = false;
 
   constructor(@IRouter private readonly router: IRouter) {
     if (process.env.NODE_ENV === 'development') {

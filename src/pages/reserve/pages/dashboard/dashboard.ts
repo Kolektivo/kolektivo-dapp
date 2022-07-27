@@ -1,7 +1,3 @@
 import { ICustomElementViewModel } from 'aurelia';
 
-export class Dashboard implements ICustomElementViewModel {
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
-}
+export class Dashboard implements ICustomElementViewModel {}

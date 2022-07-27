@@ -1,13 +1,10 @@
-import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
-import { IfExistsThenTrue } from '../../../design-system/common';
+import { ICustomElementViewModel, bindable, capture } from 'aurelia';
 import { NotificationType } from './../../services/notification/notification-type';
+import { ifExistsThenTrue } from '../../../design-system/common';
 
+@capture()
 export class KChip implements ICustomElementViewModel {
   @bindable type: NotificationType = 'primary';
   @bindable icon = '';
-  @bindable({ set: IfExistsThenTrue }) border = false;
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
+  @bindable({ set: ifExistsThenTrue }) border = false;
 }
-(CustomElement.getDefinition(KChip) as { capture: boolean }).capture = true;

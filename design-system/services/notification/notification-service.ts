@@ -11,16 +11,10 @@ export const INotificationService = DI.createInterface<INotificationService>('IN
 export class NotificationService {
   private activeToast?: KToast;
 
-  constructor(
-    @IPlatform private readonly platform: IPlatform,
-    @IAurelia private readonly aurelia: IAurelia,
-    @IContainer private readonly container: IContainer,
-    @IDesignSystemConfiguration private readonly config: IDesignSystemConfiguration
-  ) {}
+  constructor(@IPlatform private readonly platform: IPlatform, @IAurelia private readonly aurelia: IAurelia, @IContainer private readonly container: IContainer, @IDesignSystemConfiguration private readonly config: IDesignSystemConfiguration) {}
 
-  public async confirm(message?: string, component?: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }>): Promise<boolean> {
+  public async confirm(message?: string, component: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }> = KConfirm): Promise<boolean> {
     return new Promise(res => {
-      component ??= KConfirm;
       const { controller, instance } = createCustomElement(component, this.container, this.aurelia.root.host);
 
       if (message) {
@@ -60,9 +54,9 @@ export class NotificationService {
             task.cancel();
           }
         },
-        { delay: 100, persistent: true /* runs until canceled */ }
+        { delay: 100, persistent: true /* runs until canceled */ },
       );
-    }).then(_x => {
+    }).then(() => {
       const { controller, instance } = createCustomElement(KToast, this.container, this.aurelia.root.host, toastOptions);
       instance.close = () => this.destroyToast(controller);
       if (toastOptions.timeOut !== 0 && (toastOptions.timeOut || this.config.defaultToastTimeout)) {
@@ -70,14 +64,14 @@ export class NotificationService {
         let timeout = toastOptions.timeOut ?? this.config.defaultToastTimeout;
         const expireTask = this.platform.taskQueue.queueTask(
           () => {
-            if (instance.hovering) return;
+            if (instance.hovering || timeout == null) return;
             timeout -= 100;
             if (timeout <= 0) {
               expireTask.cancel();
               this.destroyToast(controller);
             }
           },
-          { delay: 100, persistent: true /* runs until canceled */ }
+          { delay: 100, persistent: true /* runs until canceled */ },
         );
       }
       return () => {
@@ -87,7 +81,7 @@ export class NotificationService {
   }
 
   private destroyToast(controller: ICustomElementController) {
-    destroyCustomElement(controller);
+    void destroyCustomElement(controller);
     this.activeToast = undefined;
   }
   public static register(container: IContainer): void {

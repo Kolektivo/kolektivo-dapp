@@ -12,9 +12,6 @@ export class App {
       transform: this.sidebarOpen ? false : 'translateX(-80%)',
     };
   }
-  header: HTMLElement;
-  constructor(@INotificationService private readonly confirmService: INotificationService, @IAnimationService private readonly animationService: IAnimationService, @I18N i18n: I18N) {
-    // eslint-disable-next-line no-console
-    console.log('locale: ', i18n.getLocale());
-  }
+  header?: HTMLElement;
+  constructor(@INotificationService private readonly confirmService: INotificationService, @IAnimationService private readonly animationService: IAnimationService) {}
 }

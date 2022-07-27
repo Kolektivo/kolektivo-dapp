@@ -1,12 +1,9 @@
-import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
 import { Grid } from '../../base/grid';
+import { ICustomElementViewModel, bindable, capture } from 'aurelia';
 
+@capture()
 export class KStack extends Grid implements ICustomElementViewModel {
   @bindable direction = 'column';
-
-  constructor() {
-    super();
-  }
 
   binding(): void {
     if (this.direction === 'row') {
@@ -27,4 +24,3 @@ export class KStack extends Grid implements ICustomElementViewModel {
     };
   }
 }
-(CustomElement.getDefinition(KStack) as { capture: boolean }).capture = true;
