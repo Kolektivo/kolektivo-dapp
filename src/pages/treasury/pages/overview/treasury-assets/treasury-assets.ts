@@ -1,6 +1,6 @@
 import './treasury-assets.scss';
 import { ICustomElementViewModel } from 'aurelia';
-import { IGridColumn } from './../../../../../design-system/elements/k-data-grid/grid-column';
+import { IGridColumn } from './../../../../../../design-system/elements/k-data-grid/grid-column';
 
 export class TreasuryAssets implements ICustomElementViewModel {
   testColumns: IGridColumn[] = [
