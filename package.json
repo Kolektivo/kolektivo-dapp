@@ -18,6 +18,7 @@
   "scripts": {
     "lint:js": "eslint src design-system test --ext .js,.ts",
     "lint:fix": "eslint src design-system test --fix",
+    "lint:scss:fix": "stylelint \"src/**/*.scss\" \"design-system/**/*.scss\" --fix",
     "lint:scss": "stylelint \"src/**/*.scss\" \"design-system/**/*.scss\"",
     "lint:html": "htmlhint -c .htmlhintrc src design-system ",
     "lint": "npm run lint:js && npm run lint:html && npm run lint:scss",
@@ -33,7 +34,7 @@
     "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope"
   },
   "dependencies": {
-    "@aurelia/i18n": "^2.0.0-alpha.35",
+    "@aurelia/i18n": "dev",
     "@aurelia/validation-html": "dev",
     "@material-design-icons/svg": "^0.11.4",
     "@microsoft/fast-components": "^2.30.6",
@@ -82,6 +83,7 @@
     "stylelint": "^14.9.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^26.0.0",
+    "stylelint-config-standard-scss": "^5.0.0",
     "stylelint-prettier": "^2.0.0",
     "ts-loader": "^9.3.0",
     "tslib": "^2.4.0",

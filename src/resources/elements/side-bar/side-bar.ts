@@ -24,6 +24,6 @@ export class SideBar implements ICustomElementViewModel {
   }
 
   getRoutes(location: RouteLink['location']): RouteLink[] {
-    return routes.filter(y => y.location === location);
+    return routes.filter((y) => y.location === location);
   }
 }

@@ -1,10 +1,12 @@
 :host {
   cursor: pointer;
-  > div {
+
+  >div {
     display: grid;
     place-items: center;
     position: relative;
-    > k-spinner {
+
+    >k-spinner {
       display: inherit;
     }
   }

@@ -9,8 +9,8 @@ export class KCountdown implements ICustomElementViewModel {
   @bindable size = 40;
   @bindable({ set: ifExistsThenTrue }) hovering = false;
   @bindable({ set: ifExistsThenTrue }) inheritHover = false;
-  task: Task;
-  currentCount: number;
+  task?: Task;
+  currentCount: number = this.countdown;
 
   constructor(@IPlatform private readonly platform: IPlatform) {
     // you can inject the element or any DI in the constructor
@@ -48,6 +48,6 @@ export class KCountdown implements ICustomElementViewModel {
     this.hovering = false;
   }
   detaching(): void {
-    this.task.cancel();
+    this.task?.cancel();
   }
 }

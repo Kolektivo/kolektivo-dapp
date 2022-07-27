@@ -34,7 +34,11 @@ export class Storybook {
     this.showCountdowns = true;
   }
 
-  constructor(@IValidationRules validationRules: IValidationRules, @newInstanceForScope(IValidationController) private controller: IValidationController, @INotificationService private readonly notificationService: INotificationService) {
+  constructor(
+    @IValidationRules validationRules: IValidationRules,
+    @newInstanceForScope(IValidationController) private controller: IValidationController,
+    @INotificationService private readonly notificationService: INotificationService,
+  ) {
     validationRules
       .on(this.data)
       .ensure('required')
@@ -43,11 +47,11 @@ export class Storybook {
       .email()
       .withMessage('Please enter an email address with the following format: name@example.com')
       .ensure('birthdate')
-      .satisfies(x => !isNaN(Date.parse(String(x))))
+      .satisfies((x) => !isNaN(Date.parse(String(x))))
       .withMessage('Date of birth is required in the following format: DD/MM/YYYY')
-      .satisfies(x => new Date(String(x)) < new Date())
+      .satisfies((x) => new Date(String(x)) < new Date())
       .withMessage("Date of birth can't be in the future")
-      .satisfies(x => new Date(String(x)) < new Date())
+      .satisfies((x) => new Date(String(x)) < new Date())
       .withMessage('Another condition that triggers multiple errors');
     this.controller.addObject(this.data);
   }
@@ -97,7 +101,12 @@ export class Storybook {
 
   //data grid example
   testColumns1: IGridColumn[] = [
-    { headerText: 'Token', field: 'token', width: '1fr', template: '<k-grid cols="auto 1fr" gap="var(--spacing-lg)"><k-icon tooltip="this is cool" name="calendar_today"></k-icon>${token}</k-grid>' },
+    {
+      headerText: 'Token',
+      field: 'token',
+      width: '1fr',
+      template: '<k-grid cols="auto 1fr" gap="var(--spacing-lg)"><k-icon tooltip="this is cool" name="calendar_today"></k-icon>${token}</k-grid>',
+    },
     { headerText: 'Price', field: 'price', width: '1fr', align: 'right', template: '${price | currency}' },
     { headerText: 'Quantity', field: 'quantity', width: '1fr', align: 'right' },
     { headerText: 'Total Value', field: 'totalValue', width: '1fr', align: 'right', template: '${price * quantity | currency}' },

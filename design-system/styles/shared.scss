@@ -1,82 +1,103 @@
-@import './animations.scss';
+@import './animations';
 
 *[full-width] {
   width: 100%;
 }
 
-//extended classes used throughout the dapp
-.header-text {
+// extended classes used throughout the dapp
+%header-text {
   font-family: var(--header-font);
   font-weight: 700;
-  margin-block: 0px;
+  margin: 0;
 }
+
 .danger {
   k-icon {
     fill: var(--error);
   }
+
   color: var(--error);
   background-color: var(--error-light);
-  &.border{
+
+  &.border {
     border: 1px solid var(--error);
   }
 }
+
 .success {
   k-icon {
     fill: var(--success);
   }
+
   color: var(--success);
   background-color: var(--success-light);
-  &.border{
+
+  &.border {
     border: 1px solid var(--success);
   }
 }
+
 .warning {
   k-icon {
     fill: var(--warning);
   }
+
   color: var(--warning);
   background-color: var(--warning-light);
-  &.border{
+
+  &.border {
     border: 1px solid var(--warning);
   }
 }
+
 .info {
   k-icon {
     fill: var(--info);
   }
+
   color: var(--info);
   background-color: var(--info-light);
-  &.border{
+
+  &.border {
     border: 1px solid var(--info);
   }
 }
+
 .primary {
   k-icon {
     fill: var(--ocean-blue-700);
   }
+
   color: var(--ocean-blue-700);
   background-color: var(--ocean-blue-050);
-  &.border{
-      border: 1px solid var(--ocean-blue-700);
+
+  &.border {
+    border: 1px solid var(--ocean-blue-700);
   }
 }
+
 .secondary {
   k-icon {
     fill: var(--dark-coral-700);
   }
+
   color: var(--dark-coral-700);
   background-color: var(--dark-coral-050);
-  &.border{
+
+  &.border {
     border: 1px solid var(--dark-coral-700);
   }
 }
+
 .dark {
   k-icon {
     fill: var(--san-juan-700);
   }
+
   color: var(--san-juan-700);
   background-color: var(--san-juan-050);
-  &.border{
+
+  &.border {
     border: 1px solid var(--san-juan-700);
   }
 }
@@ -88,7 +109,7 @@
 
 .k-page-overlay,
 .k-overlay {
-  background-color: rgb(var(--san-juan-800-rgb), var(--alpha-xl));
+  background-color: rgb(var(--san-juan-800-rgb) var(--alpha-xl));
   position: fixed;
   top: 0;
   right: 0;
@@ -104,7 +125,7 @@
 
 @keyframes countdown {
   from {
-    stroke-dashoffset: 0px;
+    stroke-dashoffset: 0;
   }
 
   to {

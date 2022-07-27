@@ -11,10 +11,18 @@ export const INotificationService = DI.createInterface<INotificationService>('IN
 export class NotificationService {
   private activeToast?: KToast;
 
-  constructor(@IPlatform private readonly platform: IPlatform, @IAurelia private readonly aurelia: IAurelia, @IContainer private readonly container: IContainer, @IDesignSystemConfiguration private readonly config: IDesignSystemConfiguration) {}
+  constructor(
+    @IPlatform private readonly platform: IPlatform,
+    @IAurelia private readonly aurelia: IAurelia,
+    @IContainer private readonly container: IContainer,
+    @IDesignSystemConfiguration private readonly config: IDesignSystemConfiguration,
+  ) {}
 
-  public async confirm(message?: string, component: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }> = KConfirm): Promise<boolean> {
-    return new Promise(res => {
+  public async confirm(
+    message?: string,
+    component: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }> = KConfirm,
+  ): Promise<boolean> {
+    return new Promise((res) => {
       const { controller, instance } = createCustomElement(component, this.container, this.aurelia.root.host);
 
       if (message) {
@@ -45,7 +53,7 @@ export class NotificationService {
       toastOptions.countdown ??= (toastOptions.timeOut ?? this.config.defaultToastTimeout ?? 0) / 1000;
     }
 
-    return new Promise<void>(res => {
+    return new Promise<void>((res) => {
       if (!this.activeToast) res();
       const task = this.platform.taskQueue.queueTask(
         () => {

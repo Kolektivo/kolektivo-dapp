@@ -62,19 +62,19 @@ export type DataType = number | ScatterDataPoint | BubbleDataPoint;
 export class KChart implements ICustomElementViewModel {
   @bindable type: ChartType = 'bar';
   @bindable labels?: string[];
-  @bindable fill: boolean;
+  @bindable fill?: boolean;
   @bindable data: DataType[] | [DataType[]] = [];
-  @bindable colors: string[] | string;
+  @bindable colors?: string[] | string;
 
-  chart: HTMLCanvasElement;
-  chartJsInstance: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
+  chart?: HTMLCanvasElement;
+  chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
 
   createChart(): void {
     const dataSets: ChartDataset[] = [];
     if (!isNaN(this.data[0] as number)) {
       dataSets.push({ data: this.data as DataType[], backgroundColor: this.colors });
     }
-    const context = this.chart.getContext('2d');
+    const context = this.chart?.getContext('2d');
     if (!context) return;
 
     this.chartJsInstance = new Chart(context, {
@@ -102,7 +102,7 @@ export class KChart implements ICustomElementViewModel {
   }
 
   dataChanged(): void {
-    this.chartJsInstance.destroy();
+    this.chartJsInstance?.destroy();
     this.attaching();
   }
 
@@ -111,6 +111,6 @@ export class KChart implements ICustomElementViewModel {
   }
 
   detaching(): void | Promise<void> {
-    this.chartJsInstance.destroy();
+    this.chartJsInstance?.destroy();
   }
 }
