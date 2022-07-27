@@ -44,6 +44,7 @@
     "chart.js": "^3.8.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "ethers": "^5.6.9",
     "html-loader": "^3.1.2",
     "i18next-intervalplural-postprocessor": "^3.0.0"
   },
