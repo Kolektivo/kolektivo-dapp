@@ -22,13 +22,11 @@ module.exports = {
   rules: {
     'prettier/prettier': [
       'error',
+      // these cannot be overridden by prettier, so must pull them in here explicitly from prettier
       {
-        semi: true,
         trailingComma: 'all',
         singleQuote: true,
         printWidth: 150,
-        tabWidth: 2,
-        arrowParens: 'avoid',
       },
       {
         usePrettierrc: false,
