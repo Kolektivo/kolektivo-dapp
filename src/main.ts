@@ -29,13 +29,33 @@ import designScss from '../design-system/styles/shared.scss';
 import scss from './shared.scss';
 
 const container = DI.createContainer();
-container.register(Registration.singleton(INumberService, NumberService));
-const numberService = container.get(INumberService);
 
 container
   .register(Registration.instance(IPlatform, PLATFORM), StandardConfiguration)
+  /**
+   * This will cause the static function `NumberService.register` to be invoked.
+   * We should use this pattern for all services but move them into an index.ts
+   * in the "services" folder and then do `register(services)` here.
+   */
+  .register(NumberService)
+  .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss as string, scss as string] }))
+  .register(pages)
+  .register(resources)
+  .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
+  .register(
+    I18nConfiguration.customize(options => {
+      options.initOptions = {
+        fallbackLng: { default: ['en'] },
+        resources: {
+          en: { translation: en },
+        },
+        plugins: [intervalPlural],
+      };
+    })
+  )
   .register(
     DesignSystemPlugin.configure(x => {
+      const numberService = container.get(INumberService);
       x.iconMap ??= new Map<string, string>();
       x.iconMap.set('alternate_email', alternate_email);
       x.iconMap.set('alternate_email', alternate_email);
@@ -52,21 +72,6 @@ container
       x.formatNumber = (value: string | number, options?: INumberFormatOptions) => numberService.toString(value, options);
       x.formatCurrency = (value: string | number, options?: INumberFormatOptions) => numberService.toString(value, Object.assign({ isCurrency: true }, options));
       x.formatPercent = (value: string | number, options?: INumberFormatOptions) => numberService.toString(value, Object.assign({ isPercentage: true }, options));
-    })
-  )
-  .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss as string, scss as string] }))
-  .register(pages)
-  .register(resources)
-  .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
-  .register(
-    I18nConfiguration.customize(options => {
-      options.initOptions = {
-        fallbackLng: { default: ['en'] },
-        resources: {
-          en: { translation: en },
-        },
-        plugins: [intervalPlural],
-      };
     })
   );
 

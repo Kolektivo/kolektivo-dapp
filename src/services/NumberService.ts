@@ -1,5 +1,5 @@
 ﻿import { BigNumber } from 'ethers';
-import { DI } from 'aurelia';
+import { DI, IContainer, Registration } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 
 export interface IToStringOptions {
@@ -28,6 +28,10 @@ export const INumberService = DI.createInterface<INumberService>('NumberService'
 
 export class NumberService {
   constructor(@I18N private readonly i18n: I18N) {}
+
+  public static register(container: IContainer): void {
+    container.register(Registration.singleton(INumberService, NumberService));
+  }
 
   /**
    * @param value
