@@ -1,9 +1,9 @@
 @mixin define-color-rgb($color-name, $value) {
-  $red: color.red($value);
-  $green: color.green($value);
-  $blue: color.blue($value);
+  $red: red($value);
+  $green: green($value);
+  $blue: blue($value);
 
-  #{$color-name}: string.unquote('rgb(#{$red}, #{$green}, #{$blue})');
+  #{$color-name}: unquote('rgb(#{$red}, #{$green}, #{$blue})');
   #{$color-name}-rgb: $red, $green, $blue;
   #{$color-name}-r: $red;
   #{$color-name}-g: $green;
