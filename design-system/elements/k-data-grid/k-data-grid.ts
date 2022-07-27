@@ -16,7 +16,7 @@ export class KDataGrid implements ICustomElementViewModel {
   context?: ICustomElementViewModel | ICustomAttributeViewModel;
 
   get cols(): string {
-    return this.columns.map(y => y.width).join(' ');
+    return this.columns.map((y) => y.width).join(' ');
   }
 
   binding(top: ElementOrAttributeViewModel<this>, direct: ElementOrAttributeViewModel<this>): void {
@@ -34,8 +34,8 @@ export class KDataGrid implements ICustomElementViewModel {
     const vm = { ...(this.context ?? {}), ...row, row: row } as Record<string, unknown>;
     if (this.context) {
       Object.keys(Object.getOwnPropertyDescriptors(Object.getPrototypeOf(this.context)))
-        .filter(y => y !== 'constructor' && y !== 'bind' && y !== '__metadata__' && y !== 'activate')
-        .forEach(y => {
+        .filter((y) => y !== 'constructor' && y !== 'bind' && y !== '__metadata__' && y !== 'activate')
+        .forEach((y) => {
           vm[y] = (this.context as Record<string, unknown>)[y];
         });
     }

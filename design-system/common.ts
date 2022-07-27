@@ -4,7 +4,7 @@ export const numberToPixels = (value: string | number | null | undefined): strin
     value
       .trim()
       .split(' ')
-      .map(x => numberToPixels(x))
+      .map((x) => numberToPixels(x))
       .join(' ');
   }
 

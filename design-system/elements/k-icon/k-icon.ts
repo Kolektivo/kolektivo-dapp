@@ -18,8 +18,8 @@ export class KIcon implements ICustomElementViewModel {
     const url = this.configuration.iconMap?.get(this.name);
     if (!url) return;
 
-    void fetch(url).then(x => {
-      void x.text().then(y => (this.view = y));
+    void fetch(url).then((x) => {
+      void x.text().then((y) => (this.view = y));
     });
   }
 

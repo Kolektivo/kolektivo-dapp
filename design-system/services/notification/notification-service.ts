@@ -22,7 +22,7 @@ export class NotificationService {
     message?: string,
     component: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }> = KConfirm,
   ): Promise<boolean> {
-    return new Promise(res => {
+    return new Promise((res) => {
       const { controller, instance } = createCustomElement(component, this.container, this.aurelia.root.host);
 
       if (message) {
@@ -53,7 +53,7 @@ export class NotificationService {
       toastOptions.countdown ??= (toastOptions.timeOut ?? this.config.defaultToastTimeout ?? 0) / 1000;
     }
 
-    return new Promise<void>(res => {
+    return new Promise<void>((res) => {
       if (!this.activeToast) res();
       const task = this.platform.taskQueue.queueTask(
         () => {

@@ -26,7 +26,7 @@ import designScss from '../design-system/styles/shared.scss';
 import scss from './shared.scss';
 
 void Aurelia.register(
-  DesignSystemPlugin.configure(x => {
+  DesignSystemPlugin.configure((x) => {
     x.iconMap ??= new Map<string, string>();
     x.iconMap.set('alternate_email', alternate_email);
     x.iconMap.set('alternate_email', alternate_email);
@@ -47,7 +47,7 @@ void Aurelia.register(
   .register(resources)
   .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
   .register(
-    I18nConfiguration.customize(options => {
+    I18nConfiguration.customize((options) => {
       options.initOptions = {
         fallbackLng: { default: ['en'] },
         resources: {

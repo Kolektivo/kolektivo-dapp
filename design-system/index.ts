@@ -67,7 +67,7 @@ export class DesignSystemPlugin implements IRegistry {
     container.register(Fast);
     container.register(Registration.instance(IDesignSystemConfiguration, this.#configuration));
     container.register(
-      ValidationHtmlConfiguration.customize(options => {
+      ValidationHtmlConfiguration.customize((options) => {
         options.DefaultTrigger = ValidationTrigger.changeOrFocusout;
       }),
     );

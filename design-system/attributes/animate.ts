@@ -49,7 +49,7 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   };
 
   detaching(): void | Promise<void> {
-    return new Promise(res => {
+    return new Promise((res) => {
       this.resolve = res;
 
       if (this.endClass) {
