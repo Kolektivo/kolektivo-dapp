@@ -34,7 +34,11 @@ export class Storybook {
     this.showCountdowns = true;
   }
 
-  constructor(@IValidationRules validationRules: IValidationRules, @newInstanceForScope(IValidationController) private controller: IValidationController, @INotificationService private readonly notificationService: INotificationService) {
+  constructor(
+    @IValidationRules validationRules: IValidationRules,
+    @newInstanceForScope(IValidationController) private controller: IValidationController,
+    @INotificationService private readonly notificationService: INotificationService,
+  ) {
     validationRules
       .on(this.data)
       .ensure('required')
@@ -97,7 +101,12 @@ export class Storybook {
 
   //data grid example
   testColumns1: IGridColumn[] = [
-    { headerText: 'Token', field: 'token', width: '1fr', template: '<k-grid cols="auto 1fr" gap="var(--spacing-lg)"><k-icon tooltip="this is cool" name="calendar_today"></k-icon>${token}</k-grid>' },
+    {
+      headerText: 'Token',
+      field: 'token',
+      width: '1fr',
+      template: '<k-grid cols="auto 1fr" gap="var(--spacing-lg)"><k-icon tooltip="this is cool" name="calendar_today"></k-icon>${token}</k-grid>',
+    },
     { headerText: 'Price', field: 'price', width: '1fr', align: 'right', template: '${price | currency}' },
     { headerText: 'Quantity', field: 'quantity', width: '1fr', align: 'right' },
     { headerText: 'Total Value', field: 'totalValue', width: '1fr', align: 'right', template: '${price * quantity | currency}' },

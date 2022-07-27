@@ -1,11 +1,11 @@
-import * as en from '/locales/en/translation.json';
-import * as intervalPlural from 'i18next-intervalplural-postprocessor';
 import { App } from './app';
 import { DesignSystemPlugin } from '../design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { RouterConfiguration } from '@aurelia/router';
 import { StyleConfiguration } from 'aurelia';
 import Aurelia /*, { StyleConfiguration }*/ from 'aurelia';
+import en from '/locales/en/translation.json';
+import intervalPlural from 'i18next-intervalplural-postprocessor';
 // Css files imported in this main file are NOT processed by style-loader
 // They are for sharedStyles in shadowDOM.
 // However, css files imported in other js/ts files are processed by style-loader.
@@ -55,8 +55,7 @@ void Aurelia.register(
         },
         plugins: [intervalPlural],
       };
-    })
+    }),
   )
-
   .app(App)
   .start();

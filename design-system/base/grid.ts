@@ -1,13 +1,13 @@
 import { Alignable } from './alignable';
 import { bindable } from 'aurelia';
-import { numberToPixels } from '../common';
+import { numberToPixelsInterceptor } from '../common';
 
 export abstract class Grid extends Alignable {
-  @bindable({ set: numberToPixels }) gap: string;
-  @bindable({ set: numberToPixels }) rowGap?: string;
-  @bindable({ set: numberToPixels }) columnGap?: string;
+  @bindable({ set: numberToPixelsInterceptor }) gap?: string;
+  @bindable({ set: numberToPixelsInterceptor }) rowGap?: string;
+  @bindable({ set: numberToPixelsInterceptor }) columnGap?: string;
 
-  get gridStyle(): Record<string, string> {
+  get gridStyle(): Record<string, string | undefined> {
     return {
       gap: this.gap,
       rowGap: this.rowGap,

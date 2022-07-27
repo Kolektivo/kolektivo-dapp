@@ -1,4 +1,4 @@
-@keyframes SlideInEnd {
+@keyframes slide-in-end {
     from {
         transform: translateX(100%);
     }
@@ -9,7 +9,7 @@
 }
 
 
-@keyframes SlideInTop {
+@keyframes slide-in-top {
     from {
         transform: translateY(-100%);
     }
@@ -19,7 +19,7 @@
     }
 }
 
-@keyframes SlideInBottom {
+@keyframes slide-in-bottom {
     from {
         transform: translateY(100%);
     }
@@ -30,7 +30,7 @@
 }
 
 
-@keyframes SlideInStart {
+@keyframes slide-in-start {
     from {
         transform: translateX(-100%);
     }
@@ -40,7 +40,7 @@
     }
 }
 
-@keyframes FadeIn {
+@keyframes fade-in {
     from {
         opacity: 0;
     }
@@ -51,41 +51,41 @@
 }
 
 .fade-in {
-    animation: FadeIn 1s;
+    animation: fade-in 1s;
 }
 
 .fade-out {
-    animation: FadeIn 1s reverse;
+    animation: fade-in 1s reverse;
 }
 
 .slide-in-start {
-    animation: SlideInStart 1s;
+    animation: slide-in-start 1s;
 }
 
 .slide-out-start {
-    animation: SlideInStart 1s reverse;
+    animation: slide-in-start 1s reverse;
 }
 
 .slide-in-end {
-    animation: SlideInEnd 1s;
+    animation: slide-in-end 1s;
 }
 
 .slide-out-end {
-    animation: SlideInEnd 1s reverse;
+    animation: slide-in-end 1s reverse;
 }
 
 .slide-in-top {
-    animation: SlideInTop 1s;
+    animation: slide-in-top 1s;
 }
 
 .slide-out-top {
-    animation: SlideInTop 1s reverse;
+    animation: slide-in-top 1s reverse;
 }
 
 .slide-in-bottom {
-    animation: SlideInBottom 1s;
+    animation: slide-in-bottom 1s;
 }
 
 .slide-out-bottom {
-    animation: SlideInBottom 1s reverse;
+    animation: slide-in-bottom 1s reverse;
 }

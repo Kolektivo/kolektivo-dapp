@@ -26,28 +26,37 @@ module.exports = {
         semi: true,
         trailingComma: 'all',
         singleQuote: true,
-        printWidth: 350,
+        printWidth: 150,
         tabWidth: 2,
-        endOfLine: 'auto',
         arrowParens: 'avoid',
       },
       {
         usePrettierrc: false,
       },
     ],
+    'require-atomic-updates': 'warn',
+    'no-console': 'warn',
+    'unused-imports/no-unused-imports': 'error',
+    'no-useless-escape': 'off',
     'no-tabs': ['error', { allowIndentationTabs: true }],
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    'no-useless-escape': 'off',
     '@typescript-eslint/no-extraneous-class': 'off',
     '@typescript-eslint/indent': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-unused-expressions': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/ban-ts-comment': 'warn',
-    'unused-imports/no-unused-imports': 'error',
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'interface',
+        format: ['PascalCase'],
+        prefix: ['I'],
+      },
+    ],
     'sort-imports-es6-autofix/sort-imports-es6': [
       2,
       {
@@ -58,4 +67,27 @@ module.exports = {
     ],
     'object-curly-spacing': ['error', 'always'],
   },
+  /**
+   * require services to be explicit about public/private access
+   */
+  overrides: [
+  {
+    files: ['*-service.ts'],
+    rules: {
+      '@typescript-eslint/explicit-member-accessibility': [
+        'error',
+        {
+          accessibility: 'explicit',
+          overrides: {
+            accessors: 'explicit',
+            constructors: 'no-public',
+            methods: 'explicit',
+            properties: 'explicit',
+            parameterProperties: 'explicit',
+          },
+        },
+      ],
+    },
+  },
+  ],
 };

@@ -24,5 +24,5 @@ export class KButton {
   @bindable size: ButtonSize | '' = '';
   @bindable({ set: ifExistsThenTrue }) loading = false;
   @bindable class = '';
-  @bindable({ set: ifExistsThenTrue }) disabled;
+  @bindable({ set: ifExistsThenTrue }) disabled = false;
 }

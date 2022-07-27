@@ -3,7 +3,6 @@
   padding: var(--spacing-xxl);
 
   >k-stack {
-
     >slot[name='instruction-text'],
     >slot[name='additional-text'],
     >slot:last-of-type {

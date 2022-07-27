@@ -9,6 +9,11 @@
     border-radius: 8px;
     background-color: var(--don-juan-100);
 
+    div {
+      border-radius: 8px;
+      background-color: var(--ocean-blue);
+    }
+
     &.warning {
       background-color: var(--dark-coral-300);
     }
@@ -21,14 +26,11 @@
       }
     }
 
-    div {
-      border-radius: 8px;
-      background-color: var(--ocean-blue);
-    }
+
   }
 
   span {
-    font-family: 'Lato';
+    font-family: Lato, sans-serif;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;

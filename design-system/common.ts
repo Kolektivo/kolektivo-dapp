@@ -34,6 +34,7 @@ export function uid(): string {
   return Math.random().toString(36).substring(2);
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export interface DisplayValue<T = number> {
   display: string;
   value: T;

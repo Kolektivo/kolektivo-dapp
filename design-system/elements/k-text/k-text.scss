@@ -1,7 +1,7 @@
-@import '../../styles/shared.scss';
+@import '../../styles/shared';
 
 :host {
-  font-family: 'Lato';
+  font-family: Lato, sans-serif;
 
   .right {
     text-align: right;
@@ -46,7 +46,9 @@
 
   h1,
   *[type='h1'] {
-    @extend .header-text;
+
+    @extend %header-text;
+
     font-size: 64px;
     line-height: 76px;
     letter-spacing: -0.2%;
@@ -54,7 +56,9 @@
 
   h2,
   *[type='h2'] {
-    @extend .header-text;
+
+    @extend %header-text;
+
     font-size: 48px;
     line-height: 60px;
     letter-spacing: -0.1%;
@@ -62,7 +66,9 @@
 
   h3,
   *[type='h3'] {
-    @extend .header-text;
+
+    @extend %header-text;
+
     font-size: 40px;
     line-height: 52px;
     letter-spacing: 0%;
@@ -70,7 +76,9 @@
 
   h4,
   *[type='h4'] {
-    @extend .header-text;
+
+    @extend %header-text;
+
     font-size: 32px;
     line-height: 44px;
     letter-spacing: 0%;
@@ -78,7 +86,9 @@
 
   h5,
   *[type='h5'] {
-    @extend .header-text;
+
+    @extend %header-text;
+
     font-size: 24px;
     line-height: 32px;
     letter-spacing: 0%;
@@ -86,7 +96,9 @@
 
   h6,
   *[type='h6'] {
-    @extend .header-text;
+
+    @extend %header-text;
+
     font-size: 20px;
     line-height: 24px;
     letter-spacing: 0%;
