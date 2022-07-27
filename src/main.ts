@@ -23,8 +23,7 @@ import info_filled from '@material-design-icons/svg/filled/info.svg';
 import link from '@material-design-icons/svg/outlined/link.svg';
 import warning_filled from '@material-design-icons/svg/filled/warning.svg';
 
-import { INumberFormatOptions } from 'design-system/configuration';
-import { INumberService, NumberService } from './services/NumberService';
+import { NumberService } from './services/NumberService';
 import designScss from '../design-system/styles/shared.scss';
 import scss from './shared.scss';
 
@@ -55,7 +54,6 @@ container
   )
   .register(
     DesignSystemPlugin.configure(x => {
-      const numberService = container.get(INumberService);
       x.iconMap ??= new Map<string, string>();
       x.iconMap.set('alternate_email', alternate_email);
       x.iconMap.set('alternate_email', alternate_email);
@@ -69,9 +67,6 @@ container
       x.iconMap.set('link', link);
       x.iconMap.set('warning_filled', warning_filled);
       x.defaultToastTimeout = 5000;
-      x.formatNumber = (value: string | number, options?: INumberFormatOptions) => numberService.toString(value, options);
-      x.formatCurrency = (value: string | number, options?: INumberFormatOptions) => numberService.toString(value, Object.assign({ isCurrency: true }, options));
-      x.formatPercent = (value: string | number, options?: INumberFormatOptions) => numberService.toString(value, Object.assign({ isPercentage: true }, options));
     })
   );
 
