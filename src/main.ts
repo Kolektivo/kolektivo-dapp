@@ -50,7 +50,7 @@ container
         },
         plugins: [intervalPlural],
       };
-    })
+    }),
   )
   .register(
     DesignSystemPlugin.configure(x => {
@@ -67,7 +67,7 @@ container
       x.iconMap.set('link', link);
       x.iconMap.set('warning_filled', warning_filled);
       x.defaultToastTimeout = 5000;
-    })
+    }),
   );
 
 void new Aurelia(container).app(App).start();

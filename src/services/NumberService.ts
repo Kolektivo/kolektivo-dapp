@@ -39,6 +39,7 @@ export class NumberService {
    */
   public toString(value: number | string | BigNumber, options?: IToStringOptions): string | null | undefined {
     // this helps to display the erroneus value in the GUI
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (typeof value === 'string' || value === null || value === undefined) {
       return value as string | null | undefined;
     }
@@ -64,7 +65,7 @@ export class NumberService {
         useGrouping,
         minimumFractionDigits: fractionDigits,
         maximumFractionDigits: fractionDigits,
-      })
+      }),
     );
   }
 

@@ -1,6 +1,5 @@
 import './app.scss';
 import './shared.scss';
-import { I18N } from '@aurelia/i18n';
 import { IAnimationService } from '../design-system/services/animation/animation-service';
 import { INotificationService } from '../design-system/services/notification/notification-service';
 export class App {
