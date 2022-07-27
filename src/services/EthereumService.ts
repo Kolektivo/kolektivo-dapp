@@ -10,7 +10,6 @@ import { IConsoleLogService } from './ConsoleLogService';
 import { Utils } from './utils';
 import { SafeAppWeb3Modal as Web3Modal } from '@gnosis.pm/safe-apps-web3modal';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
-import Torus from '@toruslabs/torus-embed';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 
 const safeAppOpts = {
@@ -85,20 +84,6 @@ export class EthereumService {
     alfajores: `https://alfajores-forno.celo-testnet.org`,
   };
   private static providerOptions = {
-    torus: {
-      package: Torus, // required
-      options: {
-        network: '',
-        // networkParams: {
-        //   host: "https://localhost:8545", // optional
-        //   chainId: 1337, // optional
-        //   networkId: 1337, // optional
-        // },
-        // config: {
-        //   buildEnv: "development", // optional
-        // },
-      },
-    },
     // TODO: test with walletconnect
     walletconnect: {
       package: WalletConnectProvider, // required
@@ -134,7 +119,6 @@ export class EthereumService {
 
     EthereumService.targetedNetwork = network;
     EthereumService.targetedChainId = this.chainIdByName.get(network);
-    EthereumService.providerOptions.torus.options.network = network;
 
     const readonlyEndPoint = EthereumService.ProviderEndpoints[EthereumService.targetedNetwork];
     if (!readonlyEndPoint) {
