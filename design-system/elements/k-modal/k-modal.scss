@@ -1,14 +1,18 @@
 @import '../../styles/sizes.scss';
-.modal > k-card {
+
+.modal>k-card {
   width: 90vw;
   position: relative;
+
   @include lg {
     width: 45vw;
   }
+
   @include xl {
     width: 30vw;
   }
-  & > k-icon {
+
+  &>k-icon {
     position: absolute;
     top: 5px;
     right: 5px;

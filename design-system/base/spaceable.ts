@@ -1,18 +1,18 @@
 import { bindable } from 'aurelia';
-import { numberToPixels } from './../common';
+import { numberToPixelsInterceptor } from './../common';
 
 export abstract class Spaceable {
-  @bindable({ set: numberToPixels }) padding?: CSSStyleDeclaration['padding'];
-  @bindable({ set: numberToPixels }) paddingLeft?: CSSStyleDeclaration['paddingLeft'];
-  @bindable({ set: numberToPixels }) paddingRight?: CSSStyleDeclaration['paddingRight'];
-  @bindable({ set: numberToPixels }) paddingTop?: CSSStyleDeclaration['paddingTop'];
+  @bindable({ set: numberToPixelsInterceptor }) padding?: CSSStyleDeclaration['padding'];
+  @bindable({ set: numberToPixelsInterceptor }) paddingLeft?: CSSStyleDeclaration['paddingLeft'];
+  @bindable({ set: numberToPixelsInterceptor }) paddingRight?: CSSStyleDeclaration['paddingRight'];
+  @bindable({ set: numberToPixelsInterceptor }) paddingTop?: CSSStyleDeclaration['paddingTop'];
 
-  @bindable({ set: numberToPixels }) margin?: CSSStyleDeclaration['margin'];
-  @bindable({ set: numberToPixels }) marginLeft?: CSSStyleDeclaration['marginLeft'];
-  @bindable({ set: numberToPixels }) marginRight?: CSSStyleDeclaration['marginRight'];
-  @bindable({ set: numberToPixels }) marginTop?: CSSStyleDeclaration['marginTop'];
+  @bindable({ set: numberToPixelsInterceptor }) margin?: CSSStyleDeclaration['margin'];
+  @bindable({ set: numberToPixelsInterceptor }) marginLeft?: CSSStyleDeclaration['marginLeft'];
+  @bindable({ set: numberToPixelsInterceptor }) marginRight?: CSSStyleDeclaration['marginRight'];
+  @bindable({ set: numberToPixelsInterceptor }) marginTop?: CSSStyleDeclaration['marginTop'];
 
-  get spaceStyle(): Record<string, string> {
+  get spaceStyle(): Record<string, string | undefined> {
     return {
       padding: this.padding,
       paddingLeft: this.paddingLeft,

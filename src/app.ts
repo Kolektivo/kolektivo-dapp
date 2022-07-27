@@ -13,14 +13,10 @@ export class App {
     };
   }
   header: HTMLElement;
-  constructor(
-    @INotificationService private readonly confirmService: INotificationService,
-    @IAnimationService private readonly animationService: IAnimationService,
-    @IEthereumService private readonly ethereumService: IEthereumService
-  ) {}
+  constructor(@INotificationService private readonly confirmService: INotificationService, @IAnimationService private readonly animationService: IAnimationService, @IEthereumService private readonly ethereumService: IEthereumService) {}
 
-  async binding() {
-    const network = process.env.NETWORK as AllowedNetworks;
+  binding() {
+    const network = process.env.NETWORK as AllowedNetworks | undefined;
     const inDev = process.env.NODE_ENV === 'development';
     this.ethereumService.initialize(network ?? (inDev ? Networks.Alfajores : Networks.Mainnet));
   }

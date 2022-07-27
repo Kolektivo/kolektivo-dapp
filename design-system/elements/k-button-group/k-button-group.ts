@@ -1,5 +1,4 @@
-import { CustomElement } from 'aurelia';
+import { capture } from 'aurelia';
 
+@capture()
 export class KButtonGroup {}
-
-(CustomElement.getDefinition(KButtonGroup) as { capture: boolean }).capture = true;

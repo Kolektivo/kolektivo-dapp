@@ -1,13 +1,16 @@
 :host {
   width: 100%;
-  > k-grid:first-child {
+
+  >k-grid:first-child {
     border-bottom: 1px solid var(--san-juan-800);
   }
-  > k-grid {
+
+  >k-grid {
     padding-top: var(--spacing);
     padding-bottom: var(--spacing);
   }
-  .right{
+
+  .right {
     text-align: right;
   }
 }

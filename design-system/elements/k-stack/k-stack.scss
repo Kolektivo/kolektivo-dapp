@@ -1,6 +1,7 @@
 :host {
   display: block;
-  > slot {
+
+  >slot {
     display: flex;
     height: 100%;
   }

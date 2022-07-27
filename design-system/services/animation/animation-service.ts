@@ -9,10 +9,10 @@ export class AnimationService {
 
   constructor(@IPlatform private readonly platform: IPlatform) {}
 
-  public animate(from: number, to: number, duration: number, update: (value: number | string) => void, easing?: keyof typeof easings, done?: () => Promise<void> | void): Task<void> {
+  public animate(from: number, to: number, duration: number, update: (value: number | string) => void, easing?: keyof typeof easings, done?: () => Promise<void> | void): Task<void> | undefined {
     // Early bail out if called incorrectly
     if (typeof from !== 'number' || typeof to !== 'number' || typeof duration !== 'number' || typeof update !== 'function') return;
-    const easingFunc = typeof easing === 'string' ? easings[easing] ?? easings.linear : easings.linear;
+    const easingFunc = typeof easing === 'string' ? easings[easing] : easings.linear;
 
     done ??= (): void => {
       /*noop*/
@@ -31,26 +31,26 @@ export class AnimationService {
         if (time >= 0 && time >= duration) {
           update(to);
           task.cancel();
-          done();
+          done && void done();
         }
       },
-      { persistent: true }
+      { persistent: true },
     );
     return task;
   }
 
   public animateCSS(
     element: HTMLElement,
-    property: string,
+    property: string | number,
     unit: string | undefined,
     from: Parameters<AnimationService['animate']>[0],
     to: Parameters<AnimationService['animate']>[1],
     duration: Parameters<AnimationService['animate']>[2],
     easing?: Parameters<AnimationService['animate']>[4],
-    done?: Parameters<AnimationService['animate']>[5]
-  ): Task<void> {
-    const update = (value: string): void => {
-      element.style[property] = value + (unit ?? '');
+    done?: Parameters<AnimationService['animate']>[5],
+  ): Task<void> | undefined {
+    const update = (value: string | number): void => {
+      element.style[property] = String(value) + (unit ?? '');
     };
     return this.animate(from, to, duration, update, easing, done);
   }
@@ -110,7 +110,8 @@ export const easings = {
     if (a < Math.abs(change)) {
       a = change;
       speed = p / 4;
-    } else return -(a * Math.pow(2, 10 * (time -= 1)) * Math.sin(((time * duration - speed) * (2 * Math.PI)) / p)) + from;
+    }
+    return -(a * Math.pow(2, 10 * (time -= 1)) * Math.sin(((time * duration - speed) * (2 * Math.PI)) / p)) + from;
   },
   easeOutElastic: (time: number, from: number, change: number, duration: number): number => {
     let p = 0;
@@ -139,17 +140,17 @@ export const easings = {
     if (time < 1) return -0.5 * (a * Math.pow(2, 10 * (time -= 1)) * Math.sin(((time * duration - speed) * (2 * Math.PI)) / p)) + from;
     return a * Math.pow(2, -10 * (time -= 1)) * Math.sin(((time * duration - speed) * (2 * Math.PI)) / p) * 0.5 + change + from;
   },
-  easeInBack: (time: number, from: number, change: number, duration: number, speed: number): number => {
+  easeInBack: (time: number, from: number, change: number, duration: number, speed?: number): number => {
     // eslint-disable-next-line eqeqeq
     if (speed == undefined) speed = 1.70158;
     return change * (time /= duration) * time * ((speed + 1) * time - speed) + from;
   },
-  easeOutBack: (time: number, from: number, change: number, duration: number, speed: number): number => {
+  easeOutBack: (time: number, from: number, change: number, duration: number, speed?: number): number => {
     // eslint-disable-next-line eqeqeq
     if (speed == undefined) speed = 1.70158;
     return change * ((time = time / duration - 1) * time * ((speed + 1) * time + speed) + 1) + from;
   },
-  easeInOutBack: (time: number, from: number, change: number, duration: number, speed: number): number => {
+  easeInOutBack: (time: number, from: number, change: number, duration: number, speed?: number): number => {
     // eslint-disable-next-line eqeqeq
     if (speed == undefined) speed = 1.70158;
     if ((time /= duration / 2) < 1) return (change / 2) * (time * time * (((speed *= 1.525) + 1) * time - speed)) + from;

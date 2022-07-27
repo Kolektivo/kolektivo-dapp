@@ -1,6 +1,7 @@
-import { CustomElement, ICustomElementViewModel, bindable } from 'aurelia';
+import { ICustomElementViewModel, bindable, capture } from 'aurelia';
 import { NotificationType } from '../../services/notification/notification-type';
 
+@capture()
 export class KAlert implements ICustomElementViewModel {
   @bindable type: NotificationType = 'warning';
   @bindable icon = '';
@@ -28,4 +29,3 @@ export class KAlert implements ICustomElementViewModel {
     return styles;
   }
 }
-(CustomElement.getDefinition(KAlert) as { capture: boolean }).capture = true;

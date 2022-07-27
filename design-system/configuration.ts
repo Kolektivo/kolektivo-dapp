@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { DI } from 'aurelia';
 
 export const IDesignSystemConfiguration = DI.createInterface<IDesignSystemConfiguration>('IDesignSystemConfiguration');
