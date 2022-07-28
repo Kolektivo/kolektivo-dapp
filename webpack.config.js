@@ -61,7 +61,7 @@ module.exports = function (env, { analyze }) {
     devServer: {
       historyApiFallback: true,
       open: !process.env.CI,
-      port: 9000,
+      port: 9000
     },
     module: {
       rules: [
@@ -107,12 +107,24 @@ module.exports = function (env, { analyze }) {
           issuer: /\.html$/,
           use: [cssLoader, postcssLoader, sassLoader],
         },
-        { test: /\.ts$/i, use: ['ts-loader', '@aurelia/webpack-loader'], exclude: /node_modules/ },
+        { test: /\.ts$/i, use: ['ts-loader', 
+        {
+          loader: '@aurelia/webpack-loader',
+          options: {
+            hmr: false,
+            // The other possible Shadow DOM mode is 'closed'.
+            // If you turn on "closed" mode, there will be difficulty to perform e2e
+            // tests (such as Cypress). Because shadowRoot is not accessible through
+            // standard DOM APIs in "closed" mode.
+          },
+        }
+      ], exclude: /node_modules/ },
         {
           test: /[/\\]src[/\\].+\.html$/i,
           use: {
             loader: '@aurelia/webpack-loader',
             options: {
+              hmr: false,
               // The other possible Shadow DOM mode is 'closed'.
               // If you turn on "closed" mode, there will be difficulty to perform e2e
               // tests (such as Cypress). Because shadowRoot is not accessible through
@@ -127,6 +139,7 @@ module.exports = function (env, { analyze }) {
           use: {
             loader: '@aurelia/webpack-loader',
             options: {
+              hmr: false,
               // The other possible Shadow DOM mode is 'closed'.
               // If you turn on "closed" mode, there will be difficulty to perform e2e
               // tests (such as Cypress). Because shadowRoot is not accessible through

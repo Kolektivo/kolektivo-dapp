@@ -56,7 +56,7 @@ export class NumberService {
     const isPercentage = options?.isPercentage ?? false;
     const isCurrency = options?.isCurrency ?? false;
     // eslint-disable-next-line eqeqeq
-    const fractionDigits = options?.fractionDigits == undefined ? 2 : this.fromString(options.fractionDigits);
+    const fractionDigits = options?.fractionDigits == undefined ? 2 : this.fromString(options.fractionDigits) ?? 2;
     const format = isCurrency ? { style: 'currency', currency: 'USD' } : isPercentage ? { style: 'percent' } : { style: 'decimal' };
 
     return this.i18n.nf(
@@ -73,26 +73,13 @@ export class NumberService {
    * returns number from string.
    * @param value the value
    */
-  public fromString(value: string | number | BigNumber): number {
-    if (typeof value === 'number') return value;
+  public fromString(value?: string | number | BigNumber): number | undefined | null {
+    if (value == null || typeof value === 'number') return value;
 
     if (BigNumber.isBigNumber(value)) {
       return value.toNumber(); // assuming this will not overflow
     }
 
     return this.i18n.uf(value);
-  }
-
-  /**
-   * @param value
-   * @returns true if value is a number.  BigNumber is not considered a number.
-   */
-  public stringIsNumber(value?: string | number): boolean {
-    try {
-      this.fromString(value);
-      return true;
-    } catch {
-      return false;
-    }
   }
 }
