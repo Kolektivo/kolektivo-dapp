@@ -71,6 +71,8 @@ module.exports = function (env, { analyze }) {
         http: false,
         https: false,
         stream: false,
+        util: false,
+        crypto: false,
       },
     },
     devServer: {

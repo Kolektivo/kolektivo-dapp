@@ -2,7 +2,7 @@ import { IDisposable, transient } from 'aurelia';
 
 @transient()
 export class DisposableCollection implements IDisposable {
-  private disposables: Array<IDisposable>;
+  private disposables: IDisposable[];
 
   constructor() {
     this.disposables = new Array<IDisposable>();
