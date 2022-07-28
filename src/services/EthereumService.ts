@@ -84,7 +84,7 @@ export class EthereumService {
 
   public static ProviderEndpoints = {
     mainnet: `https://forno.celo.org`,
-    alfajores: `https://alfajores-forno.celo-testnet.org`,
+    alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
   };
   private static providerOptions = {
     // TODO: test with walletconnect
@@ -92,8 +92,8 @@ export class EthereumService {
       package: WalletConnectProvider, // required
       options: {
         rpc: {
-          [CELO_MAINNET_CHAIN_ID]: 'https://forno.celo.org',
-          [CELO_ALFAJORES_CHAIN_ID]: 'https://alfajores-forno.celo-testnet.org',
+          [CELO_MAINNET_CHAIN_ID]: EthereumService.ProviderEndpoints[Networks.Mainnet],
+          [CELO_ALFAJORES_CHAIN_ID]: EthereumService.ProviderEndpoints[Networks.Alfajores],
         },
       },
     },
