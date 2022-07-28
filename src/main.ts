@@ -24,7 +24,6 @@ import info_filled from '@material-design-icons/svg/filled/info.svg';
 import link from '@material-design-icons/svg/outlined/link.svg';
 import warning_filled from '@material-design-icons/svg/filled/warning.svg';
 
-import { NumberService } from './services/NumberService';
 import designScss from '../design-system/styles/shared.scss';
 import scss from './shared.scss';
 
@@ -32,12 +31,6 @@ const container = DI.createContainer();
 
 container
   .register(Registration.instance(IPlatform, PLATFORM), StandardConfiguration)
-  /**
-   * This will cause the static function `NumberService.register` to be invoked.
-   * We should use this pattern for all services but move them into an index.ts
-   * in the "services" folder and then do `register(services)` here.
-   */
-  .register(NumberService)
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss as string, scss as string] }))
   .register(pages)
   .register(resources)
