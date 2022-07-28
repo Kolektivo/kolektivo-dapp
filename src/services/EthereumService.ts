@@ -125,7 +125,7 @@ export class EthereumService {
   }
 
   public initialize(network: AllowedNetworks): void {
-    if (typeof network !== 'object') {
+    if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: `network` must be specified');
     }
 

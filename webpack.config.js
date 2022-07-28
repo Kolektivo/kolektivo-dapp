@@ -178,6 +178,7 @@ module.exports = function (env, { analyze }) {
         process: 'process/browser',
       }),
       analyze && new BundleAnalyzerPlugin(),
+      new webpack.EnvironmentPlugin(process.env),
     ].filter(p => p),
   };
 };
