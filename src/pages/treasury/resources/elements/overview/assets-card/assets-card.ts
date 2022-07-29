@@ -1,8 +1,8 @@
-import './treasury-assets.scss';
+import './assets-card.scss';
 import { ICustomElementViewModel } from 'aurelia';
-import { IGridColumn } from './../../../../../../design-system/elements/k-data-grid/grid-column';
+import { IGridColumn } from 'design-system/elements/k-data-grid/grid-column';
 
-export class TreasuryAssets implements ICustomElementViewModel {
+export class AssetsCard implements ICustomElementViewModel {
   testColumns: IGridColumn[] = [
     { headerText: 'Token', field: 'token', width: '1fr' },
     { headerText: 'Price', field: 'price', width: '1fr' },
@@ -20,7 +20,4 @@ export class TreasuryAssets implements ICustomElementViewModel {
     { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
     { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
   ];
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
 }
