@@ -20,7 +20,4 @@ export class TreasuryAssets implements ICustomElementViewModel {
     { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
     { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
   ];
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
 }
