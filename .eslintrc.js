@@ -38,6 +38,11 @@ module.exports = {
     'no-useless-escape': 'off',
     'no-tabs': ['error', { allowIndentationTabs: true }],
     '@typescript-eslint/consistent-type-definitions': 'off',
+    '@typescript-eslint/no-base-to-string': [
+      'error',
+      {
+        ignoredTypeNames: ['BigNumberish']
+      }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',

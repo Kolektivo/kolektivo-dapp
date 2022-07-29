@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 const cssLoader = 'css-loader';
 
@@ -57,6 +58,22 @@ module.exports = function (env, { analyze }) {
               }
             ),
           },
+      fallback: {
+        // this is needed for packages that use native nodejs modules like 'fs', 'os', etc.
+        fs: false,
+        tls: false,
+        os: false,
+        assert: false,
+        url: false,
+        net: false,
+        path: false,
+        zlib: false,
+        http: false,
+        https: false,
+        stream: false,
+        util: false,
+        crypto: false,
+      },
     },
     devServer: {
       historyApiFallback: true,
@@ -156,7 +173,12 @@ module.exports = function (env, { analyze }) {
       new Dotenv({
         path: `./.env${production ? '' : '.' + (process.env.NODE_ENV || 'development')}`,
       }),
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+        process: 'process/browser',
+      }),
       analyze && new BundleAnalyzerPlugin(),
+      new webpack.EnvironmentPlugin(process.env),
     ].filter(p => p),
   };
 };
