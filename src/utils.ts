@@ -18,3 +18,17 @@ export function getColorByType(type: NotificationType): string {
       return 'var(--warning)';
   }
 }
+
+/**
+ * Remove precision from the decimals part of a number. Need this instead of `toFixed` because
+ * the latter adds phantom numbers with decimals > 16
+ * @param num
+ * @returns
+ */
+export function truncateDecimals(num: number, decimals: number): number {
+  if (typeof num !== 'number' || Number.isInteger(num) || isNaN(num)) {
+    return num;
+  }
+  const parts = num.toString().split('.');
+  return Number(`${parts[0]}.${parts[1].slice(0, decimals)}`);
+}
