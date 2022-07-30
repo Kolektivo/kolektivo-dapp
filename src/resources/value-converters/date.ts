@@ -1,6 +1,12 @@
 ﻿import { IDateServiceIntl, IDateTimeFormatOptions } from '../../services/DateServiceIntl';
 import { valueConverter } from 'aurelia';
 
+/**
+ * Display localized date and time formats using the browser javascript INTL.
+ * Note we also have the ability to use the @aurelia/i18n `dt` value converter,
+ * but it doesn't support the canned formats that INTL supports (see DateServiceIntl).
+ * This value converter supports everything from INTL.
+ */
 @valueConverter('date')
 export class DateValueConverter {
   constructor(@IDateServiceIntl private readonly dateServiceIntl: IDateServiceIntl) {}

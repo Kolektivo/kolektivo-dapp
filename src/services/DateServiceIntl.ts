@@ -36,6 +36,13 @@ interface IDateTimeFormatOptions2 {
 export type IDateServiceIntl = DateServiceIntl;
 export const IDateServiceIntl = DI.createInterface<IDateServiceIntl>('DateServiceIntl');
 
+/**
+ * Use this service and the `date` or `dt` value converters (`date` is preferred for supporting
+ * date and time formats given us by the design team -- see the `date` value converter).
+ *
+ * Note that the plain-old `DateService` does a lot of other useful date functionality,
+ * but should not be used for localization.
+ */
 export class DateServiceIntl {
   constructor(@IDateService private readonly dateService: IDateService) {}
 
