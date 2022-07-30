@@ -4,16 +4,9 @@ import { IDateService } from './DateService';
 export type CannedFormats = 'full' | 'long' | 'medium' | 'short';
 /**
  * canned and other INTL formats: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
- * Aurelia doesn't appear to support the CannedFormats
+ * Aurelia doesn't appear to support the CannedFormats.
  */
-// export interface IFormats {
-//   dateFormat?: CannedFormats;
-//   timeFormat?: CannedFormats;
-//   // see notes in DateService about utc
-//   utc?: boolean;
-//}
-
-interface IDateTimeFormatOptions1 {
+export interface IDateTimeFormatOptions extends IDateTimeFormatOptions2 {
   calendar?: string | undefined;
   dayPeriod?: 'narrow' | 'short' | 'long' | undefined;
   numberingSystem?: string | undefined;
@@ -24,7 +17,7 @@ interface IDateTimeFormatOptions1 {
   utc?: boolean;
 }
 
-export interface IDateTimeFormatOptions extends IDateTimeFormatOptions1 {
+interface IDateTimeFormatOptions2 {
   localeMatcher?: 'best fit' | 'lookup' | undefined;
   weekday?: 'long' | 'short' | 'narrow' | undefined;
   era?: 'long' | 'short' | 'narrow' | undefined;
@@ -55,14 +48,18 @@ export class DateServiceIntl {
       return null;
     }
 
-    /**
-     * convert to the local timezone
-     */
-    const thisMoment = this.dateService.createMoment(date, !!options?.utc);
+    if (typeof date === 'string') {
+      date = new Date(date);
+    }
 
-    return new Intl.DateTimeFormat(undefined, {
-      dateStyle: options?.dateStyle ?? 'long',
-      timeStyle: options?.timeStyle ?? 'long',
-    }).format(thisMoment.date());
+    return new Intl.DateTimeFormat(
+      undefined,
+      Object.assign(
+        {
+          timeZone: options?.utc ? 'UTC' : undefined,
+        },
+        options,
+      ),
+    ).format(date);
   }
 }

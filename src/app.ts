@@ -6,7 +6,6 @@ import { INotificationService } from '../design-system/services/notification/not
 export class App {
   width = 200;
   sidebarOpen = true;
-  testDate = '2022-08-10T13:42:35.209Z';
 
   get sidebarStyle(): Record<string, unknown> {
     return {

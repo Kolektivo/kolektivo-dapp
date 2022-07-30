@@ -15,7 +15,7 @@ export class DateValueConverter {
    * @param options
    * @returns
    */
-  public toView(value: Date | number | undefined, options?: IDateTimeFormatOptions): string | null {
+  public toView(value: Date | number | string | undefined, options?: IDateTimeFormatOptions): string | null {
     return this.dateServiceIntl.toString(value, options);
   }
 }
