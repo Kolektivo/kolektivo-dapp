@@ -491,7 +491,7 @@ export class DateService {
    * for some reason it gets serialized using a different format, lacking the Z.
    * (at least with the fetch serialized this is true).
    */
-  public createMoment(date?: Date | string, utc = false): Moment {
+  public createMoment(date?: Date | string | number | undefined, utc = false): Moment {
     return moment.tz(date, utc ? 'Etc/GMT-0' : this.localTimezone);
   }
 
