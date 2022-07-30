@@ -1,7 +1,15 @@
+import { DI, IContainer, Registration } from 'aurelia';
 import moment from 'moment-timezone';
 import Moment = moment.Moment;
 
+export type IDateService = DateService;
+export const IDateService = DI.createInterface<IDateService>('DateService');
+
 export class DateService {
+  public static register(container: IContainer): void {
+    container.register(Registration.singleton(IDateService, DateService));
+  }
+
   public get tomorrow(): Date {
     const tomorrow = this.createMoment().add(1, 'days');
     const dtTomorrow = new Date(tomorrow.year(), tomorrow.month(), tomorrow.date());
@@ -24,18 +32,22 @@ export class DateService {
     return dtMidnight;
   }
 
-  public localTimezoneOffset: number;
-  public localTimezone: string;
+  public localTimezoneOffset = 0;
+  public localTimezone = '';
 
   private formats = new Map<string, string>();
 
   constructor() {
-    this.localTimezoneOffset = moment().utcOffset();
-    this.localTimezone = moment.tz.guess();
+    this.initTimezone();
     this.configure();
   }
 
-  public configure(): void {
+  private initTimezone(): void {
+    this.localTimezoneOffset = moment().utcOffset();
+    this.localTimezone = moment.tz.guess();
+  }
+
+  private configure(): void {
     // spacial case localize for diff display.
     moment.updateLocale('en-custom', {
       relativeTime: {
@@ -393,11 +405,11 @@ export class DateService {
      * format can be either raw or a key into the config (this.formats)
      */
     if (typeof params === 'string') {
-      return { format: this.formats.get(params) || params };
+      return { format: this.formats.get(params) ?? params };
     } else {
       const parms = params;
 
-      const format = parms.format ? this.formats.get(parms.format) || parms.format : undefined;
+      const format = parms.format ? this.formats.get(parms.format) ?? parms.format : undefined;
       return {
         format,
         utc: parms.utc,
@@ -479,7 +491,7 @@ export class DateService {
    * for some reason it gets serialized using a different format, lacking the Z.
    * (at least with the fetch serialized this is true).
    */
-  private createMoment(date?: Date | string, utc = false): Moment {
+  public createMoment(date?: Date | string, utc = false): Moment {
     return moment.tz(date, utc ? 'Etc/GMT-0' : this.localTimezone);
   }
 

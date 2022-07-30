@@ -1,6 +1,10 @@
 <div class="app">
   <side-bar style.bind="sidebarStyle" open.bind="sidebarOpen"></side-bar>
   <main>
+    <div> ${ '2019-08-10T13:42:35.209Z' & df : {year:'numeric', month:'long', day:'2-digit'} } </div>
+    <div> ${ '2019-08-10T13:42:35.209Z' & df : {'datestyle':'full'} } </div>
+    <div t="key"></div>
+    <div>${textDate | date}</div>
     <header if.bind="sidebarOpen" ref="header"></header>
     <au-viewport default="map" fallback="not-found"></au-viewport>
     <footer></footer>
