@@ -23,33 +23,32 @@ export interface IToStringOptions {
   isCurrency?: boolean;
 }
 
-export type INumberService = NumberService;
-export const INumberService = DI.createInterface<INumberService>('NumberService');
+export type INumberService = DumberService;
+export const INumberService = DI.createInterface<INumberService>('DumberService');
 
-export class NumberService {
+export class DumberService {
   constructor(@I18N private readonly i18n: I18N) {}
 
   public static register(container: IContainer): void {
-    container.register(Registration.singleton(INumberService, NumberService));
+    container.register(Registration.singleton(INumberService, DumberService));
   }
 
   /**
+   * Returns a string from a number or BigNumber.
    * @param value
    * @param format
    */
-  public toString(value: number | string | BigNumber, options?: IToStringOptions): string | null | undefined {
-    // this helps to display the erroneus value in the GUI
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (typeof value === 'string' || value === null || value === undefined) {
-      return value as string | null | undefined;
+  public toString(value: number | string | BigNumber | null | undefined, options?: IToStringOptions): string | null | undefined {
+    if (value === null || typeof value === 'undefined' || typeof value === 'string') {
+      return value;
     }
 
     if (BigNumber.isBigNumber(value)) {
-      value = value.toNumber(); // better not overflow, better not be wei
+      value = value.toNumber(); // warning: could overflow
     }
 
     if (Number.isNaN(value)) {
-      return null;
+      return 'NaN';
     }
 
     const useGrouping = options?.useGrouping ?? true;
@@ -73,11 +72,9 @@ export class NumberService {
    * returns number from string.
    * @param value the value
    */
-  public fromString(value?: string | number | BigNumber): number | undefined | null {
-    if (value == null || typeof value === 'number') return value;
-
-    if (BigNumber.isBigNumber(value)) {
-      return value.toNumber(); // assuming this will not overflow
+  public fromString(value?: string | number | null | undefined): number | null | undefined {
+    if (value === null || typeof value === 'undefined' || typeof value === 'number') {
+      return value;
     }
 
     return this.i18n.uf(value);

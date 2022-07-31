@@ -34,9 +34,9 @@ const container = DI.createContainer();
 container
   .register(Registration.instance(IPlatform, PLATFORM), StandardConfiguration)
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss as string, scss as string] }))
-  .register(pages)
-  .register(resources)
   .register(services)
+  .register(resources)
+  .register(pages)
   .register(
     LoggerConfiguration.create({
       level: LogLevel.trace,
