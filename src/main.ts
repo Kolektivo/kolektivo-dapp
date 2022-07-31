@@ -4,7 +4,9 @@ import { DesignSystemPlugin } from '../design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { RouterConfiguration } from '@aurelia/router';
 import Aurelia /*, { StyleConfiguration }*/ from 'aurelia';
-import en from '/locales/en/translation.json';
+// import en from '/locales/en/translation.json';
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
+const en = require('/locales/en/translation.json');
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 // Css files imported in this main file are NOT processed by style-loader
 // They are for sharedStyles in shadowDOM.
@@ -47,7 +49,7 @@ container
       options.initOptions = {
         fallbackLng: { default: ['en'] },
         resources: {
-          en: { translation: en },
+          en: { translation: en as object },
         },
         plugins: [intervalPlural],
       };

@@ -47,7 +47,9 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "ethers": "^5.6.9",
+    "html-loader": "^3.1.2",
     "i18next-intervalplural-postprocessor": "^3.0.0",
+    "moment-timezone": "^0.5.34",
     "util": "^0.10.3",
     "web3modal": "^1.9.8"
   },
