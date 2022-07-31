@@ -1,3 +1,21 @@
 {
-    "key": "dude"
+    "general": {},
+    "treasury": {
+        "general": {},
+        "master": {
+            "title": "Kolektivo Network Treasury"
+        },
+        "overview": {},
+        "assets": {},
+        "ktt": {},
+        "value": {},
+        "value-by-asset-type": {},
+        "value-over-time": {}
+    },
+    "reserve": {
+        "general": {}
+    },
+    "map" {
+        "general": {}
+    }
 }
