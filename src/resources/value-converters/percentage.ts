@@ -5,11 +5,11 @@ import { valueConverter } from 'aurelia';
 /**
  * when a number is retrieved from the element to which it is bound, convert it from a string to a number.
  */
-@valueConverter('number')
-export class NumberValueConverter {
+@valueConverter('percentage')
+export class PercentageValueConverter {
   constructor(@INumberService private readonly numberService: INumberService) {}
 
   public toView(value: number | string | BigNumber, options?: IToStringOptions): string {
-    return this.numberService.toString(value, Object.assign({ isPercentage: false, isCurrency: false }, options)) ?? value.toString();
+    return this.numberService.toString(value, Object.assign({ isPercentage: true, isCurrency: false }, options)) ?? value.toString();
   }
 }
