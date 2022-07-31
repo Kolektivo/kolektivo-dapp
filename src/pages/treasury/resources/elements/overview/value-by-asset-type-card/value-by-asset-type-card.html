@@ -1,0 +1,20 @@
+<k-card>
+  <k-text type="h4" slot="header">Value by Asset Type</k-text>
+  <k-stack direction="row">
+    <k-chart type="doughnut" colors.bind="['darkgreen', 'salmon','orange']" data.bind="[60,20,20]"></k-chart>
+    <k-stack gap="20">
+      <k-stack gap="20" direction="row">
+        <k-avatar color="darkgreen" size="20"></k-avatar>
+        <k-text>60% Ecological</k-text>
+      </k-stack>
+      <k-stack gap="20" direction="row">
+        <k-avatar color="var(--cheese)" size="20"></k-avatar>
+        <k-text>20% Stablecoins</k-text>
+      </k-stack>
+      <k-stack gap="20" direction="row">
+        <k-avatar color="salmon" size="20"></k-avatar>
+        <k-text>20% Non Stablecoins</k-text>
+      </k-stack>
+    </k-stack>
+  </k-stack>
+</k-card>
