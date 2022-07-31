@@ -1,21 +1,20 @@
 {
     "general": {},
     "treasury": {
-        "general": {},
-        "master": {
-            "title": "Kolektivo Network Treasury"
+        "title": "Kolektivo Network Treasury",
+        "menu": {
+            "overview": "Overview",
+            "governance": "Governance"
         },
-        "overview": {},
-        "assets": {},
-        "ktt": {},
-        "value": {},
-        "value-by-asset-type": {},
-        "value-over-time": {}
+        "overview": {
+            "assets": {},
+            "ktt": {},
+            "value": {},
+            "value-by-asset-type": {},
+            "value-over-time": {}
+        },
+        "governance": {}
     },
-    "reserve": {
-        "general": {}
-    },
-    "map": {
-        "general": {}
-    }
+    "reserve": {},
+    "map": {}
 }
