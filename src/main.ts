@@ -15,6 +15,7 @@ import * as pages from './pages';
 import * as resources from './resources';
 import * as services from './services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
+import add_circle from '@material-design-icons/svg/filled/add_circle_outline.svg';
 import alternate_email from '@material-design-icons/svg/outlined/alternate_email.svg';
 import calendar_today from '@material-design-icons/svg/outlined/calendar_today.svg';
 import check from '@material-design-icons/svg/filled/check.svg';
@@ -58,6 +59,7 @@ container
   .register(
     DesignSystemPlugin.configure((x) => {
       x.iconMap ??= new Map<string, string>();
+      x.iconMap.set('add_circle', add_circle);
       x.iconMap.set('alternate_email', alternate_email);
       x.iconMap.set('alternate_email', alternate_email);
       x.iconMap.set('calendar_today', calendar_today);
