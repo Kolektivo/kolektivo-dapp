@@ -35,8 +35,6 @@ export class DateService {
   public localTimezoneOffset = 0;
   public localTimezone = '';
 
-  private formats = new Map<string, string>();
-
   constructor() {
     this.initTimezone();
     this.configure();
@@ -69,61 +67,6 @@ export class DateService {
         yy: '%d y',
       },
     });
-
-    const formatArray: IFormat[] = [
-      {
-        format: 'ZZ',
-        key: 'GmtOffset',
-      },
-      {
-        format: 'h:mma',
-        key: 'amPmTime',
-      },
-      {
-        format: 'h:mma z',
-        key: 'amPmHourTz',
-      },
-      {
-        format: 'MMM Do',
-        key: 'shortdayofmonth',
-      },
-      {
-        format: 'MMMM Do',
-        key: 'dayofmonth',
-      },
-      {
-        format: 'MMMM Do, YYYY',
-        key: 'shortdate',
-      },
-      {
-        format: 'dddd MMMM Do, YYYY',
-        key: 'friendly',
-      },
-      {
-        format: 'YYYY-MM-DD',
-        key: 'table-date',
-      },
-      {
-        format: 'YYYY-MM-DD HH:mm:ss',
-        key: 'table-datetime',
-      },
-      {
-        format: 'HH:mm:ss',
-        key: 'table-time',
-      },
-      {
-        format: 'HH[:]mm dddd MMMM Do, YYYY',
-        key: 'friendlyDateTime',
-      },
-      {
-        format: 'YYYY-MM-DDTHH:mm:ss.sssZ',
-        key: 'json',
-      },
-    ];
-
-    for (const format of formatArray) {
-      this.formats.set(format.key, format.format);
-    }
   }
 
   /**
@@ -156,31 +99,6 @@ export class DateService {
     return ts + this.localTimezoneOffset * 60 * 1000;
   }
 
-  /**
-   * convert one date string to a different date string for the same date and time.
-   * @param dateString
-   * @param paramsFrom
-   * @param paramsTo
-   */
-  public convertFormat(dateString: string, paramsFrom?: IFormatParameters | string, paramsTo?: IFormatParameters | string): string {
-    if (paramsFrom === paramsTo) {
-      return dateString;
-    }
-
-    return this.createMomentFromString(dateString, this.getSafeParams(paramsFrom).format).format(this.getSafeParams(paramsTo).format);
-  }
-
-  public ticksToString(ticks: number, params?: IFormatParameters | string): string | null {
-    if (!ticks) {
-      return '';
-    }
-
-    const d = this.createMomentFromTicks(ticks).toDate();
-
-    // will account for optional utc here
-    return this.toString(d, params);
-  }
-
   public ticksToDate(ticks: number): Date | null {
     if (!ticks) {
       return null;
@@ -194,17 +112,6 @@ export class DateService {
     return this.ticksToDate(seconds * 1000);
   }
 
-  public dateStringToTicks(dtString: string, params?: IFormatParameters | string): number {
-    if (!dtString) {
-      return 0;
-    }
-
-    const parms = this.getSafeParams(params);
-
-    // ignore utc, is meaningless here
-    return this.createMomentFromString(dtString, parms.format).valueOf();
-  }
-
   public dateToTicks(dt: Date): number {
     if (typeof dt !== 'object') {
       return 0;
@@ -212,6 +119,18 @@ export class DateService {
     return this.createMoment(dt).valueOf();
   }
 
+  /**
+   * Return something like "1 hour : 4 minutes : 10 seconds
+   *
+   * See TimespanResolution for options.
+   *
+   * TODO: translate the time labels
+   *
+   * @param ms
+   * @param resolution
+   * @param abbrev
+   * @returns
+   */
   public ticksToTimeSpanString(ms: number, resolution: TimespanResolution = TimespanResolution.milliseconds, abbrev = false): string | null {
     if (typeof ms !== 'number') {
       return null;
@@ -257,7 +176,7 @@ export class DateService {
 
     if (
       !stop &&
-      (is2ndLargest(largestTwoCounter) ||
+      (this.is2ndLargest(largestTwoCounter) ||
         hours ||
         // show zero if not the first or is the res
         firstResolution ||
@@ -277,8 +196,8 @@ export class DateService {
 
     if (
       !stop &&
-      !shouldStopOnLargest2(largestTwoCounter) &&
-      (is2ndLargest(largestTwoCounter) ||
+      !this.shouldStopOnLargest2(largestTwoCounter) &&
+      (this.is2ndLargest(largestTwoCounter) ||
         minutes ||
         // show zero if not the first or is the res
         firstResolution ||
@@ -296,7 +215,7 @@ export class DateService {
 
     if (
       !stop &&
-      !shouldStopOnLargest2(largestTwoCounter) &&
+      !this.shouldStopOnLargest2(largestTwoCounter) &&
       (seconds ||
         // show zero if not the first or is the res
         firstResolution ||
@@ -312,21 +231,11 @@ export class DateService {
       }
     }
 
-    if (!stop && !shouldStopOnLargest2(largestTwoCounter) && ms && resolution === TimespanResolution.milliseconds) {
+    if (!stop && !this.shouldStopOnLargest2(largestTwoCounter) && ms && resolution === TimespanResolution.milliseconds) {
       result += `${result.length ? ', ' : ''}${ms}${abbrev ? 'ms' : ms === 1 ? ' millisecond' : ' milliseconds'}`;
     }
 
     return result;
-  }
-
-  public toString(dt: Date, params?: IFormatParameters | string): string | null {
-    if (typeof dt !== 'object') {
-      return null;
-    }
-
-    const parms = this.getSafeParams(params);
-
-    return this.createMoment(dt, parms.utc).format(parms.format);
   }
 
   /**
@@ -357,21 +266,6 @@ export class DateService {
     return moment(str).toDate();
   }
 
-  public nameofDay(day: number): string {
-    return moment.weekdays(day);
-  }
-
-  public fromString(str: string, params?: IFormatParameters | string): Date | null {
-    if (!str) {
-      return null;
-    }
-
-    const parms = this.getSafeParams(params);
-
-    // ignore utc, is meaningless here
-    return this.createMomentFromString(str, parms.format).toDate();
-  }
-
   /**
    * *day is 0-6, where 0 is sunday
    * @param day
@@ -390,33 +284,6 @@ export class DateService {
     return new Date(nextInstance.year(), nextInstance.month(), nextInstance.date());
   }
 
-  /**
-   * return IFormatParameters from IFormatParameters|string.
-   * params is either not set, or is a string which is the key to use, or is an IFormatParameters
-   * @param params
-   */
-  public getSafeParams(params?: IFormatParameters | string | undefined | null): IFormatParameters {
-    if (!params) {
-      // return this.defaultTableFormat;
-      return {};
-    }
-
-    /**
-     * format can be either raw or a key into the config (this.formats)
-     */
-    if (typeof params === 'string') {
-      return { format: this.formats.get(params) ?? params };
-    } else {
-      const parms = params;
-
-      const format = parms.format ? this.formats.get(parms.format) ?? parms.format : undefined;
-      return {
-        format,
-        utc: parms.utc,
-      };
-    }
-  }
-
   public getDurationBetween(end: Date, start: Date): moment.Duration {
     if (typeof start !== 'object' || typeof end !== 'object') {
       moment.duration(0);
@@ -429,41 +296,18 @@ export class DateService {
    * ## Returns formatted time:
    * @param date the date reference (Date).
    *
-   * ### Methods:
-   *
-   * #### `short`:
-   * Short formatted date string with the format of "MMM dd, yyyy"
-   *
-   * @param locale in which local to return the date. Defaults to "en-US"
-   * @returns Date
-   *
-   * #### `diff`:
    * Return the time passed from <date> until now as the number of
    * seconds, minutes, hours, days, weeks or years- depends on the
    * difference size.
-   * * Up to 1 minutes, the output is "#sec".
-   * * Up to 1 hour, the output is "#min".
-   * * Up to 1 day, the output is "#h".
-   * * Up to 1 week, the output is "#d".
-   * * Up to 1 year, the output is "#w".
-   * * Over 1 year, the output is "#y".
+   *
+   * See "en-custom" above for format of returned string.
+   *
+   * TODO: translate the en-custom formats to current locale.
+   *
    * @returns string
-   *
-   * #### Example:
-   * formatDate(new Date()).short("de-DE");
-   *
-   * formatDate(new Date()).diff();
    */
-  public formattedTime(date: Date | number): { short: (locale: string) => string; diff: (locale?: string, withoutSuffix?: boolean) => string } {
-    const _date = new Date(date);
-
-    return {
-      short: (locale = 'en-US') => _date.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' }),
-      diff: (locale = 'en-custom', withoutSuffix = true) => {
-        if (!date) return '-';
-        return moment(date).locale(locale).fromNow(withoutSuffix);
-      },
-    };
+  public diffFromNow(date: Date | number): string {
+    return moment(new Date(date)).locale('en-custom').fromNow(false);
   }
   /**
    * Trying here to keep everything in local timezone with option to translate into UTC when formating as a string.
@@ -495,16 +339,6 @@ export class DateService {
     return moment.tz(date, utc ? 'Etc/GMT-0' : this.localTimezone);
   }
 
-  private createMomentFromString(str: string, format?: string, utc = false): Moment {
-    let m: Moment = moment(str, format, true); // true for strict
-
-    if (utc) {
-      m = this.momentToUTC(m);
-    }
-
-    return m;
-  }
-
   private createMomentFromTicks(ticks: number, utc = false): Moment {
     let m: Moment = moment(ticks);
 
@@ -524,19 +358,14 @@ export class DateService {
   private momentToUTC(m: Moment): Moment {
     return m.utc();
   }
-}
 
-function shouldStopOnLargest2(largestCounter: number) {
-  return largestCounter === 2;
-}
+  private shouldStopOnLargest2(largestCounter: number) {
+    return largestCounter === 2;
+  }
 
-function is2ndLargest(largestCounter: number) {
-  return largestCounter === 1;
-}
-
-interface IFormat {
-  key: string;
-  format: string;
+  private is2ndLargest(largestCounter: number) {
+    return largestCounter === 1;
+  }
 }
 
 export interface IFormatParameters {
