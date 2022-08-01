@@ -13,16 +13,29 @@ import { ifExistsThenTrue } from './../../common';
  *    <pbutton type="primary" no-animation>Not Animated</pbutton>
  *    <pbutton ... full-width>Full-Width</pbutton>
  */
-export type ButtonType = '' | 'outlined' | 'link';
-export type ButtonColor = 'primary' | 'secondary';
-
+export type ButtonType = 'primary' | 'secondary' | 'tertiary' | 'utility-light' | 'utility-dark' | 'error';
 @capture()
 export class KButton {
   @bindable fullWidth = false;
-  @bindable type: ButtonType = '';
-  @bindable color: ButtonColor = 'primary';
+  @bindable type: ButtonType = 'primary';
   @bindable size: ButtonSize | '' = '';
   @bindable({ set: ifExistsThenTrue }) loading = false;
   @bindable class = '';
   @bindable({ set: ifExistsThenTrue }) disabled = false;
+  @bindable icon = '';
+
+  get iconSize(): number {
+    switch (this.size) {
+      case 'xs':
+        return 13;
+      case 'sm':
+        return 16;
+      case 'lg':
+        return 23;
+      case 'xl':
+        return 26;
+      default:
+        return 20;
+    }
+  }
 }
