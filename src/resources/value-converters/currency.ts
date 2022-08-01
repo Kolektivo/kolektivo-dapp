@@ -10,6 +10,6 @@ export class CurrencyrValueConverter {
   constructor(@INumberService private readonly numberService: INumberService) {}
 
   public toView(value: number | string | BigNumber, options?: IToStringOptions): string {
-    return this.numberService.toString(value, Object.assign({ isPercentage: false, isCurrency: true }, options)) ?? value.toString();
+    return this.numberService.toString(value, Object.assign(options ?? {}, { isPercentage: false, isCurrency: true })) ?? value.toString();
   }
 }
