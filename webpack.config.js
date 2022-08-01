@@ -177,6 +177,10 @@ module.exports = function (env, { analyze }) {
         Buffer: ['buffer', 'Buffer'],
         process: 'process/browser',
       }),
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
+      }),
       analyze && new BundleAnalyzerPlugin(),
       new webpack.EnvironmentPlugin(process.env),
     ].filter(p => p),
