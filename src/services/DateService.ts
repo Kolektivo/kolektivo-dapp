@@ -376,7 +376,7 @@ export interface IFormatParameters {
 
 export enum TimespanResolution {
   /**
-   * show only the largest 2 units, down to the resolution or'd with this
+   * show only the largest 2 units
    */
   largest2 = 0x40,
   /**
