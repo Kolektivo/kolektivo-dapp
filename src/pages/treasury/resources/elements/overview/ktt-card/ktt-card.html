@@ -1,15 +1,22 @@
 <k-card>
-  <k-text type="h4" slot="header">Kolektivo Treasury Token (KTT)</k-text>
-  <k-grid align-items="center" cols="2">
-    <k-text type="h5">KTT</k-text>
-    <k-text>KTT</k-text>
-    <k-text type="h5">KTT</k-text>
-    <k-text>KTT</k-text>
-    <k-text type="h5">KTT</k-text>
-    <k-text>KTT</k-text>
-    <k-text type="h5">KTT</k-text>
-    <k-text>KTT</k-text>
-    <k-text type="h5">KTT</k-text>
-    <k-text>KTT</k-text>
+  <k-text type="h4" slot="header" t="treasury.overview.ktt.title"></k-text>
+  <k-grid cols="3">
+    <title-value t="[title]treasury.overview.ktt.market-cap;[tooltip]treasury.overview.ktt.market-cap-tooltip"
+      value.bind="data.marketCap | currency">
+    </title-value>
+    <title-value t="[title]treasury.overview.ktt.current-price;[tooltip]treasury.overview.ktt.current-price-tooltip"
+      value.bind="data.currentPrice | currency">
+    </title-value>
+    <title-value t="[title]treasury.overview.ktt.total-supply;[tooltip]treasury.overview.ktt.total-supply-tooltip"
+      value.bind="data.totalSupply | number">
+    </title-value>
   </k-grid>
+  <title-value
+    t="[title]treasury.overview.ktt.supply-distribution;[tooltip]treasury.overview.ktt.supply-distribution-tooltip">
+    <div class="supply-distribution">
+      <k-text>${data.supplyDistribution.treasury}% in treasury</k-text>
+      <k-text>${data.supplyDistribution.reserves}% in reserves</k-text>
+      <k-text>${data.supplyDistribution.circulating}% circulating supply</k-text>
+    </div>
+  </title-value>
 </k-card>

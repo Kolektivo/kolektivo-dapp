@@ -22,6 +22,7 @@ import check_circle_filled from '@material-design-icons/svg/filled/check_circle.
 import close from '@material-design-icons/svg/outlined/close.svg';
 import content_copy from '@material-design-icons/svg/outlined/content_copy.svg';
 import error_filled from '@material-design-icons/svg/filled/error.svg';
+import help_outline from '@material-design-icons/svg/outlined/help_outline.svg';
 import info_filled from '@material-design-icons/svg/filled/info.svg';
 import link from '@material-design-icons/svg/outlined/link.svg';
 import warning_filled from '@material-design-icons/svg/filled/warning.svg';
@@ -69,6 +70,7 @@ container
       x.iconMap.set('info_filled', info_filled);
       x.iconMap.set('link', link);
       x.iconMap.set('warning_filled', warning_filled);
+      x.iconMap.set('help_outline', help_outline);
       x.defaultToastTimeout = 5000;
     }),
   );
