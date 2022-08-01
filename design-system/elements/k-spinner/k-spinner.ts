@@ -1,7 +1,19 @@
-import { ICustomElementViewModel, bindable } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { ifExistsThenTrue } from './../../common';
 import { numberToPixels } from '../../../design-system/common';
 
+import css from './k-spinner.scss';
+import template from './k-spinner.html';
+
+@customElement({
+  name: 'k-spinner',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KSpinner implements ICustomElementViewModel {
   @bindable color = 'var(--primary-text)';
   @bindable({ set: ifExistsThenTrue }) paused = false;

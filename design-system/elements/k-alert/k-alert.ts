@@ -1,7 +1,20 @@
-import { ICustomElementViewModel, bindable, capture } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { NotificationType } from '../../services/notification/notification-type';
 
-@capture()
+import css from './k-alert.scss';
+import template from './k-alert.html';
+
+console.log(css);
+
+@customElement({
+  name: 'k-alert',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KAlert implements ICustomElementViewModel {
   @bindable type: NotificationType = 'warning';
   @bindable icon = '';
@@ -22,10 +35,11 @@ export class KAlert implements ICustomElementViewModel {
         return 'check_circle_filled';
     }
   }
-  margin(): string {
-    let styles = '';
-    if (this.top) styles += `margin-top: ${this.top};`;
-    if (this.bottom) styles += `margin-bottom: ${this.bottom};`;
-    return styles;
+
+  get styles() {
+    return {
+      marginTop: this.top,
+      marginBottom: this.bottom,
+    };
   }
 }

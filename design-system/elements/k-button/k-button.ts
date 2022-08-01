@@ -1,5 +1,5 @@
 import { ButtonSize } from './button-size';
-import { bindable, capture } from 'aurelia';
+import { bindable, customElement, shadowCSS } from 'aurelia';
 import { ifExistsThenTrue } from './../../common';
 /**
  * Usage:
@@ -16,7 +16,18 @@ import { ifExistsThenTrue } from './../../common';
 export type ButtonType = '' | 'outlined' | 'link';
 export type ButtonColor = 'primary' | 'secondary';
 
-@capture()
+import css from './k-button.scss';
+import template from './k-button.html';
+
+@customElement({
+  name: 'k-button',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KButton {
   @bindable fullWidth = false;
   @bindable type: ButtonType = '';

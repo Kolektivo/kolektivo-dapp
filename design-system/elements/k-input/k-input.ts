@@ -1,7 +1,18 @@
-import { ICustomElementViewModel, bindable, capture } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { ifExistsThenTrue } from './../../common';
 
-@capture()
+import css from './k-input.scss';
+import template from './k-input.html';
+
+@customElement({
+  name: 'k-input',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KInput implements ICustomElementViewModel {
   @bindable type = 'text';
   @bindable name = '';

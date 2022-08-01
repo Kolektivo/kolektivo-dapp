@@ -1,7 +1,9 @@
-import { BindingMode, ICustomElementViewModel, bindable } from 'aurelia';
+import './side-bar.scss';
+import { BindingMode, ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { IRouter } from '@aurelia/router';
 import { RouteLink } from '../../../models/common';
 import { ifExistsThenTrue } from '../../../../design-system/common';
+import template from './side-bar.html';
 
 const routes: RouteLink[] = [
   { name: 'Map', path: 'map', location: 'top' },
@@ -13,6 +15,8 @@ const routes: RouteLink[] = [
   { name: 'Download Wallet', path: 'download', location: 'bottom' },
   { name: 'Kolektivo.cw', path: 'cw', location: 'bottom' },
 ];
+
+@customElement({ template, name: 'side-bar' })
 export class SideBar implements ICustomElementViewModel {
   @bindable({ mode: BindingMode.twoWay }) open = true;
   @bindable({ set: ifExistsThenTrue }) collapsible = false;

@@ -1,4 +1,6 @@
-import { ICustomElementViewModel } from 'aurelia';
+import './k-footer.scss';
+import { ICustomElementViewModel, customElement } from 'aurelia';
+import template from './k-footer.html';
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
+@customElement({ template, name: 'k-footer' })
 export class KFooter implements ICustomElementViewModel {}

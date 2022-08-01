@@ -85,49 +85,35 @@ module.exports = function (env, { analyze }) {
         { test: /\.(png|svg|jpg|jpeg|gif)$/i, type: 'asset' },
         { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, type: 'asset/resource' },
         {
-          test: /\.css$/i,
-          // For style loaded in src/main.js, it's not loaded by style-loader.
-          // It's for shared styles for shadow-dom only.
-          issuer: /[/\\]src[/\\]main\.(js|ts)$/,
-          use: [cssLoader, postcssLoader],
-        },
-        {
           test: /\.scss$/i,
           // For style loaded in src/main.js, it's not loaded by style-loader.
           // It's for shared styles for shadow-dom only.
-          issuer: /[/\\]src[/\\]main\.(js|ts)$/,
+          issuer: /[/\\]src[/\\]app-container\.(js|ts)$/,
           use: [cssLoader, postcssLoader, sassLoader],
         },
         {
-          test: /\.css$/i,
-          // For style loaded in other js/ts files, it's loaded by style-loader.
-          // They are directly injected to HTML head.
-          issuer: /(?<![/\\]src[/\\]main)\.(js|ts)$/,
-          use: ['style-loader', cssLoader, postcssLoader],
+          test: /\.scss$/i,
+          issuer: /design-system/,
+          use: [cssLoader, postcssLoader, sassLoader],
         },
         {
           test: /\.scss$/i,
           // For style loaded in other js/ts files, it's loaded by style-loader.
           // They are directly injected to HTML head.
-          issuer: /(?<![/\\]src[/\\]main)\.(js|ts)$/,
+          issuer:{
+             not:/design-system|[/\\]src[/\\]app-container\.(js|ts)$/,
+          },
           use: ['style-loader', cssLoader, postcssLoader, sassLoader],
         },
         {
-          test: /\.css$/i,
-          // For style loaded in html files, Aurelia will handle it.
-          issuer: /\.html$/,
-          use: [cssLoader, postcssLoader],
-        },
-        {
-          test: /\.scss$/i,
-          // For style loaded in html files, Aurelia will handle it.
-          issuer: /\.html$/,
-          use: [cssLoader, postcssLoader, sassLoader],
+          test: /\.html$/i,
+          loader: "html-loader",
         },
         { test: /\.ts$/i, use: ['ts-loader', 
         {
           loader: '@aurelia/webpack-loader',
           options: {
+            enableConventions: false,
             hmr: false,
             // The other possible Shadow DOM mode is 'closed'.
             // If you turn on "closed" mode, there will be difficulty to perform e2e
@@ -135,37 +121,7 @@ module.exports = function (env, { analyze }) {
             // standard DOM APIs in "closed" mode.
           },
         }
-      ], exclude: /node_modules/ },
-        {
-          test: /[/\\]src[/\\].+\.html$/i,
-          use: {
-            loader: '@aurelia/webpack-loader',
-            options: {
-              hmr: false,
-              // The other possible Shadow DOM mode is 'closed'.
-              // If you turn on "closed" mode, there will be difficulty to perform e2e
-              // tests (such as Cypress). Because shadowRoot is not accessible through
-              // standard DOM APIs in "closed" mode.
-              // defaultShadowOptions: { mode: 'open' },
-            },
-          },
-          exclude: /node_modules/,
-        },
-        {
-          test: /[/\\]design-system[/\\].+\.html$/i,
-          use: {
-            loader: '@aurelia/webpack-loader',
-            options: {
-              hmr: false,
-              // The other possible Shadow DOM mode is 'closed'.
-              // If you turn on "closed" mode, there will be difficulty to perform e2e
-              // tests (such as Cypress). Because shadowRoot is not accessible through
-              // standard DOM APIs in "closed" mode.
-              defaultShadowOptions: { mode: 'open' },
-            },
-          },
-          exclude: /node_modules/,
-        },
+      ], exclude: /node_modules/ },        
       ],
     },
     plugins: [

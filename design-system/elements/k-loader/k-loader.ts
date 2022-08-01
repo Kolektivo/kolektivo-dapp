@@ -1,9 +1,11 @@
-import { ICustomElementViewModel, bindable, capture } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { ifExistsThenTrue, numberToPixelsInterceptor } from './../../common';
 export type LoaderType = 'spinner';
 export type LoaderFill = 'page' | 'parent';
 
-@capture()
+import template from './k-loader.html';
+
+@customElement({ name: 'k-loader', template, capture: true })
 export class KLoader implements ICustomElementViewModel {
   @bindable type: LoaderType = 'spinner';
   @bindable fill: LoaderFill = 'page';

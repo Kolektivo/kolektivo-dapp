@@ -1,8 +1,11 @@
-import { ICustomElementViewModel, bindable, capture } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { uid } from '../../common';
 
 export type ContentLoaderType = 'list' | 'code' | 'facebook' | 'instagram' | 'bullet-list';
-@capture()
+
+import template from './k-skeleton.html';
+
+@customElement({ name: 'k-skeleton', template, capture: true })
 export class KSkeleton implements ICustomElementViewModel {
   @bindable type: ContentLoaderType = 'list';
   @bindable primaryColor = '#f9f9f9';

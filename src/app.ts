@@ -1,8 +1,14 @@
 import './app.scss';
 import './shared.scss';
-import { AllowedNetworks, IEthereumService, Networks } from './services';
 import { IAnimationService } from '../design-system/services/animation/animation-service';
+import { IEthereumService, Networks } from './services';
 import { INotificationService } from '../design-system/services/notification/notification-service';
+import { customElement } from 'aurelia';
+import { ethereumNetwork } from './environment-variables';
+import { isDev } from './environment-variables';
+import template from './app.html';
+
+@customElement({ name: 'app', template })
 export class App {
   width = 200;
   sidebarOpen = true;
@@ -21,8 +27,6 @@ export class App {
   ) {}
 
   binding() {
-    const network = process.env.NETWORK as AllowedNetworks | undefined;
-    const inDev = process.env.NODE_ENV === 'development';
-    this.ethereumService.initialize(network ?? (inDev ? Networks.Alfajores : Networks.Mainnet));
+    this.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
   }
 }
