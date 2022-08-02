@@ -1,4 +1,4 @@
-import { smallHexString } from 'utils';
+import { smallHexString } from '../../utils';
 import { valueConverter } from 'aurelia';
 
 @valueConverter('small-hex-string')
