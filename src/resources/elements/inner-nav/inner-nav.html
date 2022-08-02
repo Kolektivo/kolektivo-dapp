@@ -1,7 +1,7 @@
-<k-paper>
-  <k-stack direction="row" gap="var(--spacing-xxl)">
-    <a repeat.for="route of routes" load="${route.path}">
-      <k-text tag="h6"> ${route.name} </k-text>
-    </a>
-  </k-stack>
-</k-paper>
+<k-app-bar border-bottom="1px solid var(--san-juan-500)">
+  <k-tabs>
+    <k-tab load="${route.path}" repeat.for="route of routes">
+      ${route.name}
+    </k-tab>
+  </k-tabs>
+</k-app-bar>

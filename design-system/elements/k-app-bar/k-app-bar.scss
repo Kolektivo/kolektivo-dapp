@@ -1,9 +1,13 @@
 :host {
-    background-color: var(--san-juan-800);
-  
-    k-stack {
-      padding-right: var(--spacing);
-      padding-top: var(--spacing-small);
-    }
+  background-color: var(--san-juan-800);
+
+  k-stack {
+    padding-right: var(--spacing);
+    padding-top: var(--spacing-small);
   }
-  
+
+  slot[part=end] {
+    align-content: flex-end;
+  }
+
+}

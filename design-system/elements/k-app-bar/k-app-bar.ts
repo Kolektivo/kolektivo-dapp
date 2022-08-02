@@ -1,4 +1,4 @@
-import { ICustomElementViewModel, customElement, shadowCSS } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 
 import css from './k-app-bar.scss';
 import template from './k-app-bar.html';
@@ -12,4 +12,12 @@ import template from './k-app-bar.html';
     mode: 'open',
   },
 })
-export class KAppBar implements ICustomElementViewModel {}
+export class KAppBar implements ICustomElementViewModel {
+  @bindable borderBottom = '';
+
+  get gridStyle() {
+    return {
+      borderBottom: this.borderBottom,
+    };
+  }
+}

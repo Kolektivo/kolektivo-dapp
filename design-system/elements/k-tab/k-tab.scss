@@ -1,0 +1,14 @@
+:host {
+    k-button::part(button) {
+        background-color: transparent;
+        color: var(--san-juan-300)
+    }
+}
+
+:host(.active) {
+    border-bottom: 5px var(--ocean-blue) solid;
+
+    k-button::part(button) {
+        color: var(--white)
+    }
+}

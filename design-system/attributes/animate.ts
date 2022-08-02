@@ -34,7 +34,16 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
       this.element.onanimationend = this.onAnimationEnd;
       this.element.onanimationstart = (): boolean => (this.animationStarted = true);
       this.element.classList.add(this.startClass);
+      return;
     }
+
+    if (this.value && this.from == null) {
+      this.element.onanimationend = this.onAnimationEnd;
+      this.element.onanimationstart = (): boolean => (this.animationStarted = true);
+      this.element.classList.add(this.value);
+      return;
+    }
+
     this.value &&
       this.from != null &&
       this.to != null &&
@@ -63,6 +72,14 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
         this.element.classList.add(this.endClass);
         this.element.onanimationend = this.onAnimationEnd;
       }
+
+      if (this.value && this.from == null) {
+        this.element.onanimationend = this.onAnimationEnd;
+        this.element.classList.add(this.value);
+        this.element.style.animationDirection = 'reverse';
+        return;
+      }
+
       // not started or no end class
       if (!this.animationStarted || !this.endClass) {
         this.resolve();
