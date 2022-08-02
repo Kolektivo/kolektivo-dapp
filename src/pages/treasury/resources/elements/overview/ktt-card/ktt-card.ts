@@ -1,17 +1,15 @@
 import './ktt-card.scss';
-import { ICustomElementViewModel, bindable } from 'aurelia';
-
-export interface IKttCardData {
-  marketCap: number;
-  currentPrice: number;
-  totalSupply: number;
-  supplyDistribution: {
-    treasury: number;
-    reserves: number;
-    circulating: number;
-  };
-}
+import { ICustomElementViewModel } from 'aurelia';
 
 export class KttCard implements ICustomElementViewModel {
-  @bindable public data?: IKttCardData;
+  public data = {
+    marketCap: 3000000,
+    currentPrice: 0.98,
+    totalSupply: 8000000,
+    supplyDistribution: {
+      treasury: 40,
+      reserves: 40,
+      circulating: 20,
+    },
+  };
 }
