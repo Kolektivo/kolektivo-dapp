@@ -8,7 +8,6 @@ import template from './k-spinner.html';
 @customElement({
   name: 'k-spinner',
   template,
-  capture: true,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

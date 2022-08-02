@@ -36,8 +36,8 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
       this.element.classList.add(this.startClass);
     }
     this.value &&
-      this.from &&
-      this.to &&
+      this.from != null &&
+      this.to != null &&
       this.duration &&
       this.animationService.animateCSS(this.element, this.value, 'px', this.from, this.to, this.duration, this.easing as keyof typeof easings);
   }
@@ -52,19 +52,20 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
     return new Promise((res) => {
       this.resolve = res;
 
+      if (this.out && this.value && this.to != null && this.from != null && this.duration) {
+        this.animationService.animateCSS(this.element, this.value, 'px', this.to, this.from, this.duration, this.easing as keyof typeof easings, () =>
+          this.resolve?.(),
+        );
+        return;
+      }
+
       if (this.endClass) {
         this.element.classList.add(this.endClass);
         this.element.onanimationend = this.onAnimationEnd;
       }
       // not started or no end class
       if (!this.animationStarted || !this.endClass) {
-        res();
-      }
-
-      if (this.out && this.value && this.to && this.from && this.duration) {
-        this.animationService.animateCSS(this.element, this.value, 'px', this.to, this.from, this.duration, this.easing as keyof typeof easings, () =>
-          this.resolve?.(),
-        );
+        this.resolve();
       }
     });
   }

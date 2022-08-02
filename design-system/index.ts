@@ -1,6 +1,5 @@
 import { IContainer, IRegistry, Registration } from 'aurelia';
 
-import './fast';
 import 'style-loader!./styles/main.scss';
 import 'style-loader!./styles/shared.scss';
 import * as attributes from './attributes';

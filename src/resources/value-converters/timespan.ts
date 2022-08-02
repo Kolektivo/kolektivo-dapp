@@ -1,7 +1,12 @@
-﻿import { valueConverter } from 'aurelia';
+﻿import { IDateService, TimespanResolution } from '../../services/DateService';
+import { valueConverter } from 'aurelia';
+
+type TimespanResolutionStrings = keyof typeof TimespanResolution;
 
 @valueConverter('timespan')
 export class TimespanValueConverter {
+  constructor(@IDateService private readonly dateService: IDateService) {}
+
   /**
    * convert between milliseconds in the viewmodel and a string.
    * @param value
@@ -11,8 +16,19 @@ export class TimespanValueConverter {
    * @param abbrev for example, "minutes" becomes "min"
    * @returns
    */
-  public toView(value: number, resolution?: number | undefined, largest = false, abbrev = false): string | null {
-    // this can use built in
-    return '';
+  public toView(value: number, resolution?: number | TimespanResolutionStrings | undefined, largest = false, abbrev = false): string | null {
+    let resolutionEnum: TimespanResolution | undefined = undefined;
+    if (typeof resolution === 'number') {
+      resolutionEnum = resolution;
+    } else if (typeof resolution === 'string') {
+      resolutionEnum = TimespanResolution[resolution];
+    } else {
+      resolutionEnum = resolution; // undefined
+    }
+    if (typeof resolutionEnum !== 'undefined' && largest) {
+      // eslint-disable-next-line no-bitwise
+      resolutionEnum |= TimespanResolution.largest;
+    }
+    return this.dateService.ticksToTimeSpanString(value, resolutionEnum, abbrev);
   }
 }

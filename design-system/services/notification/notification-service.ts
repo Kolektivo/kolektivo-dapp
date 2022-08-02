@@ -73,7 +73,7 @@ export class NotificationService {
         const expireTask = this.platform.taskQueue.queueTask(
           () => {
             if (instance.hovering || timeout == null) return;
-            timeout -= 100;
+            timeout -= 1000;
             if (timeout <= 0) {
               expireTask.cancel();
               this.destroyToast(controller);

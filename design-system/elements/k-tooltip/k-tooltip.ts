@@ -6,7 +6,7 @@ export type TooltipPosition = 'top' | 'start' | 'end' | 'bottom';
 import css from './k-tooltip.scss';
 import template from './k-tooltip.html';
 
-@customElement({ name: 'k-tooltip', template, capture: true, dependencies: [shadowCSS(css)] })
+@customElement({ name: 'k-tooltip', template, dependencies: [shadowCSS(css)], shadowOptions: { mode: 'open' } })
 export class KTooltip implements ICustomElementViewModel {
   @bindable message?: string;
   @bindable host?: HTMLElement;
