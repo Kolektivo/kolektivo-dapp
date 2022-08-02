@@ -1,3 +1,6 @@
 module.exports = {
-    extends: ["stylelint-config-standard-scss", "stylelint-config-prettier"]
+    extends: ["stylelint-config-standard-scss", "stylelint-config-prettier"],
+    rules:{
+      "no-descending-specificity": null
+    }
   }

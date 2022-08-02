@@ -37,9 +37,11 @@ body {
   font-weight: 400;
   @include scrollbars(8px, 12px, var(--ocean-blue));
 }
+
 .small-side-bar{
   position: fixed;
 }
+
 .scrollbar {
   @include scrollbars(8px, 12px, var(--ocean-blue));
 }
@@ -55,6 +57,7 @@ body {
     position: relative;
   }
 }
+
 .app-small{
   display: block;
 }

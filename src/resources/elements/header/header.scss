@@ -1,7 +1,8 @@
-@import '../../../../design-system/styles/sizes.scss';
+@import '../../../../design-system/styles/sizes';
 
 header {
   margin: 20px 18px;
+
   k-stack {
     padding-right: var(--spacing);
     padding-top: var(--spacing-small);
