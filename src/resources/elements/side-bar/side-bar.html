@@ -17,7 +17,7 @@
   </div>
   <nav id="footer-nav" part="footer-nav">
     <a load="${route.path}" repeat.for="route  of getRoutes('bottom')">
-      <k-stack direction="row" column-gap="15">
+      <k-stack direction="row" column-gap="10">
         <k-icon size="20" name.bind="route.icon"></k-icon>
         <k-text type="label">${route.name}</k-text>
       </k-stack>

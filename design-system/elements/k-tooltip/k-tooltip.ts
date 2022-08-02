@@ -36,6 +36,10 @@ export class KTooltip implements ICustomElementViewModel {
     this.recalc();
   }
 
+  detaching(): void {
+    this.platform.window.removeEventListener('resize', this.recalc);
+  }
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   get style() {
     return {

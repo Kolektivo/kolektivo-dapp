@@ -28,10 +28,13 @@ import info_filled from '@material-design-icons/svg/filled/info.svg';
 import language from '@material-design-icons/svg/outlined/language.svg';
 import link from '@material-design-icons/svg/outlined/link.svg';
 import map from '@material-design-icons/svg/outlined/map.svg';
+import menu from '@material-design-icons/svg/outlined/menu.svg';
+import menu_book from '@material-design-icons/svg/outlined/menu_book.svg';
 import savings from '@material-design-icons/svg/outlined/savings.svg';
 import swap_horiz from '@material-design-icons/svg/outlined/swap_horiz.svg';
 import warning_filled from '@material-design-icons/svg/filled/warning.svg';
 
+import { State } from './state';
 import designScss from 'style-loader!../design-system/styles/shared.scss';
 import scss from 'style-loader!./shared.scss';
 export const appContainer: IContainer = DI.createContainer()
@@ -40,6 +43,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(services)
   .register(resources)
   .register(pages)
+  .register(State)
   .register(
     LoggerConfiguration.create({
       level: isDev ? LogLevel.trace : LogLevel.warn,
@@ -78,6 +82,8 @@ export const appContainer: IContainer = DI.createContainer()
       x.iconMap.set('language', language);
       x.iconMap.set('link', link);
       x.iconMap.set('map', map);
+      x.iconMap.set('menu', menu);
+      x.iconMap.set('menu_book', menu_book);
       x.iconMap.set('savings', savings);
       x.iconMap.set('swap_horiz', swap_horiz);
       x.iconMap.set('warning_filled', warning_filled);
