@@ -1,4 +1,7 @@
-<k-stack justify-content="flex-end" align-content="center" direction="row" gap="5">
-  <k-avatar> </k-avatar>
-  <k-button color="white">Connect Wallet</k-button>
-</k-stack>
+<k-app-bar>
+  <k-icon-button slot="start" name="menu" type="utility-dark" click.trigger="state.sideBarOpen = !state.sideBarOpen"></k-icon-button>
+  <k-button click.trigger="connectWallet()">Connect Wallet</k-button>
+  <k-grid slot="end">
+    <k-avatar> </k-avatar>
+  </k-grid>  
+</k-app-bar>

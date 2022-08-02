@@ -7,6 +7,6 @@ export class State {
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IState, State));
   }
-
+  sideBarOpen = false;
   treasuryState = {};
 }
