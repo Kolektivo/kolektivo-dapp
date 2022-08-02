@@ -4,14 +4,14 @@ import { RouteLink } from '../../../models/common';
 import { ifExistsThenTrue } from '../../../../design-system/common';
 
 const routes: RouteLink[] = [
-  { name: 'Map', path: 'map', location: 'top' },
-  { name: 'Treasury', path: 'treasury', location: 'top' },
-  { name: 'Reserve', path: 'reserve', location: 'top' },
-  { name: 'Swap', path: 'swap', location: 'top' },
-  { name: 'Documentation', path: 'documentation', location: 'bottom' },
-  { name: 'Contact Kolektivo', path: 'contact', location: 'bottom' },
-  { name: 'Download Wallet', path: 'download', location: 'bottom' },
-  { name: 'Kolektivo.cw', path: 'cw', location: 'bottom' },
+  { name: 'Map', path: 'map', location: 'top', icon: 'map' },
+  { name: 'Treasury', path: 'treasury', location: 'top', icon: 'account_balance' },
+  { name: 'Reserve', path: 'reserve', location: 'top', icon: 'savings' },
+  { name: 'Swap', path: 'swap', location: 'top', icon: 'swap_horiz' },
+  { name: 'Documentation', path: 'documentation', location: 'bottom', icon: 'description' },
+  { name: 'Contact Kolektivo', path: 'contact', location: 'bottom', icon: 'headset_mic' },
+  { name: 'Download Wallet', path: 'download', location: 'bottom', icon: 'account_balance_wallet' },
+  { name: 'Kolektivo.cw', path: 'cw', location: 'bottom', icon: 'language' },
 ];
 export class SideBar implements ICustomElementViewModel {
   @bindable({ mode: BindingMode.twoWay }) open = true;
