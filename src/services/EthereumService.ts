@@ -57,9 +57,9 @@ const CELO_MAINNET_CHAIN_ID = 42220;
 const CELO_ALFAJORES_CHAIN_ID = 44787;
 
 export interface IChainEventInfo {
-  chainId: number;
-  chainName: AllowedNetworks;
-  provider: Web3Provider | null;
+  chainId?: number;
+  chainName?: AllowedNetworks;
+  provider?: Web3Provider | null;
 }
 
 export type IEthereumService = EthereumService;
@@ -192,11 +192,11 @@ export class EthereumService {
     this.eventAggregator.publish('Network.Changed.Account', account);
   }
   private fireChainChangedHandler(info: IChainEventInfo): void {
-    console.info(`chain changed: ${info.chainId}`);
+    console.info(`chain changed: ${info.chainId ?? 'undefined'}`);
     this.eventAggregator.publish('Network.Changed.Id', info);
   }
   private fireConnectHandler(info: IChainEventInfo): void {
-    console.info(`connected: ${info.chainName}`);
+    console.info(`connected: ${info.chainName ?? 'undefined'}`);
     this.eventAggregator.publish('Network.Changed.Connected', info);
   }
   private fireDisconnectHandler(error: { code: number; message: string }): void {
