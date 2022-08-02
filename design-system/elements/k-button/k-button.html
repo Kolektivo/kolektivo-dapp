@@ -1,8 +1,9 @@
-<button disabled.bind="disabled || loading" part="button" class="${size} ${type} ${color}" class.bind="class" role="button" ...$attrs>
-  <k-grid if.bind="!loading" justify-items="center" cols="auto 1fr auto" direction="row">
-    <slot name="start"></slot>
+<button disabled.bind="disabled || loading" part="button" class="${size} ${type}" class.bind="class" role="button" ...$attrs>
+  <k-grid if.bind="!loading" justify-content="center" cols="auto auto" direction="row">
+    <slot name="start">
+      <k-icon if.bind="icon" name.bind="icon" size.bind="iconSize"></k-icon>
+    </slot>
     <slot></slot>
-    <slot name="end"></slot>
   </k-grid>
   <k-spinner part="spinner" else size.bind="20" if.bind="loading"></k-spinner>
 </button>

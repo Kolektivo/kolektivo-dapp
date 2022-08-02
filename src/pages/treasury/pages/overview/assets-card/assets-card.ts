@@ -1,7 +1,10 @@
 import './assets-card.scss';
-import { ICustomElementViewModel } from 'aurelia';
+import { ICustomElementViewModel, customElement } from 'aurelia';
 import { IGridColumn } from 'design-system/elements/k-data-grid/grid-column';
 
+import template from './assets-card.html';
+
+@customElement({ name: 'assets-card', template })
 export class AssetsCard implements ICustomElementViewModel {
   testColumns: IGridColumn[] = [
     { headerText: 'Token', field: 'token', width: '1fr' },

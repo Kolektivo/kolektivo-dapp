@@ -4,8 +4,7 @@ import { IAnimationService } from '../design-system/services/animation/animation
 import { IEthereumService, Networks } from './services';
 import { INotificationService } from '../design-system/services/notification/notification-service';
 import { customElement } from 'aurelia';
-import { ethereumNetwork } from './environment-variables';
-import { isDev } from './environment-variables';
+import { ethereumNetwork, isDev } from './environment-variables';
 import template from './app.html';
 
 @customElement({ name: 'app', template })

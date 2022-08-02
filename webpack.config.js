@@ -30,7 +30,7 @@ module.exports = function (env, { analyze }) {
   return {
     target: 'web',
     mode: production ? 'production' : 'development',
-    devtool: production ? undefined : 'eval-cheap-source-map',
+    devtool: production ? undefined : 'inline-source-map',
     entry: {
       entry: './src/main.ts',
     },
@@ -109,19 +109,7 @@ module.exports = function (env, { analyze }) {
           test: /\.html$/i,
           loader: "html-loader",
         },
-        { test: /\.ts$/i, use: ['ts-loader', 
-        {
-          loader: '@aurelia/webpack-loader',
-          options: {
-            enableConventions: false,
-            hmr: false,
-            // The other possible Shadow DOM mode is 'closed'.
-            // If you turn on "closed" mode, there will be difficulty to perform e2e
-            // tests (such as Cypress). Because shadowRoot is not accessible through
-            // standard DOM APIs in "closed" mode.
-          },
-        }
-      ], exclude: /node_modules/ },        
+        { test: /\.ts$/i, use: ['ts-loader'], exclude: /node_modules/ },        
       ],
     },
     plugins: [
@@ -132,6 +120,10 @@ module.exports = function (env, { analyze }) {
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
         process: 'process/browser',
+      }),
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
       }),
       analyze && new BundleAnalyzerPlugin(),
       new webpack.EnvironmentPlugin(process.env),

@@ -14,6 +14,7 @@ export * from './k-data-grid';
 export * from './k-form-field';
 export * from './k-grid';
 export * from './k-icon';
+export * from './k-icon-button';
 export * from './k-input';
 export * from './k-loader';
 export * from './k-modal';

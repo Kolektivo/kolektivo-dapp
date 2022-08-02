@@ -1,9 +1,9 @@
-import { DI, IContainer, IPlatform, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
+import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from '../design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { RouterConfiguration } from '@aurelia/router';
-import { State } from './state';
-import en from '/locales/en/translation.json';
+import { isDev } from './environment-variables';
+import en from '../locales/en/translation.json';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 // Css files imported in this main file are NOT processed by style-loader
 // They are for sharedStyles in shadowDOM.
@@ -12,6 +12,7 @@ import * as pages from './pages';
 import * as resources from './resources';
 import * as services from './services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
+import add_circle from '@material-design-icons/svg/filled/add_circle_outline.svg';
 import alternate_email from '@material-design-icons/svg/outlined/alternate_email.svg';
 import calendar_today from '@material-design-icons/svg/outlined/calendar_today.svg';
 import check from '@material-design-icons/svg/filled/check.svg';
@@ -25,14 +26,18 @@ import warning_filled from '@material-design-icons/svg/filled/warning.svg';
 
 import designScss from 'style-loader!../design-system/styles/shared.scss';
 import scss from 'style-loader!./shared.scss';
-
 export const appContainer: IContainer = DI.createContainer()
   .register(Registration.instance(IPlatform, PLATFORM), StandardConfiguration)
-  .register(services)
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
-  .register(pages)
-  .register(State)
+  .register(services)
   .register(resources)
+  .register(pages)
+  .register(
+    LoggerConfiguration.create({
+      level: isDev ? LogLevel.trace : LogLevel.warn,
+      sinks: [ConsoleSink],
+    }),
+  )
   .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
   .register(
     I18nConfiguration.customize((options) => {
@@ -48,6 +53,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(
     DesignSystemPlugin.configure((x) => {
       x.iconMap ??= new Map<string, string>();
+      x.iconMap.set('add_circle', add_circle);
       x.iconMap.set('alternate_email', alternate_email);
       x.iconMap.set('alternate_email', alternate_email);
       x.iconMap.set('calendar_today', calendar_today);

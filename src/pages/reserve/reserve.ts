@@ -1,6 +1,7 @@
 import { ICustomElementViewModel, customElement } from 'aurelia';
 
 import './reserve.scss';
+import * as pages from './pages';
 import template from './reserve.html';
 
 const routes = [
@@ -12,7 +13,7 @@ const routes = [
   { name: 'Governance', path: 'governance' },
 ];
 
-@customElement({ name: 'reserve', template })
+@customElement({ name: 'reserve', template, dependencies: [pages] })
 export class Reserve implements ICustomElementViewModel {
   routes = routes;
 }

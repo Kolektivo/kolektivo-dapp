@@ -4,8 +4,6 @@ import { NotificationType } from '../../services/notification/notification-type'
 import css from './k-alert.scss';
 import template from './k-alert.html';
 
-console.log(css);
-
 @customElement({
   name: 'k-alert',
   template,
