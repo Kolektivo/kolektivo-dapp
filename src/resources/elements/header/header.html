@@ -1,8 +1,9 @@
 <k-app-bar>
   <k-icon-button slot="start" name="menu" type="utility-dark" click.trigger="state.sideBarOpen = !state.sideBarOpen">
   </k-icon-button>
+  <div></div>
   <div slot="end">
-    <k-stack direction="row" gap="var(--spacing)">
+    <k-stack justify-content="flex-end" direction="row" gap="var(--spacing)">
       <k-button click.trigger="connectWallet()">Connect Wallet</k-button>
       <k-avatar> </k-avatar>
     </k-stack>
