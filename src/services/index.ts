@@ -5,4 +5,5 @@ export * from './NumberService';
 export * from './DateService';
 export * from './DateServiceIntl';
 export * from './ContractsService';
+export * from './TransactionsService';
 export * from './ContractsDeploymentProvider';
