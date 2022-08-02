@@ -1,8 +1,19 @@
-import { BindingMode, ICustomElementViewModel, bindable, capture } from 'aurelia';
+import { BindingMode, ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { ValidationResult } from '@aurelia/validation';
 import { ifExistsThenTrue } from '../../common';
 
-@capture()
+import css from './k-form-field.scss';
+import template from './k-form-field.html';
+
+@customElement({
+  name: 'k-form-field',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KFormField implements ICustomElementViewModel {
   @bindable label = '';
   @bindable max = '';

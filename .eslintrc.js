@@ -36,6 +36,7 @@ module.exports = {
     'no-console': 'warn',
     'unused-imports/no-unused-imports': 'error',
     'no-useless-escape': 'off',
+    'no-duplicate-imports':'error',
     'no-tabs': ['error', { allowIndentationTabs: true }],
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/no-base-to-string': [

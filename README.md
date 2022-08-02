@@ -2,6 +2,8 @@
 
 A collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
 
+A collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
+
 This project is bootstrapped by [aurelia/new](https://github.com/aurelia/new).
 
 ## Development

@@ -29,7 +29,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
-import { ICustomElementViewModel, bindable } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 
 Chart.register(
   ArcElement,
@@ -59,6 +59,18 @@ Chart.register(
 );
 
 export type DataType = number | ScatterDataPoint | BubbleDataPoint;
+import css from './k-chart.scss';
+import template from './k-chart.html';
+
+@customElement({
+  name: 'k-chart',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KChart implements ICustomElementViewModel {
   @bindable type: ChartType = 'bar';
   @bindable labels?: string[];

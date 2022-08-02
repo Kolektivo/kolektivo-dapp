@@ -1,7 +1,19 @@
 import { Grid } from '../../base/grid';
-import { ICustomElementViewModel, bindable, capture } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 
-@capture()
+import css from './k-stack.scss';
+
+import template from './k-stack.html';
+
+@customElement({
+  name: 'k-stack',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KStack extends Grid implements ICustomElementViewModel {
   @bindable direction = 'column';
 

@@ -1,4 +1,15 @@
-import { ICustomElementViewModel, capture } from 'aurelia';
+import { ICustomElementViewModel, customElement, shadowCSS } from 'aurelia';
 
-@capture()
+import css from './k-card.scss';
+import template from './k-card.html';
+
+@customElement({
+  name: 'k-card',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KCard implements ICustomElementViewModel {}

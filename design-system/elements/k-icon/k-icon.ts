@@ -1,9 +1,19 @@
-import './k-icon.scss';
-import { ICustomElementViewModel, bindable, capture } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { IDesignSystemConfiguration } from '../../configuration';
 import { numberToPixelsInterceptor } from './../../common';
 
-@capture()
+import css from './k-icon.scss';
+import template from './k-icon.html';
+
+@customElement({
+  name: 'k-icon',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KIcon implements ICustomElementViewModel {
   @bindable name = '';
   @bindable color = '';
