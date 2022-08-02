@@ -1,7 +1,7 @@
 :host {
   width: fit-content;
   display: inline-block;
-  
+
   button {
     border: 0;
     color: var(--white);
@@ -15,27 +15,34 @@
     border-radius: var(--rounded);
     cursor: pointer;
     width: 100%;
-    k-icon, ::slotted(k-icon) {
-      fill: var(--white); 
+
+    k-icon,
+    ::slotted(k-icon) {
+      fill: var(--white);
     }
-    k-icon{
+
+    k-icon {
       transform: translateX(-8px);
-    }    
+    }
+
     &.xs {
       font-size: 14px;
       letter-spacing: 2%;
       line-height: 10px;
       padding: 6px 10px;
+
       k-icon {
         transform: translateX(-2px);
       }
     }
+
     &.sm {
       font-size: 14px;
       letter-spacing: 1.5%;
       line-height: 13px;
       padding: 8px 16px;
-      k-icon{
+
+      k-icon {
         transform: translateX(-4px);
       }
     }
@@ -55,6 +62,7 @@
     &:hover {
       background-color: var(--ocean-blue-600);
     }
+
     &:active {
       background-color: var(--ocean-blue-700);
     }
@@ -72,69 +80,83 @@
       cursor: inherit;
     }
 
-    
+
     &.secondary {
       color: var(--ocean-blue);
       border: 1px solid var(--ocean-blue);
       background-color: var(--white);
+
       k-icon {
-        fill: var(--ocean-blue); 
+        fill: var(--ocean-blue);
         transform: translateX(-8px);
       }
+
       &:hover {
         k-icon {
-          fill: var(--white); 
+          fill: var(--white);
         }
+
         color: var(--white);
         background-color: var(--ocean-blue-600);
       }
+
       &:active {
         k-icon {
-          fill: var(--white); 
+          fill: var(--white);
         }
+
         color: var(--white);
         background-color: var(--ocean-blue-700);
       }
+
       &:focus,
       &:focus-visible,
       &:focus-within {
         k-icon {
-          fill: var(--ocean-blue); 
+          fill: var(--ocean-blue);
         }
+
         color: var(--ocean-blue);
         outline: 2px solid var(--ocean-blue-300);
         background-color: var(--white);
       }
-    }  
+    }
 
     &.tertiary {
       border-color: transparent;
       background-color: transparent;
       color: var(--ocean-blue);
+
       k-icon {
-        fill: var(--ocean-blue); 
+        fill: var(--ocean-blue);
         transform: translateX(-8px);
       }
+
       &:hover {
         k-icon {
-          fill: var(--white); 
+          fill: var(--white);
         }
+
         color: var(--white);
         background-color: var(--ocean-blue-600);
       }
+
       &:active {
         k-icon {
-          fill: var(--white); 
+          fill: var(--white);
         }
+
         color: var(--white);
         background-color: var(--ocean-blue-700);
       }
+
       &:focus,
       &:focus-visible,
       &:focus-within {
         k-icon {
-          fill: var(--ocean-blue); 
+          fill: var(--ocean-blue);
         }
+
         color: var(--ocean-blue);
         outline: 2px solid var(--ocean-blue-300);
         background-color: var(--white);
@@ -145,16 +167,20 @@
       border-color: transparent;
       background-color: transparent;
       color: var(--don-juan-600);
+
       k-icon {
-        fill: var(--don-juan-600); 
+        fill: var(--don-juan-600);
         transform: translateX(-8px);
       }
+
       &:hover {
         background-color: var(--don-juan-050);
       }
+
       &:active {
         background-color: var(--don-juan-100);
       }
+
       &:focus,
       &:focus-visible,
       &:focus-within {
@@ -167,16 +193,20 @@
       border-color: var(--san-juan-500);
       background-color: var(--san-juan-500);
       color: var(--white);
+
       k-icon {
-        fill: var(--white); 
+        fill: var(--white);
         transform: translateX(-8px);
       }
+
       &:hover {
         background-color: var(--san-juan-400);
       }
+
       &:active {
         background-color: var(--san-juan-500);
       }
+
       &:focus,
       &:focus-visible,
       &:focus-within {
@@ -185,18 +215,22 @@
       }
     }
 
-    &.error{
+    &.error {
       color: var(--white);
       background-color: var(--error);
+
       k-icon {
-        fill: var(--white); 
+        fill: var(--white);
       }
+
       &:hover {
         background-color: var(--error-dark);
       }
+
       &:active {
         background-color: var(--error-dark);
       }
+
       &:focus,
       &:focus-visible,
       &:focus-within {
