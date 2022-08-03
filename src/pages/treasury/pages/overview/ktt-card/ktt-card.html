@@ -1,20 +1,21 @@
 <k-card>
-  <k-text type="h4" slot="header" t="treasury.overview.ktt.title"></k-text>
+  <k-text type="h4" slot="header" t="navigation.treasury.overview.ktt.title"></k-text>
   <k-grid cols="3">
-    <token-summary-stack t="[title]treasury.overview.ktt.market-cap;[tooltip]treasury.overview.ktt.market-cap-tooltip"
+    <token-summary-stack
+      t="[title]navigation.treasury.overview.ktt.market-cap;[tooltip]navigation.treasury.overview.ktt.market-cap-tooltip"
       value.bind="data.marketCap | currency">
     </token-summary-stack>
     <token-summary-stack
-      t="[title]treasury.overview.ktt.current-price;[tooltip]treasury.overview.ktt.current-price-tooltip"
+      t="[title]navigation.treasury.overview.ktt.current-price;[tooltip]navigation.treasury.overview.ktt.current-price-tooltip"
       value.bind="data.currentPrice | currency">
     </token-summary-stack>
     <token-summary-stack
-      t="[title]treasury.overview.ktt.total-supply;[tooltip]treasury.overview.ktt.total-supply-tooltip"
-      value.bind="data.totalSupply | number">
+      t="[title]navigation.treasury.overview.ktt.total-supply;[tooltip]navigation.treasury.overview.ktt.total-supply-tooltip"
+      value.bind="data.totalSupply">
     </token-summary-stack>
   </k-grid>
   <token-summary-stack
-    t="[title]treasury.overview.ktt.supply-distribution;[tooltip]treasury.overview.ktt.supply-distribution-tooltip">
+    t="[title]navigation.treasury.overview.ktt.supply-distribution;[tooltip]navigation.treasury.overview.ktt.supply-distribution-tooltip">
     <div class="supply-distribution">
       <k-text>${data.supplyDistribution.treasury}% in treasury</k-text>
       <k-text>${data.supplyDistribution.reserves}% in reserves</k-text>
