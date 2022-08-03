@@ -2,4 +2,4 @@ export * from './header';
 export * from './inner-nav';
 export * from './k-footer';
 export * from './side-bar';
-export * from './title-value';
+export * from './token-summary-stack';
