@@ -40,10 +40,14 @@ import warning_filled from '@material-design-icons/svg/filled/warning.svg';
 import { State } from './state';
 import designScss from 'style-loader!../design-system/styles/shared.scss';
 import scss from 'style-loader!./shared.scss';
+
+import * as hooks from './hooks';
+
 export const appContainer: IContainer = DI.createContainer()
   .register(Registration.instance(IPlatform, PLATFORM), StandardConfiguration)
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(services)
+  .register(hooks)
   .register(resources)
   .register(pages)
   .register(State)
