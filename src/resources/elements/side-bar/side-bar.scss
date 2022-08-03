@@ -1,19 +1,16 @@
 side-bar {
   background-color: var(--white);
   height: 100%;
-  width: 275px;
+  width: 240px;
   z-index: 99;
+  position: fixed;
 
   a.logo {
     margin-left: 38px;
     margin-top: 28px;
-    font-size: var(--text-xl);
-    color: var(--don-juan-700);
-    font-weight: 600;
-    text-decoration: none;
     
-    img {
-      width: 36px;
+    &:focus-visible{
+      outline: 0;
     }
   }
 
@@ -61,9 +58,7 @@ side-bar {
         
       }
 
-      &:focus,
-      &:focus-visible,
-      &:focus-within {
+      &:focus-visible{
         outline: 3px solid var(--ocean-blue-100);
         background-color: var(--white);
       }
@@ -114,11 +109,9 @@ side-bar {
         
       }
 
-      &:focus,
-      &:focus-visible,
-      &:focus-within {
-        outline: 3px solid var(--ocean-blue-100);
-        background-color: var(--white);
+      &:focus-visible{
+        outline: 0;
+        background-color: var(--don-juan-050);
       }
     }
   }

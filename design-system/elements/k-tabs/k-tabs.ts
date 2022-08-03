@@ -12,8 +12,4 @@ import template from './k-tabs.html';
   },
   dependencies: [shadowCSS(css)],
 })
-export class KTabs implements ICustomElementViewModel {
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
-}
+export class KTabs implements ICustomElementViewModel {}
