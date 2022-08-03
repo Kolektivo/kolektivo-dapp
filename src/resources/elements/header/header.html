@@ -1,11 +1,19 @@
+<import from="../value-converters/small-hex-string" />
 <k-app-bar>
   <k-icon-button slot="start" name="menu" type="utility-dark" click.trigger="state.sideBarOpen = !state.sideBarOpen">
   </k-icon-button>
   <div></div>
   <div slot="end">
-    <k-stack justify-content="flex-end" direction="row" gap="var(--spacing)">
+    <k-stack if.bind="!blockChainState.walletConnected" justify-content="flex-end">
       <k-button click.trigger="connectWallet()">Connect Wallet</k-button>
-      <k-avatar> </k-avatar>
+    </k-stack>
+    <k-stack else justify-content="flex-end" direction="row" gap="var(--spacing)">
+      <k-text color="var(--white)">My badges:</k-text>
+      <k-avatar-group>
+        <k-avatar repeat.for="badge of blockChainState.badges" tooltip="value:${badge.name};position:bottom" src.bind="badge.imageUrl" size="32"></k-avatar>
+      </k-avatar-group>
+      <k-button type="utility-dark" icon="account_circle">${blockChainState.connectedWalletAddress | smallHexString}</k-button>
+      <k-icon-button type="utility-dark" name="electric_bolt"></k-icon-button>
     </k-stack>
   </div>
 </k-app-bar>

@@ -2,6 +2,7 @@ export * from './k-accordion';
 export * from './k-alert';
 export * from './k-app-bar';
 export * from './k-avatar';
+export * from './k-avatar-group';
 export * from './k-backdrop';
 export * from './k-button';
 export * from './k-card';

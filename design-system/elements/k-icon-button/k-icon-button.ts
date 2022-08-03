@@ -5,7 +5,7 @@ import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aur
 import css from './k-icon-button.scss';
 import template from './k-icon-button.html';
 
-@customElement({ name: 'k-icon-button', template, capture: true, dependencies: [shadowCSS(css)] })
+@customElement({ name: 'k-icon-button', template, capture: true, dependencies: [shadowCSS(css)], shadowOptions: { mode: 'open' } })
 export class KIconButton implements ICustomElementViewModel {
   @bindable name = '';
   @bindable type: ButtonType = 'primary';

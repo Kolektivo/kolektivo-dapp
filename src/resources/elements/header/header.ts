@@ -1,10 +1,13 @@
 import './header.scss';
+import { BlockChainState, IState } from './../../../state';
 import { ICustomElementViewModel, customElement } from 'aurelia';
-import { IState } from './../../../state';
 import template from './header.html';
 @customElement({ name: 'header', template })
 export class Header implements ICustomElementViewModel {
-  constructor(@IState private readonly state: IState) {}
+  blockChainState: BlockChainState;
+  constructor(@IState private readonly state: IState) {
+    this.blockChainState = state.blockChainState;
+  }
   connectWallet(): void {
     alert('Not Implemented');
   }

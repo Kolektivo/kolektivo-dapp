@@ -4,25 +4,30 @@
 
   &.xs {
     k-button::part(button) {
-      padding: 0;
+      padding: 6px 8px;
     }
   }
 
-  k-button {
-    &.xs {
-      padding: 6px 8px;
-    }
-
-    &.sm {
+  &.sm {
+    k-button::part(button) {
       padding: 8px 12px;
     }
+  }
 
-    &.lg {
+  k-button::part(button) {
+    padding: 10px 16px;
+  }
+
+  &.lg {
+    k-button::part(button) {
       padding: 10px 20px;
     }
+  }
 
-    &.xl {
+  &.xl {
+    k-button::part(button) {
       padding: 12px 24px;
     }
   }
+
 }

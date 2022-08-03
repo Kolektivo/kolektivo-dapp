@@ -1,3 +1,5 @@
-<div part="main" style.bind="divStyle" class="circle">
-  <slot></slot>
+<div part="main" style.bind="divStyle" class="circle" ...$attrs>
+  <slot>
+    <img alt="avatar" if.bind="src" src.bind="src" />
+  </slot>
 </div>
