@@ -23,14 +23,14 @@ export interface IToStringOptions {
   isCurrency?: boolean;
 }
 
-export type INumberService = DumberService;
+export type INumberService = NumberService;
 export const INumberService = DI.createInterface<INumberService>('DumberService');
 
-export class DumberService {
+export class NumberService {
   constructor(@I18N private readonly i18n: I18N) {}
 
   public static register(container: IContainer): void {
-    container.register(Registration.singleton(INumberService, DumberService));
+    container.register(Registration.singleton(INumberService, NumberService));
   }
 
   /**

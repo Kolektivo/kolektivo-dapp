@@ -1,30 +1,60 @@
 {
-    "general": {},
-    "treasury": {
-        "title": "Kolektivo Network Treasury",
-        "menu": {
-            "overview": "Overview",
-            "governance": "Governance"
+    "navigation":{
+        "map": {
+            "link-text" : "Map",
+            "link-icon" : "map"
         },
-        "overview": {
-            "assets": {},
-            "ktt": {
-              "title": "Kolektivo Treasury Token (KTT)",
-              "market-cap": "Market Cap",
-              "market-cap-tooltip": "Market Cap is this and that",
-              "current-price": "Current Price",
-              "current-price-tooltip": "Current Price is this and that",
-              "total-supply": "Total Supply",
-              "total-supply-tooltip": "Total Supply is this and that",
-              "supply-distribution": "Supply Distribution",
-              "supply-distribution-tooltip": "Supply Distribution is this and that"
+        "treasury":{
+            "link-text" : "Treasury",
+            "link-icon" : "account_balance",
+            "title": "Kolektivo Network Treasury",
+            "menu": {
+                "overview": "Overview",
+                "governance": "Governance"
             },
-            "value": {},
-            "value-by-asset-type": {},
-            "value-over-time": {}
+            "overview": {
+                "assets": {},
+                "ktt": {
+                  "title": "Kolektivo Treasury Token (KTT)",
+                  "market-cap": "Market Cap",
+                  "market-cap-tooltip": "Market Cap is this and that",
+                  "current-price": "Current Price",
+                  "current-price-tooltip": "Current Price is this and that",
+                  "total-supply": "Total Supply",
+                  "total-supply-tooltip": "Total Supply is this and that",
+                  "supply-distribution": "Supply Distribution",
+                  "supply-distribution-tooltip": "Supply Distribution is this and that"
+                },
+                "value": {},
+                "value-by-asset-type": {},
+                "value-over-time": {}
+            },
+            "governance": {}
         },
-        "governance": {}
+        "reserve":{
+            "link-text": "Reserve",
+            "link-icon": "savings"
+        },
+        "swap":{
+            "link-text": "Swap",
+            "link-icon": "swap_horiz"
+        },
+        "documentation":{
+            "link-text": "Documentation",
+            "link-icon": "description"
+        },
+        "contact":{
+            "link-text": "Contact Kolektivo",
+            "link-icon": "headset_mic"
+        },
+        "download-wallet":{
+            "link-text": "Download Wallet",
+            "link-icon": "account_balance_wallet"
+        },
+        "external-site":{
+            "link-text": "Kolektivo.cw",
+            "link-icon": "language"
+        }
     },
-    "reserve": {},
-    "map": {}
+    "general": {}
 }

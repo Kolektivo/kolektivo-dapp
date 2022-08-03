@@ -4,3 +4,6 @@ export * from './EthereumService';
 export * from './NumberService';
 export * from './DateService';
 export * from './DateServiceIntl';
+export * from './ContractsDeploymentProvider';
+export * from './ContractsService';
+export * from './TransactionsService';

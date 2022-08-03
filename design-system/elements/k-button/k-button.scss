@@ -6,40 +6,59 @@
     border: 0;
     color: var(--white);
     background-color: var(--ocean-blue);
-    padding: 10px 20px;
+    padding: 10px 24px;
     font-size: 16px;
     font-weight: 600;
     font-family: Lato, sans-serif;
-    line-height: 24px;
-    letter-spacing: 0.005em;
+    letter-spacing: 1%;
     align-items: center;
     border-radius: var(--rounded);
     cursor: pointer;
     width: 100%;
 
-    &.xs,
-    &.sm {
+    k-icon,
+    ::slotted(k-icon) {
+      fill: var(--white);
+    }
+
+    k-icon {
+      transform: translateX(-8px);
+    }
+
+    &.xs {
       font-size: 14px;
-      line-height: 20px;
-      letter-spacing: 0.02em;
-      padding: 4px 8px;
+      letter-spacing: 2%;
+      line-height: 10px;
+      padding: 6px 10px;
+
+      k-icon {
+        transform: translateX(-2px);
+      }
     }
 
     &.sm {
-      padding: 8px 12px;
+      font-size: 14px;
+      letter-spacing: 1.5%;
+      line-height: 13px;
+      padding: 8px 16px;
+
+      k-icon {
+        transform: translateX(-4px);
+      }
     }
 
     &.lg {
-      padding: 12px 24px;
+      font-size: 18px;
+      letter-spacing: 0.5%;
+      padding: 10px 28px;
     }
 
     &.xl {
       font-size: 20px;
-      line-height: 24px;
-      padding: 16px 24px;
+      letter-spacing: 0%;
+      padding: 12px 32px;
     }
 
-    // primary colors
     &:hover {
       background-color: var(--ocean-blue-600);
     }
@@ -52,121 +71,171 @@
     &:focus-visible,
     &:focus-within {
       outline: 2px solid var(--ocean-blue-300);
+      background-color: var(--ocean-blue-500);
+
     }
 
     &:disabled {
-      background-color: var(--don-juan-200);
+      background-color: var(--don-juan-100);
       cursor: inherit;
     }
 
-    // secondary colors
+
     &.secondary {
+      color: var(--ocean-blue);
+      border: 1px solid var(--ocean-blue);
+      background-color: var(--white);
+
+      k-icon {
+        fill: var(--ocean-blue);
+        transform: translateX(-8px);
+      }
+
       &:hover {
-        background-color: var(--dark-coral-600);
+        k-icon {
+          fill: var(--white);
+        }
+
+        color: var(--white);
+        background-color: var(--ocean-blue-600);
       }
 
       &:active {
-        background-color: var(--dark-coral-700);
+        k-icon {
+          fill: var(--white);
+        }
+
+        color: var(--white);
+        background-color: var(--ocean-blue-700);
       }
 
       &:focus,
       &:focus-visible,
       &:focus-within {
-        outline: 2px solid var(--dark-coral-300);
-      }
+        k-icon {
+          fill: var(--ocean-blue);
+        }
 
-      background-color: var(--dark-coral);
-
-      &:disabled {
-        background-color: var(--don-juan-200);
-        border-color: var(--don-juan-200);
-        color: var(--white);
-        cursor: inherit;
+        color: var(--ocean-blue);
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--white);
       }
     }
 
-    &.outlined {
-      color: var(--ocean-blue);
-      border: 1px solid var(--ocean-blue);
-      background-color: var(--white);
-
-      &:hover {
-        background-color: var(--ocean-blue-600);
-        color: var(--white);
-      }
-
-      &:active {
-        background-color: var(--ocean-blue-700);
-        color: var(--white);
-      }
-
-      &.secondary {
-        color: var(--dark-coral);
-        border: 1px solid var(--dark-coral);
-
-        &:hover {
-          background-color: var(--dark-coral-600);
-          color: var(--white);
-        }
-
-        &:active {
-          background-color: var(--dark-coral-700);
-          color: var(--white);
-        }
-      }
-
-      &:disabled {
-        border-color: var(--don-juan-200);
-        color: var(--don-juan-200);
-        cursor: inherit;
-
-        &:hover {
-          background-color: inherit;
-          border-color: var(--don-juan-200);
-          color: var(--don-juan-200);
-        }
-      }
-    }
-
-    &.link {
+    &.tertiary {
       border-color: transparent;
       background-color: transparent;
       color: var(--ocean-blue);
 
+      k-icon {
+        fill: var(--ocean-blue);
+        transform: translateX(-8px);
+      }
+
       &:hover {
-        background-color: var(--ocean-blue-600);
+        k-icon {
+          fill: var(--white);
+        }
+
         color: var(--white);
+        background-color: var(--ocean-blue-600);
       }
 
       &:active {
-        background-color: var(--ocean-blue-700);
+        k-icon {
+          fill: var(--white);
+        }
+
         color: var(--white);
+        background-color: var(--ocean-blue-700);
       }
 
-      &.secondary {
-        color: var(--dark-coral);
-
-        &:hover {
-          background-color: var(--dark-coral-600);
-          color: var(--white);
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        k-icon {
+          fill: var(--ocean-blue);
         }
 
-        &:active {
-          background-color: var(--dark-coral-700);
-          color: var(--white);
-        }
+        color: var(--ocean-blue);
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--white);
+      }
+    }
+
+    &.utility-light {
+      border-color: transparent;
+      background-color: transparent;
+      color: var(--don-juan-600);
+
+      k-icon {
+        fill: var(--don-juan-600);
+        transform: translateX(-8px);
       }
 
-      &:disabled {
-        border-color: transparent;
-        color: var(--don-juan-200);
-        cursor: inherit;
+      &:hover {
+        background-color: var(--don-juan-050);
+      }
 
-        &:hover {
-          background-color: inherit;
-          border-color: transparent;
-          color: var(--don-juan-200);
-        }
+      &:active {
+        background-color: var(--don-juan-100);
+      }
+
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--white);
+      }
+    }
+
+    &.utility-dark {
+      border-color: var(--san-juan-500);
+      background-color: var(--san-juan-500);
+      color: var(--white);
+
+      k-icon {
+        fill: var(--white);
+        transform: translateX(-8px);
+      }
+
+      &:hover {
+        background-color: var(--san-juan-400);
+      }
+
+      &:active {
+        background-color: var(--san-juan-500);
+      }
+
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--san-juan-400);
+      }
+    }
+
+    &.error {
+      color: var(--white);
+      background-color: var(--error);
+
+      k-icon {
+        fill: var(--white);
+      }
+
+      &:hover {
+        background-color: var(--error-dark);
+      }
+
+      &:active {
+        background-color: var(--error-dark);
+      }
+
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        outline: 2px solid var(--error);
+        background-color: var(--error-dark);
       }
     }
   }

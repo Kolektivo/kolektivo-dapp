@@ -33,73 +33,69 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
-    letter-spacing: 3%;
+    letter-spacing: 5%;
     text-transform: uppercase;
   }
 
   label,
   *[type='label'] {
+    font-weight: 600;
     font-size: 16px;
     line-height: 20px;
+    letter-spacing: 0%;
     color: var(--don-juan-900);
   }
 
   h1,
   *[type='h1'] {
-
-    @extend %header-text;
-
-    font-size: 64px;
-    line-height: 76px;
-    letter-spacing: -0.2%;
-  }
-
-  h2,
-  *[type='h2'] {
-
-    @extend %header-text;
-
-    font-size: 48px;
-    line-height: 60px;
-    letter-spacing: -0.1%;
-  }
-
-  h3,
-  *[type='h3'] {
-
     @extend %header-text;
 
     font-size: 40px;
     line-height: 52px;
+    letter-spacing: -1%;
+  }
+
+  h2,
+  *[type='h2'] {
+    @extend %header-text;
+
+    font-size: 32px;
+    line-height: 44px;
+    letter-spacing: -0.5%;
+  }
+
+  h3,
+  *[type='h3'] {
+    @extend %header-text;
+
+    font-size: 28px;
+    line-height: 40px;
     letter-spacing: 0%;
   }
 
   h4,
   *[type='h4'] {
-
     @extend %header-text;
 
-    font-size: 32px;
-    line-height: 44px;
+    font-size: 24px;
+    line-height: 36px;
     letter-spacing: 0%;
   }
 
   h5,
   *[type='h5'] {
-
     @extend %header-text;
 
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 28px;
     letter-spacing: 0%;
   }
 
   h6,
   *[type='h6'] {
-
     @extend %header-text;
 
-    font-size: 20px;
+    font-size: 16px;
     line-height: 24px;
     letter-spacing: 0%;
   }

@@ -29,7 +29,6 @@
     }
 }
 
-
 @keyframes slide-in-start {
     from {
         transform: translateX(-100%);
@@ -47,6 +46,28 @@
 
     to {
         opacity: 1;
+    }
+}
+
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 0;
+    }
+
+    to {
+        stroke-dashoffset: 113px;
+    }
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(1080deg);
+        stroke-dashoffset: (0.3 * 113px);
+    }
+
+    100% {
+        transform: rotate(0deg);
+        stroke-dashoffset: (0.3 * 113px);
     }
 }
 

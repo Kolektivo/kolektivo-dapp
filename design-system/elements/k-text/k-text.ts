@@ -1,7 +1,19 @@
-import { ICustomElementViewModel, bindable, capture } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { numberToPixels } from './../../common';
 
-@capture()
+import css from './k-text.scss';
+
+import template from './k-text.html';
+
+@customElement({
+  name: 'k-text',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KText implements ICustomElementViewModel {
   @bindable tag = '';
   @bindable color = '';

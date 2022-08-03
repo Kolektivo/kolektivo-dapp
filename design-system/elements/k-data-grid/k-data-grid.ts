@@ -1,7 +1,19 @@
 import { ICustomAttributeController, ICustomElementController, ViewModelKind } from '@aurelia/runtime-html';
-import { ICustomAttributeViewModel, ICustomElementViewModel, bindable } from 'aurelia';
+import { ICustomAttributeViewModel, ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { IGridColumn } from './grid-column';
 type ElementOrAttributeViewModel<T> = ICustomElementController<T> | ICustomAttributeController<T>;
+import css from './k-data-grid.scss';
+import template from './k-data-grid.html';
+
+@customElement({
+  name: 'k-data-grid',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KDataGrid implements ICustomElementViewModel {
   @bindable id?: string;
   @bindable condensed = false;

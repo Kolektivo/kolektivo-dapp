@@ -1,0 +1,28 @@
+:host {
+  width: fit-content;
+  display: inline-block;
+
+  &.xs {
+    k-button::part(button) {
+      padding: 0;
+    }
+  }
+
+  k-button {
+    &.xs {
+      padding: 6px 8px;
+    }
+
+    &.sm {
+      padding: 8px 12px;
+    }
+
+    &.lg {
+      padding: 10px 20px;
+    }
+
+    &.xl {
+      padding: 12px 24px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import './k-toast.scss';
+import 'style-loader!./k-toast.scss';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { NotificationAction, NotificationType } from '../../../design-system/services';
 import { Position } from './../../types';

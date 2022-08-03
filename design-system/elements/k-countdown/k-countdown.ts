@@ -1,6 +1,18 @@
-import { ICustomElementViewModel, IPlatform, Task, bindable } from 'aurelia';
+import { ICustomElementViewModel, IPlatform, Task, bindable, customElement, shadowCSS } from 'aurelia';
 import { ifExistsThenTrue, numberToPixels } from './../../common';
 
+import css from './k-countdown.scss';
+import template from './k-countdown.html';
+
+@customElement({
+  name: 'k-countdown',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KCountdown implements ICustomElementViewModel {
   @bindable countdown = 5;
   @bindable color?: string = 'var(--primary-text)';

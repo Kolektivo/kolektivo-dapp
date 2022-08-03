@@ -1,8 +1,9 @@
-<div class="app">
-  <side-bar style.bind="sidebarStyle" open.bind="sidebarOpen"></side-bar>
+<div class="app ${!xl && 'app-small'}">
+  <side-bar animate-out="true" animate-from="-275" animate-to="0" animate-duration="100" animate="left" if.bind="!xl && state.sideBarOpen" class="small-side-bar"></side-bar>
+  <side-bar if.bind="xl && state.sideBarOpen"></side-bar>
   <main>
-    <header if.bind="sidebarOpen" ref="header"></header>
+    <k-backdrop if.bind="!xl && state.sideBarOpen" click.trigger="state.sideBarOpen = false" blur="10"></k-backdrop>
+    <header></header>
     <au-viewport default="map" fallback="not-found"></au-viewport>
-    <footer></footer>
   </main>
 </div>

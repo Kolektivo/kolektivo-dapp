@@ -1,8 +1,12 @@
-import { ICustomElementViewModel, IPlatform, bindable } from 'aurelia';
+import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
 import { numberToPixels } from './../../common';
 
 export type TooltipPosition = 'top' | 'start' | 'end' | 'bottom';
 
+import css from './k-tooltip.scss';
+import template from './k-tooltip.html';
+
+@customElement({ name: 'k-tooltip', template, dependencies: [shadowCSS(css)], shadowOptions: { mode: 'open' } })
 export class KTooltip implements ICustomElementViewModel {
   @bindable message?: string;
   @bindable host?: HTMLElement;
@@ -22,8 +26,9 @@ export class KTooltip implements ICustomElementViewModel {
     const horizontalAdjustment = this.position === 'start' ? 6 : this.position === 'end' ? -6 : 0;
     const verticalAdjustment = this.position === 'top' ? 6 : this.position === 'bottom' ? -5 : 0;
     if (this.host) {
-      this.top = numberToPixels(this.host.offsetTop - verticalAdjustment);
-      this.left = numberToPixels(this.host.offsetLeft + this.host.offsetWidth / 2 - horizontalAdjustment);
+      const clientRect = this.host.getBoundingClientRect();
+      this.top = numberToPixels(clientRect.top - verticalAdjustment);
+      this.left = numberToPixels(clientRect.left + this.host.offsetWidth / 2 - horizontalAdjustment);
     }
   };
 
@@ -31,11 +36,16 @@ export class KTooltip implements ICustomElementViewModel {
     this.recalc();
   }
 
+  detaching(): void {
+    this.platform.window.removeEventListener('resize', this.recalc);
+  }
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   get style() {
     return {
       top: this.top,
       left: this.left,
+      position: 'fixed',
     };
   }
 }

@@ -3,8 +3,11 @@ import { IGridColumn } from './../../../design-system/elements/k-data-grid/grid-
 import { INotificationService } from '../../../design-system/services';
 import { IValidationController } from '@aurelia/validation-html';
 import { IValidationRules } from '@aurelia/validation';
+import { customElement } from 'aurelia';
 import { newInstanceForScope } from '@aurelia/kernel';
+import template from './storybook.html';
 
+@customElement({ name: 'storybook', template })
 export class Storybook {
   showAnimate1 = true;
   showCountdowns = true;

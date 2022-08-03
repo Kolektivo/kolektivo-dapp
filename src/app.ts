@@ -1,28 +1,35 @@
 import './app.scss';
 import './shared.scss';
-import { AllowedNetworks, IEthereumService, Networks } from './services';
 import { IAnimationService } from '../design-system/services/animation/animation-service';
+import { IEthereumService, Networks } from './services';
 import { INotificationService } from '../design-system/services/notification/notification-service';
-export class App {
-  width = 200;
-  sidebarOpen = true;
+import { IPlatform, customElement } from 'aurelia';
+import { IState } from './state';
+import { ethereumNetwork, isDev } from './environment-variables';
+import template from './app.html';
 
-  get sidebarStyle(): Record<string, unknown> {
-    return {
-      transition: 'transform .5s',
-      transform: this.sidebarOpen ? false : 'translateX(-80%)',
-    };
-  }
-  header?: HTMLElement;
+@customElement({ name: 'app', template })
+export class App {
+  xl = false;
   constructor(
     @INotificationService private readonly confirmService: INotificationService,
     @IAnimationService private readonly animationService: IAnimationService,
     @IEthereumService private readonly ethereumService: IEthereumService,
+    @IState private readonly state: IState,
+    @IPlatform private readonly platform: IPlatform,
   ) {}
-
+  recalc = (): void => {
+    this.xl = this.platform.window.innerWidth >= 1200;
+    this.state.sideBarOpen = this.xl;
+  };
+  attaching(): void {
+    this.platform.window.addEventListener('resize', this.recalc);
+    this.recalc();
+  }
+  detaching(): void {
+    this.platform.window.removeEventListener('resize', this.recalc);
+  }
   binding() {
-    const network = process.env.NETWORK as AllowedNetworks | undefined;
-    const inDev = process.env.NODE_ENV === 'development';
-    this.ethereumService.initialize(network ?? (inDev ? Networks.Alfajores : Networks.Mainnet));
+    this.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
   }
 }

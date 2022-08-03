@@ -27,7 +27,7 @@
 body {
   height: 100vh;
   width: 100vw;
-  background-color: var(--concrete);
+  background-color: var(--san-juan-600);
   color: var(--san-juan-800);
   font-family: var(--font);
   margin: 0;
@@ -38,21 +38,26 @@ body {
   @include scrollbars(8px, 12px, var(--ocean-blue));
 }
 
+.small-side-bar{
+  position: fixed;
+}
+
 .scrollbar {
   @include scrollbars(8px, 12px, var(--ocean-blue));
 }
 
 .app {
   display: grid;
-  grid-template-columns: minmax(auto, 288px) 1fr;
+  grid-template-columns: auto 1fr;
   height: 100%;
 
   main {
-    header {
-      background-color: var(--san-juan-800);
-    }
-
     display: grid;
-    grid-template-rows: 80px 1fr auto;
+    grid-template-rows: auto 1fr;
+    position: relative;
   }
+}
+
+.app-small{
+  display: block;
 }

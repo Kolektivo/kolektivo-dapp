@@ -1,5 +1,7 @@
 inner-nav {
-    a.active {
-        text-decoration: underline;
+
+    k-app-bar>* {
+        padding-left: var(--spacing-xl);
+        padding-right: var(--spacing-xl);
     }
 }

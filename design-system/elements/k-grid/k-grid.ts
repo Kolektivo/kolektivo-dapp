@@ -1,8 +1,19 @@
 import { Grid } from '../../base/grid';
-import { ICustomElementViewModel, bindable, capture } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { gridTemplateRowSetterInterceptor } from './../../common';
 
-@capture()
+import css from './k-grid.scss';
+import template from './k-grid.html';
+
+@customElement({
+  name: 'k-grid',
+  template,
+  capture: true,
+  dependencies: [shadowCSS(css)],
+  shadowOptions: {
+    mode: 'open',
+  },
+})
 export class KGrid extends Grid implements ICustomElementViewModel {
   @bindable({ set: gridTemplateRowSetterInterceptor }) rows?: number;
   @bindable({ set: gridTemplateRowSetterInterceptor }) cols?: number;

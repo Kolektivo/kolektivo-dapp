@@ -19,7 +19,6 @@ export class Tooltip implements ICustomAttributeViewModel {
   }
 
   onHover = (): void => {
-    if (this.controller) return;
     this.host = document.createElement('k-tooltip');
     this.element.insertAdjacentElement('beforebegin', this.host);
     const { controller } = createCustomElement(KTooltip, this.container, this.host, {
