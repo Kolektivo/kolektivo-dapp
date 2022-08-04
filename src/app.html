@@ -1,5 +1,5 @@
-<div class="app ${!xl && 'app-small'}">
-  <side-bar animate-out="true" animate-from="-275" animate-to="0" animate-duration="100" animate="left" if.bind="!xl && state.sideBarOpen" class="small-side-bar"></side-bar>
+<div class="app">
+  <side-bar animate-out="true" animate-from="-275" animate-to="0" animate-duration="100" animate="left" if.bind="!xl && state.sideBarOpen"></side-bar>
   <side-bar if.bind="xl && state.sideBarOpen"></side-bar>
   <main>
     <k-backdrop if.bind="!xl && state.sideBarOpen" click.trigger="state.sideBarOpen = false" blur="10"></k-backdrop>

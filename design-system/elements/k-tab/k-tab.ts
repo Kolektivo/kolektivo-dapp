@@ -14,7 +14,4 @@ import template from './k-tab.html';
 })
 export class KTab implements ICustomElementViewModel {
   @bindable load = '';
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
 }

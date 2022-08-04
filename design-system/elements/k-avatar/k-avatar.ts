@@ -15,6 +15,7 @@ import template from './k-avatar.html';
 export class KAvatar implements ICustomElementViewModel {
   @bindable size = 50;
   @bindable color = 'var(--white)';
+  @bindable src?: string;
 
   get divStyle(): Partial<CSSStyleDeclaration> {
     return {

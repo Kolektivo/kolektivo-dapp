@@ -24,10 +24,10 @@ export class KTooltip implements ICustomElementViewModel {
 
   recalc = (): void => {
     const horizontalAdjustment = this.position === 'start' ? 6 : this.position === 'end' ? -6 : 0;
-    const verticalAdjustment = this.position === 'top' ? 6 : this.position === 'bottom' ? -5 : 0;
+    const verticalAdjustment = this.position === 'top' ? 6 : this.position === 'bottom' ? -10 : 0;
     if (this.host) {
       const clientRect = this.host.getBoundingClientRect();
-      this.top = numberToPixels(clientRect.top - verticalAdjustment);
+      this.top = numberToPixels((this.position === 'bottom' ? clientRect.bottom : clientRect.top) - verticalAdjustment);
       this.left = numberToPixels(clientRect.left + this.host.offsetWidth / 2 - horizontalAdjustment);
     }
   };

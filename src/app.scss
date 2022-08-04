@@ -1,4 +1,5 @@
 @import '../design-system/styles/mixins';
+@import '../design-system/styles/sizes';
 
 @font-face {
   font-family: Kaleko;
@@ -38,26 +39,21 @@ body {
   @include scrollbars(8px, 12px, var(--ocean-blue));
 }
 
-.small-side-bar{
-  position: fixed;
-}
-
 .scrollbar {
   @include scrollbars(8px, 12px, var(--ocean-blue));
 }
 
 .app {
   display: grid;
-  grid-template-columns: auto 1fr;
   height: 100%;
 
   main {
-    display: grid;
-    grid-template-rows: auto 1fr;
     position: relative;
   }
 }
 
-.app-small{
-  display: block;
+@include xl {
+  main{
+    margin-left: 240px;
+  }
 }
