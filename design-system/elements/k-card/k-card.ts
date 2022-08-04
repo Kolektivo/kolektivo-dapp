@@ -1,4 +1,4 @@
-import { ICustomElementViewModel, customElement, shadowCSS } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 
 import css from './k-card.scss';
 import template from './k-card.html';
@@ -12,4 +12,12 @@ import template from './k-card.html';
     mode: 'open',
   },
 })
-export class KCard implements ICustomElementViewModel {}
+export class KCard implements ICustomElementViewModel {
+  @bindable color = 'var(--white)';
+
+  get style() {
+    return {
+      backgroundColor: this.color,
+    };
+  }
+}
