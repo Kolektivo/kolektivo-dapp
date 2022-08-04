@@ -1,4 +1,6 @@
-#overview-card {
+/* stylelint-disable selector-type-no-unknown */
+overview {
+  > k-grid {
     k-card::part(grid) {
         padding: var(--spacing-xl);
     }
@@ -21,4 +23,5 @@
     &:nth-child(n + 4) {
         grid-column: 1/3;
     }
+  }
 }

@@ -26,6 +26,7 @@ import description from '@material-design-icons/svg/outlined/description.svg';
 import electric_bolt from '@material-design-icons/svg/filled/electric_bolt.svg';
 import error_filled from '@material-design-icons/svg/filled/error.svg';
 import headset_mic from '@material-design-icons/svg/outlined/headset_mic.svg';
+import help_outline from '@material-design-icons/svg/outlined/help_outline.svg';
 import info_filled from '@material-design-icons/svg/filled/info.svg';
 import language from '@material-design-icons/svg/outlined/language.svg';
 import link from '@material-design-icons/svg/outlined/link.svg';
@@ -97,6 +98,7 @@ export const appContainer: IContainer = DI.createContainer()
       x.iconMap.set('savings', savings);
       x.iconMap.set('swap_horiz', swap_horiz);
       x.iconMap.set('warning_filled', warning_filled);
+      x.iconMap.set('help_outline', help_outline);
       x.defaultToastTimeout = 5000;
     }),
   );

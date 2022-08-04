@@ -14,7 +14,17 @@
             },
             "overview": {
                 "assets": {},
-                "ktt": {},
+                "ktt": {
+                  "title": "Kolektivo Treasury Token (KTT)",
+                  "market-cap": "Market Cap",
+                  "market-cap-tooltip": "Market Cap is this and that",
+                  "current-price": "Current Price",
+                  "current-price-tooltip": "Current Price is this and that",
+                  "total-supply": "Total Supply",
+                  "total-supply-tooltip": "Total Supply is this and that",
+                  "supply-distribution": "Supply Distribution",
+                  "supply-distribution-tooltip": "Supply Distribution is this and that"
+                },
                 "value": {},
                 "value-by-asset-type": {},
                 "value-over-time": {}
