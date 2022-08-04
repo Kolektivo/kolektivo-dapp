@@ -17,4 +17,14 @@
     </k-stack>
   </div>
 </k-app-bar>
-<k-menu target.bind="badgeGroup" t="[title]status-bar.badge-title" position="bottom-end"></k-menu>
+<k-menu target.bind="badgeGroup" t="[title]status-bar.badge-title" position="bottom-end">
+  <k-stack gap="var(--spacing-lg)">
+    <k-grid repeat.for="badge of blockChainState.badges" cols="auto 1fr" gap="var(--spacing)">
+      <k-avatar src.bind="badge.imageUrl" size="40"></k-avatar>
+      <k-stack>
+        <k-text tag="h6">${badge.name}</k-text>
+        <k-text type="small-caption">${badge.description}</k-text>
+      </k-stack>
+    </k-grid>
+  </k-stack>
+</k-menu>

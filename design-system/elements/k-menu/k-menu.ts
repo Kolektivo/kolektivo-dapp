@@ -12,7 +12,7 @@ import template from './k-menu.html';
   shadowOptions: {
     mode: 'open',
   },
-  processContent: (node, platform) => {
+  processContent: (node) => {
     const htmlNode = node as HTMLElement;
     if (htmlNode.hasAttribute('portal')) return;
     htmlNode.setAttribute('portal', 'document.body');
@@ -29,7 +29,7 @@ export class KMenu implements ICustomElementViewModel {
   @bindable target?: HTMLElement;
   @bindable title = '';
   @bindable position: Position = 'bottom-start';
-  @bindable offset = 5;
+  @bindable({ type: Number }) offset = 5;
 
   calcPos(): void {
     if (!this.target || !this.div) return;

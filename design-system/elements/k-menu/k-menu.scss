@@ -5,9 +5,11 @@
         position:absolute;
         box-shadow: var(--elevation-small);
         z-index: 100;
-
+        padding: 16px;
+        
         k-text::part(content){
-            margin: 16px;
+            margin-bottom: 16px;
         }
+        
     }
 }
