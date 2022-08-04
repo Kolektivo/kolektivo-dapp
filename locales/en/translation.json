@@ -25,7 +25,10 @@
                   "supply-distribution": "Supply Distribution",
                   "supply-distribution-tooltip": "Supply Distribution is this and that"
                 },
-                "value": {},
+                "value": {
+                  "title": "Treasury Value",
+                  "tooltip": "Treasury Value is this and that"
+                },
                 "value-by-asset-type": {},
                 "value-over-time": {}
             },
