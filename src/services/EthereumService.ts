@@ -63,7 +63,7 @@ export interface IChainEventInfo {
 
 export type IEthereumService = EthereumService;
 export const IEthereumService = DI.createInterface<IEthereumService>('EthereumService');
-type WalletProvider = Web3Provider & IEIP1193 & ExternalProvider;
+export type WalletProvider = Web3Provider & IEIP1193 & ExternalProvider;
 type MetamaskProvider = WalletProvider &
   ExternalProvider & {
     autoRefreshOnNetworkChange: boolean;
@@ -305,10 +305,9 @@ export class EthereumService {
     }
   }
 
-  private async getNetwork(provider: Web3Provider): Promise<Network> {
-    let network = await provider.getNetwork();
-    network = Object.assign({}, network);
-    if (network.name === 'homestead') {
+  private async getNetwork(provider: Web3Provider): Promise<Network | null> {
+    const network = (await provider.getNetwork()) as Network | null;
+    if (network?.name === 'homestead') {
       network.name = 'mainnet';
     }
     return network;
@@ -336,7 +335,7 @@ export class EthereumService {
   //   this.eventAggregator.publish("Network.wrongNetwork", { provider, connectedTo: connectedTo, need: EthereumService.targetedNetwork });
   // }
 
-  private async setProvider(web3ModalProvider?: WalletProvider & ExternalProvider): Promise<void> {
+  private async setProvider(web3ModalProvider?: WalletProvider): Promise<void> {
     try {
       if (web3ModalProvider) {
         const walletProvider = new ethers.providers.Web3Provider(web3ModalProvider);
@@ -345,10 +344,10 @@ export class EthereumService {
 
         const network = await this.getNetwork(walletProvider);
 
-        if (network.name !== EthereumService.targetedNetwork) {
+        if (network?.name !== EthereumService.targetedNetwork) {
           this.eventAggregator.publish('Network.wrongNetwork', {
             provider: web3ModalProvider,
-            connectedTo: network.name,
+            connectedTo: network?.name,
             need: EthereumService.targetedNetwork,
           });
         } else {
@@ -391,15 +390,16 @@ export class EthereumService {
   }
 
   private handleChainChanged = (chainId: number): void => {
-    const network = ethers.providers.getNetwork(Number(chainId));
-    if (network.name === 'homestead') {
+    const network = ethers.providers.getNetwork(Number(chainId)) as Network | null;
+
+    if (network?.name === 'homestead') {
       network.name = 'mainnet';
     }
 
-    if (network.name !== EthereumService.targetedNetwork) {
+    if (network?.name !== EthereumService.targetedNetwork) {
       this.eventAggregator.publish('Network.wrongNetwork', {
         provider: this.web3ModalProvider,
-        connectedTo: network.name,
+        connectedTo: network?.name,
         need: EthereumService.targetedNetwork,
       });
       return;
