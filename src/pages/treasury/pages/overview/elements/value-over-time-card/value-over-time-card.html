@@ -1,3 +1,22 @@
 <k-card>
   <k-text type="h4" slot="header">Treasury Value Over Time</k-text>
+  <k-chart hide-legend type="line" fill labels="[1,2,3,4]" border-color.bind="red" tension=".01" data-sets.bind="[
+  {
+    label: 'My First Dataset',
+    data: [65, 59, 80, 81, 56, 55, 40],
+    fill: 1,
+    backgroundColor:'blue',
+    borderColor: 'rgb(75, 192, 192)',
+    tension: 0.1
+  },
+  {
+    label: 'My First Dataset',
+    data: [25, 29, 33, 41, 23, 35, 20],
+    fill: 'origin',
+    backgroundColor:'red',
+    borderColor: 'yellow',
+    tension: 0.1
+  } 
+  ]"></k-chart>
+
 </k-card>
