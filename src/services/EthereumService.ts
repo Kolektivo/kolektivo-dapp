@@ -318,7 +318,7 @@ export class EthereumService {
   //   try {
   //     return this.chainNameById.get(Number(await provider.request({ method: "eth_chainId" }))) ?? "";
   //   } catch (error) {
-  //     // this.logger.warn(error.message, error);
+  //     // this.logger.error(error.message, error);
   //     return "";
   //   }
   // }
@@ -376,7 +376,7 @@ export class EthereumService {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
-      this.logger.warn(`Error connecting to wallet provider ${error?.message}`);
+      this.logger.error(`Error connecting to wallet provider ${error?.message}`);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
       alert(`Error connecting to wallet provider ${error?.message}`);
     }
@@ -492,7 +492,7 @@ export class EthereumService {
           this.setMetamaskHasToken(tokenAddress);
         }
       } catch (error) {
-        this.logger.warn(error);
+        this.logger.error(error);
       }
     }
 
