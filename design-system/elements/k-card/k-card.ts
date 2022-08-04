@@ -14,10 +14,12 @@ import template from './k-card.html';
 })
 export class KCard implements ICustomElementViewModel {
   @bindable color = 'var(--white)';
+  @bindable rounded = 6;
 
   get style() {
     return {
-      backgroundColor: this.color,
+      background: this.color,
+      borderRadius: this.rounded && `var(--rounded-${this.rounded})`,
     };
   }
 }

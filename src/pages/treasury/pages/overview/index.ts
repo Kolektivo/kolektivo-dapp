@@ -1,4 +1,4 @@
-export * from './ktt-card';
+export * from './token-info-card';
 export * from './assets-card';
 export * from './value-card';
 export * from './value-over-time-card';

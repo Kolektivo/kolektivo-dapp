@@ -28,9 +28,9 @@ export class ContractsDeploymentProvider {
 
   public static initialize(targetedNetwork: string): void {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ContractsDeploymentProvider.contractInfosJson = require(`../contracts/${targetedNetwork}.json`) as IContractInfosJson;
+    ContractsDeploymentProvider.contractInfosJson = require(`../../contracts/${targetedNetwork}.json`) as IContractInfosJson;
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ContractsDeploymentProvider.sharedContractAbisJson = require('../contracts/sharedAbis.json') as ISharedContractInfos;
+    ContractsDeploymentProvider.sharedContractAbisJson = require('../../contracts/sharedAbis.json') as ISharedContractInfos;
     this.initialized = true;
   }
 
