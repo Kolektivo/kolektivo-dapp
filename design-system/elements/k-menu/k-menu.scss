@@ -1,0 +1,13 @@
+:host{
+    >div{
+        background-color: var(--white);
+        border-radius: var(--rounded);
+        position:absolute;
+        box-shadow: var(--elevation-small);
+        z-index: 100;
+
+        k-text::part(content){
+            margin: 16px;
+        }
+    }
+}

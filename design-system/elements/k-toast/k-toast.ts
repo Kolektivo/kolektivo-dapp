@@ -1,7 +1,6 @@
 import 'style-loader!./k-toast.scss';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { NotificationAction, NotificationType } from '../../../design-system/services';
-import { Position } from './../../types';
 import { ToastOptions } from './toast-options';
 import { getColorByType } from 'utils';
 import template from './k-toast.html';

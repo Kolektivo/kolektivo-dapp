@@ -20,6 +20,7 @@ export * from './k-icon';
 export * from './k-icon-button';
 export * from './k-input';
 export * from './k-loader';
+export * from './k-menu';
 export * from './k-modal';
 export * from './k-page';
 export * from './k-paper';

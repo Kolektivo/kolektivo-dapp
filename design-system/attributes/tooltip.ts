@@ -1,7 +1,6 @@
 import { IContainer, ICustomAttributeViewModel, bindable, customAttribute } from 'aurelia';
 import { ICustomElementController } from '@aurelia/runtime-html';
 import { KTooltip } from '../../design-system/elements';
-import { Position } from './../types';
 import { createCustomElement, destroyCustomElement } from '../../design-system/aurelia-helpers';
 
 @customAttribute({ name: 'tooltip' })

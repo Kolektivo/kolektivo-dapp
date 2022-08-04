@@ -598,6 +598,151 @@
       </div>
     </k-accordion>
     <k-accordion>
+      <span slot="header">Menus</span>
+      <div class="loaders">
+        <k-code>
+          <k-button ref="defaultPosition">Default Position</k-button>  
+          <k-menu target.bind="defaultPosition" title="Menu Title">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="bottom">Bottom Middle</k-button>  
+          <k-menu target.bind="bottom" title="Menu Title" position="bottom">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="bottomEnd">Bottom End</k-button>  
+          <k-menu target.bind="bottomEnd" title="Menu Title" position="bottom-end">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="start">Start</k-button>  
+          <k-menu target.bind="start" title="Menu Title" position="start">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="startTop">Start Top</k-button>  
+          <k-menu target.bind="startTop" title="Menu Title" position="start-top">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="startBottom">Start Bottom</k-button>  
+          <k-menu target.bind="startBottom" title="Menu Title" position="start-bottom">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="end">End</k-button>  
+          <k-menu target.bind="end" title="Menu Title" position="end">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="endTop">End Top</k-button>  
+          <k-menu target.bind="endTop" title="Menu Title" position="end-top">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="endBottom">End Bottom</k-button>  
+          <k-menu target.bind="endBottom" title="Menu Title" position="end-bottom">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="top">Top</k-button>  
+          <k-menu target.bind="top" title="Menu Title" position="top">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="topEnd">Top End</k-button>  
+          <k-menu target.bind="topEnd" title="Menu Title" position="top-end">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="topStart">Top Start</k-button>  
+          <k-menu target.bind="topStart" title="Menu Title" position="top-start">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="definedWidth">Defined Width</k-button>  
+          <k-menu target.bind="definedWidth" title="Menu Title" width="360">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+        <k-code>
+          <k-button ref="offset">Offset Padding</k-button>  
+          <k-menu target.bind="offset" title="Menu Title" offset.bind="20">
+            <ul>
+              <li>List 1</li>
+              <li>List 2</li>
+              <li>List 3</li>
+            </ul>
+          </k-menu>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
       <span slot="header">Modals</span>
       <k-alert type="info" bottom="var(--spacing-xl)">We don't know what the modal styles will be yet so the modals
         don't look great until we know more from the designers</k-alert>

@@ -1,5 +1,4 @@
 import { NotificationAction, NotificationType } from '../../services/notification';
-import { Position } from './../../types';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface ToastOptions {
   title?: string;
