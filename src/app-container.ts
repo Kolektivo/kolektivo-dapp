@@ -49,7 +49,7 @@ export const appContainer: IContainer = DI.createContainer()
     Registration.instance(IPlatform, PLATFORM),
     StandardConfiguration.customize((y) => {
       y.coercingOptions = {
-        coerceNullish: true,
+        coerceNullish: false,
         enableCoercion: true,
       };
     }),

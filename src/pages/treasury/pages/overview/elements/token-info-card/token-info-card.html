@@ -1,28 +1,28 @@
+<let info.bind="state.tokenInfo"></let>
 <div animate animate-start-class="zoom-in" animate-speed=".2">
-  <k-card color="linear-gradient(to right, var(--ocean-blue-500), var(--ocean-blue-600))">
-    <k-text type=" h4" slot="header" t="navigation.treasury.overview.ktt.title">
-    </k-text>
-    <k-grid cols="3">
-      <token-summary-stack
-        t="[title]navigation.treasury.overview.ktt.market-cap;[tooltip]navigation.treasury.overview.ktt.market-cap-tooltip"
-        value.bind="state.tokenInfo.marketCap | currency">
-      </token-summary-stack>
-      <token-summary-stack
-        t="[title]navigation.treasury.overview.ktt.current-price;[tooltip]navigation.treasury.overview.ktt.current-price-tooltip"
-        value.bind="state.tokenInfo.currentPrice | currency">
-      </token-summary-stack>
-      <token-summary-stack
-        t="[title]navigation.treasury.overview.ktt.total-supply;[tooltip]navigation.treasury.overview.ktt.total-supply-tooltip"
-        value.bind="state.tokenInfo.totalSupply">
-      </token-summary-stack>
-    </k-grid>
-    <token-summary-stack
-      t="[title]navigation.treasury.overview.ktt.supply-distribution;[tooltip]navigation.treasury.overview.ktt.supply-distribution-tooltip">
-      <div class="supply-distribution">
-        <k-text>${state.tokenInfo.supplyDistribution.treasury}% in treasury</k-text>
-        <k-text>${state.tokenInfo.supplyDistribution.reserves}% in reserves</k-text>
-        <k-text>${state.tokenInfo.supplyDistribution.circulating}% circulating supply</k-text>
-      </div>
-    </token-summary-stack>
+  <k-card color="${cardColor & oneTime}">
+    <k-stack gap="var(--spacing-xl)" slot="header" direction="row">
+      <k-avatar></k-avatar>
+      <k-text type="h3" t="${titlei18n & oneTime}">
+      </k-text>
+    </k-stack>
+    <k-stack gap="var(--spacing-xl)">
+
+      <k-grid cols="3">
+        <label-value t="${marketCapi18n & oneTime}" value.bind="info.marketCap | currency">
+        </label-value>
+        <label-value t="${currentPricei18n & oneTime}" value.bind="info.currentPrice | currency">
+        </label-value>
+        <label-value t="${totalSupplyi18n & oneTime}" value.bind="info.totalSupply">
+        </label-value>
+      </k-grid>
+      <label-value gap="var(--spacing-lg)" t="${supplyDistributioni18n & oneTime}">
+        <div class="supply-distribution">
+          <k-text>${info.supplyDistribution.treasury}% in treasury</k-text>
+          <k-text>${info.supplyDistribution.reserves}% in reserves</k-text>
+          <k-text>${info.supplyDistribution.circulating}% circulating supply</k-text>
+        </div>
+      </label-value>
+    </k-stack>
   </k-card>
 </div>
