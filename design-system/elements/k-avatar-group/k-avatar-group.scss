@@ -1,10 +1,12 @@
 k-avatar-group{
     > div{
         display: flex;
+
         k-avatar{
             &:not(:first-child){
                 margin-left: -10px;
             }
+            
             &::part(main){
                 border: 1px solid var(--white);
             }
