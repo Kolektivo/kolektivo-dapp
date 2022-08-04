@@ -45,3 +45,7 @@ export function noop(e: Event): boolean {
   e.preventDefault();
   return false;
 }
+
+export const standardCapturesToIgnore = ['slot', 'part', 'style', 'class', 't'];
+
+export const captureFilter = (attr: string) => standardCapturesToIgnore.includes(attr.toLowerCase());
