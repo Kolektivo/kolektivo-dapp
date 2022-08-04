@@ -108,7 +108,7 @@ export class EthereumService {
   /**
    * provided by ethers
    */
-  public readOnlyProvider?: BaseProvider;
+  public readOnlyProvider = {} as BaseProvider;
   /**
    * provided by ethers given provider from Web3Modal
    */
@@ -141,7 +141,8 @@ export class EthereumService {
     }
 
     // comment out to run DISCONNECTED
-    this.readOnlyProvider = ethers.getDefaultProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork]);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.readOnlyProvider = ethers.getDefaultProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork])!;
     this.readOnlyProvider.pollingInterval = 15000;
 
     if (!this.blockSubscribed) {
@@ -524,13 +525,13 @@ export class EthereumService {
    * so unit tests will be able to complete
    */
   public dispose(): void {
-    this.readOnlyProvider?.off('block', (blockNumber: number) => {
+    this.readOnlyProvider.off('block', (blockNumber: number) => {
       void this.handleNewBlock(blockNumber);
     });
   }
 
   public async getBlock(blockNumber: number): Promise<IBlockInfo> {
-    const block = (await this.readOnlyProvider?.getBlock(blockNumber)) as unknown as IBlockInfo;
+    const block = (await this.readOnlyProvider.getBlock(blockNumber)) as unknown as IBlockInfo;
     block.blockDate = new Date(block.timestamp * 1000);
     return block;
   }
@@ -552,10 +553,6 @@ export class EthereumService {
    * @returns null if there is no ENS
    */
   public getEnsForAddress(address: Address): Promise<string | null> {
-    if (!this.readOnlyProvider) {
-      throw new Error('getEnsForAddress: no readOnlyProvider');
-    }
-
     return this.readOnlyProvider.lookupAddress(address).catch(() => null);
   }
 
@@ -565,9 +562,6 @@ export class EthereumService {
    * Returns address if it already is an address
    */
   public getAddressForEns(ens: string): Promise<Address | null> {
-    if (!this.readOnlyProvider) {
-      throw new Error('getAddressForEns: no readOnlyProvider');
-    }
     /**
      * returns the address if ens already is an address
      */
