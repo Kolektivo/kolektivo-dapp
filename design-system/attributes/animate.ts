@@ -12,7 +12,9 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   @bindable public out?: boolean;
   @bindable public startClass?: string | null;
   @bindable public endClass?: string | null;
+  @bindable public reverse?: boolean;
   @bindable public animationStarted?: boolean;
+  @bindable public speed?: number;
   resolve?: (value: void | PromiseLike<void>) => void;
 
   constructor(private readonly element: HTMLElement, @IAnimationService private readonly animationService: IAnimationService) {}
@@ -20,7 +22,9 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   binding(): void | Promise<void> {
     const duration = this.element.getAttribute('animate-duration');
     this.from ??= Number(this.element.getAttribute('animate-from'));
+    this.reverse ??= this.element.getAttribute('animate-reverse') != null;
     this.to ??= Number(this.element.getAttribute('animate-to'));
+    this.speed ??= Number(this.element.getAttribute('animate-speed'));
     this.unit ??= this.element.getAttribute('animate-unit') ?? 'px';
     this.duration ??= duration ? Number(duration) : 1000;
     this.easing ??= this.element.getAttribute('animate-easing');
@@ -34,6 +38,7 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
       this.element.onanimationend = this.onAnimationEnd;
       this.element.onanimationstart = (): boolean => (this.animationStarted = true);
       this.element.classList.add(this.startClass);
+      if (this.speed) this.element.style.animationDuration = `${this.speed}s`;
       return;
     }
 
@@ -70,6 +75,10 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
 
       if (this.endClass) {
         this.element.classList.add(this.endClass);
+        this.element.onanimationend = this.onAnimationEnd;
+      }
+      if (this.reverse) {
+        this.element.style.animationDirection = 'reverse';
         this.element.onanimationend = this.onAnimationEnd;
       }
 
