@@ -9,9 +9,6 @@
   "author": "CL Cybernetix GmbH",
   "homepage": "./",
   "license": "MIT",
-  "engines": {
-    "node": ">=16.0.0 < 17"
-  },
   "browser": {
     "http": false
   },
