@@ -11,13 +11,17 @@ import template from './k-avatar-group.html';
 export class KAvatarGroup implements ICustomElementViewModel {
   @bindable max = 3;
   @bindable total?: number;
+  @bindable moreSize = 50;
+  @bindable moreIcon = 'more_horiz';
+  @bindable moreIconColor = 'var(--white)';
+  @bindable moreColor = 'var(--concrete)';
   div?: HTMLElement;
   tooMany = false;
   constructor(@IAuSlotsInfo public readonly slotInfo: IAuSlotsInfo) {}
   attached(): void {
     if (!this.div) return;
     if (this.div.childElementCount > this.max) {
-      for (let i = this.max; i < this.div.childElementCount; i++) {
+      for (let i = this.max - 1; i < this.div.childElementCount; i++) {
         this.div.children[i].remove();
       }
       this.tooMany = true;
