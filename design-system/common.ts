@@ -46,9 +46,9 @@ export function noop(e: Event): boolean {
   return false;
 }
 
-export const standardCapturesToIgnore = ['ripple', 'animate', 'slot', 'part', 'style', 'class', 't', 'ref'];
+export const standardCapturesToIgnore = ['ripple', 'animate', 'slot', 'part', 'style', 'class', 't', 'ref', 'tooltip'];
 
-export const captureFilter = (attr: string) => !standardCapturesToIgnore.includes(attr.toLowerCase());
+export const captureFilter = (attr: string) => standardCapturesToIgnore.includes(attr.toLowerCase());
 
 export function assignDefined(target: unknown, ...sources: unknown[]): void {
   const sourcesArray = sources as Record<string, unknown>[];
