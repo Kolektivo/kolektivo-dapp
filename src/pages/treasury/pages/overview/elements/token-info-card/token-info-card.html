@@ -3,11 +3,10 @@
   <k-card color="${cardColor & oneTime}">
     <k-stack gap="var(--spacing-xl)" slot="header" direction="row">
       <k-avatar></k-avatar>
-      <k-text type="h3" t="${titlei18n & oneTime}">
+      <k-text tag="h3" t="${titlei18n & oneTime}">
       </k-text>
     </k-stack>
     <k-stack gap="var(--spacing-xl)">
-
       <k-grid cols="3">
         <label-value t="${marketCapi18n & oneTime}" value.bind="info.marketCap | currency">
         </label-value>
