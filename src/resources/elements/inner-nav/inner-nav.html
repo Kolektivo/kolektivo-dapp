@@ -1,9 +1,7 @@
 <k-app-bar border-bottom="1px solid var(--san-juan-500)">
   <k-tabs>
-    <k-tab load="${route.path}" repeat.for="route of routes">
-      <div ripple>
-        ${route.name}
-      </div>
+    <k-tab ripple load="${route.path}" repeat.for="route of routes">
+      ${route.name}
     </k-tab>
   </k-tabs>
 </k-app-bar>
