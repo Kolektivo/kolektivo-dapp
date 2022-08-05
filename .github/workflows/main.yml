@@ -26,6 +26,8 @@ jobs:
       #     key: modules-${{ hashFiles('package-lock.json') }}
 
       - run: npm -v
+
+      - run: npm cache clean --force
       
       - name: Install dependencies
         # if: steps.cache.outputs.cache-hit != 'true'
