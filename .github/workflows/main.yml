@@ -84,7 +84,7 @@ jobs:
 
   cypress-run:
     name: Cypress run
-    needs: [deploy, lint]
+    needs: [deploy]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
