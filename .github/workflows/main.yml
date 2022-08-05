@@ -27,6 +27,7 @@ jobs:
 
       - name: Install dependencies
         # if: steps.cache.outputs.cache-hit != 'true'
+        run: npm -v
         run: npm ci --ignore-scripts
 
       - run: npm list
