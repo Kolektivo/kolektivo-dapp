@@ -1,4 +1,5 @@
 import { ICustomElementViewModel, customElement, shadowCSS } from 'aurelia';
+import { captureFilter } from './../../common';
 
 import css from './k-tabs.scss';
 import template from './k-tabs.html';
@@ -6,7 +7,7 @@ import template from './k-tabs.html';
 @customElement({
   name: 'k-tabs',
   template,
-  capture: true,
+  capture: captureFilter,
   shadowOptions: {
     mode: 'open',
   },

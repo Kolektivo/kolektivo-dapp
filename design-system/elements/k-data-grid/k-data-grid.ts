@@ -1,6 +1,7 @@
 import { ICustomAttributeController, ICustomElementController, ViewModelKind } from '@aurelia/runtime-html';
 import { ICustomAttributeViewModel, ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { IGridColumn } from './grid-column';
+import { captureFilter } from './../../common';
 type ElementOrAttributeViewModel<T> = ICustomElementController<T> | ICustomAttributeController<T>;
 import css from './k-data-grid.scss';
 import template from './k-data-grid.html';
@@ -8,7 +9,7 @@ import template from './k-data-grid.html';
 @customElement({
   name: 'k-data-grid',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

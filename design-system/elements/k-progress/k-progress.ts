@@ -1,5 +1,5 @@
 import { bindable, customElement, shadowCSS } from 'aurelia';
-import { numberToPixelsInterceptor } from './../../common';
+import { captureFilter, numberToPixelsInterceptor } from './../../common';
 export type ProgressType = 'error' | 'warning';
 
 import css from './k-progress.scss';
@@ -9,7 +9,7 @@ import template from './k-progress.html';
 @customElement({
   name: 'k-progress',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

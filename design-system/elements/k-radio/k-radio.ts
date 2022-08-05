@@ -1,12 +1,12 @@
 import './k-radio.scss';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { uid } from '../../common';
+import { captureFilter, uid } from '../../common';
 import template from './k-radio.html';
 
 @customElement({
   name: 'k-radio',
   template,
-  capture: true,
+  capture: captureFilter,
   shadowOptions: {
     mode: 'open',
   },

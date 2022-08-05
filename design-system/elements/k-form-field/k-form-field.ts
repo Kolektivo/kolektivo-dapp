@@ -1,6 +1,6 @@
 import { BindingMode, ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { ValidationResult } from '@aurelia/validation';
-import { ifExistsThenTrue } from '../../common';
+import { captureFilter, ifExistsThenTrue } from '../../common';
 
 import css from './k-form-field.scss';
 import template from './k-form-field.html';
@@ -8,7 +8,7 @@ import template from './k-form-field.html';
 @customElement({
   name: 'k-form-field',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

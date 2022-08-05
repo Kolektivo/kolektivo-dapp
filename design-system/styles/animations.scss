@@ -81,6 +81,25 @@
     }
 }
 
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    80% {
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.ripple {
+    animation: ripple 2s forwards cubic-bezier(0, 0, 0.2, 1);
+}
+
 .zoom-in {
     animation: zoom-in 1s;
 }

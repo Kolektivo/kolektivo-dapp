@@ -1,6 +1,6 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { NotificationType } from './../../services/notification/notification-type';
-import { ifExistsThenTrue } from '../../../design-system/common';
+import { captureFilter, ifExistsThenTrue } from '../../../design-system/common';
 
 import css from './k-chip.scss';
 import template from './k-chip.html';
@@ -8,7 +8,7 @@ import template from './k-chip.html';
 @customElement({
   name: 'k-chip',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

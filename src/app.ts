@@ -1,11 +1,10 @@
 import './app.scss';
 import './shared.scss';
 import { IAnimationService } from '../design-system/services/animation/animation-service';
-import { IEthereumService, Networks } from './services';
+import { IEthereumService } from './services';
 import { INotificationService } from '../design-system/services/notification/notification-service';
 import { IPlatform, customElement } from 'aurelia';
 import { IState } from './state';
-import { ethereumNetwork, isDev } from './environment-variables';
 import template from './app.html';
 
 @customElement({ name: 'app', template })
@@ -28,8 +27,5 @@ export class App {
   }
   detaching(): void {
     this.platform.window.removeEventListener('resize', this.recalc);
-  }
-  binding() {
-    this.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
   }
 }

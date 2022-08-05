@@ -31,8 +31,8 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { ifExistsThenTrue } from '../../common';
+import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
+import { captureFilter, ifExistsThenTrue } from '../../common';
 
 Chart.register(
   ArcElement,
@@ -68,7 +68,7 @@ import template from './k-chart.html';
 @customElement({
   name: 'k-chart',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',
@@ -91,7 +91,20 @@ export class KChart implements ICustomElementViewModel {
   chart?: HTMLCanvasElement;
   chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
 
+  constructor(@IPlatform private readonly platform: IPlatform) {}
+
   createChart(): void {
+    if (typeof this.colors !== 'string') {
+      const style = this.platform.window.getComputedStyle(this.platform.document.body);
+
+      this.colors = this.colors?.map((x) => {
+        if (!x.includes('var(--')) return x;
+        const variable = x.match(/var\((.*)\)/);
+        if ((variable?.length ?? 0) < 2) return x;
+        return style.getPropertyValue(variable?.[1] ?? '');
+      });
+    }
+
     if (!this.dataSets.length && !isNaN(this.data[0] as number)) {
       switch (this.type) {
         case 'doughnut':

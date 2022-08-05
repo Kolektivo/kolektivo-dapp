@@ -1,6 +1,6 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { IDesignSystemConfiguration } from '../../configuration';
-import { numberToPixelsInterceptor } from './../../common';
+import { captureFilter, numberToPixelsInterceptor } from './../../common';
 
 import css from './k-icon.scss';
 import template from './k-icon.html';
@@ -8,7 +8,7 @@ import template from './k-icon.html';
 @customElement({
   name: 'k-icon',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

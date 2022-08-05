@@ -1,12 +1,12 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { numberToPixelsInterceptor } from '../../common';
+import { captureFilter, numberToPixelsInterceptor } from '../../common';
 import css from './k-backdrop.scss';
 import template from './k-backdrop.html';
 
 @customElement({
   name: 'k-backdrop',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

@@ -1,6 +1,6 @@
 import { Grid } from '../../base/grid';
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { gridTemplateRowSetterInterceptor } from './../../common';
+import { captureFilter, gridTemplateRowSetterInterceptor } from './../../common';
 
 import css from './k-grid.scss';
 import template from './k-grid.html';
@@ -8,7 +8,7 @@ import template from './k-grid.html';
 @customElement({
   name: 'k-grid',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

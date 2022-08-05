@@ -1,5 +1,5 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { uid } from '../../common';
+import { captureFilter, uid } from '../../common';
 
 import css from './k-check.scss';
 
@@ -8,7 +8,7 @@ import template from './k-check.html';
 @customElement({
   name: 'k-check',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

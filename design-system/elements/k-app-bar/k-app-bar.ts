@@ -1,4 +1,5 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { captureFilter } from './../../common';
 
 import css from './k-app-bar.scss';
 import template from './k-app-bar.html';
@@ -6,7 +7,7 @@ import template from './k-app-bar.html';
 @customElement({
   name: 'k-app-bar',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

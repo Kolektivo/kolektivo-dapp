@@ -1,6 +1,6 @@
 import { ButtonSize } from './button-size';
 import { bindable, customElement, shadowCSS } from 'aurelia';
-import { ifExistsThenTrue } from './../../common';
+import { captureFilter, ifExistsThenTrue } from './../../common';
 /**
  * Usage:
  *    <pbutton type="primary">Primary</pbutton>
@@ -20,7 +20,7 @@ import template from './k-button.html';
 @customElement({
   name: 'k-button',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',
