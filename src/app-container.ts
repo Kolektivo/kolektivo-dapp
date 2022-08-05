@@ -39,8 +39,8 @@ import swap_horiz from '@material-design-icons/svg/outlined/swap_horiz.svg';
 import warning_filled from '@material-design-icons/svg/filled/warning.svg';
 
 import { State } from './state';
-import designScss from 'style-loader!../design-system/styles/shared.scss';
-import scss from 'style-loader!./shared.scss';
+import designScss from '../design-system/styles/shared.scss';
+import scss from './shared.scss';
 
 import * as hooks from './hooks';
 
