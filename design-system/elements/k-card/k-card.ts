@@ -21,7 +21,6 @@ export class KCard implements ICustomElementViewModel {
     return {
       background: this.color,
       borderRadius: this.rounded && `var(--rounded-${this.rounded})`,
-      padding: 'var(--spacing-xl)',
     };
   }
 }
