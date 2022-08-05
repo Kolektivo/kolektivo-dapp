@@ -181,7 +181,7 @@ jobs:
   comment-pr:
     name: Comment on the Pull Request
     if: ${{ github.event_name == 'pull_request' }}
-    needs: [deploy, cypress-run, assign-branch-url]
+    needs: [deploy, assign-branch-url]
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
