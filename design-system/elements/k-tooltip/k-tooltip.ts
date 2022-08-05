@@ -1,8 +1,6 @@
 import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
 import { numberToPixels } from './../../common';
 
-export type TooltipPosition = 'top' | 'start' | 'end' | 'bottom';
-
 import css from './k-tooltip.scss';
 import template from './k-tooltip.html';
 
@@ -11,7 +9,7 @@ export class KTooltip implements ICustomElementViewModel {
   @bindable message?: string;
   @bindable host?: HTMLElement;
   @bindable color = 'var(--don-juan-800)';
-  @bindable position: TooltipPosition = 'top';
+  @bindable position: Position = 'top';
   left?: string | number | null;
   top?: string | number | null;
   compose?: HTMLElement;

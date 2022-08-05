@@ -7,11 +7,13 @@ import {
   CategoryScale,
   Chart,
   ChartDataset,
+  ChartOptions,
   ChartType,
   Decimation,
   DoughnutController,
   Filler,
   Legend,
+  LegendOptions,
   LineController,
   LineElement,
   LinearScale,
@@ -30,6 +32,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { ifExistsThenTrue } from '../../common';
 
 Chart.register(
   ArcElement,
@@ -73,43 +76,72 @@ import template from './k-chart.html';
 })
 export class KChart implements ICustomElementViewModel {
   @bindable type: ChartType = 'bar';
+  @bindable cutout = 75;
   @bindable labels?: string[];
-  @bindable fill?: boolean;
   @bindable data: DataType[] | [DataType[]] = [];
+  @bindable dataSets: ChartDataset[] = [];
   @bindable colors?: string[] | string;
+  @bindable borderColor?: string;
+  @bindable backgroundColor?: string;
+  @bindable tension?: number = 0.01;
+  @bindable legend?: LegendOptions<ChartType>;
+  @bindable({ set: ifExistsThenTrue }) hideLegend = false;
+  @bindable({ set: ifExistsThenTrue }) fill?: boolean;
 
   chart?: HTMLCanvasElement;
   chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
 
   createChart(): void {
-    const dataSets: ChartDataset[] = [];
-    if (!isNaN(this.data[0] as number)) {
-      dataSets.push({ data: this.data as DataType[], backgroundColor: this.colors });
+    if (!this.dataSets.length && !isNaN(this.data[0] as number)) {
+      switch (this.type) {
+        case 'doughnut':
+          this.dataSets.push({
+            data: this.data as DataType[],
+            backgroundColor: this.colors,
+            borderColor: this.borderColor,
+          });
+          break;
+        case 'line':
+          this.dataSets.push({
+            label: this.labels?.[0],
+            data: this.data as DataType[],
+            borderColor: this.borderColor ?? 'red',
+            backgroundColor: this.backgroundColor,
+            tension: this.tension,
+          });
+          break;
+      }
     }
     const context = this.chart?.getContext('2d');
     if (!context) return;
+
+    const options: Chart['options'] = {
+      responsive: true,
+      maintainAspectRatio: false,
+      borderColor: 'transparent',
+      plugins: {
+        legend: this.legend ?? {
+          display: !this.hideLegend,
+          position: 'right',
+          labels: {
+            pointStyle: 'circle',
+            usePointStyle: true,
+          },
+        },
+      },
+    };
+
+    if (this.type === 'doughnut') {
+      (options as ChartOptions<'doughnut'>).cutout = `${this.cutout}%`;
+    }
 
     this.chartJsInstance = new Chart(context, {
       type: this.type,
       data: {
         labels: this.labels,
-        datasets: dataSets,
+        datasets: this.dataSets,
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        borderColor: 'transparent',
-        plugins: {
-          legend: {
-            display: true,
-            position: 'right',
-            labels: {
-              pointStyle: 'circle',
-              usePointStyle: true,
-            },
-          },
-        },
-      },
+      options,
     });
   }
 

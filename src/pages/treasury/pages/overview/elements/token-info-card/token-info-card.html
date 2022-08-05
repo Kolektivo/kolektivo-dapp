@@ -1,0 +1,28 @@
+<let info.bind="state.tokenInfo"></let>
+<div animate animate-start-class="zoom-in" animate-speed=".2">
+  <k-card color="${cardColor & oneTime}">
+    <k-stack gap="var(--spacing-xl)" slot="header" direction="row">
+      <k-avatar></k-avatar>
+      <k-text type="h3" t="${titlei18n & oneTime}">
+      </k-text>
+    </k-stack>
+    <k-stack gap="var(--spacing-xl)">
+
+      <k-grid cols="3">
+        <label-value t="${marketCapi18n & oneTime}" value.bind="info.marketCap | currency">
+        </label-value>
+        <label-value t="${currentPricei18n & oneTime}" value.bind="info.currentPrice | currency">
+        </label-value>
+        <label-value t="${totalSupplyi18n & oneTime}" value.bind="info.totalSupply">
+        </label-value>
+      </k-grid>
+      <label-value gap="var(--spacing-lg)" t="${supplyDistributioni18n & oneTime}">
+        <div class="supply-distribution">
+          <k-text>${info.supplyDistribution.treasury}% in treasury</k-text>
+          <k-text>${info.supplyDistribution.reserves}% in reserves</k-text>
+          <k-text>${info.supplyDistribution.circulating}% circulating supply</k-text>
+        </div>
+      </label-value>
+    </k-stack>
+  </k-card>
+</div>

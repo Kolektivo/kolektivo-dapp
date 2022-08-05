@@ -6,11 +6,6 @@ k-avatar-group{
             &:not(:first-child){
                 margin-left: -10px;
             }
-            
-            &::part(main){
-                border: 1px solid var(--white);
-            }
-        }
-        
+        }        
     }
 }

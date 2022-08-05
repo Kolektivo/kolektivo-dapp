@@ -1,4 +1,7 @@
 {
+    "status-bar":{
+        "badge-title": "My Badges"
+    },
     "navigation":{
         "map": {
             "link-text" : "Map",

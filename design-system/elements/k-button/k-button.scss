@@ -67,9 +67,7 @@
       background-color: var(--ocean-blue-700);
     }
 
-    &:focus,
-    &:focus-visible,
-    &:focus-within {
+    &:focus-visible{
       outline: 2px solid var(--ocean-blue-300);
       background-color: var(--ocean-blue-500);
 
@@ -109,9 +107,7 @@
         background-color: var(--ocean-blue-700);
       }
 
-      &:focus,
-      &:focus-visible,
-      &:focus-within {
+      &:focus-visible{
         k-icon {
           fill: var(--ocean-blue);
         }
@@ -150,9 +146,7 @@
         background-color: var(--ocean-blue-700);
       }
 
-      &:focus,
-      &:focus-visible,
-      &:focus-within {
+      &:focus-visible {
         k-icon {
           fill: var(--ocean-blue);
         }
@@ -181,9 +175,7 @@
         background-color: var(--don-juan-100);
       }
 
-      &:focus,
-      &:focus-visible,
-      &:focus-within {
+      &:focus-visible {
         outline: 2px solid var(--ocean-blue-300);
         background-color: var(--white);
       }
@@ -207,9 +199,7 @@
         background-color: var(--san-juan-500);
       }
 
-      &:focus,
-      &:focus-visible,
-      &:focus-within {
+      &:focus-visible {
         outline: 2px solid var(--ocean-blue-300);
         background-color: var(--san-juan-400);
       }
@@ -231,9 +221,7 @@
         background-color: var(--error-dark);
       }
 
-      &:focus,
-      &:focus-visible,
-      &:focus-within {
+      &:focus-visible {
         outline: 2px solid var(--error);
         background-color: var(--error-dark);
       }

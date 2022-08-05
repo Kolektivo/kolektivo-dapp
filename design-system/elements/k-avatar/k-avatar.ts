@@ -1,4 +1,5 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { numberToPixelsInterceptor } from '../../common';
 
 import css from './k-avatar.scss';
 import template from './k-avatar.html';
@@ -13,16 +14,20 @@ import template from './k-avatar.html';
   },
 })
 export class KAvatar implements ICustomElementViewModel {
-  @bindable size = 50;
-  @bindable color = 'var(--white)';
+  @bindable({ set: numberToPixelsInterceptor }) size = '50';
+  @bindable color = 'var(--primary)';
   @bindable src?: string;
+  @bindable textColor = 'var(--white)';
+  @bindable({ set: numberToPixelsInterceptor }) fontSize = '21';
 
   get divStyle(): Partial<CSSStyleDeclaration> {
     return {
-      height: `${this.size}px`,
-      width: `${this.size}px`,
+      height: this.size,
+      width: this.size,
       overflow: 'hidden',
       backgroundColor: this.color,
+      color: this.textColor,
+      fontSize: this.fontSize,
     };
   }
 }

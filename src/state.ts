@@ -3,22 +3,21 @@ import { DI, IContainer, Registration } from 'aurelia';
 export type IState = State;
 export const IState = DI.createInterface<IState>('State');
 
-export type BlockChainState = {
-  walletConnected: boolean;
-  connectedWalletAddress: string;
-  badges: Badge[];
-};
-export type Badge = {
-  name: string;
-  description?: string;
-  imageUrl?: string;
-};
-
 export class State {
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IState, State));
   }
   sideBarOpen = false;
+  tokenInfo: TokenInfo = {
+    marketCap: 3000000,
+    currentPrice: 0.98,
+    totalSupply: 8000000,
+    supplyDistribution: {
+      treasury: 40,
+      reserves: 40,
+      circulating: 20,
+    },
+  };
   treasuryState = {};
   blockChainState: BlockChainState = {
     walletConnected: true,

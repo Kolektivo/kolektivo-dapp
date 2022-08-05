@@ -1,0 +1,10 @@
+<k-stack gap.bind="gap" ...$attrs>
+  <au-slot name="header">
+    <k-grid cols="auto 1fr" gap="var(--spacing)" class="header">
+      <k-text type="tag">${title}</k-text>
+      <k-icon if.bind="tooltip" name="help_outline" size="24" tooltip.bind="tooltip"></k-icon>
+    </k-grid>
+  </au-slot>
+  <au-slot></au-slot>
+  <k-text if.bind="value" type="h5">${value}</k-text>
+</k-stack>

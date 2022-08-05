@@ -1,4 +1,5 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { captureFilter } from './../../common';
 
 import css from './k-card.scss';
 import template from './k-card.html';
@@ -6,7 +7,7 @@ import template from './k-card.html';
 @customElement({
   name: 'k-card',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',
@@ -14,10 +15,12 @@ import template from './k-card.html';
 })
 export class KCard implements ICustomElementViewModel {
   @bindable color = 'var(--white)';
+  @bindable rounded = 6;
 
   get style() {
     return {
-      backgroundColor: this.color,
+      background: this.color,
+      borderRadius: this.rounded && `var(--rounded-${this.rounded})`,
     };
   }
 }

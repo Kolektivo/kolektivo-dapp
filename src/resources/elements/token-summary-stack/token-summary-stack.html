@@ -1,8 +1,0 @@
-<k-stack gap="var(--spacing-sm)">
-  <k-grid cols="auto 1fr" gap="var(--spacing-lg)" class="header">
-    <k-text type="h6">${title}</k-text>
-    <k-icon if.bind="tooltip" name="help_outline" size="24" tooltip.bind="tooltip"></k-icon>
-  </k-grid>
-  <au-slot></au-slot>
-  <k-text if.bind="value" type="h5">${value}</k-text>
-</k-stack>

@@ -45,7 +45,15 @@ import scss from 'style-loader!./shared.scss';
 import * as hooks from './hooks';
 
 export const appContainer: IContainer = DI.createContainer()
-  .register(Registration.instance(IPlatform, PLATFORM), StandardConfiguration)
+  .register(
+    Registration.instance(IPlatform, PLATFORM),
+    StandardConfiguration.customize((y) => {
+      y.coercingOptions = {
+        coerceNullish: false,
+        enableCoercion: true,
+      };
+    }),
+  )
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(services)
   .register(hooks)
