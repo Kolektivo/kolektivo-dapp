@@ -34,6 +34,15 @@ export class KButton {
   @bindable class = '';
   @bindable({ set: ifExistsThenTrue }) disabled = false;
   @bindable icon = '';
+  @bindable color = '';
+  @bindable rounded = '';
+
+  get buttonStyle() {
+    return {
+      borderRadius: this.rounded && `var(--rounded-${this.rounded}`,
+      backgroundColor: this.color,
+    };
+  }
 
   get iconSize(): number {
     switch (this.size) {

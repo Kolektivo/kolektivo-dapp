@@ -15,7 +15,7 @@ import template from './k-avatar.html';
 })
 export class KAvatar implements ICustomElementViewModel {
   @bindable({ set: numberToPixelsInterceptor }) size = '50';
-  @bindable color = 'var(--primary)';
+  @bindable color = 'var(--white)';
   @bindable src?: string;
   @bindable textColor = 'var(--white)';
   @bindable({ set: numberToPixelsInterceptor }) fontSize = '21';

@@ -2,11 +2,7 @@
   display: block;
 
   k-paper {
-    height: 100%;
-    width: 100%;
+    display: block;
   }
 
-  div[part=grid] {
-    height: 100%;
-  }
 }

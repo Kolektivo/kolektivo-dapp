@@ -77,6 +77,7 @@ import template from './k-chart.html';
 export class KChart implements ICustomElementViewModel {
   @bindable type: ChartType = 'bar';
   @bindable cutout = 75;
+  @bindable options?: Chart['options'];
   @bindable labels?: string[];
   @bindable data: DataType[] | [DataType[]] = [];
   @bindable dataSets: ChartDataset[] = [];
@@ -84,6 +85,7 @@ export class KChart implements ICustomElementViewModel {
   @bindable borderColor?: string;
   @bindable backgroundColor?: string;
   @bindable tension?: number = 0.01;
+  @bindable maxLabels = 11;
   @bindable legend?: LegendOptions<ChartType>;
   @bindable({ set: ifExistsThenTrue }) hideLegend = false;
   @bindable({ set: ifExistsThenTrue }) fill?: boolean;
@@ -132,20 +134,50 @@ export class KChart implements ICustomElementViewModel {
       responsive: true,
       maintainAspectRatio: false,
       borderColor: 'transparent',
+      hover: {
+        intersect: false,
+        includeInvisible: true,
+      },
+      interaction: {
+        intersect: false,
+        includeInvisible: true,
+      },
+
       plugins: {
         legend: this.legend ?? {
           display: !this.hideLegend,
           position: 'right',
           labels: {
-            pointStyle: 'circle',
+            pointStyle: 'line',
+            color: 'red',
             usePointStyle: true,
           },
         },
       },
     };
 
+    // assignDefined(options, this.options);
+
     if (this.type === 'doughnut') {
       (options as ChartOptions<'doughnut'>).cutout = `${this.cutout}%`;
+    }
+
+    if (this.type === 'line') {
+      (options as ChartOptions<'line'>).scales = {
+        x: {
+          ticks: {
+            maxTicksLimit: this.maxLabels,
+          },
+          grid: {
+            display: false,
+          },
+        },
+        y: {
+          grid: {
+            display: false,
+          },
+        },
+      };
     }
 
     this.chartJsInstance = new Chart(context, {
