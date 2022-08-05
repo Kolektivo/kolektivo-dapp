@@ -1,0 +1,27 @@
+:host{
+    a{
+        color: var(--primary);
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:hover{
+            color: var(--ocean-blue-600);
+
+            k-icon {
+                fill: var(--ocean-blue-600);
+              }
+        }
+
+        &:active{
+            color: var(--ocean-blue-700);
+
+            k-icon {
+                fill: var(--ocean-blue-700);
+              }
+        }
+        
+        k-icon {
+          fill: var(--primary);
+        }
+    }
+}

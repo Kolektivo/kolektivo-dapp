@@ -59,7 +59,6 @@ export function assignDefined(target: unknown, ...sources: unknown[]): void {
   const targetObj = target as Record<string, unknown>;
 
   sourcesArray.forEach((source) => {
-    if (!source) return;
     Object.keys(source as object).forEach((key) => {
       const val: unknown = source[key];
       if (val !== undefined) {

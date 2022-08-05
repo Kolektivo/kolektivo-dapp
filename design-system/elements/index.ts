@@ -19,6 +19,7 @@ export * from './k-grid';
 export * from './k-icon';
 export * from './k-icon-button';
 export * from './k-input';
+export * from './k-link';
 export * from './k-loader';
 export * from './k-menu';
 export * from './k-modal';

@@ -1,6 +1,7 @@
 {
     "status-bar":{
-        "badge-title": "My Badges"
+        "badge-title": "My Badges",
+        "connected-account-title": "Connected Account"
     },
     "navigation":{
         "map": {
