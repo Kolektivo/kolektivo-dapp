@@ -91,12 +91,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - run: npx playwright install
+
       - run: npx playwright install-deps
 
       - run: npm install -D @playwright/test 
 
       - name: Run playwright
-        run: URL=https://kolektivo-dapp.vercel.app npx playwright test
+        run: BASE_URL=https://kolektivo-dapp.vercel.app npx playwright test
 
   # cypress-run:
   #   name: Cypress run
