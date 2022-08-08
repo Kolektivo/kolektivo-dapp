@@ -34,6 +34,11 @@ jobs:
 
       - run: cat package-lock.json
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: package-lock.json
+
       - run: npm list
 
       - run: npm run lint
