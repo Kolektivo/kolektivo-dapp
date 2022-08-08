@@ -18,26 +18,16 @@ jobs:
           node-version: '16'
           cache: 'npm'
 
-      # - name: Cache dependencies
-      #   id: cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ./node_modules
-      #     key: modules-${{ hashFiles('package-lock.json') }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
-        # if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
-
-      # - run: pwd
-      # - run: ls
-
-      # - run: cat package-lock.json
-
-      # - uses: actions/upload-artifact@v2
-      #   with:
-      #     name: package
-      #     path: package-lock.json
 
       - run: npm list
 
