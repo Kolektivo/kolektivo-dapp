@@ -1,10 +1,11 @@
 import { ICustomElementViewModel, customElement } from 'aurelia';
+import { captureFilter } from './../../common';
 import template from './k-code.html';
 
 @customElement({
   name: 'k-code',
   template,
-  capture: true,
+  capture: captureFilter,
   shadowOptions: {
     mode: 'open',
   },

@@ -1,11 +1,11 @@
 import { BindingMode, ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { DisplayValue } from './../../common';
+import { DisplayValue, captureFilter } from './../../common';
 import template from './k-radio-group.html';
 
 @customElement({
   name: 'k-radio-group',
   template,
-  capture: true,
+  capture: captureFilter,
   shadowOptions: {
     mode: 'open',
   },

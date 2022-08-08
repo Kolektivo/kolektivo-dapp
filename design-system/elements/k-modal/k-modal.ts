@@ -1,10 +1,10 @@
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { ifExistsThenTrue, noop } from './../../common';
+import { captureFilter, ifExistsThenTrue, noop } from './../../common';
 
 import 'style-loader!./k-modal.scss';
 import template from './k-modal.html';
 
-@customElement({ name: 'k-modal', template, capture: true })
+@customElement({ name: 'k-modal', template, capture: captureFilter })
 export class KModal implements ICustomElementViewModel {
   @bindable portalElement = 'body';
   @bindable ok?: () => void;

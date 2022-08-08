@@ -1,5 +1,5 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { ifExistsThenTrue } from './../../common';
+import { captureFilter, ifExistsThenTrue } from './../../common';
 
 import css from './k-input.scss';
 import template from './k-input.html';
@@ -7,7 +7,7 @@ import template from './k-input.html';
 @customElement({
   name: 'k-input',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

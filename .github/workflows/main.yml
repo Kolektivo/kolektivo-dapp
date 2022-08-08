@@ -144,7 +144,7 @@ jobs:
   # Otherwise the latest successful deployment for that branch will be still available under the branch specific URL
   assign-branch-url:
     name: Assign branch specific URL
-    needs: [deploy, cypress-run]
+    needs: [deploy, lint]
     runs-on: ubuntu-latest
     timeout-minutes: 2
     if: ${{needs.deploy.outputs.DEPLOYMENT_ENVIRONMENT == 'Preview' }}
@@ -181,7 +181,7 @@ jobs:
   comment-pr:
     name: Comment on the Pull Request
     if: ${{ github.event_name == 'pull_request' }}
-    needs: [deploy, cypress-run, assign-branch-url]
+    needs: [deploy, assign-branch-url]
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:

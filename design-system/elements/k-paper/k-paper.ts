@@ -1,5 +1,6 @@
 import { ICustomElementViewModel, customElement, shadowCSS } from 'aurelia';
 import { Spaceable } from '../../../design-system/base/spaceable';
+import { captureFilter } from './../../common';
 
 import css from './k-paper.scss';
 import template from './k-paper.html';
@@ -7,7 +8,7 @@ import template from './k-paper.html';
 @customElement({
   name: 'k-paper',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

@@ -1,5 +1,6 @@
 import { Grid } from '../../base/grid';
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { captureFilter } from './../../common';
 
 import css from './k-stack.scss';
 
@@ -8,7 +9,7 @@ import template from './k-stack.html';
 @customElement({
   name: 'k-stack',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

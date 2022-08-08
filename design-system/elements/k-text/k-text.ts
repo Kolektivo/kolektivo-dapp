@@ -1,5 +1,5 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { numberToPixels } from './../../common';
+import { captureFilter, numberToPixels } from './../../common';
 
 import css from './k-text.scss';
 
@@ -8,7 +8,7 @@ import template from './k-text.html';
 @customElement({
   name: 'k-text',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',

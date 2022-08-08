@@ -1,11 +1,12 @@
 import { ButtonSize } from './../k-button/button-size';
 import { ButtonType } from '../k-button';
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { captureFilter } from './../../common';
 
 import css from './k-icon-button.scss';
 import template from './k-icon-button.html';
 
-@customElement({ name: 'k-icon-button', template, capture: true, dependencies: [shadowCSS(css)], shadowOptions: { mode: 'open' } })
+@customElement({ name: 'k-icon-button', template, capture: captureFilter, dependencies: [shadowCSS(css)], shadowOptions: { mode: 'open' } })
 export class KIconButton implements ICustomElementViewModel {
   @bindable name = '';
   @bindable type: ButtonType = 'primary';

@@ -1,4 +1,5 @@
 import { IAuSlotsInfo, ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { captureFilter } from './../../common';
 
 import 'style-loader!./k-avatar-group.scss';
 import template from './k-avatar-group.html';
@@ -6,7 +7,7 @@ import template from './k-avatar-group.html';
 @customElement({
   name: 'k-avatar-group',
   template,
-  capture: true,
+  capture: captureFilter,
 })
 export class KAvatarGroup implements ICustomElementViewModel {
   @bindable max = 3;

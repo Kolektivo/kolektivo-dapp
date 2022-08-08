@@ -1,8 +1,5 @@
 :host {
   background-color: var(--san-juan-200);
   position: relative;
-
-  >slot {
-    display: block;
-  }
+  display: block;
 }

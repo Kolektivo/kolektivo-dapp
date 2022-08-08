@@ -1,0 +1,20 @@
+#account-menu {
+    &::part(title){
+        margin-bottom: 0;
+    }
+
+    hr{
+        border:0;
+        height: 1px;
+        background-color:  var(--don-juan-050);
+        margin: 12px -16px 8px;
+    }
+
+    div.content{
+        background-color: var(--don-juan-025);
+        border:1px solid var(--don-juan-050);
+        border-radius: var(--rounded);
+        padding: 16px;
+        margin-top: 8px;
+    }
+}

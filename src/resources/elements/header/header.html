@@ -12,19 +12,10 @@
       <k-avatar-group ref="badgeGroup">
         <k-avatar repeat.for="badge of blockChainState.badges" tooltip="value:${badge.name};position:bottom" src.bind="badge.imageUrl" size="32"></k-avatar>
       </k-avatar-group>
-      <k-button type="utility-dark" icon="account_circle">${blockChainState.connectedWalletAddress | smallHexString}</k-button>
+      <k-button ref="accountButton" type="utility-dark" icon="account_circle">${blockChainState.connectedWalletAddress | smallHexString}</k-button>
       <k-icon-button type="utility-dark" name="electric_bolt"></k-icon-button>
     </k-stack>
   </div>
 </k-app-bar>
-<k-menu target.bind="badgeGroup" t="[title]status-bar.badge-title" position="bottom-end">
-  <k-stack gap="var(--spacing-lg)">
-    <k-grid repeat.for="badge of blockChainState.badges" cols="auto 1fr" gap="var(--spacing)">
-      <k-avatar src.bind="badge.imageUrl" size="40"></k-avatar>
-      <k-stack>
-        <k-text tag="h6">${badge.name}</k-text>
-        <k-text type="small-caption">${badge.description}</k-text>
-      </k-stack>
-    </k-grid>
-  </k-stack>
-</k-menu>
+<badge-menu target.bind="badgeGroup"></badge-menu>
+<account-menu target.bind="accountButton"></account-menu>

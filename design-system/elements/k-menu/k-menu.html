@@ -1,6 +1,6 @@
-<div style.bind="style" if.bind="show" ref="div">
-  <slot name="title">
+<div style.bind="style" if.bind="show" ref="div" animate animate-start-class="zoom-in" animate-speed=".2">
+  <slot name="title" part="title">
     <k-text tag="h6">${title}</k-text>
   </slot>
-  <slot></slot>
+  <slot part="content"></slot>
 </div>

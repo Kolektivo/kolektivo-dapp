@@ -1,0 +1,13 @@
+<k-menu t="[title]status-bar.connected-account-title" id="account-menu" position="bottom-end" width="320" ...$attrs>
+  <k-stack gap="8">
+    <k-text tag="div" type="caption" color="var(--don-juan-400)">${state.blockChainState.connectedWalletAddress | smallHexString}</k-text>
+    <k-stack direction="rows" gap="16">
+      <k-link copy-text="${state.blockChainState.connectedWalletAddress}">Copy Address</k-link>
+      <k-link src="https://celoscan.io/" external>View on Celoscan</k-link>
+    </k-stack>
+  </k-stack>
+  <hr />
+  <div class="content">
+    <k-text>Placeholder. Additional information will be placed in this menu.</k-text>
+  </div>
+</k-menu>

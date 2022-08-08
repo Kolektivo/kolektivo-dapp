@@ -1,5 +1,5 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { numberToPixelsInterceptor } from '../../common';
+import { captureFilter, numberToPixelsInterceptor } from '../../common';
 
 import css from './k-avatar.scss';
 import template from './k-avatar.html';
@@ -7,7 +7,7 @@ import template from './k-avatar.html';
 @customElement({
   name: 'k-avatar',
   template,
-  capture: true,
+  capture: captureFilter,
   dependencies: [shadowCSS(css)],
   shadowOptions: {
     mode: 'open',
@@ -15,7 +15,7 @@ import template from './k-avatar.html';
 })
 export class KAvatar implements ICustomElementViewModel {
   @bindable({ set: numberToPixelsInterceptor }) size = '50';
-  @bindable color = 'var(--primary)';
+  @bindable color = 'var(--white)';
   @bindable src?: string;
   @bindable textColor = 'var(--white)';
   @bindable({ set: numberToPixelsInterceptor }) fontSize = '21';

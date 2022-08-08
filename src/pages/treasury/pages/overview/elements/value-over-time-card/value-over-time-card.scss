@@ -1,1 +1,9 @@
-/* empty */
+value-over-time-card {
+    k-stack>k-text::part(content) {
+        margin-left: auto;
+    }
+
+    k-stack {
+        margin-top: var(--spacing);
+    }
+}
