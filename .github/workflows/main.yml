@@ -27,17 +27,17 @@ jobs:
 
       - name: Install dependencies
         # if: steps.cache.outputs.cache-hit != 'true'
-        run: npm i
+        run: npm ci
 
-      - run: pwd
-      - run: ls
+      # - run: pwd
+      # - run: ls
 
-      - run: cat package-lock.json
+      # - run: cat package-lock.json
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: package
-          path: package-lock.json
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: package
+      #     path: package-lock.json
 
       - run: npm list
 
