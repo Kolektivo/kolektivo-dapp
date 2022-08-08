@@ -10,4 +10,8 @@ test.describe('App', () => {
   test('shows message', async ({ page }) => {
     await expect(page.locator('app au-viewport')).toHaveText('Map works!');
   });
+
+  test('correct URL', ({ page }) => {
+    expect(page.url()).toBe('https://kolektivo-dapp.vercel.app');
+  });
 });
