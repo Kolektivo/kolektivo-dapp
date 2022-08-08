@@ -39,7 +39,7 @@ export class ContractsService {
     @IEthereumService private readonly ethereumService: IEthereumService,
   ) {}
 
-  public setup() {
+  public initialize() {
     this.eventAggregator.subscribe('Network.Changed.Account', (account: Address): void => {
       if (account !== this.accountAddress) {
         this.accountAddress = account;
@@ -90,9 +90,6 @@ export class ContractsService {
       signerOrProvider = this.ethereumService.readOnlyProvider;
     }
 
-    if (!signerOrProvider) {
-      throw new Error('createProvider: no signerOrProvider');
-    }
     return signerOrProvider;
   }
 
@@ -117,9 +114,9 @@ export class ContractsService {
    * @returns null if not found
    */
   public async getProxyImplementation(proxyContract: Address): Promise<Address | null> {
-    let result = await this.ethereumService.readOnlyProvider?.getStorageAt(proxyContract, ContractsService.storagePositionZep);
+    let result = await this.ethereumService.readOnlyProvider.getStorageAt(proxyContract, ContractsService.storagePositionZep);
     if (BigNumber.from(result).isZero()) {
-      result = await this.ethereumService.readOnlyProvider?.getStorageAt(proxyContract, ContractsService.storagePosition1967);
+      result = await this.ethereumService.readOnlyProvider.getStorageAt(proxyContract, ContractsService.storagePosition1967);
     }
 
     const bnResult = BigNumber.from(result);
