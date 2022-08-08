@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
 
+const BASE_URL = process.env.URL ?? '';
+
 test.beforeEach(async ({ page }) => {
-  await page.goto('http://localhost:9000');
+  await page.goto(BASE_URL);
 });
 
 test.describe('App', () => {

@@ -82,6 +82,18 @@ jobs:
           echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
           echo "::set-output name=INSPECT_URL::$INSPECT_URL"
 
+  e2e:
+    name: e2e tests
+    needs: [deploy, lint]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run playwright
+        run: URL=https://kolektivo-dapp.vercel.app npx playwright test
+
   cypress-run:
     name: Cypress run
     needs: [deploy, lint]
