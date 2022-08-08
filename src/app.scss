@@ -24,7 +24,9 @@
   src: url('../static/Kaleko105-Thin.woff2') format('woff2');
   font-weight: lighter;
 }
-
+html{
+  overflow-y: overlay;
+}
 body {
   height: 100vh;
   background-color: var(--san-juan-600);
