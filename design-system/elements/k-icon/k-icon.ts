@@ -35,7 +35,7 @@ export class KIcon implements ICustomElementViewModel {
 
   get styles(): Record<string, unknown> {
     return {
-      fill: this.color && this.color,
+      color: this.color && this.color,
       width: this.size,
       height: this.size,
       marginTop: this.top,

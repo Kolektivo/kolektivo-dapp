@@ -32,7 +32,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
-import { captureFilter, ifExistsThenTrue } from '../../common';
+import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
 
 Chart.register(
   ArcElement,
@@ -84,6 +84,7 @@ export class KChart implements ICustomElementViewModel {
   @bindable colors?: string[] | string;
   @bindable borderColor?: string;
   @bindable backgroundColor?: string;
+  @bindable({ set: numberToPixelsInterceptor }) height = 150;
   @bindable tension?: number = 0.01;
   @bindable maxLabels = 11;
   @bindable legend?: LegendOptions<ChartType>;
@@ -94,6 +95,13 @@ export class KChart implements ICustomElementViewModel {
   chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
 
   constructor(@IPlatform private readonly platform: IPlatform) {}
+
+  get styles() {
+    return {
+      width: '100%',
+      height: this.height,
+    };
+  }
 
   createChart(): void {
     if (typeof this.colors !== 'string') {

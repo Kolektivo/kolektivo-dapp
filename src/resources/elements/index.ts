@@ -1,4 +1,5 @@
 export * from './account-menu';
+export * from './activity-menu';
 export * from './badge-menu';
 export * from './header';
 export * from './inner-nav';
