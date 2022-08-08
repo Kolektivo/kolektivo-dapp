@@ -40,7 +40,17 @@
         },
         "reserve":{
             "link-text": "Reserve",
-            "link-icon": "savings"
+            "link-icon": "savings",
+            "dashboard": {
+              "title": "Kolektivo Curaçao Reserve",
+              "assets": {},
+              "value": {
+                "title": "Reserve Value",
+                "tooltip": "Reserve Value is this and that"
+              },
+              "value-by-asset-type": {},
+              "value-over-time": {}
+            }
         },
         "swap":{
             "link-text": "Swap",

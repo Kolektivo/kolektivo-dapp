@@ -1,1 +1,11 @@
-#dashboard { /* empty */ }
+#dashboard-page {
+  > k-page {
+    k-card::part(grid) {
+        padding: var(--spacing-xl);
+    }
+
+    .instruction-text {
+      margin-bottom: var(--spacing-xxl);;
+    }
+  }
+}
