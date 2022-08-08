@@ -7,3 +7,8 @@ export * from './DateServiceIntl';
 export * from './ContractsDeploymentProvider';
 export * from './ContractsService';
 export * from './TransactionsService';
+export * from './KolektivoIpfsClient';
+export * from './IpfsService';
+export * from './AxiosService';
+export * from './TokenListProvider';
+export * from './TokenService';

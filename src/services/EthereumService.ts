@@ -53,7 +53,7 @@ export enum Networks {
 }
 
 const CELO_MAINNET_CHAIN_ID = 42220;
-const CELO_ALFAJORES_CHAIN_ID = 44787;
+const CELO_ALFAJORES_CHAIN_ID = 1;
 
 export interface IChainEventInfo {
   chainId?: number;
@@ -86,7 +86,7 @@ export class EthereumService {
 
   public static ProviderEndpoints = {
     mainnet: `https://forno.celo.org`,
-    alfajores: `https://alfajores-forno.celo-testnet.org`,
+    alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`, // `https://alfajores-forno.celo-testnet.org`,
     // alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
   };
   private static providerOptions = {
