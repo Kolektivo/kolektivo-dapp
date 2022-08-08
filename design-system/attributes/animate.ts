@@ -59,6 +59,7 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   onAnimationEnd = (): void => {
     this.startClass && this.element.classList.remove(this.startClass);
     this.endClass && this.element.classList.remove(this.endClass);
+    this.resolve?.();
   };
 
   detaching(): void | Promise<void> {
