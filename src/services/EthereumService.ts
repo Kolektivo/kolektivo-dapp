@@ -1,7 +1,6 @@
-/* eslint-disable no-console */
 import { BaseProvider, ExternalProvider, Network, Web3Provider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish, Signer, ethers } from 'ethers';
-import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
+import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
 import { IBrowserStorageService } from './BrowserStorageService';
 import detectEthereumProvider from '@metamask/detect-provider';
 // import { IDisclaimerService } from './DisclaimerService';
@@ -64,7 +63,7 @@ export interface IChainEventInfo {
 
 export type IEthereumService = EthereumService;
 export const IEthereumService = DI.createInterface<IEthereumService>('EthereumService');
-type WalletProvider = Web3Provider & IEIP1193 & ExternalProvider;
+export type WalletProvider = Web3Provider & IEIP1193 & ExternalProvider;
 type MetamaskProvider = WalletProvider &
   ExternalProvider & {
     autoRefreshOnNetworkChange: boolean;
@@ -76,7 +75,10 @@ export class EthereumService {
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     // @IDisclaimerService private readonly disclaimerService: IDisclaimerService,
     @IBrowserStorageService private readonly storageService: IBrowserStorageService,
-  ) {}
+    @ILogger private readonly logger: ILogger,
+  ) {
+    this.logger = logger.scopeTo('EthereumService');
+  }
 
   public static register(container: IContainer) {
     Registration.singleton(IEthereumService, EthereumService).register(container);
@@ -106,7 +108,7 @@ export class EthereumService {
   /**
    * provided by ethers
    */
-  public readOnlyProvider?: BaseProvider;
+  public readOnlyProvider = {} as BaseProvider;
   /**
    * provided by ethers given provider from Web3Modal
    */
@@ -139,7 +141,8 @@ export class EthereumService {
     }
 
     // comment out to run DISCONNECTED
-    this.readOnlyProvider = ethers.getDefaultProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork]);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.readOnlyProvider = ethers.getDefaultProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork])!;
     this.readOnlyProvider.pollingInterval = 15000;
 
     if (!this.blockSubscribed) {
@@ -188,19 +191,19 @@ export class EthereumService {
     // this.disconnect({ code: -1, message: 'User declined the Prime Deals disclaimer' });
     // account = null;
     // }
-    console.info(`account changed: ${account ?? 'null'}`);
+    this.logger.info(`account changed: ${account ?? 'null'}`);
     this.eventAggregator.publish('Network.Changed.Account', account);
   }
   private fireChainChangedHandler(info: IChainEventInfo): void {
-    console.info(`chain changed: ${info.chainId ?? 'undefined'}`);
+    this.logger.info(`chain changed: ${info.chainId ?? 'undefined'}`);
     this.eventAggregator.publish('Network.Changed.Id', info);
   }
   private fireConnectHandler(info: IChainEventInfo): void {
-    console.info(`connected: ${info.chainName ?? 'undefined'}`);
+    this.logger.info(`connected: ${info.chainName ?? 'undefined'}`);
     this.eventAggregator.publish('Network.Changed.Connected', info);
   }
   private fireDisconnectHandler(error: { code: number; message: string }): void {
-    console.info(`disconnected: ${error.code}: ${error.message}`);
+    this.logger.info(`disconnected: ${error.code}: ${error.message}`);
     this.eventAggregator.publish('Network.Changed.Disconnect', error);
   }
 
@@ -276,7 +279,7 @@ export class EthereumService {
           if (accounts.length) {
             // const account = getAddress(accounts[0]);
             // if (this.disclaimerService.isDappDisclaimed(account)) {
-            // this.consoleLogService.logMessage(`autoconnecting to ${account}`, 'info');
+            // this.logger.info(`autoconnecting to ${account}`);
             return this.setProvider(provider);
             // }
           }
@@ -303,10 +306,9 @@ export class EthereumService {
     }
   }
 
-  private async getNetwork(provider: Web3Provider): Promise<Network> {
-    let network = await provider.getNetwork();
-    network = Object.assign({}, network);
-    if (network.name === 'homestead') {
+  private async getNetwork(provider: Web3Provider): Promise<Network | null> {
+    const network = (await provider.getNetwork()) as Network | null;
+    if (network?.name === 'homestead') {
       network.name = 'mainnet';
     }
     return network;
@@ -316,7 +318,7 @@ export class EthereumService {
   //   try {
   //     return this.chainNameById.get(Number(await provider.request({ method: "eth_chainId" }))) ?? "";
   //   } catch (error) {
-  //     // this.consoleLogService.logObject(error.message, error, "error");
+  //     // this.logger.error(error.message, error);
   //     return "";
   //   }
   // }
@@ -334,7 +336,7 @@ export class EthereumService {
   //   this.eventAggregator.publish("Network.wrongNetwork", { provider, connectedTo: connectedTo, need: EthereumService.targetedNetwork });
   // }
 
-  private async setProvider(web3ModalProvider?: WalletProvider & ExternalProvider): Promise<void> {
+  private async setProvider(web3ModalProvider?: WalletProvider): Promise<void> {
     try {
       if (web3ModalProvider) {
         const walletProvider = new ethers.providers.Web3Provider(web3ModalProvider);
@@ -343,10 +345,10 @@ export class EthereumService {
 
         const network = await this.getNetwork(walletProvider);
 
-        if (network.name !== EthereumService.targetedNetwork) {
+        if (network?.name !== EthereumService.targetedNetwork) {
           this.eventAggregator.publish('Network.wrongNetwork', {
             provider: web3ModalProvider,
-            connectedTo: network.name,
+            connectedTo: network?.name,
             need: EthereumService.targetedNetwork,
           });
         } else {
@@ -373,7 +375,8 @@ export class EthereumService {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      // this.consoleLogService.logMessage(`Error connecting to wallet provider ${error?.message}`, 'error');
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+      this.logger.error(`Error connecting to wallet provider ${error?.message}`);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
       alert(`Error connecting to wallet provider ${error?.message}`);
     }
@@ -388,15 +391,16 @@ export class EthereumService {
   }
 
   private handleChainChanged = (chainId: number): void => {
-    const network = ethers.providers.getNetwork(Number(chainId));
-    if (network.name === 'homestead') {
+    const network = ethers.providers.getNetwork(Number(chainId)) as Network | null;
+
+    if (network?.name === 'homestead') {
       network.name = 'mainnet';
     }
 
-    if (network.name !== EthereumService.targetedNetwork) {
+    if (network?.name !== EthereumService.targetedNetwork) {
       this.eventAggregator.publish('Network.wrongNetwork', {
         provider: this.web3ModalProvider,
-        connectedTo: network.name,
+        connectedTo: network?.name,
         need: EthereumService.targetedNetwork,
       });
       return;
@@ -489,7 +493,7 @@ export class EthereumService {
           this.setMetamaskHasToken(tokenAddress);
         }
       } catch (error) {
-        console.log(error);
+        this.logger.error(error);
       }
     }
 
@@ -521,13 +525,13 @@ export class EthereumService {
    * so unit tests will be able to complete
    */
   public dispose(): void {
-    this.readOnlyProvider?.off('block', (blockNumber: number) => {
+    this.readOnlyProvider.off('block', (blockNumber: number) => {
       void this.handleNewBlock(blockNumber);
     });
   }
 
   public async getBlock(blockNumber: number): Promise<IBlockInfo> {
-    const block = (await this.readOnlyProvider?.getBlock(blockNumber)) as unknown as IBlockInfo;
+    const block = (await this.readOnlyProvider.getBlock(blockNumber)) as unknown as IBlockInfo;
     block.blockDate = new Date(block.timestamp * 1000);
     return block;
   }
@@ -549,10 +553,6 @@ export class EthereumService {
    * @returns null if there is no ENS
    */
   public getEnsForAddress(address: Address): Promise<string | null> {
-    if (!this.readOnlyProvider) {
-      throw new Error('getEnsForAddress: no readOnlyProvider');
-    }
-
     return this.readOnlyProvider.lookupAddress(address).catch(() => null);
   }
 
@@ -562,9 +562,6 @@ export class EthereumService {
    * Returns address if it already is an address
    */
   public getAddressForEns(ens: string): Promise<Address | null> {
-    if (!this.readOnlyProvider) {
-      throw new Error('getAddressForEns: no readOnlyProvider');
-    }
     /**
      * returns the address if ens already is an address
      */
