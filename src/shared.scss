@@ -39,3 +39,11 @@ body {
     }
   }
 }
+
+%callout {
+  background-color: var(--don-juan-025);
+  border:1px solid var(--don-juan-050);
+  border-radius: var(--rounded);
+  padding: 16px;
+  margin-top: 8px;
+}

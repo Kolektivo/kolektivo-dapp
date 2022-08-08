@@ -19,11 +19,13 @@ import add_circle from '@material-design-icons/svg/filled/add_circle_outline.svg
 import alternate_email from '@material-design-icons/svg/outlined/alternate_email.svg';
 import calendar_today from '@material-design-icons/svg/outlined/calendar_today.svg';
 import check from '@material-design-icons/svg/filled/check.svg';
+import check_circle from '@material-design-icons/svg/outlined/check_circle.svg';
 import check_circle_filled from '@material-design-icons/svg/filled/check_circle.svg';
 import close from '@material-design-icons/svg/outlined/close.svg';
 import content_copy from '@material-design-icons/svg/outlined/content_copy.svg';
 import description from '@material-design-icons/svg/outlined/description.svg';
 import electric_bolt from '@material-design-icons/svg/filled/electric_bolt.svg';
+import error from '@material-design-icons/svg/filled/error_outline.svg';
 import error_filled from '@material-design-icons/svg/filled/error.svg';
 import headset_mic from '@material-design-icons/svg/outlined/headset_mic.svg';
 import help_outline from '@material-design-icons/svg/outlined/help_outline.svg';
@@ -90,12 +92,14 @@ export const appContainer: IContainer = DI.createContainer()
       x.iconMap.set('alternate_email', alternate_email);
       x.iconMap.set('calendar_today', calendar_today);
       x.iconMap.set('check_circle_filled', check_circle_filled);
+      x.iconMap.set('check_circle', check_circle);
       x.iconMap.set('check', check);
       x.iconMap.set('close', close);
       x.iconMap.set('content_copy', content_copy);
       x.iconMap.set('description', description);
       x.iconMap.set('electric_bolt', electric_bolt);
       x.iconMap.set('error_filled', error_filled);
+      x.iconMap.set('error', error);
       x.iconMap.set('headset_mic', headset_mic);
       x.iconMap.set('info_filled', info_filled);
       x.iconMap.set('language', language);

@@ -1,5 +1,5 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { ifExistsThenTrue } from './../../common';
+import { ifExistsThenTrue, numberToPixelsInterceptor } from './../../common';
 import { numberToPixels } from '../../../design-system/common';
 
 import css from './k-spinner.scss';
@@ -18,6 +18,7 @@ export class KSpinner implements ICustomElementViewModel {
   @bindable({ set: ifExistsThenTrue }) paused = false;
   @bindable size = 40;
   @bindable speed = 2;
+  @bindable({ set: numberToPixelsInterceptor }) thickness = 3;
   @bindable animation = 'spinner';
   @bindable icon = '';
 
@@ -31,9 +32,10 @@ export class KSpinner implements ICustomElementViewModel {
   get circleStyle(): Record<string, unknown> {
     return {
       stroke: this.color,
+      strokeWidth: this.thickness,
       animation: this.animation && `${this.animation} ${this.speed}s linear infinite forwards`,
       animationPlayState: this.paused && 'paused',
-      transformOrigin: this.animation === 'spinner' && '20px 20px 0',
+      transformOrigin: this.animation === 'spinner' && `20px 20px 0`,
     };
   }
   get svgStyle(): Record<string, unknown> {

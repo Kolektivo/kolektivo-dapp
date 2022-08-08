@@ -1,27 +1,8 @@
 /* stylelint-disable selector-type-no-unknown */
 overview {
-    >k-grid {
+    >k-stack {
         k-card::part(grid) {
             padding: var(--spacing-xxl);
-        }
-
-        &:nth-child(3) {
-            min-height: 200px;
-        }
-
-        &:nth-child(2) {
-            height: 100%;
-            grid-area: 1/2/3/2;
-
-            >k-grid {
-                :nth-child(2n + 2) {
-                    text-align: right;
-                }
-            }
-        }
-
-        &:nth-child(n + 4) {
-            grid-column: 1/3;
         }
     }
 }

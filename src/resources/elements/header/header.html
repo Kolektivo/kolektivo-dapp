@@ -13,9 +13,10 @@
         <k-avatar repeat.for="badge of blockChainState.badges" tooltip="value:${badge.name};position:bottom" src.bind="badge.imageUrl" size="32"></k-avatar>
       </k-avatar-group>
       <k-button ref="accountButton" type="utility-dark" icon="account_circle">${blockChainState.connectedWalletAddress | smallHexString}</k-button>
-      <k-icon-button type="utility-dark" name="electric_bolt"></k-icon-button>
+      <k-icon-button ref="activityButton" type="utility-dark" name="electric_bolt"></k-icon-button>
     </k-stack>
   </div>
 </k-app-bar>
 <badge-menu target.bind="badgeGroup"></badge-menu>
 <account-menu target.bind="accountButton"></account-menu>
+<activity-menu target.bind="activityButton"></activity-menu>

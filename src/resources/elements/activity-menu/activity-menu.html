@@ -1,0 +1,16 @@
+<k-menu t="[title]status-bar.activity-title" id="activity-menu" position="bottom-end" width="320" ...$attrs>
+  <k-paper>
+    <k-text if.bind="state.blockChainState.transactions.count === 0">
+      ${i18n.tr('status-bar.activity-empty')}
+    </k-text>
+    <k-stack else gap="24">
+      <k-link small class="activity" src="https://celoscan.io/tx/${t.id}" repeat.for="t of orderedTransactions | take:3">
+        <au-compose view.bind="linkIcon(t.status)" slot="start"></au-compose>
+        ${statusText(t.status)} ${t.fromAmount} ${t.fromToken} for ${t.toAmount} ${t.toToken}
+      </k-link>
+    </k-stack>
+  </k-paper>
+  <div class="footer-link">
+    <k-link small src="https://celoscan.io/address/${state.blockChainState.connectedWalletAddress}" external>${i18n.tr('status-bar.activity-link-text')}</k-link>
+  </div>
+</k-menu>

@@ -1,7 +1,10 @@
 {
     "status-bar":{
         "badge-title": "My Badges",
-        "connected-account-title": "Connected Account"
+        "connected-account-title": "Connected Account",
+        "activity-title": "Recent Activity",
+        "activity-empty": "Your transactions will appear here.",
+        "activity-link-text": "View all activity on Celoscan"
     },
     "navigation":{
         "map": {
