@@ -178,31 +178,31 @@ jobs:
 
       - run: npm run vercel:alias --deployment=${{needs.deploy.outputs.DEPLOYMENT_URL}} --branch=${{ steps.branch-deployment-url.outputs.BRANCH_DOMAIN }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_TEAM_SLUG }}
 
-  # comment-pr:
-  #   name: Comment on the Pull Request
-  #   if: ${{ github.event_name == 'pull_request' }}
-  #   needs: [deploy, assign-branch-url]
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 2
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
+  comment-pr:
+    name: Comment on the Pull Request
+    if: ${{ github.event_name == 'pull_request' }}
+    needs: [deploy, assign-branch-url]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-  #     - name: Get current date
-  #       id: get-current-date
-  #       # Stores current date as variable to use in the next step
-  #       run: |
-  #         echo "::set-output name=CURRENT_DATE::$(date -u)"
+      - name: Get current date
+        id: get-current-date
+        # Stores current date as variable to use in the next step
+        run: |
+          echo "::set-output name=CURRENT_DATE::$(date -u)"
 
-  #     - name: Comment on the Pull Request
-  #       uses: thollander/actions-comment-pull-request@v1
-  #       with:
-  #         # Content of the comment
-  #         message: |
-  #           | Type | Status | URL | Date |
-  #           | :--- | :----- | :------ | :------ |
-  #           | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://${{needs.assign-branch-url.outputs.BRANCH_DOMAIN}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
-  #         # This is going to replace the already existing comment based and string matching
-  #         comment_includes: 'Latest successful deployment'
-  #         # Pass Github token so it's possible to comment on a PR
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Comment on the Pull Request
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          # Content of the comment
+          message: |
+            | Type | Status | URL | Date |
+            | :--- | :----- | :------ | :------ |
+            | **Latest successful deployment** | ✅ Ready ([Inspect](${{needs.deploy.outputs.INSPECT_URL}})) | [Visit Preview](https://${{needs.assign-branch-url.outputs.BRANCH_DOMAIN}}) | ${{ steps.get-current-date.outputs.CURRENT_DATE }} |
+          # This is going to replace the already existing comment based and string matching
+          comment_includes: 'Latest successful deployment'
+          # Pass Github token so it's possible to comment on a PR
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
