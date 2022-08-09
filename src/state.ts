@@ -60,7 +60,7 @@ export class State {
       },
       {
         id: '0x69a5da6c2ed9304093b0eb5efc905bda6a9418e67a11164eae41455acb99739e',
-        status: 'pending',
+        status: 'success',
         fromAmount: 432,
         fromToken: 'XYZ',
         from: '0x6088e40ba11a8ef9af341595a611498fbf6a7294',

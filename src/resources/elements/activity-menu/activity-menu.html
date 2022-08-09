@@ -4,10 +4,18 @@
       ${i18n.tr('status-bar.activity-empty')}
     </k-text>
     <k-stack else gap="24">
-      <k-link small class="activity" src="https://celoscan.io/tx/${t.id}" repeat.for="t of orderedTransactions | take:3">
-        <au-compose view.bind="linkIcon(t.status)" slot="start"></au-compose>
-        ${statusText(t.status)} ${t.fromAmount} ${t.fromToken} for ${t.toAmount} ${t.toToken}
-      </k-link>
+      <k-grid cols="auto 1fr" gap="10" repeat.for="t of orderedTransactions | take:3">
+        <span switch.bind="t.status">
+          <k-icon case="success" name="check_circle" color="var(--success)"></k-icon>
+          <k-icon case="failed" name="error" color="var(--error)"></k-icon>
+          <div case="pending" class="spinnerDiv">
+            <k-spinner size="18" thickness="5" color="var(--primary)"></k-spinner>
+          </div>
+        </span>
+        <k-link small class="activity" src="https://celoscan.io/tx/${t.id}">
+          ${statusText(t.status)} ${t.fromAmount} ${t.fromToken} for ${t.toAmount} ${t.toToken}
+        </k-link>
+      </k-grid>
     </k-stack>
   </k-paper>
   <div class="footer-link">
