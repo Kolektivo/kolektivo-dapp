@@ -95,7 +95,7 @@ jobs:
 
       - run: npx playwright install-deps
 
-      # - run: npm install -D @playwright/test 
+      - run: npm install -D @playwright/test 
 
       - name: Run playwright
         run: npm run e2e:ci
