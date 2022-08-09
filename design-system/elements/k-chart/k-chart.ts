@@ -60,7 +60,6 @@ Chart.register(
   Tooltip,
   SubTitle,
 );
-
 export type DataType = number | ScatterDataPoint | BubbleDataPoint;
 import css from './k-chart.scss';
 import template from './k-chart.html';
@@ -195,6 +194,30 @@ export class KChart implements ICustomElementViewModel {
         datasets: this.dataSets,
       },
       options,
+      plugins: [
+        {
+          id: 'mouseLine',
+          afterDatasetsDraw: (chart, _, opts) => {
+            const {
+              ctx,
+              chartArea: { top, bottom, left, right },
+            } = chart;
+
+            ctx.lineWidth = 1;
+            ctx.setLineDash([1, 1]);
+            ctx.strokeStyle = 'black';
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x, bottom);
+            ctx.lineTo(x, top);
+            ctx.moveTo(left, y);
+            ctx.lineTo(right, y);
+            ctx.stroke();
+            ctx.restore();
+          },
+        },
+      ],
     });
   }
 
