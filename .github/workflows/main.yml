@@ -7,31 +7,31 @@ on:
       - development
   pull_request:
 jobs:
-  # lint:
-  #   name: Install dependencies and Lint
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 15
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: '16'
-  #         cache: 'npm'
+  lint:
+    name: Install dependencies and Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
 
-  #     - name: Cache dependencies
-  #       id: cache
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ./node_modules
-  #         key: modules-${{ hashFiles('package-lock.json') }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
 
-  #     - name: Install dependencies
-  #       if: steps.cache.outputs.cache-hit != 'true'
-  #       run: npm ci --ignore-scripts
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
 
-  #     - run: npm list
+      - run: npm list
 
-  #     - run: npm run lint
+      - run: npm run lint
 
   # deploy:
   #   name: Deploy to Vercel
@@ -95,7 +95,7 @@ jobs:
 
       - run: npx playwright install-deps
 
-      - run: npm install -D @playwright/test 
+      # - run: npm install -D @playwright/test 
 
       - name: Run playwright
         run: URL=https://kolektivo-dapp.vercel.app npx playwright test
