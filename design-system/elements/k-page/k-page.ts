@@ -15,4 +15,6 @@ import template from './k-page.html';
 })
 export class KPage implements ICustomElementViewModel {
   @bindable title?: string;
+  @bindable description?: string;
+  @bindable learnMoreLink?: string;
 }

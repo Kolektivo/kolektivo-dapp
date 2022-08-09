@@ -1,4 +1,4 @@
-import { ICustomElementViewModel, customElement, shadowCSS } from 'aurelia';
+import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { captureFilter } from './../../common';
 
 import css from './k-tabs.scss';
@@ -13,4 +13,6 @@ import template from './k-tabs.html';
   },
   dependencies: [shadowCSS(css)],
 })
-export class KTabs implements ICustomElementViewModel {}
+export class KTabs implements ICustomElementViewModel {
+  @bindable gap?: number;
+}

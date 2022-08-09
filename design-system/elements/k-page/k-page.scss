@@ -1,8 +1,22 @@
 :host {
-  display: block;
-  padding: var(--spacing-xxl);
+  display: grid;
+  place-items: center;
+  padding: 40px 70px;
+  
+  div.description{
+    max-width: 50%;
+    k-text::part(content){
+      font-size: 20px;
+      font-weight: 400;
+    }
+  }
+
+  k-link.learn-more-link::part(link-text){
+    color: var(--white);
+  }
 
   >k-stack {
+    max-width: 1200px;
     >slot[name='instruction-text'],
     >slot[name='additional-text'],
     >slot:last-of-type {

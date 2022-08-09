@@ -15,6 +15,7 @@
             "link-text" : "Treasury",
             "link-icon" : "account_balance",
             "title": "Kolektivo Network Treasury",
+            "description": "This is a basic & accessible description that the public can read to understand what it is.",
             "menu": {
                 "overview": "Overview",
                 "governance": "Governance"
