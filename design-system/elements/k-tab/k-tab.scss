@@ -8,10 +8,12 @@
         padding-left: 0;
         padding-right: 0;
         padding-bottom: 5px;
+        
         &:hover, &:focus-visible{
             color: var(--white);
             outline: 0;
         }
+
         &:active{
             color: var(--san-juan-200);
         }
@@ -25,6 +27,7 @@
     k-button::part(button) {
         padding-bottom: 0;
         color: var(--white);
+
         &:active{
             color: var(--san-juan-200);
         }

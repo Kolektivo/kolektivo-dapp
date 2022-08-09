@@ -13,9 +13,11 @@
         display: grid;
         place-items: center;
     }
-    div.spinnerDiv{
+
+    div.spinner-div{
         padding: 3px;
     }
+
     k-link.activity::part(link-text){
         color: var(--don-juan-600);
 

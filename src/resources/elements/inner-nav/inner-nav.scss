@@ -6,10 +6,12 @@ inner-nav {
         display: grid;
         place-items: center;
     }
+
     k-tabs::part(tabs){
         display: block;
         max-width: 1200px;
     }
+    
     k-tab{
         margin-bottom: -1px;
     }
