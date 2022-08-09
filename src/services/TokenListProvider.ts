@@ -52,7 +52,7 @@ export class TokenListProvider {
 
       for (const tokenInfoArray of tokenInfoArrays) {
         for (const tokenInfo of tokenInfoArray) {
-          if (tokenInfo.chainId == EthereumService.targetedChainId) {
+          if (tokenInfo.chainId === EthereumService.targetedChainId) {
             tokenInfoMap.set(tokenInfo.address.toLowerCase(), tokenInfo);
           }
         }

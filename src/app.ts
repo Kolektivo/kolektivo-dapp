@@ -1,10 +1,21 @@
 import './app.scss';
 import './shared.scss';
+import {
+  ContractsDeploymentProvider,
+  EthereumService,
+  IContractsService,
+  IEthereumService,
+  IIpfsService,
+  IKolektivoIpfsClient,
+  ITokenService,
+  Networks,
+  WalletProvider,
+} from './services';
 import { IAnimationService } from '../design-system/services/animation/animation-service';
-import { IContractsService, IEthereumService, IIpfsService, IKolektivoIpfsClient, ITokenService, WalletProvider } from './services';
 import { IEventAggregator, IPlatform, customElement } from 'aurelia';
 import { INotificationService } from '../design-system/services/notification/notification-service';
 import { IState } from './state';
+import { ethereumNetwork, isDev } from './environment-variables';
 import template from './app.html';
 
 type WrongNetworkInfo = { provider: WalletProvider; connectedTo?: string; need: string };
@@ -45,14 +56,14 @@ export class App {
     this.platform.window.removeEventListener('resize', this.recalc);
   }
   async binding(): Promise<void> {
-    // this.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
-    // ContractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
-    // this.contractsService.initialize();
-    // this.ipfsService.initialize(this.kolektivoIpfsClient);
-    // /**
-    //  * we want tokens to be all loaded before showing the app
-    //  */
-    // await this.tokenService.initialize();
+    this.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
+    ContractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
+    this.contractsService.initialize();
+    this.ipfsService.initialize(this.kolektivoIpfsClient);
+    /**
+     * we want tokens to be all loaded before showing the app
+     */
+    await this.tokenService.initialize();
   }
 
   async conformChangeNetwork(): Promise<void> {

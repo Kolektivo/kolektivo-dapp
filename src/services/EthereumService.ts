@@ -86,6 +86,7 @@ export class EthereumService {
 
   public static ProviderEndpoints = {
     mainnet: `https://forno.celo.org`,
+    // alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
     alfajores: `https://alfajores-forno.celo-testnet.org`,
     // alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
   };
