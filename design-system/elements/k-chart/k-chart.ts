@@ -31,6 +31,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+
 import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
 
@@ -89,6 +90,7 @@ export class KChart implements ICustomElementViewModel {
   @bindable legend?: LegendOptions<ChartType>;
   @bindable({ set: ifExistsThenTrue }) hideLegend = false;
   @bindable({ set: ifExistsThenTrue }) fill?: boolean;
+  @bindable({ set: ifExistsThenTrue }) gradient?: boolean;
 
   chart?: HTMLCanvasElement;
   chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
@@ -103,6 +105,13 @@ export class KChart implements ICustomElementViewModel {
   }
 
   createChart(): void {
+    const ctx = this.chart?.getContext('2d');
+    if (this.gradient && typeof this.dataSets[0].backgroundColor === 'string') {
+      const gradient = ctx?.createLinearGradient(0, 0, 0, 400);
+      gradient?.addColorStop(0, this.dataSets[0].backgroundColor);
+      gradient?.addColorStop(1, 'rgba(255, 255, 255, 0.76) ');
+      this.dataSets[0].backgroundColor = gradient;
+    }
     if (typeof this.colors !== 'string') {
       const style = this.platform.window.getComputedStyle(this.platform.document.body);
 
@@ -145,6 +154,7 @@ export class KChart implements ICustomElementViewModel {
         intersect: false,
         includeInvisible: true,
       },
+
       interaction: {
         intersect: false,
         includeInvisible: true,
@@ -160,6 +170,13 @@ export class KChart implements ICustomElementViewModel {
             usePointStyle: true,
           },
         },
+        tooltip: {
+          backgroundColor: 'rgba(213, 92, 56, 1)',
+          bodyColor: 'white',
+          caretPadding: 6,
+          usePointStyle: true,
+          displayColors: false,
+        },
       },
     };
 
@@ -170,7 +187,7 @@ export class KChart implements ICustomElementViewModel {
     }
 
     if (this.type === 'line') {
-      (options as ChartOptions<'line'>).scales = {
+      options.scales = {
         x: {
           ticks: {
             maxTicksLimit: this.maxLabels,
@@ -194,30 +211,31 @@ export class KChart implements ICustomElementViewModel {
         datasets: this.dataSets,
       },
       options,
-      plugins: [
-        {
-          id: 'mouseLine',
-          afterDatasetsDraw: (chart, _, opts) => {
-            const {
-              ctx,
-              chartArea: { top, bottom, left, right },
-            } = chart;
-
-            ctx.lineWidth = 1;
-            ctx.setLineDash([1, 1]);
-            ctx.strokeStyle = 'black';
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(x, bottom);
-            ctx.lineTo(x, top);
-            ctx.moveTo(left, y);
-            ctx.lineTo(right, y);
-            ctx.stroke();
-            ctx.restore();
-          },
-        },
-      ],
+      plugins:
+        this.type === 'line'
+          ? [
+              {
+                id: 'chaddy-paddy',
+                afterDraw: (chart) => {
+                  if (chart.tooltip?.getActiveElements().length) {
+                    const x = chart.tooltip.getActiveElements()[0]?.element.x;
+                    const y = chart.tooltip.getActiveElements()[0]?.element.y;
+                    const yAxis = chart.scales.y;
+                    const ctx = chart.ctx;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x, yAxis.bottom);
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([2, 2]);
+                    ctx.strokeStyle = 'orange';
+                    ctx.stroke();
+                    ctx.restore();
+                  }
+                },
+              },
+            ]
+          : [],
     });
   }
 

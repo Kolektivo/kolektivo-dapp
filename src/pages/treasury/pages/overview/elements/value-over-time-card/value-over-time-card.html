@@ -2,26 +2,43 @@
   <k-text tag="h3" slot="header">Treasury Value Over Time</k-text>
   <k-stack gap="var(--spacing-xl)">
     <k-stack direction="row" gap="var(--spacing-xl)">
-      <k-button type="getButtonType('1h')" size='sm' rounded="7">1H</k-button>
-      <k-button type="getButtonType('1d')" size='sm' rounded="7">1D</k-button>
-      <k-button type="getButtonType('1w')" size='sm' rounded="7">1W</k-button>
-      <k-button type="getButtonType('1m')" size='sm' rounded="7">1M</k-button>
-      <k-button type="getButtonType('1y')" size='sm' rounded="7">1Y</k-button>
-      <k-text color="var(--don-juan-200)" class="chart-right-text">Last rebase ${'xxx'} time</k-text>
+      <k-button click.trigger="currentFilter = '1h'" type.bind="getButtonType('1h', currentFilter)" size='sm'
+        rounded="7">1H</k-button>
+      <k-button click.trigger="currentFilter = '1d'" type.bind="getButtonType('1d', currentFilter)" size='sm'
+        rounded="7">1D</k-button>
+      <k-button click.trigger="currentFilter = '1w'" type.bind="getButtonType('1w', currentFilter)" size='sm'
+        rounded="7">1W</k-button>
+      <k-button click.trigger="currentFilter = '1m'" type.bind="getButtonType('1m', currentFilter)" size='sm'
+        rounded="7">1M</k-button>
+      <k-button click.trigger="currentFilter = '1y'" type.bind="getButtonType('1y', currentFilter)" size='sm'
+        rounded="7">1Y</k-button>
+      <k-text color="var(--don-juan-200)" class="chart-ri.bindght-text">Last rebase ${'xxx'} time</k-text>
+      ${currentFilter}
     </k-stack>
-    
-    <k-chart max-labels="2" hide-legend type="line" options.bind="{plugins:{tooltip:{backgroundColor:'red'}}}" fill
+
+    <k-chart gradient height="300" max-labels="2" hide-legend type="line" fill
       labels.bind="[65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40]"
       border-color.bind="red" tension=".01" data-sets.bind="[
-  {
-    label: 'Reserve Value',
-    data: [65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40],
-    fill: true,
-    borderColor: 'rgb(75, 192, 192)',
-    tension: 0.5,
-    pointRadius: 0,
-    pointBackgroundColor: '#F07C4B'
-  }
+      {
+        label: 'Reserve Value',
+        data: [65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40],
+        fill: true,
+        borderColor: 'rgba(69, 173, 168, 0.77)',
+        tension: 0.5,
+        pointRadius: 0,
+        pointBackgroundColor: '#F07C4B',
+        backgroundColor:'rgba(75, 192, 192, .7)'
+      },
+      {
+        label: 'Reserve Value',
+        data: [75, 69, 90, 91, 96, 75, 50,45, 549, 40, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40],
+        fill: true,
+        borderColor: 'rgba(69, 173, 168, 0.77)',
+        tension: 0.5,
+        pointRadius: 0,
+        pointBackgroundColor: '#F07C4B',
+        backgroundColor:'rgba(75, 192, 192, .7)'
+      }
   ]"></k-chart>
   </k-stack>
 </k-card>
