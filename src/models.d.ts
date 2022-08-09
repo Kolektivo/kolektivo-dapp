@@ -2,6 +2,21 @@ type BlockChainState = {
   walletConnected: boolean;
   connectedWalletAddress: string;
   badges: Badge[];
+  transactions: Transaction[];
+};
+
+type TransactionStatus = 'success' | 'failed' | 'pending';
+
+type Transaction = {
+  id: string;
+  status: TransactionStatus;
+  fromAmount: number;
+  fromToken: string;
+  from: string;
+  toAmount: number;
+  toToken: string;
+  to: string;
+  date: string;
 };
 
 type Badge = {

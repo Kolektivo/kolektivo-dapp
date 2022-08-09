@@ -1,12 +1,26 @@
 :host {
   display: grid;
   place-content: center;
+  position: relative;
 
-  svg circle {
-    stroke-dasharray: 113px;
-    stroke-dashoffset: 0;
-    stroke-linecap: round;
-    stroke-width: 2px;
-    fill: none;
+  svg{
+    overflow: visible;
+    
+    circle{
+      stroke-dasharray: 113px;
+      stroke-dashoffset: 0;
+      stroke-linecap: round;
+      fill: none;
+    }
+  }
+  
+  slot{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: 600;
   }
 }

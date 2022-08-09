@@ -1,6 +1,18 @@
 inner-nav {
-    k-app-bar>* {
-        padding-left: var(--spacing-xl);
-        padding-right: var(--spacing-xl);
+    k-app-bar::part(grid) {
+        border-bottom: 1px solid var(--san-juan-500);
+        padding-left: 70px;
+        padding-right: 70px;
+        display: grid;
+        place-items: center;
+    }
+
+    k-tabs::part(tabs){
+        display: block;
+        max-width: 1200px;
+    }
+    
+    k-tab{
+        margin-bottom: -1px;
     }
 }

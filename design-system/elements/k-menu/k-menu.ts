@@ -97,9 +97,14 @@ export class KMenu implements ICustomElementViewModel {
     }
   };
   private showEvent = () => {
+    const alreadyShowing = this.show;
     this.show = true;
-    this.calcPos();
-    this.platform.taskQueue.queueTask(() => this.platform.window.addEventListener('click', this.closeEvent));
+    this.platform.taskQueue.queueTask(() => {
+      this.calcPos();
+      if (!alreadyShowing) {
+        this.platform.window.addEventListener('click', this.closeEvent);
+      }
+    });
   };
   get style() {
     return {

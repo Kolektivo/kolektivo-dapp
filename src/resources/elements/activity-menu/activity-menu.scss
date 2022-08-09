@@ -1,0 +1,36 @@
+@import '../../../shared';
+
+#activity-menu {
+    k-paper {
+        @extend %callout;
+
+        min-height: 160px;
+    }
+
+    div.footer-link{
+        margin-top: 8px;
+        margin-bottom: 4px;
+        display: grid;
+        place-items: center;
+    }
+
+    div.spinner-div{
+        padding: 3px;
+    }
+
+    k-link.activity::part(link-text){
+        color: var(--don-juan-600);
+
+        &:hover{
+            color: var(--primary);
+        }
+
+        &:active{
+            color: var(--ocean-blue-600);
+        }
+
+        &:focus-visible{
+            color: var(--primary);
+        }
+    }
+}

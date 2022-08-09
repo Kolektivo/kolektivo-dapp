@@ -121,11 +121,11 @@ export class EthereumService {
    */
   private defaultAccount?: Signer | Address | null;
 
-  private async handleNewBlock(blockNumber: number): Promise<void> {
-    const block = await this.getBlock(blockNumber);
-    this.lastBlock = block;
-    this.eventAggregator.publish('Network.NewBlock', block);
-  }
+  // private async handleNewBlock(blockNumber: number): Promise<void> {
+  //   const block = await this.getBlock(blockNumber);
+  //   this.lastBlock = block;
+  //   this.eventAggregator.publish('Network.NewBlock', block);
+  // }
 
   public initialize(network: AllowedNetworks): void {
     if (typeof network !== 'string') {
@@ -145,12 +145,13 @@ export class EthereumService {
     this.readOnlyProvider = ethers.getDefaultProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork])!;
     this.readOnlyProvider.pollingInterval = 15000;
 
-    if (!this.blockSubscribed) {
-      this.readOnlyProvider.on('block', (blockNumber: number) => {
-        void this.handleNewBlock(blockNumber);
-      });
-      this.blockSubscribed = true;
-    }
+    // TODO: reenable this when it no longer throws exceptions
+    // if (!this.blockSubscribed) {
+    //   this.readOnlyProvider.on('block', (blockNumber: number) => {
+    //     void this.handleNewBlock(blockNumber);
+    //   });
+    //   this.blockSubscribed = true;
+    // }
   }
 
   private web3Modal?: Web3Modal;
@@ -524,11 +525,11 @@ export class EthereumService {
   /**
    * so unit tests will be able to complete
    */
-  public dispose(): void {
-    this.readOnlyProvider.off('block', (blockNumber: number) => {
-      void this.handleNewBlock(blockNumber);
-    });
-  }
+  // public dispose(): void {
+  //   this.readOnlyProvider.off('block', (blockNumber: number) => {
+  //     void this.handleNewBlock(blockNumber);
+  //   });
+  // }
 
   public async getBlock(blockNumber: number): Promise<IBlockInfo> {
     const block = (await this.readOnlyProvider.getBlock(blockNumber)) as unknown as IBlockInfo;

@@ -9,6 +9,9 @@ export class Header implements ICustomElementViewModel {
   constructor(@IState private readonly state: IState) {
     this.blockChainState = state.blockChainState;
   }
+  get pendingTransactions(): number {
+    return this.blockChainState.transactions.filter((x) => x.status === 'pending').length;
+  }
   connectWallet(): void {
     alert('Not Implemented');
   }
