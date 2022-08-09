@@ -90,12 +90,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+
 
       - run: npx playwright install
 
       - run: npx playwright install-deps
 
-      - run: npm install -D @playwright/test 
+      # - run: npm install -D @playwright/test 
 
       - name: Run playwright
         run: npm run e2e:ci
