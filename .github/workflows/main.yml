@@ -98,7 +98,7 @@ jobs:
       # - run: npm install -D @playwright/test 
 
       - name: Run playwright
-        run: URL=https://kolektivo-dapp.vercel.app npx playwright test
+        run: npm run e2e:ci
 
   # cypress-run:
   #   name: Cypress run
