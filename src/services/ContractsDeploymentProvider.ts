@@ -35,7 +35,8 @@ export class ContractsDeploymentProvider {
   }
 
   public static getContractAbi(contractName: string): [] {
-    let abi = ContractsDeploymentProvider.contractInfosJson.contracts[contractName].abi;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    let abi = ContractsDeploymentProvider.contractInfosJson.contracts[contractName]?.abi;
     if (typeof abi === 'string') {
       // is name of shared abi, such as ERC20
       abi = ContractsDeploymentProvider.sharedContractAbisJson[abi];

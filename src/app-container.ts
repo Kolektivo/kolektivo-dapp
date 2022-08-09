@@ -1,7 +1,15 @@
+import { AxiosService } from './services/AxiosService';
+import { BrowserStorageService } from './services/BrowserStorageService';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
+import { ContractsService } from './services/ContractsService';
+import { DateService } from './services/DateService';
 import { DesignSystemPlugin } from '../design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
+import { IpfsService } from './services/IpfsService';
+import { KolektivoIpfsClient } from './services/KolektivoIpfsClient';
 import { RouterConfiguration } from '@aurelia/router';
+import { TokenListProvider } from './services/TokenListProvider';
+import { TokenService } from './services/TokenService';
 import { isDev } from './environment-variables';
 import en from '../locales/en/translation.json';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
@@ -10,7 +18,7 @@ import intervalPlural from 'i18next-intervalplural-postprocessor';
 // However, css files imported in other js/ts files are processed by style-loader.
 import * as pages from './pages';
 import * as resources from './resources';
-import * as services from './services';
+
 import { StandardConfiguration } from '@aurelia/runtime-html';
 import account_balance from '@material-design-icons/svg/outlined/account_balance.svg';
 import account_balance_wallet from '@material-design-icons/svg/outlined/account_balance_wallet.svg';
@@ -46,6 +54,7 @@ import designScss from '../design-system/styles/shared.scss';
 import scss from './shared.scss';
 
 import * as hooks from './hooks';
+import { EthereumService } from './services/EthereumService';
 
 export const appContainer: IContainer = DI.createContainer()
   .register(
@@ -58,7 +67,15 @@ export const appContainer: IContainer = DI.createContainer()
     }),
   )
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
-  .register(services)
+  .register(AxiosService)
+  .register(DateService)
+  .register(IpfsService)
+  .register(KolektivoIpfsClient)
+  .register(EthereumService)
+  .register(BrowserStorageService)
+  .register(ContractsService)
+  .register(TokenService)
+  .register(TokenListProvider)
   .register(hooks)
   .register(resources)
   .register(pages)
