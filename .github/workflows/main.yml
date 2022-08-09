@@ -39,9 +39,10 @@ jobs:
         if: steps.cache-playwright.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
   lint:
-    name: Install dependencies and Lint
+    name: Lint
+    needs: install
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -104,6 +105,7 @@ jobs:
 
   e2e:
     name: e2e tests
+    needs: install
     # needs: [deploy, lint]
     runs-on: ubuntu-latest
     timeout-minutes: 15
