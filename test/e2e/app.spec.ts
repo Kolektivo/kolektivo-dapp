@@ -12,6 +12,6 @@ test.describe('App', () => {
   });
 
   test('correct URL', ({ page }) => {
-    expect(page.url()).toBe('https://kolektivo-dapp.vercel.app');
+    expect(page.url()).toBe('https://kolektivo-dapp.vercel.app/');
   });
 });
