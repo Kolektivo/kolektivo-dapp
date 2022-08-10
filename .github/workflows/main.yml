@@ -145,7 +145,7 @@ jobs:
       - run: npx playwright install-deps
 
       - name: Run playwright
-        run: npm run e2e:ci
+        run: npm run e2e:ci --url=${{ needs.deploy.outputs.DEPLOYMENT_URL }}
 
   # cypress-run:
   #   name: Cypress run
