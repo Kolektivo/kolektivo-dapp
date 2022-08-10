@@ -1,7 +1,7 @@
 import './activity-menu.scss';
 import { ICustomElementViewModel, customElement } from 'aurelia';
-import { IState } from '../../../../src/state';
 
+import { IBlockChainStore } from '../../../stores';
 import template from './activity-menu.html';
 
 @customElement({
@@ -10,10 +10,10 @@ import template from './activity-menu.html';
   capture: true,
 })
 export class ActivityMenu implements ICustomElementViewModel {
-  constructor(@IState private readonly state: IState) {}
+  constructor(@IBlockChainStore private readonly blockChainStore: IBlockChainStore) {}
 
   get orderedTransactions(): Transaction[] {
-    return this.state.blockChainState.transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3);
+    return this.blockChainStore.transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3);
   }
 
   statusText(status: string) {

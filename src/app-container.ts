@@ -1,15 +1,8 @@
-import { AxiosService } from './services/AxiosService';
-import { BrowserStorageService } from './services/BrowserStorageService';
+import { BlockChainStore, Store, TreasuryStore } from './stores';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
-import { ContractsService } from './services/ContractsService';
-import { DateService } from './services/DateService';
 import { DesignSystemPlugin } from '../design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
-import { IpfsService } from './services/IpfsService';
-import { KolektivoIpfsClient } from './services/KolektivoIpfsClient';
 import { RouterConfiguration } from '@aurelia/router';
-import { TokenListProvider } from './services/TokenListProvider';
-import { TokenService } from './services/TokenService';
 import { isDev } from './environment-variables';
 import en from '../locales/en/translation.json';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
@@ -49,12 +42,11 @@ import savings from '@material-design-icons/svg/outlined/savings.svg';
 import swap_horiz from '@material-design-icons/svg/outlined/swap_horiz.svg';
 import warning_filled from '@material-design-icons/svg/filled/warning.svg';
 
-import { State } from './state';
 import designScss from '../design-system/styles/shared.scss';
 import scss from './shared.scss';
 
 import * as hooks from './hooks';
-import { EthereumService } from './services/EthereumService';
+import { Services } from './services/services';
 
 export const appContainer: IContainer = DI.createContainer()
   .register(
@@ -67,19 +59,13 @@ export const appContainer: IContainer = DI.createContainer()
     }),
   )
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
-  .register(AxiosService)
-  .register(DateService)
-  .register(IpfsService)
-  .register(KolektivoIpfsClient)
-  .register(EthereumService)
-  .register(BrowserStorageService)
-  .register(ContractsService)
-  .register(TokenService)
-  .register(TokenListProvider)
+  .register(Services)
+  .register(Store)
+  .register(TreasuryStore)
+  .register(BlockChainStore)
   .register(hooks)
   .register(resources)
   .register(pages)
-  .register(State)
   .register(
     LoggerConfiguration.create({
       level: isDev ? LogLevel.trace : LogLevel.warn,

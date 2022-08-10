@@ -1,6 +1,5 @@
 import './badge-menu.scss';
 import { ICustomElementViewModel, customElement } from 'aurelia';
-import { IState } from '../../../../src/state';
 import template from './badge-menu.html';
 
 @customElement({
@@ -8,9 +7,4 @@ import template from './badge-menu.html';
   template,
   capture: true,
 })
-export class BadgeMenu implements ICustomElementViewModel {
-  blockChainState: BlockChainState;
-  constructor(@IState private readonly state: IState) {
-    this.blockChainState = state.blockChainState;
-  }
-}
+export class BadgeMenu implements ICustomElementViewModel {}

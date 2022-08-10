@@ -1,7 +1,7 @@
 <div class="app">
   <side-bar animate-out="true" animate-from="-275" animate-to="0" animate-duration="100" animate="left"
-    if.bind="!xl && state.sideBarOpen"></side-bar>
-  <side-bar if.bind="xl && state.sideBarOpen"></side-bar>
+    if.bind="!xl && store.sideBarOpen"></side-bar>
+  <side-bar if.bind="xl && store.sideBarOpen"></side-bar>
   <main>
     <k-modal if.bind="confirmChangeNetworkInfo" cancel.call="cancelConformChangeNetwork()"
       ok.call="conformChangeNetwork()" title="Unsupported Network" ok-button-text="Yes, Please!"
@@ -11,7 +11,7 @@
       your
       connection ${confirmChangeNetworkInfo.need} now?
     </k-modal>
-    <k-backdrop if.bind="!xl && state.sideBarOpen" click.trigger="state.sideBarOpen = false" blur="10"></k-backdrop>
+    <k-backdrop if.bind="!xl && store.sideBarOpen" click.trigger="store.sideBarOpen = false" blur="10"></k-backdrop>
     <header></header>
     <au-viewport default="map" fallback="not-found"></au-viewport>
   </main>
