@@ -43,11 +43,6 @@ jobs:
         # if: steps.cache-playwright.outputs.cache-hit != 'true'
         run: npx playwright install-deps
 
-      - run: ls
-
-      - run: cd ~/.cache && ls
-
-      - run: ~/.cache/ms-playwright && ls 
   # lint:
   #   name: Lint
   #   needs: install
