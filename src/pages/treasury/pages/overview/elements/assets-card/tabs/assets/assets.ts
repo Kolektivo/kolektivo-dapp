@@ -6,9 +6,9 @@ import template from './assets.html';
 
 @customElement({ name: 'assets', template })
 export class Assets implements ICustomElementViewModel {
-  testColumns: IGridColumn[] = [];
+  columns: IGridColumn[] = [];
   constructor(@I18N private readonly i18n: I18N) {
-    this.testColumns = [
+    this.columns = [
       { headerText: this.i18n.tr('navigation.treasury.overview.assets.assets-tab.grid-headers.token'), field: 'token', width: '1fr' },
       { headerText: this.i18n.tr('navigation.treasury.overview.assets.assets-tab.grid-headers.price'), field: 'price', width: '1fr' },
       { headerText: this.i18n.tr('navigation.treasury.overview.assets.assets-tab.grid-headers.quantity'), field: 'quantity', width: '1fr' },
@@ -16,7 +16,7 @@ export class Assets implements ICustomElementViewModel {
     ];
   }
 
-  testData = [
+  data = [
     { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
     { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
     { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },

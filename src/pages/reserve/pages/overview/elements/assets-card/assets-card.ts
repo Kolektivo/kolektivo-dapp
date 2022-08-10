@@ -12,7 +12,7 @@ export class AssetsCard implements ICustomElementViewModel {
   routes() {
     return [
       { name: this.i18n.tr('navigation.treasury.overview.assets.assets-tab.title'), path: 'assets' },
-      { name: this.i18n.tr('navigation.treasury.overview.assets.transaction-history.title'), path: 'transaction-history' },
+      { name: this.i18n.tr('navigation.treasury.overview.assets.transaction-history.title'), path: './transaction-history' },
     ];
   }
 }

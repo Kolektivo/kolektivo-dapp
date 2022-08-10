@@ -18,6 +18,19 @@ export class Store {
   }
 
   sideBarOpen = false;
+
+  kCur: TokenInfo = {
+    marketCap: 4000000,
+    currentPrice: 0.98,
+    totalSupply: 8000000,
+    supplyDistribution: {
+      treasury: 40,
+      reserves: 40,
+      circulating: 10,
+      circulatingExternal: 10,
+    },
+  };
+
   tokenInfo: TokenInfo = {
     marketCap: 3000000,
     currentPrice: 0.98,

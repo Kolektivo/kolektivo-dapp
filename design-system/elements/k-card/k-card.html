@@ -1,10 +1,11 @@
 <k-paper part="paper" style.bind="style" ...$attrs>
   <k-grid part="grid" gap="var(--spacing)" rows="auto 1fr auto">
     <slot part="header" name="header">
-      <k-grid cols="auto 1fr" gap="var(--spacing-lg)">
+      <k-stack direction="row" gap="var(--spacing-lg)">
+        <k-avatar if.bind="titleAvatar" src.bind="titleAvatar" size="32"></k-avatar>
         <k-text type="h3">${title}</k-text>
         <k-icon if.bind="tooltipText" name="help_outline" size="28" tooltip="${tooltipText}"></k-icon>
-      </k-grid>
+      </k-stack>
     </slot>
     <slot part="content"></slot>
     <slot part="footer" name="footer"></slot>

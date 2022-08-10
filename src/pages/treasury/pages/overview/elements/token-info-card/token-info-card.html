@@ -1,27 +1,25 @@
-<let info.bind="state.tokenInfo"></let>
-<div animate animate-start-class="zoom-in" animate-speed=".2">
-  <k-card color="${cardColor & oneTime}">
-    <k-stack gap="var(--spacing-xl)" slot="header" direction="row">
-      <k-avatar color="var(--white)"></k-avatar>
-      <k-text tag="h3" t="${titlei18n & oneTime}">
-      </k-text>
-    </k-stack>
-    <k-stack gap="var(--spacing-xl)">
-      <k-grid cols="3">
-        <label-value t="${marketCapi18n & oneTime}" value.bind="info.marketCap | currency">
-        </label-value>
-        <label-value t="${currentPricei18n & oneTime}" value.bind="info.currentPrice | currency">
-        </label-value>
-        <label-value t="${totalSupplyi18n & oneTime}" value.bind="info.totalSupply">
-        </label-value>
-      </k-grid>
-      <label-value gap="var(--spacing-lg)" t="${supplyDistributioni18n & oneTime}">
-        <k-stack direction="row" gap="var(--spacing-xl)">
-          <k-text>${info.supplyDistribution.treasury}% in treasury</k-text>
-          <k-text>${info.supplyDistribution.reserves}% in reserves</k-text>
-          <k-text>${info.supplyDistribution.circulating}% circulating supply</k-text>
-        </k-stack>
-      </label-value>
-    </k-stack>
-  </k-card>
-</div>
+<let info.bind="store.tokenInfo"></let>
+<k-card color="linear-gradient(to right, var(--ocean-blue-500), var(--ocean-blue-600))"
+  title="${i18n.tr('navigation.treasury.overview.ktt.title')}"
+  title-avatar="${i18n.tr('navigation.treasury.overview.ktt.avatar-src')}">
+  <k-stack gap="var(--spacing-xl)">
+    <k-grid cols="3">
+      <label-value title="${i18n.tr('navigation.treasury.overview.ktt.market-cap')}"
+        value.bind="info.marketCap | currency"
+        tooltip-text="${i18n.tr('navigation.treasury.overview.ktt.market-cap-tooltip')}"></label-value>
+      <label-value title="${i18n.tr('navigation.treasury.overview.ktt.current-price')}"
+        value.bind="info.currentPrice | currency"
+        tooltip-text="${i18n.tr('navigation.treasury.overview.ktt.current-price-tooltip')}"></label-value>
+      <label-value title="${i18n.tr('navigation.treasury.overview.ktt.total-supply')}" value.bind="info.totalSupply"
+        tooltip-text="${i18n.tr('navigation.treasury.overview.ktt.total-supply-tooltip')}"></label-value>
+    </k-grid>
+    <label-value gap="var(--spacing-lg)" title="${i18n.tr('navigation.treasury.overview.ktt.supply-distribution')}"
+      tooltip-text="${i18n.tr('navigation.treasury.overview.ktt.supply-distribution-tooltip')}">
+      <k-stack direction="row" gap="var(--spacing-xl)">
+        <k-text>${info.supplyDistribution.treasury}% in treasury</k-text>
+        <k-text>${info.supplyDistribution.reserves}% in reserves</k-text>
+        <k-text>${info.supplyDistribution.circulating}% circulating supply</k-text>
+      </k-stack>
+    </label-value>
+  </k-stack>
+</k-card>

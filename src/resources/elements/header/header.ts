@@ -12,6 +12,6 @@ export class Header implements ICustomElementViewModel {
   }
 
   connectWallet(): void {
-    alert('Not Implemented');
+    this.blockChainStore.walletConnected = true;
   }
 }
