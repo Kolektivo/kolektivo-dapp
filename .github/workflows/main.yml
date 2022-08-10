@@ -8,7 +8,7 @@ on:
   pull_request:
 jobs:
   lint:
-    name: Install dependencies and Lint
+    name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
