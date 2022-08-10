@@ -85,6 +85,7 @@ export class KChart implements ICustomElementViewModel {
   @bindable borderColor?: string;
   @bindable backgroundColor?: string;
   @bindable({ set: numberToPixelsInterceptor }) height = 150;
+  @bindable({ set: numberToPixelsInterceptor }) width?: string;
   @bindable tension?: number = 0.01;
   @bindable maxLabels = 11;
   @bindable legend?: LegendOptions<ChartType>;
@@ -99,8 +100,8 @@ export class KChart implements ICustomElementViewModel {
 
   get styles() {
     return {
-      width: '100%',
       height: this.height,
+      width: this.width,
     };
   }
 

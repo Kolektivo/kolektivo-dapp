@@ -1,4 +1,5 @@
 <k-card>
-  <k-text type="h4" slot="header">Treasury Assets</k-text>
-  <k-data-grid rows.bind="testData" columns.bind="testColumns"></k-data-grid>
+  <k-text type="h3" slot="header">${i18n.tr('navigation.treasury.overview.assets.title')}</k-text>
+  <card-nav routes.bind="routes()"></card-nav>
+  <au-viewport name="assets-card" default="assets"></au-viewport>
 </k-card>

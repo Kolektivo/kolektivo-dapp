@@ -21,7 +21,29 @@
                 "governance": "Governance"
             },
             "overview": {
-                "assets": {},
+                "assets": {
+                    "title": "Treasury Assets",
+                    "assets-tab": {
+                        "title": "Assets",
+                        "grid-headers":{
+                            "token": "Token",
+                            "price": "Price",
+                            "quantity": "Quantity",
+                            "total": "Total Value"
+                        }
+                    },
+                    "transaction-history": {
+                        "title": "Transaction History",
+                        "grid-headers":{
+                            "token": "Token",
+                            "type": "Type",
+                            "amount": "Amount",
+                            "address": "Address",
+                            "age": "Age"
+                        }
+                     } 
+
+                },
                 "ktt": {
                   "title": "Kolektivo Treasury Token (KTT)",
                   "market-cap": "Market Cap",
@@ -37,14 +59,71 @@
                   "title": "Treasury Value",
                   "tooltip": "Treasury Value is this and that"
                 },
-                "value-by-asset-type": {},
+                "value-by-asset-type": {
+                    "title": "Value by Asset Type"
+                },
                 "value-over-time": {}
             },
             "governance": {}
         },
         "reserve":{
+            "title": "Kolektivo Curaçao Reserve",
+            "description": "This is a basic & accessible description that the public can read to understand what it is.",
             "link-text": "Reserve",
-            "link-icon": "savings"
+            "link-icon": "savings",
+            "overview": {
+                "menu": "Overview",
+                "value" :{
+                    "title": "Reserve Value",
+                    "tooltip": "This is a tooltip for the reserve value"
+                },
+                "value-by-asset-type": {
+                    "title": "Value by Asset Type",
+                    "tooltip": "This is a tooltip for Value by Asset Type"
+                },
+                "value-over-time": {
+                    "title": "Reserve Value Over Time",
+                    "tooltip": "This is a tooltip for Value Over Time"
+                },
+                "assets": {
+                    "title": "Reserve Assets",
+                    "tooltip": "This is a tooltip for Reserve Assets",
+                    "assets-tab": {
+                        "title": "Assets",
+                        "grid-headers":{
+                            "token": "Token",
+                            "price": "Price",
+                            "quantity": "Quantity",
+                            "total": "Total Value"
+                        }
+                    },
+                    "transaction-history": {
+                        "title": "Transaction History",
+                        "grid-headers":{
+                            "token": "Token",
+                            "type": "Type",
+                            "amount": "Amount",
+                            "address": "Address",
+                            "age": "Age"
+                        }
+                     } 
+                }
+            },
+            "k-cur":{
+                "menu": "kCur"
+            },
+            "bond-admin":{
+                "menu": "Bond Admin"
+            },
+            "risk":{
+                "menu": "Risk"
+            },
+            "k-guilder":{
+                "menu": "kGuilder"
+            },
+            "governance":{
+                "menu": "Governance"
+            }
         },
         "swap":{
             "link-text": "Swap",

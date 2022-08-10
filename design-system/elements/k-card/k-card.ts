@@ -14,9 +14,10 @@ import template from './k-card.html';
   },
 })
 export class KCard implements ICustomElementViewModel {
-  @bindable color = 'var(--white)';
+  @bindable color = 'var(--card-bg)';
   @bindable rounded = 6;
-
+  @bindable title?: string;
+  @bindable tooltipText?: string;
   get style() {
     return {
       background: this.color,

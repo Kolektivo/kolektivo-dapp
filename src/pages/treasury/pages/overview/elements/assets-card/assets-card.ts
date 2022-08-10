@@ -1,26 +1,17 @@
 import './assets-card.scss';
+import * as tabs from './tabs';
+import { I18N } from '@aurelia/i18n';
 import { ICustomElementViewModel, customElement } from 'aurelia';
-import { IGridColumn } from 'design-system/elements/k-data-grid/grid-column';
-
 import template from './assets-card.html';
 
-@customElement({ name: 'assets-card', template })
+@customElement({ name: 'assets-card', template, dependencies: [tabs] })
 export class AssetsCard implements ICustomElementViewModel {
-  testColumns: IGridColumn[] = [
-    { headerText: 'Token', field: 'token', width: '1fr' },
-    { headerText: 'Price', field: 'price', width: '1fr' },
-    { headerText: 'Quantity', field: 'quantity', width: '1fr' },
-    { headerText: 'Total Value', field: 'totalValue', width: '1fr' },
-  ];
+  constructor(@I18N private readonly i18n: I18N) {}
 
-  testData = [
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-  ];
+  routes() {
+    return [
+      { name: this.i18n.tr('navigation.treasury.overview.assets.assets-tab.title'), path: 'assets' },
+      { name: this.i18n.tr('navigation.treasury.overview.assets.transaction-history.title'), path: 'transaction-history' },
+    ];
+  }
 }

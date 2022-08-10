@@ -17,7 +17,7 @@ export class SideBar implements ICustomElementViewModel {
       { name: this.i18n.tr('navigation.map.link-text'), path: 'map', location: 'top', icon: this.i18n.tr('navigation.map.link-icon') },
       { name: this.i18n.tr('navigation.treasury.link-text'), path: 'treasury', location: 'top', icon: this.i18n.tr('navigation.treasury.link-icon') },
       { name: this.i18n.tr('navigation.reserve.link-text'), path: 'reserve', location: 'top', icon: this.i18n.tr('navigation.reserve.link-icon') },
-      { name: this.i18n.tr('navigation.swap.link-text'), path: 'swap', location: 'top', icon: this.i18n.tr('navigation.swap.link-icon') },
+      // { name: this.i18n.tr('navigation.swap.link-text'), path: 'swap', location: 'top', icon: this.i18n.tr('navigation.swap.link-icon') },
       {
         name: this.i18n.tr('navigation.documentation.link-text'),
         path: 'documentation',

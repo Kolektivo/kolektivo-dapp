@@ -1,0 +1,21 @@
+<k-card title="${i18n.tr('navigation.reserve.overview.value-by-asset-type.title')}" tooltip-text="${i18n.tr('navigation.reserve.overview.value-by-asset-type.tooltip')}">
+  <k-stack direction="row">
+    <k-chart cutout="70" type="doughnut" width="150"
+      colors.bind="['var(--terra-cotta)', 'var(--ocean-blue)', 'var(--green-apple)', ]" data.bind="[20,20,60]">
+    </k-chart>
+    <k-stack gap="var(--spacing-xl)">
+      <k-stack gap="20" direction="row">
+        <k-avatar color="var(--green-apple)" size="20"></k-avatar>
+        <k-text>60% Ecological</k-text>
+      </k-stack>
+      <k-stack gap="20" direction="row">
+        <k-avatar color="var(--ocean-blue)" size="20"></k-avatar>
+        <k-text>20% Stablecoins</k-text>
+      </k-stack>
+      <k-stack gap="20" direction="row">
+        <k-avatar color="var(--terra-cotta)" size="20"></k-avatar>
+        <k-text>20% Non Stablecoins</k-text>
+      </k-stack>
+    </k-stack>
+  </k-stack>
+</k-card>
