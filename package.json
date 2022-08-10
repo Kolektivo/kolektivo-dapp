@@ -29,7 +29,7 @@
     "unit:watch": "jest --watch",
     "e2e": "playwright test",
     "e2e:watch": "playwright test --watch",
-    "e2e:ci": "URL=https://kolektivo-dapp.vercel.app playwright test",
+    "e2e:ci": "URL=https://kolektivo-dapp.vercel.app/ playwright test",
     "vercel:deploy": "vercel --token $npm_config_token",
     "vercel:deploy:production": "vercel --prod --token $npm_config_token",
     "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope"
