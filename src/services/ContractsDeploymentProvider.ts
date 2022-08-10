@@ -47,7 +47,8 @@ export class ContractsDeploymentProvider {
     return abi;
   }
 
-  public static getContractAddress(contractName: string): Address {
-    return ContractsDeploymentProvider.contractInfosJson.contracts[contractName].address;
+  public static getContractAddress(contractName: string): Address | null {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return ContractsDeploymentProvider.contractInfosJson.contracts[contractName]?.address ?? null;
   }
 }
