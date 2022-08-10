@@ -7,10 +7,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('App', () => {
-  test('shows message', async ({ page }) => {
-    await expect(page.locator('app au-viewport')).toHaveText('description');
-  });
-
   test('correct URL', ({ page }) => {
     expect(page.url()).toBe(BASE_URL);
   });
