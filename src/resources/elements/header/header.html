@@ -16,7 +16,7 @@
       <k-icon-button if.bind="pendingTransactions === 0" ref="activityButton" type="utility-dark" name="electric_bolt"></k-icon-button>
       <k-icon-button else ref="activityButton" type="utility-dark">
         <k-spinner size="20" thickness="6" color="var(--primary)">
-          ${pendingTransactions}
+          ${pendingTransactions < 10 ? pendingTransactions : '9+'}
         </k-spinner>
       </k-icon-button>
     </k-stack>
