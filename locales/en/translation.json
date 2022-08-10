@@ -125,7 +125,16 @@
                     "total-supply-tooltip": "This is a tooltip for total supply",
                     "supply-distribution":"Supply Distribution",
                     "supply-distribution-tooltip":"This is a tooltip for supply distribution"
-
+                },
+                "pool": {
+                    "title":"Primary Pool (kCUR-cUSD)",
+                    "grid-headers": {
+                        "tokens": "Tokens",
+                        "volume": "Volume",
+                        "tvl": "TVL",
+                        "fees": "Fees (24h)",
+                        "range": "Range to Value"
+                    }
                 }
             },
             "bond-admin":{

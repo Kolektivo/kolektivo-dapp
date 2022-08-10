@@ -24,7 +24,7 @@ export interface IToStringOptions {
 }
 
 export type INumberService = NumberService;
-export const INumberService = DI.createInterface<INumberService>('DumberService');
+export const INumberService = DI.createInterface<INumberService>('NumberService');
 
 export class NumberService {
   constructor(@I18N private readonly i18n: I18N) {}

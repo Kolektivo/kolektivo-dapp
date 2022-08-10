@@ -3,6 +3,7 @@ export * from './animate';
 export * from './copy';
 export * from './full-height';
 export * from './full-width';
+export * from './link';
 export * from './ripple';
 export * from './tooltip';
 export * from './underline';

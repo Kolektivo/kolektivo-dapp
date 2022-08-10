@@ -6,6 +6,7 @@ import { DateService, IDateService } from './DateService';
 import { EthereumService, IEthereumService } from './EthereumService';
 import { IIpfsService, IpfsService } from './IpfsService';
 import { IKolektivoIpfsClient, KolektivoIpfsClient } from './KolektivoIpfsClient';
+import { INumberService, NumberService } from './NumberService';
 import { ITokenListProvider, TokenListProvider } from './TokenListProvider';
 import { ITokenService, TokenService } from './TokenService';
 
@@ -15,6 +16,7 @@ export const IServices = DI.createInterface<Services>();
 export class Services {
   constructor(
     @IAxiosService public readonly axiosService: IAxiosService,
+    @INumberService public readonly numberService: INumberService,
     @IDateService public readonly dateService: IDateService,
     @IIpfsService public readonly ipfsService: IIpfsService,
     @IKolektivoIpfsClient public readonly kolektivoService: IKolektivoIpfsClient,
@@ -29,6 +31,7 @@ export class Services {
     container
       .register(Registration.singleton(IServices, Services))
       .register(AxiosService)
+      .register(NumberService)
       .register(DateService)
       .register(IpfsService)
       .register(KolektivoIpfsClient)

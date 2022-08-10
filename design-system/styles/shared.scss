@@ -122,3 +122,15 @@
 .k-overlay {
   position: absolute;
 }
+
+k-avatar-group{
+  > div{
+      display: flex;
+
+      k-avatar{
+          &:not(:first-child){
+              margin-left: -10px;
+          }
+      }        
+  }
+}

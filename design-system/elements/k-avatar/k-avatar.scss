@@ -8,10 +8,4 @@
     display:grid;
     place-content: center;
   }
-
-  img,  
-  ::slotted(*) {
-    width: 100%;
-    height: 100%;
-  }
 }

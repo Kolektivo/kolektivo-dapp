@@ -30,4 +30,10 @@ export class KAvatar implements ICustomElementViewModel {
       fontSize: this.fontSize,
     };
   }
+  get imageStyle(): Partial<CSSStyleDeclaration> {
+    return {
+      height: this.size,
+      width: this.size,
+    };
+  }
 }
