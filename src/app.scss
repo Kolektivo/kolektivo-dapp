@@ -51,7 +51,14 @@ body {
 
   main {
     position: relative;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
   }
+}
+
+au-viewport{
+  height: 100%;
 }
 
 @include xl {

@@ -1,4 +1,4 @@
-<div id="reserve-page">
-  <inner-nav routes.bind></inner-nav>
-  <au-viewport default="dashboard"></au-viewport>
-</div>
+<inner-nav routes.bind="routes()"></inner-nav>
+<k-page id="reserve-page" title="${i18n.tr('navigation.reserve.title')}" description="${i18n.tr('navigation.reserve.description')}" learn-more-link="/map">
+  <au-viewport default="overview"></au-viewport>
+</k-page>

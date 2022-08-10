@@ -2,18 +2,21 @@ import { ICustomElementViewModel, customElement } from 'aurelia';
 
 import './reserve.scss';
 import * as pages from './pages';
+import { I18N } from '@aurelia/i18n';
 import template from './reserve.html';
-
-const routes = [
-  { name: 'Reserve', path: './dashboard' },
-  { name: 'kCur', path: './currency' },
-  { name: 'Reserve Bonds', path: './reserve-bonds' },
-  { name: 'Risk', path: './risk' },
-  { name: 'Mento', path: './mento' },
-  { name: 'Governance', path: './governance' },
-];
 
 @customElement({ name: 'reserve', template, dependencies: [pages] })
 export class Reserve implements ICustomElementViewModel {
-  routes = routes;
+  constructor(@I18N private readonly i18n: I18N) {}
+
+  routes() {
+    return [
+      { name: this.i18n.tr('navigation.reserve.overview.menu'), path: 'overview' },
+      { name: this.i18n.tr('navigation.reserve.k-cur.menu'), path: 'k-cur' },
+      // { name: this.i18n.tr('navigation.reserve.bond-admin.menu'), path: 'bond-admin' },
+      { name: this.i18n.tr('navigation.reserve.risk.menu'), path: 'risk' },
+      { name: this.i18n.tr('navigation.reserve.k-guilder.menu'), path: 'k-guilder' },
+      { name: this.i18n.tr('navigation.reserve.governance.menu'), path: 'governance' },
+    ];
+  }
 }

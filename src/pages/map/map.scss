@@ -1,1 +1,9 @@
-#map { /* empty */ }
+map { 
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    p{
+        height: 100%;
+    }
+ }

@@ -1,5 +1,5 @@
 <k-card>
-  <k-text tag="h3" slot="header">Value by Asset Type</k-text>
+  <k-text tag="h3" slot="header">${i18n.tr('navigation.treasury.overview.value-by-asset-type.title')}</k-text>
   <k-stack direction="row">
     <k-chart cutout="70" type="doughnut"
       colors.bind="['var(--terra-cotta)', 'var(--ocean-blue)', 'var(--green-apple)', ]" data.bind="[20,20,60]">
