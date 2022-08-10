@@ -9,7 +9,7 @@ on:
 jobs:
   install:
     timeout-minutes: 15
-    name: 🔍 Install
+    name: Install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
