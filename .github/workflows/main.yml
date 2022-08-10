@@ -7,10 +7,43 @@ on:
       - development
   pull_request:
 jobs:
-  lint:
-    name: Install dependencies and Lint
-    runs-on: ubuntu-latest
+  install:
     timeout-minutes: 15
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Cache Playwright binaries
+        uses: actions/cache@v3
+        id: cache-playwright
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+
+      - name: Install Playwright 
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+        run: npx playwright install
+
+  lint:
+    name: Lint
+    needs: install
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -18,16 +51,12 @@ jobs:
           node-version: '16'
           cache: 'npm'
 
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v2
+      - name: Cache node_modules
+        uses: actions/cache@v3
         with:
-          path: ./node_modules
+          path: |
+            node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
 
       - run: npm list
 
@@ -75,6 +104,10 @@ jobs:
             npm run vercel:deploy --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
           fi
 
+          if grep -q Error! "deployment-output.txt"; then
+            exit 1
+          fi
+
           DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
           echo Deployment URL: $DEPLOYMENT_URL
           INSPECT_URL=$(grep -m 1 -o 'https://vercel[^"]*[[:blank:]]' deployment-output.txt)
@@ -82,36 +115,44 @@ jobs:
           echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
           echo "::set-output name=INSPECT_URL::$INSPECT_URL"
 
-  cypress-run:
-    name: Cypress run
-    needs: [deploy, lint]
+  e2e:
+    name: e2e tests
+    needs: [lint, deploy]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
 
-      # Run e2e tests against Vercel deployment
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+      - name: Cache node_modules
+        uses: actions/cache@v3
         with:
-          config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
-      # after the test run completes
-      # store videos and any screenshots
-      # NOTE: screenshots will be generated only if E2E test failed
-      # thus we store screenshots only on failures
-      - uses: actions/upload-artifact@v2
-        if: failure()
+          path: |
+            node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Cache Playwright
+        uses: actions/cache@v3
         with:
-          name: cypress-screenshots
-          path: test/e2e/screenshots
+          path: |
+            ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('package-lock.json') }}
+
+      - run: npx playwright install-deps
+
+      - name: Run playwright
+        run: npm run e2e:ci --url=${{ needs.deploy.outputs.DEPLOYMENT_URL }}/
 
   failed-e2e:
     name: Comment on PR with failing tests details
-    needs: [deploy, cypress-run]
+    needs: [deploy, e2e]
     runs-on: ubuntu-latest
     timeout-minutes: 2
-    if: always() && needs.cypress-run.result == 'failure' && (github.event_name == 'pull_request')
+    if: always() && needs.e2e.result == 'failure' && (github.event_name == 'pull_request')
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -144,7 +185,7 @@ jobs:
   # Otherwise the latest successful deployment for that branch will be still available under the branch specific URL
   assign-branch-url:
     name: Assign branch specific URL
-    needs: [deploy, lint]
+    needs: [deploy, lint, e2e]
     runs-on: ubuntu-latest
     timeout-minutes: 2
     if: ${{needs.deploy.outputs.DEPLOYMENT_ENVIRONMENT == 'Preview' }}
