@@ -48,28 +48,28 @@ jobs:
       - run: cd ~/.cache && ls
 
       - run: ~/.cache/ms-playwright && ls 
-  lint:
-    name: Lint
-    needs: install
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: 'npm'
+  # lint:
+  #   name: Lint
+  #   needs: install
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 5
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '16'
+  #         cache: 'npm'
 
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: |
-            node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
+  #     - name: Cache node_modules
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: |
+  #           node_modules
+  #         key: modules-${{ hashFiles('package-lock.json') }}
 
-      - run: npm list
+  #     - run: npm list
 
-      - run: npm run lint
+  #     - run: npm run lint
 
   # deploy:
   #   name: Deploy to Vercel
