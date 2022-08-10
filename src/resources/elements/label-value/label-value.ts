@@ -6,6 +6,6 @@ import template from './label-value.html';
 export class LabelValue implements ICustomElementViewModel {
   @bindable public title?: string;
   @bindable public value?: string;
-  @bindable public tooltip?: string;
+  @bindable public tooltipText?: string;
   @bindable public gap = 'var(--spacing)';
 }

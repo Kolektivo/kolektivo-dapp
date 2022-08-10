@@ -1,0 +1,18 @@
+<let info.bind="state.kCur"></let>
+<k-card color="linear-gradient(to right, var(--ocean-blue-500), var(--ocean-blue-600))" title="${i18n.tr('navigation.reserve.k-cur.token-info.title')}" title-avatar="${i18n.tr('navigation.reserve.k-cur.token-info.avatar-src')}">
+  <k-stack gap="var(--spacing-xl)">
+    <k-grid cols="3">
+      <label-value title="${i18n.tr('navigation.reserve.k-cur.token-info.market-cap')}" value.bind="info.marketCap | currency" tooltip-text="${i18n.tr('navigation.reserve.k-cur.token-info.market-cap-tooltip')}"></label-value>
+      <label-value title="${i18n.tr('navigation.reserve.k-cur.token-info.current-price')}" value.bind="info.currentPrice | currency" tooltip-text="${i18n.tr('navigation.reserve.k-cur.token-info.current-price-tooltip')}"></label-value>
+      <label-value title="${i18n.tr('navigation.reserve.k-cur.token-info.total-supply')}" value.bind="info.totalSupply" tooltip-text="${i18n.tr('navigation.reserve.k-cur.token-info.total-supply-tooltip')}"></label-value>
+    </k-grid>
+    <label-value gap="var(--spacing-lg)" title="${i18n.tr('navigation.reserve.k-cur.token-info.supply-distribution')}" tooltip-text="${i18n.tr('navigation.reserve.k-cur.token-info.supply-distribution-tooltip')}">
+      <k-stack direction="row" gap="var(--spacing-xl)">
+        <k-text>${info.supplyDistribution.treasury}% in Reserve</k-text>
+        <k-text>${info.supplyDistribution.reserves}% in Mento</k-text>
+        <k-text>${info.supplyDistribution.circulating}% circulating (Primary Pool)</k-text>
+        <k-text>${info.supplyDistribution.circulating-external}% circulating (External)</k-text>
+      </k-stack>
+    </label-value>
+  </k-stack>
+</k-card>

@@ -4,7 +4,7 @@
   </k-icon-button>
   <div></div>
   <div slot="end">
-    <k-stack if.bind="!blockChainState.walletConnected" justify-content="flex-end">
+    <k-stack if.bind="!blockChainState.walletConnected" justify-content="flex-end" direction="row">
       <k-button click.trigger="connectWallet()">Connect Wallet</k-button>
     </k-stack>
     <k-stack else justify-content="flex-end" direction="row" gap="var(--spacing)">

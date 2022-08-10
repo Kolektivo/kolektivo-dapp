@@ -46,6 +46,7 @@
                 },
                 "ktt": {
                   "title": "Kolektivo Treasury Token (KTT)",
+                  "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg",
                   "market-cap": "Market Cap",
                   "market-cap-tooltip": "Market Cap is this and that",
                   "current-price": "Current Price",
@@ -67,12 +68,12 @@
             "governance": {}
         },
         "reserve":{
-            "title": "Kolektivo Curaçao Reserve",
-            "description": "This is a basic & accessible description that the public can read to understand what it is.",
             "link-text": "Reserve",
             "link-icon": "savings",
             "overview": {
                 "menu": "Overview",
+                "title": "Kolektivo Curaçao Reserve",
+                "description": "This is a basic & accessible description that the public can read to understand what it is.",
                 "value" :{
                     "title": "Reserve Value",
                     "tooltip": "This is a tooltip for the reserve value"
@@ -110,7 +111,22 @@
                 }
             },
             "k-cur":{
-                "menu": "kCur"
+                "menu": "kCur",
+                "title": "kCUR",
+                "description": "What is kCUR? Why does it exist? Which blockchain does it live on? This is a basic & accessible description that the public can read to understand what it is.",
+                "token-info": {
+                    "title": "kCUR",
+                    "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg",
+                    "market-cap": "Market Cap",
+                    "market-cap-tooltip": "This is a tooltip for market cap",
+                    "current-price": "Current Price",
+                    "current-price-tooltip": "This is a tooltip for current price",
+                    "total-supply": "Total Supply",
+                    "total-supply-tooltip": "This is a tooltip for total supply",
+                    "supply-distribution":"Supply Distribution",
+                    "supply-distribution-tooltip":"This is a tooltip for supply distribution"
+
+                }
             },
             "bond-admin":{
                 "menu": "Bond Admin"

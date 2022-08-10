@@ -36,6 +36,7 @@ type SupplyDistribution = {
   treasury: number;
   reserves: number;
   circulating: number;
+  circulatingExternal?: number;
 };
 
 type RouteLink = { name: string; path: string; location: 'top' | 'bottom'; icon?: string };

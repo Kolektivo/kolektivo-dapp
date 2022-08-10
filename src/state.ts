@@ -18,9 +18,20 @@ export class State {
       circulating: 20,
     },
   };
+  kCur: TokenInfo = {
+    marketCap: 4000000,
+    currentPrice: 0.98,
+    totalSupply: 8000000,
+    supplyDistribution: {
+      treasury: 40,
+      reserves: 40,
+      circulating: 10,
+      circulatingExternal: 10,
+    },
+  };
   treasuryState = {};
   blockChainState: BlockChainState = {
-    walletConnected: true,
+    walletConnected: false,
     connectedWalletAddress: '0xBf3a5599f2f6CE89862d640a248e31F30B7ddF29',
     badges: [
       {

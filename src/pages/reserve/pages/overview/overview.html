@@ -1,4 +1,5 @@
-<k-stack gap="20">
+<k-page id="reserve-page" title="${i18n.tr('navigation.reserve.overview.title')}" description="${i18n.tr('navigation.reserve.overview.description')}" learn-more-link="/map">
+  <k-stack gap="20">
     <k-grid gap="20" cols="2">
       <value-card animate animate-start-class="zoom-in" animate-speed=".2"></value-card>
       <value-by-asset-type-card animate animate-start-class="zoom-in" animate-speed=".2"></value-by-asset-type-card>
@@ -7,4 +8,6 @@
       <value-over-time-card animate animate-start-class="zoom-in" animate-speed=".2"></value-over-time-card>
       <assets-card animate animate-start-class="zoom-in" animate-speed=".2"></assets-card>
     </k-stack>
-</k-stack>
+  </k-stack>
+</k-page>
+  

@@ -1,9 +1,4 @@
 /* stylelint-disable selector-type-no-unknown */
 overview {
-    >k-stack {
-        k-card::part(grid) {
-            padding: var(--spacing-xxl);
-        }
-    }
-    
+
 }

@@ -13,6 +13,6 @@ export class Header implements ICustomElementViewModel {
     return this.blockChainState.transactions.filter((x) => x.status === 'pending').length;
   }
   connectWallet(): void {
-    alert('Not Implemented');
+    this.blockChainState.walletConnected = true;
   }
 }

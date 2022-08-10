@@ -6,9 +6,9 @@ import template from './assets.html';
 
 @customElement({ name: 'assets', template })
 export class Assets implements ICustomElementViewModel {
-  testColumns: IGridColumn[] = [];
+  columns: IGridColumn[] = [];
   constructor(@I18N private readonly i18n: I18N) {
-    this.testColumns = [
+    this.columns = [
       {
         headerText: this.i18n.tr('navigation.reserve.overview.assets.assets-tab.grid-headers.token'),
         field: 'token',
@@ -21,7 +21,7 @@ export class Assets implements ICustomElementViewModel {
     ];
   }
 
-  testData = [
+  data = [
     {
       token: 'ETH',
       tokenIcon: 'https://assets.coingecko.com/coins/images/279/thumb/ethereum.png?1595348880',
