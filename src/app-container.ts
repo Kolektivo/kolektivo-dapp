@@ -1,8 +1,8 @@
-import { BlockChainStore, Store, TreasuryStore } from './stores';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from '../design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { RouterConfiguration } from '@aurelia/router';
+import { Store } from './stores';
 import { isDev } from './environment-variables';
 import en from '../locales/en/translation.json';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
@@ -61,8 +61,6 @@ export const appContainer: IContainer = DI.createContainer()
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(Services)
   .register(Store)
-  .register(TreasuryStore)
-  .register(BlockChainStore)
   .register(hooks)
   .register(resources)
   .register(pages)
