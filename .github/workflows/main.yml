@@ -9,7 +9,7 @@ on:
 jobs:
   install:
     timeout-minutes: 15
-    name: Install
+    name: Install Dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -145,31 +145,7 @@ jobs:
       - run: npx playwright install-deps
 
       - name: Run playwright
-        run: npm run e2e:ci --url=${{ needs.deploy.outputs.DEPLOYMENT_URL }}
-
-  # cypress-run:
-  #   name: Cypress run
-  #   needs: [deploy, lint]
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 15
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-
-  #     # Run e2e tests against Vercel deployment
-  #     - name: Cypress run
-  #       uses: cypress-io/github-action@v4
-  #       with:
-  #         config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
-  #     # after the test run completes
-  #     # store videos and any screenshots
-  #     # NOTE: screenshots will be generated only if E2E test failed
-  #     # thus we store screenshots only on failures
-  #     - uses: actions/upload-artifact@v2
-  #       if: failure()
-  #       with:
-  #         name: cypress-screenshots
-  #         path: test/e2e/screenshots
+        run: npm run e2e:ci --url=${{ needs.deploy.outputs.DEPLOYMENT_URL }}/
 
   failed-e2e:
     name: Comment on PR with failing tests details

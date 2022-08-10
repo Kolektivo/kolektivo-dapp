@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('App', () => {
   test('shows message', async ({ page }) => {
-    await expect(page.locator('app au-viewport')).toHaveText('Map works!');
+    await expect(page.locator('app au-viewport')).toHaveText('description');
   });
 
   test('correct URL', ({ page }) => {
