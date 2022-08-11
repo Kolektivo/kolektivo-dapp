@@ -13,7 +13,7 @@ export class Assets implements ICustomElementViewModel {
         headerText: this.i18n.tr('navigation.reserve.overview.assets.assets-tab.grid-headers.token'),
         field: 'token',
         width: '1fr',
-        template: '<token name.bind="token" icon.bind="tokenIcon"></token>',
+        template: '<avatar-text name.bind="token" src.bind="tokenIcon"></avatar-text>',
       },
       { headerText: this.i18n.tr('navigation.reserve.overview.assets.assets-tab.grid-headers.price'), field: 'price', width: '1fr' },
       { headerText: this.i18n.tr('navigation.reserve.overview.assets.assets-tab.grid-headers.quantity'), field: 'quantity', width: '1fr' },

@@ -1,0 +1,7 @@
+<k-stack direction="row" gap="5">
+  <k-icon if.bind="icon" name.bind="icon" size.bind="size" color.bind="color"></k-icon>
+  <k-avatar else src.bind="src" color.bind="color" size.bind="size"></k-avatar>  
+  <au-slot>
+    <k-text>${name}</k-text>
+  </au-slot>
+</k-stack>

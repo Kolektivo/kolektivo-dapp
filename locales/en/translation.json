@@ -154,11 +154,30 @@
                     "external": "External"
                 }
             },
-            "bond-admin":{
-                "menu": "Bond Admin"
-            },
             "risk":{
-                "menu": "Risk"
+                "menu": "Risk",
+                "title": "Reserve Risk",
+                "description": "This is a basic & accessible description that the public can read to understand what it is.",
+                "value-over-time":{
+                    "title": "Reserve Value Over Time by Risk Class",
+                    "tooltip": "Tooltip for Reserve Value Over Time by Risk Class",
+                    "ceiling": "Collateral Ceiling",
+                    "low-risk": "Low Risk",
+                    "moderate-risk": "Moderate Risk",
+                    "high-risk": "High Risk",
+                    "alert": "The reserve is under-collateralized. Some copy about why this matters.",
+                    "alert-link-text": "Learn more"
+                },
+                "assets":{
+                    "title": "Risk by Asset",
+                    "tooltip": "Tooltip for Risk by Asset",
+                    "grid-headers": {
+                        "token": "Token",
+                        "risk-class": "Risk Class",
+                        "collateral-value": "Collateral Value",
+                        "percent-of-reserve": "% of Reserve"
+                    }
+                }
             },
             "k-guilder":{
                 "menu": "kGuilder"

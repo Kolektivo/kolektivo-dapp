@@ -1,22 +1,10 @@
 <k-card title="${i18n.tr('navigation.reserve.k-cur.supply.title')}" tooltip-text="${i18n.tr('navigation.reserve.k-cur.supply.tooltip')}">
   <chart-time-filter>
     <k-stack direction="row" gap="40">
-      <k-stack direction="row" gap="8">
-        <k-avatar color="var(--san-juan-500)" size="14"></k-avatar>
-        <k-text>${i18n.tr('navigation.reserve.k-cur.supply.reserve')}</k-text>
-      </k-stack>
-      <k-stack direction="row" gap="8">
-        <k-avatar color="var(--primary)" size="14"></k-avatar>
-        <k-text>${i18n.tr('navigation.reserve.k-cur.supply.primary-pool')}</k-text>
-      </k-stack>
-      <k-stack direction="row" gap="8">
-        <k-avatar color="var(--sandy-brown)" size="14"></k-avatar>
-        <k-text>${i18n.tr('navigation.reserve.k-cur.supply.mento')}</k-text>
-      </k-stack>
-      <k-stack direction="row" gap="8">
-        <k-avatar color="var(--dark-coral)" size="14"></k-avatar>
-        <k-text>${i18n.tr('navigation.reserve.k-cur.supply.external')}</k-text>
-      </k-stack>
+      <avatar-text size="14" color="var(--san-juan-500)">${i18n.tr('navigation.reserve.k-cur.supply.reserve')}</avatar-text>
+      <avatar-text size="14" color="var(--primary)">${i18n.tr('navigation.reserve.k-cur.supply.primary-pool')}</avatar-text>
+      <avatar-text size="14" color="var(--sandy-brown)">${i18n.tr('navigation.reserve.k-cur.supply.mento')}</avatar-text>
+      <avatar-text size="14" color="var(--dark-coral)">${i18n.tr('navigation.reserve.k-cur.supply.external')}</avatar-text>
     </k-stack>
   </chart-time-filter>
   <k-chart height="300" max-y="100" min-y="0" max-y-labels="6" hide-legend type="line" fill labels.bind="[1,2,3,4,5,6,7,8,9,10]"
