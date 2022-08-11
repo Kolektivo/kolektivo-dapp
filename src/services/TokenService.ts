@@ -61,7 +61,7 @@ export class TokenService {
   }
 
   public async initialize(): Promise<void> {
-    this.erc20Abi = ContractsService.getContractAbi(ContractNames.IERC20);
+    this.erc20Abi = ContractsService.getContractAbi(ContractNames.ERC20);
 
     void this.tokenListProvider.initialize().then(() => {
       /**
@@ -223,28 +223,27 @@ export class TokenService {
         }
 
         const contractInterface = new Interface(contractAbi);
-        const ierc20Abi = ContractsService.getContractAbi(ContractNames.IERC20);
-        const ierc20Interface = new Interface(ierc20Abi);
+        const erc20Interface = new Interface(this.erc20Abi);
 
-        for (const functionName in ierc20Interface.functions) {
+        for (const functionName in erc20Interface.functions) {
           const contractFunction = contractInterface.functions[functionName];
           if (
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             !contractFunction ||
-            contractFunction.format(FormatTypes.minimal) !== ierc20Interface.functions[functionName].format(FormatTypes.minimal)
+            contractFunction.format(FormatTypes.minimal) !== erc20Interface.functions[functionName].format(FormatTypes.minimal)
           ) {
             isOk = false;
-            this.logger.error(`TokenService: Token ${tokenAddress} fails to implement IERC20 on function: ${functionName}`);
+            this.logger.error(`TokenService: Token ${tokenAddress} fails to implement ERC20 on function: ${functionName}`);
             break;
           }
         }
         if (isOk) {
-          for (const eventName in ierc20Interface.events) {
+          for (const eventName in erc20Interface.events) {
             const contractEvent = contractInterface.events[eventName];
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            if (!contractEvent || contractEvent.format(FormatTypes.minimal) !== ierc20Interface.events[eventName].format(FormatTypes.minimal)) {
+            if (!contractEvent || contractEvent.format(FormatTypes.minimal) !== erc20Interface.events[eventName].format(FormatTypes.minimal)) {
               isOk = false;
-              this.logger.error(`TokenService: Token ${tokenAddress} fails to implement IERC20 on event: ${eventName}`);
+              this.logger.error(`TokenService: Token ${tokenAddress} fails to implement ERC20 on event: ${eventName}`);
               break;
             }
           }
@@ -256,7 +255,7 @@ export class TokenService {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
-      this.logger.error(`TokenService: Error confirming IERC20: ${error?.response?.data?.error?.message ?? error?.message}`);
+      this.logger.error(`TokenService: Error confirming ERC20: ${error?.response?.data?.error?.message ?? error?.message}`);
       isOk = false;
     }
 
@@ -365,9 +364,7 @@ export class TokenService {
       await tokenContract.deployed();
 
       const tokenInfo = { address } as unknown as Partial<ITokenInfo>;
-      const logoURI = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;
-      const logoFound = await axios.get(logoURI).catch(() => null);
-      tokenInfo.logoURI = logoFound ? logoURI : undefined;
+      tokenInfo.logoURI = undefined;
       /**
        * It is up to the caller to decide what to tolerate
        * in the way of incomplete information

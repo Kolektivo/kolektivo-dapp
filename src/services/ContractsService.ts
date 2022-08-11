@@ -4,8 +4,14 @@ import { ContractsDeploymentProvider } from './ContractsDeploymentProvider';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
 
 export enum ContractNames {
-  IERC20 = 'IERC20',
+  ELASTICRECEIPTTOKEN = 'ElasticReceiptToken',
+  GEONFT = 'GeoNFT',
+  ORACLE = 'Oracle',
+  RESERVE = 'Reserve',
+  TREASURY = 'Treasury',
+  VESTINGVAULT = 'VestingVault',
   ERC20 = 'ERC20',
+  ERC721 = 'ERC721',
 }
 
 export interface IStandardEvent<TArgs> {
@@ -24,7 +30,16 @@ export class ContractsService {
     Registration.singleton(IContractsService, ContractsService).register(container);
   }
 
-  private static Contracts = new Map<ContractNames, Contract | undefined>([]);
+  private static Contracts = new Map<ContractNames, Contract | null>([
+    [ContractNames.ELASTICRECEIPTTOKEN, null],
+    [ContractNames.GEONFT, null],
+    [ContractNames.ORACLE, null],
+    [ContractNames.RESERVE, null],
+    [ContractNames.TREASURY, null],
+    [ContractNames.VESTINGVAULT, null],
+    [ContractNames.ERC20, null],
+    [ContractNames.ERC721, null],
+  ]);
   // org.zeppelinos.proxy.implementation
   private static storagePositionZep = '0x7050c9e0f4ca769c69bd3a8ef740bc37934f8e2c036e5a723fd8ee048ed3f8c3';
   // eip1967.proxy.implementation
@@ -76,7 +91,7 @@ export class ContractsService {
     return ContractsDeploymentProvider.getContractAbi(contractName);
   }
 
-  public static getContractAddress(contractName: ContractNames): Address {
+  public static getContractAddress(contractName: ContractNames): Address | null {
     return ContractsDeploymentProvider.getContractAddress(contractName);
   }
 
@@ -93,9 +108,9 @@ export class ContractsService {
     return signerOrProvider;
   }
 
-  public async getContractFor(contractName: ContractNames): Promise<Contract | undefined> {
+  public async getContractFor(contractName: ContractNames): Promise<Contract | null> {
     await this.assertContracts();
-    return ContractsService.Contracts.get(contractName);
+    return ContractsService.Contracts.get(contractName) ?? null;
   }
 
   public getContractAtAddress(contractName: ContractNames, address: Address, signorOrProvider?: SignerTypes): Contract {
@@ -165,9 +180,14 @@ export class ContractsService {
       let contract;
 
       if (reuseContracts) {
-        contract = ContractsService.Contracts.get(contractName)?.connect(signerOrProvider);
+        contract = ContractsService.Contracts.get(contractName)?.connect(signerOrProvider) ?? null;
       } else {
-        contract = this.getContractAtAddress(contractName, ContractsService.getContractAddress(contractName), signerOrProvider);
+        const address = ContractsService.getContractAddress(contractName);
+        if (address) {
+          contract = this.getContractAtAddress(contractName, address, signerOrProvider);
+        } else {
+          contract = null;
+        }
       }
       ContractsService.Contracts.set(contractName, contract);
     });
