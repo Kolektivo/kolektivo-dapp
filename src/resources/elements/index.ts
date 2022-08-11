@@ -2,6 +2,7 @@ export * from './account-menu';
 export * from './activity-menu';
 export * from './badge-menu';
 export * from './card-nav';
+export * from './chart-time-filter';
 export * from './header';
 export * from './inner-nav';
 export * from './k-footer';

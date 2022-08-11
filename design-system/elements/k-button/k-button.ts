@@ -39,7 +39,7 @@ export class KButton {
 
   get buttonStyle() {
     return {
-      borderRadius: this.rounded && `var(--rounded-${this.rounded}`,
+      borderRadius: this.rounded && `var(--rounded-${this.rounded})`,
       backgroundColor: this.color,
     };
   }

@@ -1,0 +1,10 @@
+<k-grid class="chart-time-filter" cols="auto 1fr">
+  <k-stack direction="row" gap="var(--spacing-xl)">
+    <k-button click.trigger="currentFilter = '1h'" type.bind="getButtonType('1h', currentFilter)" size='sm' rounded="7">${i18n.tr('general.chart-time-filter.1h')}</k-button>
+    <k-button click.trigger="currentFilter = '1d'" type.bind="getButtonType('1d', currentFilter)" size='sm' rounded="7">${i18n.tr('general.chart-time-filter.1d')}</k-button>
+    <k-button click.trigger="currentFilter = '1w'" type.bind="getButtonType('1w', currentFilter)" size='sm' rounded="7">${i18n.tr('general.chart-time-filter.1w')}</k-button>
+    <k-button click.trigger="currentFilter = '1m'" type.bind="getButtonType('1m', currentFilter)" size='sm' rounded="7">${i18n.tr('general.chart-time-filter.1m')}</k-button>
+    <k-button click.trigger="currentFilter = '1y'" type.bind="getButtonType('1y', currentFilter)" size='sm' rounded="7">${i18n.tr('general.chart-time-filter.1y')}</k-button>
+  </k-stack>
+  <au-slot></au-slot>
+</k-grid>

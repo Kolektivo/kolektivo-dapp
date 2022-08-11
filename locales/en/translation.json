@@ -135,6 +135,23 @@
                         "fees": "Fees (24h)",
                         "range": "Range to Value"
                     }
+                },
+                "leverage":{
+                    "title": "Leverage Ratio Over Time",
+                    "tooltip": "Tooltip for Leverage Ratio Over Time",
+                    "ratio-text": "Current Collateralization Ratio"
+                },
+                "trend": {
+                    "title": "kCur Price Trend",
+                    "tooltip": "Tooltip for kCur Price Trend"
+                },
+                "supply": {
+                    "title": "kCur Supply Distribution Over Time",
+                    "tooltip": "Tooltip for kCur Supply Distribution Over Time",
+                    "reserve": "Reserve",
+                    "primary-pool": "Primary Pool",
+                    "mento": "Mento",
+                    "external": "External"
                 }
             },
             "bond-admin":{
@@ -171,5 +188,13 @@
             "link-icon": "language"
         }
     },
-    "general": {}
+    "general": {
+        "chart-time-filter": {
+            "1h": "1H",
+            "1d": "1D",
+            "1w": "1W",
+            "1m": "1M",
+            "1y": "1Y"
+        }
+    }
 }
