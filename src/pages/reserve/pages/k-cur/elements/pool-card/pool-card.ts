@@ -13,7 +13,8 @@ export class PoolCard implements ICustomElementViewModel {
         headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.tokens'),
         field: 'tokens',
         width: '1fr',
-        template: '<k-avatar-group><k-avatar repeat.for="token of tokenIcons" src.bind="token" size="31"></k-avatar></k-avatar-group>',
+        template:
+          '<k-avatar-group><k-avatar repeat.for="token of tokens" src.bind="token.icon" size="31" tooltip.bind="token.symbol"></k-avatar></k-avatar-group>',
       },
       {
         headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.volume'),
@@ -34,10 +35,9 @@ export class PoolCard implements ICustomElementViewModel {
 
   data = [
     {
-      token: ['kCUR', 'cUSD'],
-      tokenIcons: [
-        'https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg',
-        'https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png?1547042389',
+      tokens: [
+        { symbol: 'kCUR', icon: 'https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg' },
+        { symbol: 'cUSD', icon: 'https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png?1547042389' },
       ],
       volume: 55000,
       tvl: 87000,

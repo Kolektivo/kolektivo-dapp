@@ -87,11 +87,14 @@ export class KChart implements ICustomElementViewModel {
   @bindable({ set: numberToPixelsInterceptor }) height = 150;
   @bindable({ set: numberToPixelsInterceptor }) width?: string;
   @bindable tension?: number = 0.01;
-  @bindable maxLabels = 11;
+  @bindable maxYLabels = 11;
+  @bindable maxXLabels = 11;
   @bindable legend?: LegendOptions<ChartType>;
   @bindable({ set: ifExistsThenTrue }) hideLegend = false;
   @bindable({ set: ifExistsThenTrue }) fill?: boolean;
   @bindable({ set: ifExistsThenTrue }) gradient?: boolean;
+  @bindable minY?: number;
+  @bindable maxY?: number;
 
   chart?: HTMLCanvasElement;
   chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
@@ -159,8 +162,8 @@ export class KChart implements ICustomElementViewModel {
       interaction: {
         intersect: false,
         includeInvisible: true,
+        mode: 'index',
       },
-
       plugins: {
         legend: this.legend ?? {
           display: !this.hideLegend,
@@ -177,6 +180,17 @@ export class KChart implements ICustomElementViewModel {
           caretPadding: 6,
           usePointStyle: true,
           displayColors: false,
+          intersect: false,
+          callbacks: {
+            label: (x) => {
+              switch (x.datasetIndex) {
+                case 0:
+                  return `${x.dataset.label ?? ''}: ${x.raw as string}%`;
+                default:
+                  return `${x.dataset.label ?? ''}: ${(x.raw as number) - (this.dataSets[x.datasetIndex - 1]?.data[x.dataIndex] as number)}%`;
+              }
+            },
+          },
         },
       },
     };
@@ -191,13 +205,18 @@ export class KChart implements ICustomElementViewModel {
       options.scales = {
         x: {
           ticks: {
-            maxTicksLimit: this.maxLabels,
+            maxTicksLimit: this.maxXLabels,
           },
           grid: {
             display: false,
           },
         },
         y: {
+          ticks: {
+            maxTicksLimit: this.maxYLabels,
+          },
+          max: this.maxY,
+          min: this.minY,
           grid: {
             display: false,
           },
@@ -218,9 +237,10 @@ export class KChart implements ICustomElementViewModel {
               {
                 id: 'chaddy-paddy',
                 afterDraw: (chart) => {
-                  if (chart.tooltip?.getActiveElements().length) {
-                    const x = chart.tooltip.getActiveElements()[0]?.element.x;
-                    const y = chart.tooltip.getActiveElements()[0]?.element.y;
+                  const activeElements = chart.tooltip?.getActiveElements();
+                  if (activeElements?.length) {
+                    const x = activeElements[0]?.element.x;
+                    const y = activeElements.map((y) => y.element.y).sort()[0];
                     const yAxis = chart.scales.y;
                     const ctx = chart.ctx;
                     ctx.save();

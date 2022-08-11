@@ -3,9 +3,4 @@ import { ICustomElementViewModel, customElement } from 'aurelia';
 import template from './value-over-time-card.html';
 
 @customElement({ name: 'value-over-time-card', template })
-export class ValueOverTimeCard implements ICustomElementViewModel {
-  currentFilter = '1d';
-  getButtonType(value: string, current: string) {
-    return current === value ? 'primary' : 'secondary';
-  }
-}
+export class ValueOverTimeCard implements ICustomElementViewModel {}

@@ -38,6 +38,7 @@ import menu from '@material-design-icons/svg/outlined/menu.svg';
 import menu_book from '@material-design-icons/svg/outlined/menu_book.svg';
 import more_horiz from '@material-design-icons/svg/outlined/more_horiz.svg';
 import open_in_new from '@material-design-icons/svg/outlined/open_in_new.svg';
+import remove from '@material-design-icons/svg/outlined/remove.svg';
 import savings from '@material-design-icons/svg/outlined/savings.svg';
 import swap_horiz from '@material-design-icons/svg/outlined/swap_horiz.svg';
 import warning_filled from '@material-design-icons/svg/filled/warning.svg';
@@ -110,6 +111,7 @@ export const appContainer: IContainer = DI.createContainer()
       x.iconMap.set('menu_book', menu_book);
       x.iconMap.set('more_horiz', more_horiz);
       x.iconMap.set('open_in_new', open_in_new);
+      x.iconMap.set('remove', remove);
       x.iconMap.set('savings', savings);
       x.iconMap.set('swap_horiz', swap_horiz);
       x.iconMap.set('warning_filled', warning_filled);
