@@ -29,7 +29,7 @@ type TokenInfo = {
   marketCap: number;
   currentPrice: number;
   totalSupply: number;
-  supplyDistribution: SupplyDistribution;
+  supplyDistribution?: SupplyDistribution;
 };
 
 type SupplyDistribution = {

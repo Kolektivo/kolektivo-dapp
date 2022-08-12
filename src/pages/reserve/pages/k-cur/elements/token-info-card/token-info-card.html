@@ -4,17 +4,17 @@
   title-avatar="${i18n.tr('navigation.reserve.k-cur.token-info.avatar-src')}">
   <k-stack gap="var(--spacing-xl)">
     <k-grid cols="3">
-      <label-value title="${i18n.tr('navigation.reserve.k-cur.token-info.market-cap')}"
+      <label-value title="${i18n.tr('general.token-info-card.market-cap')}"
         value.bind="info.marketCap | currency"
-        tooltip-text="${i18n.tr('navigation.reserve.k-cur.token-info.market-cap-tooltip')}"></label-value>
-      <label-value title="${i18n.tr('navigation.reserve.k-cur.token-info.current-price')}"
+        tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}"></label-value>
+      <label-value title="${i18n.tr('general.token-info-card.current-price')}"
         value.bind="info.currentPrice | currency"
-        tooltip-text="${i18n.tr('navigation.reserve.k-cur.token-info.current-price-tooltip')}"></label-value>
-      <label-value title="${i18n.tr('navigation.reserve.k-cur.token-info.total-supply')}" value.bind="info.totalSupply"
-        tooltip-text="${i18n.tr('navigation.reserve.k-cur.token-info.total-supply-tooltip')}"></label-value>
+        tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}"></label-value>
+      <label-value title="${i18n.tr('general.token-info-card.total-supply')}" value.bind="info.totalSupply"
+        tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}"></label-value>
     </k-grid>
-    <label-value gap="var(--spacing-lg)" title="${i18n.tr('navigation.reserve.k-cur.token-info.supply-distribution')}"
-      tooltip-text="${i18n.tr('navigation.reserve.k-cur.token-info.supply-distribution-tooltip')}">
+    <label-value gap="var(--spacing-lg)" title="${i18n.tr('general.token-info-card.supply-distribution')}"
+      tooltip-text="${i18n.tr('general.token-info-card.supply-distribution-tooltip')}">
       <k-stack direction="row" gap="var(--spacing-xl)">
         <k-text>${info.supplyDistribution.treasury}% in Reserve</k-text>
         <k-text>${info.supplyDistribution.reserves}% in Mento</k-text>

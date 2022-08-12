@@ -1,4 +1,4 @@
-<div mouseenter.trigger="!inheritHover && mouseEnter()" mouseleave.trigger="!inheritHover && mouseLeave()">
+<div mouseenter.trigger="!inheritHover && mouseEnter()" mouseleave.trigger="!inheritHover && mouseLeave()" ...$attrs>
   <div style.bind="divStyle">
     <k-text if.bind="currentCount && !hovering" size="${size/2}"> ${currentCount} </k-text>
     <k-icon color.bind="divStyle.color" else name.bind="icon" size.bind="size"></k-icon>
