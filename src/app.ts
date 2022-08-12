@@ -37,7 +37,7 @@ export class App {
     this.platform.window.removeEventListener('resize', this.recalc);
   }
   async binding(): Promise<void> {
-    this.store.services.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
+    await this.store.services.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
     ContractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
     this.store.services.contractsService.initialize();
     this.store.services.ipfsService.initialize(this.store.services.kolektivoService);

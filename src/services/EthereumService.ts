@@ -4,6 +4,7 @@ import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia
 import { IBrowserStorageService } from './BrowserStorageService';
 import detectEthereumProvider from '@metamask/detect-provider';
 // import { IDisclaimerService } from './DisclaimerService';
+import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
 import { truncateDecimals } from '../utils';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -87,7 +88,8 @@ export class EthereumService {
   public static ProviderEndpoints = {
     mainnet: `https://forno.celo.org`,
     // alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
-    alfajores: `https://alfajores-forno.celo-testnet.org`,
+    alfajores: `https://alfajores.rpcs.dev:8545`,
+    //alfajores: `https://alfajores-forno.celo-testnet.org`,
     // alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
   };
   private static providerOptions = {
@@ -122,13 +124,13 @@ export class EthereumService {
    */
   private defaultAccount?: Signer | Address | null;
 
-  // private async handleNewBlock(blockNumber: number): Promise<void> {
-  //   const block = await this.getBlock(blockNumber);
-  //   this.lastBlock = block;
-  //   this.eventAggregator.publish('Network.NewBlock', block);
-  // }
+  private async handleNewBlock(blockNumber: number): Promise<void> {
+    const block = await this.getBlock(blockNumber);
+    this.lastBlock = block;
+    this.eventAggregator.publish('Network.NewBlock', block);
+  }
 
-  public initialize(network: AllowedNetworks): void {
+  public async initialize(network: AllowedNetworks): Promise<void> {
     if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: `network` must be specified');
     }
@@ -143,16 +145,18 @@ export class EthereumService {
 
     // comment out to run DISCONNECTED
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.readOnlyProvider = ethers.getDefaultProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork])!;
-    this.readOnlyProvider.pollingInterval = 15000;
+    this.readOnlyProvider = new CeloProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork]);
+    return this.readOnlyProvider.ready.then(() => {
+      this.readOnlyProvider.pollingInterval = 15000;
 
-    // TODO: reenable this when it no longer throws exceptions
-    // if (!this.blockSubscribed) {
-    //   this.readOnlyProvider.on('block', (blockNumber: number) => {
-    //     void this.handleNewBlock(blockNumber);
-    //   });
-    //   this.blockSubscribed = true;
-    // }
+      // TODO: reenable this when it no longer throws exceptions
+      if (!this.blockSubscribed) {
+        this.readOnlyProvider.on('block', (blockNumber: number) => {
+          void this.handleNewBlock(blockNumber);
+        });
+        this.blockSubscribed = true;
+      }
+    });
   }
 
   private web3Modal?: Web3Modal;
@@ -526,11 +530,11 @@ export class EthereumService {
   /**
    * so unit tests will be able to complete
    */
-  // public dispose(): void {
-  //   this.readOnlyProvider.off('block', (blockNumber: number) => {
-  //     void this.handleNewBlock(blockNumber);
-  //   });
-  // }
+  public dispose(): void {
+    this.readOnlyProvider.off('block', (blockNumber: number) => {
+      void this.handleNewBlock(blockNumber);
+    });
+  }
 
   public async getBlock(blockNumber: number): Promise<IBlockInfo> {
     const block = (await this.readOnlyProvider.getBlock(blockNumber)) as unknown as IBlockInfo;
