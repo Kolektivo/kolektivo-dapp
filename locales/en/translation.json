@@ -1,19 +1,19 @@
 {
-    "status-bar":{
+    "status-bar": {
         "badge-title": "My Badges",
         "connected-account-title": "Connected Account",
         "activity-title": "Recent Activity",
         "activity-empty": "Your transactions will appear here.",
         "activity-link-text": "View all activity on Celoscan"
     },
-    "navigation":{
+    "navigation": {
         "map": {
-            "link-text" : "Map",
-            "link-icon" : "map"
+            "link-text": "Map",
+            "link-icon": "map"
         },
-        "treasury":{
-            "link-text" : "Treasury",
-            "link-icon" : "account_balance",
+        "treasury": {
+            "link-text": "Treasury",
+            "link-icon": "account_balance",
             "title": "Kolektivo Network Treasury",
             "description": "This is a basic & accessible description that the public can read to understand what it is.",
             "menu": {
@@ -25,7 +25,7 @@
                     "title": "Treasury Assets",
                     "assets-tab": {
                         "title": "Assets",
-                        "grid-headers":{
+                        "grid-headers": {
                             "token": "Token",
                             "price": "Price",
                             "quantity": "Quantity",
@@ -34,23 +34,22 @@
                     },
                     "transaction-history": {
                         "title": "Transaction History",
-                        "grid-headers":{
+                        "grid-headers": {
                             "token": "Token",
                             "type": "Type",
                             "amount": "Amount",
                             "address": "Address",
                             "age": "Age"
                         }
-                     } 
-
+                    }
                 },
                 "ktt": {
-                  "title": "Kolektivo Treasury Token (KTT)",
-                  "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
+                    "title": "Kolektivo Treasury Token (KTT)",
+                    "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
                 },
                 "value": {
-                  "title": "Treasury Value",
-                  "tooltip": "Treasury Value is this and that"
+                    "title": "Treasury Value",
+                    "tooltip": "Treasury Value is this and that"
                 },
                 "value-by-asset-type": {
                     "title": "Value by Asset Type"
@@ -59,14 +58,14 @@
             },
             "governance": {}
         },
-        "reserve":{
+        "reserve": {
             "link-text": "Reserve",
             "link-icon": "savings",
             "overview": {
                 "menu": "Overview",
                 "title": "Kolektivo Curaçao Reserve",
                 "description": "This is a basic & accessible description that the public can read to understand what it is.",
-                "value" :{
+                "value": {
                     "title": "Reserve Value",
                     "tooltip": "This is a tooltip for the reserve value"
                 },
@@ -83,7 +82,7 @@
                     "tooltip": "This is a tooltip for Reserve Assets",
                     "assets-tab": {
                         "title": "Assets",
-                        "grid-headers":{
+                        "grid-headers": {
                             "token": "Token",
                             "price": "Price",
                             "quantity": "Quantity",
@@ -92,17 +91,17 @@
                     },
                     "transaction-history": {
                         "title": "Transaction History",
-                        "grid-headers":{
+                        "grid-headers": {
                             "token": "Token",
                             "type": "Type",
                             "amount": "Amount",
                             "address": "Address",
                             "age": "Age"
                         }
-                     } 
+                    }
                 }
             },
-            "k-cur":{
+            "k-cur": {
                 "menu": "kCur",
                 "title": "kCUR",
                 "description": "What is kCUR? Why does it exist? Which blockchain does it live on? This is a basic & accessible description that the public can read to understand what it is.",
@@ -111,7 +110,7 @@
                     "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
                 },
                 "pool": {
-                    "title":"Primary Pool (kCUR-cUSD)",
+                    "title": "Primary Pool (kCUR-cUSD)",
                     "grid-headers": {
                         "tokens": "Tokens",
                         "volume": "Volume",
@@ -120,7 +119,7 @@
                         "range": "Range to Value"
                     }
                 },
-                "leverage":{
+                "leverage": {
                     "title": "Leverage Ratio Over Time",
                     "tooltip": "Tooltip for Leverage Ratio Over Time",
                     "ratio-text": "Current Collateralization Ratio"
@@ -138,11 +137,11 @@
                     "external": "External"
                 }
             },
-            "risk":{
+            "risk": {
                 "menu": "Risk",
                 "title": "Reserve Risk",
                 "description": "This is a basic & accessible description that the public can read to understand what it is.",
-                "value-over-time":{
+                "value-over-time": {
                     "title": "Reserve Value Over Time by Risk Class",
                     "tooltip": "Tooltip for Reserve Value Over Time by Risk Class",
                     "ceiling": "Collateral Ceiling",
@@ -152,7 +151,7 @@
                     "alert": "The reserve is under-collateralized. Some copy about why this matters.",
                     "alert-link-text": "Learn more"
                 },
-                "assets":{
+                "assets": {
                     "title": "Risk by Asset",
                     "tooltip": "Tooltip for Risk by Asset",
                     "grid-headers": {
@@ -163,15 +162,15 @@
                     }
                 }
             },
-            "k-guilder":{
+            "k-guilder": {
                 "menu": "kGuilder",
                 "title": "kGuilder",
                 "description": "What is kGuilder? Why does it exist? Which blockchain does it live on? Basic & accessible description for the general public.",
-                "token-info":{
+                "token-info": {
                     "title": "kGuilder",
-                    "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"                    
+                    "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
                 },
-                "value-ratio":{
+                "value-ratio": {
                     "title": "kCUR-kGuilder Value Ratio (USD)",
                     "tooltip": "Tooltip for kCUR-kGuilder Value Ratio (USD)",
                     "ratio-text": "kCUR-kGuilder Value Ratio"
@@ -186,27 +185,27 @@
                     "title": "Tobin Tax"
                 }
             },
-            "governance":{
+            "governance": {
                 "menu": "Governance"
             }
         },
-        "swap":{
+        "swap": {
             "link-text": "Swap",
             "link-icon": "swap_horiz"
         },
-        "documentation":{
+        "documentation": {
             "link-text": "Documentation",
             "link-icon": "description"
         },
-        "contact":{
+        "contact": {
             "link-text": "Contact Kolektivo",
             "link-icon": "headset_mic"
         },
-        "download-wallet":{
+        "download-wallet": {
             "link-text": "Download Wallet",
             "link-icon": "account_balance_wallet"
         },
-        "external-site":{
+        "external-site": {
             "link-text": "Kolektivo.cw",
             "link-icon": "language"
         }
@@ -226,8 +225,10 @@
             "current-price-tooltip": "This is a tooltip for current price",
             "total-supply": "Total Supply",
             "total-supply-tooltip": "This is a tooltip for total supply",
-            "supply-distribution":"Supply Distribution",
-            "supply-distribution-tooltip":"This is a tooltip for supply distribution"
-        }
+            "supply-distribution": "Supply Distribution",
+            "supply-distribution-tooltip": "This is a tooltip for supply distribution"
+        },
+        "wrong-network-message": "Your wallet is connected to {{connectedTo}}, but we need you to connect to {{neededNetwork}}. Do you want to switch your connection to {{neededNetwork}} now?",
+        "an-unknown-network": "an unknown network"
     }
 }
