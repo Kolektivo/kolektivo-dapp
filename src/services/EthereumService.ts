@@ -106,7 +106,7 @@ export class EthereumService {
   };
 
   public static targetedNetwork: AllowedNetworks;
-  public static targetedChainId: number | undefined;
+  public static targetedChainId: number;
   public lastBlock?: IBlockInfo;
   /**
    * provided by ethers
@@ -135,8 +135,13 @@ export class EthereumService {
       throw new Error('Ethereum.initialize: `network` must be specified');
     }
 
+    if (!this.chainIdByName.get(network)) {
+      throw new Error('Ethereum.initialize: `unsupported network');
+    }
+
     EthereumService.targetedNetwork = network;
-    EthereumService.targetedChainId = this.chainIdByName.get(network);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    EthereumService.targetedChainId = this.chainIdByName.get(network)!;
 
     const readonlyEndPoint = EthereumService.ProviderEndpoints[EthereumService.targetedNetwork];
     if (typeof readonlyEndPoint !== 'string') {
@@ -315,7 +320,7 @@ export class EthereumService {
   private async getNetwork(provider: Web3Provider): Promise<Network | null> {
     const network = (await provider.getNetwork()) as Network | null;
     if (network?.name === 'homestead') {
-      network.name = 'mainnet';
+      network.name = Networks.Mainnet;
     }
     return network;
   }
@@ -342,6 +347,10 @@ export class EthereumService {
   //   this.eventAggregator.publish("Network.wrongNetwork", { provider, connectedTo: connectedTo, need: EthereumService.targetedNetwork });
   // }
 
+  /**
+   *
+   * @param web3ModalProvider The provider created by Web3Modal
+   */
   private async setProvider(web3ModalProvider?: WalletProvider): Promise<void> {
     try {
       if (web3ModalProvider) {
@@ -351,7 +360,7 @@ export class EthereumService {
 
         const network = await this.getNetwork(walletProvider);
 
-        if (network?.name !== EthereumService.targetedNetwork) {
+        if (network?.chainId !== EthereumService.targetedChainId) {
           this.eventAggregator.publish('Network.wrongNetwork', {
             provider: web3ModalProvider,
             connectedTo: network?.name,
@@ -369,7 +378,7 @@ export class EthereumService {
           /**
            * because the events aren't fired on first connection
            */
-          this.fireConnectHandler({ chainId: network.chainId, chainName: network.name, provider: this.walletProvider });
+          this.fireConnectHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.walletProvider });
           this.fireAccountsChangedHandler(this.defaultAccountAddress);
 
           this.web3ModalProvider.on('accountsChanged', (accounts?: Address[]) => void this.handleAccountsChanged(accounts));
@@ -400,10 +409,10 @@ export class EthereumService {
     const network = ethers.providers.getNetwork(Number(chainId)) as Network | null;
 
     if (network?.name === 'homestead') {
-      network.name = 'mainnet';
+      network.name = Networks.Mainnet;
     }
 
-    if (network?.name !== EthereumService.targetedNetwork) {
+    if (network?.chainId !== EthereumService.targetedChainId) {
       this.eventAggregator.publish('Network.wrongNetwork', {
         provider: this.web3ModalProvider,
         connectedTo: network?.name,
@@ -411,7 +420,7 @@ export class EthereumService {
       });
       return;
     } else {
-      this.fireChainChangedHandler({ chainId: network.chainId, chainName: network.name, provider: this.walletProvider ?? null });
+      this.fireChainChangedHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.walletProvider ?? null });
     }
   };
 
