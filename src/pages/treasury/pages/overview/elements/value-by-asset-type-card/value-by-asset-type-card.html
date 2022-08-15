@@ -1,22 +1,12 @@
-<k-card>
-  <k-text tag="h3" slot="header">${i18n.tr('navigation.treasury.overview.value-by-asset-type.title')}</k-text>
+<k-card id="t-o-vbatc-card" title="${i18n.tr('navigation.treasury.overview.value-by-asset-type.title')}">
   <k-stack direction="row">
-    <k-chart cutout="70" type="doughnut"
+    <k-chart cutout="70" type="doughnut" id="t-o-vbatc-chart" width="200"
       colors.bind="['var(--terra-cotta)', 'var(--ocean-blue)', 'var(--green-apple)', ]" data.bind="[20,20,60]">
     </k-chart>
-    <k-stack gap="var(--spacing-xl)">
-      <k-stack gap="20" direction="row">
-        <k-avatar color="var(--green-apple)" size="20"></k-avatar>
-        <k-text>60% Ecological</k-text>
-      </k-stack>
-      <k-stack gap="20" direction="row">
-        <k-avatar color="var(--ocean-blue)" size="20"></k-avatar>
-        <k-text>20% Stablecoins</k-text>
-      </k-stack>
-      <k-stack gap="20" direction="row">
-        <k-avatar color="var(--terra-cotta)" size="20"></k-avatar>
-        <k-text>20% Non Stablecoins</k-text>
-      </k-stack>
+    <k-stack gap="var(--spacing-xl)" id="t-o-vbatc-legend">
+      <avatar-text color="var(--green-apple)" size="20">60% Ecological</avatar-text>
+      <avatar-text color="var(--ocean-blue)" size="20">20% Stablecoins</avatar-text>
+      <avatar-text color="var(--terra-cotta)" size="20">20% Non Stablecoins</avatar-text>
     </k-stack>
   </k-stack>
 </k-card>

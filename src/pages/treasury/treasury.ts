@@ -9,8 +9,8 @@ export class Treasury implements ICustomElementViewModel {
 
   routes() {
     return [
-      { name: this.i18n.tr('navigation.treasury.menu.overview'), path: 'overview' },
-      { name: this.i18n.tr('navigation.treasury.menu.governance'), path: 'governance' },
+      { name: this.i18n.tr('navigation.treasury.menu.overview', { defaultValue: 'Overview' }), path: 'overview' },
+      { name: this.i18n.tr('navigation.treasury.menu.governance', { defaultValue: 'Governance' }), path: 'governance' },
     ];
   }
 }

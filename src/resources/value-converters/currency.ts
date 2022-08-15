@@ -6,7 +6,7 @@ import { valueConverter } from 'aurelia';
  * when a number is retrieved from the element to which it is bound, convert it from a string to a number.
  */
 @valueConverter('number')
-export class CurrencyrValueConverter {
+export class CurrencyValueConverter {
   constructor(@INumberService private readonly numberService: INumberService) {}
 
   public toView(value: number | string | BigNumber, options?: IToStringOptions): string {
