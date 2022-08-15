@@ -1,6 +1,7 @@
 import './app.scss';
 import './shared.scss';
 import { ContractsDeploymentProvider, EthereumService, Networks, WalletProvider } from './services';
+import { I18N } from '@aurelia/i18n';
 import { IEventAggregator, IPlatform, customElement } from 'aurelia';
 import { IStore } from './stores/store';
 import { ethereumNetwork, isDev } from './environment-variables';
@@ -16,6 +17,7 @@ export class App {
     @IStore private readonly store: IStore,
     @IEventAggregator private eventAggregator: IEventAggregator,
     @IPlatform private readonly platform: IPlatform,
+    @I18N private readonly i18n: I18N,
   ) {}
   recalc = (): void => {
     this.xl = this.platform.window.innerWidth >= 1200;
@@ -30,7 +32,7 @@ export class App {
       /**
        * This will put up a modal to prompt the user to change the network.  Handlers are below.
        */
-      this.confirmChangeNetworkInfo = info;
+      this.confirmChangeNetworkInfo = Object.assign(info, { connectedTo: info.connectedTo ?? this.i18n.tr('general.an-unknown-network') });
     });
   }
   detaching(): void {
