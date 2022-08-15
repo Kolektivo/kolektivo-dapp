@@ -44,6 +44,10 @@
     grid-template-columns: minmax(150px, 25%) 1fr;
   }
 
+  .tooltips k-text{
+    display: inline;
+  }
+
   .form-fields k-code,
   .inputs k-code {
     grid-template-columns: minmax(150px, 15%) 1fr;

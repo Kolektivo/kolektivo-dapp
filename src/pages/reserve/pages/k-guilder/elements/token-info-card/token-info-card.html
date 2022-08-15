@@ -1,7 +1,7 @@
-<let info.bind="store.tokenInfo"></let>
+<let info.bind="store.kGuilder"></let>
 <k-card color="linear-gradient(to right, var(--ocean-blue-500), var(--ocean-blue-600))"
-  title="${i18n.tr('navigation.treasury.overview.ktt.title')}"
-  title-avatar="${i18n.tr('navigation.treasury.overview.ktt.avatar-src')}">
+  title="${i18n.tr('navigation.reserve.k-guilder.token-info.title')}"
+  title-avatar="${i18n.tr('navigation.reserve.k-guilder.token-info.avatar-src')}">
   <k-stack gap="var(--spacing-xl)">
     <k-grid cols="3">
       <label-value title="${i18n.tr('general.token-info-card.market-cap')}"
@@ -13,13 +13,5 @@
       <label-value title="${i18n.tr('general.token-info-card.total-supply')}" value.bind="info.totalSupply"
         tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}"></label-value>
     </k-grid>
-    <label-value gap="var(--spacing-lg)" title="${i18n.tr('general.token-info-card.supply-distribution')}"
-      tooltip-text="${i18n.tr('general.token-info-card.supply-distribution-tooltip')}">
-      <k-stack direction="row" gap="var(--spacing-xl)">
-        <k-text>${info.supplyDistribution.treasury}% in treasury</k-text>
-        <k-text>${info.supplyDistribution.reserves}% in reserves</k-text>
-        <k-text>${info.supplyDistribution.circulating}% circulating supply</k-text>
-      </k-stack>
-    </label-value>
   </k-stack>
 </k-card>

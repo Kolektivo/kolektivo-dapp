@@ -33,6 +33,12 @@ export class Store {
     },
   };
 
+  kGuilder: TokenInfo = {
+    marketCap: 5000000,
+    currentPrice: 12.98,
+    totalSupply: 8000000,
+  };
+
   tokenInfo: TokenInfo = {
     marketCap: 3000000,
     currentPrice: 0.98,

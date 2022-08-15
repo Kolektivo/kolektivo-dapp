@@ -1,3 +1,20 @@
-<p id="k-guilder">
-  KGuilder works!
-</p>
+<k-page id="k-guilder-page" title="${i18n.tr('navigation.reserve.k-guilder.title')}" description="${i18n.tr('navigation.reserve.k-guilder.description')}" learn-more-link="/map">
+  <k-stack gap="20">
+    <token-info-card class="zoom-in"></token-info-card>
+    <value-ratio-card class="zoom-in"></value-ratio-card>    
+    <k-grid cols="1fr 1fr 1fr" gap="20">
+      <k-card>
+        <k-text type="h5" slot="header">${i18n.tr('navigation.reserve.k-guilder.spread.title')}</k-text>
+        <k-text type="h2">${0.2 | percentage}</k-text>
+      </k-card>
+      <k-card>
+        <k-text type="h5" slot="header">${i18n.tr('navigation.reserve.k-guilder.inflation-rate.title')}</k-text>
+        <k-text type="h2">${0.4 | percentage}</k-text>
+      </k-card>
+      <k-card>
+        <k-text type="h5" slot="header">${i18n.tr('navigation.reserve.k-guilder.tobin-tax.title')}</k-text>
+        <k-text type="h2">${0.4 | percentage}</k-text>
+      </k-card>
+    </k-grid>
+  </k-stack>
+</k-page>
