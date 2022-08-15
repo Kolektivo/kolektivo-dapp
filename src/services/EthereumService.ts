@@ -5,6 +5,7 @@ import { IBrowserStorageService } from './BrowserStorageService';
 import detectEthereumProvider from '@metamask/detect-provider';
 // import { IDisclaimerService } from './DisclaimerService';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
+import { IBlockChainStore } from '../stores/block-chain-store';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
 import { truncateDecimals } from '../utils';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -77,6 +78,7 @@ export class EthereumService {
     // @IDisclaimerService private readonly disclaimerService: IDisclaimerService,
     @IBrowserStorageService private readonly storageService: IBrowserStorageService,
     @ILogger private readonly logger: ILogger,
+    @IBlockChainStore private readonly blockChainStore: IBlockChainStore,
   ) {
     this.logger = logger.scopeTo('EthereumService');
   }
@@ -116,7 +118,14 @@ export class EthereumService {
    * provided by ethers given provider from Web3Modal
    */
   public walletProvider?: Web3Provider;
-  public defaultAccountAddress: Address | null = null;
+
+  private get defaultAccountAddress(): Address | null {
+    return this.blockChainStore.connectedWalletAddress;
+  }
+
+  private set defaultAccountAddress(address: Address | null) {
+    this.blockChainStore.connectedWalletAddress = address;
+  }
 
   private blockSubscribed?: boolean;
   /**

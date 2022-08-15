@@ -1,3 +1,4 @@
+import { Address } from 'services';
 import { DI, IContainer, Registration } from 'aurelia';
 
 export type IBlockChainStore = BlockChainStore;
@@ -8,8 +9,12 @@ export class BlockChainStore {
     container.register(Registration.singleton(IBlockChainStore, BlockChainStore));
   }
 
-  walletConnected = true;
-  connectedWalletAddress = '0xBf3a5599f2f6CE89862d640a248e31F30B7ddF29';
+  connectedWalletAddress: Address | null = null;
+
+  get walletConnected(): boolean {
+    return !!this.connectedWalletAddress;
+  }
+
   badges = [
     {
       name: 'Badge Name 1',
