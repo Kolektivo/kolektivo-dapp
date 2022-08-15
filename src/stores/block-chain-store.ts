@@ -1,15 +1,24 @@
+import { Address, IEthereumService } from 'services';
 import { DI, IContainer, Registration } from 'aurelia';
 
 export type IBlockChainStore = BlockChainStore;
 export const IBlockChainStore = DI.createInterface<IBlockChainStore>('BlockChainStore');
 
 export class BlockChainStore {
+  constructor(@IEthereumService private readonly ethereumService: IEthereumService) {}
+
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IBlockChainStore, BlockChainStore));
   }
 
-  walletConnected = true;
-  connectedWalletAddress = '0xBf3a5599f2f6CE89862d640a248e31F30B7ddF29';
+  get connectedWalletAddress(): Address | null {
+    return this.ethereumService.defaultAccountAddress;
+  }
+
+  get walletConnected(): boolean {
+    return !!this.connectedWalletAddress;
+  }
+
   badges = [
     {
       name: 'Badge Name 1',
