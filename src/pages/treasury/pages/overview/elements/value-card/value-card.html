@@ -1,8 +1,3 @@
-<k-card gap="var(--spacing-lg)" id="value-card">
-  <k-grid cols="auto 1fr" gap="var(--spacing-lg)" slot="header" align-items="center">
-    <k-text type="h4" t="navigation.treasury.overview.value.title"></k-text>
-    <k-icon name="help_outline" size="24" t="[tooltip]navigation.treasury.overview.value.tooltip">
-    </k-icon>
-  </k-grid>
+<k-card gap="var(--spacing-lg)" id="t-o-vc-card" title="${i18n.tr('navigation.treasury.overview.value.title')}" tooltip-text="${i18n.tr('navigation.treasury.overview.value.tooltip')}">
   <k-text> ${3000000 | currency} </k-text>
 </k-card>
