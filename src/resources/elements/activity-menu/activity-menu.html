@@ -1,6 +1,6 @@
 <k-menu t="[title]status-bar.activity-title" id="activity-menu" position="bottom-end" width="320" ...$attrs>
   <k-paper>
-    <k-text if.bind="store.blockChainStore.transactions.count === 0">
+    <k-text if.bind="store.blockChainStore.transactions.length === 0">
       ${i18n.tr('status-bar.activity-empty')}
     </k-text>
     <k-stack else gap="24">

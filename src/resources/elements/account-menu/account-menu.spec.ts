@@ -12,11 +12,8 @@ preparePlatform();
 
 describe('<account-menu />', () => {
   it('displays store connected wallet address', async () => {
-    // todo: what is this rule about?
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const { appHost } = await createFixture
       .html(`<account-menu>`)
-      .component({})
       .deps(...getRegistrations())
       .build().started;
 
