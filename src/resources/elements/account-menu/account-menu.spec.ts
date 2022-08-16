@@ -1,3 +1,4 @@
+import '../../../utils-testing/setup-testing';
 import { AccountMenu } from './account-menu';
 import { Global } from '../../../hooks';
 import { I18N } from '@aurelia/i18n';
@@ -6,9 +7,6 @@ import { Registration } from 'aurelia';
 import { SmallHexStringValueConverter } from '../../value-converters';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
-import { preparePlatform } from '../../../utils-testing/setup-testing';
-
-preparePlatform();
 
 describe('<account-menu />', () => {
   it('displays store connected wallet address', async () => {
