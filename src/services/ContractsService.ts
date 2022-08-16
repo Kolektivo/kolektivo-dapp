@@ -1,5 +1,6 @@
 import { Address, Hash, IBlockInfoNative, IChainEventInfo, IEthereumService } from './ethereum-service';
 import { BigNumber, Contract, Signer, ethers } from 'ethers';
+import { CeloSigner } from './Celo/CeloSigner';
 import { ContractsDeploymentProvider } from './ContractsDeploymentProvider';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
 
@@ -23,7 +24,7 @@ export interface IStandardEvent<TArgs> {
 
 export type IContractsService = ContractsService;
 export const IContractsService = DI.createInterface<IContractsService>('ContractsService');
-type SignerTypes = ethers.providers.Provider | Signer;
+type SignerTypes = ethers.providers.Provider | Signer | CeloSigner;
 
 export class ContractsService {
   public static register(container: IContainer) {
@@ -98,7 +99,10 @@ export class ContractsService {
   public createProvider(): SignerTypes {
     let signerOrProvider;
     if (this.accountAddress && this.networkInfo?.provider) {
-      signerOrProvider = Signer.isSigner(this.accountAddress) ? this.accountAddress : this.networkInfo.provider.getSigner(this.accountAddress);
+      // signerOrProvider = Signer.isSigner(this.accountAddress) ? this.accountAddress : this.networkInfo.provider.getSigner(this.accountAddress);
+      signerOrProvider = Signer.isSigner(this.accountAddress)
+        ? this.accountAddress
+        : new CeloSigner(this.networkInfo.provider.getSigner(this.accountAddress));
     }
 
     if (!signerOrProvider) {
