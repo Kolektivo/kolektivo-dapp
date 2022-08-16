@@ -1,4 +1,4 @@
-import { Address } from './EthereumService';
+import { Address } from './ethereum-service';
 import { BigNumber } from 'ethers/lib/ethers';
 import { TransactionResponse } from './TransactionsService';
 

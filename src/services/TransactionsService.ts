@@ -1,5 +1,5 @@
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
-import { Hash, IEthereumService } from './EthereumService';
+import { Hash, IEthereumService } from './ethereum-service';
 import { TransactionReceipt, TransactionResponse } from '@ethersproject/providers';
 
 export type ITransactionsService = TransactionsService;

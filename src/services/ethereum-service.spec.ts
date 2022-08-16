@@ -1,6 +1,6 @@
 import { BaseProvider } from '@ethersproject/providers/lib/base-provider';
 import { Block } from '@ethersproject/providers';
-import { IBlockInfo, IEthereumService } from './EthereumService';
+import { IBlockInfo, IEthereumService } from './ethereum-service';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

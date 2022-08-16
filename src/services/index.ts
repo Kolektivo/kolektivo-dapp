@@ -5,7 +5,7 @@ export * from './ContractsService';
 export * from './DateService';
 export * from './DateServiceIntl';
 export * from './DisposableCollection';
-export * from './EthereumService';
+export * from './ethereum-service';
 export * from './IpfsService';
 export * from './KolektivoIpfsClient';
 export * from './NumberService';

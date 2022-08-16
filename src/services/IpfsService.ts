@@ -1,5 +1,5 @@
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
-import { Hash } from './EthereumService';
+import { Hash } from './ethereum-service';
 import { IPFS_GATEWAY } from '../environment-variables';
 import axios from 'axios';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
