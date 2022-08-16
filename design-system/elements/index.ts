@@ -4,6 +4,7 @@ export * from './k-app-bar';
 export * from './k-avatar';
 export * from './k-avatar-group';
 export * from './k-backdrop';
+export * from './k-badge';
 export * from './k-button';
 export * from './k-card';
 export * from './k-chart';

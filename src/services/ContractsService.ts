@@ -1,4 +1,4 @@
-import { Address, Hash, IBlockInfoNative, IChainEventInfo, IEthereumService } from './EthereumService';
+import { Address, Hash, IBlockInfoNative, IChainEventInfo, IEthereumService } from './ethereum-service';
 import { BigNumber, Contract, Signer, ethers } from 'ethers';
 import { ContractsDeploymentProvider } from './ContractsDeploymentProvider';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';

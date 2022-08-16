@@ -4,7 +4,7 @@ import { IServices } from 'services';
 import { ITreasuryStore, TreasuryStore } from './treasury-store';
 
 export type IStore = Store;
-export const IStore = DI.createInterface<IStore>('Store');
+export const IStore = DI.createInterface<IStore>('IStore');
 
 export class Store {
   constructor(

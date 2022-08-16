@@ -1,4 +1,4 @@
-import { Address, AllowedNetworks } from './EthereumService';
+import { Address, AllowedNetworks } from './ethereum-service';
 import { DI, IContainer, Registration } from 'aurelia';
 
 interface IContractInfo {

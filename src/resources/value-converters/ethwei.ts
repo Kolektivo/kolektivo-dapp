@@ -1,5 +1,5 @@
 ﻿import { BigNumber } from 'ethers';
-import { fromWei, toWei } from '../../services/EthereumService';
+import { fromWei, toWei } from '../../services/ethereum-service';
 import { valueConverter } from 'aurelia';
 
 /**

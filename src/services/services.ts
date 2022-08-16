@@ -3,7 +3,7 @@ import { BrowserStorageService, IBrowserStorageService } from './BrowserStorageS
 import { ContractsService, IContractsService } from './ContractsService';
 import { DI, IContainer, Registration } from 'aurelia';
 import { DateService, IDateService } from './DateService';
-import { EthereumService, IEthereumService } from './EthereumService';
+import { EthereumService, IEthereumService } from './ethereum-service';
 import { IIpfsService, IpfsService } from './IpfsService';
 import { IKolektivoIpfsClient, KolektivoIpfsClient } from './KolektivoIpfsClient';
 import { INumberService, NumberService } from './NumberService';

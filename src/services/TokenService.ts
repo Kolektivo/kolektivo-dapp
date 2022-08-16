@@ -1,4 +1,4 @@
-import { Address, EthereumService, Networks } from './EthereumService';
+import { Address, EthereumService, Networks } from './ethereum-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { IAxiosService } from './AxiosService';
 import { IErc20Token, ITokenInfo } from './TokenTypes';
