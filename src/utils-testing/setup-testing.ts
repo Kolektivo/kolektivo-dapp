@@ -8,3 +8,5 @@ export const preparePlatform = () => {
   setPlatform(platform);
   return platform;
 };
+
+preparePlatform();

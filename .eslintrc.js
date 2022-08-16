@@ -1,3 +1,6 @@
+/**
+ * @type {import('eslint').Linter.Config}
+ */
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -13,6 +16,7 @@ module.exports = {
     sourceType: 'module',
     project: ['tsconfig.json']
   },
+  ignorePatterns: ["*.js"],
   env: {
     es6: true,
     browser: true,
@@ -93,5 +97,11 @@ module.exports = {
       ],
     },
   },
+  {
+    files: ['./src/**/*.spec.ts'],
+    rules: {
+      "@typescript-eslint/unbound-method": 'off'
+    }
+  }
   ],
 };
