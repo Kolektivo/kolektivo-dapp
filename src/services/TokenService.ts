@@ -11,6 +11,7 @@ import { Contract, ethers } from 'ethers';
 import { ContractNames, ContractsService, IContractsService } from './ContractsService';
 import { FormatTypes, Interface, getAddress } from 'ethers/lib/utils';
 import { ITokenListProvider } from './TokenListProvider';
+import { callOnce } from '../decorators/call-once';
 import { endTimer, startTimer } from './TimingService';
 
 interface ICoingeckoTokenInfo {
@@ -60,6 +61,7 @@ export class TokenService {
       .subscribe();
   }
 
+  @callOnce('TokenService')
   public async initialize(): Promise<void> {
     this.erc20Abi = ContractsService.getContractAbi(ContractNames.ERC20);
 

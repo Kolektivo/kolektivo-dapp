@@ -3,6 +3,7 @@ import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { IIpfsService } from './IpfsService';
 import { ITokenInfo, ITokenInfoUniswap, ITokenListUniswap } from './TokenTypes';
 import { TokenLists } from '../configurations/tokenLists';
+import { callOnce } from '../decorators/call-once';
 import { endTimer, startTimer } from './TimingService';
 import axios from 'axios';
 
@@ -30,6 +31,7 @@ export class TokenListProvider {
   /**
    * Hydrate this.tokenInfos from all configured TokenInfo documents for the current network.
    */
+  @callOnce('TokenListProvider')
   public async initialize(): Promise<void> {
     if (typeof this.tokenInfos === 'undefined') {
       startTimer('fetch tokeninfos');
