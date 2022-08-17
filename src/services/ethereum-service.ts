@@ -4,7 +4,7 @@ import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia
 import { IBrowserStorageService } from './BrowserStorageService';
 import detectEthereumProvider from '@metamask/detect-provider';
 // import { IDisclaimerService } from './DisclaimerService';
-import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
+import { CeloJsonRpcProvider } from '@abacus-network/celo-ethers-provider';
 import { IBlockChainStore } from '../stores/block-chain-store';
 import { callOnce } from '../decorators/call-once';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
@@ -161,7 +161,7 @@ export class EthereumService {
 
     // comment out to run DISCONNECTED
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.readOnlyProvider = new CeloProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork]);
+    this.readOnlyProvider = new CeloJsonRpcProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork]);
     return this.readOnlyProvider.ready.then(() => {
       this.readOnlyProvider.pollingInterval = 15000;
 
