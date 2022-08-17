@@ -1,4 +1,8 @@
 :host {
+  --spacing-close-top: var(--spacing-sm);
+  --spacing-close-right: var(--spacing-sm);
+
+
   >div {
     font-family: Lato, sans-serif;
     display: grid;
@@ -65,8 +69,8 @@
 
   slot[part=close] {
     position: absolute;
-    top: var(--spacing-sm);
-    right: var(--spacing-sm);
+    top: var(--spacing-close-top);
+    right: var(--spacing-close-right);
     display: block;
   }
 }
