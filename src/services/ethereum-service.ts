@@ -160,7 +160,7 @@ export class EthereumService {
     }
 
     // comment out to run DISCONNECTED
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     this.readOnlyProvider = new CeloProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork]);
     return this.readOnlyProvider.ready.then(() => {
       this.readOnlyProvider.pollingInterval = 15000;
