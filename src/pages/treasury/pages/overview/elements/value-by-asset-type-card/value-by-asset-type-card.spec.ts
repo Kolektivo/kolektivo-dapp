@@ -14,7 +14,7 @@ describe('value-by-asset-type-card', () => {
       .html(`<value-by-asset-type-card>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelector('#t-o-vbatc-card')).exist;
+    expect(appHost.querySelector('k-card')).exist;
   });
 
   it('should have a title k-card component', async () => {
@@ -23,7 +23,7 @@ describe('value-by-asset-type-card', () => {
 
       .deps(...getRegistrations())
       .build().started;
-    const card = appHost.querySelector('#t-o-vbatc-card');
+    const card = appHost.querySelector('k-card');
     expect(card?.getAttribute('title')).exist;
   });
 
@@ -32,7 +32,7 @@ describe('value-by-asset-type-card', () => {
       .html(`<value-by-asset-type-card>`)
       .deps(...getRegistrations())
       .build().started;
-    const chart = appHost.querySelector('#t-o-vbatc-chart');
+    const chart = appHost.querySelector('k-chart');
     expect(chart).exist;
     expect(chart?.getAttribute('type')).eq('doughnut');
   });
@@ -51,7 +51,7 @@ describe('value-by-asset-type-card', () => {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
-        tr: () => 'Overview',
+        tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [ValueByAssetTypeCard, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];

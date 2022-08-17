@@ -3,16 +3,18 @@ import { CurrencyValueConverter } from '../../../../../design-system/value-conve
 import { Global } from '../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../design-system/configuration';
+import { INumberService } from './../../../../services';
 import { IStore } from '../../../../stores';
-import { Overview } from './overview';
+import { KCur } from './k-cur';
+import { PercentageValueConverter } from './../../../../resources/value-converters';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
 
-describe('overview', () => {
+describe('k-cur', () => {
   it('should have a k-page component', async () => {
     const { appHost } = await createFixture
-      .html(`<overview>`)
+      .html(`<k-cur>`)
       .deps(...getRegistrations())
       .build().started;
     expect(appHost.querySelectorAll('k-page')).exist;
@@ -20,52 +22,52 @@ describe('overview', () => {
 
   it('should have a tile and description in the k-page component', async () => {
     const { appHost } = await createFixture
-      .html(`<overview>`)
+      .html(`<k-cur>`)
       .deps(...getRegistrations())
       .build().started;
-    const kPage = appHost.querySelectorAll('k-page');
-    expect(kPage[0].hasAttribute('title')).true;
-    expect(kPage[0].hasAttribute('description')).true;
+    const kPage = appHost.querySelector('k-page');
+    expect(kPage?.hasAttribute('title')).true;
+    expect(kPage?.hasAttribute('description')).true;
   });
 
   it('should have a token info card component', async () => {
     const { appHost } = await createFixture
-      .html(`<overview>`)
+      .html(`<k-cur>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('token-info-card')).exist;
+    expect(appHost.querySelector('token-info-card')).exist;
   });
 
-  it('should have a value card component', async () => {
+  it('should have a pool card component', async () => {
     const { appHost } = await createFixture
-      .html(`<overview>`)
+      .html(`<k-cur>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('value-card')).exist;
+    expect(appHost.querySelector('pool-card')).exist;
   });
 
-  it('should have a value by asset type card component', async () => {
+  it('should have a leverage card component', async () => {
     const { appHost } = await createFixture
-      .html(`<overview>`)
+      .html(`<k-cur>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('value-by-asset-type-card')).exist;
+    expect(appHost.querySelector('leverage-card')).exist;
   });
 
-  it('should have a value over time card component', async () => {
+  it('should have an trend card component', async () => {
     const { appHost } = await createFixture
-      .html(`<overview>`)
+      .html(`<k-cur>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('value-over-time-card')).exist;
+    expect(appHost.querySelector('trend-card')).exist;
   });
 
-  it('should have an assets card component', async () => {
+  it('should have an supply card component', async () => {
     const { appHost } = await createFixture
-      .html(`<overview>`)
+      .html(`<k-cur>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('assets-card')).exist;
+    expect(appHost.querySelector('supply-card')).exist;
   });
 
   function getRegistrations() {
@@ -75,6 +77,16 @@ describe('overview', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [Overview, CurrencyValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
+    const numberServiceRegistration = () => Registration.instance(INumberService, {});
+    return [
+      KCur,
+      PercentageValueConverter,
+      CurrencyValueConverter,
+      Global,
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+      numberServiceRegistration(),
+    ];
   }
 });

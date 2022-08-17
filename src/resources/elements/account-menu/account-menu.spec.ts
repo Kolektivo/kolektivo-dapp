@@ -26,7 +26,10 @@ describe('<account-menu />', () => {
         },
         ...overrides,
       });
-    const createMockI18nRegistration = () => Registration.instance(I18N, {});
+    const createMockI18nRegistration = () =>
+      Registration.instance(I18N, {
+        tr: (s: string) => String(s),
+      });
     return [AccountMenu, SmallHexStringValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration()];
   }
 });

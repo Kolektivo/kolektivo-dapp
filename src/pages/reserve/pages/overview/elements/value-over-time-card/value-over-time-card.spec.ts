@@ -17,13 +17,14 @@ describe('value-over-time-card', () => {
     expect(appHost.querySelector('k-card')).exist;
   });
 
-  it('should have a title k-card component', async () => {
+  it('should have a title and tooltip in the k-card component', async () => {
     const { appHost } = await createFixture
       .html(`<value-over-time-card>`)
       .deps(...getRegistrations())
       .build().started;
     const card = appHost.querySelector('k-card');
     expect(card?.getAttribute('title')).exist;
+    expect(card?.getAttribute('tooltip-text')).exist;
   });
 
   it('should have a chart time filter component with text on the right', async () => {

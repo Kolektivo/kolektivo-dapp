@@ -23,17 +23,9 @@ describe('overview', () => {
       .html(`<overview>`)
       .deps(...getRegistrations())
       .build().started;
-    const kPage = appHost.querySelectorAll('k-page');
-    expect(kPage[0].hasAttribute('title')).true;
-    expect(kPage[0].hasAttribute('description')).true;
-  });
-
-  it('should have a token info card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<overview>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelectorAll('token-info-card')).exist;
+    const kPage = appHost.querySelector('k-page');
+    expect(kPage?.hasAttribute('title')).true;
+    expect(kPage?.hasAttribute('description')).true;
   });
 
   it('should have a value card component', async () => {

@@ -53,7 +53,7 @@ describe('assets-card', () => {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
-        tr: () => 'Overview',
+        tr: (s: string) => String(s),
       });
     return [AssetsCard, Global, createMockStoreRegistration(), createMockI18nRegistration()];
   }
