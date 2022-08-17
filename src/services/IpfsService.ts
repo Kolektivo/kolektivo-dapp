@@ -1,9 +1,9 @@
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Hash } from './ethereum-service';
 import { IPFS_GATEWAY } from '../environment-variables';
+import { callOnce } from '../decorators/call-once';
+import CID from 'cids';
 import axios from 'axios';
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
-const CID = require('cids');
 
 export interface IIpfsClient {
   pinHash(hash: Hash, name?: string): Promise<void>;
@@ -25,6 +25,7 @@ export class IpfsService {
 
   constructor(@ILogger private readonly logger: ILogger) {}
 
+  @callOnce('IpfsService')
   public initialize(ipfs: IIpfsClient): void {
     this.ipfs = ipfs;
   }
@@ -46,10 +47,8 @@ export class IpfsService {
       } else {
         return typeof response.data === 'string' ? (JSON.parse(response.data) as T) : (response.data as T);
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (ex: any) {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
-      this.logger.error(`Error fetching from ${url}: ${ex.message}`);
+    } catch (ex) {
+      this.logger.error(`Error fetching from ${url}: ${(ex as { message: string }).message}`);
       return null;
     }
   }
@@ -70,8 +69,7 @@ export class IpfsService {
    */
   public getIpfsUrl(hash: string, protocol = 'ipfs'): string {
     const format = IPFS_GATEWAY;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const encodedHash = protocol === 'ipfs' ? (new CID(hash).toV1().toBaseEncodedString('base32') as string) : hash;
+    const encodedHash = protocol === 'ipfs' ? new CID(hash).toV1().toBaseEncodedString('base32') : hash;
     return format.replace('${hash}', encodedHash).replace('${protocol}', protocol);
   }
 

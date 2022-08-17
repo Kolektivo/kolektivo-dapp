@@ -1,6 +1,6 @@
-<k-card id="t-o-vbatc-card" title="${i18n.tr('navigation.treasury.overview.value-by-asset-type.title')}">
+<k-card title="${i18n.tr('navigation.treasury.overview.value-by-asset-type.title')}">
   <k-stack direction="row">
-    <k-chart cutout="70" type="doughnut" id="t-o-vbatc-chart" width="200"
+    <k-chart cutout="70" type="doughnut" width="200"
       colors.bind="['var(--terra-cotta)', 'var(--ocean-blue)', 'var(--green-apple)', ]" data.bind="[20,20,60]">
     </k-chart>
     <k-stack gap="var(--spacing-xl)" id="t-o-vbatc-legend">

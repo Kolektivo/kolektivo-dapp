@@ -5,4 +5,4 @@ import './overview.scss';
 import template from './overview.html';
 
 @customElement({ name: 'overview', template, dependencies: [elements] })
-export class Dashboard implements ICustomElementViewModel {}
+export class Overview implements ICustomElementViewModel {}

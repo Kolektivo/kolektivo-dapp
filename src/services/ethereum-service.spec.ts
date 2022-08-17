@@ -11,7 +11,7 @@ describe('ethereum-service.ts', () => {
         return new Promise((res) =>
           res(
             mock<Block>({
-              number: 1,
+              number: n,
             }),
           ),
         );
