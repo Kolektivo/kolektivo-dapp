@@ -3,14 +3,14 @@ import { Global } from '../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IStore } from '../../stores';
 import { Registration } from 'aurelia';
-import { Treasury } from './treasury';
+import { Reserve } from './reserve';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
 
-describe('treasury', () => {
+describe('reserve', () => {
   it('should have an au-viewport with overview as default', async () => {
     const { appHost } = await createFixture
-      .html(`<treasury>`)
+      .html(`<reserve>`)
       .deps(...getRegistrations())
       .build().started;
     const viewport = appHost.querySelector('au-viewport');
@@ -20,7 +20,7 @@ describe('treasury', () => {
 
   it('should have an inner-nav', async () => {
     const { appHost } = await createFixture
-      .html(`<treasury>`)
+      .html(`<reserve>`)
       .deps(...getRegistrations())
       .build().started;
     expect(appHost.querySelector('inner-nav')).exist;
@@ -32,6 +32,6 @@ describe('treasury', () => {
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
       });
-    return [Treasury, Global, createMockStoreRegistration(), createMockI18nRegistration()];
+    return [Reserve, Global, createMockStoreRegistration(), createMockI18nRegistration()];
   }
 });

@@ -3,6 +3,7 @@ import { BigNumber, Contract, Signer, ethers } from 'ethers';
 import { CeloSigner } from './Celo/CeloSigner';
 import { ContractsDeploymentProvider } from './ContractsDeploymentProvider';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
+import { callOnce } from '../decorators/call-once';
 
 export enum ContractNames {
   ELASTICRECEIPTTOKEN = 'ElasticReceiptToken',
@@ -55,6 +56,7 @@ export class ContractsService {
     @IEthereumService private readonly ethereumService: IEthereumService,
   ) {}
 
+  @callOnce('Contracts Service')
   public initialize() {
     this.eventAggregator.subscribe('Network.Changed.Account', (account: Address): void => {
       if (account !== this.accountAddress) {

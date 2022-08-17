@@ -15,7 +15,7 @@ describe('token-info-card', () => {
       .html(`<token-info-card>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelector('#t-o-tic-card')).exist;
+    expect(appHost.querySelector('k-card')).exist;
   });
 
   it('should have a color, title and avatar on the k-card', async () => {
@@ -23,7 +23,7 @@ describe('token-info-card', () => {
       .html(`<token-info-card>`)
       .deps(...getRegistrations())
       .build().started;
-    const kCard = appHost.querySelector('#t-o-tic-card');
+    const kCard = appHost.querySelector('k-card');
     expect(kCard?.hasAttribute('color')).true;
     expect(kCard?.hasAttribute('title')).true;
     expect(kCard?.hasAttribute('title-avatar')).true;
@@ -34,22 +34,22 @@ describe('token-info-card', () => {
       .html(`<token-info-card>`)
       .deps(...getRegistrations())
       .build().started;
-    const kGrid = appHost.querySelector('#t-o-tic-stats');
+    const kGrid = appHost.querySelector('#r-kCur-tic-stats');
     expect(kGrid?.getAttribute('cols')).eq('3');
     const labels = kGrid?.querySelectorAll('label-value');
     expect(labels).toHaveLength(3);
     labels?.forEach((label) => expect(label.getAttribute('tooltip-text')).exist);
   });
 
-  it('should have supply distribution with tooltip and 3 treasury percentages', async () => {
+  it('should have supply distribution with tooltip and 4 treasury percentages', async () => {
     const { appHost } = await createFixture
       .html(`<token-info-card>`)
       .deps(...getRegistrations())
       .build().started;
-    const supplyDistribution = appHost.querySelector('#t-o-tic-supply');
+    const supplyDistribution = appHost.querySelector('#r-kCur-tic-supply');
     expect(supplyDistribution?.getAttribute('tooltip-text')).exist;
     const stats = supplyDistribution?.querySelectorAll('k-text');
-    expect(stats).toHaveLength(3);
+    expect(stats).toHaveLength(4);
   });
 
   function getRegistrations() {

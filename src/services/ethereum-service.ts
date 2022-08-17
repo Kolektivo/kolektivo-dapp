@@ -6,6 +6,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 // import { IDisclaimerService } from './DisclaimerService';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { IBlockChainStore } from '../stores/block-chain-store';
+import { callOnce } from '../decorators/call-once';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
 import { truncateDecimals } from '../utils';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -139,6 +140,7 @@ export class EthereumService {
     this.eventAggregator.publish('Network.NewBlock', block);
   }
 
+  @callOnce('Etherium Service')
   public async initialize(network: AllowedNetworks): Promise<void> {
     if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: `network` must be specified');

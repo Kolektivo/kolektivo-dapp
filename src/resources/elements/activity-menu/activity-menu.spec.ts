@@ -1,3 +1,4 @@
+import '../../../utils-testing/setup-testing';
 import { ActivityMenu } from './activity-menu';
 import { Global } from '../../../hooks/';
 import { I18N } from '@aurelia/i18n';
@@ -6,9 +7,6 @@ import { Registration } from 'aurelia';
 import { TakeValueConverter } from '../../../../design-system/value-converters';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createFixture } from '@aurelia/testing';
-import { preparePlatform } from '../../../utils-testing/setup-testing';
-
-preparePlatform();
 
 describe('<activity-menu />', () => {
   let transactions: Transaction[] = [];

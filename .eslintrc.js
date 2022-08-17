@@ -97,5 +97,12 @@ module.exports = {
       ],
     },
   },
+  {
+    files: ['./src/**/*.spec.ts'],
+    rules: {
+      "@typescript-eslint/unbound-method": 'off',
+      '@typescript-eslint/ban-ts-comment': 'off'
+    }
+  }
   ],
 };
