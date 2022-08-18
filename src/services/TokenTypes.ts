@@ -20,6 +20,10 @@ export interface ITokenInfoUniswap {
   logoURI?: string;
   name: string;
   symbol: string;
+  /**
+   * id does not exist unless the token represents an NFT
+   */
+  id?: number;
 }
 
 /**
