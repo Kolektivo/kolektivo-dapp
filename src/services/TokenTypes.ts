@@ -11,7 +11,10 @@ export interface IErc20Token {
   transferFrom(sender: Address, recipient: Address, amount: BigNumber): Promise<TransactionResponse>; // boolean
 }
 
-export type ITokenPrices = Record<string, number>;
+/**
+ * string with format "address_id", where "_id_" is optional, only used for NFTs
+ */
+export type TokenAddressId = string;
 
 export interface ITokenInfoUniswap {
   readonly chainId: number;
