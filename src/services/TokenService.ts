@@ -1,7 +1,7 @@
 import { Address, EthereumService, Networks } from './ethereum-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { IAxiosService } from './AxiosService';
-import { IErc20Token, ITokenInfo } from './TokenTypes';
+import { IErc20Token, ITokenInfo, TokenAddressId } from './TokenTypes';
 import { Subject, from } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import axios from 'axios';
@@ -29,7 +29,7 @@ export class TokenService {
   public static DefaultDecimals = 0;
   private erc20Abi = [];
 
-  private tokenInfos!: Map<Address, ITokenInfo>;
+  private tokenInfos!: Map<TokenAddressId, ITokenInfo>;
   private queue: Subject<() => Promise<void>>;
   // public tokenLists: TokenListMap;
   // private tokenPrices: Map<Address, number>;
@@ -69,7 +69,7 @@ export class TokenService {
       /**
        * note these will not automatically have id or price initialized
        */
-      this.tokenInfos = this.tokenListProvider.tokenInfos as Map<Address, ITokenInfo>;
+      this.tokenInfos = this.tokenListProvider.tokenInfos as Map<TokenAddressId, ITokenInfo>;
     });
 
     const uri = `https://pro-api.coingecko.com/api/v3/coins/list?x_cg_pro_api_key=${COINGECKO_API_KEY}`;
@@ -132,7 +132,13 @@ export class TokenService {
     endTimer('getTokenPrices');
   }
 
-  public async getTokenInfoFromAddress(tokenAddress: Address): Promise<ITokenInfo> {
+  /**
+   * Returns promise of ITokenInfo given address and optional NTF id.
+   * @param tokenAddress
+   * @param id Just for NFTs
+   * @returns
+   */
+  public async getTokenInfoFromAddress(tokenAddress: Address, id?: number): Promise<ITokenInfo> {
     let resolver: (value: ITokenInfo | PromiseLike<ITokenInfo>) => void;
     let rejector: (reason?: unknown) => void;
 
@@ -151,7 +157,7 @@ export class TokenService {
      * Fetch tokens one-at-a-time because many requests will be redundant, we want them
      * to take advantage of caching, and we don't want to re-enter on fetching duplicate tokens.
      */
-    this.queue.next(() => this._getTokenInfoFromAddress(tokenAddress, resolver, rejector));
+    this.queue.next(() => this._getTokenInfoFromAddress(tokenAddress, resolver, rejector, id));
 
     return promise;
   }
@@ -294,7 +300,7 @@ export class TokenService {
   }
 
   /**
-   * returns promise of a tokenInfo if the metadata is found in the tokenLists or
+   * Returns promise of a tokenInfo if the metadata is found in the tokenLists or
    * a valid token contract is found.
    *
    * If there is an error, then throws an exception.
@@ -303,8 +309,10 @@ export class TokenService {
     tokenAddress: Address,
     resolve: (tokenInfo: ITokenInfo) => void,
     reject: (reason?: unknown) => void,
+    id?: number,
   ): Promise<void> {
-    let tokenInfo = this.tokenInfos.get(tokenAddress.toLowerCase());
+    const tokenAddressId = this.getTokenAddressId(tokenAddress, id);
+    let tokenInfo = this.tokenInfos.get(tokenAddressId);
 
     if (!tokenInfo) {
       startTimer(`_getTokenInfoFromAddress-${getAddress(tokenAddress)}`);
@@ -343,12 +351,16 @@ export class TokenService {
         tokenInfo.logoURI = TokenService.DefaultLogoURI;
       }
 
-      this.tokenInfos.set(tokenAddress.toLowerCase(), tokenInfo);
+      this.tokenInfos.set(tokenAddressId, tokenInfo);
       endTimer(`_getTokenInfoFromAddress-${tokenAddress}`);
       this.logger.info(`loaded token: ${tokenAddress}`);
     }
 
     resolve(tokenInfo);
+  }
+
+  private getTokenAddressId(address: Address, id?: number) {
+    return typeof id !== 'undefined' ? `${address.toLowerCase()}_${id.toString()}` : address;
   }
 
   private async getTokeinInfoOnChain(address: string): Promise<Partial<ITokenInfo> | undefined> {
