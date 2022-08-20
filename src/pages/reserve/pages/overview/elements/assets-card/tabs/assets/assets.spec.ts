@@ -13,7 +13,6 @@ describe('assets', () => {
       .html(`<assets>`)
       .deps(...getRegistrations())
       .build().started;
-    console.log(appHost.innerHTML);
     expect(appHost.querySelector('k-data-grid')).exist;
   });
 

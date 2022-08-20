@@ -8,6 +8,7 @@ import template from './k-loader.html';
 @customElement({ name: 'k-loader', template, capture: captureFilter })
 export class KLoader implements ICustomElementViewModel {
   @bindable type: LoaderType = 'spinner';
+  @bindable loading?: Promise<unknown>;
   @bindable fill: LoaderFill = 'page';
   @bindable({ set: numberToPixelsInterceptor }) size = '75';
   @bindable({ set: ifExistsThenTrue }) overlay = false;

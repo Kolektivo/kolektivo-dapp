@@ -1,24 +1,30 @@
-<let info.bind="store.tokenInfo"></let>
 <k-card id="t-o-tic-card" color="linear-gradient(to right, var(--ocean-blue-500), var(--ocean-blue-600))"
   title="${i18n.tr('navigation.treasury.overview.ktt.title')}"
   title-avatar="${i18n.tr('navigation.treasury.overview.ktt.avatar-src')}">
+  <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadData()"></k-loader>
   <k-stack gap="var(--spacing-xl)">
     <k-grid cols="3" id="t-o-tic-stats">
       <label-value title="${i18n.tr('general.token-info-card.market-cap')}"
-        value.bind="info.marketCap | currency"
-        tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}"></label-value>
+        tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}">
+        <k-text type="h4">
+          <formatted-number show-tooltip currency commas decimals="0" ethwei="18" value.bind="treasuryStore.totalValuation"></formatted-number>
+        </k-text>
+      </label-value>
       <label-value title="${i18n.tr('general.token-info-card.current-price')}"
-        value.bind="info.currentPrice | currency"
+        value.bind="treasuryStore.currentPrice | currency"
         tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}"></label-value>
-      <label-value title="${i18n.tr('general.token-info-card.total-supply')}" value.bind="info.totalSupply"
-        tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}"></label-value>
+      <label-value title="${i18n.tr('general.token-info-card.total-supply')}" tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}">
+        <k-text type="h4">
+          <formatted-number show-tooltip commas decimals="0" ethwei="18" value.bind="treasuryStore.totalSupply"></formatted-number>
+        </k-text>
+      </label-value>
     </k-grid>
     <label-value id="t-o-tic-supply" gap="var(--spacing-lg)" title="${i18n.tr('general.token-info-card.supply-distribution')}"
       tooltip-text="${i18n.tr('general.token-info-card.supply-distribution-tooltip')}">
       <k-stack direction="row" gap="var(--spacing-xl)">
-        <k-text>${info.supplyDistribution.treasury}% in treasury</k-text>
-        <k-text>${info.supplyDistribution.reserves}% in reserves</k-text>
-        <k-text>${info.supplyDistribution.circulating}% circulating supply</k-text>
+        <k-text>${treasuryStore.treasury | percentage} in treasury</k-text>
+        <k-text>${treasuryStore.reserves | percentage} in reserves</k-text>
+        <k-text>${treasuryStore.circulating | percentage} circulating supply</k-text>
       </k-stack>
     </label-value>
   </k-stack>

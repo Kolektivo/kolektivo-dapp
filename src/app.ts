@@ -4,7 +4,7 @@ import { ContractsDeploymentProvider, EthereumService, Networks, WalletProvider 
 import { I18N } from '@aurelia/i18n';
 import { IEventAggregator, IPlatform, customElement } from 'aurelia';
 import { IStore } from './stores/store';
-import { ethereumNetwork, isDev } from './environment-variables';
+import { isDev } from './environment-variables';
 import template from './app.html';
 
 type WrongNetworkInfo = { provider: WalletProvider; connectedTo?: string; need: string };
@@ -39,7 +39,7 @@ export class App {
     this.platform.window.removeEventListener('resize', this.recalc);
   }
   async binding(): Promise<void> {
-    await this.store.services.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
+    await this.store.services.ethereumService.initialize(isDev ? Networks.Alfajores : Networks.Mainnet);
     ContractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
     this.store.services.contractsService.initialize();
     this.store.services.ipfsService.initialize(this.store.services.kolektivoService);
