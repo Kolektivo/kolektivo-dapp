@@ -80,7 +80,7 @@ module.exports = {
    */
   overrides: [
   {
-    files: ['*-service.ts'],
+    files: ['*-service.ts', '*-store.ts'],
     rules: {
       '@typescript-eslint/explicit-member-accessibility': [
         'error',
