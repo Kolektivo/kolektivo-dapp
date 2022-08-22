@@ -37,8 +37,8 @@ interface ImportMeta {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface ImportMetaEnv {
-  readonly VITE_NETWORK?: AllowedNetworks;
-  readonly VITE_ETHERSCAN_KEY: string;
-  readonly VITE_IPFS_GATEWAY: string;
-  readonly VITE_COINGECKO_API_KEY: string;
+  readonly KOL_NETWORK?: AllowedNetworks;
+  readonly KOL_ETHERSCAN_KEY: string;
+  readonly KOL_IPFS_GATEWAY: string;
+  readonly KOL_COINGECKO_API_KEY: string;
 }

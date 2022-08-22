@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import inject from '@rollup/plugin-inject'
 
 // vite.config.js
 const htmlImport = {
@@ -13,7 +14,7 @@ const htmlImport = {
     transform(code, id) {
       if (/^.*\.html$/g.test(id)) {
         code = `export default \`${code.replaceAll('${', '\\${')}\``;
-    }
+      }
 
 
       return { code }
@@ -25,6 +26,7 @@ const htmlImport = {
     define:{
       'process.env': process.env
     },
+    envPrefix: 'KOL',
     resolve: {
       alias: {
         process: "process/browser",
