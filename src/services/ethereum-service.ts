@@ -594,9 +594,9 @@ export class EthereumService {
   public getEtherscanLink(addressOrHash: Address | Hash, tx = false): string {
     const targetedNetwork = EthereumService.targetedNetwork as string;
     if (targetedNetwork === Networks.Celo) {
-      return `https://alfajores-blockscout.celo-testnet.org/${tx ? 'tx' : 'address'}/${addressOrHash}`;
-    } else {
       return `https://celoscan.io/${tx ? 'tx' : 'address'}/${addressOrHash}`;
+    } else {
+      return `https://alfajores-blockscout.celo-testnet.org/${tx ? 'tx' : 'address'}/${addressOrHash}`;
     }
   }
 
