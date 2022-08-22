@@ -25,9 +25,9 @@ export class ContractsDeploymentProvider {
     Registration.singleton(IContractsDeploymentProvider, ContractsDeploymentProvider).register(container);
   }
 
-  public static async initialize(targetedNetwork: string): Promise<void> {
+  public static async initialize(targetedNetwork: AllowedNetworks): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ContractsDeploymentProvider.contractInfosJson = (await import(`../contracts/${targetedNetwork}.json`)) as IContractInfosJson;
+    ContractsDeploymentProvider.contractInfosJson = (await import(`../contracts/${targetedNetwork as string}.json`)) as IContractInfosJson;
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     ContractsDeploymentProvider.sharedContractAbisJson = (await import('../contracts/sharedAbis.json')) as unknown as ISharedContractInfos;
   }
