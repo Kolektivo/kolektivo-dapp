@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 declare module '*.html' {
   import { IContainer, PartialBindableDefinition } from 'aurelia';
   export const name: string;
@@ -26,4 +28,17 @@ declare module '*.json' {
 declare module '*.svg' {
   const value: string;
   export = value;
+}
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+interface ImportMetaEnv {
+  readonly VITE_NETWORK?: AllowedNetworks;
+  readonly VITE_ETHERSCAN_KEY: string;
+  readonly VITE_IPFS_GATEWAY: string;
+  readonly VITE_COINGECKO_API_KEY: string;
 }

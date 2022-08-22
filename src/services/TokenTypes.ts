@@ -1,6 +1,6 @@
 import { Address } from './ethereum-service';
 import { BigNumber } from 'ethers/lib/ethers';
-import { TransactionResponse } from './TransactionsService';
+import { TransactionResponse } from '@ethersproject/providers';
 
 export interface IErc20Token {
   allowance(owner: Address, spender: Address): Promise<BigNumber>;

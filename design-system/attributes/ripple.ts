@@ -7,11 +7,12 @@ export class Ripple implements ICustomAttributeViewModel {
   rippleContainer?: HTMLDivElement;
   ripple?: HTMLDivElement;
 
-  constructor(private readonly htmlElement: HTMLElement, @IPlatform private readonly platform: IPlatform) {
-    htmlElement.addEventListener('mousedown', this.rippleEvent);
+  constructor(private readonly htmlElement?: HTMLElement, @IPlatform private readonly platform?: IPlatform) {
+    htmlElement?.addEventListener('mousedown', this.rippleEvent);
   }
 
   rippleEvent = (event: MouseEvent) => {
+    if (!this.htmlElement) return;
     const offsetInfo = this.htmlElement.getBoundingClientRect();
     this.createContainer(offsetInfo);
     this.createRipple(offsetInfo, event);
@@ -35,6 +36,7 @@ export class Ripple implements ICustomAttributeViewModel {
   };
 
   private createContainer(offsetInfo: DOMRect) {
+    if (!this.htmlElement) return;
     const ripplerContainer = this.htmlElement.querySelector('.ripple-container');
     if (ripplerContainer) {
       ripplerContainer.remove();
@@ -57,6 +59,7 @@ export class Ripple implements ICustomAttributeViewModel {
   };
 
   detaching() {
+    if (!this.htmlElement) return;
     this.htmlElement.removeEventListener('mousedown', this.rippleEvent);
   }
 }

@@ -1,4 +1,4 @@
-import { IContainer, ICustomAttributeViewModel, bindable, customAttribute } from 'aurelia';
+import { IContainer, ICustomAttributeViewModel, INode, bindable, customAttribute } from 'aurelia';
 import { ICustomElementController } from '@aurelia/runtime-html';
 import { KTooltip } from '../../design-system/elements';
 import { createCustomElement, destroyCustomElement } from '../../design-system/aurelia-helpers';
@@ -12,7 +12,7 @@ export class Tooltip implements ICustomAttributeViewModel {
   controller?: ICustomElementController;
   host?: HTMLElement;
 
-  constructor(private readonly element: HTMLElement, @IContainer private readonly container: IContainer) {
+  constructor(@INode private readonly element: HTMLElement, @IContainer private readonly container: IContainer) {
     this.element.onmouseover = this.onHover;
     this.element.onmouseout = this.onHoverOut;
   }

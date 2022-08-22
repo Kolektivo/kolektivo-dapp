@@ -1,4 +1,4 @@
-import { Address, AllowedNetworks, EthereumService, IEthereumService } from 'services';
+import { Address, EthereumService, IEthereumService } from '../services';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { IIpfsService } from './IpfsService';
 import { ITokenInfo, ITokenInfoUniswap, ITokenListUniswap } from './TokenTypes';
@@ -57,9 +57,9 @@ export class TokenListProvider {
           }
         }
       }
-      if (tokenInfoMap.size === 0) {
-        throw new Error('Failed to load any TokenInfos');
-      }
+      // if (tokenInfoMap.size === 0) {
+      //   throw new Error('Failed to load any TokenInfos');
+      // }
 
       endTimer('fetch tokeninfos');
 

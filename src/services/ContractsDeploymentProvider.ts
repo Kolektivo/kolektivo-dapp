@@ -1,4 +1,4 @@
-import { Address, AllowedNetworks } from './ethereum-service';
+import { Address } from './ethereum-service';
 import { DI, IContainer, Registration } from 'aurelia';
 
 interface IContractInfo {
@@ -26,11 +26,11 @@ export class ContractsDeploymentProvider {
     Registration.singleton(IContractsDeploymentProvider, ContractsDeploymentProvider).register(container);
   }
 
-  public static initialize(targetedNetwork: string): void {
+  public static async initialize(targetedNetwork: string) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ContractsDeploymentProvider.contractInfosJson = require(`../../contracts/${targetedNetwork}.json`) as IContractInfosJson;
+    ContractsDeploymentProvider.contractInfosJson = (await import(`../../contracts/${targetedNetwork}.json`)) as IContractInfosJson;
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ContractsDeploymentProvider.sharedContractAbisJson = require('../../contracts/sharedAbis.json') as ISharedContractInfos;
+    ContractsDeploymentProvider.sharedContractAbisJson = (await import('../../contracts/sharedAbis.json')) as unknown as ISharedContractInfos;
     this.initialized = true;
   }
 

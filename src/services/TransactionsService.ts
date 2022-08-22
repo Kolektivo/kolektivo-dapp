@@ -35,6 +35,3 @@ export default class TransactionsService {
     return this.ethereumService.getEtherscanLink(txHash, true);
   }
 }
-
-export { TransactionResponse } from '@ethersproject/providers';
-export { TransactionReceipt } from '@ethersproject/providers';

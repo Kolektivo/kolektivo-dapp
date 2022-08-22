@@ -1,4 +1,4 @@
-import { ICustomAttributeViewModel, IPlatform, bindable, customAttribute } from 'aurelia';
+import { ICustomAttributeViewModel, INode, IPlatform, bindable, customAttribute } from 'aurelia';
 import { INotificationService } from '../../design-system/services';
 
 @customAttribute({ name: 'copy' })
@@ -7,7 +7,7 @@ export class Copy implements ICustomAttributeViewModel {
   public value?: string;
 
   constructor(
-    private readonly element: HTMLElement,
+    @INode private readonly element: HTMLElement,
     @IPlatform private readonly platform: IPlatform,
     @INotificationService private readonly notificationService: INotificationService,
   ) {

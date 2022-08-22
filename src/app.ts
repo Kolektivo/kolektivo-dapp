@@ -40,12 +40,9 @@ export class App {
   }
   async binding(): Promise<void> {
     await this.store.services.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
-    ContractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
+    await ContractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
     this.store.services.contractsService.initialize();
     this.store.services.ipfsService.initialize(this.store.services.kolektivoService);
-    /**
-     * we want tokens to be all loaded before showing the app
-     */
     await this.store.services.tokenService.initialize();
   }
 

@@ -1,5 +1,5 @@
 import { IAnimationService, easings } from '../../design-system/services';
-import { ICustomAttributeViewModel, bindable, customAttribute } from 'aurelia';
+import { ICustomAttributeViewModel, INode, bindable, customAttribute } from 'aurelia';
 
 @customAttribute({ name: 'animate' })
 export class AnimateAttribute implements ICustomAttributeViewModel {
@@ -17,7 +17,7 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   @bindable public speed?: number;
   resolve?: (value: void | PromiseLike<void>) => void;
 
-  constructor(private readonly element: HTMLElement, @IAnimationService private readonly animationService: IAnimationService) {}
+  constructor(@INode private readonly element: HTMLElement, @IAnimationService private readonly animationService: IAnimationService) {}
 
   binding(): void | Promise<void> {
     const duration = this.element.getAttribute('animate-duration');
@@ -63,6 +63,8 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   };
 
   detaching(): void | Promise<void> {
+    if (!this.element) return;
+
     return new Promise((res) => {
       this.resolve = res;
 

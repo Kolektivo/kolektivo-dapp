@@ -1,6 +1,6 @@
 import { BlockChainStore, IBlockChainStore } from './block-chain-store';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IServices } from 'services';
+import { IServices } from '../services';
 import { ITreasuryStore, TreasuryStore } from './treasury-store';
 
 export type IStore = Store;

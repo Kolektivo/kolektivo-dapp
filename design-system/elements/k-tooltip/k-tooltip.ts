@@ -1,4 +1,4 @@
-import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
+import { ICustomElementViewModel, INode, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
 import { numberToPixels } from './../../common';
 
 import css from './k-tooltip.scss';
@@ -14,7 +14,7 @@ export class KTooltip implements ICustomElementViewModel {
   top?: string | number | null;
   compose?: HTMLElement;
 
-  constructor(@IPlatform private readonly platform: IPlatform, private readonly element: HTMLElement) {}
+  constructor(@IPlatform private readonly platform: IPlatform, @INode private readonly element: HTMLElement) {}
 
   attaching(): void {
     this.platform.window.addEventListener('resize', this.recalc);

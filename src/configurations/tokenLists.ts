@@ -1,4 +1,4 @@
-import { AllowedNetworks, Networks } from 'services';
+import { Networks } from '../services';
 /**
  * key is the network name, value is an array of urls to TokenLists.
  */

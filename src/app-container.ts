@@ -71,7 +71,7 @@ export const appContainer: IContainer = DI.createContainer()
       sinks: [ConsoleSink],
     }),
   )
-  .register(RouterConfiguration.customize({ useUrlFragmentHash: false, useHref: false }))
+  .register(RouterConfiguration.customize({ useUrlFragmentHash: false, useHref: false, useDirectRouting: true }))
   .register(
     I18nConfiguration.customize((options) => {
       options.initOptions = {

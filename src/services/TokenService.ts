@@ -71,7 +71,7 @@ export class TokenService {
     });
 
     const uri = `https://pro-api.coingecko.com/api/v3/coins/list?x_cg_pro_api_key=${COINGECKO_API_KEY}`;
-
+    console.log(uri);
     startTimer('get geckoCoinInfo');
     /**
      * prefetch all coingecko ids to use for fetching token prices, etc later

@@ -1,8 +1,8 @@
-import { ICustomAttributeViewModel, customAttribute } from 'aurelia';
+import { ICustomAttributeViewModel, INode, customAttribute } from 'aurelia';
 
 @customAttribute({ name: 'full-height' })
 export class FullHeight implements ICustomAttributeViewModel {
-  constructor(private readonly element: HTMLElement) {
+  constructor(@INode private readonly element: HTMLElement) {
     this.element.style.height = '100%';
   }
 }

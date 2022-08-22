@@ -1,10 +1,10 @@
-import { ICustomAttributeViewModel, IPlatform, bindable, customAttribute } from 'aurelia';
+import { ICustomAttributeViewModel, INode, IPlatform, bindable, customAttribute } from 'aurelia';
 
 @customAttribute({ name: 'link', noMultiBindings: true })
 export class Link implements ICustomAttributeViewModel {
   @bindable public value = '';
 
-  constructor(private readonly htmlElement: HTMLElement, @IPlatform private readonly platform: IPlatform) {
+  constructor(@INode private readonly htmlElement: HTMLElement, @IPlatform private readonly platform: IPlatform) {
     htmlElement.addEventListener('mousedown', this.clickEvent);
   }
 

@@ -1,8 +1,8 @@
-import 'style-loader!./k-toast.scss';
+import './k-toast.scss';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { NotificationAction, NotificationType } from '../../../design-system/services';
+import { NotificationAction, NotificationType } from '../../services';
 import { ToastOptions } from './toast-options';
-import { getColorByType } from 'utils';
+import { getColorByType } from '../../common';
 import template from './k-toast.html';
 
 function getFlexFromPosition(position: Position): string {

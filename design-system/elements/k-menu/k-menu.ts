@@ -1,4 +1,4 @@
-import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
+import { ICustomElementViewModel, INode, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
 
 import { captureFilter, numberToPixels } from '../../../design-system/common';
 import css from './k-menu.scss';
@@ -19,7 +19,7 @@ import template from './k-menu.html';
   },
 })
 export class KMenu implements ICustomElementViewModel {
-  constructor(@IPlatform private readonly platform: IPlatform, private readonly element: HTMLElement) {}
+  constructor(@IPlatform private readonly platform: IPlatform, @INode private readonly element: HTMLElement) {}
   private top?: number;
   private left?: number;
   private show = false;

@@ -1,7 +1,7 @@
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { captureFilter, ifExistsThenTrue, noop } from './../../common';
 
-import 'style-loader!./k-modal.scss';
+import './k-modal.scss';
 import template from './k-modal.html';
 
 @customElement({ name: 'k-modal', template, capture: captureFilter })

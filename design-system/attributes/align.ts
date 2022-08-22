@@ -1,15 +1,13 @@
-import { ICustomAttributeViewModel, bindable, customAttribute } from 'aurelia';
+import { ICustomAttributeViewModel, INode, bindable, customAttribute } from 'aurelia';
 
 @customAttribute({ name: 'align' })
 export class Align implements ICustomAttributeViewModel {
   @bindable()
   public value?: string;
 
-  constructor(private readonly element: HTMLElement) {}
+  constructor(@INode private readonly element: HTMLElement) {}
 
   public afterBind(): void {
-    /* Place Code In Here */
-    // this.element.classList.add(value);
     this.element.style.textAlign = this.value ?? '';
   }
 
