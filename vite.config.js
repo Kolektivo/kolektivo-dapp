@@ -22,6 +22,10 @@ const htmlImport = {
   }
   
   export default defineConfig({
+    server: {
+      port: 9000,
+      strictPort: true
+    },
     plugins: [ htmlImport ],
     define:{
       'process.env': process.env
