@@ -6,6 +6,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 // import { IDisclaimerService } from './DisclaimerService';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { IBlockChainStore } from '../stores/block-chain-store';
+import { callOnce } from '../decorators/call-once';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
 import { truncateDecimals } from '../utils';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -88,7 +89,7 @@ export class EthereumService {
   public static ProviderEndpoints = {
     mainnet: `https://forno.celo.org`,
     // alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
-    // alfajores: `https://alfajores.rpcs.dev:8545`,
+    //alfajores: `https://alfajores.rpcs.dev:8545`,
     alfajores: `https://alfajores-forno.celo-testnet.org`,
     // alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
   };
@@ -137,6 +138,7 @@ export class EthereumService {
     this.eventAggregator.publish('Network.NewBlock', block);
   }
 
+  @callOnce('Etherium Service')
   public async initialize(network: AllowedNetworks): Promise<void> {
     if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: `network` must be specified');
@@ -156,7 +158,7 @@ export class EthereumService {
     }
 
     // comment out to run DISCONNECTED
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     this.readOnlyProvider = new CeloProvider(EthereumService.ProviderEndpoints[EthereumService.targetedNetwork]);
     return this.readOnlyProvider.ready.then(() => {
       this.readOnlyProvider.pollingInterval = 15000;

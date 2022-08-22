@@ -1,4 +1,5 @@
 <k-card title="${i18n.tr('navigation.reserve.overview.assets.title')}" tooltip-text="${i18n.tr('navigation.reserve.overview.assets.tooltip')}">
-  <card-nav routes.bind="routes()"></card-nav>
-  <au-viewport name="assets-card" default="assets"></au-viewport>
+  <card-nav routes.bind="routes"></card-nav>
+  <assets if.bind="activeTab === 'assets'"></assets>
+  <transaction-history if.bind="activeTab === 'transaction-history'"></transaction-history>
 </k-card>

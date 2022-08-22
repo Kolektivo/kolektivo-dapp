@@ -1,13 +1,47 @@
 import '../../../../utils-testing/setup-testing';
 import { Global } from '../../../../hooks/';
 import { I18N } from '@aurelia/i18n';
-import { IBlockChainStore, IStore } from '../../../../stores';
+import { IStore } from '../../../../stores';
 import { KGuilder } from './k-guilder';
 import { Registration, ValueConverter } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
 
 describe('<k-guilder />', () => {
+  it('should have a k-page component', async () => {
+    const { appHost } = await createFixture
+      .html(`<k-guilder>`)
+      .deps(...getRegistrations())
+      .build().started;
+    expect(appHost.querySelector('k-page')).exist;
+  });
+
+  it('should have a tile and description in the k-page component', async () => {
+    const { appHost } = await createFixture
+      .html(`<k-guilder>`)
+      .deps(...getRegistrations())
+      .build().started;
+    const kPage = appHost.querySelector('k-page');
+    expect(kPage?.hasAttribute('title')).true;
+    expect(kPage?.hasAttribute('description')).true;
+  });
+
+  it('should have a token info card component', async () => {
+    const { appHost } = await createFixture
+      .html(`<k-guilder>`)
+      .deps(...getRegistrations())
+      .build().started;
+    expect(appHost.querySelector('token-info-card')).exist;
+  });
+
+  it('should have a value ratio card component', async () => {
+    const { appHost } = await createFixture
+      .html(`<k-guilder>`)
+      .deps(...getRegistrations())
+      .build().started;
+    expect(appHost.querySelector('value-ratio-card')).exist;
+  });
+
   it('displays grid cards text', async () => {
     const { getAllBy } = await createFixture
       .html(`<k-guilder>`)
@@ -31,7 +65,7 @@ describe('<k-guilder />', () => {
   it.todo('display token info card marketCap, currentPrice and totalSupply');
   it.todo('display value ratio card title with translation');
 
-  function getRegistrations(overrides?: Partial<IBlockChainStore>) {
+  function getRegistrations() {
     const createMockStoreRegistration = () =>
       Registration.instance(IStore, {
         blockChainStore: {},

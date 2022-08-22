@@ -14,7 +14,7 @@ describe('value-over-time-card', () => {
       .html(`<value-over-time-card>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelector('#t-o-votc-card')).exist;
+    expect(appHost.querySelector('k-card')).exist;
   });
 
   it('should have a title k-card component', async () => {
@@ -22,7 +22,7 @@ describe('value-over-time-card', () => {
       .html(`<value-over-time-card>`)
       .deps(...getRegistrations())
       .build().started;
-    const card = appHost.querySelector('#t-o-votc-card');
+    const card = appHost.querySelector('k-card');
     expect(card?.getAttribute('title')).exist;
   });
 
@@ -49,7 +49,7 @@ describe('value-over-time-card', () => {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
-        tr: () => 'Overview',
+        tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [ValueOverTimeCard, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];

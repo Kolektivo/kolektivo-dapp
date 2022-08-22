@@ -80,7 +80,7 @@ module.exports = {
    */
   overrides: [
   {
-    files: ['*-service.ts'],
+    files: ['*-service.ts', '*-store.ts'],
     rules: {
       '@typescript-eslint/explicit-member-accessibility': [
         'error',
@@ -100,7 +100,8 @@ module.exports = {
   {
     files: ['./src/**/*.spec.ts'],
     rules: {
-      "@typescript-eslint/unbound-method": 'off'
+      "@typescript-eslint/unbound-method": 'off',
+      '@typescript-eslint/ban-ts-comment': 'off'
     }
   }
   ],

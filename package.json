@@ -35,7 +35,10 @@
     "e2e:ci": "URL=$npm_config_url playwright test",
     "vercel:deploy": "vercel --token $npm_config_token",
     "vercel:deploy:production": "vercel --prod --token $npm_config_token",
-    "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope"
+    "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope",
+    "abi:alfajores:treasury": "abi-types-generator './src/contracts/treasury.json' --output='./src/models' --name=treasury --provider=ethers_v5",
+    "abi:alfajores:reserve": "abi-types-generator './src/contracts/reserve.json' --output='./src/models' --name=reserve --provider=ethers_v5",
+    "abi:alfajores:geonft": "abi-types-generator './src/contracts/geonft.json' --output='./src/models' --name=geonft --provider=ethers_v5"
   },
   "dependencies": {
     "@aurelia/i18n": "dev",
@@ -85,6 +88,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "ethereum-abi-types-generator": "^1.3.2",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
     "happy-dom": "^6.0.4",

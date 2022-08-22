@@ -13,8 +13,9 @@ describe('treasury', () => {
       .html(`<treasury>`)
       .deps(...getRegistrations())
       .build().started;
-
-    expect(appHost.innerHTML).toContain('<au-viewport default="overview">');
+    const viewport = appHost.querySelector('au-viewport');
+    expect(viewport).exist;
+    expect(viewport?.getAttribute('default')).toBe('overview');
   });
 
   it('should have an inner-nav', async () => {
@@ -22,14 +23,14 @@ describe('treasury', () => {
       .html(`<treasury>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.innerHTML).toContain('<inner-nav');
+    expect(appHost.querySelector('inner-nav')).exist;
   });
 
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
-        tr: () => 'Overview',
+        tr: (s: string) => String(s),
       });
     return [Treasury, Global, createMockStoreRegistration(), createMockI18nRegistration()];
   }

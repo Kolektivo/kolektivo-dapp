@@ -2,6 +2,7 @@ import { Address, Hash, IBlockInfoNative, IChainEventInfo, IEthereumService } fr
 import { BigNumber, Contract, Signer, ethers } from 'ethers';
 import { ContractsDeploymentProvider } from './ContractsDeploymentProvider';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
+import { callOnce } from '../decorators/call-once';
 
 export enum ContractNames {
   ELASTICRECEIPTTOKEN = 'ElasticReceiptToken',
@@ -54,6 +55,7 @@ export class ContractsService {
     @IEthereumService private readonly ethereumService: IEthereumService,
   ) {}
 
+  @callOnce('Contracts Service')
   public initialize() {
     this.eventAggregator.subscribe('Network.Changed.Account', (account: Address): void => {
       if (account !== this.accountAddress) {
@@ -113,8 +115,8 @@ export class ContractsService {
     return ContractsService.Contracts.get(contractName) ?? null;
   }
 
-  public getContractAtAddress(contractName: ContractNames, address: Address, signorOrProvider?: SignerTypes): Contract {
-    return new ethers.Contract(address, ContractsService.getContractAbi(contractName), signorOrProvider ?? this.createProvider());
+  public getContractAtAddress<T>(contractName: ContractNames, address: Address, signorOrProvider?: SignerTypes): T {
+    return new ethers.Contract(address, ContractsService.getContractAbi(contractName), signorOrProvider ?? this.createProvider()) as unknown as T;
   }
 
   /**
@@ -177,7 +179,7 @@ export class ContractsService {
     const signerOrProvider = this.createProvider();
 
     ContractsService.Contracts.forEach((_contract, contractName) => {
-      let contract;
+      let contract: Contract | null;
 
       if (reuseContracts) {
         contract = ContractsService.Contracts.get(contractName)?.connect(signerOrProvider) ?? null;

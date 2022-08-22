@@ -1,6 +1,11 @@
 :host {
   --toolip-color: var(--don-juan-800);
 
+  display:block;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: var(--font);
+  
   au-compose {
     position: absolute;
     background: var(--toolip-color);

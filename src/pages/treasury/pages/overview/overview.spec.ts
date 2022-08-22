@@ -15,7 +15,7 @@ describe('overview', () => {
       .html(`<overview>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('k-page')).toHaveLength(1);
+    expect(appHost.querySelectorAll('k-page')).exist;
   });
 
   it('should have a tile and description in the k-page component', async () => {
@@ -33,7 +33,7 @@ describe('overview', () => {
       .html(`<overview>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('token-info-card')).toHaveLength(1);
+    expect(appHost.querySelectorAll('token-info-card')).exist;
   });
 
   it('should have a value card component', async () => {
@@ -41,7 +41,7 @@ describe('overview', () => {
       .html(`<overview>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('value-card')).toHaveLength(1);
+    expect(appHost.querySelectorAll('value-card')).exist;
   });
 
   it('should have a value by asset type card component', async () => {
@@ -49,7 +49,7 @@ describe('overview', () => {
       .html(`<overview>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('value-by-asset-type-card')).toHaveLength(1);
+    expect(appHost.querySelectorAll('value-by-asset-type-card')).exist;
   });
 
   it('should have a value over time card component', async () => {
@@ -57,7 +57,7 @@ describe('overview', () => {
       .html(`<overview>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('value-over-time-card')).toHaveLength(1);
+    expect(appHost.querySelectorAll('value-over-time-card')).exist;
   });
 
   it('should have an assets card component', async () => {
@@ -65,14 +65,14 @@ describe('overview', () => {
       .html(`<overview>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelectorAll('assets-card')).toHaveLength(1);
+    expect(appHost.querySelectorAll('assets-card')).exist;
   });
 
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
-        tr: () => 'Overview',
+        tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [Overview, CurrencyValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];

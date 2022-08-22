@@ -24,3 +24,14 @@ export function smallHexString(str: string): string {
   const len = str.length;
   return `${str.slice(0, 6)}...${str.slice(len - 4, len)}`;
 }
+
+export function delay(time: number): Promise<void> {
+  let resolve: (() => void) | undefined = undefined;
+  const promise = new Promise<void>((res) => {
+    resolve = res;
+  });
+  setTimeout(() => {
+    resolve?.();
+  }, time);
+  return promise;
+}

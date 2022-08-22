@@ -1,6 +1,7 @@
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Hash } from './ethereum-service';
 import { IPFS_GATEWAY } from '../environment-variables';
+import { callOnce } from '../decorators/call-once';
 import CID from 'cids';
 import axios from 'axios';
 
@@ -24,6 +25,7 @@ export class IpfsService {
 
   constructor(@ILogger private readonly logger: ILogger) {}
 
+  @callOnce('IpfsService')
   public initialize(ipfs: IIpfsClient): void {
     this.ipfs = ipfs;
   }

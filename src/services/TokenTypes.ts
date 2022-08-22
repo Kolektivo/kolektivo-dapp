@@ -11,7 +11,21 @@ export interface IErc20Token {
   transferFrom(sender: Address, recipient: Address, amount: BigNumber): Promise<TransactionResponse>; // boolean
 }
 
-export type ITokenPrices = Record<string, number>;
+export interface IErc721Token {
+  balanceOf(owner: Address): Promise<BigNumber>;
+  ownerOf(tokenId: number): Promise<Address>;
+  safeTransferFrom(from: Address, to: Address, tokenId: number): Promise<TransactionResponse>;
+  transferFrom(from: Address, to: Address, tokenId: number): Promise<TransactionResponse>;
+  approve(to: Address, tokenId: number): Promise<TransactionResponse>;
+  setApprovalForAll(operator: Address, approved: boolean): Promise<TransactionResponse>;
+  getApproved(tokenId: number): Promise<boolean>;
+  isApprovedForAll(owner: Address, operator: Address): Promise<boolean>;
+}
+
+/**
+ * string with format "address_id", where "_id_" is optional, only used for NFTs
+ */
+export type TokenAddressId = string;
 
 export interface ITokenInfoUniswap {
   readonly chainId: number;
@@ -20,6 +34,10 @@ export interface ITokenInfoUniswap {
   logoURI?: string;
   name: string;
   symbol: string;
+  /**
+   * id does not exist unless the token represents an NFT
+   */
+  id?: number;
 }
 
 /**
@@ -39,7 +57,7 @@ export interface ITokenInfo extends ITokenInfoUniswap {
 
 export interface ITokenHolder {
   /**
-   * address of holder
+   * of: Address holder
    */
   address: Address;
   /**

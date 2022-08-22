@@ -8,6 +8,7 @@ export class Tooltip implements ICustomAttributeViewModel {
   @bindable value?: string;
   @bindable position: Position = 'top';
   @bindable color = 'red';
+  @bindable visible = true;
 
   controller?: ICustomElementController;
   host?: HTMLElement;
@@ -18,21 +19,25 @@ export class Tooltip implements ICustomAttributeViewModel {
   }
 
   onHover = (): void => {
-    this.host = document.createElement('k-tooltip');
-    this.element.insertAdjacentElement('beforebegin', this.host);
-    const { controller } = createCustomElement(KTooltip, this.container, this.host, {
-      message: this.value,
-      host: this.element,
-      position: this.position,
-      color: this.color,
-    });
+    if (this.visible) {
+      this.host = document.createElement('k-tooltip');
+      this.element.insertAdjacentElement('beforebegin', this.host);
+      const { controller } = createCustomElement(KTooltip, this.container, this.host, {
+        message: this.value,
+        host: this.element,
+        position: this.position,
+        color: this.color,
+      });
 
-    this.controller = controller;
+      this.controller = controller;
+    }
   };
 
   onHoverOut = async (): Promise<void> => {
-    this.controller && (await destroyCustomElement(this.controller));
-    this.host?.remove();
-    this.controller = void 0;
+    if (this.visible) {
+      this.controller && (await destroyCustomElement(this.controller));
+      this.host?.remove();
+      this.controller = void 0;
+    }
   };
 }
