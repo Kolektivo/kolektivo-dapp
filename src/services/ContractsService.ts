@@ -1,7 +1,7 @@
 import { Address, Hash, IBlockInfoNative, IChainEventInfo, IEthereumService } from './ethereum-service';
 import { BigNumber, Contract, Signer, ethers } from 'ethers';
-import { ContractsDeploymentProvider } from './ContractsDeploymentProvider';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
+import { IContractsDeploymentProvider } from './ContractsDeploymentProvider';
 import { callOnce } from '../decorators/call-once';
 
 export enum ContractNames {
@@ -53,6 +53,7 @@ export class ContractsService {
   constructor(
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     @IEthereumService private readonly ethereumService: IEthereumService,
+    @IContractsDeploymentProvider private readonly contractsDeploymentProvider: IContractsDeploymentProvider,
   ) {}
 
   @callOnce('Contracts Service')
@@ -89,12 +90,12 @@ export class ContractsService {
     this.initializeContracts();
   }
 
-  public static getContractAbi(contractName: ContractNames): [] {
-    return ContractsDeploymentProvider.getContractAbi(contractName);
+  public getContractAbi(contractName: ContractNames): [] {
+    return this.contractsDeploymentProvider.getContractAbi(contractName);
   }
 
-  public static getContractAddress(contractName: ContractNames): Address | null {
-    return ContractsDeploymentProvider.getContractAddress(contractName);
+  public getContractAddress(contractName: ContractNames): Address | null {
+    return this.contractsDeploymentProvider.getContractAddress(contractName);
   }
 
   public createProvider(): SignerTypes {
@@ -116,7 +117,7 @@ export class ContractsService {
   }
 
   public getContractAtAddress<T>(contractName: ContractNames, address: Address, signorOrProvider?: SignerTypes): T {
-    return new ethers.Contract(address, ContractsService.getContractAbi(contractName), signorOrProvider ?? this.createProvider()) as unknown as T;
+    return new ethers.Contract(address, this.getContractAbi(contractName), signorOrProvider ?? this.createProvider()) as unknown as T;
   }
 
   /**
@@ -184,7 +185,7 @@ export class ContractsService {
       if (reuseContracts) {
         contract = ContractsService.Contracts.get(contractName)?.connect(signerOrProvider) ?? null;
       } else {
-        const address = ContractsService.getContractAddress(contractName);
+        const address = this.getContractAddress(contractName);
         if (address) {
           contract = this.getContractAtAddress(contractName, address, signerOrProvider);
         } else {

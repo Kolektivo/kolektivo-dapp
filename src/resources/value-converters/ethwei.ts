@@ -19,7 +19,7 @@ export class EthweiValueConverter {
    * @param ethValue
    * @param decimals
    */
-  public fromView(ethValue: string | number | null | undefined, decimals: string | number | undefined): BigNumber | null {
+  public fromView(ethValue: string | number | null | undefined, decimals: string | number | undefined = 18): BigNumber | null {
     if (typeof ethValue === 'undefined' || ethValue === null || (typeof ethValue === 'string' && ethValue.trim() === '')) {
       return null;
     }
@@ -36,7 +36,7 @@ export class EthweiValueConverter {
    * @param weiValue
    * @param decimals
    */
-  public toView(weiValue: BigNumber | string | null | undefined, decimals: string | number | undefined): string {
+  public toView(weiValue: BigNumber | string | null | undefined, decimals: string | number | undefined = 18): string {
     try {
       if (weiValue === undefined || weiValue === null) {
         return '';

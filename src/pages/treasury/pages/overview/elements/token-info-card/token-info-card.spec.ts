@@ -1,13 +1,19 @@
 import '../../../../../../utils-testing/setup-testing';
+import { BlockChainStore, IStore, ITreasuryStore } from '../../../../../../stores';
+import { BrowserStorageService, IContractsService, NumberService } from './../../../../../../services';
 import { CurrencyValueConverter } from '../../../../../../../design-system/value-converters';
+import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../../design-system/configuration';
-import { IStore } from '../../../../../../stores';
+import { IEthereumService } from './../../../../../../services/ethereum-service';
+import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
 import { TokenInfoCard } from './token-info-card';
+import { TreasuryStore } from './../../../../../../stores/treasury-store';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('token-info-card', () => {
   it('should have a k-card component', async () => {
@@ -15,7 +21,7 @@ describe('token-info-card', () => {
       .html(`<token-info-card>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelector('#t-o-tic-card')).exist;
+    expect(appHost.querySelector('k-card')).exist;
   });
 
   it('should have a color, title and avatar on the k-card', async () => {
@@ -23,7 +29,7 @@ describe('token-info-card', () => {
       .html(`<token-info-card>`)
       .deps(...getRegistrations())
       .build().started;
-    const kCard = appHost.querySelector('#t-o-tic-card');
+    const kCard = appHost.querySelector('k-card');
     expect(kCard?.hasAttribute('color')).true;
     expect(kCard?.hasAttribute('title')).true;
     expect(kCard?.hasAttribute('title-avatar')).true;
@@ -54,11 +60,32 @@ describe('token-info-card', () => {
 
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
+    const createMockTreasuryStoreRegistration = () => Registration.instance(ITreasuryStore, {});
+    const createMockEthereumService = () => Registration.instance(IEthereumService, mock<IEthereumService>({}));
+    const createMockContractsService = () => Registration.instance(IContractsService, mock<IContractsService>({}));
+
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
+        nf: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [TokenInfoCard, CurrencyValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
+    return [
+      TokenInfoCard,
+      CurrencyValueConverter,
+      TreasuryStore,
+      createMockContractsService(),
+      createMockEthereumService(),
+      BrowserStorageService,
+      BlockChainStore,
+      PercentageValueConverter,
+      EthweiValueConverter,
+      NumberService,
+      Global,
+      createMockStoreRegistration(),
+      createMockTreasuryStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+    ];
   }
 });

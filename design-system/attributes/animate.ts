@@ -63,8 +63,6 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
   };
 
   detaching(): void | Promise<void> {
-    if (!this.element) return;
-
     return new Promise((res) => {
       this.resolve = res;
 

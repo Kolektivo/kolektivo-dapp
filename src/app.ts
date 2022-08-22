@@ -1,6 +1,6 @@
 import './app.scss';
 import './shared.scss';
-import { ContractsDeploymentProvider, EthereumService, Networks, WalletProvider } from './services';
+import { EthereumService, Networks, WalletProvider } from './services';
 import { I18N } from '@aurelia/i18n';
 import { IEventAggregator, IPlatform, customElement } from 'aurelia';
 import { IStore } from './stores/store';
@@ -40,7 +40,7 @@ export class App {
   }
   async binding(): Promise<void> {
     await this.store.services.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
-    await ContractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
+    await this.store.services.contractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
     this.store.services.contractsService.initialize();
     this.store.services.ipfsService.initialize(this.store.services.kolektivoService);
     await this.store.services.tokenService.initialize();

@@ -9,13 +9,13 @@ export class BlockChainStore {
     container.register(Registration.singleton(IBlockChainStore, BlockChainStore));
   }
 
-  connectedWalletAddress: Address | null = null;
+  public connectedWalletAddress: Address | null = null;
 
-  get walletConnected(): boolean {
+  public get walletConnected(): boolean {
     return !!this.connectedWalletAddress;
   }
 
-  badges = [
+  public badges = [
     {
       name: 'Badge Name 1',
       description: 'This is a badge description for what the user can do',
@@ -28,7 +28,7 @@ export class BlockChainStore {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBQ7wJMICTg6bIjVa2_VDmVEVNKWxr4th2H4WvODmwhMp1ciux4UgbPiKYHhhyTsUHHl4&usqp=CAU',
     },
   ];
-  transactions: Transaction[] = [
+  public transactions: Transaction[] = [
     {
       id: '0x69a5da6c2ed9304093b0eb5efc905bda6a9418e67a11164eae41455acb99739e',
       status: 'success',
