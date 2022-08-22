@@ -2,13 +2,13 @@
 import { EthereumService } from './ethereum-service';
 
 export function startTimer(label: string): void {
-  if (EthereumService.targetedNetwork !== 'mainnet' || process.env.NODE_ENV === 'development') {
+  if (EthereumService.targetedNetwork !== 'Celo' || process.env.NODE_ENV === 'development') {
     console.time(label);
   }
 }
 
 export function endTimer(label: string): void {
-  if (EthereumService.targetedNetwork !== 'mainnet' || process.env.NODE_ENV === 'development') {
+  if (EthereumService.targetedNetwork !== 'Celo' || process.env.NODE_ENV === 'development') {
     console.timeEnd(label);
   }
 }

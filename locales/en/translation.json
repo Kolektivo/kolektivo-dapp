@@ -228,7 +228,7 @@
             "supply-distribution": "Supply Distribution",
             "supply-distribution-tooltip": "This is a tooltip for supply distribution"
         },
-        "wrong-network-message": "Your wallet is connected to {{connectedTo}}, but we need you to connect to {{neededNetwork}}. Do you want to switch your connection to {{neededNetwork}} now?",
+        "wrong-network-message": "Your wallet is connected to {{connectedTo}}, but we need you to connect to {{need}}. Do you want to switch your connection to {{needed}} now?",
         "an-unknown-network": "an unknown network"
     }
 }

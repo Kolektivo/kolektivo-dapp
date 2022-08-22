@@ -3,6 +3,7 @@ import './shared.scss';
 import { EthereumService, Networks, WalletProvider } from './services';
 import { I18N } from '@aurelia/i18n';
 import { IEventAggregator, IPlatform, customElement } from 'aurelia';
+import { INotificationService } from '../design-system/services';
 import { IStore } from './stores/store';
 import { ethereumNetwork, isDev } from './environment-variables';
 import template from './app.html';
@@ -19,6 +20,7 @@ export class App {
     @IEventAggregator private eventAggregator: IEventAggregator,
     @IPlatform private readonly platform: IPlatform,
     @I18N private readonly i18n: I18N,
+    @INotificationService private readonly notificationService: INotificationService,
   ) {}
   recalc = (): void => {
     this.xl = this.platform.window.innerWidth >= 1200;
@@ -41,7 +43,7 @@ export class App {
     this.platform.window.removeEventListener('resize', this.recalc);
   }
   async binding(): Promise<void> {
-    await this.store.services.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Mainnet));
+    await this.store.services.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Celo));
     await this.store.services.contractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
     this.store.services.contractsService.initialize();
     this.store.services.ipfsService.initialize(this.store.services.kolektivoService);
@@ -51,7 +53,6 @@ export class App {
   async confirmChangeNetwork(): Promise<void> {
     if (this.confirmChangeNetworkInfo) {
       const info = this.confirmChangeNetworkInfo;
-      this.confirmChangeNetworkInfo = null;
       this.showConfirmChangeNetworkInfo = false;
       if (!(await this.store.services.ethereumService.switchToTargetedNetwork(info.provider))) {
         this.cancelConfirmChangeNetwork(info);
@@ -61,11 +62,11 @@ export class App {
 
   cancelConfirmChangeNetwork(info: WrongNetworkInfo | undefined): void {
     this.store.services.ethereumService.disconnect({ code: -1, message: 'wrong network' });
-    this.eventAggregator.publish(
-      'handleFailure',
-      `Please connect your wallet to ${info?.need ?? this.confirmChangeNetworkInfo?.need ?? 'unknown network'}`,
-    );
-    this.confirmChangeNetworkInfo = null;
+    void this.notificationService.toast({
+      message: `Please connect your wallet to ${info?.need ?? this.confirmChangeNetworkInfo?.need ?? this.i18n.tr('general.an-unknown-network')}`,
+      type: 'danger',
+    });
+
     this.showConfirmChangeNetworkInfo = false;
   }
 }

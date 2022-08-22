@@ -15,6 +15,9 @@ fs.emptyDirSync(destPath);
 
 const files = glob.sync(srcPath + "/**/*.json");
 files.forEach(file => {
+  if (file === 'mainnet') {
+    file = 'Celo';
+  }
   fs.copySync(file, `${destPath}/${path.basename(file)}`,
     {
       preserveTimestamps: true

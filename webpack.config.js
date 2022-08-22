@@ -115,7 +115,7 @@ module.exports = function (env, { analyze }) {
     plugins: [
       new HtmlWebpackPlugin({ template: 'index.html' }),
       new Dotenv({
-        path: `./.env${production ? '' : '.' + (process.env.NODE_ENV || 'development')}`,
+        path: `./.env.${(process.env.NODE_ENV || 'development')}`,
       }),
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],

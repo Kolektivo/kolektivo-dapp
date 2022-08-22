@@ -6,10 +6,7 @@
     <k-modal if.bind="showConfirmChangeNetworkInfo" cancel.call="cancelConfirmChangeNetwork()"
       ok.call="confirmChangeNetwork()" title="Unsupported Network" ok-button-text="Yes, Please!"
       cancel-button-text="Not Now">
-      <span t="general.wrong-network-message" t-params.bind="{
-        connectedTo:   confirmChangeNetworkInfo.connectedTo,
-        neededNetwork: confirmChangeNetworkInfo.need
-      }"></span>
+      <span t="general.wrong-network-message" t-params.bind="confirmChangeNetworkInfo"></span>
     </k-modal>
     <k-backdrop if.bind="!xl && store.sideBarOpen" click.trigger="store.sideBarOpen = false" blur="10"></k-backdrop>
     <header></header>

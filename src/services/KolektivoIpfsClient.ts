@@ -27,9 +27,9 @@ export class KolektivoIpfsClient implements IIpfsClient {
   // constructor() {
   // this.httpRequestConfig = {
   //   headers: {
-  //     pinata_api_key: EthereumService.targetedNetwork === 'mainnet' ? process.env.PINATA_API_KEY : process.env.PINATA_API_KEY_TEST,
+  //     pinata_api_key: EthereumService.targetedNetwork === 'Celo' ? process.env.PINATA_API_KEY : process.env.PINATA_API_KEY_TEST,
   //     pinata_secret_api_key:
-  //       EthereumService.targetedNetwork === 'mainnet' ? process.env.PINATA_SECRET_API_KEY : process.env.PINATA_SECRET_API_KEY_TEST,
+  //       EthereumService.targetedNetwork === 'Celo' ? process.env.PINATA_SECRET_API_KEY : process.env.PINATA_SECRET_API_KEY_TEST,
   //   },
   // };
   //}

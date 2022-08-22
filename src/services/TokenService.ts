@@ -227,7 +227,7 @@ export class TokenService {
     }
 
     try {
-      if (EthereumService.targetedNetwork === Networks.Mainnet) {
+      if (EthereumService.targetedNetwork === Networks.Celo) {
         const proxyImplementation = await this.contractsService.getProxyImplementation(tokenAddress);
         if (proxyImplementation) {
           tokenAddress = proxyImplementation;

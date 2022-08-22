@@ -6,6 +6,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 // import { IDisclaimerService } from './DisclaimerService';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { IBlockChainStore } from '../stores/block-chain-store';
+import { INotificationService } from '../../design-system/services/notification/notification-service';
 import { callOnce } from '../decorators/call-once';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
 import { truncateDecimals } from '../utils';
@@ -49,8 +50,8 @@ export interface IBlockInfo extends IBlockInfoNative {
 }
 
 export enum Networks {
-  Mainnet = 'mainnet',
-  Alfajores = 'alfajores',
+  Celo = 'Celo',
+  Alfajores = 'Alfajores',
 }
 
 const CELO_MAINNET_CHAIN_ID = 42220;
@@ -78,6 +79,7 @@ export class EthereumService {
     @IBrowserStorageService private readonly storageService: IBrowserStorageService,
     @ILogger private readonly logger: ILogger,
     @IBlockChainStore private readonly blockChainStore: IBlockChainStore,
+    @INotificationService private readonly notificationService: INotificationService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
   }
@@ -86,11 +88,12 @@ export class EthereumService {
     Registration.singleton(IEthereumService, EthereumService).register(container);
   }
 
-  public static ProviderEndpoints = {
-    mainnet: `https://forno.celo.org`,
+  public static ProviderEndpoints: Record<AllowedNetworks, string> = {
+    Celo: `https://forno.celo.org`,
+    // Celo: 'https://celo.rpcs.dev:8545',
     // alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
-    //alfajores: `https://alfajores.rpcs.dev:8545`,
-    alfajores: `https://alfajores-forno.celo-testnet.org`,
+    Alfajores: `https://alfajores.rpcs.dev:8545`,
+    // alfajores: `https://alfajores-forno.celo-testnet.org`,
     // alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
   };
   private static providerOptions = {
@@ -99,7 +102,7 @@ export class EthereumService {
       package: WalletConnectProvider, // required
       options: {
         rpc: {
-          CELO_MAINNET_CHAIN_ID: EthereumService.ProviderEndpoints[Networks.Mainnet],
+          CELO_MAINNET_CHAIN_ID: EthereumService.ProviderEndpoints[Networks.Celo],
           CELO_ALFAJORES_CHAIN_ID: EthereumService.ProviderEndpoints[Networks.Alfajores],
         },
       },
@@ -154,7 +157,7 @@ export class EthereumService {
 
     const readonlyEndPoint = EthereumService.ProviderEndpoints[EthereumService.targetedNetwork];
     if (typeof readonlyEndPoint !== 'string') {
-      throw new Error(`Please connect your wallet to either ${Networks.Mainnet} or ${Networks.Alfajores}`);
+      throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
     }
 
     // comment out to run DISCONNECTED
@@ -180,12 +183,12 @@ export class EthereumService {
   private web3ModalProvider?: WalletProvider;
 
   private chainNameById = new Map<number, AllowedNetworks>([
-    [CELO_MAINNET_CHAIN_ID, Networks.Mainnet],
+    [CELO_MAINNET_CHAIN_ID, Networks.Celo],
     [CELO_ALFAJORES_CHAIN_ID, Networks.Alfajores],
   ]);
 
   private chainIdByName = new Map<AllowedNetworks, number>([
-    [Networks.Mainnet, CELO_MAINNET_CHAIN_ID],
+    [Networks.Celo, CELO_MAINNET_CHAIN_ID],
     [Networks.Alfajores, CELO_ALFAJORES_CHAIN_ID],
   ]);
 
@@ -292,9 +295,8 @@ export class EthereumService {
        */
       // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
       if (await provider._metamask.isUnlocked()) {
-        const chainId = (await provider.request({ method: 'eth_chainId' })) as string;
-        const chainName = this.chainNameById.get(Number(chainId));
-        if (chainName === EthereumService.targetedNetwork) {
+        const chainId = Number(await provider.request({ method: 'eth_chainId' }));
+        if (chainId === EthereumService.targetedChainId) {
           const accounts = (await provider.request({ method: 'eth_accounts' })) as string[];
           if (accounts.length) {
             // const account = getAddress(accounts[0]);
@@ -311,7 +313,7 @@ export class EthereumService {
   private ensureWeb3Modal(): void {
     if (!this.web3Modal) {
       this.web3Modal = new Web3Modal({
-        // network: Networks.Mainnet,
+        // network: Networks.CELO,
         cacheProvider: false,
         providerOptions: EthereumService.providerOptions, // required
         theme: 'dark',
@@ -326,12 +328,35 @@ export class EthereumService {
     }
   }
 
+  private cleanNetworkName(network: Network | null): Network | null {
+    if (network) {
+      const clonedNetwork = Object.assign(network) as Network;
+      if (clonedNetwork.name === 'homestead') {
+        clonedNetwork.name = 'Ethereum Mainnet';
+      } else if (clonedNetwork.name === 'unknown') {
+        /**
+         * metamask has a hard time recognizing these names
+         */
+        switch (clonedNetwork.chainId) {
+          case CELO_ALFAJORES_CHAIN_ID:
+            clonedNetwork.name = Networks.Alfajores;
+            break;
+          case CELO_MAINNET_CHAIN_ID:
+            clonedNetwork.name = Networks.Celo;
+            break;
+          default:
+            clonedNetwork.name = '';
+            break;
+        }
+      }
+      return clonedNetwork;
+    }
+    return null;
+  }
+
   private async getNetwork(provider: Web3Provider): Promise<Network | null> {
     const network = (await provider.getNetwork()) as Network | null;
-    if (network?.name === 'homestead') {
-      network.name = Networks.Mainnet;
-    }
-    return network;
+    return this.cleanNetworkName(network);
   }
 
   // public async getNetworkName(provider: any): Promise<string> {
@@ -415,11 +440,9 @@ export class EthereumService {
   }
 
   private handleChainChanged = (chainId: number): void => {
-    const network = ethers.providers.getNetwork(Number(chainId)) as Network | null;
+    let network = ethers.providers.getNetwork(Number(chainId)) as Network | null;
 
-    if (network?.name === 'homestead') {
-      network.name = Networks.Mainnet;
-    }
+    network = this.cleanNetworkName(network);
 
     if (network?.chainId !== EthereumService.targetedChainId) {
       this.eventAggregator.publish('Network.wrongNetwork', {
@@ -482,9 +505,17 @@ export class EthereumService {
         // return false;
       }
       // chain does not exist, let's add it (see balancer)
-      // if (err.code === 4902) {
-      //   return importNetworkDetailsToWallet(provider);
-      // }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      else if (err.code === 4902) {
+        /**
+         * we might be able to add it here, but for now:
+         * Balancer does this:  // return importNetworkDetailsToWallet(provider);
+         */
+        void this.notificationService.toast({
+          message: `The ${EthereumService.targetedNetwork} network is not installed in your Metamask configuration`,
+          type: 'danger',
+        });
+      }
     }
     return false;
   }
@@ -562,7 +593,7 @@ export class EthereumService {
 
   public getEtherscanLink(addressOrHash: Address | Hash, tx = false): string {
     let targetedNetwork = EthereumService.targetedNetwork as string;
-    if (targetedNetwork === Networks.Mainnet) {
+    if (targetedNetwork === Networks.Celo) {
       targetedNetwork = '';
     } else {
       targetedNetwork = targetedNetwork + '.';

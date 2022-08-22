@@ -26,7 +26,8 @@ export class ContractsDeploymentProvider {
   }
 
   public async initialize(targetedNetwork: AllowedNetworks): Promise<void> {
-    this.contractInfosJson = (await import(`../contracts/${targetedNetwork as string}.json`)) as IContractInfosJson;
+    const network = targetedNetwork.toLowerCase();
+    this.contractInfosJson = (await import(`../contracts/${network}.json`)) as IContractInfosJson;
     this.sharedContractAbisJson = (await import('../contracts/sharedAbis.json')) as unknown as ISharedContractInfos;
   }
 
