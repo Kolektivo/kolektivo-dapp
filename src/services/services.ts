@@ -1,5 +1,6 @@
 import { AxiosService, IAxiosService } from './AxiosService';
 import { BrowserStorageService, IBrowserStorageService } from './BrowserStorageService';
+import { ContractsDeploymentProvider, IContractsDeploymentProvider } from './ContractsDeploymentProvider';
 import { ContractsService, IContractsService } from './ContractsService';
 import { DI, IContainer, Registration } from 'aurelia';
 import { DateService, IDateService } from './DateService';
@@ -23,6 +24,7 @@ export class Services {
     @IEthereumService public readonly ethereumService: IEthereumService,
     @IBrowserStorageService public readonly browserStorageService: IBrowserStorageService,
     @IContractsService public readonly contractsService: IContractsService,
+    @IContractsDeploymentProvider public readonly contractsDeploymentProvider: IContractsDeploymentProvider,
     @ITokenService public readonly tokenService: ITokenService,
     @ITokenListProvider public readonly tokenListProvider: ITokenListProvider,
   ) {}
@@ -39,6 +41,7 @@ export class Services {
       .register(BrowserStorageService)
       .register(ContractsService)
       .register(TokenService)
-      .register(TokenListProvider);
+      .register(TokenListProvider)
+      .register(ContractsDeploymentProvider);
   }
 }

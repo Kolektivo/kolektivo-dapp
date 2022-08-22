@@ -8,7 +8,7 @@ import axios from 'axios';
 // import TokenMetadataService from './TokenMetadataService';
 import { COINGECKO_API_KEY, ETHERSCAN_KEY } from '../environment-variables';
 import { Contract, ethers } from 'ethers';
-import { ContractNames, ContractsService, IContractsService } from './ContractsService';
+import { ContractNames, IContractsService } from './ContractsService';
 import { FormatTypes, Interface, getAddress } from 'ethers/lib/utils';
 import { ITokenListProvider } from './TokenListProvider';
 import { callOnce } from '../decorators/call-once';
@@ -64,8 +64,8 @@ export class TokenService {
 
   @callOnce('TokenService')
   public async initialize(): Promise<void> {
-    this.erc20Abi = ContractsService.getContractAbi(ContractNames.ERC20);
-    this.erc721Abi = ContractsService.getContractAbi(ContractNames.ERC721);
+    this.erc20Abi = this.contractsService.getContractAbi(ContractNames.ERC20);
+    this.erc721Abi = this.contractsService.getContractAbi(ContractNames.ERC721);
 
     void this.tokenListProvider.initialize().then(() => {
       /**
@@ -75,7 +75,6 @@ export class TokenService {
     });
 
     const uri = `https://pro-api.coingecko.com/api/v3/coins/list?x_cg_pro_api_key=${COINGECKO_API_KEY}`;
-    console.log(uri);
     startTimer('get geckoCoinInfo');
     /**
      * prefetch all coingecko ids to use for fetching token prices, etc later

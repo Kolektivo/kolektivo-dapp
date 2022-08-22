@@ -1,13 +1,17 @@
 import '../../../../utils-testing/setup-testing';
 import { CurrencyValueConverter } from '../../../../../design-system/value-converters';
+import { EthweiValueConverter, PercentageValueConverter } from './../../../../resources/value-converters';
 import { Global } from '../../../../hooks';
 import { I18N } from '@aurelia/i18n';
+import { IContractsService } from 'services';
 import { IDesignSystemConfiguration } from '../../../../../design-system/configuration';
-import { IStore } from '../../../../stores';
+import { IStore, TreasuryStore } from '../../../../stores';
+import { NumberService } from './../../../../services';
 import { Overview } from './overview';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('overview', () => {
   it('should have a k-page component', async () => {
@@ -70,11 +74,25 @@ describe('overview', () => {
 
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
+    const createMockContractsService = () => Registration.instance(IContractsService, mock<IContractsService>({}));
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
+        nf: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [Overview, CurrencyValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
+    return [
+      Overview,
+      TreasuryStore,
+      EthweiValueConverter,
+      CurrencyValueConverter,
+      PercentageValueConverter,
+      NumberService,
+      Global,
+      createMockContractsService(),
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+    ];
   }
 });
