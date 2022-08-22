@@ -11,6 +11,7 @@ type WrongNetworkInfo = { provider: WalletProvider; connectedTo?: string; need: 
 @customElement({ name: 'app', template })
 export class App {
   xl = false;
+  showConfirmChangeNetworkInfo = false;
   confirmChangeNetworkInfo: WrongNetworkInfo | null = null;
 
   constructor(
@@ -33,6 +34,7 @@ export class App {
        * This will put up a modal to prompt the user to change the network.  Handlers are below.
        */
       this.confirmChangeNetworkInfo = Object.assign(info, { connectedTo: info.connectedTo ?? this.i18n.tr('general.an-unknown-network') });
+      this.showConfirmChangeNetworkInfo = true;
     });
   }
   detaching(): void {
@@ -46,22 +48,24 @@ export class App {
     await this.store.services.tokenService.initialize();
   }
 
-  async conformChangeNetwork(): Promise<void> {
+  async confirmChangeNetwork(): Promise<void> {
     if (this.confirmChangeNetworkInfo) {
       const info = this.confirmChangeNetworkInfo;
       this.confirmChangeNetworkInfo = null;
+      this.showConfirmChangeNetworkInfo = false;
       if (!(await this.store.services.ethereumService.switchToTargetedNetwork(info.provider))) {
-        this.cancelConformChangeNetwork(info);
+        this.cancelConfirmChangeNetwork(info);
       }
     }
   }
 
-  cancelConformChangeNetwork(info: WrongNetworkInfo | undefined): void {
+  cancelConfirmChangeNetwork(info: WrongNetworkInfo | undefined): void {
     this.store.services.ethereumService.disconnect({ code: -1, message: 'wrong network' });
     this.eventAggregator.publish(
       'handleFailure',
       `Please connect your wallet to ${info?.need ?? this.confirmChangeNetworkInfo?.need ?? 'unknown network'}`,
     );
     this.confirmChangeNetworkInfo = null;
+    this.showConfirmChangeNetworkInfo = false;
   }
 }

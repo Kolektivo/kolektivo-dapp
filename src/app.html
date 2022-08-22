@@ -3,8 +3,8 @@
     if.bind="!xl && store.sideBarOpen"></side-bar>
   <side-bar if.bind="xl && store.sideBarOpen"></side-bar>
   <main>
-    <k-modal if.bind="confirmChangeNetworkInfo" cancel.call="cancelConformChangeNetwork()"
-      ok.call="conformChangeNetwork()" title="Unsupported Network" ok-button-text="Yes, Please!"
+    <k-modal if.bind="showConfirmChangeNetworkInfo" cancel.call="cancelConfirmChangeNetwork()"
+      ok.call="confirmChangeNetwork()" title="Unsupported Network" ok-button-text="Yes, Please!"
       cancel-button-text="Not Now">
       <span t="general.wrong-network-message" t-params.bind="{
         connectedTo:   confirmChangeNetworkInfo.connectedTo,
