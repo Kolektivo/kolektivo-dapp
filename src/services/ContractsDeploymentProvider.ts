@@ -1,6 +1,5 @@
 import { Address } from './ethereum-service';
 import { DI, IContainer, Registration } from 'aurelia';
-import { callOnce } from '../decorators/call-once';
 
 interface IContractInfo {
   address: Address;
@@ -26,12 +25,11 @@ export class ContractsDeploymentProvider {
     Registration.singleton(IContractsDeploymentProvider, ContractsDeploymentProvider).register(container);
   }
 
-  @callOnce('ContractsDeploymentProvider')
-  public static initialize(targetedNetwork: string): void {
+  public static async initialize(targetedNetwork: string): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ContractsDeploymentProvider.contractInfosJson = require(`../contracts/${targetedNetwork}.json`) as IContractInfosJson;
+    ContractsDeploymentProvider.contractInfosJson = (await import(`../contracts/${targetedNetwork}.json`)) as IContractInfosJson;
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ContractsDeploymentProvider.sharedContractAbisJson = require('../contracts/sharedAbis.json') as ISharedContractInfos;
+    ContractsDeploymentProvider.sharedContractAbisJson = (await import('../contracts/sharedAbis.json')) as unknown as ISharedContractInfos;
   }
 
   public static getContractAbi(contractName: string): [] {

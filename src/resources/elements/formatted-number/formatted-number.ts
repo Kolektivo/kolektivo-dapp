@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { INumberService } from 'services';
+import { INumberService } from './../../../services';
 import { fromWei } from './../../../services/ethereum-service';
 import { ifExistsThenTrue } from '../../../../design-system/common';
 import template from './formatted-number.html';
