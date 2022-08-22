@@ -15,7 +15,7 @@ import template from './k-code.html';
       .replaceAll('<', '&lt;')
       .replaceAll('>', '&gt;')
       .replaceAll('=""', '')
-      .trim()} <a href='#' onclick='navigator.clipboard.writeText(this.closest("code").textContent)'><k-icon name="content_copy" color="var(--white)"></k-icon></a>`;
+      .trim()} <a onclick='navigator.clipboard.writeText(this.closest("code").textContent)'><k-icon name="content_copy" style="cursor:pointer;" color="var(--white)"></k-icon></a>`;
     let strip: string | null;
     if ((strip = (node as HTMLElement).getAttribute('strip'))) {
       code.innerHTML = code.innerHTML.replaceAll(strip, '');
