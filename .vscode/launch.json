@@ -7,10 +7,19 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Edge against localhost",
+            "name": "Launch Chrome against localhost",
             "url": "http://localhost:9000",
             "webRoot": "${workspaceFolder}/src",
             "sourceMaps": true,
+        },
+        {
+            "type": "msedge",
+            "request": "launch",
+            "name": "Launch Edge against localhost",
+            "url": "http://localhost:9000",
+            "webRoot": "${workspaceRoot}/src",
+            "sourceMaps": true,
+            "smartStep": true,
         }
     ]
 }
