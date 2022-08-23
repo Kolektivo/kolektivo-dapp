@@ -1,11 +1,10 @@
 import './app.scss';
 import './shared.scss';
-import { EthereumService, Networks, WalletProvider } from './services';
 import { I18N } from '@aurelia/i18n';
 import { IEventAggregator, IPlatform, customElement } from 'aurelia';
 import { INotificationService } from '../design-system/services';
 import { IStore } from './stores/store';
-import { ethereumNetwork, isDev } from './environment-variables';
+import { WalletProvider } from './services';
 import template from './app.html';
 
 type WrongNetworkInfo = { provider: WalletProvider; connectedTo?: string; need: string };
@@ -40,24 +39,20 @@ export class App {
     });
     await this.store.services.ethereumService.connectToConnectedProvider();
   }
+
   detaching(): void {
     this.platform.window.removeEventListener('resize', this.recalc);
   }
-  async binding(): Promise<void> {
-    await this.store.services.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Celo));
-    await this.store.services.contractsDeploymentProvider.initialize(EthereumService.targetedNetwork);
-    this.store.services.contractsService.initialize();
-    this.store.services.ipfsService.initialize(this.store.services.kolektivoService);
-    await this.store.services.tokenService.initialize();
+
+  binding(): Promise<void> {
+    return this.store.services.initialize();
   }
 
   async confirmChangeNetwork(): Promise<void> {
-    if (this.confirmChangeNetworkInfo) {
-      const info = this.confirmChangeNetworkInfo;
-      this.showConfirmChangeNetworkInfo = false;
-      if (!(await this.store.services.ethereumService.switchToTargetedNetwork(info.provider))) {
-        this.cancelConfirmChangeNetwork(info);
-      }
+    if (!this.confirmChangeNetworkInfo) return;
+    this.showConfirmChangeNetworkInfo = false;
+    if (!(await this.store.services.ethereumService.switchToTargetedNetwork(this.confirmChangeNetworkInfo.provider))) {
+      this.cancelConfirmChangeNetwork(this.confirmChangeNetworkInfo);
     }
   }
 
