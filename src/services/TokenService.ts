@@ -1,4 +1,4 @@
-import { Address, EthereumService, Networks } from './ethereum-service';
+import { Address, IEthereumService, Networks } from './ethereum-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { IAxiosService } from './AxiosService';
 import { IErc20Token, IErc721Token, ITokenInfo, TokenAddressId } from './TokenTypes';
@@ -43,6 +43,7 @@ export class TokenService {
   constructor(
     @IContractsService private readonly contractsService: IContractsService,
     @ITokenListProvider private readonly tokenListProvider: ITokenListProvider,
+    @IEthereumService private readonly ethereumService: IEthereumService,
     // private tokenMetadataService: TokenMetadataService,
     @IAxiosService private readonly axiosService: IAxiosService,
     @ILogger private readonly logger: ILogger,
@@ -227,7 +228,7 @@ export class TokenService {
     }
 
     try {
-      if (EthereumService.targetedNetwork === Networks.Celo) {
+      if (this.ethereumService.targetedNetwork === Networks.Celo) {
         const proxyImplementation = await this.contractsService.getProxyImplementation(tokenAddress);
         if (proxyImplementation) {
           tokenAddress = proxyImplementation;

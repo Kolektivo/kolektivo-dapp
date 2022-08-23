@@ -1,15 +1,14 @@
-import { isDev } from './../environment-variables';
 /* eslint-disable no-console */
-import { EthereumService } from './ethereum-service';
+import { isDev } from './../environment-variables';
 
 export function startTimer(label: string): void {
-  if (EthereumService.targetedNetwork !== 'Celo' || isDev) {
+  if (isDev) {
     console.time(label);
   }
 }
 
 export function endTimer(label: string): void {
-  if (EthereumService.targetedNetwork !== 'Celo' || isDev) {
+  if (isDev) {
     console.timeEnd(label);
   }
 }
