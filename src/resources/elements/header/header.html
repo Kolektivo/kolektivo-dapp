@@ -3,12 +3,14 @@
   <k-icon-button slot="start" name="menu" type="utility-dark" click.trigger="store.sideBarOpen = !store.sideBarOpen">
   </k-icon-button>
   <div></div>
-  <div slot="end">
-    <k-stack if.bind="!blockChainStore.walletConnected" justify-content="flex-end" direction="row">
-      <k-button click.trigger="connectWallet()">Connect Wallet</k-button>
+    <div slot="end">
+    <k-stack if.bind="!blockChainStore.walletConnected" justify-content="flex-end" direction="row" gap="var(--spacing)">
+        <network-feedback></network-feedback>
+        <k-button click.trigger="connectWallet()">Connect Wallet</k-button>
     </k-stack>
     <div else>
       <k-stack justify-content="flex-end" direction="row" gap="var(--spacing)">
+        <network-feedback></network-feedback>
         <k-text color="var(--white)">${i18n.tr('status-bar.badge-title')}:</k-text>
         <k-avatar-group ref="badgeGroup">
           <k-avatar repeat.for="badge of blockChainStore.badges" tooltip="value:${badge.name};position:bottom"
@@ -24,7 +26,7 @@
           </k-spinner>
         </k-icon-button>
       </k-stack>
-      <badge-menu target.bind="badgeGroup"></badge-menu>
+    <badge-menu target.bind="badgeGroup"></badge-menu>
       <account-menu target.bind="accountButton"></account-menu>
       <activity-menu target.bind="activityButton"></activity-menu>
     </div>

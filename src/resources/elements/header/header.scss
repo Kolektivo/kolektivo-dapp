@@ -3,9 +3,6 @@
 header {
   padding: 20px 18px;
 
-
-
-
   k-stack {
     padding-right: var(--spacing);
     padding-top: var(--spacing-small);
@@ -13,6 +10,12 @@ header {
 
   @include xl {
     k-app-bar>k-icon-button {
+      display: none;
+    }
+  }
+
+  @include sm_max {
+    k-app-bar .network-feedback {
       display: none;
     }
   }
