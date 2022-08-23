@@ -14,7 +14,7 @@ header {
     }
   }
 
-  @include sm_max {
+  @include sm-max {
     k-app-bar .network-feedback {
       display: none;
     }

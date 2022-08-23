@@ -4,9 +4,17 @@ import { captureFilter, ifExistsThenTrue, noop } from './../../common';
 import './k-modal.scss';
 import template from './k-modal.html';
 
-@customElement({ name: 'k-modal', template, capture: captureFilter })
+@customElement({
+  name: 'k-modal',
+  template,
+  capture: captureFilter,
+  processContent: (node) => {
+    const element = node as HTMLElement;
+    if (element.hasAttribute('PORTAL')) return;
+    element.setAttribute('portal', 'body');
+  },
+})
 export class KModal implements ICustomElementViewModel {
-  @bindable portalElement = 'body';
   @bindable ok?: () => void;
   @bindable cancel?: () => void;
   @bindable({ set: ifExistsThenTrue }) closeOnClick = false;

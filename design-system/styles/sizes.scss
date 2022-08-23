@@ -61,35 +61,35 @@ $screen-xl-min: 1200px;
 }
 
 // Small devices
-@mixin sm_max {
+@mixin sm-max {
   @media (max-width: #{$screen-sm-min}) {
     @content;
   }
 }
 
 // Medium devices
-@mixin md_max {
+@mixin md-max {
   @media (max-width: #{$screen-md-min}) {
     @content;
   }
 }
 
 // Large devices
-@mixin lg_max {
+@mixin lg-max {
   @media (max-width: #{$screen-lg-min}) {
     @content;
   }
 }
 
 // Extra large devices
-@mixin xl_max {
+@mixin xl-max {
   @media (max-width: #{$screen-xl-min}) {
     @content;
   }
 }
 
 // Custom devices
-@mixin rwd_max($screen) {
+@mixin rwd-max($screen) {
   @media (max-width: ($screen + 'px')) {
     @content;
   }
