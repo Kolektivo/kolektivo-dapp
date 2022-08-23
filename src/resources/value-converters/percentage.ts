@@ -10,6 +10,7 @@ export class PercentageValueConverter {
   constructor(@INumberService private readonly numberService: INumberService) {}
 
   public toView(value: number | string | BigNumber, options?: IToStringOptions): string {
+    if (value !== 0 && !value) return '';
     return this.numberService.toString(value, Object.assign(options ?? {}, { isPercentage: true, isCurrency: false })) ?? value.toString();
   }
 }

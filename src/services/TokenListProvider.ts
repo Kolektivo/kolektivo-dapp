@@ -1,4 +1,4 @@
-import { Address, EthereumService, IEthereumService } from '../services';
+import { Address, IEthereumService } from '../services';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { IIpfsService } from './IpfsService';
 import { ITokenInfo, ITokenInfoUniswap, ITokenListUniswap, TokenAddressId } from './TokenTypes';
@@ -35,10 +35,12 @@ export class TokenListProvider {
   public async initialize(): Promise<void> {
     if (typeof this.tokenInfos === 'undefined') {
       startTimer('fetch tokeninfos');
-
-      const uris = TokenLists.get(EthereumService.targetedNetwork);
+      if (!this.ethereumService.targetedNetwork) {
+        throw new Error('TokenListProvider: ethereum service targetd network is undefined');
+      }
+      const uris = TokenLists.get(this.ethereumService.targetedNetwork);
       if (!uris) {
-        throw new Error(`TokenListProvider: no tokenlists available for the network ${EthereumService.targetedNetwork}`);
+        throw new Error(`TokenListProvider: no tokenlists available for the network ${this.ethereumService.targetedNetwork}`);
       }
       /**
        * get an array of promised ITokenInfoUniswap arrays, excluding any that are null or empty
@@ -54,7 +56,7 @@ export class TokenListProvider {
 
       for (const tokenInfoArray of tokenInfoArrays) {
         for (const tokenInfo of tokenInfoArray) {
-          if (tokenInfo.chainId === EthereumService.targetedChainId) {
+          if (tokenInfo.chainId === this.ethereumService.targetedChainId) {
             tokenInfoMap.set(tokenInfo.address.toLowerCase(), tokenInfo);
           }
         }

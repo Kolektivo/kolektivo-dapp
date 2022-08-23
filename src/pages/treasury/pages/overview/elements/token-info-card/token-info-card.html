@@ -1,7 +1,7 @@
 <k-card id="t-o-tic-card" color="linear-gradient(to right, var(--ocean-blue-500), var(--ocean-blue-600))"
   title="${i18n.tr('navigation.treasury.overview.ktt.title')}"
   title-avatar="${i18n.tr('navigation.treasury.overview.ktt.avatar-src')}">
-  <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadValuationAndSupply()"></k-loader>
+  <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadTokenData()"></k-loader>
   <k-stack gap="var(--spacing-xl)">
     <k-grid cols="3" id="t-o-tic-stats">
       <label-value title="${i18n.tr('general.token-info-card.market-cap')}"
@@ -22,9 +22,9 @@
     <label-value id="t-o-tic-supply" gap="var(--spacing-lg)" title="${i18n.tr('general.token-info-card.supply-distribution')}"
       tooltip-text="${i18n.tr('general.token-info-card.supply-distribution-tooltip')}">
       <k-stack direction="row" gap="var(--spacing-xl)">
-        <k-text>${treasuryStore.treasury | percentage} in treasury</k-text>
-        <k-text>${treasuryStore.reserves | percentage} in reserves</k-text>
-        <k-text>${treasuryStore.circulating | percentage} circulating supply</k-text>
+        <k-text>${treasuryStore.treasuryDistribution | percentage} in treasury</k-text>
+        <k-text>${treasuryStore.reservesDistribution | percentage} in reserves</k-text>
+        <k-text>${treasuryStore.circulatingDistribution | percentage} circulating supply</k-text>
       </k-stack>
     </label-value>
   </k-stack>

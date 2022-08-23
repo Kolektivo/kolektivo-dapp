@@ -94,7 +94,7 @@ export class ContractsService {
     return this.contractsDeploymentProvider.getContractAbi(contractName);
   }
 
-  public getContractAddress(contractName: ContractNames): Address | null {
+  public getContractAddress(contractName: ContractNames | string): Address | null {
     return this.contractsDeploymentProvider.getContractAddress(contractName);
   }
 
