@@ -59,3 +59,38 @@ $screen-xl-min: 1200px;
     @content;
   }
 }
+
+// Small devices
+@mixin sm_max {
+  @media (max-width: #{$screen-sm-min}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin md_max {
+  @media (max-width: #{$screen-md-min}) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin lg_max {
+  @media (max-width: #{$screen-lg-min}) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin xl_max {
+  @media (max-width: #{$screen-xl-min}) {
+    @content;
+  }
+}
+
+// Custom devices
+@mixin rwd_max($screen) {
+  @media (max-width: ($screen + 'px')) {
+    @content;
+  }
+}

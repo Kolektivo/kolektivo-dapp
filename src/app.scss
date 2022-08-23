@@ -25,7 +25,7 @@
   font-weight: lighter;
 }
 
-html{
+html {
   overflow-y: overlay;
 }
 
@@ -57,12 +57,12 @@ body {
   }
 }
 
-au-viewport{
+au-viewport {
   height: 100%;
 }
 
 @include xl {
-  main{
+  main {
     margin-left: 240px;
   }
 }

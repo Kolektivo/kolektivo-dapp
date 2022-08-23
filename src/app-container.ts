@@ -67,7 +67,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(pages)
   .register(
     LoggerConfiguration.create({
-      level: isDev ? LogLevel.trace : LogLevel.warn,
+      level: isDev ? LogLevel.debug : LogLevel.warn,
       sinks: [ConsoleSink],
     }),
   )
