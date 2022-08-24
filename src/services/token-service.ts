@@ -90,7 +90,7 @@ export class TokenService {
       }
       this.timingService.endTimer('get geckoCoinInfo');
     } catch {
-      console.error('There was an error fetching token data');
+      this.logger.error('There was an error fetching token data');
     }
   }
 
