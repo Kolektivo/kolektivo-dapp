@@ -7,7 +7,6 @@ import * as valueConverters from './value-converters';
 import { AnimationService, NotificationService } from './services';
 import { IDesignSystemConfiguration } from './configuration';
 import { ValidationHtmlConfiguration, ValidationTrigger } from '@aurelia/validation-html';
-import Fast from './fast';
 
 export class DesignSystemPlugin implements IRegistry {
   #configuration?: IDesignSystemConfiguration;
@@ -62,7 +61,6 @@ export class DesignSystemPlugin implements IRegistry {
     container.register(attributes);
     container.register(elements);
     container.register(valueConverters);
-    container.register(Fast);
     container.register(Registration.instance(IDesignSystemConfiguration, this.#configuration));
     container.register(
       ValidationHtmlConfiguration.customize((options) => {

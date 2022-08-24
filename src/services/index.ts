@@ -2,7 +2,6 @@ export * from './AxiosService';
 export * from './BrowserStorageService';
 export * from './ContractsDeploymentProvider';
 export * from './ContractsService';
-export * from './DateService';
 export * from './DateServiceIntl';
 export * from './DisposableCollection';
 export * from './ethereum-service';

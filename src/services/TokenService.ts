@@ -65,29 +65,33 @@ export class TokenService {
 
   @callOnce('TokenService')
   public async initialize(): Promise<void> {
-    this.erc20Abi = this.contractsService.getContractAbi(ContractNames.ERC20);
-    this.erc721Abi = this.contractsService.getContractAbi(ContractNames.ERC721);
+    try {
+      this.erc20Abi = this.contractsService.getContractAbi(ContractNames.ERC20);
+      this.erc721Abi = this.contractsService.getContractAbi(ContractNames.ERC721);
 
-    void this.tokenListProvider.initialize().then(() => {
+      void this.tokenListProvider.initialize().then(() => {
+        /**
+         * note these will not automatically have id or price initialized
+         */
+        this.tokenInfos = this.tokenListProvider.tokenInfos as Map<TokenAddressId, ITokenInfo>;
+      });
+
+      const uri = `https://pro-api.coingecko.com/api/v3/coins/list?x_cg_pro_api_key=${COINGECKO_API_KEY}`;
+      this.timingService.startTimer('get geckoCoinInfo');
       /**
-       * note these will not automatically have id or price initialized
+       * prefetch all coingecko ids to use for fetching token prices, etc later
        */
-      this.tokenInfos = this.tokenListProvider.tokenInfos as Map<TokenAddressId, ITokenInfo>;
-    });
-
-    const uri = `https://pro-api.coingecko.com/api/v3/coins/list?x_cg_pro_api_key=${COINGECKO_API_KEY}`;
-    this.timingService.startTimer('get geckoCoinInfo');
-    /**
-     * prefetch all coingecko ids to use for fetching token prices, etc later
-     */
-    const response = await axios.get<[]>(uri);
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (response.data.length) {
-      response.data.map((coidTokenInfo: ICoingeckoTokenInfo) =>
-        this.geckoCoinInfo.set(this.getTokenGeckoMapKey(coidTokenInfo.name, coidTokenInfo.symbol), coidTokenInfo.id ?? ''),
-      );
+      const response = await axios.get<[]>(uri);
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (response.data.length) {
+        response.data.map((coidTokenInfo: ICoingeckoTokenInfo) =>
+          this.geckoCoinInfo.set(this.getTokenGeckoMapKey(coidTokenInfo.name, coidTokenInfo.symbol), coidTokenInfo.id ?? ''),
+        );
+      }
+      this.timingService.endTimer('get geckoCoinInfo');
+    } catch {
+      console.error('There was an error fetching token data');
     }
-    this.timingService.endTimer('get geckoCoinInfo');
   }
 
   /**

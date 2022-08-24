@@ -3,7 +3,6 @@ import { BrowserStorageService, IBrowserStorageService } from './BrowserStorageS
 import { ContractsDeploymentProvider, IContractsDeploymentProvider } from './ContractsDeploymentProvider';
 import { ContractsService, IContractsService } from './ContractsService';
 import { DI, IContainer, Registration } from 'aurelia';
-import { DateService, IDateService } from './DateService';
 import { EthereumService, IEthereumService, Networks } from './ethereum-service';
 import { IIpfsService, IpfsService } from './IpfsService';
 import { IKolektivoIpfsClient, KolektivoIpfsClient } from './KolektivoIpfsClient';
@@ -20,7 +19,6 @@ export class Services {
   constructor(
     @IAxiosService public readonly axiosService: IAxiosService,
     @INumberService public readonly numberService: INumberService,
-    @IDateService public readonly dateService: IDateService,
     @IIpfsService public readonly ipfsService: IIpfsService,
     @IKolektivoIpfsClient public readonly kolektivoService: IKolektivoIpfsClient,
     @IEthereumService public readonly ethereumService: IEthereumService,
@@ -51,7 +49,6 @@ export class Services {
       .register(TimingService)
       .register(AxiosService)
       .register(NumberService)
-      .register(DateService)
       .register(IpfsService)
       .register(KolektivoIpfsClient)
       .register(EthereumService)
