@@ -1,15 +1,16 @@
 import './network-feedback.scss';
 import { ICustomElementViewModel, containerless, customElement } from 'aurelia';
-import { IEthereumService, Networks } from '../../../services';
+import { IStore } from './../../../stores/store';
+import { Networks } from '../../../services';
 import template from './network-feedback.html';
 
 @containerless
 @customElement({ template, name: 'network-feedback' })
 export class NetworkFeedback implements ICustomElementViewModel {
-  constructor(@IEthereumService private readonly ethereumService: IEthereumService) {}
+  constructor(@IStore private readonly store: IStore) {}
 
-  get networkName(): string {
-    return this.ethereumService.targetedNetwork ?? '';
+  get networkName(): AllowedNetworks | null {
+    return this.store.blockChainStore.targetedNetwork;
   }
 
   get isTestnet(): boolean {

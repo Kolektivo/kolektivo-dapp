@@ -8,6 +8,7 @@ import { EthereumService, IEthereumService, Networks } from './ethereum-service'
 import { IIpfsService, IpfsService } from './IpfsService';
 import { IKolektivoIpfsClient, KolektivoIpfsClient } from './KolektivoIpfsClient';
 import { INumberService, NumberService } from './NumberService';
+import { ITimingService, TimingService } from './TimingService';
 import { ITokenListProvider, TokenListProvider } from './TokenListProvider';
 import { ITokenService, TokenService } from './TokenService';
 import { ethereumNetwork, isDev } from './../environment-variables';
@@ -28,12 +29,17 @@ export class Services {
     @IContractsDeploymentProvider public readonly contractsDeploymentProvider: IContractsDeploymentProvider,
     @ITokenService public readonly tokenService: ITokenService,
     @ITokenListProvider public readonly tokenListProvider: ITokenListProvider,
+    @ITimingService public readonly timingService: ITimingService,
   ) {}
 
   public async initialize() {
-    await this.ethereumService.initialize(ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Celo));
-    if (!this.ethereumService.targetedNetwork) return;
-    await this.contractsDeploymentProvider.initialize(this.ethereumService.targetedNetwork);
+    const targetNetwork = ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Celo);
+    this.timingService.initialize(targetNetwork);
+    /**
+     * throws an error if targetNetwork is no good
+     */
+    await this.ethereumService.initialize(targetNetwork);
+    await this.contractsDeploymentProvider.initialize(targetNetwork);
     this.contractsService.initialize();
     this.ipfsService.initialize(this.kolektivoService);
     await this.tokenService.initialize();
@@ -42,6 +48,7 @@ export class Services {
   public static register(container: IContainer): void {
     container
       .register(Registration.singleton(IServices, Services))
+      .register(TimingService)
       .register(AxiosService)
       .register(NumberService)
       .register(DateService)
@@ -50,8 +57,8 @@ export class Services {
       .register(EthereumService)
       .register(BrowserStorageService)
       .register(ContractsService)
-      .register(TokenService)
       .register(TokenListProvider)
+      .register(TokenService)
       .register(ContractsDeploymentProvider);
   }
 }

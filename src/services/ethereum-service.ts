@@ -5,7 +5,6 @@ import { IBrowserStorageService } from './BrowserStorageService';
 import detectEthereumProvider from '@metamask/detect-provider';
 // import { IDisclaimerService } from './DisclaimerService';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
-import { IBlockChainStore } from '../stores/block-chain-store';
 import { INotificationService } from '../../design-system/services/notification/notification-service';
 import { callOnce } from '../decorators/call-once';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
@@ -77,7 +76,6 @@ export class EthereumService {
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     @IBrowserStorageService private readonly storageService: IBrowserStorageService,
     @ILogger private readonly logger: ILogger,
-    @IBlockChainStore private readonly blockChainStore: IBlockChainStore,
     @INotificationService private readonly notificationService: INotificationService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
@@ -109,7 +107,7 @@ export class EthereumService {
     },
   };
 
-  public targetedNetwork?: AllowedNetworks;
+  public targetedNetwork: AllowedNetworks | null = null;
   public targetedChainId?: number;
   public lastBlock?: IBlockInfo;
   /**
@@ -121,13 +119,7 @@ export class EthereumService {
    */
   public walletProvider?: Web3Provider;
 
-  private get defaultAccountAddress(): Address | null {
-    return this.blockChainStore.connectedWalletAddress;
-  }
-
-  private set defaultAccountAddress(address: Address | null) {
-    this.blockChainStore.connectedWalletAddress = address;
-  }
+  public defaultAccountAddress: Address | null = null;
 
   private blockSubscribed?: boolean;
   /**
@@ -141,7 +133,7 @@ export class EthereumService {
     this.eventAggregator.publish('Network.NewBlock', block);
   }
 
-  @callOnce('Etherium Service')
+  @callOnce('Ethereum Service')
   public async initialize(network: AllowedNetworks): Promise<void> {
     if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: `network` must be specified');
@@ -458,7 +450,7 @@ export class EthereumService {
    * @param web3ModalProvider should be a Web3Provider
    * @returns
    */
-  public async switchToTargetedNetwork(web3ModalProvider: ExternalProvider & WalletProvider): Promise<boolean> {
+  public async switchToTargetedNetwork(web3ModalProvider: WalletProvider): Promise<boolean> {
     if (typeof this.targetedChainId !== 'number') {
       return false;
     }

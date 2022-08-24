@@ -3,20 +3,22 @@
   <k-icon-button slot="start" name="menu" type="utility-dark" click.trigger="store.sideBarOpen = !store.sideBarOpen">
   </k-icon-button>
   <div></div>
-    <div slot="end">
-    <k-stack if.bind="!blockChainStore.walletConnected" justify-content="flex-end" direction="row" gap="var(--spacing)">
-        <network-feedback></network-feedback>
-        <k-button click.trigger="connectWallet()">Connect Wallet</k-button>
+  <div slot="end">
+    <k-stack if.bind="!store.blockChainStore.walletConnected" justify-content="flex-end" direction="row"
+      gap="var(--spacing)">
+      <network-feedback></network-feedback>
+      <k-button click.trigger="connectWallet()">Connect Wallet</k-button>
     </k-stack>
     <div else>
       <k-stack justify-content="flex-end" direction="row" gap="var(--spacing)">
         <network-feedback></network-feedback>
         <k-text color="var(--white)">${i18n.tr('status-bar.badge-title')}:</k-text>
         <k-avatar-group ref="badgeGroup">
-          <k-avatar repeat.for="badge of blockChainStore.badges" tooltip="value:${badge.name};position:bottom"
+          <k-avatar repeat.for="badge of store.kolektivoStore.badges" tooltip="value:${badge.name};position:bottom"
             src.bind="badge.imageUrl" size="32"></k-avatar>
         </k-avatar-group>
-        <k-button ref="accountButton" type="utility-dark" icon="account_circle">${blockChainStore.connectedWalletAddress
+        <k-button ref="accountButton" type="utility-dark" icon="account_circle">
+          ${store.blockChainStore.connectedWalletAddress
           | smallHexString}</k-button>
         <k-icon-button if.bind="pendingTransactions === 0" ref="activityButton" type="utility-dark"
           name="electric_bolt"></k-icon-button>
@@ -26,7 +28,7 @@
           </k-spinner>
         </k-icon-button>
       </k-stack>
-    <badge-menu target.bind="badgeGroup"></badge-menu>
+      <badge-menu target.bind="badgeGroup"></badge-menu>
       <account-menu target.bind="accountButton"></account-menu>
       <activity-menu target.bind="activityButton"></activity-menu>
     </div>

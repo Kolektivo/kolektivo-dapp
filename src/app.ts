@@ -37,7 +37,7 @@ export class App {
       this.confirmChangeNetworkInfo = Object.assign(info, { connectedTo: info.connectedTo ?? this.i18n.tr('general.an-unknown-network') });
       this.showConfirmChangeNetworkInfo = true;
     });
-    await this.store.services.ethereumService.connectToConnectedProvider();
+    await this.store.blockChainStore.connectToConnectedProvider();
   }
 
   detaching(): void {
@@ -51,13 +51,13 @@ export class App {
   async confirmChangeNetwork(): Promise<void> {
     if (!this.confirmChangeNetworkInfo) return;
     this.showConfirmChangeNetworkInfo = false;
-    if (!(await this.store.services.ethereumService.switchToTargetedNetwork(this.confirmChangeNetworkInfo.provider))) {
+    if (!(await this.store.blockChainStore.switchToTargetedNetwork(this.confirmChangeNetworkInfo.provider))) {
       this.cancelConfirmChangeNetwork(this.confirmChangeNetworkInfo);
     }
   }
 
   cancelConfirmChangeNetwork(info: WrongNetworkInfo | undefined): void {
-    this.store.services.ethereumService.disconnect({ code: -1, message: 'wrong network' });
+    this.store.blockChainStore.disconnect({ code: -1, message: 'wrong network' });
     void this.notificationService.toast({
       message: `Please connect your wallet to ${info?.need ?? this.confirmChangeNetworkInfo?.need ?? this.i18n.tr('general.an-unknown-network')}`,
       type: 'danger',

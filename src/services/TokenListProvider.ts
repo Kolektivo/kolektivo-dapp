@@ -1,10 +1,9 @@
-import { Address, IEthereumService } from '../services';
+import { Address, IEthereumService, ITimingService } from '../services';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { IIpfsService } from './IpfsService';
 import { ITokenInfo, ITokenInfoUniswap, ITokenListUniswap, TokenAddressId } from './TokenTypes';
 import { TokenLists } from '../configurations/tokenLists';
 import { callOnce } from '../decorators/call-once';
-import { endTimer, startTimer } from './TimingService';
 import axios from 'axios';
 
 export type ITokenListMapByNetwork = Map<AllowedNetworks, ITokenInfo[]>;
@@ -17,6 +16,7 @@ export class TokenListProvider {
     @IEthereumService private readonly ethereumService: IEthereumService,
     @IIpfsService private readonly ipfsService: IIpfsService,
     @ILogger private readonly logger: ILogger,
+    @ITimingService private readonly timingService: ITimingService,
   ) {}
 
   public static register(container: IContainer): void {
@@ -34,7 +34,7 @@ export class TokenListProvider {
   @callOnce('TokenListProvider')
   public async initialize(): Promise<void> {
     if (typeof this.tokenInfos === 'undefined') {
-      startTimer('fetch tokeninfos');
+      this.timingService.startTimer('fetch tokeninfos');
       if (!this.ethereumService.targetedNetwork) {
         throw new Error(`TokenListProvider: no tokenlists available for the empty network`);
       }
@@ -66,7 +66,7 @@ export class TokenListProvider {
       //   throw new Error('Failed to load any TokenInfos');
       // }
 
-      endTimer('fetch tokeninfos');
+      this.timingService.endTimer('fetch tokeninfos');
 
       this.tokenInfos = tokenInfoMap;
     }

@@ -10,9 +10,9 @@ import { COINGECKO_API_KEY, ETHERSCAN_KEY } from '../environment-variables';
 import { Contract, ethers } from 'ethers';
 import { ContractNames, IContractsService } from './ContractsService';
 import { FormatTypes, Interface, getAddress } from 'ethers/lib/utils';
+import { ITimingService } from './TimingService';
 import { ITokenListProvider } from './TokenListProvider';
 import { callOnce } from '../decorators/call-once';
-import { endTimer, startTimer } from './TimingService';
 
 interface ICoingeckoTokenInfo {
   id?: string;
@@ -44,7 +44,7 @@ export class TokenService {
     @IContractsService private readonly contractsService: IContractsService,
     @ITokenListProvider private readonly tokenListProvider: ITokenListProvider,
     @IEthereumService private readonly ethereumService: IEthereumService,
-    // private tokenMetadataService: TokenMetadataService,
+    @ITimingService private readonly timingService: ITimingService,
     @IAxiosService private readonly axiosService: IAxiosService,
     @ILogger private readonly logger: ILogger,
   ) {
@@ -76,7 +76,7 @@ export class TokenService {
     });
 
     const uri = `https://pro-api.coingecko.com/api/v3/coins/list?x_cg_pro_api_key=${COINGECKO_API_KEY}`;
-    startTimer('get geckoCoinInfo');
+    this.timingService.startTimer('get geckoCoinInfo');
     /**
      * prefetch all coingecko ids to use for fetching token prices, etc later
      */
@@ -87,7 +87,7 @@ export class TokenService {
         this.geckoCoinInfo.set(this.getTokenGeckoMapKey(coidTokenInfo.name, coidTokenInfo.symbol), coidTokenInfo.id ?? ''),
       );
     }
-    endTimer('get geckoCoinInfo');
+    this.timingService.endTimer('get geckoCoinInfo');
   }
 
   /**
@@ -96,7 +96,7 @@ export class TokenService {
    * @param tokenInfos
    */
   public async getTokenPrices(tokenInfos: ITokenInfo[]): Promise<void> {
-    startTimer('getTokenPrices');
+    this.timingService.startTimer('getTokenPrices');
 
     const tokensByGeckoId = new Map<string, ITokenInfo>();
 
@@ -131,7 +131,7 @@ export class TokenService {
         });
     }
 
-    endTimer('getTokenPrices');
+    this.timingService.endTimer('getTokenPrices');
   }
 
   /**
@@ -219,7 +219,7 @@ export class TokenService {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const timerLabel = `isRequiredTokenContract-${tokenAddress}${this.isNftId(id) ? `-${id!}` : ''}`;
 
-    startTimer(timerLabel);
+    this.timingService.startTimer(timerLabel);
     const contract = this.getTokenContract(tokenAddress);
     try {
       await contract.deployed();
@@ -294,7 +294,7 @@ export class TokenService {
       isOk = false;
     }
 
-    endTimer(timerLabel);
+    this.timingService.endTimer(timerLabel);
 
     return isOk;
   }
