@@ -2,14 +2,12 @@
 
 A collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
 
-A collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
-
-This project is bootstrapped by [aurelia/new](https://github.com/aurelia/new).
+This project is bootstrapped by [Aurelia 2.0](https://github.com/aurelia/new).
 
 ## Development
 
 ### Prerequisites
-Make sure you have [node.js version >= 14.11.0 < 15](https://nodejs.org/en/)
+Make sure you have [node.js version >= 16.0.0 < 17](https://nodejs.org/en/)
 
 ### Install
 Install dependencies with the following command:
@@ -17,57 +15,46 @@ Install dependencies with the following command:
 npm ci
 ```
 
-## Start dev web server
+## Start development web server
 
-    npm start
+    npm run start
 
 ## Build the app in production mode
 
-    npm run build
 
-It builds all files to dist folder. To deploy to production server, copy all the `dist/*` files to production root folder.
+This builds all files to dist folder from where you can host the app locally.
 
-For example
 ```
-dist/index.html
-dist/foo.12345.js
-```
-Copy to production root folder
-```
-root_folder/index.html
-root_folder/foo.12345.js
+npm run build
 ```
 
-## Unit Tests
+## Test
 
-    npm run test
+Run all tests:
 
-Run unit tests in watch mode.
+```
+npm run test
+```
 
-    npm run test:watch
+Run tests in watch mode:
 
+```
+npm run test:watch
+```
 
+Run Playwright e2e tests:
+
+```
+npm run e2e
+```
+
+Run Playwrite interactively:
+
+```
+npm e2e:watch
+```
 ## Analyze webpack bundle
 
-    npm run analyze
-
-## Cypress e2e test
-
-All e2e tests are in `cypress/integration/`.
-
-Run e2e tests with:
-
-    npm run test:e2e
-
-Note the `test:e2e` script uses start-server-and-test to boot up dev server on port 9000 first, then run cypress test, it will automatically shutdown the dev server after test was finished.
-
-To run Cypress interactively, do
-
-```bash
-# Start the dev server in one terminal
-npm start
-# Start Cypress in another terminal
-npx cypress open
 ```
-
-For more information, visit https://www.cypress.io
+npm run analyze
+```
