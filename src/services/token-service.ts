@@ -181,7 +181,7 @@ export class TokenService {
     } else {
       ercAbi = this.erc20Abi;
     }
-    return new Contract(tokenAddress, ercAbi, this.contractsService.createProvider())!;
+    return new Contract(tokenAddress, ercAbi, this.contractsService.createProvider());
   }
 
   /**
