@@ -66,6 +66,7 @@
     "web3modal": "^1.9.8"
   },
   "devDependencies": {
+    "sass": "^1.54.5",
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "rollup-plugin-polyfill-node": "^0.10.2",
     "rollup-plugin-visualizer": "^5.8.0",
