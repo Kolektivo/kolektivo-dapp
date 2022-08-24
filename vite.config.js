@@ -5,6 +5,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { visualizer } from "rollup-plugin-visualizer";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
+import svgLoader from "vite-svg-loader";
 
 export default defineConfig({
   server: {
@@ -28,6 +29,9 @@ export default defineConfig({
     }),
     rawHtml(),
     hmrPlugin(),
+    svgLoader({
+      defaultImport: "url"
+    }),
     visualizer({
       emitFile: true,
       file: "stats.html"

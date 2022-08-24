@@ -112,7 +112,8 @@
     "vercel": "^25.1.0",
     "vite": "latest",
     "vitest": "^0.21.1",
-    "vitest-mock-extended": "^0.1.13"
+    "vitest-mock-extended": "^0.1.13",
+    "vite-svg-loader": "^3.4.0"
   },
   "jest": {
     "testMatch": [
