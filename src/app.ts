@@ -44,8 +44,8 @@ export class App {
     this.platform.window.removeEventListener('resize', this.recalc);
   }
 
-  binding(): Promise<void> {
-    return this.store.initializeServices();
+  binding() {
+    return this.store.initializeServices().catch((error) => void this.notificationService.toast({ type: 'danger', message: JSON.stringify(error) }));
   }
 
   async confirmChangeNetwork(): Promise<void> {

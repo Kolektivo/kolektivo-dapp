@@ -27,8 +27,13 @@ export class TokenListService {
   public async initialize(): Promise<void> {
     if (this.tokenInfos) return;
 
+    this.timingService.startTimer('fetch tokeninfos');
     const uris = this.ethereumService.targetedNetwork && TokenLists.get(this.ethereumService.targetedNetwork);
-    if (!uris) return;
+
+    if (!uris) {
+      this.logger.fatal(`TokenListProvider: no tokenlists available for the network ${this.ethereumService.targetedNetwork ?? ''}`);
+      return;
+    }
 
     const tokenInfoArrays = await Promise.all(uris.map((uri) => this.fetch(uri)));
 
@@ -42,6 +47,7 @@ export class TokenListService {
             .map((tokenInfo) => [tokenInfo.address.toLowerCase(), tokenInfo]),
         ),
     );
+    this.timingService.endTimer('fetch tokeninfos');
   }
 
   /**

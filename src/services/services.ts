@@ -30,17 +30,16 @@ export class Services {
     @ITimingService public readonly timingService: ITimingService,
   ) {}
 
-  public async initialize() {
+  public initialize(): Promise<unknown> {
     const targetNetwork = ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Celo);
     this.timingService.initialize(targetNetwork);
-    /**
-     * throws an error if targetNetwork is no good
-     */
-    await this.ethereumService.initialize(targetNetwork);
-    await this.contractsDeploymentService.initialize(targetNetwork);
     this.contractsService.initialize();
     this.ipfsService.initialize(this.kolektivoService);
-    await this.tokenService.initialize();
+    return Promise.all([
+      this.ethereumService.initialize(targetNetwork),
+      this.contractsDeploymentService.initialize(targetNetwork),
+      this.tokenService.initialize(),
+    ]);
   }
 
   public static register(container: IContainer): void {
