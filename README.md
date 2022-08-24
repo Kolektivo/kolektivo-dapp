@@ -59,4 +59,4 @@ npm e2e:watch
 npm run build
 ```
 
-Then look in the dist folder for the stat.html file.
+Then look in the dist folder for the stats.html file.
