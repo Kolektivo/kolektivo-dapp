@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { BytesLike as Arrayish, BigNumber, BigNumberish, ContractTransaction } from 'ethers';
+import { BytesLike as Arrayish } from '@ethersproject/bytes';
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
+import { ContractTransaction } from '@ethersproject/contracts';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
 
 export type ContractContext = EthersContractContextV5<Reserve, ReserveMethodNames, ReserveEventsContext, ReserveEvents>;

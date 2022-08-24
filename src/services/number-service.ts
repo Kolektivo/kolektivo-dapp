@@ -1,4 +1,5 @@
-﻿import { BigNumber } from 'ethers';
+﻿import { BigNumber } from '@ethersproject/bignumber';
+
 import { DI, IContainer, Registration } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 

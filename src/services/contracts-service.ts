@@ -1,5 +1,9 @@
 import { Address, Hash, IBlockInfoNative, IChainEventInfo, IEthereumService } from './ethereum-service';
-import { BigNumber, Contract, Signer, ethers } from 'ethers';
+import { BaseProvider, JsonRpcSigner } from '@ethersproject/providers';
+import { BigNumber } from '@ethersproject/bignumber';
+import { Contract } from '@ethersproject/contracts';
+import { Signer } from '@ethersproject/abstract-signer';
+
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
 import { IContractsDeploymentService } from './contracts-deployment-service';
 import { callOnce } from '../decorators/call-once';
@@ -24,7 +28,7 @@ export interface IStandardEvent<TArgs> {
 
 export type IContractsService = ContractsService;
 export const IContractsService = DI.createInterface<IContractsService>('ContractsService');
-type SignerTypes = ethers.providers.Provider | Signer;
+type SignerTypes = BaseProvider | (string & Signer) | JsonRpcSigner;
 
 export class ContractsService {
   public static register(container: IContainer) {
@@ -117,7 +121,7 @@ export class ContractsService {
   }
 
   public getContractAtAddress<T>(contractName: ContractNames, address: Address, signorOrProvider?: SignerTypes): T {
-    return new ethers.Contract(address, this.getContractAbi(contractName), signorOrProvider ?? this.createProvider()) as unknown as T;
+    return new Contract(address, this.getContractAbi(contractName), signorOrProvider ?? this.createProvider()) as unknown as T;
   }
 
   /**

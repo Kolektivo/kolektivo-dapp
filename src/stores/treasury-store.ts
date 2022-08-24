@@ -1,4 +1,5 @@
-import { BigNumber } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
+
 import { ContractNames, IContractsService } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Treasury } from '../models/treasury';

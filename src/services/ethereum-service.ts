@@ -1,16 +1,17 @@
-import { BaseProvider, ExternalProvider, Network, Web3Provider } from '@ethersproject/providers';
-import { BigNumber, BigNumberish, Signer, ethers } from 'ethers';
+import { BaseProvider, ExternalProvider, Network, Web3Provider, getNetwork } from '@ethersproject/providers';
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
+import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
 import { IBrowserStorageService } from './browser-storage-service';
-import detectEthereumProvider from '@metamask/detect-provider';
-// import { IDisclaimerService } from './DisclaimerService';
-import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { INotificationService } from '../../design-system/services/notification/notification-service';
+import { Signer } from '@ethersproject/abstract-signer';
 import { callOnce } from '../decorators/call-once';
-import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
+import { formatUnits, parseUnits } from '@ethersproject/units';
+import { getAddress } from '@ethersproject/address';
 import { truncateDecimals } from '../utils';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal from 'web3modal';
+import detectEthereumProvider from '@metamask/detect-provider';
 
 interface IEIP1193 {
   on(eventName: 'accountsChanged', handler: (accounts: Address[]) => void): void;
@@ -356,7 +357,7 @@ export class EthereumService {
   private async setProvider(web3ModalProvider?: WalletProvider): Promise<void> {
     try {
       if (web3ModalProvider) {
-        const walletProvider = new ethers.providers.Web3Provider(web3ModalProvider);
+        const walletProvider = new Web3Provider(web3ModalProvider);
 
         (walletProvider.provider as MetamaskProvider).autoRefreshOnNetworkChange = false; // mainly for metamask
 
@@ -409,7 +410,7 @@ export class EthereumService {
   }
 
   private handleChainChanged = (chainId: number): void => {
-    let network = ethers.providers.getNetwork(Number(chainId)) as Network | null;
+    let network = getNetwork(Number(chainId)) as Network | null;
 
     network = this.cleanNetworkName(network);
     if (!network) return;

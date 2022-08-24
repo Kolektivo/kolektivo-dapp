@@ -1,4 +1,5 @@
-import { BigNumber } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
+
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { INumberService } from './../../../services';
 import { ifExistsThenTrue } from '../../../../design-system/common';

@@ -1,16 +1,17 @@
 import { Address, IEthereumService, Networks } from './ethereum-service';
 import { COINGECKO_API_KEY, ETHERSCAN_KEY } from '../environment-variables';
-import { Contract, ethers } from 'ethers';
+import { Contract } from '@ethersproject/contracts';
 import { ContractNames, IContractsService } from './contracts-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
-import { FormatTypes, Interface, getAddress } from 'ethers/lib/utils';
+import { FormatTypes, Interface } from '@ethersproject/abi';
 import { IAxiosService } from './axios-service';
-import { IErc20Token, IErc721Token, ITokenInfo, TokenAddressId } from './token-types';
 import { ITimingService } from './timing-service';
+import { ITokenInfo, TokenAddressId } from './token-types';
 import { ITokenListService } from './token-list-service';
 import { Subject, from } from 'rxjs';
 import { callOnce } from '../decorators/call-once';
 import { concatMap } from 'rxjs/operators';
+import { getAddress } from '@ethersproject/address';
 import axios from 'axios';
 
 interface ICoingeckoTokenInfo {
@@ -173,15 +174,14 @@ export class TokenService {
    * @param id This is undefined for Erc20 tokens, defined but otherwise ignored for Erc721 tokens
    * @returns
    */
-  public getTokenContract(tokenAddress: Address, id?: number): (Contract & IErc20Token) | (Contract & IErc721Token) {
+  public getTokenContract(tokenAddress: Address, id?: number): Contract {
     let ercAbi = [];
     if (this.isNftId(id)) {
       ercAbi = this.erc721Abi;
     } else {
       ercAbi = this.erc20Abi;
     }
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return new ethers.Contract(tokenAddress, ercAbi, this.contractsService.createProvider())! as Contract & IErc20Token;
+    return new Contract(tokenAddress, ercAbi, this.contractsService.createProvider())!;
   }
 
   /**

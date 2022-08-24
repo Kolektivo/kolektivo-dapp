@@ -1,5 +1,5 @@
 import { Address } from './ethereum-service';
-import { BigNumber } from 'ethers/lib/ethers';
+import { BigNumber } from '@ethersproject/bignumber';
 import { TransactionResponse } from '@ethersproject/providers';
 
 export interface IErc20Token {
