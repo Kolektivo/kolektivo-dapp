@@ -14,15 +14,15 @@ interface IContractInfosJson {
 
 type ISharedContractInfos = Record<string, []>;
 
-export type IContractsDeploymentProvider = ContractsDeploymentProvider;
-export const IContractsDeploymentProvider = DI.createInterface<IContractsDeploymentProvider>('ContractsDeploymentProvider');
+export type IContractsDeploymentService = ContractsDeploymentService;
+export const IContractsDeploymentService = DI.createInterface<IContractsDeploymentService>('ContractsDeploymentService');
 
-export class ContractsDeploymentProvider {
+export class ContractsDeploymentService {
   private contractInfosJson?: IContractInfosJson;
   private sharedContractAbisJson?: ISharedContractInfos;
 
   public static register(container: IContainer) {
-    Registration.singleton(IContractsDeploymentProvider, ContractsDeploymentProvider).register(container);
+    Registration.singleton(IContractsDeploymentService, ContractsDeploymentService).register(container);
   }
 
   public async initialize(targetedNetwork: AllowedNetworks): Promise<void> {

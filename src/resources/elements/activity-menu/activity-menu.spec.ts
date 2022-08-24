@@ -2,7 +2,8 @@ import '../../../utils-testing/setup-testing';
 import { ActivityMenu } from './activity-menu';
 import { Global } from '../../../hooks/';
 import { I18N } from '@aurelia/i18n';
-import { IBlockChainStore, IStore } from '../../../stores';
+import { IKolektivoStore } from './../../../stores/kolektivo-store';
+import { IStore } from '../../../stores';
 import { Registration } from 'aurelia';
 import { TakeValueConverter } from '../../../../design-system/value-converters';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -24,23 +25,20 @@ describe('<activity-menu />', () => {
     expect(appHost.textContent).toContain('activity-empty');
   });
 
-  function getRegistrations(overrides?: Partial<IBlockChainStore>) {
-    const blockChainStore: Partial<IBlockChainStore> = {
+  function getRegistrations() {
+    const kolektivoStore: Partial<IKolektivoStore> = {
       transactions,
-      ...overrides,
     };
-    const createMockStoreRegistration = () =>
-      Registration.instance(IStore, {
-        blockChainStore,
-      });
+
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
       });
     return [
       ActivityMenu,
-      Registration.instance(IBlockChainStore, blockChainStore),
-      createMockStoreRegistration(),
+      Registration.instance(IStore, {
+        kolektivoStore,
+      }),
       createMockI18nRegistration(),
       TakeValueConverter,
       Global,

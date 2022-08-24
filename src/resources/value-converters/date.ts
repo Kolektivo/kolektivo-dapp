@@ -1,4 +1,4 @@
-﻿import { IDateServiceIntl, IDateTimeFormatOptions } from '../../services/DateServiceIntl';
+﻿import { IDateServiceIntl, IDateTimeFormatOptions } from '../../services/date-intl-service';
 import { valueConverter } from 'aurelia';
 
 /**

@@ -1,7 +1,7 @@
 import { BaseProvider, ExternalProvider, Network, Web3Provider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish, Signer, ethers } from 'ethers';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
-import { IBrowserStorageService } from './BrowserStorageService';
+import { IBrowserStorageService } from './browser-storage-service';
 import detectEthereumProvider from '@metamask/detect-provider';
 // import { IDisclaimerService } from './DisclaimerService';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';

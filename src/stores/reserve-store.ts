@@ -1,5 +1,5 @@
 import { Address } from './../services/ethereum-service';
-import { ContractNames, IContractsService } from './../services/ContractsService';
+import { ContractNames, IContractsService } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
 
 export type IReserveStore = ReserveStore;
