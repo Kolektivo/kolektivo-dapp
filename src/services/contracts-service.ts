@@ -17,6 +17,8 @@ export enum ContractNames {
   VESTINGVAULT = 'VestingVault',
   ERC20 = 'ERC20',
   ERC721 = 'ERC721',
+  KCT = 'Kolektivo Curacao Token',
+  KTT = 'Kolektivo Treasury Token',
 }
 
 export interface IStandardEvent<TArgs> {
