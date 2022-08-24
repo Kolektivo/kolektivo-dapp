@@ -1,5 +1,5 @@
 import { DI, IContainer, Registration } from 'aurelia';
-import { IIpfsClient } from './IpfsService';
+import { IIpfsClient } from './ipfs-service';
 
 export type IKolektivoIpfsClient = KolektivoIpfsClient;
 export const IKolektivoIpfsClient = DI.createInterface<IKolektivoIpfsClient>('KolektivoIpfsClient');
@@ -9,17 +9,17 @@ export class KolektivoIpfsClient implements IIpfsClient {
     container.register(Registration.singleton(IKolektivoIpfsClient, KolektivoIpfsClient));
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  pinHash(hash: string, name?: string | undefined): Promise<void> {
+  public pinHash(hash: string, name?: string | undefined): Promise<void> {
     // 'https://ipfs.rpcs.dev:4001'
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  addAndPinData(data: string, name?: string | undefined): Promise<string> {
+  public addAndPinData(data: string, name?: string | undefined): Promise<string> {
     // 'https://ipfs.rpcs.dev:4001'
     throw new Error('Method not implemented.');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getPinnedObjectsHashes(): Promise<string[]> {
+  public getPinnedObjectsHashes(): Promise<string[]> {
     // 'https://ipfs.rpcs.dev:4001'
     throw new Error('Method not implemented.');
   }

@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers';
-import { ContractNames, IContractsService } from './../services/ContractsService';
+import { ContractNames, IContractsService } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Treasury } from '../models/treasury';
 

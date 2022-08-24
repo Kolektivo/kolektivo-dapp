@@ -1,10 +1,12 @@
-<fast-select ...$attrs>
+<!-- <fast-select ...$attrs>
   <fast-option if.to-view="placeholder">${placeholder}</fast-option>
   <fast-option repeat.for="option of options" value.bind="option.value === null ? option : option.value">
     ${option.display === null ? option : option.display}</fast-option>
-</fast-select>
+</fast-select> -->
 
-<!-- <select ref="dropdown" ...$attrs>
+<select ref="dropdown" ...$attrs>
   <option if.bind="placeholder" value="" hidden>${placeholder}</option>
-  <option click.bind="optionClicked" repeat.for="option of options" value.bind="option.value === null ? option : option.value">${option.display === null ? option : option.display}</option>
-</select> -->
+  <option click.bind="optionClicked" repeat.for="option of options"
+    value.bind="option.value === null ? option : option.value">${option.display === null ? option : option.display}
+  </option>
+</select>

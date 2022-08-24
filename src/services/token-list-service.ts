@@ -1,17 +1,16 @@
-import { Address, IEthereumService, ITimingService } from '../services';
+import { Address, IEthereumService } from './ethereum-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
-import { IIpfsService } from './IpfsService';
-import { ITokenInfo, ITokenInfoUniswap, ITokenListUniswap, TokenAddressId } from './TokenTypes';
+import { IIpfsService } from './ipfs-service';
+import { ITimingService } from './timing-service';
+import { ITokenInfoUniswap, ITokenListUniswap, TokenAddressId } from './token-types';
 import { TokenLists } from '../configurations/tokenLists';
 import { callOnce } from '../decorators/call-once';
 import axios from 'axios';
 
-export type ITokenListMapByNetwork = Map<AllowedNetworks, ITokenInfo[]>;
+export type ITokenListService = TokenListService;
+export const ITokenListService = DI.createInterface<ITokenListService>('TokenListService');
 
-export type ITokenListProvider = TokenListProvider;
-export const ITokenListProvider = DI.createInterface<ITokenListProvider>('TokenListProvider');
-
-export class TokenListProvider {
+export class TokenListService {
   constructor(
     @IEthereumService private readonly ethereumService: IEthereumService,
     @IIpfsService private readonly ipfsService: IIpfsService,
@@ -20,7 +19,7 @@ export class TokenListProvider {
   ) {}
 
   public static register(container: IContainer): void {
-    container.register(Registration.singleton(ITokenListProvider, TokenListProvider));
+    Registration.singleton(ITokenListService, TokenListService).register(container);
   }
 
   /**
@@ -31,14 +30,13 @@ export class TokenListProvider {
   /**
    * Hydrate this.tokenInfos from all configured TokenInfo documents for the current network.
    */
-  @callOnce('TokenListProvider')
+  @callOnce('TokenListService')
   public async initialize(): Promise<void> {
     if (typeof this.tokenInfos === 'undefined') {
       this.timingService.startTimer('fetch tokeninfos');
       if (!this.ethereumService.targetedNetwork) {
-        throw new Error(`TokenListProvider: no tokenlists available for the empty network`);
+        throw new Error(`TokenListService: no tokenlists available for the empty network`);
       }
-
       const uris = TokenLists.get(this.ethereumService.targetedNetwork);
       if (!uris) {
         throw new Error(`TokenListProvider: no tokenlists available for the network ${this.ethereumService.targetedNetwork}`);
@@ -54,7 +52,6 @@ export class TokenListProvider {
        * Address key is set to lowercase.
        */
       const tokenInfoMap = new Map<Address, ITokenInfoUniswap>();
-
       for (const tokenInfoArray of tokenInfoArrays) {
         for (const tokenInfo of tokenInfoArray) {
           if (tokenInfo.chainId === this.ethereumService.targetedChainId) {
@@ -65,9 +62,7 @@ export class TokenListProvider {
       // if (tokenInfoMap.size === 0) {
       //   throw new Error('Failed to load any TokenInfos');
       // }
-
       this.timingService.endTimer('fetch tokeninfos');
-
       this.tokenInfos = tokenInfoMap;
     }
   }

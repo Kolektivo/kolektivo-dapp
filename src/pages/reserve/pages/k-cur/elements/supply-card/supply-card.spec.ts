@@ -1,7 +1,7 @@
 import '../../../../../../utils-testing/setup-testing';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
-import { INumberService } from './../../../../../../services/NumberService';
+import { INumberService } from '../../../../../../services/number-service';
 import { IStore } from '../../../../../../stores';
 import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';

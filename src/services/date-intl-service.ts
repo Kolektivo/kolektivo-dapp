@@ -1,5 +1,4 @@
 import { DI, IContainer, Registration } from 'aurelia';
-import { IDateService } from './DateService';
 
 export type CannedFormats = 'full' | 'long' | 'medium' | 'short';
 /**
@@ -44,8 +43,6 @@ export const IDateServiceIntl = DI.createInterface<IDateServiceIntl>('DateServic
  * but should not be used for localization.
  */
 export class DateServiceIntl {
-  constructor(@IDateService private readonly dateService: IDateService) {}
-
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IDateServiceIntl, DateServiceIntl));
   }

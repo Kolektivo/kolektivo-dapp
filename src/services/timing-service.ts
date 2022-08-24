@@ -1,6 +1,6 @@
 import { DI, IContainer, Registration } from 'aurelia';
 import { callOnce } from '../decorators/call-once';
-import { isDev } from './../environment-variables';
+import { isDev } from '../environment-variables';
 /* eslint-disable no-console */
 import { Networks } from './ethereum-service';
 

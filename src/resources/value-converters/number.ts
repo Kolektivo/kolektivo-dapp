@@ -1,5 +1,5 @@
 ﻿import { BigNumber } from 'ethers';
-import { INumberService, IToStringOptions } from '../../services/NumberService';
+import { INumberService, IToStringOptions } from '../../services/number-service';
 import { valueConverter } from 'aurelia';
 
 /**

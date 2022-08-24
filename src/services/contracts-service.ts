@@ -1,7 +1,7 @@
 import { Address, Hash, IBlockInfoNative, IChainEventInfo, IEthereumService } from './ethereum-service';
 import { BigNumber, Contract, Signer, ethers } from 'ethers';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
-import { IContractsDeploymentProvider } from './ContractsDeploymentProvider';
+import { IContractsDeploymentService } from './contracts-deployment-service';
 import { callOnce } from '../decorators/call-once';
 
 export enum ContractNames {
@@ -53,7 +53,7 @@ export class ContractsService {
   constructor(
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     @IEthereumService private readonly ethereumService: IEthereumService,
-    @IContractsDeploymentProvider private readonly contractsDeploymentProvider: IContractsDeploymentProvider,
+    @IContractsDeploymentService private readonly contractsDeploymentProvider: IContractsDeploymentService,
   ) {}
 
   @callOnce('Contracts Service')

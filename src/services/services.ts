@@ -1,16 +1,15 @@
-import { AxiosService, IAxiosService } from './AxiosService';
-import { BrowserStorageService, IBrowserStorageService } from './BrowserStorageService';
-import { ContractsDeploymentProvider, IContractsDeploymentProvider } from './ContractsDeploymentProvider';
-import { ContractsService, IContractsService } from './ContractsService';
+import { AxiosService, IAxiosService } from './axios-service';
+import { BrowserStorageService, IBrowserStorageService } from './browser-storage-service';
+import { ContractsDeploymentService, IContractsDeploymentService } from './contracts-deployment-service';
+import { ContractsService, IContractsService } from './contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
-import { DateService, IDateService } from './DateService';
 import { EthereumService, IEthereumService, Networks } from './ethereum-service';
-import { IIpfsService, IpfsService } from './IpfsService';
-import { IKolektivoIpfsClient, KolektivoIpfsClient } from './KolektivoIpfsClient';
-import { INumberService, NumberService } from './NumberService';
-import { ITimingService, TimingService } from './TimingService';
-import { ITokenListProvider, TokenListProvider } from './TokenListProvider';
-import { ITokenService, TokenService } from './TokenService';
+import { IIpfsService, IpfsService } from './ipfs-service';
+import { IKolektivoIpfsClient, KolektivoIpfsClient } from './kolektivo-ipfs-service';
+import { INumberService, NumberService } from './number-service';
+import { ITimingService, TimingService } from './timing-service';
+import { ITokenListService, TokenListService } from './token-list-service';
+import { ITokenService, TokenService } from './token-service';
 import { ethereumNetwork, isDev } from './../environment-variables';
 
 export type IServices = Services;
@@ -20,15 +19,14 @@ export class Services {
   constructor(
     @IAxiosService public readonly axiosService: IAxiosService,
     @INumberService public readonly numberService: INumberService,
-    @IDateService public readonly dateService: IDateService,
     @IIpfsService public readonly ipfsService: IIpfsService,
     @IKolektivoIpfsClient public readonly kolektivoService: IKolektivoIpfsClient,
     @IEthereumService public readonly ethereumService: IEthereumService,
     @IBrowserStorageService public readonly browserStorageService: IBrowserStorageService,
     @IContractsService public readonly contractsService: IContractsService,
-    @IContractsDeploymentProvider public readonly contractsDeploymentProvider: IContractsDeploymentProvider,
+    @IContractsDeploymentService public readonly contractsDeploymentService: IContractsDeploymentService,
     @ITokenService public readonly tokenService: ITokenService,
-    @ITokenListProvider public readonly tokenListProvider: ITokenListProvider,
+    @ITokenListService public readonly tokenListService: ITokenListService,
     @ITimingService public readonly timingService: ITimingService,
   ) {}
 
@@ -39,7 +37,7 @@ export class Services {
      * throws an error if targetNetwork is no good
      */
     await this.ethereumService.initialize(targetNetwork);
-    await this.contractsDeploymentProvider.initialize(targetNetwork);
+    await this.contractsDeploymentService.initialize(targetNetwork);
     this.contractsService.initialize();
     this.ipfsService.initialize(this.kolektivoService);
     await this.tokenService.initialize();
@@ -51,14 +49,13 @@ export class Services {
       .register(TimingService)
       .register(AxiosService)
       .register(NumberService)
-      .register(DateService)
       .register(IpfsService)
       .register(KolektivoIpfsClient)
       .register(EthereumService)
       .register(BrowserStorageService)
       .register(ContractsService)
-      .register(TokenListProvider)
+      .register(TokenListService)
       .register(TokenService)
-      .register(ContractsDeploymentProvider);
+      .register(ContractsDeploymentService);
   }
 }
