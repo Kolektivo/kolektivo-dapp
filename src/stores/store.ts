@@ -22,6 +22,10 @@ export class Store {
     container.register(TreasuryStore);
   }
 
+  initializeServices() {
+    return this.services.initialize();
+  }
+
   sideBarOpen = false;
 
   kCur: TokenInfo = {

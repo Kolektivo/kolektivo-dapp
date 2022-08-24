@@ -45,7 +45,7 @@ export class App {
   }
 
   binding(): Promise<void> {
-    return this.store.services.initialize();
+    return this.store.initializeServices();
   }
 
   async confirmChangeNetwork(): Promise<void> {
