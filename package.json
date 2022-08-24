@@ -113,5 +113,28 @@
     "vite": "latest",
     "vitest": "^0.21.1",
     "vitest-mock-extended": "^0.1.13"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/test/unit/**/*.spec.ts",
+      "<rootDir>/design-system/test/**/*.spec.ts"
+    ],
+    "testEnvironment": "jsdom",
+    "transform": {
+      "\\.(css|less|sass|scss|styl|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "jest-transform-stub",
+      "\\.(ts|html)$": "@aurelia/ts-jest"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "design-system/**/*.ts",
+      "!src/**/*.d.ts",
+      "!design-system/**/*.d.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "isolatedModules": true
+      }
+    }
   }
 }
