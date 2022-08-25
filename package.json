@@ -32,6 +32,8 @@
     "build-alfajores": "cross-env DOTENV_CONFIG_PATH=.env.production KOL_NETWORK=Alfajores rimraf dist && vite build",
     "build-alfajores-dev": "cross-env DOTENV_CONFIG_PATH=.env.production KOL_NETWORK=Alfajores rimraf dist && vite build --env development",
     "fetchContracts": "node scripts/fetchContracts.js",
+    "buildModels:alfajores" : "node scripts/buildModels.js alfajores",
+    "buildModels:celo" : "node scripts/buildModels.js celo",
     "test": "vitest -r src/",
     "unit": "jest",
     "unit:watch": "jest --watch",
