@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { BytesLike as Arrayish } from '@ethersproject/bytes';
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
-import { ContractTransaction } from '@ethersproject/contracts';
+import { BytesLike as Arrayish, BigNumber, BigNumberish, ContractTransaction } from 'ethers';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
 
 export type ContractContext = EthersContractContextV5<Reserve, ReserveMethodNames, ReserveEventsContext, ReserveEvents>;
@@ -205,6 +202,7 @@ export interface BondedERC20EventEmittedResponse {
   tokensMinted: BigNumberish;
 }
 export interface BondedERC721EventEmittedResponse {
+  erc721Id: Erc721IdRequest;
   tokensMinted: BigNumberish;
 }
 export interface DebtIncurredEventEmittedResponse {
@@ -231,6 +229,24 @@ export interface ERC20ListedAsRedeemableEventEmittedResponse {
 export interface ERC20RegisteredEventEmittedResponse {
   erc20: string;
 }
+export interface ERC721IdDelistedAsBondableEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
+}
+export interface ERC721IdDelistedAsRedeemableEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
+}
+export interface ERC721IdDeregisteredEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
+}
+export interface ERC721IdListedAsBondableEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
+}
+export interface ERC721IdListedAsRedeemableEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
+}
+export interface ERC721IdRegisteredEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
+}
 export interface NewOwnerEventEmittedResponse {
   previousOwner: string;
   newOwner: string;
@@ -245,6 +261,7 @@ export interface RedeemedERC20EventEmittedResponse {
   tokensBurned: BigNumberish;
 }
 export interface RedeemedERC721IdEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
   tokensBurned: BigNumberish;
 }
 export interface SetERC20BondingDiscountEventEmittedResponse {
@@ -273,14 +290,17 @@ export interface SetERC20RedeemLimitEventEmittedResponse {
   newLimit: BigNumberish;
 }
 export interface SetERC721IdBondingDiscountEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
   oldDiscount: BigNumberish;
   newDiscount: BigNumberish;
 }
 export interface SetERC721IdBondingVestingEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
   oldVestingDuration: BigNumberish;
   newVestingDuration: BigNumberish;
 }
 export interface SetERC721IdOracleEventEmittedResponse {
+  erc721Id: Erc721IdRequest;
   oldOracle: string;
   newOracle: string;
 }
