@@ -27,7 +27,6 @@ export class TokenListService {
   public async initialize(): Promise<void> {
     if (this.tokenInfos) return;
 
-    this.timingService.startTimer('fetch tokeninfos');
     const uris = this.ethereumService.targetedNetwork && TokenLists.get(this.ethereumService.targetedNetwork);
 
     if (!uris) {
@@ -35,7 +34,9 @@ export class TokenListService {
       return;
     }
 
+    this.timingService.startTimer('fetch tokeninfos');
     const tokenInfoArrays = await Promise.all(uris.map((uri) => this.fetch(uri)));
+    this.timingService.endTimer('fetch tokeninfos');
 
     this.tokenInfos = new Map(
       tokenInfoArrays
@@ -47,7 +48,6 @@ export class TokenListService {
             .map((tokenInfo) => [tokenInfo.address.toLowerCase(), tokenInfo]),
         ),
     );
-    this.timingService.endTimer('fetch tokeninfos');
   }
 
   /**
@@ -72,7 +72,7 @@ export class TokenListService {
     }
 
     if (protocol === 'ipns') {
-      return this.ipfsService.getObjectFromHash<ITokenListUniswap>(path, protocol).then((result: ITokenListUniswap | null) => result?.tokens);
+      return this.ipfsService.getObjectFromHash<ITokenListUniswap>(path, protocol).then((result?: ITokenListUniswap) => result?.tokens);
     }
 
     this.logger.error(`Unhandled TokenList protocol: ${uri}`);

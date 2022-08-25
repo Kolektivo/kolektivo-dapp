@@ -45,7 +45,9 @@ export class App {
   }
 
   binding() {
-    return this.store.initializeServices().catch((error) => void this.notificationService.toast({ type: 'danger', message: JSON.stringify(error) }));
+    return this.store
+      .initializeServices()
+      .catch(() => void this.notificationService.toast({ type: 'danger', message: 'There was an error initializing the application' }));
   }
 
   async confirmChangeNetwork(): Promise<void> {
