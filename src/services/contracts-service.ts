@@ -5,7 +5,9 @@ import { Contract } from '@ethersproject/contracts';
 import { Signer } from '@ethersproject/abstract-signer';
 
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
+import { ICacheService } from './cache-service';
 import { IContractsDeploymentService } from './contracts-deployment-service';
+import { cache } from '../decorators/cache';
 import { callOnce } from '../decorators/call-once';
 
 export enum ContractNames {
@@ -59,10 +61,16 @@ export class ContractsService {
   constructor(
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     @IEthereumService private readonly ethereumService: IEthereumService,
+    @ICacheService private readonly cacheService: ICacheService,
     @IContractsDeploymentService private readonly contractsDeploymentProvider: IContractsDeploymentService,
   ) {}
 
   @callOnce('Contracts Service')
+  @cache<ContractsService>(function () {
+    return {
+      storage: this.cacheService,
+    };
+  })
   public initialize() {
     this.eventAggregator.subscribe('Network.Changed.Account', (account: Address): void => {
       if (account !== this.accountAddress) {
