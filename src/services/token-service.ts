@@ -69,12 +69,12 @@ export class TokenService {
       this.erc20Abi = this.contractsService.getContractAbi(ContractNames.ERC20);
       this.erc721Abi = this.contractsService.getContractAbi(ContractNames.ERC721);
 
-      // void this.tokenListProvider.initialize().then(() => {
-      //   /**
-      //    * note these will not automatically have id or price initialized
-      //    */
-      //   this.tokenInfos = this.tokenListProvider.tokenInfos as Map<TokenAddressId, ITokenInfo>;
-      // });
+      void this.tokenListProvider.initialize().then(() => {
+        /**
+         * note these will not automatically have id or price initialized
+         */
+        this.tokenInfos = this.tokenListProvider.tokenInfos as Map<TokenAddressId, ITokenInfo>;
+      });
 
       const uri = `https://pro-api.coingecko.com/api/v3/coins/list?x_cg_pro_api_key=${COINGECKO_API_KEY}`;
       this.timingService.startTimer('get geckoCoinInfo');
@@ -388,7 +388,7 @@ export class TokenService {
   }
 
   private getTokenAddressId(address: Address, id?: number) {
-    return typeof id !== 'undefined' ? `${address.toLowerCase()}_${id.toString()}` : address;
+    return typeof id !== 'undefined' ? `${address.toLowerCase()}_${id.toString()}` : address.toLowerCase();
   }
 
   private async getTokeinInfoOnChain(address: string, id?: number): Promise<Partial<ITokenInfo> | undefined> {
