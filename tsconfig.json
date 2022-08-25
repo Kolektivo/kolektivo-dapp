@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noEmit": true,
     "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -15,15 +16,35 @@
     "baseUrl": "./",
     "strictNullChecks": true,
     "paths": {
-      "pages": ["./src/pages"],
-      "design-system": ["./design-system"],
-      "utils": ["./src/utils"],
-      "services": ["./src/services"],
-      "value-converters": ["./src/resources/value-converters"],
-      "elements": ["./src/resources/elements"],
-      "design-system/services": ["./design-system/services"],
+      "pages": [
+        "./src/pages"
+      ],
+      "design-system": [
+        "./design-system"
+      ],
+      "utils": [
+        "./src/utils"
+      ],
+      "services": [
+        "./src/services"
+      ],
+      "value-converters": [
+        "./src/resources/value-converters"
+      ],
+      "elements": [
+        "./src/resources/elements"
+      ],
+      "design-system/services": [
+        "./design-system/services"
+      ],
     }
   },
-  "include": ["test", "src", "design-system"],
-  "files": ["src/resource.d.ts"]
+  "include": [
+    "test",
+    "src",
+    "design-system"
+  ],
+  "files": [
+    "src/resource.d.ts"
+  ]
 }
