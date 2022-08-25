@@ -7,6 +7,6 @@ type ITokenInfoReposByNetwork = Map<AllowedNetworks, string[]>;
  * Map of the TokenLists used on each network
  */
 export const TokenLists: ITokenInfoReposByNetwork = new Map([
-  [Networks.Celo, ['https://raw.githubusercontent.com/Kolektivo/tokenlists/main/tokenlist.json']],
-  [Networks.Alfajores, ['https://raw.githubusercontent.com/Kolektivo/tokenlists/main/tokenlist.json']],
+  [Networks.Celo, ['https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json']],
+  [Networks.Alfajores, ['https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json']],
 ]);
