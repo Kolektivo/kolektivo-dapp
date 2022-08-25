@@ -35,7 +35,8 @@ export interface ITokenInfoUniswap {
   name: string;
   symbol: string;
   /**
-   * id does not exist unless the token represents an NFT
+   * id does not exist unless the token represents an NFT.  Is technically not part of the
+   * Uniswap schema for TokenList.
    */
   id?: number;
 }
