@@ -3,6 +3,9 @@ import { COINGECKO_API_KEY, ETHERSCAN_KEY } from '../environment-variables';
 import { Contract } from '@ethersproject/contracts';
 import { ContractNames, IContractsService } from './contracts-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
+import { Erc20 } from './../models/erc20';
+import { Erc721 } from './../models/erc721';
+import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
 import { FormatTypes, Interface } from '@ethersproject/abi';
 import { IAxiosService } from './axios-service';
 import { ITimingService } from './timing-service';
@@ -174,14 +177,14 @@ export class TokenService {
    * @param id This is undefined for Erc20 tokens, defined but otherwise ignored for Erc721 tokens
    * @returns
    */
-  public getTokenContract(tokenAddress: Address, id?: number): Contract {
+  public getTokenContract<T extends Erc20 | Erc721>(tokenAddress: Address, id?: number): T {
     let ercAbi = [];
     if (this.isNftId(id)) {
       ercAbi = this.erc721Abi;
     } else {
       ercAbi = this.erc20Abi;
     }
-    return new Contract(tokenAddress, ercAbi, this.contractsService.createProvider());
+    return new Contract(tokenAddress, ercAbi, this.contractsService.createProvider()) as unknown as T;
   }
 
   /**
@@ -217,13 +220,16 @@ export class TokenService {
     }
   }
 
-  public async isRequiredTokenContract(tokenAddress: Address, id?: number): Promise<boolean> {
+  public async isRequiredTokenContract<T extends EthersContractContextV5<unknown, unknown, unknown, unknown> & Erc20>(
+    tokenAddress: Address,
+    id?: number,
+  ): Promise<boolean> {
     let isOk = true;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const timerLabel = `isRequiredTokenContract-${tokenAddress}${this.isNftId(id) ? `-${id!}` : ''}`;
 
     this.timingService.startTimer(timerLabel);
-    const contract = this.getTokenContract(tokenAddress);
+    const contract = this.getTokenContract<T>(tokenAddress);
     try {
       await contract.deployed();
     } catch {
@@ -391,11 +397,14 @@ export class TokenService {
     return typeof id !== 'undefined' ? `${address.toLowerCase()}_${id.toString()}` : address.toLowerCase();
   }
 
-  private async getTokeinInfoOnChain(address: string, id?: number): Promise<Partial<ITokenInfo> | undefined> {
+  private async getTokeinInfoOnChain<T extends EthersContractContextV5<unknown, unknown, unknown, unknown> & Erc20>(
+    address: string,
+    id?: number,
+  ): Promise<Partial<ITokenInfo> | undefined> {
     let tokenInfoResult: Partial<ITokenInfo> | undefined;
 
     try {
-      const tokenContract = this.getTokenContract(address, id);
+      const tokenContract = this.getTokenContract<T>(address, id);
 
       await tokenContract.deployed();
 

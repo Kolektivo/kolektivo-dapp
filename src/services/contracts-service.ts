@@ -9,6 +9,7 @@ import { ICacheService } from './cache-service';
 import { IContractsDeploymentService } from './contracts-deployment-service';
 import { cache } from '../decorators/cache';
 import { callOnce } from '../decorators/call-once';
+import { ethers } from 'ethers';
 
 export enum ContractNames {
   ELASTICRECEIPTTOKEN = 'ElasticReceiptToken',
@@ -102,6 +103,9 @@ export class ContractsService {
     });
 
     this.initializeContracts();
+  }
+  public async getArraySize(address: string): Promise<BigNumber> {
+    return ethers.BigNumber.from(await ethers.getDefaultProvider().getStorageAt(address, 19));
   }
 
   public getContractAbi(contractName: ContractNames): [] {

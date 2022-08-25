@@ -1,1 +1,4 @@
-<k-data-grid rows.bind="data" columns.bind="columns"></k-data-grid>
+<div>
+    <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadAssets()"></k-loader>
+    <k-data-grid rows.bind="data" columns.bind="columns"></k-data-grid>
+</div>

@@ -1,4 +1,5 @@
 <k-card title="${i18n.tr('navigation.treasury.overview.value-by-asset-type.title')}">
+  <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadAssets()"></k-loader>
   <k-stack direction="row">
     <k-chart cutout="70" type="doughnut" width="200"
       colors.bind="['var(--terra-cotta)', 'var(--ocean-blue)', 'var(--green-apple)', ]" data.bind="[20,20,60]">
