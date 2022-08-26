@@ -51,7 +51,7 @@ export const appContainer: IContainer = DI.createContainer()
   )
   .register(
     DesignSystemPlugin.configure((x) => {
-      x.iconMap ??= imageMap;
+      x.iconMap = imageMap;
       x.defaultToastTimeout = 5000;
     }),
   );
