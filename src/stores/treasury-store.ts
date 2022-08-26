@@ -1,14 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { ContractNames, IContractsService } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
-import { Erc20 } from './../models/erc20';
-import { ICacheService } from './../services/cache-service';
-import { ITokenInfo } from '../services/token-types';
-import { ITokenService } from '../services/token-service';
-import { ContractContext as OracleContractContext } from '../models/oracle';
-import { Treasury } from '../models/treasury';
-import { callOnce } from '../decorators/call-once';
-import { fromWei } from '../services/ethereum-service';
+import { INumberService } from './../services/number-service';
+import { ITokenInfo, ITokenService, fromWei } from 'services';
+// eslint-disable-next-line unused-imports/no-unused-imports
+import { callOnce } from './../decorators/call-once';
+import { erc20ContractContext } from 'models/erc20';
+import { oracleContractContext } from 'models/oracle';
+import { treasuryContractContext } from 'models/treasury';
 
 export type ITreasuryStore = TreasuryStore;
 export const ITreasuryStore = DI.createInterface<ITreasuryStore>('TreasuryStore');
@@ -24,12 +23,12 @@ export class TreasuryStore {
   public totalValuation?: BigNumber;
   public treasuryDistribution?: number;
   public reservesDistribution?: number;
-  private treasuryContract?: Treasury;
+  private treasuryContract?: treasuryContractContext;
   private treasuryAssets: TreasuryAsset[] = [];
   constructor(
     @IContractsService private readonly contractService: IContractsService,
     @ITokenService private readonly tokenService: ITokenService,
-    @ICacheService private readonly cacheService: ICacheService,
+    @INumberService private readonly numberService: INumberService,
   ) {}
 
   public static register(container: IContainer): void {
@@ -74,7 +73,7 @@ export class TreasuryStore {
     console.log('Treasury Assets', this.treasuryAssets);
   }
 
-  private async getTreasuryAsset(contract: Treasury, treasuryAddress: string, i: number): Promise<TreasuryAsset | undefined> {
+  private async getTreasuryAsset(contract: treasuryContractContext, treasuryAddress: string, i: number): Promise<TreasuryAsset | undefined> {
     const assetAddress = await contract.registeredAssets(BigNumber.from(i));
     //console.log('Address of asset', assetAddress);
     if (!assetAddress) return;
@@ -82,7 +81,7 @@ export class TreasuryStore {
     const oracleAddress = await contract.oraclePerAsset(assetAddress);
     //console.log('Address of asset', oracleAddress);
     if (!oracleAddress) return;
-    const oracleContract = this.contractService.getContractAtAddress<OracleContractContext>(ContractNames.ORACLE, oracleAddress);
+    const oracleContract = this.contractService.getContractAtAddress<oracleContractContext>(ContractNames.ORACLE, oracleAddress);
 
     //console.log('Contract from ContractService', oracleContract);
     const data = await oracleContract.getData();
@@ -92,12 +91,23 @@ export class TreasuryStore {
 
     let tokenQuantity = BigNumber.from(1);
     if (!tokenInfo.id) {
-      const tokenContract = this.tokenService.getTokenContract<Erc20>(assetAddress, tokenInfo.id);
+      const tokenContract = this.tokenService.getTokenContract<erc20ContractContext>(assetAddress, tokenInfo.id);
       //console.log('Token Contract', tokenContract);
       tokenQuantity = await tokenContract.balanceOf(treasuryAddress);
       //console.log('Token Balance', fromWei(tokenQuantity, 18));
+      const transfers = await tokenContract.queryFilter(tokenContract.filters.Transfer(undefined, treasuryAddress));
+      console.log('transfers', transfers);
     }
-    tokenInfo.price = parseFloat(fromWei(data[0], tokenInfo.decimals));
+    //TODO make a copy of tokenInfo and update price
+    tokenInfo.price = this.numberService.fromString(fromWei(data[0], 18)) ?? 0;
+
+    // const assetsRegisteredFilter = contract.filters.AssetPriceUpdated(assetAddress, oracleAddress);
+
+    // const assetsRegistered = contract.getPase(assetsRegisteredFilter, (first, second) => {
+    //   console.log('first', first);
+    //   console.log('second', second);
+    // });
+
     return {
       quantity: parseFloat(fromWei(tokenQuantity, tokenInfo.decimals)),
       token: tokenInfo,
@@ -121,11 +131,11 @@ export class TreasuryStore {
     return tokens?.div(this.totalSupply) ?? BigNumber.from(0);
   }
 
-  private getTreasuryContract(): Treasury | null {
+  private getTreasuryContract(): treasuryContractContext | null {
     if (this.treasuryContract) return this.treasuryContract;
     const treasuryAddress = this.contractService.getContractAddress(ContractNames.TREASURY);
     if (treasuryAddress) {
-      this.treasuryContract = this.contractService.getContractAtAddress<Treasury>(
+      this.treasuryContract = this.contractService.getContractAtAddress<treasuryContractContext>(
         ContractNames.TREASURY,
         treasuryAddress,
         this.contractService.createProvider(),
