@@ -1,3 +1,4 @@
 <k-card gap="var(--spacing-lg)" title="${i18n.tr('navigation.treasury.overview.value.title')}" tooltip-text="${i18n.tr('navigation.treasury.overview.value.tooltip')}">
-  <k-text> ${3000000 | currency} </k-text>
+  <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadAssets()"></k-loader>
+  <k-text> ${treasuryStore.treasuryValue | currency} </k-text>
 </k-card>

@@ -1,6 +1,6 @@
 import './storybook.scss';
-import { IGridColumn } from './../../../design-system/elements/k-data-grid/grid-column';
-import { INotificationService } from '../../../design-system/services';
+import { IGridColumn } from '../../design-system/elements/k-data-grid/grid-column';
+import { INotificationService } from '../../design-system/services';
 import { IValidationController } from '@aurelia/validation-html';
 import { IValidationRules } from '@aurelia/validation';
 import { customElement } from 'aurelia';

@@ -1,10 +1,10 @@
-import { BytesLike as Arrayish } from '@ethersproject/bytes';
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
-import { ContractTransaction } from '@ethersproject/contracts';
 /* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-interface */
+import { BytesLike as Arrayish, BigNumber, BigNumberish, ContractTransaction } from 'ethers';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
 
-export type ContractContext = EthersContractContextV5<Geonft, GeonftMethodNames, GeonftEventsContext, GeonftEvents>;
+export type geonftContractContext = EthersContractContextV5<Geonft, GeonftMethodNames, GeonftEventsContext, GeonftEvents>;
 
 export declare type EventFilter = {
   address?: string;

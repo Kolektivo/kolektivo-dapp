@@ -2,12 +2,46 @@ import { DI, IContainer, Registration } from 'aurelia';
 export type IKolektivoStore = KolektivoStore;
 export const IKolektivoStore = DI.createInterface<IKolektivoStore>('KolektivoStore');
 
+type TransactionStatus = 'success' | 'failed' | 'pending';
+
+type Transaction = {
+  id: string;
+  status: TransactionStatus;
+  fromAmount: number;
+  fromToken: string;
+  from: string;
+  toAmount: number;
+  toToken: string;
+  to: string;
+  date: string;
+};
+
+type Badge = {
+  name: string;
+  description?: string;
+  imageUrl?: string;
+};
+
+type SupplyDistribution = {
+  treasury: number;
+  reserves: number;
+  circulating: number;
+  circulatingExternal?: number;
+};
+
+type TokenInfo = {
+  marketCap: number;
+  currentPrice: number;
+  totalSupply: number;
+  supplyDistribution?: SupplyDistribution;
+};
+
 export class KolektivoStore {
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IKolektivoStore, KolektivoStore));
   }
 
-  public badges = [
+  public badges: Badge[] = [
     {
       name: 'Badge Name 1',
       description: 'This is a badge description for what the user can do',
@@ -20,6 +54,7 @@ export class KolektivoStore {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBQ7wJMICTg6bIjVa2_VDmVEVNKWxr4th2H4WvODmwhMp1ciux4UgbPiKYHhhyTsUHHl4&usqp=CAU',
     },
   ];
+
   public transactions: Transaction[] = [
     {
       id: '0x69a5da6c2ed9304093b0eb5efc905bda6a9418e67a11164eae41455acb99739e',
@@ -55,4 +90,22 @@ export class KolektivoStore {
       date: '08/02/2022',
     },
   ];
+
+  public kCur: TokenInfo = {
+    marketCap: 4000000,
+    currentPrice: 0.98,
+    totalSupply: 8000000,
+    supplyDistribution: {
+      treasury: 40,
+      reserves: 40,
+      circulating: 10,
+      circulatingExternal: 10,
+    },
+  };
+
+  public kGuilder: TokenInfo = {
+    marketCap: 5000000,
+    currentPrice: 12.98,
+    totalSupply: 8000000,
+  };
 }

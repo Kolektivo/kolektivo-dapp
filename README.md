@@ -53,8 +53,10 @@ Run Playwrite interactively:
 ```
 npm e2e:watch
 ```
-## Analyze webpack bundle
+## Analyze rollup bundle
 
 ```
-npm run analyze
+npm run build
 ```
+
+Then look in the dist folder for the stats.html file.

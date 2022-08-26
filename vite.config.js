@@ -34,6 +34,7 @@ export default defineConfig({
     }),
     visualizer({
       emitFile: true,
+      gzipSize: true,
       file: "stats.html"
     })
   ],

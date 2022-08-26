@@ -1,5 +1,6 @@
 export * from './axios-service';
 export * from './browser-storage-service';
+export * from './cache-service';
 export * from './contracts-deployment-service';
 export * from './contracts-service';
 export * from './date-intl-service';

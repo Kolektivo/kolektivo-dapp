@@ -1,6 +1,6 @@
 import './chart-time-filter.scss';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { captureFilter } from './../../../../design-system/common';
+import { captureFilter } from '../../../design-system/common';
 import template from './chart-time-filter.html';
 
 @customElement({

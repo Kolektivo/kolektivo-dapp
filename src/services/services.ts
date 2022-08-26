@@ -1,5 +1,6 @@
 import { AxiosService, IAxiosService } from './axios-service';
 import { BrowserStorageService, IBrowserStorageService } from './browser-storage-service';
+import { CacheService, ICacheService } from './cache-service';
 import { ContractsDeploymentService, IContractsDeploymentService } from './contracts-deployment-service';
 import { ContractsService, IContractsService } from './contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
@@ -28,6 +29,7 @@ export class Services {
     @ITokenService public readonly tokenService: ITokenService,
     @ITokenListService public readonly tokenListService: ITokenListService,
     @ITimingService public readonly timingService: ITimingService,
+    @ICacheService public readonly cacheService: ICacheService,
   ) {}
 
   public initialize(): Promise<unknown> {
@@ -44,6 +46,7 @@ export class Services {
     container
       .register(Registration.singleton(IServices, Services))
       .register(TimingService)
+      .register(CacheService)
       .register(AxiosService)
       .register(NumberService)
       .register(IpfsService)

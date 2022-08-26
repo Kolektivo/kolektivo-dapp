@@ -1,11 +1,11 @@
 import '../../../../../../utils-testing/setup-testing';
 import { BlockChainStore, IStore, ITreasuryStore } from '../../../../../../stores';
 import { BrowserStorageService, IContractsService, NumberService } from './../../../../../../services';
-import { CurrencyValueConverter } from '../../../../../../../design-system/value-converters';
+import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
 import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from '../../../../../../../design-system/configuration';
+import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { IEthereumService } from './../../../../../../services/ethereum-service';
 import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
