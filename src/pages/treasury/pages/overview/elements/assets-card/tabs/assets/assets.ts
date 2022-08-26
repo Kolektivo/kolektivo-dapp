@@ -1,7 +1,7 @@
 import './assets.scss';
 import { I18N } from '@aurelia/i18n';
 import { ICustomElementViewModel, customElement } from 'aurelia';
-import { IGridColumn } from '../../../../../../../../../design-system/elements/k-data-grid/grid-column';
+import { IGridColumn } from '../../../../../../../../design-system/elements/k-data-grid/grid-column';
 import { ITreasuryStore } from './../../../../../../../../stores/treasury-store';
 import template from './assets.html';
 

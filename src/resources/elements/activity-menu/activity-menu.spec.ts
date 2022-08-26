@@ -5,7 +5,7 @@ import { I18N } from '@aurelia/i18n';
 import { IKolektivoStore } from './../../../stores/kolektivo-store';
 import { IStore } from '../../../stores';
 import { Registration } from 'aurelia';
-import { TakeValueConverter } from '../../../../design-system/value-converters';
+import { TakeValueConverter } from '../../../design-system/value-converters';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createFixture } from '@aurelia/testing';
 

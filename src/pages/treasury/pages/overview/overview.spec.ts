@@ -1,10 +1,10 @@
 import '../../../../utils-testing/setup-testing';
-import { CurrencyValueConverter } from '../../../../../design-system/value-converters';
+import { CurrencyValueConverter } from '../../../../design-system/value-converters';
 import { EthweiValueConverter, PercentageValueConverter } from './../../../../resources/value-converters';
 import { Global } from '../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IContractsService } from 'services';
-import { IDesignSystemConfiguration } from '../../../../../design-system/configuration';
+import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
 import { IStore, TreasuryStore } from '../../../../stores';
 import { NumberService } from './../../../../services';
 import { Overview } from './overview';

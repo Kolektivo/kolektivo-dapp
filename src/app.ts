@@ -2,7 +2,7 @@ import './app.scss';
 import './shared.scss';
 import { I18N } from '@aurelia/i18n';
 import { IEventAggregator, IPlatform, customElement } from 'aurelia';
-import { INotificationService } from '../design-system/services';
+import { INotificationService } from './design-system/services';
 import { IStore } from './stores/store';
 import { WalletProvider } from './services';
 import template from './app.html';

@@ -1,8 +1,8 @@
 import '../../../../../../utils-testing/setup-testing';
-import { CurrencyValueConverter } from '../../../../../../../design-system/value-converters';
+import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from '../../../../../../../design-system/configuration';
+import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { IStore } from '../../../../../../stores';
 import { Registration } from 'aurelia';
 import { ValueCard } from './value-card';

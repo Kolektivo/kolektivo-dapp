@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { INumberService } from './../../../services';
-import { ifExistsThenTrue } from '../../../../design-system/common';
+import { ifExistsThenTrue } from '../../../design-system/common';
 import template from './formatted-number.html';
 
 @customElement({ name: 'formatted-number', template })

@@ -1,7 +1,7 @@
 import './pool-card.scss';
 import { I18N } from '@aurelia/i18n';
 import { ICustomElementViewModel, customElement } from 'aurelia';
-import { IGridColumn } from './../../../../../../../design-system/elements/k-data-grid/grid-column';
+import { IGridColumn } from '../../../../../../design-system/elements/k-data-grid/grid-column';
 import template from './pool-card.html';
 
 @customElement({ name: 'pool-card', template })

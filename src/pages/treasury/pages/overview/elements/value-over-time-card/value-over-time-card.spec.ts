@@ -1,7 +1,7 @@
 import '../../../../../../utils-testing/setup-testing';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from '../../../../../../../design-system/configuration';
+import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { IStore } from '../../../../../../stores';
 import { Registration } from 'aurelia';
 import { ValueOverTimeCard } from './value-over-time-card';

@@ -13,36 +13,39 @@
     "importHelpers": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "strictNullChecks": true,
+    "rootDir": "./src",
     "paths": {
-      "pages": [
-        "./src/pages"
+      "*": [
+        "*"
       ],
-      "design-system": [
-        "./design-system"
+      "pages/*": [
+        "pages/*"
       ],
-      "utils": [
-        "./src/utils"
+      "stores/*": [
+        "stores/*"
       ],
-      "services": [
-        "./src/services"
+      "design-system/*": [
+        "design-system/*"
       ],
-      "value-converters": [
-        "./src/resources/value-converters"
+      "utils/*": [
+        "utils/*"
       ],
-      "elements": [
-        "./src/resources/elements"
+      "services/*": [
+        "services/*"
       ],
-      "design-system/services": [
-        "./design-system/services"
+      "value-converters/*": [
+        "resources/value-converters/*"
+      ],
+      "elements/*": [
+        "resources/elements/*"
       ],
     }
   },
   "include": [
     "test",
     "src",
-    "design-system"
   ],
   "files": [
     "src/resource.d.ts"

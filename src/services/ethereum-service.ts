@@ -3,7 +3,7 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
 import { IBrowserStorageService } from './browser-storage-service';
-import { INotificationService } from '../../design-system/services/notification/notification-service';
+import { INotificationService } from '../design-system/services/notification/notification-service';
 import { Signer } from '@ethersproject/abstract-signer';
 import { callOnce } from '../decorators/call-once';
 import { formatUnits, parseUnits } from '@ethersproject/units';

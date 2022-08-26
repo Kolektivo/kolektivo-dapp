@@ -2,7 +2,7 @@ import './side-bar.scss';
 import { BindingMode, ICustomElementViewModel, bindable, customElement } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 import { IRouter } from '@aurelia/router';
-import { ifExistsThenTrue } from '../../../../design-system/common';
+import { ifExistsThenTrue } from '../../../design-system/common';
 import { isDev } from './../../../environment-variables';
 import template from './side-bar.html';
 
