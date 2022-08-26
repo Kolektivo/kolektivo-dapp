@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import { BytesLike as Arrayish, BigNumber, BigNumberish, ContractTransaction } from 'ethers';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
 
-export type ContractContext = EthersContractContextV5<Reserve, ReserveMethodNames, ReserveEventsContext, ReserveEvents>;
+export type reserveContractContext = EthersContractContextV5<Reserve, ReserveMethodNames, ReserveEventsContext, ReserveEvents>;
 
 export declare type EventFilter = {
   address?: string;
@@ -228,6 +230,12 @@ export interface ERC20ListedAsRedeemableEventEmittedResponse {
 export interface ERC20RegisteredEventEmittedResponse {
   erc20: string;
 }
+export interface ERC721IdDelistedAsBondableEventEmittedResponse {}
+export interface ERC721IdDelistedAsRedeemableEventEmittedResponse {}
+export interface ERC721IdDeregisteredEventEmittedResponse {}
+export interface ERC721IdListedAsBondableEventEmittedResponse {}
+export interface ERC721IdListedAsRedeemableEventEmittedResponse {}
+export interface ERC721IdRegisteredEventEmittedResponse {}
 export interface NewOwnerEventEmittedResponse {
   previousOwner: string;
   newOwner: string;

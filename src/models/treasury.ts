@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import { BytesLike as Arrayish, BigNumber, BigNumberish, ContractTransaction } from 'ethers';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
 
-export type ContractContext = EthersContractContextV5<Treasury, TreasuryMethodNames, TreasuryEventsContext, TreasuryEvents>;
+export type treasuryContractContext = EthersContractContextV5<Treasury, TreasuryMethodNames, TreasuryEventsContext, TreasuryEvents>;
 
 export declare type EventFilter = {
   address?: string;

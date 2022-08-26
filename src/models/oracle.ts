@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import { BigNumber, BigNumberish, ContractTransaction } from 'ethers';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
 
-export type ContractContext = EthersContractContextV5<Oracle, OracleMethodNames, OracleEventsContext, OracleEvents>;
+export type oracleContractContext = EthersContractContextV5<Oracle, OracleMethodNames, OracleEventsContext, OracleEvents>;
 
 export declare type EventFilter = {
   address?: string;

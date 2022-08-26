@@ -60,6 +60,17 @@ files.forEach(file => { //loop through each json file and process it
                 fs.writeJSONSync(filePath, abi); // create the new json file
                 exec(`npx abi-types-generator '${filePath}' --output='${destPath}' --name=${fileName} --provider=ethers_v5`, ()=> { // create the model file from the json file
                     fs.unlinkSync(filePath); //delete the source json file afterwards
+                    const tsFile = destPath + "/" + fileName + ".ts";
+                    fs.readFile(tsFile, 'utf8', (err, data)=>{
+                        if(err) return console.log(err);
+                        var result = data.replace(/export type ContractContext/g, `export type ${fileName}ContractContext`); // rename the parent type to have the file name in it
+                        result = '/* eslint-disable @typescript-eslint/naming-convention, @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-interface */\r\n' + result; //add eslint-disable @typescript-eslint/naming-convention to the top of the file so interfaces don't have to begin with I
+                        result = result.replace(/erc721Id: Erc721IdRequest;/g, ''); // remove this line because the generator doesn't have the Erc721IdRequest type
+                        fs.writeFile(tsFile, result, 'utf8', (err)=>{
+                            if(err) return console.log(err);
+                        });
+                        exec(`npx eslint --fix "${tsFile}"`)
+                    })
                 }); 
             }
         });
