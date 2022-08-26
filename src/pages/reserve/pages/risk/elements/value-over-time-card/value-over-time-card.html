@@ -9,7 +9,7 @@
       </k-stack>
     </chart-time-filter>
     <k-alert type="danger">${i18n.tr('navigation.reserve.risk.value-over-time.alert')} <k-link path="/map">${i18n.tr('navigation.reserve.risk.value-over-time.alert-link-text')}</k-link></k-alert>
-    <k-chart height="300" max-y="100" min-y="0" max-y-labels="6" hide-legend type="line" fill labels.bind="[1,2,3,4,5,6,7,8,9,10]"
+    <k-chart height="300" max-y.bind="100" min-y.bind="0" max-y-labels="6" hide-legend type="line" fill labels.bind="[1,2,3,4,5,6,7,8,9,10]"
     border-color.bind="red" tension=".01" data-sets.bind="dataset"></k-chart>
   </k-stack>
 </k-card>
