@@ -1,14 +1,12 @@
-<let info.bind="store.kGuilder"></let>
+<let info.bind="kolektivoStore.kGuilder"></let>
 <k-card color="linear-gradient(to right, var(--ocean-blue-500), var(--ocean-blue-600))"
   title="${i18n.tr('navigation.reserve.k-guilder.token-info.title')}"
   title-avatar="${i18n.tr('navigation.reserve.k-guilder.token-info.avatar-src')}">
   <k-stack gap="var(--spacing-xl)">
     <k-grid cols="3" id="r-kGuilder-tic-stats">
-      <label-value title="${i18n.tr('general.token-info-card.market-cap')}"
-        value.bind="info.marketCap | currency"
+      <label-value title="${i18n.tr('general.token-info-card.market-cap')}" value.bind="info.marketCap | currency"
         tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}"></label-value>
-      <label-value title="${i18n.tr('general.token-info-card.current-price')}"
-        value.bind="info.currentPrice | currency"
+      <label-value title="${i18n.tr('general.token-info-card.current-price')}" value.bind="info.currentPrice | currency"
         tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}"></label-value>
       <label-value title="${i18n.tr('general.token-info-card.total-supply')}" value.bind="info.totalSupply"
         tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}"></label-value>
