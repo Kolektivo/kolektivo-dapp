@@ -1,7 +1,7 @@
 import './app.scss';
 import './shared.scss';
 import { I18N } from '@aurelia/i18n';
-import { IEventAggregator, IPlatform, customElement } from 'aurelia';
+import { IEventAggregator, ILogger, IPlatform, customElement } from 'aurelia';
 import { INotificationService } from '../design-system/services';
 import { IStore } from './stores/store';
 import { WalletProvider } from './services';
@@ -20,6 +20,7 @@ export class App {
     @IPlatform private readonly platform: IPlatform,
     @I18N private readonly i18n: I18N,
     @INotificationService private readonly notificationService: INotificationService,
+    @ILogger private readonly logger: ILogger,
   ) {}
   recalc = (): void => {
     this.xl = this.platform.window.innerWidth >= 1200;
@@ -45,9 +46,10 @@ export class App {
   }
 
   binding() {
-    return this.store
-      .initializeServices()
-      .catch(() => void this.notificationService.toast({ type: 'danger', message: 'There was an error initializing the application' }));
+    return this.store.initializeServices().catch((e) => {
+      this.logger.error(e);
+      void this.notificationService.toast({ type: 'danger', message: 'There was an error initializing the application' });
+    });
   }
 
   async confirmChangeNetwork(): Promise<void> {
