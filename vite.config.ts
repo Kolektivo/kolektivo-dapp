@@ -8,7 +8,6 @@ import svgLoader from 'vite-svg-loader';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  root: './src',
   server: {
     port: 9000,
     strictPort: true,
