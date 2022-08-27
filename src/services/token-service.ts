@@ -12,7 +12,7 @@ import { ITimingService } from './timing-service';
 import { ITokenInfo, TokenAddressId } from './token-types';
 import { ITokenListService } from './token-list-service';
 import { callOnce } from 'decorators/call-once';
-import { delay, getErrorMessage } from 'utils';
+import { getErrorMessage } from 'utils';
 import axios from 'axios';
 
 interface ICoingeckoTokenInfo {
@@ -314,7 +314,6 @@ export class TokenService {
    * If there is an error, then throws an exception.
    */
   private async _getTokenInfoFromAddress(tokenAddress: Address, id?: number) {
-    await delay(5000);
     const tokenAddressId = this.getTokenAddressId(tokenAddress, id);
     const foundTokenInfo = this.tokenInfos.get(tokenAddressId);
     if (foundTokenInfo) return foundTokenInfo;
