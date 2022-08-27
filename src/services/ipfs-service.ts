@@ -36,20 +36,20 @@ export class IpfsService {
    * @param protocol -- ipfs or ipns
    * @returns
    */
-  public async getObjectFromHash<T>(hash: Hash, protocol = 'ipfs'): Promise<T | null> {
+  public async getObjectFromHash<T>(hash: Hash, protocol = 'ipfs'): Promise<T | undefined> {
     let url = 'n/a';
     try {
       url = this.getIpfsUrl(hash, protocol);
       const response = await axios.get(url);
 
       if (response.status !== 200) {
-        throw Error(`An error occurred getting the hash ${hash}: ${response.statusText}`);
-      } else {
-        return typeof response.data === 'string' ? (JSON.parse(response.data) as T) : (response.data as T);
+        this.logger.fatal(`An error occurred getting the hash ${hash}: ${response.statusText}`);
+        return;
       }
+
+      return typeof response.data === 'string' ? (JSON.parse(response.data) as T) : (response.data as T);
     } catch (ex) {
       this.logger.error(`Error fetching from ${url}: ${(ex as { message: string }).message}`);
-      return null;
     }
   }
 

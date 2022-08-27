@@ -32,17 +32,14 @@ export class Services {
     @ICacheService public readonly cacheService: ICacheService,
   ) {}
 
-  public async initialize() {
+  public initialize(): Promise<unknown> {
     const targetNetwork = ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Celo);
     this.timingService.initialize(targetNetwork);
-    /**
-     * throws an error if targetNetwork is no good
-     */
-    await this.ethereumService.initialize(targetNetwork);
-    await this.contractsDeploymentService.initialize(targetNetwork);
-    this.contractsService.initialize();
     this.ipfsService.initialize(this.kolektivoService);
-    await this.tokenService.initialize();
+    return Promise.all([
+      this.ethereumService.initialize(targetNetwork),
+      this.contractsDeploymentService.initialize(targetNetwork).then(() => this.tokenService.initialize()),
+    ]).then(() => this.contractsService.initialize());
   }
 
   public static register(container: IContainer): void {

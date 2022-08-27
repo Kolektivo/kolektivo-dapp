@@ -1,5 +1,5 @@
-import { Address, IEthereumService } from './ethereum-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
+import { IEthereumService } from './ethereum-service';
 import { IIpfsService } from './ipfs-service';
 import { ITimingService } from './timing-service';
 import { ITokenInfoUniswap, ITokenListUniswap, TokenAddressId } from './token-types';
@@ -11,6 +11,7 @@ export type ITokenListService = TokenListService;
 export const ITokenListService = DI.createInterface<ITokenListService>('TokenListService');
 
 export class TokenListService {
+  public tokenInfos?: Map<TokenAddressId, ITokenInfoUniswap>;
   constructor(
     @IEthereumService private readonly ethereumService: IEthereumService,
     @IIpfsService private readonly ipfsService: IIpfsService,
@@ -22,49 +23,31 @@ export class TokenListService {
     Registration.singleton(ITokenListService, TokenListService).register(container);
   }
 
-  /**
-   * address key is set to lowercase
-   */
-  public tokenInfos: Map<TokenAddressId, ITokenInfoUniswap> | undefined;
-
-  /**
-   * Hydrate this.tokenInfos from all configured TokenInfo documents for the current network.
-   */
   @callOnce('TokenListService')
   public async initialize(): Promise<void> {
-    if (typeof this.tokenInfos === 'undefined') {
-      this.timingService.startTimer('fetch tokeninfos');
-      if (!this.ethereumService.targetedNetwork) {
-        throw new Error(`TokenListService: no tokenlists available for the empty network`);
-      }
-      const uris = TokenLists.get(this.ethereumService.targetedNetwork);
-      if (!uris) {
-        throw new Error(`TokenListProvider: no tokenlists available for the network ${this.ethereumService.targetedNetwork}`);
-      }
-      /**
-       * get an array of promised ITokenInfoUniswap arrays, excluding any that are null or empty
-       */
-      const tokenInfoArrays = (await Promise.all(uris.map((uri) => this.fetch(uri)))).filter(
-        (tokenInfoArray) => tokenInfoArray?.length,
-      ) as ITokenInfoUniswap[][];
-      /**
-       * compile lists into a single map, filtering the tokeninfos by targetted network.
-       * Address key is set to lowercase.
-       */
-      const tokenInfoMap = new Map<Address, ITokenInfoUniswap>();
-      for (const tokenInfoArray of tokenInfoArrays) {
-        for (const tokenInfo of tokenInfoArray) {
-          if (tokenInfo.chainId === this.ethereumService.targetedChainId) {
-            tokenInfoMap.set(tokenInfo.address.toLowerCase(), tokenInfo);
-          }
-        }
-      }
-      // if (tokenInfoMap.size === 0) {
-      //   throw new Error('Failed to load any TokenInfos');
-      // }
-      this.timingService.endTimer('fetch tokeninfos');
-      this.tokenInfos = tokenInfoMap;
+    if (this.tokenInfos) return;
+
+    const uris = this.ethereumService.targetedNetwork && TokenLists.get(this.ethereumService.targetedNetwork);
+
+    if (!uris) {
+      this.logger.fatal(`TokenListProvider: no tokenlists available for the network ${this.ethereumService.targetedNetwork ?? ''}`);
+      return;
     }
+
+    this.timingService.startTimer('fetch tokeninfos');
+    const tokenInfoArrays = await Promise.all(uris.map((uri) => this.fetch(uri)));
+    this.timingService.endTimer('fetch tokeninfos');
+
+    this.tokenInfos = new Map(
+      tokenInfoArrays
+        .filter((y) => y?.length)
+        .flatMap((tokenInfoArray) =>
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          tokenInfoArray!
+            .filter((y) => y.chainId === this.ethereumService.targetedChainId)
+            .map((tokenInfo) => [tokenInfo.address.toLowerCase(), tokenInfo]),
+        ),
+    );
   }
 
   /**
@@ -72,41 +55,37 @@ export class TokenListService {
    * @param uri Uri to TokenInfo document
    * @returns Promise<ITokenInfoUniswap[] | null>
    */
-  private fetch(uri: string): Promise<ITokenInfoUniswap[] | null> {
-    let list: Promise<ITokenInfoUniswap[] | null> = Promise.resolve(null);
-
-    if (uri) {
-      const [protocol, path] = uri.split('://');
-
-      if (uri.endsWith('.eth')) {
-        list = this.getByEns(uri);
-      } else if (protocol === 'https') {
-        list = axios.get<ITokenListUniswap>(uri).then((result: { data?: ITokenListUniswap }) => result.data?.tokens ?? null);
-      } else if (protocol === 'ipns') {
-        list = this.ipfsService
-          .getObjectFromHash<ITokenListUniswap>(path, protocol)
-          .then((result: ITokenListUniswap | null) => result?.tokens ?? null);
-      } else {
-        this.logger.error(`Unhandled TokenList protocol: ${uri}`);
-      }
-    } else {
-      this.logger.error(`No TokenList uri`);
+  private fetch(uri: string): Promise<ITokenInfoUniswap[] | undefined> | undefined {
+    if (!uri) {
+      this.logger.error('Unable to fetch an empty URI');
+      return;
     }
 
-    return list.catch((e) => {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
-      this.logger.error(`Failed to load TokenList: ${uri}, ${e?.message}`);
-      return null;
-    });
+    const [protocol, path] = uri.split('://');
+
+    if (uri.endsWith('.eth')) {
+      return this.getByEns(uri);
+    }
+
+    if (protocol === 'https') {
+      return axios.get<ITokenListUniswap>(uri).then((result: { data?: ITokenListUniswap }) => result.data?.tokens);
+    }
+
+    if (protocol === 'ipns') {
+      return this.ipfsService.getObjectFromHash<ITokenListUniswap>(path, protocol).then((result?: ITokenListUniswap) => result?.tokens);
+    }
+
+    this.logger.error(`Unhandled TokenList protocol: ${uri}`);
   }
 
-  private async getByEns(ensName: string): Promise<ITokenInfoUniswap[] | null> {
+  private async getByEns(ensName: string): Promise<ITokenInfoUniswap[] | undefined> {
     const resolver = await this.ethereumService.readOnlyProvider.getResolver(ensName);
-    if (resolver) {
-      const [, ipfsHash] = (await resolver.getContentHash()).split('://');
-      return this.ipfsService.getObjectFromHash<ITokenListUniswap>(ipfsHash).then((result: ITokenListUniswap | null) => result?.tokens ?? null);
-    } else {
-      throw new Error(`ens for TokenList not found: ${ensName}`);
+    if (!resolver) {
+      this.logger.error(`ens for TokenList not found: ${ensName}`);
+      return;
     }
+    const [, ipfsHash] = (await resolver.getContentHash()).split('://');
+    const result = await this.ipfsService.getObjectFromHash<ITokenListUniswap>(ipfsHash);
+    return result?.tokens;
   }
 }
