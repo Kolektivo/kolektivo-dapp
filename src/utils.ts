@@ -35,3 +35,8 @@ export function delay(time: number): Promise<void> {
   }, time);
   return promise;
 }
+type ErrorType = string | { message?: string };
+export const getErrorMessage = (error: ErrorType | unknown) => {
+  const knownError = error as ErrorType;
+  return typeof knownError === 'string' ? knownError : knownError.message ?? '';
+};

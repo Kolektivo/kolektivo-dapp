@@ -1,8 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber';
-import { ContractNames, IContractsService } from '../services/contracts-service';
-import { DI, IContainer, Registration } from 'aurelia';
-import { INumberService } from './../services/number-service';
-import { ITokenInfo, ITokenService, fromWei } from 'services';
+import { ContractNames } from '../services/contracts-service';
+import { DI, IContainer, ILogger, Registration } from 'aurelia';
+import { IServices, ITokenInfo, fromWei } from 'services';
 // eslint-disable-next-line unused-imports/no-unused-imports
 import { callOnce } from './../decorators/call-once';
 import { erc20ContractContext } from 'models/erc20';
@@ -25,11 +24,7 @@ export class TreasuryStore {
   public reservesDistribution?: number;
   private treasuryContract?: treasuryContractContext;
   private treasuryAssets: TreasuryAsset[] = [];
-  constructor(
-    @IContractsService private readonly contractService: IContractsService,
-    @ITokenService private readonly tokenService: ITokenService,
-    @INumberService private readonly numberService: INumberService,
-  ) {}
+  constructor(@IServices private readonly services: IServices, @ILogger private readonly logger: ILogger) {}
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(ITreasuryStore, TreasuryStore));
@@ -51,7 +46,7 @@ export class TreasuryStore {
   public async loadAssets(): Promise<void> {
     const contract = this.getTreasuryContract();
     if (!contract) return;
-    const treasuryAddress = this.contractService.getContractAddress(ContractNames.TREASURY) ?? '';
+    const treasuryAddress = this.services.contractsService.getContractAddress(ContractNames.TREASURY) ?? '';
     if (!treasuryAddress) return;
 
     //TODO: figure out the size of the array from the contract so we can do it async all
@@ -81,20 +76,23 @@ export class TreasuryStore {
     const oracleAddress = await contract.oraclePerAsset(assetAddress);
     //console.log('Address of asset', oracleAddress);
     if (!oracleAddress) return;
-    const oracleContract = this.contractService.getContractAtAddress<oracleContractContext>(ContractNames.ORACLE, oracleAddress);
+    const oracleContract = this.services.contractsService.getContractAtAddress<oracleContractContext>(ContractNames.ORACLE, oracleAddress);
 
     //console.log('Contract from ContractService', oracleContract);
     const data = await oracleContract.getData();
     if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
-    const tokenInfo = await this.tokenService.getTokenInfoFromAddress(assetAddress);
+    const tokenInfo = await this.services.tokenService.getTokenInfoFromAddress(assetAddress);
+    if (!tokenInfo) {
+      this.logger.error(`No token info was found for ${assetAddress}`);
+      return;
+    }
     // console.log('Token Info', tokenInfo);
 
     let tokenQuantity = BigNumber.from(1);
     if (!tokenInfo.id) {
-      const tokenContract = this.tokenService.getTokenContract<erc20ContractContext & { queryFilter: (...args: unknown[]) => Promise<unknown> }>(
-        assetAddress,
-        tokenInfo.id,
-      );
+      const tokenContract = this.services.tokenService.getTokenContract<
+        erc20ContractContext & { queryFilter: (...args: unknown[]) => Promise<unknown> }
+      >(assetAddress, tokenInfo.id);
       //console.log('Token Contract', tokenContract);
       tokenQuantity = await tokenContract.balanceOf(treasuryAddress);
       //console.log('Token Balance', fromWei(tokenQuantity, 18));
@@ -102,7 +100,7 @@ export class TreasuryStore {
       // console.log('transfers', transfers);
     }
     //TODO make a copy of tokenInfo and update price
-    tokenInfo.price = this.numberService.fromString(fromWei(data[0], 18)) ?? 0;
+    tokenInfo.price = this.services.numberService.fromString(fromWei(data[0], 18)) ?? 0;
 
     // const assetsRegisteredFilter = contract.filters.AssetPriceUpdated(assetAddress, oracleAddress);
 
@@ -128,7 +126,7 @@ export class TreasuryStore {
   }
 
   private async getDistributionPercentage(contractName: string): Promise<BigNumber> {
-    const address = this.contractService.getContractAddress(contractName);
+    const address = this.services.contractsService.getContractAddress(contractName);
     if (!address || !this.totalSupply) return BigNumber.from(0);
     const tokens = await this.getTreasuryContract()?.balanceOf(address);
     return tokens?.div(this.totalSupply) ?? BigNumber.from(0);
@@ -136,12 +134,12 @@ export class TreasuryStore {
 
   private getTreasuryContract(): treasuryContractContext | null {
     if (this.treasuryContract) return this.treasuryContract;
-    const treasuryAddress = this.contractService.getContractAddress(ContractNames.TREASURY);
+    const treasuryAddress = this.services.contractsService.getContractAddress(ContractNames.TREASURY);
     if (treasuryAddress) {
-      this.treasuryContract = this.contractService.getContractAtAddress<treasuryContractContext>(
+      this.treasuryContract = this.services.contractsService.getContractAtAddress<treasuryContractContext>(
         ContractNames.TREASURY,
         treasuryAddress,
-        this.contractService.createProvider(),
+        this.services.contractsService.createProvider(),
       );
       return this.treasuryContract;
     }

@@ -2,7 +2,7 @@ import { Address, IEthereumService, Networks } from './ethereum-service';
 import { COINGECKO_API_KEY, ETHERSCAN_KEY } from 'environment-variables';
 import { Contract } from 'ethers';
 import { ContractNames, IContractsService } from './contracts-service';
-import { DI, IContainer, ILogger, Registration } from 'aurelia';
+import { DI, IContainer, ILogger, IPlatform, Registration, TaskQueue } from 'aurelia';
 import { Erc20 } from 'models/erc20';
 import { Erc721 } from 'models/erc721';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
@@ -11,8 +11,8 @@ import { IAxiosService } from './axios-service';
 import { ITimingService } from './timing-service';
 import { ITokenInfo, TokenAddressId } from './token-types';
 import { ITokenListService } from './token-list-service';
-import { Subject, concatMap, from } from 'rxjs';
 import { callOnce } from 'decorators/call-once';
+import { delay, getErrorMessage } from 'utils';
 import axios from 'axios';
 
 interface ICoingeckoTokenInfo {
@@ -32,9 +32,7 @@ export class TokenService {
   private erc721Abi = [];
 
   private tokenInfos!: Map<TokenAddressId, ITokenInfo>;
-  private queue: Subject<() => Promise<void>>;
-  // public tokenLists: TokenListMap;
-  // private tokenPrices: Map<Address, number>;
+  private queue: TaskQueue;
   private geckoCoinInfo = new Map<string, string>();
 
   public static register(container: IContainer): void {
@@ -48,20 +46,10 @@ export class TokenService {
     @ITimingService private readonly timingService: ITimingService,
     @IAxiosService private readonly axiosService: IAxiosService,
     @ILogger private readonly logger: ILogger,
+    @IPlatform private readonly platform: IPlatform,
   ) {
     this.logger = logger.scopeTo('TokenService');
-    this.queue = new Subject<() => Promise<void>>();
-    // this.tokenPrices = new Map<Address, number>();
-
-    // this will initiate the execution of the promises
-    // each promise is executed after the previous one has resolved
-    this.queue
-      .pipe(
-        concatMap((resolver: () => Promise<void>) => {
-          return from(resolver());
-        }),
-      )
-      .subscribe();
+    this.queue = platform.taskQueue;
   }
 
   @callOnce('TokenService')
@@ -145,28 +133,14 @@ export class TokenService {
    * @param id Just for NFTs
    * @returns
    */
-  public async getTokenInfoFromAddress(tokenAddress: Address, id?: number): Promise<ITokenInfo> {
-    let resolver: (value: ITokenInfo | PromiseLike<ITokenInfo>) => void;
-    let rejector: (reason?: unknown) => void;
-
-    const promise = new Promise<ITokenInfo>(
-      (resolve: (value: ITokenInfo | PromiseLike<ITokenInfo>) => void, reject: (reason?: unknown) => void): void => {
-        resolver = resolve;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        rejector = (reason?: any) => {
-          this.logger.error(reason);
-          reject(reason);
-        };
-      },
-    );
-
+  public getTokenInfoFromAddress(tokenAddress: Address, id?: number): Promise<ITokenInfo | undefined> {
     /**
      * Fetch tokens one-at-a-time because many requests will be redundant, we want them
      * to take advantage of caching, and we don't want to re-enter on fetching duplicate tokens.
      */
-    this.queue.next(() => this._getTokenInfoFromAddress(tokenAddress, resolver, rejector, id));
-
-    return promise;
+    return this.queue.queueTask(() => this._getTokenInfoFromAddress(tokenAddress, id), {
+      suspend: true,
+    }).result;
   }
 
   /**
@@ -175,7 +149,7 @@ export class TokenService {
    * @param id This is undefined for Erc20 tokens, defined but otherwise ignored for Erc721 tokens
    * @returns
    */
-  public getTokenContract<T extends Erc20 | Erc721>(tokenAddress: Address, id?: number): T {
+  public getTokenContract<T extends Partial<Erc20> | Partial<Erc721>>(tokenAddress: Address, id?: number): T {
     let ercAbi = [];
     if (this.isNftId(id)) {
       ercAbi = this.erc721Abi;
@@ -339,105 +313,60 @@ export class TokenService {
    *
    * If there is an error, then throws an exception.
    */
-  private async _getTokenInfoFromAddress(
-    tokenAddress: Address,
-    resolve: (tokenInfo: ITokenInfo) => void,
-    reject: (reason?: unknown) => void,
-    id?: number,
-  ): Promise<void> {
+  private async _getTokenInfoFromAddress(tokenAddress: Address, id?: number) {
+    await delay(5000);
     const tokenAddressId = this.getTokenAddressId(tokenAddress, id);
-    let tokenInfo = this.tokenInfos.get(tokenAddressId);
+    const foundTokenInfo = this.tokenInfos.get(tokenAddressId);
+    if (foundTokenInfo) return foundTokenInfo;
 
-    if (!tokenInfo) {
-      tokenAddress = getAddress(tokenAddress);
+    tokenAddress = getAddress(tokenAddress);
 
-      if (!tokenAddress) {
-        reject(`Invalid token address: ${tokenAddress}`);
-        return;
-      }
-
-      /**
-       * fetchTokenMetadata will throw an exception if it can't at least find a contract at the
-       * given address.  Otherwise it may return an incomplete tokenInfo.
-       */
-      tokenInfo = (await this.getTokeinInfoOnChain(tokenAddress, id)) as ITokenInfo | undefined;
-      if (!tokenInfo) {
-        // is not a valid token contract, or some other error occurred
-        reject(`Token does not appear to be a token contract: ${tokenAddress}`);
-        return;
-      }
-      /**
-       * Set defaults for missing values
-       */
-      if (!tokenInfo.name) {
-        tokenInfo.name = TokenService.DefaultNameSymbol;
-      }
-      if (!tokenInfo.symbol) {
-        tokenInfo.symbol = TokenService.DefaultNameSymbol;
-      }
-      if (!tokenInfo.decimals) {
-        // NFTs have no decimals, always effectively 1
-        tokenInfo.decimals = this.isNftId(id) ? 1 : TokenService.DefaultDecimals;
-      }
-
-      if (!tokenInfo.logoURI) {
-        tokenInfo.logoURI = TokenService.DefaultLogoURI;
-      }
-
-      this.tokenInfos.set(tokenAddressId, tokenInfo);
-      this.logger.info(`loaded token: ${tokenAddress}`);
+    if (!tokenAddress) {
+      throw new Error(`Invalid token address: ${tokenAddress}`);
     }
 
-    resolve(tokenInfo);
+    /**
+     * fetchTokenMetadata will throw an exception if it can't at least find a contract at the
+     * given address.  Otherwise it may return an incomplete tokenInfo.
+     */
+    const tokenInfo = await this.getTokeinInfoOnChain(tokenAddress, id);
+    if (!tokenInfo) {
+      // is not a valid token contract, or some other error occurred
+      throw new Error(`Token does not appear to be a token contract: ${tokenAddress}`);
+    }
+
+    tokenInfo.name ||= TokenService.DefaultNameSymbol;
+    tokenInfo.symbol ||= TokenService.DefaultNameSymbol;
+    // NFTs have no decimals, always effectively 1
+    tokenInfo.decimals ||= this.isNftId(id) ? 1 : TokenService.DefaultDecimals;
+    tokenInfo.logoURI ||= TokenService.DefaultLogoURI;
+
+    this.tokenInfos.set(tokenAddressId, tokenInfo as ITokenInfo);
+    this.logger.info(`loaded token: ${tokenAddress}`);
   }
 
   private getTokenAddressId(address: Address, id?: number) {
-    return typeof id !== 'undefined' ? `${address.toLowerCase()}_${id.toString()}` : address.toLowerCase();
+    const lowerCaseAddress = address.toLowerCase();
+    return typeof id === 'undefined' ? lowerCaseAddress : `${lowerCaseAddress}_${id}`;
   }
 
-  private async getTokeinInfoOnChain<T extends EthersContractContextV5<unknown, unknown, unknown, unknown> & Erc20>(
+  private async getTokeinInfoOnChain<T extends EthersContractContextV5<unknown, unknown, unknown, unknown> & Partial<Erc20>>(
     address: string,
     id?: number,
-  ): Promise<Partial<ITokenInfo> | undefined> {
-    let tokenInfoResult: Partial<ITokenInfo> | undefined;
-
+  ): Promise<undefined | Partial<ITokenInfo>> {
     try {
       const tokenContract = this.getTokenContract<T>(address, id);
-
       await tokenContract.deployed();
-
-      const tokenInfo = { address } as unknown as Partial<ITokenInfo>;
+      const tokenInfo: Partial<ITokenInfo> = { address };
       tokenInfo.logoURI = undefined;
-      /**
-       * It is up to the caller to decide what to tolerate
-       * in the way of incomplete information
-       */
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-        tokenInfo.name = await tokenContract.name();
-        // eslint-disable-next-line no-empty
-      } catch {}
 
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-        tokenInfo.symbol = await tokenContract.symbol();
-        // eslint-disable-next-line no-empty
-      } catch {}
-
-      try {
-        /** NFT contracts have no decimals.  account balances are always either 1 or 0. */
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-        tokenInfo.decimals = this.isNftId(id) ? 1 : await tokenContract.decimals();
-        // eslint-disable-next-line no-empty
-      } catch {}
-
-      tokenInfoResult = tokenInfo;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
-      this.logger.error(`Failed to fetch onchain token metadata: ${error?.message}`);
+      tokenInfo.name = await tokenContract.name?.();
+      tokenInfo.symbol = await tokenContract.symbol?.();
+      tokenInfo.decimals = this.isNftId(id) ? 1 : await tokenContract.decimals?.();
+      return tokenInfo;
+    } catch (error) {
+      this.logger.error(`Failed to fetch onchain token metadata: ${getErrorMessage(error)}`);
     }
-    return tokenInfoResult;
   }
 
   private isNftId(id?: number): boolean {
