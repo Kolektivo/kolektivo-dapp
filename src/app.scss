@@ -39,11 +39,11 @@ body {
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-  @include scrollbars(8px, 12px, var(--ocean-blue));
+  @include scrollbars(8px, 12px, var(--primary));
 }
 
 .scrollbar {
-  @include scrollbars(8px, 12px, var(--ocean-blue));
+  @include scrollbars(8px, 12px, var(--primary));
 }
 
 .app {

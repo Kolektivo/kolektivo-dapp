@@ -1,4 +1,4 @@
-<k-card id="t-o-tic-card" color="linear-gradient(to right, var(--ocean-blue-500), var(--ocean-blue-600))"
+<k-card id="t-o-tic-card" color="linear-gradient(to right, var(--primary), var(--ocean-blue-600))"
   title="${i18n.tr('navigation.treasury.overview.ktt.title')}"
   title-avatar="${i18n.tr('navigation.treasury.overview.ktt.avatar-src')}">
   <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadTokenData()"></k-loader>
@@ -7,19 +7,23 @@
       <label-value title="${i18n.tr('general.token-info-card.market-cap')}"
         tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}">
         <k-text type="h4">
-          <formatted-number show-tooltip currency commas decimals="0" value="${treasuryStore.totalValuation | ethwei}"></formatted-number>
+          <formatted-number show-tooltip currency commas decimals="0" value="${treasuryStore.totalValuation | ethwei}">
+          </formatted-number>
         </k-text>
       </label-value>
       <label-value title="${i18n.tr('general.token-info-card.current-price')}"
         value.bind="treasuryStore.currentPrice | currency"
         tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}"></label-value>
-      <label-value title="${i18n.tr('general.token-info-card.total-supply')}" tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}">
+      <label-value title="${i18n.tr('general.token-info-card.total-supply')}"
+        tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}">
         <k-text type="h4">
-          <formatted-number show-tooltip commas decimals="0" value="${treasuryStore.totalSupply | ethwei}"></formatted-number>
+          <formatted-number show-tooltip commas decimals="0" value="${treasuryStore.totalSupply | ethwei}">
+          </formatted-number>
         </k-text>
       </label-value>
     </k-grid>
-    <label-value id="t-o-tic-supply" gap="var(--spacing-lg)" title="${i18n.tr('general.token-info-card.supply-distribution')}"
+    <label-value id="t-o-tic-supply" gap="var(--spacing-lg)"
+      title="${i18n.tr('general.token-info-card.supply-distribution')}"
       tooltip-text="${i18n.tr('general.token-info-card.supply-distribution-tooltip')}">
       <k-stack direction="row" gap="var(--spacing-xl)">
         <k-text>${treasuryStore.treasuryDistribution | percentage} in treasury</k-text>

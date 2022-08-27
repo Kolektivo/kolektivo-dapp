@@ -1,4 +1,5 @@
 body {
+
   h1,
   h2,
   h3,
@@ -12,7 +13,7 @@ body {
   }
 
   a {
-    color: var(--san-juan-700);
+    color: var(--dark);
   }
 
   pre {
@@ -22,7 +23,7 @@ body {
 
   code {
     background-color: var(--san-juan-800);
-    color: var(--san-juan-050);
+    color: var(--dark-light);
     font-family: monospace;
     display: block;
     font-size: 14px;
@@ -41,7 +42,7 @@ body {
 
 %callout {
   background-color: var(--don-juan-025);
-  border:1px solid var(--don-juan-050);
+  border: 1px solid var(--don-juan-050);
   border-radius: var(--rounded);
   padding: 16px;
   margin-top: 8px;

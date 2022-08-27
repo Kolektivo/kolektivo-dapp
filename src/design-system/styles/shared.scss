@@ -69,7 +69,7 @@
   }
 
   color: var(--ocean-blue-700);
-  background-color: var(--ocean-blue-050);
+  background-color: var(--primary-light);
 
   &.border {
     border: 1px solid var(--ocean-blue-700);
@@ -82,7 +82,7 @@
   }
 
   color: var(--dark-coral-700);
-  background-color: var(--dark-coral-050);
+  background-color: var(--secondary-light);
 
   &.border {
     border: 1px solid var(--dark-coral-700);
@@ -91,14 +91,14 @@
 
 .dark {
   k-icon {
-    fill: var(--san-juan-700);
+    fill: var(--dark);
   }
 
-  color: var(--san-juan-700);
-  background-color: var(--san-juan-050);
+  color: var(--dark);
+  background-color: var(--dark-light);
 
   &.border {
-    border: 1px solid var(--san-juan-700);
+    border: 1px solid var(--dark);
   }
 }
 
@@ -118,8 +118,8 @@
   display: grid;
   place-content: center;
   overflow: hidden;
-  
-  &.rounded{
+
+  &.rounded {
     border-radius: 20px;
   }
 }
@@ -128,14 +128,14 @@
   position: absolute;
 }
 
-k-avatar-group{
-  > div{
-      display: flex;
+k-avatar-group {
+  >div {
+    display: flex;
 
-      k-avatar{
-          &:not(:first-child){
-              margin-left: -10px;
-          }
-      }        
+    k-avatar {
+      &:not(:first-child) {
+        margin-left: -10px;
+      }
+    }
   }
 }

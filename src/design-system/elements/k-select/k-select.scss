@@ -17,17 +17,17 @@
     padding-right: 2rem !important;
 
     &:hover {
-      border-color: var(--ocean-blue);
+      border-color: var(--primary);
     }
 
     &:active {
-      border: 2px solid var(--ocean-blue);
+      border: 2px solid var(--primary);
     }
 
     &:focus,
     &:focus-visible,
     &:focus-within {
-      border: 2px solid var(--ocean-blue);
+      border: 2px solid var(--primary);
       outline: 2px solid var(--ocean-blue-200);
       margin: -1px;
     }
@@ -59,17 +59,17 @@
     }
 
     &::part(listbox) {
-      border: 2px solid var(--ocean-blue);
+      border: 2px solid var(--primary);
       border-radius: var(--rounded);
       background: var(--white);
       padding: 6px 0;
 
       &::-webkit-scrollbar-thumb {
-        background-color: var(--ocean-blue);
+        background-color: var(--primary);
         border-radius: 12px;
       }
 
-      @include scrollbars(8px, 12px, var(--ocean-blue));
+      @include scrollbars(8px, 12px, var(--primary));
     }
 
     &:disabled {
@@ -105,19 +105,19 @@
     margin: 0;
 
     &:hover {
-      background-color: var(--ocean-blue-050);
+      background-color: var(--primary-light);
     }
 
     &:active,
     &:focus-visible {
-      background-color: var(--ocean-blue);
+      background-color: var(--primary);
       color: var(--white);
     }
 
     &[aria-selected='true'] {
       border: none;
       box-shadow: none;
-      background-color: var(--ocean-blue);
+      background-color: var(--primary);
       color: var(--white);
     }
   }

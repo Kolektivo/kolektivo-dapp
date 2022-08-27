@@ -18,7 +18,7 @@
     position: relative;
 
     &:hover {
-      border-color: var(--ocean-blue);
+      border-color: var(--primary);
     }
 
     &:active {
@@ -27,14 +27,14 @@
 
     &:focus,
     &:focus-visible {
-      border-color: var(--ocean-blue);
+      border-color: var(--primary);
       box-shadow: 0 0 0 3px rgb(69 173 168 / 40%);
       outline-color: var(--ocean-blue-200);
     }
 
     &:checked {
-      background-color: var(--ocean-blue);
-      border-color: var(--ocean-blue);
+      background-color: var(--primary);
+      border-color: var(--primary);
       color: var(--white);
     }
 

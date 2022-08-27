@@ -31,7 +31,7 @@
   input,
   textarea {
     flex: 1;
-    caret-color: var(--ocean-blue);
+    caret-color: var(--primary);
     border: 1px solid var(--don-juan);
     background: var(--white);
     border-radius: var(--rounded);
@@ -58,17 +58,17 @@
     }
 
     &:hover {
-      border-color: var(--ocean-blue);
+      border-color: var(--primary);
     }
 
     &:active {
-      border: 2px solid var(--ocean-blue);
+      border: 2px solid var(--primary);
     }
 
     &:focus,
     &:focus-visible,
     &:focus-within {
-      border: 2px solid var(--ocean-blue);
+      border: 2px solid var(--primary);
       outline: 2px solid var(--ocean-blue-200);
       margin: -1px;
     }

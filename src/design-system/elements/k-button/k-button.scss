@@ -5,7 +5,7 @@
   button {
     border: 0;
     color: var(--white);
-    background-color: var(--ocean-blue);
+    background-color: var(--primary);
     padding: 10px 24px;
     font-size: 16px;
     font-weight: 600;
@@ -67,9 +67,9 @@
       background-color: var(--ocean-blue-700);
     }
 
-    &:focus-visible{
+    &:focus-visible {
       outline: 2px solid var(--ocean-blue-300);
-      background-color: var(--ocean-blue-500);
+      background-color: var(--primary);
 
     }
 
@@ -80,51 +80,12 @@
 
 
     &.secondary {
-      color: var(--ocean-blue);
-      border: 1px solid var(--ocean-blue);
+      color: var(--primary);
+      border: 1px solid var(--primary);
       background-color: var(--white);
 
       k-icon {
-        fill: var(--ocean-blue);
-        transform: translateX(-8px);
-      }
-
-      &:hover {
-        k-icon {
-          fill: var(--white);
-        }
-
-        color: var(--white);
-        background-color: var(--ocean-blue-600);
-      }
-
-      &:active {
-        k-icon {
-          fill: var(--white);
-        }
-
-        color: var(--white);
-        background-color: var(--ocean-blue-700);
-      }
-
-      &:focus-visible{
-        k-icon {
-          fill: var(--ocean-blue);
-        }
-
-        color: var(--ocean-blue);
-        outline: 2px solid var(--ocean-blue-300);
-        background-color: var(--white);
-      }
-    }
-
-    &.tertiary {
-      border-color: transparent;
-      background-color: transparent;
-      color: var(--ocean-blue);
-
-      k-icon {
-        fill: var(--ocean-blue);
+        fill: var(--primary);
         transform: translateX(-8px);
       }
 
@@ -148,10 +109,49 @@
 
       &:focus-visible {
         k-icon {
-          fill: var(--ocean-blue);
+          fill: var(--primary);
         }
 
-        color: var(--ocean-blue);
+        color: var(--primary);
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--white);
+      }
+    }
+
+    &.tertiary {
+      border-color: transparent;
+      background-color: transparent;
+      color: var(--primary);
+
+      k-icon {
+        fill: var(--primary);
+        transform: translateX(-8px);
+      }
+
+      &:hover {
+        k-icon {
+          fill: var(--white);
+        }
+
+        color: var(--white);
+        background-color: var(--ocean-blue-600);
+      }
+
+      &:active {
+        k-icon {
+          fill: var(--white);
+        }
+
+        color: var(--white);
+        background-color: var(--ocean-blue-700);
+      }
+
+      &:focus-visible {
+        k-icon {
+          fill: var(--primary);
+        }
+
+        color: var(--primary);
         outline: 2px solid var(--ocean-blue-300);
         background-color: var(--white);
       }

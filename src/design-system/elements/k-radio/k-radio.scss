@@ -25,13 +25,13 @@ k-radio {
 
       &:focus,
       &:focus-visible {
-        border-color: var(--ocean-blue);
+        border-color: var(--primary);
         box-shadow: 0 0 0 3px rgb(69 173 168 / 40%);
         outline-color: var(--ocean-blue-200);
       }
 
       &:hover {
-        border-color: var(--ocean-blue);
+        border-color: var(--primary);
       }
 
       &:active {
@@ -44,7 +44,7 @@ k-radio {
 
       &:checked {
         background-color: var(--white);
-        border-color: var(--ocean-blue);
+        border-color: var(--primary);
       }
 
       &:checked::after {
@@ -55,7 +55,7 @@ k-radio {
         position: absolute;
         top: 2px;
         left: 2px;
-        background-color: var(--ocean-blue);
+        background-color: var(--primary);
       }
 
       &:disabled {

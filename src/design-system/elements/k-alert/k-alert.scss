@@ -1,15 +1,19 @@
 :host {
   --spacing-close-top: var(--spacing-sm);
   --spacing-close-right: var(--spacing-sm);
+  --gap: var(--spacing);
+  --padding: var(--spacing-lg);
+  --font: Lato, sans-serif;
+  --radius: 8px;
 
 
   >div {
-    font-family: Lato, sans-serif;
+    font-family: var(--font);
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: var(--spacing);
-    padding: var(--spacing-lg);
-    border-radius: 8px;
+    gap: var(--gap);
+    padding: var(--padding);
+    border-radius: var(--radius);
     position: relative;
 
     &.danger {
@@ -23,11 +27,11 @@
 
     &.success {
       k-icon {
-        fill: var(--ocean-blue-700);
+        fill: var(--success);
       }
 
-      color: var(--ocean-blue-700);
-      background-color: var(--ocean-blue-050);
+      color: var(--success);
+      background-color: var(--success-light);
     }
 
     &.warning {
@@ -50,20 +54,20 @@
 
     &.secondary {
       k-icon {
-        fill: var(--dark-coral-700);
+        fill: var(--secondary);
       }
 
-      color: var(--dark-coral-700);
-      background-color: var(--dark-coral-050);
+      color: var(--secondary);
+      background-color: var(--secondary-light);
     }
 
     &.dark {
       k-icon {
-        fill: var(--san-juan-700);
+        fill: var(--dark);
       }
 
-      color: var(--san-juan-700);
-      background-color: var(--san-juan-050);
+      color: var(--dark);
+      background-color: var(--dark-light);
     }
   }
 

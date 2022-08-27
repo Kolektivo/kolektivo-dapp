@@ -11,7 +11,7 @@
     grid-template-columns: minmax(550px, 25%) 1fr;
 
     div {
-      border: 1px solid var(--ocean-blue);
+      border: 1px solid var(--primary);
     }
   }
 
@@ -26,7 +26,7 @@
   k-grid {
     width: 100%;
   }
-  
+
   .avatars k-code,
   .chips k-code,
   .links k-code,
@@ -44,7 +44,7 @@
     grid-template-columns: minmax(150px, 25%) 1fr;
   }
 
-  .tooltips k-text{
+  .tooltips k-text {
     display: inline;
   }
 

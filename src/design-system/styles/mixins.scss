@@ -1,4 +1,5 @@
-@mixin scrollbars($width, $borderRadius, $background-color: mix(8px, 12px, var(--ocean-blue))) {
+@mixin scrollbars($width, $borderRadius, $background-color: mix(8px, 12px, var(--primary))) {
+
   /* width */
   &::-webkit-scrollbar {
     width: $width;
