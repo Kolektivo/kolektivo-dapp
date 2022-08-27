@@ -1,20 +1,18 @@
 import { Address, IEthereumService, Networks } from './ethereum-service';
-import { COINGECKO_API_KEY, ETHERSCAN_KEY } from '../environment-variables';
-import { Contract } from '@ethersproject/contracts';
+import { COINGECKO_API_KEY, ETHERSCAN_KEY } from 'environment-variables';
+import { Contract } from 'ethers';
 import { ContractNames, IContractsService } from './contracts-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
-import { Erc20 } from './../models/erc20';
-import { Erc721 } from './../models/erc721';
+import { Erc20 } from 'models/erc20';
+import { Erc721 } from 'models/erc721';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
-import { FormatTypes, Interface } from '@ethersproject/abi';
+import { FormatTypes, Interface, getAddress } from 'ethers/lib/utils';
 import { IAxiosService } from './axios-service';
 import { ITimingService } from './timing-service';
 import { ITokenInfo, TokenAddressId } from './token-types';
 import { ITokenListService } from './token-list-service';
-import { Subject, from } from 'rxjs';
-import { callOnce } from '../decorators/call-once';
-import { concatMap } from 'rxjs/operators';
-import { getAddress } from '@ethersproject/address';
+import { Subject, concatMap, from } from 'rxjs';
+import { callOnce } from 'decorators/call-once';
 import axios from 'axios';
 
 interface ICoingeckoTokenInfo {

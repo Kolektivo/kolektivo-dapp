@@ -1,7 +1,7 @@
-import '../../utils-testing/setup-testing';
-import { Global } from '../../hooks';
+import 'utils-testing/setup-testing';
+import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
-import { IStore } from '../../stores';
+import { IStore } from 'stores';
 import { Registration } from 'aurelia';
 import { Treasury } from './treasury';
 import { createFixture } from '@aurelia/testing';

@@ -3,10 +3,11 @@ import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { IStore } from '../../../../../../stores';
+import { ITreasuryStore } from './../../../../../../stores/treasury-store';
 import { Registration } from 'aurelia';
 import { ValueByAssetTypeCard } from './value-by-asset-type-card';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('value-by-asset-type-card', () => {
   it('should have a k-card component', async () => {
@@ -54,6 +55,13 @@ describe('value-by-asset-type-card', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [ValueByAssetTypeCard, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
+    return [
+      ValueByAssetTypeCard,
+      Global,
+      Registration.instance(ITreasuryStore, vi.fn()),
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+    ];
   }
 });

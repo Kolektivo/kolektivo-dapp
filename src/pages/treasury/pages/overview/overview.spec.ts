@@ -1,16 +1,15 @@
-import '../../../../utils-testing/setup-testing';
-import { CurrencyValueConverter } from '../../../../design-system/value-converters';
-import { EthweiValueConverter, PercentageValueConverter } from './../../../../resources/value-converters';
-import { Global } from '../../../../hooks';
+import 'utils-testing/setup-testing';
+import { CurrencyValueConverter } from 'design-system/value-converters';
+import { EthweiValueConverter, PercentageValueConverter } from 'resources';
+import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
-import { IContractsService } from 'services';
-import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
-import { IStore, TreasuryStore } from '../../../../stores';
-import { NumberService } from './../../../../services';
+import { IContractsService, ITokenService, NumberService } from 'services';
+import { IDesignSystemConfiguration } from 'design-system';
+import { IPlatform, PLATFORM, Registration } from 'aurelia';
+import { IStore, TreasuryStore } from 'stores';
 import { Overview } from './overview';
-import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('overview', () => {
@@ -82,12 +81,15 @@ describe('overview', () => {
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
+      Registration.instance(IPlatform, PLATFORM),
+      CurrencyValueConverter,
       Overview,
       TreasuryStore,
       EthweiValueConverter,
       CurrencyValueConverter,
       PercentageValueConverter,
       NumberService,
+      Registration.instance(ITokenService, vi.fn()),
       Global,
       createMockContractsService(),
       createMockStoreRegistration(),

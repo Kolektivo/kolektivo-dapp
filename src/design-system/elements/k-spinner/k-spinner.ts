@@ -1,7 +1,5 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
-import { numberToPixels } from '../../common';
-
+import { captureFilter, ifExistsThenTrue, numberToPixels, numberToPixelsInterceptor } from 'design-system/common';
 import css from './k-spinner.scss';
 import template from './k-spinner.html';
 

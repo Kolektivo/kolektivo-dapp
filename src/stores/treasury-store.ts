@@ -70,7 +70,7 @@ export class TreasuryStore {
         i = -1;
       }
     }
-    console.log('Treasury Assets', this.treasuryAssets);
+    // console.log('Treasury Assets', this.treasuryAssets);
   }
 
   private async getTreasuryAsset(contract: treasuryContractContext, treasuryAddress: string, i: number): Promise<TreasuryAsset | undefined> {
@@ -87,16 +87,19 @@ export class TreasuryStore {
     const data = await oracleContract.getData();
     if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
     const tokenInfo = await this.tokenService.getTokenInfoFromAddress(assetAddress);
-    console.log('Token Info', tokenInfo);
+    // console.log('Token Info', tokenInfo);
 
     let tokenQuantity = BigNumber.from(1);
     if (!tokenInfo.id) {
-      const tokenContract = this.tokenService.getTokenContract<erc20ContractContext>(assetAddress, tokenInfo.id);
+      const tokenContract = this.tokenService.getTokenContract<erc20ContractContext & { queryFilter: (...args: unknown[]) => Promise<unknown> }>(
+        assetAddress,
+        tokenInfo.id,
+      );
       //console.log('Token Contract', tokenContract);
       tokenQuantity = await tokenContract.balanceOf(treasuryAddress);
       //console.log('Token Balance', fromWei(tokenQuantity, 18));
-      const transfers = await tokenContract.queryFilter(tokenContract.filters.Transfer(undefined, treasuryAddress));
-      console.log('transfers', transfers);
+      // const transfers = await tokenContract.queryFilter(tokenContract.filters.Transfer(undefined, treasuryAddress));
+      // console.log('transfers', transfers);
     }
     //TODO make a copy of tokenInfo and update price
     tokenInfo.price = this.numberService.fromString(fromWei(data[0], 18)) ?? 0;

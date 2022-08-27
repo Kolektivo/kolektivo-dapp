@@ -42,3 +42,5 @@ interface ImportMetaEnv {
   readonly KOL_IPFS_GATEWAY: string;
   readonly KOL_COINGECKO_API_KEY: string;
 }
+
+declare module 'rollup-plugin-html';

@@ -1,18 +1,14 @@
-import '../../../../../../utils-testing/setup-testing';
-import { BlockChainStore, IStore, ITreasuryStore } from '../../../../../../stores';
-import { BrowserStorageService, IContractsService, NumberService } from './../../../../../../services';
-import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
-import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
-import { Global } from '../../../../../../hooks';
+import 'utils-testing/setup-testing';
+import { BlockChainStore, IStore, ITreasuryStore, TreasuryStore } from 'stores';
+import { BrowserStorageService, IContractsService, IEthereumService, ITokenService, NumberService } from 'services';
+import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from 'resources';
+import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
-import { IEthereumService } from './../../../../../../services/ethereum-service';
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { IDesignSystemConfiguration } from 'design-system';
 import { Registration } from 'aurelia';
 import { TokenInfoCard } from './token-info-card';
-import { TreasuryStore } from './../../../../../../stores/treasury-store';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('token-info-card', () => {
@@ -74,6 +70,7 @@ describe('token-info-card', () => {
       TokenInfoCard,
       CurrencyValueConverter,
       TreasuryStore,
+      Registration.instance(ITokenService, vi.fn()),
       createMockContractsService(),
       createMockEthereumService(),
       BrowserStorageService,

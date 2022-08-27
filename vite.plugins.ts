@@ -1,7 +1,7 @@
-var rollupPluginutils = require('rollup-pluginutils');
+import * as rollupPluginutils from 'rollup-pluginutils';
 
-function hmrCode(className) {
-    return `
+function hmrCode(className: string) {
+  return `
 import {CustomElement, LifecycleFlags, IHydrationContext, Controller} from '@aurelia/runtime-html';
 import {Metadata} from '@aurelia/metadata';
     // @ts-ignore
@@ -84,38 +84,36 @@ import {Metadata} from '@aurelia/metadata';
   }`;
 }
 
-export const hmrPlugin = () =>{
+export const hmrPlugin = () => {
   return {
-    name: "hmrPlugin",
+    name: 'hmrPlugin',
     /**
      * Checks to ensure that a html file is being imported.
      * If it is then it alters the code being passed as being a string being exported by default.
      * @param {string} code The file as a string.
-     * @param {string} id The absolute path. 
+     * @param {string} id The absolute path.
      * @returns {{code: string}}
      */
-    transform(code, id) {
-       if (code.includes('customElement({')){
+    transform(code: string) {
+      if (code.includes('customElement({')) {
         const matches = /let (\w*) = class/.exec(code);
-        code += `\n${hmrCode(matches?.[1])}`;
+        if (matches) code += `\n${hmrCode(matches[1])}`;
       }
 
-      return { code }
-    }
-  }
+      return { code };
+    },
+  };
 };
 
-  export const rawHtml = () =>{
-    const opts = {};
-    opts.include = '**/*.ts';
-    var filter = rollupPluginutils.createFilter(opts.include, opts.exclude);
-    return {
-      name: 'raw',
-      transform: function transform(code, id) {
-        if (filter(id)) {
-          code = code.replaceAll(/(import .* from .*)\.html/g, '$1.html?raw');
-          return {code};
-        }
+export const rawHtml = () => {
+  const filter = rollupPluginutils.createFilter('**/*.ts', undefined);
+  return {
+    name: 'raw',
+    transform: function transform(code: string, id: string) {
+      if (filter(id)) {
+        code = code.replaceAll(/(import .* from .*)\.html/g, '$1.html?raw');
+        return { code };
       }
-    };
-  }
+    },
+  };
+};

@@ -1,11 +1,12 @@
-import '../../../../../../utils-testing/setup-testing';
+import 'utils-testing/setup-testing';
 import { AssetsCard } from './assets-card';
-import { Global } from '../../../../../../hooks';
+import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
-import { IStore } from '../../../../../../stores';
+import { IStore } from 'stores';
+import { ITreasuryStore } from './../../../../../../stores/treasury-store';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('assets-card', () => {
   it('should have a k-card component', async () => {
@@ -55,6 +56,6 @@ describe('assets-card', () => {
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
       });
-    return [AssetsCard, Global, createMockStoreRegistration(), createMockI18nRegistration()];
+    return [AssetsCard, Global, Registration.instance(ITreasuryStore, vi.fn()), createMockStoreRegistration(), createMockI18nRegistration()];
   }
 });

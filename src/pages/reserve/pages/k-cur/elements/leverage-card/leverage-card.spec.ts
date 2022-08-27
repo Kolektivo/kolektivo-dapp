@@ -1,10 +1,10 @@
-import '../../../../../../utils-testing/setup-testing';
-import { Global } from '../../../../../../hooks';
+import 'utils-testing/setup-testing';
+import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
-import { INumberService } from '../../../../../../services/number-service';
-import { IStore } from '../../../../../../stores';
+import { INumberService } from 'services';
+import { IStore } from 'stores';
 import { LeverageCard } from './leverage-card';
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { PercentageValueConverter } from 'resources';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
