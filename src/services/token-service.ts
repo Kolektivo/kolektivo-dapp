@@ -25,9 +25,9 @@ export type ITokenService = TokenService;
 export const ITokenService = DI.createInterface<ITokenService>('TokenService');
 
 export class TokenService {
-  public static DefaultLogoURI = '/genericToken.svg';
-  public static DefaultNameSymbol = 'N/A';
-  public static DefaultDecimals = 0;
+  private readonly DefaultLogoURI = '/genericToken.svg';
+  private readonly DefaultNameSymbol = 'N/A';
+  private readonly DefaultDecimals = 0;
   private erc20Abi = [];
   private erc721Abi = [];
 
@@ -177,7 +177,7 @@ export class TokenService {
         .then((response) => {
           tokenInfo.price = response.data.market_data.current_price.usd ?? 0;
           // tokenInfo.priceChangePercentage_24h = response.data.market_data.price_change_percentage_24h ?? 0;
-          if (!tokenInfo.logoURI || tokenInfo.logoURI === TokenService.DefaultLogoURI) {
+          if (!tokenInfo.logoURI || tokenInfo.logoURI === this.DefaultLogoURI) {
             tokenInfo.logoURI = response.data.image.thumb;
           }
           return tokenInfo;
@@ -328,17 +328,17 @@ export class TokenService {
      * fetchTokenMetadata will throw an exception if it can't at least find a contract at the
      * given address.  Otherwise it may return an incomplete tokenInfo.
      */
-    const tokenInfo = await this.getTokeinInfoOnChain(tokenAddress, id);
+    const tokenInfo = await this.getTokenInfoOnChain(tokenAddress, id);
     if (!tokenInfo) {
       // is not a valid token contract, or some other error occurred
       throw new Error(`Token does not appear to be a token contract: ${tokenAddress}`);
     }
 
-    tokenInfo.name ||= TokenService.DefaultNameSymbol;
-    tokenInfo.symbol ||= TokenService.DefaultNameSymbol;
+    tokenInfo.name ||= this.DefaultNameSymbol;
+    tokenInfo.symbol ||= this.DefaultNameSymbol;
     // NFTs have no decimals, always effectively 1
-    tokenInfo.decimals ||= this.isNftId(id) ? 1 : TokenService.DefaultDecimals;
-    tokenInfo.logoURI ||= TokenService.DefaultLogoURI;
+    tokenInfo.decimals ||= this.isNftId(id) ? 1 : this.DefaultDecimals;
+    tokenInfo.logoURI ||= this.DefaultLogoURI;
 
     this.tokenInfos.set(tokenAddressId, tokenInfo as ITokenInfo);
     this.logger.info(`loaded token: ${tokenAddress}`);
@@ -349,7 +349,7 @@ export class TokenService {
     return typeof id === 'undefined' ? lowerCaseAddress : `${lowerCaseAddress}_${id}`;
   }
 
-  private async getTokeinInfoOnChain<T extends EthersContractContextV5<unknown, unknown, unknown, unknown> & Partial<Erc20>>(
+  private async getTokenInfoOnChain<T extends EthersContractContextV5<unknown, unknown, unknown, unknown> & Partial<Erc20>>(
     address: string,
     id?: number,
   ): Promise<undefined | Partial<ITokenInfo>> {
@@ -364,6 +364,7 @@ export class TokenService {
       tokenInfo.decimals = this.isNftId(id) ? 1 : await tokenContract.decimals?.();
       return tokenInfo;
     } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       this.logger.error(`Failed to fetch onchain token metadata: ${getErrorMessage(error)}`);
     }
   }
