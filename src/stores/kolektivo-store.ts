@@ -2,9 +2,9 @@ import { DI, IContainer, Registration } from 'aurelia';
 export type IKolektivoStore = KolektivoStore;
 export const IKolektivoStore = DI.createInterface<IKolektivoStore>('KolektivoStore');
 
-type TransactionStatus = 'success' | 'failed' | 'pending';
+export type TransactionStatus = 'success' | 'failed' | 'pending';
 
-type Transaction = {
+export type Transaction = {
   id: string;
   status: TransactionStatus;
   fromAmount: number;
@@ -16,20 +16,20 @@ type Transaction = {
   date: string;
 };
 
-type Badge = {
+export type Badge = {
   name: string;
   description?: string;
   imageUrl?: string;
 };
 
-type SupplyDistribution = {
+export type SupplyDistribution = {
   treasury: number;
   reserves: number;
   circulating: number;
   circulatingExternal?: number;
 };
 
-type TokenInfo = {
+export type TokenInfo = {
   marketCap: number;
   currentPrice: number;
   totalSupply: number;

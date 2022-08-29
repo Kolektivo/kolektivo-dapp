@@ -1,9 +1,11 @@
 <k-menu t="[title]status-bar.connected-account-title" id="account-menu" position="bottom-end" width="320" ...$attrs>
   <k-stack gap="8">
-    <k-text tag="div" type="caption" color="var(--don-juan-400)">${store.blockChainStore.connectedWalletAddress | smallHexString}</k-text>
+    <k-text tag="div" type="caption" color="var(--don-juan-400)">${store.blockChainStore.connectedWalletAddress |
+      smallHexString}</k-text>
     <k-stack direction="rows" gap="16">
       <k-link copy-text="${store.blockChainStore.connectedWalletAddress}">Copy Address</k-link>
-      <k-link src="https://celoscan.io/" external>View on Celoscan</k-link>
+      <k-link src="${store.blockChainStore.connectedWalletEtherscanLink}" external>View on
+        ${store.blockChainStore.targetedNetwork}</k-link>
     </k-stack>
   </k-stack>
   <hr />

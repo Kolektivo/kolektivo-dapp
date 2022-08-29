@@ -562,9 +562,10 @@ export class EthereumService {
     return block;
   }
 
-  public getEtherscanLink(addressOrHash: Address | Hash, tx = false): string {
-    const targetedNetwork = this.targetedNetwork as string;
-    if (targetedNetwork === Networks.Celo) {
+  public getEtherscanLink(addressOrHash: Address | Hash | null, tx = false): string {
+    if (!addressOrHash) {
+      return '';
+    } else if (this.targetedNetwork === Networks.Celo) {
       return `https://celoscan.io/${tx ? 'tx' : 'address'}/${addressOrHash}`;
     } else {
       return `https://alfajores-blockscout.celo-testnet.org/${tx ? 'tx' : 'address'}/${addressOrHash}`;

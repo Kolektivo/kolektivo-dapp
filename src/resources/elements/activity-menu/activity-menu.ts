@@ -1,6 +1,7 @@
 import './activity-menu.scss';
 import { ICustomElementViewModel, customElement } from 'aurelia';
 import { IStore } from './../../../stores/store';
+import { Transaction } from 'stores/kolektivo-store';
 import template from './activity-menu.html';
 
 @customElement({
@@ -13,6 +14,10 @@ export class ActivityMenu implements ICustomElementViewModel {
 
   get orderedTransactions(): Transaction[] {
     return this.store.kolektivoStore.transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3);
+  }
+
+  get network(): { network: string | null } {
+    return { network: this.store.blockChainStore.targetedNetwork };
   }
 
   statusText(status: string) {

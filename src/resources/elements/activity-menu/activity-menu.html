@@ -12,14 +12,15 @@
             <k-spinner size="18" thickness="5" color="var(--primary)"></k-spinner>
           </div>
         </span>
-        <k-link small class="activity" src="https://celoscan.io/tx/${t.id}">
+        <k-link small class="activity" src="${store.blockChainStore.getEtherscanLink(t.id, true)}">
           ${statusText(t.status)} ${t.fromAmount} ${t.fromToken} for ${t.toAmount} ${t.toToken}
         </k-link>
       </k-grid>
     </k-stack>
   </k-paper>
   <div class="footer-link">
-    <k-link small src="https://celoscan.io/address/${store.blockChainStore.connectedWalletAddress}" external>
-      ${i18n.tr('status-bar.activity-link-text')}</k-link>
+    <k-link small src="#" external>
+      <span t="status-bar.activity-link-text" t-params.bind="network"></span>
+    </k-link>
   </div>
 </k-menu>

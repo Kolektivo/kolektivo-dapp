@@ -1,22 +1,23 @@
-import { Address, IServices, WalletProvider } from '../services';
+import { Address, IEthereumService, WalletProvider } from '../services';
 import { DI, IContainer, Registration } from 'aurelia';
+import { Hash } from './../services/ethereum-service';
 
 export type IBlockChainStore = BlockChainStore;
 export const IBlockChainStore = DI.createInterface<IBlockChainStore>('BlockChainStore');
 
 export class BlockChainStore {
-  constructor(@IServices private readonly services: IServices) {}
+  constructor(@IEthereumService private readonly ethereumService: IEthereumService) {}
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IBlockChainStore, BlockChainStore));
   }
 
   public get connectedWalletAddress(): Address | null {
-    return this.services.ethereumService.defaultAccountAddress;
+    return this.ethereumService.defaultAccountAddress;
   }
 
   public get targetedNetwork(): AllowedNetworks | null {
-    return this.services.ethereumService.targetedNetwork;
+    return this.ethereumService.targetedNetwork;
   }
 
   public get walletConnected(): boolean {
@@ -24,18 +25,26 @@ export class BlockChainStore {
   }
 
   public connect(): void {
-    void this.services.ethereumService.connect();
+    void this.ethereumService.connect();
   }
 
   public connectToConnectedProvider(): Promise<void> {
-    return this.services.ethereumService.connectToConnectedProvider();
+    return this.ethereumService.connectToConnectedProvider();
   }
 
   public switchToTargetedNetwork(walletProvider: WalletProvider): Promise<boolean> {
-    return this.services.ethereumService.switchToTargetedNetwork(walletProvider);
+    return this.ethereumService.switchToTargetedNetwork(walletProvider);
   }
 
   public disconnect(error: { code: number; message: string }): void {
-    return this.services.ethereumService.disconnect(error);
+    return this.ethereumService.disconnect(error);
+  }
+
+  public getEtherscanLink(addressOrHash: Address | Hash, tx = false): string {
+    return this.ethereumService.getEtherscanLink(addressOrHash, tx);
+  }
+
+  public get connectedWalletEtherscanLink(): string {
+    return this.ethereumService.getEtherscanLink(this.connectedWalletAddress);
   }
 }

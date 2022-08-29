@@ -1,5 +1,5 @@
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
-import { Hash, IEthereumService } from './ethereum-service';
+import { IEthereumService } from './ethereum-service';
 import { TransactionReceipt, TransactionResponse } from '@ethersproject/providers';
 
 export type ITransactionsService = TransactionsService;
@@ -29,9 +29,5 @@ export default class TransactionsService {
       this.eventAggregator.publish('transaction.failed', ex);
       return null;
     }
-  }
-
-  public getEtherscanLink(txHash: Hash): string {
-    return this.ethereumService.getEtherscanLink(txHash, true);
   }
 }
