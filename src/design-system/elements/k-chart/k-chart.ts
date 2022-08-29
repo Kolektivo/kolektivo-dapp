@@ -94,8 +94,8 @@ export class KChart implements ICustomElementViewModel {
   @bindable({ set: ifExistsThenTrue }) hideLegend = false;
   @bindable({ set: ifExistsThenTrue }) fill?: boolean;
   @bindable({ set: ifExistsThenTrue }) gradient?: boolean;
-  @bindable minY?: number;
-  @bindable maxY?: number;
+  @bindable({ set: Number }) minY?: number;
+  @bindable({ set: Number }) maxY?: number;
 
   chart?: HTMLCanvasElement;
   chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
