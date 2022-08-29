@@ -57,7 +57,7 @@ export class KolektivoStore {
 
   public transactions: Transaction[] = [
     {
-      id: '0x69a5da6c2ed9304093b0eb5efc905bda6a9418e67a11164eae41455acb99739e',
+      id: '0xd8d82e1a6e971d1d77615ffaafe40ef37a5791c2a385cf60a19427f9917c0c9c',
       status: 'success',
       fromAmount: 100,
       fromToken: 'ABC',
@@ -68,7 +68,7 @@ export class KolektivoStore {
       date: '08/01/2022',
     },
     {
-      id: '0x69a5da6c2ed9304093b0eb5efc905bda6a9418e67a11164eae41455acb99739e',
+      id: '0x34cf5ac72deb13bd6d186ee9a58661292cfd549ad764a674c652ea8ea3d16a18',
       status: 'failed',
       fromAmount: 432,
       fromToken: 'XYZ',
@@ -79,7 +79,7 @@ export class KolektivoStore {
       date: '02/01/2022',
     },
     {
-      id: '0x69a5da6c2ed9304093b0eb5efc905bda6a9418e67a11164eae41455acb99739e',
+      id: '0x7b020394eadf78f545ffb0b80f208f5413ca4f67ff7bb101a50d0ad95c893a09',
       status: 'success',
       fromAmount: 432,
       fromToken: 'XYZ',
