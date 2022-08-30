@@ -1,5 +1,5 @@
 import 'utils-testing/setup-testing';
-import { BlockChainStore, IStore, ITreasuryStore, TreasuryStore } from 'stores';
+import { BlockChainStore, IStore, ITreasuryStore } from 'stores';
 import { BrowserStorageService, IContractsService, IEthereumService, ITokenService, NumberService } from 'services';
 import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from 'resources';
 import { Global } from 'hooks';
@@ -69,7 +69,6 @@ describe('token-info-card', () => {
     return [
       TokenInfoCard,
       CurrencyValueConverter,
-      TreasuryStore,
       Registration.instance(ITokenService, vi.fn()),
       createMockContractsService(),
       createMockEthereumService(),
