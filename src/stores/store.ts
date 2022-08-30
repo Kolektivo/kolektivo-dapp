@@ -12,7 +12,7 @@ export class Store {
     @IBlockChainStore public readonly blockChainStore: IBlockChainStore,
     @IKolektivoStore public readonly kolektivoStore: IKolektivoStore,
     @ITreasuryStore public readonly treasuryStore: ITreasuryStore,
-    @IServices public readonly services: IServices,
+    @IServices private readonly services: IServices,
   ) {}
 
   public static register(container: IContainer): void {
