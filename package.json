@@ -26,7 +26,7 @@
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
-    "build-dev": "vite build --env development",
+    "build-dev": "vite build --mode development",
     "fetchContracts": "node scripts/fetchContracts.js",
     "buildModels:alfajores": "node scripts/buildModels.js alfajores",
     "buildModels:celo": "node scripts/buildModels.js celo",
