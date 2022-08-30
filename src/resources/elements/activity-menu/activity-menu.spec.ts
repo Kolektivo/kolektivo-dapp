@@ -2,18 +2,20 @@ import '../../../utils-testing/setup-testing';
 import { ActivityMenu } from './activity-menu';
 import { Global } from '../../../hooks/';
 import { I18N } from '@aurelia/i18n';
-import { IKolektivoStore } from './../../../stores/kolektivo-store';
-import { IStore } from '../../../stores';
+import { IBlockChainStore, IStore } from '../../../stores';
+import { IKolektivoStore, Transaction } from './../../../stores/kolektivo-store';
 import { Registration } from 'aurelia';
 import { TakeValueConverter } from '../../../design-system/value-converters';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createFixture } from '@aurelia/testing';
 
 describe('<activity-menu />', () => {
-  let transactions: Transaction[] = [];
+  let transactions: Transaction[];
+  let targetedNetwork: AllowedNetworks | null;
 
   beforeEach(() => {
     transactions = [];
+    targetedNetwork = 'Celo';
   });
 
   it('displays empty message when theres no transactions', async () => {
@@ -29,6 +31,9 @@ describe('<activity-menu />', () => {
     const kolektivoStore: Partial<IKolektivoStore> = {
       transactions,
     };
+    const blockChainStore: Partial<IBlockChainStore> = {
+      targetedNetwork,
+    };
 
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
@@ -38,6 +43,7 @@ describe('<activity-menu />', () => {
       ActivityMenu,
       Registration.instance(IStore, {
         kolektivoStore,
+        blockChainStore,
       }),
       createMockI18nRegistration(),
       TakeValueConverter,
