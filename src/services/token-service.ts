@@ -3,9 +3,8 @@ import { COINGECKO_API_KEY, ETHERSCAN_KEY } from 'environment-variables';
 import { Contract } from 'ethers';
 import { ContractNames, IContractsService } from './contracts-service';
 import { DI, IContainer, ILogger, IPlatform, Registration, TaskQueue } from 'aurelia';
-import { Erc20 } from 'models/erc20';
-import { Erc721 } from 'models/erc721';
-import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
+import { Erc20 } from 'models/generated/erc20/Erc20';
+import { Erc721 } from 'models/generated/erc721/Erc721';
 import { FormatTypes, Interface, getAddress } from 'ethers/lib/utils';
 import { IAxiosService } from './axios-service';
 import { ITimingService } from './timing-service';
@@ -192,10 +191,7 @@ export class TokenService {
     }
   }
 
-  public async isRequiredTokenContract<T extends EthersContractContextV5<unknown, unknown, unknown, unknown> & Erc20>(
-    tokenAddress: Address,
-    id?: number,
-  ): Promise<boolean> {
+  public async isRequiredTokenContract<T extends Erc721 & Erc20>(tokenAddress: Address, id?: number): Promise<boolean> {
     let isOk = true;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const timerLabel = `isRequiredTokenContract-${tokenAddress}${this.isNftId(id) ? `-${id!}` : ''}`;
@@ -349,19 +345,16 @@ export class TokenService {
     return typeof id === 'undefined' ? lowerCaseAddress : `${lowerCaseAddress}_${id}`;
   }
 
-  private async getTokenInfoOnChain<T extends EthersContractContextV5<unknown, unknown, unknown, unknown> & Partial<Erc20>>(
-    address: string,
-    id?: number,
-  ): Promise<undefined | Partial<ITokenInfo>> {
+  private async getTokenInfoOnChain<T extends Erc20 & Erc721>(address: string, id?: number): Promise<undefined | Partial<ITokenInfo>> {
     try {
       const tokenContract = this.getTokenContract<T>(address, id);
       await tokenContract.deployed();
       const tokenInfo: Partial<ITokenInfo> = { address };
       tokenInfo.logoURI = undefined;
 
-      tokenInfo.name = await tokenContract.name?.();
-      tokenInfo.symbol = await tokenContract.symbol?.();
-      tokenInfo.decimals = this.isNftId(id) ? 1 : await tokenContract.decimals?.();
+      tokenInfo.name = await tokenContract.name();
+      tokenInfo.symbol = await tokenContract.symbol();
+      tokenInfo.decimals = this.isNftId(id) ? 1 : await tokenContract.decimals();
       return tokenInfo;
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

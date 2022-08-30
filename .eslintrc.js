@@ -87,6 +87,12 @@ module.exports = {
    */
   overrides: [
     {
+      files: ["./src/models/generated/**/*.ts"],
+      rules: {
+        "@typescript-eslint/ban-tslint-comment": "off"
+      }
+    },
+    {
       files: ["*-service.ts", "*-store.ts"],
       rules: {
         "@typescript-eslint/explicit-member-accessibility": [
