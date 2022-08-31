@@ -1,5 +1,5 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { Plugin, defineConfig, splitVendorChunkPlugin } from 'vite';
 import { hmrPlugin, rawHtml } from './vite.plugins';
 import { visualizer } from 'rollup-plugin-visualizer';
 import loadHtml from 'rollup-plugin-html';
@@ -14,7 +14,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      plugins: [nodePolyfills()],
+      plugins: [nodePolyfills() as Plugin],
     },
     commonjsOptions: {
       transformMixedEsModules: true,
