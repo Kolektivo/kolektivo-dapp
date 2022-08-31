@@ -1,5 +1,5 @@
 import { Address, IEthereumService, Networks } from './ethereum-service';
-import { COINGECKO_API_KEY, ETHERSCAN_KEY } from 'environment-variables';
+import { COINGECKO_API_KEY } from 'environment-variables';
 import { Contract } from 'ethers';
 import { ContractNames, IContractsService } from './contracts-service';
 import { DI, IContainer, ILogger, IPlatform, Registration, TaskQueue } from 'aurelia';
@@ -196,7 +196,6 @@ export class TokenService {
     tokenAddress: Address,
     id?: number,
   ): Promise<boolean> {
-    let isOk = true;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const timerLabel = `isRequiredTokenContract-${tokenAddress}${this.isNftId(id) ? `-${id!}` : ''}`;
 
@@ -208,6 +207,8 @@ export class TokenService {
       return false;
     }
 
+    let isOk = true;
+
     try {
       if (this.ethereumService.targetedNetwork === Networks.Celo) {
         const proxyImplementation = await this.contractsService.getProxyImplementation(tokenAddress);
@@ -215,19 +216,14 @@ export class TokenService {
           tokenAddress = proxyImplementation;
         }
 
-        /**
-         * TODO: fix this to work with a CELO block explorer:
-         */
         const contractAbi = await axios
-          .get<{ message: string; result: string }>(
-            `https://api.etherscan.io/api?module=contract&action=getabi&address=${tokenAddress}&apikey=${ETHERSCAN_KEY}`,
-          )
+          .get<{ message: string; result: string }>(`https://explorer.celo.org/api?module=contract&action=getabi&address=${tokenAddress}`)
           .then((result) => {
             return result.data.message !== 'OK' ? null : result.data.result;
           });
 
         if (!contractAbi) {
-          throw new Error('ABI not obtainable, contract may not be verified in etherscan');
+          throw new Error('ABI not obtainable, contract may not be verified');
         }
 
         const contractInterface = new Interface(contractAbi);
@@ -242,9 +238,9 @@ export class TokenService {
           ) {
             isOk = false;
             this.logger.error(
-              `TokenService: Token ${tokenAddress}${
+              `isRequiredTokenContract: Token ${tokenAddress}${
                 typeof id === 'undefined' ? '' : `-${id}`
-              } fails to implement ERC interface on function: ${functionName}`,
+              } fails to implement function: ${functionName}`,
             );
             break;
           }
@@ -257,7 +253,7 @@ export class TokenService {
               isOk = false;
               this.logger.error(
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                `TokenService: Token ${tokenAddress}${this.isNftId(id) ? `-${id!}` : ''} fails to implement ERC20 on event: ${eventName}`,
+                `isRequiredTokenContract: Token ${tokenAddress}${this.isNftId(id) ? `-${id!}` : ''} fails to implement event: ${eventName}`,
               );
               break;
             }
@@ -271,7 +267,7 @@ export class TokenService {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
-      this.logger.error(`TokenService: Error confirming ERC20: ${error?.response?.data?.error?.message ?? error?.message}`);
+      this.logger.error(`isRequiredTokenContract: Error confirming token: ${error?.response?.data?.error?.message ?? error?.message}`);
       isOk = false;
     }
 

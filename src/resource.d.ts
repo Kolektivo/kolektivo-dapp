@@ -38,7 +38,6 @@ interface ImportMeta {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface ImportMetaEnv {
   readonly KOL_NETWORK?: AllowedNetworks;
-  readonly KOL_ETHERSCAN_KEY: string;
   readonly KOL_IPFS_GATEWAY: string;
   readonly KOL_COINGECKO_API_KEY: string;
 }
