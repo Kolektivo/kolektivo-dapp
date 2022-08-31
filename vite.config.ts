@@ -14,7 +14,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      plugins: [nodePolyfills],
+      plugins: [nodePolyfills()],
     },
     commonjsOptions: {
       transformMixedEsModules: true,
