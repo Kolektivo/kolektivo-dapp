@@ -24,7 +24,8 @@
   },
   "include": [
     "src",
-    "./*.ts"
+    "./*.ts",
+    "eth-sdk"
   ],
   "files": [
     "src/resource.d.ts"

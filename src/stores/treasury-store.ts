@@ -1,29 +1,25 @@
+import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { ContractNames } from '../services/contracts-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
+import { Erc20, TransferEvent } from 'models/generated/erc20/Erc20';
 import { IServices, ITokenInfo, fromWei } from 'services';
-// eslint-disable-next-line unused-imports/no-unused-imports
+import { Oracle } from 'models/generated/oracle/Oracle';
+import { Transaction } from 'models/transaction';
+import { Treasury } from '.dethcrypto/eth-sdk-client/esm/types/alfajores/Treasury';
 import { callOnce } from './../decorators/call-once';
-import { erc20ContractContext } from 'models/erc20';
-import { oracleContractContext } from 'models/oracle';
-import { treasuryContractContext } from 'models/treasury';
 
 export type ITreasuryStore = TreasuryStore;
 export const ITreasuryStore = DI.createInterface<ITreasuryStore>('TreasuryStore');
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export interface TreasuryAsset {
-  token: ITokenInfo;
-  quantity: number;
-}
 
 export class TreasuryStore {
   public totalSupply?: BigNumber;
   public totalValuation?: BigNumber;
   public treasuryDistribution?: number;
   public reservesDistribution?: number;
-  private treasuryContract?: treasuryContractContext;
-  private treasuryAssets: TreasuryAsset[] = [];
+  private treasuryContract?: Treasury;
+  public treasuryAssets: Asset[] = [];
+  public transactions: Transaction[] = [];
   constructor(@IServices private readonly services: IServices, @ILogger private readonly logger: ILogger) {}
 
   public static register(container: IContainer): void {
@@ -31,7 +27,7 @@ export class TreasuryStore {
   }
   public get treasuryValue(): number {
     if (this.treasuryAssets.length === 0) return 0;
-    return this.treasuryAssets.map((x) => this.getTotalPrice(x)).sum();
+    return this.treasuryAssets.map((x) => x.total).sum();
   }
   public async loadTokenData(): Promise<void> {
     if (this.totalValuation && this.totalSupply) return;
@@ -65,54 +61,65 @@ export class TreasuryStore {
         i = -1;
       }
     }
-    // console.log('Treasury Assets', this.treasuryAssets);
   }
 
-  private async getTreasuryAsset(contract: treasuryContractContext, treasuryAddress: string, i: number): Promise<TreasuryAsset | undefined> {
+  private async getTreasuryAsset(contract: Treasury, treasuryAddress: string, i: number): Promise<Asset | undefined> {
     const assetAddress = await contract.registeredAssets(BigNumber.from(i));
-    //console.log('Address of asset', assetAddress);
     if (!assetAddress) return;
-    //console.log('Token Info', tokenInfo);
-    const oracleAddress = await contract.oraclePerAsset(assetAddress);
-    //console.log('Address of asset', oracleAddress);
+    const oracleAddress = await contract.oraclePerAsset(assetAddress); // get the oracle address for the given asset
     if (!oracleAddress) return;
-    const oracleContract = this.services.contractsService.getContractAtAddress<oracleContractContext>(ContractNames.ORACLE, oracleAddress);
-
-    //console.log('Contract from ContractService', oracleContract);
-    const data = await oracleContract.getData();
+    const oracleContract = this.services.contractsService.getContractAtAddress<Oracle>(ContractNames.ORACLE, oracleAddress); //get the oracle contract for the given oracle address
+    const data = await oracleContract.getData(); // get the data from the oracle contract
     if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
-    const tokenInfo = await this.services.tokenService.getTokenInfoFromAddress(assetAddress);
+    const tokenInfo = await this.services.tokenService.getTokenInfoFromAddress(assetAddress); //get the token info from the asset address
     if (!tokenInfo) {
       this.logger.error(`No token info was found for ${assetAddress}`);
       return;
     }
-    // console.log('Token Info', tokenInfo);
-
-    let tokenQuantity = BigNumber.from(1);
+    tokenInfo.price = this.services.numberService.fromString(fromWei(data[0], 18)) ?? 0; //price comes back as undefined from getTokenInfoFromAddress so set it
+    let tokenQuantity = BigNumber.from(1); //all NFTs have a quantity of 1, so set the quantity to 1 initially
+    const tokenContract = this.services.tokenService.getTokenContract<Erc20>(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
     if (!tokenInfo.id) {
-      const tokenContract = this.services.tokenService.getTokenContract<
-        erc20ContractContext & { queryFilter: (...args: unknown[]) => Promise<unknown> }
-      >(assetAddress, tokenInfo.id);
-      //console.log('Token Contract', tokenContract);
-      tokenQuantity = await tokenContract.balanceOf(treasuryAddress);
-      //console.log('Token Balance', fromWei(tokenQuantity, 18));
-      // const transfers = await tokenContract.queryFilter(tokenContract.filters.Transfer(undefined, treasuryAddress));
-      // console.log('transfers', transfers);
+      //if there is no id on the token, then it's not an NFT and we have to get more information about it
+      tokenQuantity = await tokenContract.balanceOf(treasuryAddress); // find the amount of these tokens in the treasury
     }
-    //TODO make a copy of tokenInfo and update price
-    tokenInfo.price = this.services.numberService.fromString(fromWei(data[0], 18)) ?? 0;
+    void this.populateTransactionsForAsset(tokenContract, treasuryAddress, tokenInfo); //while we are looping through the token contracts, populate the transactions on the treasury for the token contract
 
-    // const assetsRegisteredFilter = contract.filters.AssetPriceUpdated(assetAddress, oracleAddress);
-
-    // const assetsRegistered = contract.getPase(assetsRegisteredFilter, (first, second) => {
-    //   console.log('first', first);
-    //   console.log('second', second);
-    // });
-
-    return {
-      quantity: parseFloat(fromWei(tokenQuantity, tokenInfo.decimals)),
+    const asset: Asset = {
+      quantity: tokenInfo.id ? BigNumber.from(1) : tokenQuantity,
       token: tokenInfo,
-    } as TreasuryAsset;
+      total: 0,
+    };
+    asset.total = this.services.numberService.fromString(fromWei(asset.quantity.mul(asset.token.price ?? 0), 18)) ?? 0;
+    return asset;
+  }
+
+  private async populateTransactionsForAsset(tokenContract: Erc20, treasuryAddress: string, tokenInfo: ITokenInfo) {
+    //get all the deposits to the treasury for the given token
+    const deposits = await tokenContract.queryFilter(tokenContract.filters.Transfer(undefined, treasuryAddress));
+    const mappedDeposits = await this.mapTransactions(deposits, 'deposit', tokenInfo);
+    this.transactions.push(...mappedDeposits);
+    //get all the withdrawls from the treasury for the given token
+    const withdrawls = await tokenContract.queryFilter(tokenContract.filters.Transfer(treasuryAddress));
+    const mappedWithdrawls = await this.mapTransactions(withdrawls, 'withdrawl', tokenInfo);
+    this.transactions.push(...mappedWithdrawls);
+    //console.log('Mapped Transactions', this.transactions);
+  }
+
+  private async mapTransactions(transactions: TransferEvent[], type: 'deposit' | 'withdrawl', tokenInfo: ITokenInfo): Promise<Transaction[]> {
+    return await Promise.all(
+      transactions.map(async (transaction): Promise<Transaction> => {
+        const block = await transaction.getBlock();
+        return {
+          address: type === 'deposit' ? transaction.args.from : transaction.args.to,
+          amount: transaction.args.amount,
+          date: block.timestamp,
+          id: transaction.transactionHash,
+          token: tokenInfo,
+          type: type,
+        } as Transaction;
+      }),
+    );
   }
 
   public get circulatingDistribution(): number {
@@ -132,11 +139,11 @@ export class TreasuryStore {
     return tokens?.div(this.totalSupply) ?? BigNumber.from(0);
   }
 
-  private getTreasuryContract(): treasuryContractContext | null {
+  private getTreasuryContract(): Treasury | null {
     if (this.treasuryContract) return this.treasuryContract;
     const treasuryAddress = this.services.contractsService.getContractAddress(ContractNames.TREASURY);
     if (treasuryAddress) {
-      this.treasuryContract = this.services.contractsService.getContractAtAddress<treasuryContractContext>(
+      this.treasuryContract = this.services.contractsService.getContractAtAddress<Treasury>(
         ContractNames.TREASURY,
         treasuryAddress,
         this.services.contractsService.createProvider(),
@@ -144,8 +151,5 @@ export class TreasuryStore {
       return this.treasuryContract;
     }
     return null;
-  }
-  private getTotalPrice(asset: TreasuryAsset): number {
-    return asset.quantity * (asset.token.price ?? 0);
   }
 }

@@ -1,7 +1,7 @@
 import '../../../../../../../../utils-testing/setup-testing';
 import { Global } from '../../../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
-import { IStore } from '../../../../../../../../stores';
+import { IStore, ITreasuryStore } from '../../../../../../../../stores';
 import { Registration } from 'aurelia';
 import { TransactionHistory } from './transaction-history';
 import { createFixture } from '@aurelia/testing';
@@ -19,10 +19,12 @@ describe('transaction-history', () => {
 
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
+    const createMockTreasuryStoreRegistration = () => Registration.instance(ITreasuryStore, {});
+
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
       });
-    return [TransactionHistory, Global, createMockStoreRegistration(), createMockI18nRegistration()];
+    return [TransactionHistory, Global, createMockTreasuryStoreRegistration(), createMockStoreRegistration(), createMockI18nRegistration()];
   }
 });

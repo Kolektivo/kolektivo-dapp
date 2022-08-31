@@ -6,7 +6,7 @@ import { I18N } from '@aurelia/i18n';
 import { IContractsService, ITokenService, NumberService } from 'services';
 import { IDesignSystemConfiguration } from 'design-system';
 import { IPlatform, PLATFORM, Registration } from 'aurelia';
-import { IStore, TreasuryStore } from 'stores';
+import { IStore, ITreasuryStore } from 'stores';
 import { Overview } from './overview';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it, vi } from 'vitest';
@@ -74,6 +74,8 @@ describe('overview', () => {
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
     const createMockContractsService = () => Registration.instance(IContractsService, mock<IContractsService>({}));
+    const createMockTreasuryStoreRegistration = () => Registration.instance(ITreasuryStore, {});
+
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
@@ -84,13 +86,13 @@ describe('overview', () => {
       Registration.instance(IPlatform, PLATFORM),
       CurrencyValueConverter,
       Overview,
-      TreasuryStore,
       EthweiValueConverter,
       CurrencyValueConverter,
       PercentageValueConverter,
       NumberService,
       Registration.instance(ITokenService, vi.fn()),
       Global,
+      createMockTreasuryStoreRegistration(),
       createMockContractsService(),
       createMockStoreRegistration(),
       createMockI18nRegistration(),
