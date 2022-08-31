@@ -78,7 +78,7 @@ export class TreasuryStore {
     }
     tokenInfo.price = this.services.numberService.fromString(fromWei(data[0], 18)) ?? 0; //price comes back as undefined from getTokenInfoFromAddress so set it
     let tokenQuantity = BigNumber.from(1); //all NFTs have a quantity of 1, so set the quantity to 1 initially
-    const tokenContract = this.services.tokenService.getTokenContract<Erc20>(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
+    const tokenContract = this.services.tokenService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
     if (!tokenInfo.id) {
       //if there is no id on the token, then it's not an NFT and we have to get more information about it
       tokenQuantity = await tokenContract.balanceOf(treasuryAddress); // find the amount of these tokens in the treasury
