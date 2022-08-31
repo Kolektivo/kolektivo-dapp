@@ -6,11 +6,14 @@ import { ifExistsThenTrue } from '../../../design-system/common';
 import { isDev } from './../../../environment-variables';
 import template from './side-bar.html';
 
+import logo from '../../../../static/logo.svg';
+
 @customElement({ template, name: 'side-bar' })
 export class SideBar implements ICustomElementViewModel {
   @bindable({ mode: BindingMode.twoWay }) open = true;
   @bindable({ set: ifExistsThenTrue }) collapsible = false;
   routes: RouteLink[] = [];
+  logo = logo;
 
   constructor(@IRouter private readonly router: IRouter, @I18N private readonly i18n: I18N) {
     this.routes = [
