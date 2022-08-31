@@ -3,10 +3,11 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { ContractNames } from '../services/contracts-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Erc20, TransferEvent } from 'models/generated/erc20/Erc20';
+import { Erc721 } from 'models/generated/erc721/Erc721';
 import { IServices, ITokenInfo, fromWei } from 'services';
 import { Oracle } from 'models/generated/oracle/Oracle';
 import { Transaction } from 'models/transaction';
-import { Treasury } from '.dethcrypto/eth-sdk-client/esm/types/alfajores/Treasury';
+import { Treasury } from 'models/generated/treasury/Treasury';
 import { callOnce } from './../decorators/call-once';
 
 export type ITreasuryStore = TreasuryStore;
@@ -94,7 +95,7 @@ export class TreasuryStore {
     return asset;
   }
 
-  private async populateTransactionsForAsset(tokenContract: Erc20, treasuryAddress: string, tokenInfo: ITokenInfo) {
+  private async populateTransactionsForAsset(tokenContract: Erc20 | Erc721, treasuryAddress: string, tokenInfo: ITokenInfo) {
     //get all the deposits to the treasury for the given token
     const deposits = await tokenContract.queryFilter(tokenContract.filters.Transfer(undefined, treasuryAddress));
     const mappedDeposits = await this.mapTransactions(deposits, 'deposit', tokenInfo);
