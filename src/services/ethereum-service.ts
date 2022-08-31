@@ -87,8 +87,8 @@ export class EthereumService {
   }
 
   public readonly endpoints: Record<AllowedNetworks, string> = {
-    Celo: `https://forno.celo.org`,
-    // Celo: 'https://celo.rpcs.dev:8545',
+    // Celo: `https://forno.celo.org`,
+    Celo: 'https://celo.rpcs.dev:8545',
     // alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
     Alfajores: `https://alfajores.rpcs.dev:8545`,
     // alfajores: `https://alfajores-forno.celo-testnet.org`,
