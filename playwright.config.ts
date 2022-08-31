@@ -1,5 +1,5 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
+import type { PlaywrightTestConfig } from '@playwright/test';
 
 /**
  * Read environment variables from file.
@@ -11,7 +11,7 @@ import { devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testDir: './test/e2e',
+  testDir: './src/__tests__',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -19,7 +19,7 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000
+    timeout: 5000,
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
