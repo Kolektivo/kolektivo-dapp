@@ -1,5 +1,4 @@
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { NotificationType } from '../../services/notification/notification-type';
 import { captureFilter, ifExistsThenTrue } from '../../common';
 
 import css from './k-chip.scss';

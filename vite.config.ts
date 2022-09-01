@@ -5,6 +5,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import loadHtml from 'rollup-plugin-html';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import svgLoader from 'vite-svg-loader';
+import swc from 'unplugin-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
@@ -21,6 +22,16 @@ export default defineConfig({
     },
   },
   plugins: [
+    swc.vite(),
+    swc.rollup({
+      minify: true,
+      jsc: {
+        externalHelpers: true,
+        minify: {
+          mangle: false,
+        },
+      },
+    }),
     splitVendorChunkPlugin(),
     tsconfigPaths(),
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call

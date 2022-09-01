@@ -1,7 +1,7 @@
 import { ButtonSize } from '../k-button/button-size';
-import { ButtonType } from '../k-button';
 import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { captureFilter } from '../../common';
+import type { ButtonType } from '../k-button';
 
 import css from './k-icon-button.scss';
 import template from './k-icon-button.html';
