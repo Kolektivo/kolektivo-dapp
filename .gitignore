@@ -6,11 +6,8 @@
 # to the project. (https://help.github.com/articles/ignoring-files/#create-a-global-gitignore)
 
 #.env
-.env
-.env.development
-.env.test
-.env.production
-.env.staging
+.env.**local
+
 
 # OS
 #

@@ -1,4 +1,3 @@
-import { NotificationType } from './services/notification/notification-type';
 export const numberToPixels = (value: string | number | null | undefined): string | number | null | undefined => {
   if (!value) return value;
   if (typeof value === 'string' && value.trim().includes(' ')) {

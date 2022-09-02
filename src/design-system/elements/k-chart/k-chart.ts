@@ -3,17 +3,12 @@ import {
   BarController,
   BarElement,
   BubbleController,
-  BubbleDataPoint,
   CategoryScale,
   Chart,
-  ChartDataset,
-  ChartOptions,
-  ChartType,
   Decimation,
   DoughnutController,
   Filler,
   Legend,
-  LegendOptions,
   LineController,
   LineElement,
   LinearScale,
@@ -24,7 +19,6 @@ import {
   RadarController,
   RadialLinearScale,
   ScatterController,
-  ScatterDataPoint,
   SubTitle,
   TimeScale,
   TimeSeriesScale,
@@ -34,6 +28,12 @@ import {
 
 import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
+import css from './k-chart.scss';
+import template from './k-chart.html';
+// eslint-disable-next-line no-duplicate-imports
+import type { BubbleDataPoint, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint } from 'chart.js';
+
+export type DataType = number | ScatterDataPoint | BubbleDataPoint;
 
 Chart.register(
   ArcElement,
@@ -61,9 +61,6 @@ Chart.register(
   Tooltip,
   SubTitle,
 );
-export type DataType = number | ScatterDataPoint | BubbleDataPoint;
-import css from './k-chart.scss';
-import template from './k-chart.html';
 
 @customElement({
   name: 'k-chart',
@@ -94,8 +91,8 @@ export class KChart implements ICustomElementViewModel {
   @bindable({ set: ifExistsThenTrue }) hideLegend = false;
   @bindable({ set: ifExistsThenTrue }) fill?: boolean;
   @bindable({ set: ifExistsThenTrue }) gradient?: boolean;
-  @bindable({ set: Number }) minY?: number;
-  @bindable({ set: Number }) maxY?: number;
+  @bindable minY?: number;
+  @bindable maxY?: number;
 
   chart?: HTMLCanvasElement;
   chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
