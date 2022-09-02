@@ -23,15 +23,6 @@ export default defineConfig({
   },
   plugins: [
     swc.vite(),
-    swc.rollup({
-      minify: true,
-      jsc: {
-        externalHelpers: true,
-        minify: {
-          mangle: false,
-        },
-      },
-    }),
     splitVendorChunkPlugin(),
     tsconfigPaths(),
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
