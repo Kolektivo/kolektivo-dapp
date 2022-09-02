@@ -1,3 +1,4 @@
+import { Treasury } from 'models/generated/treasury/Treasury';
 import { ContractNames, ContractsService, IContractsService } from './contracts-service';
 import { DI } from 'aurelia';
 import { ITransactionsService } from './transactions-service';
@@ -11,9 +12,9 @@ describe('transactions-service.ts', () => {
     ContractsService.register(container);
     const transactionsService = container.get(ITransactionsService);
     const contractsService = container.get(IContractsService);
-    const contract = contractsService.getContractFor(ContractNames.TREASURY);
+    const contract = contractsService.getContractFor<Treasury>(ContractNames.);
 
-    contract.TransFer;
+    contract.transfer();
     expect((await transactionsService.send(1)).number).toBe(1);
   });
 });
