@@ -1,12 +1,4 @@
 <k-card gap="var(--spacing-lg)" title="${i18n.tr('navigation.treasury.overview.value.title')}" tooltip-text="${i18n.tr('navigation.treasury.overview.value.tooltip')}">
   <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadAssets()"></k-loader>
   <k-text> ${treasuryStore.treasuryValue | currency} </k-text>
-  <k-select placeholder="Select a value" width="300">
-    <k-option value="1">Testing 1</k-option>
-    <k-option value="2">Testing 2</k-option>
-    <k-option value="3">Testing 3</k-option>
-    <k-option value="4">Testing 4</k-option>
-    <k-option value="5">Testing 5</k-option>
-    <k-option value="0">Testing 6 Testing 6 Testing 6 Testing 6 Testing 6 Testing 6 Testing 6 Testing 6</k-option>
-  </k-select>
 </k-card>
