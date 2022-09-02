@@ -24,6 +24,7 @@ export * from './k-link';
 export * from './k-loader';
 export * from './k-menu';
 export * from './k-modal';
+export * from './k-option';
 export * from './k-page';
 export * from './k-paper';
 export * from './k-progress';

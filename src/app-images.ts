@@ -13,6 +13,8 @@ import description from '@material-design-icons/svg/outlined/description.svg';
 import electric_bolt from '@material-design-icons/svg/filled/electric_bolt.svg';
 import error from '@material-design-icons/svg/filled/error_outline.svg';
 import error_filled from '@material-design-icons/svg/filled/error.svg';
+import expand_less from '@material-design-icons/svg/filled/expand_less.svg';
+import expand_more from '@material-design-icons/svg/filled/expand_more.svg';
 import headset_mic from '@material-design-icons/svg/outlined/headset_mic.svg';
 import help_outline from '@material-design-icons/svg/outlined/help_outline.svg';
 import info_filled from '@material-design-icons/svg/filled/info.svg';
@@ -45,6 +47,8 @@ export const imageMap = new Map([
   ['electric_bolt', electric_bolt],
   ['error_filled', error_filled],
   ['error', error],
+  ['expand_less', expand_less],
+  ['expand_more', expand_more],
   ['headset_mic', headset_mic],
   ['info_filled', info_filled],
   ['language', language],

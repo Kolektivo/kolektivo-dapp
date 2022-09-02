@@ -1,0 +1,18 @@
+:host {
+  div {
+    cursor: pointer;
+    padding: 10px 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+      background-color: var(--ocean-blue-050);
+    }
+
+    &.selected {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+  }
+}
