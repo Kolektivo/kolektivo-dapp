@@ -1,5 +1,5 @@
 import { BindingMode, ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { DisplayValue, captureFilter } from '../../common';
+import { type DisplayValue, captureFilter } from '../../common';
 import template from './k-radio-group.html';
 
 @customElement({

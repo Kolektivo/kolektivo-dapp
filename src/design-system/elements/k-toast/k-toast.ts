@@ -1,6 +1,6 @@
 import './k-toast.scss';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { NotificationAction, NotificationType } from '../../services';
+import { NotificationAction } from '../../services';
 import { ToastOptions } from './toast-options';
 import { getColorByType } from '../../common';
 import template from './k-toast.html';

@@ -1,10 +1,19 @@
 {
   "files.eol": "\n",
-  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.formatOnPaste": false, // required 
+  "editor.formatOnType": false, // required
+  "editor.formatOnSave": true, // optional 
+  "editor.formatOnSaveMode": "file", // required to format on save
+  "files.autoSave": "onFocusChange", // optional but recommended
   "files.exclude": {
     "**/.webpack": true
   },
-  "prettier.requireConfig": true,
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
   "eslint.validate": [
@@ -13,7 +22,8 @@
   ],
   "eslint.alwaysShowStatus": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
   },
   "exportall.config.relExclusion": [
     "/src/design-system"
@@ -22,6 +32,4 @@
     "/src/design-system/elements",
     "/src/pages"
   ],
-  "javascript.format.enable": false,
-  "typescript.format.enable": false
 }

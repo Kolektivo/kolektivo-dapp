@@ -1,4 +1,4 @@
-@import './animations';
+@import "./animations";
 
 *[full-width] {
   width: 100%;
@@ -118,6 +118,7 @@
   display: grid;
   place-content: center;
   overflow: hidden;
+  z-index: 99;
 
   &.rounded {
     border-radius: 20px;
@@ -129,7 +130,7 @@
 }
 
 k-avatar-group {
-  >div {
+  > div {
     display: flex;
 
     k-avatar {

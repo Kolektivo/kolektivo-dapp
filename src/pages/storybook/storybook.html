@@ -1,11 +1,4 @@
 <k-page title="Kolektivo Design System">
-
-
-  <k-badge>
-    asdfsadfasdf
-  </k-badge>
-
-
   <div id="storybook">
     <k-accordion>
       <span slot="header">Alerts</span>
@@ -148,6 +141,14 @@
               src="https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png"></k-avatar>
             <k-avatar color="var(--primary)"></k-avatar>
           </k-avatar-group>
+        </k-code>
+      </div>
+    </k-accordion>
+    <k-accordion>
+      <span slot="header">Badges</span>
+      <div class="badges">
+        <k-code>
+          <k-badge></k-badge>
         </k-code>
       </div>
     </k-accordion>
@@ -1005,22 +1006,54 @@
     </k-accordion>
     <k-accordion>
       <span slot="header">Selects</span>
-      <k-alert type="info" bottom="var(--spacing-xl)">NOTE: This is using the Fast Select component currently, and we
-        might need to code our own select element if Fast doesn't allow us to style it exactly how the designers want it
-        styled</k-alert>
-
       <div class="selects">
         <k-code>
-          <k-select value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
-            placeholder="Default Select"> </k-select>
+          <k-select placeholder="Select a value">
+            <k-option value="1">Testing</k-option>
+            <k-option value="2">Testing 2</k-option>
+            <k-option value="3">Testing 3</k-option>
+            <k-option value="4">Testing 4</k-option>
+            <k-option value="5">Testing 5</k-option>
+            <k-option value="6">Testing 6</k-option>
+          </k-select>
         </k-code>
         <k-code>
-          <k-select disabled value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
-            placeholder="Disabled Select"> </k-select>
+          <k-select placeholder="Select a value" width="250">
+            <k-option value="1">Testing</k-option>
+            <k-option value="2">Testing 2</k-option>
+            <k-option value="3">Testing 3</k-option>
+            <k-option value="4">Testing 4</k-option>
+            <k-option value="5">Testing 5</k-option>
+            <k-option value="6">Testing 6</k-option>
+          </k-select>
         </k-code>
         <k-code>
-          <k-select error value.bind="selectTest" options.bind="['Option 1','Option 2','Option 3']"
-            placeholder="Error Select"> </k-select>
+          <k-select placeholder="Select a value" width="250">
+            <k-option value="1">This is a long option</k-option>
+            <k-option value="2">This is a long option also</k-option>
+            <k-option value="3">This is a super duper long option that shows the ellipsis</k-option>
+          </k-select>
+        </k-code>
+        <k-code>
+          <k-select placeholder="Select a value" width="250" size="5">
+            <k-option value="1">This</k-option>
+            <k-option value="2">Only</k-option>
+            <k-option value="3">Shows</k-option>
+            <k-option value="4">The</k-option>
+            <k-option value="5">First</k-option>
+            <k-option value="6">Five</k-option>
+            <k-option value="7">Options</k-option>
+            <k-option value="8">And</k-option>
+            <k-option value="9">Then</k-option>
+            <k-option value="10">Scrolls</k-option>
+          </k-select>
+        </k-code>
+        <k-code>
+          <k-select placeholder="Select a value" width="250" value="3">
+            <k-option value="1">Pre</k-option>
+            <k-option value="2">Selected</k-option>
+            <k-option value="3">Value</k-option>
+          </k-select>
         </k-code>
       </div>
     </k-accordion>

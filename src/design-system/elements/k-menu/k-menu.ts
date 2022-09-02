@@ -1,4 +1,5 @@
 import { ICustomElementViewModel, INode, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
+import { ifExistsThenTrue } from 'design-system/common';
 
 import { captureFilter, numberToPixels } from '../../common';
 import css from './k-menu.scss';
@@ -12,9 +13,10 @@ import template from './k-menu.html';
   shadowOptions: {
     mode: 'open',
   },
-  processContent: (node) => {
+  processContent: (node: INode) => {
     const htmlNode = node as HTMLElement;
-    if (htmlNode.hasAttribute('portal')) return;
+    const useTarget = htmlNode.getAttribute('use-target');
+    if (htmlNode.hasAttribute('portal') || (useTarget != undefined && useTarget !== 'false')) return;
     htmlNode.setAttribute('portal', 'document.body');
   },
 })
@@ -22,7 +24,6 @@ export class KMenu implements ICustomElementViewModel {
   constructor(@IPlatform private readonly platform: IPlatform, @INode private readonly element: HTMLElement) {}
   private top?: number;
   private left?: number;
-  private show = false;
   div?: HTMLElement;
 
   @bindable width?: number;
@@ -30,6 +31,9 @@ export class KMenu implements ICustomElementViewModel {
   @bindable title = '';
   @bindable position: Position = 'bottom-start';
   @bindable({ type: Number }) offset = 5;
+  @bindable maxHeight?: number;
+  @bindable open = false;
+  @bindable({ set: ifExistsThenTrue }) useTarget = false;
 
   calcPos(): void {
     if (!this.target || !this.div) return;
@@ -45,8 +49,13 @@ export class KMenu implements ICustomElementViewModel {
         this.left = clientRect.left + clientRect.width - this.div.clientWidth;
         break;
       case 'bottom-start':
-        this.top = y + clientRect.top + clientRect.height + this.offset;
-        this.left = clientRect.left;
+        if (this.useTarget) {
+          this.top = clientRect.height + 9;
+          this.left = 0;
+        } else {
+          this.top = y + clientRect.top + clientRect.height + this.offset;
+          this.left = clientRect.left;
+        }
         break;
       case 'start':
         this.top = y + clientRect.top + clientRect.height / 2 - this.div.clientHeight / 2;
@@ -86,31 +95,40 @@ export class KMenu implements ICustomElementViewModel {
         break;
     }
   }
+
   attached(): void {
     if (!this.target) return;
     this.target.addEventListener('click', this.showEvent);
   }
-  private closeEvent = (e: Event) => {
-    if (e.target !== this.element && this.target !== e.target && !this.element.contains(e.target as HTMLElement)) {
-      this.show = false;
+  openChanged() {
+    if (this.open) {
+      this.platform.taskQueue.queueTask(() => {
+        this.calcPos();
+      });
+      this.platform.taskQueue.queueTask(() => {
+        this.platform.window.addEventListener('click', this.closeEvent);
+      });
+    } else {
       this.platform.window.removeEventListener('click', this.closeEvent);
     }
+  }
+  private closeEvent = () => {
+    this.open = false;
   };
+
   private showEvent = () => {
-    const alreadyShowing = this.show;
-    this.show = true;
+    this.open = true;
     this.platform.taskQueue.queueTask(() => {
       this.calcPos();
-      if (!alreadyShowing) {
-        this.platform.window.addEventListener('click', this.closeEvent);
-      }
     });
   };
+
   get style() {
     return {
       top: this.top && numberToPixels(this.top),
       left: this.left && numberToPixels(this.left),
       width: this.width && numberToPixels(this.width),
+      maxHeight: this.maxHeight && numberToPixels(this.maxHeight),
     };
   }
   detaching(): void {

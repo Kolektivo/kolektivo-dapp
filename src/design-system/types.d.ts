@@ -11,3 +11,5 @@ type Position =
   | 'bottom-start'
   | 'bottom'
   | 'bottom-end';
+
+type NotificationType = 'danger' | 'success' | 'warning' | 'info' | 'primary' | 'secondary' | 'dark';

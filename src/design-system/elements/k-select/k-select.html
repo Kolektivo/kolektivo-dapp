@@ -1,12 +1,21 @@
-<!-- <fast-select ...$attrs>
-  <fast-option if.to-view="placeholder">${placeholder}</fast-option>
-  <fast-option repeat.for="option of options" value.bind="option.value === null ? option : option.value">
-    ${option.display === null ? option : option.display}</fast-option>
-</fast-select> -->
-
-<select ref="dropdown" ...$attrs>
-  <option if.bind="placeholder" value="" hidden>${placeholder}</option>
-  <option click.bind="optionClicked" repeat.for="option of options"
-    value.bind="option.value === null ? option : option.value">${option.display === null ? option : option.display}
-  </option>
-</select>
+<template>  
+  <div part="control" role="button" style.bind="selectStyles" tabindex="0" class="${menuOpen ? 'open': ''}">
+      <slot name="button-container">
+          <div part="placeholder" if.bind="placeholder && !value">
+            ${placeholder}
+          </div>
+          <div else part="selected-value">
+              ${text}
+          </div>
+          <div part="indicator">
+              <slot name="indicator">
+                  <k-icon name="expand_more" class.bind="menuOpen ? 'rotate180': 'rotate0'"></k-icon>
+              </slot>
+          </div> 
+      </slot>
+  </div>
+  <input value.bind="value" hidden />
+  <k-menu target.bind="element" role="listbox" part="listbox" open.two-way="menuOpen" use-target max-height.bind="maxMenuHeight">
+    <slot></slot>
+  </k-menu>
+</template>
