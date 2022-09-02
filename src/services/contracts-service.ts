@@ -4,12 +4,12 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { Contract } from '@ethersproject/contracts';
 import { Signer } from '@ethersproject/abstract-signer';
 
+import { BaseContract, ethers } from 'ethers';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
 import { ICacheService } from './cache-service';
 import { IContractsDeploymentService } from './contracts-deployment-service';
 import { cache } from '../decorators/cache';
 import { callOnce } from '../decorators/call-once';
-import { ethers } from 'ethers';
 
 export enum ContractNames {
   ELASTICRECEIPTTOKEN = 'ElasticReceiptToken',
@@ -129,12 +129,12 @@ export class ContractsService {
     return signerOrProvider;
   }
 
-  public async getContractFor(contractName: ContractNames): Promise<Contract | null> {
+  public async getContractFor<T extends BaseContract>(contractName: ContractNames): Promise<T | null> {
     await this.assertContracts();
-    return ContractsService.Contracts.get(contractName) ?? null;
+    return (ContractsService.Contracts.get(contractName) ?? null) as unknown as T;
   }
 
-  public getContractAtAddress<T>(contractName: ContractNames, address: Address, signorOrProvider?: SignerTypes): T {
+  public getContractAtAddress<T extends BaseContract>(contractName: ContractNames, address: Address, signorOrProvider?: SignerTypes): T {
     return new Contract(address, this.getContractAbi(contractName), signorOrProvider ?? this.createProvider()) as unknown as T;
   }
 
