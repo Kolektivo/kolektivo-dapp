@@ -1,8 +1,7 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import { Plugin, defineConfig, splitVendorChunkPlugin } from 'vite';
-import { hmrPlugin, rawHtml } from './vite.plugins';
+import { au2, rawHtml } from './vite.plugins';
 import { visualizer } from 'rollup-plugin-visualizer';
-import loadHtml from 'rollup-plugin-html';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import svgLoader from 'vite-svg-loader';
 import swc from 'unplugin-swc';
@@ -22,16 +21,12 @@ export default defineConfig({
     },
   },
   plugins: [
+    au2({ include: 'src/**/*.ts', pre: true }),
+    au2({ include: 'src/**/*.html' }),
     swc.vite(),
     splitVendorChunkPlugin(),
     tsconfigPaths(),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    loadHtml({
-      include: '**/*.html',
-      exclude: 'index.html',
-    }),
     rawHtml(),
-    hmrPlugin(),
     svgLoader({
       defaultImport: 'url',
     }),
@@ -39,7 +34,7 @@ export default defineConfig({
       emitFile: true,
       gzipSize: true,
       filename: 'stats.html',
-    }),
+    }) as Plugin,
   ],
   define: {
     'process.env': process.env,
