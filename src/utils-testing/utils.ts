@@ -13,7 +13,7 @@ import { mock } from 'vitest-mock-extended';
 export function createEthereumService(container: IContainer, network: AllowedNetworks = 'Alfajores'): Promise<IEthereumService> {
   Registration.instance(IBrowserStorageService, mock<IBrowserStorageService>({})).register(container);
   Registration.instance(INotificationService, mock<INotificationService>({})).register(container);
-  Registration.transient(IEthereumService, EthereumService).register(container);
+  Registration.singleton(IEthereumService, EthereumService).register(container);
 
   const ethereumService = container.get(IEthereumService);
 
@@ -24,7 +24,7 @@ export function createContractsDeploymentService(
   container: IContainer,
   network: AllowedNetworks = 'Alfajores',
 ): Promise<IContractsDeploymentService> {
-  Registration.transient(IContractsDeploymentService, ContractsDeploymentService).register(container);
+  Registration.singleton(IContractsDeploymentService, ContractsDeploymentService).register(container);
 
   const contractsDeploymentService = container.get(IContractsDeploymentService);
 

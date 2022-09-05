@@ -4,7 +4,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { Contract } from '@ethersproject/contracts';
 import { Signer } from '@ethersproject/abstract-signer';
 
-import { BaseContract, ethers } from 'ethers';
+import { BaseContract, Wallet, ethers } from 'ethers';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
 import { IContractsDeploymentService } from './contracts-deployment-service';
 import { callOnce } from '../decorators/call-once';
@@ -31,7 +31,7 @@ export interface IStandardEvent<TArgs> {
 
 export type IContractsService = ContractsService;
 export const IContractsService = DI.createInterface<IContractsService>('ContractsService');
-type SignerTypes = BaseProvider | (string & Signer) | JsonRpcSigner;
+type SignerTypes = BaseProvider | (string & Signer) | JsonRpcSigner | Wallet;
 
 export class ContractsService {
   public static register(container: IContainer) {
