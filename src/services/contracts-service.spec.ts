@@ -6,7 +6,8 @@ import { describe, expect, it } from 'vitest';
 describe('contracts-service.ts', () => {
   it('transfers a token', async () => {
     const container = DI.createContainer();
-    const ethereumService = await createEthereumService(container);
+    await createEthereumService(container);
+    //const ethereumService = await createEthereumService(container);
     await createContractsDeploymentService(container);
     ContractsService.register(container);
     const contractsService = container.get(IContractsService);
