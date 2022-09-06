@@ -1,6 +1,7 @@
 import { BlockChainStore, IBlockChainStore } from './block-chain-store';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IKolektivoStore, KolektivoStore } from './kolektivo-store';
+import { IReserveStore, ReserveStore } from './reserve-store';
 import { IServices } from '../services';
 import { ITreasuryStore, TreasuryStore } from './treasury-store';
 
@@ -12,6 +13,7 @@ export class Store {
     @IBlockChainStore public readonly blockChainStore: IBlockChainStore,
     @IKolektivoStore public readonly kolektivoStore: IKolektivoStore,
     @ITreasuryStore public readonly treasuryStore: ITreasuryStore,
+    @IReserveStore public readonly reserveStore: IReserveStore,
     @IServices private readonly services: IServices,
   ) {}
 
@@ -20,6 +22,7 @@ export class Store {
     container.register(BlockChainStore);
     container.register(KolektivoStore);
     container.register(TreasuryStore);
+    container.register(ReserveStore);
   }
 
   initializeServices() {
