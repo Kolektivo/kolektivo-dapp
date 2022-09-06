@@ -1,5 +1,4 @@
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
-import { IEthereumService } from './ethereum-service';
 import { TransactionReceipt, TransactionResponse } from '@ethersproject/providers';
 
 export type ITransactionsService = TransactionsService;
@@ -12,7 +11,7 @@ export default class TransactionsService {
     Registration.singleton(ITransactionsService, TransactionsService).register(container);
   }
 
-  constructor(@IEventAggregator private eventAggregator: IEventAggregator, @IEthereumService private ethereumService: IEthereumService) {}
+  constructor(@IEventAggregator private eventAggregator: IEventAggregator) {}
 
   public async send(methodCall: () => Promise<TransactionResponse>): Promise<TransactionReceipt | null> {
     let receipt: TransactionReceipt;
