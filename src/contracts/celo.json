@@ -593,21 +593,463 @@
                 }
             ]
         },
-        "Oracle-TreasuryToken": {
+        "Oracle": {
             "address": "0x0000000000000000000000000000000000000000",
-            "abi": "oracle"
-        },
-        "Oracle-ReserveToken": {
-            "address": "0x0000000000000000000000000000000000000000",
-            "abi": "oracle"
-        },
-        "Oracle-TestToken1": {
-            "address": "0x0000000000000000000000000000000000000000",
-            "abi": "oracle"
-        },
-        "Oracle-GeoNFT1": {
-            "address": "0x0000000000000000000000000000000000000000",
-            "abi": "oracle"
+            "abi": [
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "reportExpirationTime_",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "reportDelay_",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "minimumProviders_",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "inputs": [],
+                    "name": "InvalidPendingOwner",
+                    "type": "error"
+                },
+                {
+                    "inputs": [],
+                    "name": "OnlyCallableByOwner",
+                    "type": "error"
+                },
+                {
+                    "inputs": [],
+                    "name": "OnlyCallableByPendingOwner",
+                    "type": "error"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "invalidProvider",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "Oracle__InvalidProvider",
+                    "type": "error"
+                },
+                {
+                    "inputs": [],
+                    "name": "Oracle__NewReportTooSoonAfterPastReport",
+                    "type": "error"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "oldMinimumProviders",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "newMinimumProviders",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "MinimumProvidersChanged",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "previousOwner",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "newOwner",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "NewOwner",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "previousPendingOwner",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "newPendingOwner",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "NewPendingOwner",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [],
+                    "name": "OracleMarkedAsInvalid",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [],
+                    "name": "OracleMarkedAsValid",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "provider",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "ProviderAdded",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "provider",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "ProviderRemoved",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "provider",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "payload",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "timestamp",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ProviderReportPushed",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "purger",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "provider",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "ProviderReportsPurged",
+                    "type": "event"
+                },
+                {
+                    "inputs": [],
+                    "name": "acceptOwnership",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "provider",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "addProvider",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "getData",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "isValid",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "minimumProviders",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "owner",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "pendingOwner",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "providerReports",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "timestamp",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "payload",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "providers",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "providersSize",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "purgeReports",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "provider",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "purgeReportsFrom",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "payload",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "pushReport",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "provider",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "removeProvider",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "reportDelay",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "reportExpirationTime",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "isValid_",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "setIsValid",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "minimumProviders_",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setMinimumProviders",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "pendingOwner_",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setPendingOwner",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                }
+            ]
         },
         "Reserve": {
             "address": "0x0000000000000000000000000000000000000000",
@@ -766,22 +1208,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
                             "indexed": false,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "indexed": false,
@@ -816,7 +1252,7 @@
                             "type": "uint256"
                         }
                     ],
-                    "name": "DebtPayed",
+                    "name": "DebtPaid",
                     "type": "event"
                 },
                 {
@@ -892,6 +1328,12 @@
                             "internalType": "address",
                             "name": "erc20",
                             "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "enum IReserve.AssetType",
+                            "name": "assetType",
+                            "type": "uint8"
                         }
                     ],
                     "name": "ERC20Registered",
@@ -901,22 +1343,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "indexed": true,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "ERC721IdDelistedAsBondable",
@@ -926,22 +1362,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "indexed": true,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "ERC721IdDelistedAsRedeemable",
@@ -951,22 +1381,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "indexed": true,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "ERC721IdDeregistered",
@@ -976,22 +1400,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "indexed": true,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "ERC721IdListedAsBondable",
@@ -1001,22 +1419,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "indexed": true,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "ERC721IdListedAsRedeemable",
@@ -1026,22 +1438,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "indexed": true,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "ERC721IdRegistered",
@@ -1114,22 +1520,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
                             "indexed": false,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "indexed": false,
@@ -1270,22 +1670,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "indexed": true,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "indexed": false,
@@ -1307,22 +1701,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "indexed": true,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "indexed": false,
@@ -1344,22 +1732,16 @@
                     "anonymous": false,
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "indexed": true,
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "indexed": true,
@@ -1439,6 +1821,44 @@
                     "name": "acceptOwnership",
                     "outputs": [],
                     "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "allRegisteredERC20s",
+                    "outputs": [
+                        {
+                            "internalType": "address[]",
+                            "name": "",
+                            "type": "address[]"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "allRegisteredERC721Ids",
+                    "outputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "address",
+                                    "name": "erc721",
+                                    "type": "address"
+                                },
+                                {
+                                    "internalType": "uint256",
+                                    "name": "id",
+                                    "type": "uint256"
+                                }
+                            ],
+                            "internalType": "struct IReserve.ERC721Id[]",
+                            "name": "",
+                            "type": "tuple[]"
+                        }
+                    ],
+                    "stateMutability": "view",
                     "type": "function"
                 },
                 {
@@ -1608,21 +2028,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "bondERC721Id",
@@ -1633,21 +2046,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -1663,21 +2069,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -1698,21 +2097,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -1747,9 +2139,14 @@
                 {
                     "inputs": [
                         {
-                            "internalType": "bytes32",
+                            "internalType": "address",
                             "name": "",
-                            "type": "bytes32"
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
                         }
                     ],
                     "name": "bondingDiscountPerERC721Id",
@@ -1804,9 +2201,14 @@
                 {
                     "inputs": [
                         {
-                            "internalType": "bytes32",
+                            "internalType": "address",
                             "name": "",
-                            "type": "bytes32"
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
                         }
                     ],
                     "name": "bondingVestingDurationPerERC721Id",
@@ -1849,21 +2251,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "delistERC721IdAsBondable",
@@ -1874,21 +2269,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "delistERC721IdAsRedeemable",
@@ -1912,21 +2300,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "deregisterERC721Id",
@@ -1950,37 +2331,6 @@
                     "name": "executeTx",
                     "outputs": [],
                     "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "inputs": [
-                        {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
-                        }
-                    ],
-                    "name": "hashOfERC721Id",
-                    "outputs": [
-                        {
-                            "internalType": "bytes32",
-                            "name": "",
-                            "type": "bytes32"
-                        }
-                    ],
-                    "stateMutability": "pure",
                     "type": "function"
                 },
                 {
@@ -2037,9 +2387,14 @@
                 {
                     "inputs": [
                         {
-                            "internalType": "bytes32",
+                            "internalType": "address",
                             "name": "",
-                            "type": "bytes32"
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
                         }
                     ],
                     "name": "isERC721IdBondable",
@@ -2056,9 +2411,14 @@
                 {
                     "inputs": [
                         {
-                            "internalType": "bytes32",
+                            "internalType": "address",
                             "name": "",
-                            "type": "bytes32"
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
                         }
                     ],
                     "name": "isERC721IdRedeemable",
@@ -2101,21 +2461,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "listERC721IdAsBondable",
@@ -2126,21 +2479,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "listERC721IdAsRedeemable",
@@ -2217,9 +2563,14 @@
                 {
                     "inputs": [
                         {
-                            "internalType": "bytes32",
+                            "internalType": "address",
                             "name": "",
-                            "type": "bytes32"
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
                         }
                     ],
                     "name": "oraclePerERC721Id",
@@ -2439,21 +2790,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "name": "redeemERC721Id",
@@ -2464,21 +2808,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -2494,21 +2831,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -2529,21 +2859,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -2586,6 +2909,11 @@
                             "internalType": "address",
                             "name": "oracle",
                             "type": "address"
+                        },
+                        {
+                            "internalType": "enum IReserve.AssetType",
+                            "name": "assetType",
+                            "type": "uint8"
                         }
                     ],
                     "name": "registerERC20",
@@ -2596,21 +2924,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -2643,19 +2964,6 @@
                     "type": "function"
                 },
                 {
-                    "inputs": [],
-                    "name": "registeredERC20sSize",
-                    "outputs": [
-                        {
-                            "internalType": "uint256",
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
                     "inputs": [
                         {
                             "internalType": "uint256",
@@ -2673,19 +2981,6 @@
                         {
                             "internalType": "uint256",
                             "name": "id",
-                            "type": "uint256"
-                        }
-                    ],
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "inputs": [],
-                    "name": "registeredERC721IdsSize",
-                    "outputs": [
-                        {
-                            "internalType": "uint256",
-                            "name": "",
                             "type": "uint256"
                         }
                     ],
@@ -2736,21 +3031,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "uint256",
@@ -2784,21 +3072,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "uint256",
@@ -2929,6 +3210,25 @@
                     "inputs": [
                         {
                             "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "typeOfAsset",
+                    "outputs": [
+                        {
+                            "internalType": "enum IReserve.AssetType",
+                            "name": "",
+                            "type": "uint8"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
                             "name": "erc20",
                             "type": "address"
                         },
@@ -2946,21 +3246,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -3012,21 +3305,14 @@
                 {
                     "inputs": [
                         {
-                            "components": [
-                                {
-                                    "internalType": "address",
-                                    "name": "erc721",
-                                    "type": "address"
-                                },
-                                {
-                                    "internalType": "uint256",
-                                    "name": "id",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "internalType": "struct IReserve.ERC721Id",
-                            "name": "erc721Id",
-                            "type": "tuple"
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -3083,40 +3369,88 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "Treasury__AssetIsNotBondable",
+                    "name": "Treasury__ERC20IsNotBondable",
                     "type": "error"
                 },
                 {
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "Treasury__AssetIsNotRedeemable",
+                    "name": "Treasury__ERC20IsNotRedeemable",
                     "type": "error"
                 },
                 {
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "Treasury__AssetIsNotRegistered",
+                    "name": "Treasury__ERC20IsNotRegistered",
                     "type": "error"
                 },
                 {
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "Treasury__ERC721IdIsNotBondable",
+                    "type": "error"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "Treasury__ERC721IdIsNotRedeemable",
+                    "type": "error"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "Treasury__ERC721IdIsNotRegistered",
+                    "type": "error"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
                             "type": "address"
                         },
                         {
@@ -3125,7 +3459,28 @@
                             "type": "address"
                         }
                     ],
-                    "name": "Treasury__StalePriceDeliveredByOracle",
+                    "name": "Treasury__StaleERC20PriceDeliveredByOracle",
+                    "type": "error"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "oracle",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "Treasury__StaleERC721IdPriceDeliveredByOracle",
                     "type": "error"
                 },
                 {
@@ -3159,11 +3514,11 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "AssetDelistedAsBondable",
+                    "name": "ERC20DelistedAsBondable",
                     "type": "event"
                 },
                 {
@@ -3172,11 +3527,11 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "AssetDelistedAsRedeemable",
+                    "name": "ERC20DelistedAsRedeemable",
                     "type": "event"
                 },
                 {
@@ -3185,11 +3540,11 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "AssetDeregistered",
+                    "name": "ERC20ListedAsBondable",
                     "type": "event"
                 },
                 {
@@ -3198,11 +3553,11 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "AssetListedAsBondable",
+                    "name": "ERC20ListedAsRedeemable",
                     "type": "event"
                 },
                 {
@@ -3211,36 +3566,23 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-                            "name": "asset",
-                            "type": "address"
-                        }
-                    ],
-                    "name": "AssetListedAsRedeemable",
-                    "type": "event"
-                },
-                {
-                    "anonymous": false,
-                    "inputs": [
-                        {
-                            "indexed": true,
-                            "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         },
                         {
-                            "indexed": true,
+                            "indexed": false,
                             "internalType": "address",
                             "name": "oldOracle",
                             "type": "address"
                         },
                         {
-                            "indexed": true,
+                            "indexed": false,
                             "internalType": "address",
                             "name": "newOracle",
                             "type": "address"
                         }
                     ],
-                    "name": "AssetOracleUpdated",
+                    "name": "ERC20OracleUpdated",
                     "type": "event"
                 },
                 {
@@ -3249,7 +3591,7 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         },
                         {
@@ -3271,7 +3613,7 @@
                             "type": "uint256"
                         }
                     ],
-                    "name": "AssetPriceUpdated",
+                    "name": "ERC20PriceUpdated",
                     "type": "event"
                 },
                 {
@@ -3280,7 +3622,7 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         },
                         {
@@ -3288,9 +3630,28 @@
                             "internalType": "address",
                             "name": "oracle",
                             "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "enum Treasury.AssetType",
+                            "name": "assetType",
+                            "type": "uint8"
                         }
                     ],
-                    "name": "AssetRegistered",
+                    "name": "ERC20Registered",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "ERC20Unregistered",
                     "type": "event"
                 },
                 {
@@ -3305,7 +3666,7 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         },
                         {
@@ -3315,7 +3676,7 @@
                             "type": "uint256"
                         }
                     ],
-                    "name": "AssetsBonded",
+                    "name": "ERC20sBonded",
                     "type": "event"
                 },
                 {
@@ -3330,7 +3691,7 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         },
                         {
@@ -3340,7 +3701,257 @@
                             "type": "uint256"
                         }
                     ],
-                    "name": "AssetsRedeemed",
+                    "name": "ERC20sRedeemed",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ERC721IdDelistedAsBondable",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ERC721IdDelistedAsRedeemable",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ERC721IdListedAsBondable",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ERC721IdListedAsRedeemable",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "oldOracle",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "newOracle",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "ERC721IdOracleUpdated",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "oracle",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "oldPrice",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "newPrice",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ERC721IdPriceUpdated",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "oracle",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "ERC721IdRegistered",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ERC721IdUnregistered",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "who",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "kttsMinted",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ERC721IdsBonded",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "who",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "kttsBurned",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ERC721IdsRedeemed",
                     "type": "event"
                 },
                 {
@@ -3485,6 +4096,44 @@
                     "type": "function"
                 },
                 {
+                    "inputs": [],
+                    "name": "allRegisteredERC20s",
+                    "outputs": [
+                        {
+                            "internalType": "address[]",
+                            "name": "",
+                            "type": "address[]"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "allRegisteredERC721Ids",
+                    "outputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "address",
+                                    "name": "erc721",
+                                    "type": "address"
+                                },
+                                {
+                                    "internalType": "uint256",
+                                    "name": "id",
+                                    "type": "uint256"
+                                }
+                            ],
+                            "internalType": "struct Treasury.ERC721Id[]",
+                            "name": "",
+                            "type": "tuple[]"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
                     "inputs": [
                         {
                             "internalType": "address",
@@ -3536,6 +4185,25 @@
                     "inputs": [
                         {
                             "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "assetTypeOfERC20",
+                    "outputs": [
+                        {
+                            "internalType": "enum Treasury.AssetType",
+                            "name": "",
+                            "type": "uint8"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
                             "name": "who",
                             "type": "address"
                         }
@@ -3555,7 +4223,7 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         },
                         {
@@ -3564,7 +4232,25 @@
                             "type": "uint256"
                         }
                     ],
-                    "name": "bond",
+                    "name": "bondERC20",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "bondERC721Id",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -3610,11 +4296,11 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "delistAssetAsBondable",
+                    "name": "delistERC20AsBondable",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -3623,11 +4309,16 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc721",
                             "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
-                    "name": "delistAssetAsRedeemable",
+                    "name": "delistERC20AsRedeemable",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -3636,11 +4327,29 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "deregisterAsset",
+                    "name": "delistERC20AsRedeemable",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "delistERC721IdAsBondable",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -3695,7 +4404,7 @@
                             "type": "address"
                         }
                     ],
-                    "name": "isAssetBondable",
+                    "name": "isERC20Bondable",
                     "outputs": [
                         {
                             "internalType": "bool",
@@ -3714,7 +4423,7 @@
                             "type": "address"
                         }
                     ],
-                    "name": "isAssetRedeemable",
+                    "name": "isERC20Redeemable",
                     "outputs": [
                         {
                             "internalType": "bool",
@@ -3729,11 +4438,59 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "isERC721IdBondable",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "isERC721IdRedeemable",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "listAssetAsBondable",
+                    "name": "listERC20AsBondable",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -3742,11 +4499,47 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "listAssetAsRedeemable",
+                    "name": "listERC20AsRedeemable",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "listERC721IdAsBondable",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "listERC721IdAsRedeemable",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -3825,7 +4618,31 @@
                             "type": "address"
                         }
                     ],
-                    "name": "oraclePerAsset",
+                    "name": "oraclePerERC20",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "oraclePerERC721Id",
                     "outputs": [
                         {
                             "internalType": "address",
@@ -3916,7 +4733,7 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc20",
                             "type": "address"
                         },
                         {
@@ -3925,7 +4742,7 @@
                             "type": "uint256"
                         }
                     ],
-                    "name": "redeem",
+                    "name": "redeemERC20",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -3934,8 +4751,54 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc721",
                             "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "redeemERC721Id",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "oracle",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "enum Treasury.AssetType",
+                            "name": "assetType",
+                            "type": "uint8"
+                        }
+                    ],
+                    "name": "registerERC20",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         },
                         {
                             "internalType": "address",
@@ -3943,7 +4806,7 @@
                             "type": "address"
                         }
                     ],
-                    "name": "registerAsset",
+                    "name": "registerERC721Id",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -3956,12 +4819,36 @@
                             "type": "uint256"
                         }
                     ],
-                    "name": "registeredAssets",
+                    "name": "registeredERC20s",
                     "outputs": [
                         {
                             "internalType": "address",
                             "name": "",
                             "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "registeredERC721Ids",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
                         }
                     ],
                     "stateMutability": "view",
@@ -4151,16 +5038,11 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "address",
-                            "name": "oracle",
+                            "name": "erc20",
                             "type": "address"
                         }
                     ],
-                    "name": "updateAssetOracle",
+                    "name": "unregisterERC20",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -4169,7 +5051,66 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "asset",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "unregisterERC721Id",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "oracle",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "updateERC20Oracle",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "oracle",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "updateERC721IdOracle",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
                             "type": "address"
                         },
                         {
@@ -4183,14 +5124,41 @@
                             "type": "uint256"
                         }
                     ],
-                    "name": "withdrawAsset",
+                    "name": "withdrawERC20",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "recipient",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "withdrawERC721Id",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
                 }
             ]
         },
-        "ReserveToken": {
+        "Kolektivo Curacao Token": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "abi": "ERC20"
+        },
+        "Kolektivo Treasury Token": {
             "address": "0x0000000000000000000000000000000000000000",
             "abi": "ERC20"
         },

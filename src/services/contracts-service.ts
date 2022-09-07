@@ -10,7 +10,6 @@ import { IContractsDeploymentService } from './contracts-deployment-service';
 import { callOnce } from '../decorators/call-once';
 
 export enum ContractNames {
-  ELASTICRECEIPTTOKEN = 'ElasticReceiptToken',
   GEONFT = 'GeoNFT',
   ORACLE = 'Oracle',
   RESERVE = 'Reserve',
@@ -39,7 +38,6 @@ export class ContractsService {
   }
 
   private static Contracts = new Map<ContractNames, Contract | null>([
-    [ContractNames.ELASTICRECEIPTTOKEN, null],
     [ContractNames.GEONFT, null],
     [ContractNames.ORACLE, null],
     [ContractNames.RESERVE, null],
