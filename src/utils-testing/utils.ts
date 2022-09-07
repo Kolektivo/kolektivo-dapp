@@ -5,28 +5,48 @@ import { INotificationService } from 'design-system/services';
 import { mock } from 'vitest-mock-extended';
 
 /**
- * create a new instance of the EthereumService in the given container
+ * get or create a instance of IEthereumService in the given container
  * @param container
  * @param network
  * @returns
  */
 export function createEthereumService(container: IContainer, network: AllowedNetworks = 'Alfajores'): Promise<IEthereumService> {
+  let ethereumService: IEthereumService;
+
+  try {
+    ethereumService = container.get(IEthereumService);
+    return Promise.resolve(ethereumService);
+    // eslint-disable-next-line no-empty
+  } catch {}
+
   Registration.instance(IBrowserStorageService, mock<IBrowserStorageService>({})).register(container);
   Registration.instance(INotificationService, mock<INotificationService>({})).register(container);
   Registration.singleton(IEthereumService, EthereumService).register(container);
-
-  const ethereumService = container.get(IEthereumService);
-
+  ethereumService = container.get(IEthereumService);
   return ethereumService.initialize(network).then(() => ethereumService);
 }
 
+/**
+ * get or create a instance of IContractsDeploymentService in the given container
+ * @param container
+ * @param network
+ * @returns
+ */
 export function createContractsDeploymentService(
   container: IContainer,
   network: AllowedNetworks = 'Alfajores',
 ): Promise<IContractsDeploymentService> {
+  let contractsDeploymentService: IContractsDeploymentService;
+
+  try {
+    contractsDeploymentService = container.get(IContractsDeploymentService);
+    return Promise.resolve(contractsDeploymentService);
+    // eslint-disable-next-line no-empty
+  } catch {}
+
   Registration.singleton(IContractsDeploymentService, ContractsDeploymentService).register(container);
 
-  const contractsDeploymentService = container.get(IContractsDeploymentService);
+  contractsDeploymentService = container.get(IContractsDeploymentService);
 
   return contractsDeploymentService.initialize(network).then(() => contractsDeploymentService);
 }
