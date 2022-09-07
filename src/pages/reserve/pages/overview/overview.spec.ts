@@ -1,13 +1,15 @@
 import '../../../../utils-testing/setup-testing';
 import { CurrencyValueConverter } from '../../../../design-system/value-converters';
+import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
 import { Global } from '../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
+import { IReserveStore } from './../../../../stores/reserve-store';
 import { IStore } from '../../../../stores';
 import { Overview } from './overview';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('overview', () => {
   it('should have a k-page component', async () => {
@@ -67,6 +69,15 @@ describe('overview', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [Overview, CurrencyValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
+    return [
+      Overview,
+      EthweiValueConverter,
+      CurrencyValueConverter,
+      Registration.instance(IReserveStore, vi.fn()),
+      Global,
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+    ];
   }
 });

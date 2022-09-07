@@ -34,14 +34,15 @@
     "fetchContracts": "node scripts/fetchContracts.js",
     "buildModels:alfajores": "node scripts/buildModels.js alfajores",
     "buildModels:celo": "node scripts/buildModels.js celo",
-    "test": "vitest",
+    "test": "vitest --watch",
     "coverage": "vitest run --coverage",
     "e2e": "playwright test",
     "e2e:watch": "playwright test --watch",
     "e2e:ci": "URL=$npm_config_url playwright test",
     "vercel:deploy": "vercel --token $npm_config_token",
     "vercel:deploy:production": "vercel --prod --token $npm_config_token",
-    "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope"
+    "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope",
+    "postinstall": "npx eth-sdk"
   },
   "dependencies": {
     "@aurelia/i18n": "dev",
@@ -53,6 +54,7 @@
     "@metamask/detect-provider": "^1.2.0",
     "@walletconnect/web3-provider": "^1.8.0",
     "aurelia": "dev",
+    "axios": "latest",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "chart.js": "^3.9.1",
