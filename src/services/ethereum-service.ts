@@ -6,6 +6,7 @@ import { IBrowserStorageService } from './browser-storage-service';
 import { INotificationService } from '../design-system/services/notification/notification-service';
 import { Signer } from '@ethersproject/abstract-signer';
 import { callOnce } from '../decorators/call-once';
+import { ethers } from 'ethers';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
 import { truncateDecimals } from '../utils';
@@ -112,9 +113,16 @@ export class EthereumService {
   public targetedChainId?: number;
   public lastBlock?: IBlockInfo;
   /**
-   * provided by ethers
+   * provided by CeloProvider.  Enables getBlock to work.
+   * See https://github.com/celo-tools/celo-ethers-wrapper.
+   * Doesn't work well working with contracts and ethers Wallet (or provider.Signer?).
    */
   public readOnlyProvider = {} as BaseProvider;
+  /**
+   * provided by ethers.
+   * Works with Contracts and ethers Wallet (and provider Signers?) (see contracts-service.spec.ts).
+   */
+  public providerForSigners = {} as BaseProvider;
   /**
    * provided by ethers given provider from Web3Modal
    */
@@ -152,12 +160,11 @@ export class EthereumService {
       throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
     }
 
-    // comment out to run DISCONNECTED
     this.readOnlyProvider = new CeloProvider(this.endpoints[this.targetedNetwork]);
+    this.providerForSigners = ethers.getDefaultProvider(this.endpoints[this.targetedNetwork]);
     return this.readOnlyProvider.ready.then(() => {
       this.readOnlyProvider.pollingInterval = 15000;
 
-      // TODO: reenable this when it no longer throws exceptions
       if (!this.blockSubscribed) {
         this.readOnlyProvider.on('block', (blockNumber: number) => {
           void this.handleNewBlock(blockNumber);

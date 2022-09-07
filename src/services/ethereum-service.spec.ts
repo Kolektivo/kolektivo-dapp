@@ -36,4 +36,10 @@ describe('ethereum-service.ts', () => {
     expect(ethereumService.readOnlyProvider).toBeTypeOf('object');
     expect(ethereumService.readOnlyProvider.network).toBeTypeOf('object');
   });
+
+  it('getBlock works', async () => {
+    const container = DI.createContainer();
+    const ethereumService = await createEthereumService(container);
+    expect((await ethereumService.getBlock(1)).number).toBe(1);
+  });
 });
