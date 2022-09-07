@@ -95,23 +95,10 @@ side-bar {
 
       &:active {
         background-color: var(--don-juan-100);
-
-      }
-
-      &.active {
-        k-icon {
-          fill: var(--primary);
-        }
-      }
-
-      &.active k-text::part(content) {
-        color: var(--primary);
-
       }
 
       &:focus-visible {
-        outline: 0;
-        background-color: var(--don-juan-050);
+        outline: 3px solid var(--ocean-blue-200);
       }
     }
   }
