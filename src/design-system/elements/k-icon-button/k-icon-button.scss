@@ -1,33 +1,27 @@
 :host {
-  width: fit-content;
   display: inline-block;
-
-  &.xs {
-    k-button::part(button) {
-      padding: 6px 8px;
-    }
-  }
-
-  &.sm {
-    k-button::part(button) {
-      padding: 8px 12px;
-    }
-  }
-
+  
   k-button::part(button) {
     padding: 10px 16px;
   }
-
-  &.lg {
-    k-button::part(button) {
-      padding: 10px 20px;
-    }
+  
+  k-button::part(xs) {
+    padding: 6px 8px;
   }
 
-  &.xl {
-    k-button::part(button) {
-      padding: 12px 24px;
-    }
+  k-button::part(sm) {
+    padding: 8px 12px;
   }
 
+  k-button::part(lg) {
+    padding: 10px 20px;
+  }
+
+  k-button::part(xl) {
+    padding: 12px 24px;
+  }
+
+  k-icon{
+    margin-left: 0;
+  }
 }

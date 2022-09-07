@@ -1,4 +1,4 @@
-<button style.bind="buttonStyle" disabled.bind="disabled || loading" part="button" class="${size} ${type}"
+<button style.bind="buttonStyle" disabled.bind="disabled || loading" part="button ${size}" class="${size} ${type}"
   class.bind="class" role="button" ...$attrs>
   <k-grid if.bind="!loading" justify-content="center" cols="auto auto" direction="row">
     <slot name="start">
