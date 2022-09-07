@@ -50,18 +50,7 @@ export class ReserveStore {
 
   private getReserveContract(): Reserve | null {
     if (this.reserveContract) return this.reserveContract;
-    if (!this.reserveAddress) {
-      this.reserveAddress = this.getReserveAddress();
-    }
-    if (!this.reserveAddress) {
-      this.logger.error(`No contract address was found for contract name ${ContractNames.RESERVE}`);
-      return null;
-    }
-    this.reserveContract = this.services.contractsService.getContractAtAddress<Reserve>(
-      ContractNames.RESERVE,
-      this.reserveAddress,
-      this.services.contractsService.createProvider(),
-    );
+    this.reserveContract = this.services.contractsService.getContractFor<Reserve>(ContractNames.TREASURY);
     return this.reserveContract;
   }
 

@@ -131,8 +131,7 @@ export class ContractsService {
     return signerOrProvider;
   }
 
-  public async getContractFor<T extends BaseContract>(contractName: ContractNames): Promise<T | null> {
-    await this.assertContracts();
+  public getContractFor<T extends BaseContract>(contractName: ContractNames): T {
     return (ContractsService.Contracts.get(contractName) ?? null) as unknown as T;
   }
 

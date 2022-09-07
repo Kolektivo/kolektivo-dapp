@@ -142,15 +142,7 @@ export class TreasuryStore {
 
   private getTreasuryContract(): Treasury | null {
     if (this.treasuryContract) return this.treasuryContract;
-    const treasuryAddress = this.services.contractsService.getContractAddress(ContractNames.TREASURY);
-    if (treasuryAddress) {
-      this.treasuryContract = this.services.contractsService.getContractAtAddress<Treasury>(
-        ContractNames.TREASURY,
-        treasuryAddress,
-        this.services.contractsService.createProvider(),
-      );
-      return this.treasuryContract;
-    }
-    return null;
+    this.treasuryContract = this.services.contractsService.getContractFor<Treasury>(ContractNames.TREASURY);
+    return this.treasuryContract;
   }
 }
