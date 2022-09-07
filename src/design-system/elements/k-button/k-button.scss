@@ -22,28 +22,31 @@
     }
 
     k-icon {
-      transform: translateX(-8px);
+      margin-left: -8px;
+      padding-right: 10px;
     }
 
     &.xs {
       font-size: 14px;
       letter-spacing: 2%;
-      line-height: 10px;
-      padding: 6px 10px;
+      line-height: 13px;
+      padding: 6px 12px;
 
       k-icon {
-        transform: translateX(-2px);
+        margin-left: -4px;
+        padding-right: 2px;
       }
     }
 
     &.sm {
       font-size: 14px;
       letter-spacing: 1.5%;
-      line-height: 13px;
+      line-height: 15px;
       padding: 8px 16px;
 
       k-icon {
-        transform: translateX(-4px);
+        margin-left: -4px;
+        padding-right: 5px;
       }
     }
 
@@ -51,12 +54,22 @@
       font-size: 18px;
       letter-spacing: 0.5%;
       padding: 10px 28px;
+
+      k-icon {
+        margin-left: -8px;
+        padding-right: 10px;
+      }
     }
 
     &.xl {
       font-size: 20px;
       letter-spacing: 0%;
       padding: 12px 32px;
+
+      k-icon {
+        margin-left: -8px;
+        padding-right: 10px;
+      }
     }
 
     &:hover {
