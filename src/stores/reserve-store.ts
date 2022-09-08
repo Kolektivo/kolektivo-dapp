@@ -31,7 +31,7 @@ export class ReserveStore {
     this.supplyValuation = reserveStatus[1];
     this.backing = reserveStatus[2];
 
-    const erc20s = await contract.registeredERC20s(BigNumber.from(0));
+    // const erc20s = await contract.registeredERC20s(BigNumber.from(0));
     // console.log('erc20s', erc20s);
 
     // let i = 0;
