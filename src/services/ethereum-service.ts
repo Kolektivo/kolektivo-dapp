@@ -113,16 +113,18 @@ export class EthereumService {
   public targetedChainId?: number;
   public lastBlock?: IBlockInfo;
   /**
-   * provided by CeloProvider.  Enables getBlock to work.
-   * See https://github.com/celo-tools/celo-ethers-wrapper.
-   * Doesn't work well working with contracts and ethers Wallet (or provider.Signer?).
+   * Provided by ethers.
    */
   public readOnlyProvider = {} as BaseProvider;
   /**
-   * provided by ethers.
-   * Works with Contracts and ethers Wallet (and provider Signers?) (see contracts-service.spec.ts).
+   * Provided by CeloProvider.  Enables getBlock to work.
+   * Would also be needed if we ever use the following:
+   *   sendTransaction
+   *   getGasPrice
+   *   prepareRequest
+   * See https://github.com/celo-tools/celo-ethers-wrapper.
    */
-  public providerForSigners = {} as BaseProvider;
+  private providerForCeloWithEthers = {} as BaseProvider;
   /**
    * provided by ethers given provider from Web3Modal
    */
@@ -140,6 +142,7 @@ export class EthereumService {
     const block = await this.getBlock(blockNumber);
     this.lastBlock = block;
     this.eventAggregator.publish('Network.NewBlock', block);
+    this.logger.info(`got a new block: ${blockNumber}`);
   }
 
   @callOnce('Ethereum Service')
@@ -160,10 +163,11 @@ export class EthereumService {
       throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
     }
 
-    this.readOnlyProvider = new CeloProvider(this.endpoints[this.targetedNetwork]);
-    this.providerForSigners = ethers.getDefaultProvider(this.endpoints[this.targetedNetwork]);
+    this.readOnlyProvider = ethers.getDefaultProvider(this.endpoints[this.targetedNetwork]);
+    this.providerForCeloWithEthers = new CeloProvider(this.endpoints[this.targetedNetwork]);
+
     return this.readOnlyProvider.ready.then(() => {
-      this.readOnlyProvider.pollingInterval = 15000;
+      this.readOnlyProvider.pollingInterval = 5000;
 
       if (!this.blockSubscribed) {
         this.readOnlyProvider.on('block', (blockNumber: number) => {
@@ -564,7 +568,7 @@ export class EthereumService {
   }
 
   public async getBlock(blockNumber: number): Promise<IBlockInfo> {
-    const block = (await this.readOnlyProvider.getBlock(blockNumber)) as unknown as IBlockInfo;
+    const block = (await this.providerForCeloWithEthers.getBlock(blockNumber)) as unknown as IBlockInfo;
     block.blockDate = new Date(block.timestamp * 1000);
     return block;
   }

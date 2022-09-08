@@ -123,7 +123,7 @@ export class ContractsService {
     }
 
     if (!signerOrProvider) {
-      signerOrProvider = this.ethereumService.providerForSigners;
+      signerOrProvider = this.ethereumService.readOnlyProvider;
     }
 
     return signerOrProvider;
@@ -149,9 +149,9 @@ export class ContractsService {
    * @returns null if not found
    */
   public async getProxyImplementation(proxyContract: Address): Promise<Address | null> {
-    let result = await this.ethereumService.providerForSigners.getStorageAt(proxyContract, ContractsService.storagePositionZep);
+    let result = await this.ethereumService.readOnlyProvider.getStorageAt(proxyContract, ContractsService.storagePositionZep);
     if (BigNumber.from(result).isZero()) {
-      result = await this.ethereumService.providerForSigners.getStorageAt(proxyContract, ContractsService.storagePosition1967);
+      result = await this.ethereumService.readOnlyProvider.getStorageAt(proxyContract, ContractsService.storagePosition1967);
     }
 
     const bnResult = BigNumber.from(result);

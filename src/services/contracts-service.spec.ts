@@ -25,7 +25,7 @@ describe('contracts-service.ts', () => {
     const testTokenAddress = '0x44d7697a76cb17d858196797432f745e4bc5fe39';
     const transferAmount = BigNumber.from(toWei('.001', 18));
 
-    const wallet = new ethers.Wallet(testAccountKey1, ethereumService.providerForSigners);
+    const wallet = new ethers.Wallet(testAccountKey1, ethereumService.readOnlyProvider);
     const token = contractsService.getContractAtAddress<Erc20>(ContractNames.ERC20, testTokenAddress, wallet);
 
     const startingBalanceAccount1 = await token.balanceOf(testAccount1);
