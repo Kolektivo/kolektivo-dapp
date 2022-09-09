@@ -142,7 +142,7 @@ export class EthereumService {
     const block = await this.getBlock(blockNumber);
     this.lastBlock = block;
     this.eventAggregator.publish('Network.NewBlock', block);
-    this.logger.info(`got a new block: ${blockNumber}`);
+    // this.logger.info(`got a new block: ${blockNumber}`);
   }
 
   @callOnce('Ethereum Service')
