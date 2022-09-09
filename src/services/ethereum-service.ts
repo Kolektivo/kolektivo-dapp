@@ -131,22 +131,13 @@ export class EthereumService {
   public walletProvider?: Web3Provider;
 
   public defaultAccountAddress: Address | null = null;
-
-  private blockSubscribed?: boolean;
   /**
    * signer or address
    */
   private defaultAccount?: Signer | Address | null;
 
-  private async handleNewBlock(blockNumber: number): Promise<void> {
-    const block = await this.getBlock(blockNumber);
-    this.lastBlock = block;
-    this.eventAggregator.publish('Network.NewBlock', block);
-    // this.logger.info(`got a new block: ${blockNumber}`);
-  }
-
   @callOnce('Ethereum Service')
-  public async initialize(network: AllowedNetworks): Promise<void> {
+  public initialize(network: AllowedNetworks): void {
     if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: `network` must be specified');
     }
@@ -165,17 +156,6 @@ export class EthereumService {
 
     this.readOnlyProvider = ethers.getDefaultProvider(this.endpoints[this.targetedNetwork]);
     this.providerForCeloWithEthers = new CeloProvider(this.endpoints[this.targetedNetwork]);
-
-    return this.readOnlyProvider.ready.then(() => {
-      this.readOnlyProvider.pollingInterval = 5000;
-
-      if (!this.blockSubscribed) {
-        this.readOnlyProvider.on('block', (blockNumber: number) => {
-          void this.handleNewBlock(blockNumber);
-        });
-        this.blockSubscribed = true;
-      }
-    });
   }
 
   private web3Modal?: Web3Modal;
@@ -556,15 +536,6 @@ export class EthereumService {
       throw new Error('metamaskHasToken: no account');
     }
     this.storageService.lsSet(this.getKeyForMetamaskHasToken(tokenAddress), true);
-  }
-
-  /**
-   * so unit tests will be able to complete
-   */
-  public dispose(): void {
-    this.readOnlyProvider.off('block', (blockNumber: number) => {
-      void this.handleNewBlock(blockNumber);
-    });
   }
 
   public async getBlock(blockNumber: number): Promise<IBlockInfo> {

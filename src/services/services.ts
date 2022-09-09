@@ -36,10 +36,12 @@ export class Services {
     const targetNetwork = ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Celo);
     this.timingService.initialize(targetNetwork);
     this.ipfsService.initialize(this.kolektivoService);
-    return Promise.all([
-      this.ethereumService.initialize(targetNetwork),
-      this.contractsDeploymentService.initialize(targetNetwork).then(() => this.tokenService.initialize()),
-    ]).then(() => this.contractsService.initialize());
+    this.ethereumService.initialize(targetNetwork);
+
+    return this.contractsDeploymentService
+      .initialize(targetNetwork)
+      .then(() => this.contractsService.initialize())
+      .then(() => this.tokenService.initialize());
   }
 
   public static register(container: IContainer): void {
