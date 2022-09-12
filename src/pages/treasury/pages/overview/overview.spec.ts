@@ -8,6 +8,7 @@ import { IDesignSystemConfiguration } from 'design-system';
 import { IPlatform, PLATFORM, Registration } from 'aurelia';
 import { IStore, ITreasuryStore } from 'stores';
 import { Overview } from './overview';
+import { RelativeTime } from './../../../../resources/value-converters/relative-time';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it, vi } from 'vitest';
 import { mock } from 'vitest-mock-extended';
@@ -87,6 +88,7 @@ describe('overview', () => {
       CurrencyValueConverter,
       Overview,
       EthweiValueConverter,
+      RelativeTime,
       CurrencyValueConverter,
       PercentageValueConverter,
       NumberService,

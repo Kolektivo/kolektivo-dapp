@@ -2,11 +2,12 @@ import '../../../../../../utils-testing/setup-testing';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
-import { IStore } from '../../../../../../stores';
+import { IStore, ITreasuryStore } from '../../../../../../stores';
 import { Registration } from 'aurelia';
+import { RelativeTime } from './../../../../../../resources/value-converters/relative-time';
 import { ValueOverTimeCard } from './value-over-time-card';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('value-over-time-card', () => {
   it('should have a k-card component', async () => {
@@ -36,15 +37,6 @@ describe('value-over-time-card', () => {
     expect(filter?.innerHTML).contains('k-text');
   });
 
-  it('should have a line chart', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-over-time-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const chart = appHost.querySelector('k-chart');
-    expect(chart).exist;
-  });
-
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
     const createMockI18nRegistration = () =>
@@ -52,6 +44,14 @@ describe('value-over-time-card', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [ValueOverTimeCard, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
+    return [
+      ValueOverTimeCard,
+      RelativeTime,
+      Global,
+      Registration.instance(ITreasuryStore, vi.fn()),
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+    ];
   }
 });
