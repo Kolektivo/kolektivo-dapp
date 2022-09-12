@@ -21,6 +21,7 @@ export class TreasuryStore {
   private treasuryContract?: Treasury;
   public treasuryAssets?: (Asset | undefined)[] = [];
   public transactions: Transaction[] = [];
+  public valueOverTime?: { date: Date; value: number }[] = [];
   constructor(@IServices private readonly services: IServices, @ILogger private readonly logger: ILogger) {}
 
   public static register(container: IContainer): void {
@@ -42,6 +43,7 @@ export class TreasuryStore {
   @callOnce()
   public async loadAssets(): Promise<void> {
     const contract = this.getTreasuryContract();
+    void this.setValueOverTime();
     if (!contract) return;
     const treasuryAddress = this.services.contractsService.getContractAddress(ContractNames.TREASURY) ?? '';
     if (!treasuryAddress) return;
@@ -86,6 +88,19 @@ export class TreasuryStore {
     };
     asset.total = (this.services.numberService.fromString(fromWei(asset.quantity, 18)) ?? 0) * tokenInfo.price;
     return asset;
+  }
+
+  public async setValueOverTime(): Promise<void> {
+    const contract = this.getTreasuryContract();
+    if (!contract) return;
+    const rebaseEvents = await contract.queryFilter(contract.filters.Rebase());
+
+    this.valueOverTime = await Promise.all(
+      rebaseEvents.map(async (x) => ({
+        date: new Date((await x.getBlock()).timestamp * 1000),
+        value: this.services.numberService.fromString(fromWei(x.args.newScalar, 18)) ?? 0,
+      })),
+    );
   }
 
   private async populateTransactionsForAsset(tokenContract: Erc20 | Erc721, treasuryAddress: string, tokenInfo: ITokenInfo) {
