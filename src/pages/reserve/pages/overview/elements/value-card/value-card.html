@@ -10,7 +10,7 @@
     </k-stack>
     <k-stack gap="5">
       <k-text type="label">Collateralization  Ratio</k-text>
-      <k-text>xxxxx</k-text>
+      <k-text>${reserveStore.backing/10000 | percentage}</k-text>
     </k-stack>
   </k-grid>
 </k-card>
