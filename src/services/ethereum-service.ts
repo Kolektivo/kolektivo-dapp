@@ -137,7 +137,7 @@ export class EthereumService {
   private defaultAccount?: Signer | Address | null;
 
   @callOnce('Ethereum Service')
-  public initialize(network: AllowedNetworks): void {
+  public initialize(network: AllowedNetworks): Promise<unknown> {
     if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: `network` must be specified');
     }
@@ -156,6 +156,7 @@ export class EthereumService {
 
     this.readOnlyProvider = ethers.getDefaultProvider(this.endpoints[this.targetedNetwork]);
     this.providerForCeloWithEthers = new CeloProvider(this.endpoints[this.targetedNetwork]);
+    return this.readOnlyProvider._networkPromise as Promise<unknown>;
   }
 
   private web3Modal?: Web3Modal;

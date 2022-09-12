@@ -10,12 +10,12 @@ import { mock } from 'vitest-mock-extended';
  * @param network
  * @returns
  */
-export function createEthereumService(container: IContainer, network: AllowedNetworks = 'Alfajores'): IEthereumService {
+export function createEthereumService(container: IContainer, network: AllowedNetworks = 'Alfajores'): Promise<IEthereumService> {
   let ethereumService: IEthereumService;
 
   try {
     ethereumService = container.get(IEthereumService);
-    return ethereumService;
+    return Promise.resolve(ethereumService);
     // eslint-disable-next-line no-empty
   } catch {}
 
@@ -23,8 +23,7 @@ export function createEthereumService(container: IContainer, network: AllowedNet
   Registration.instance(INotificationService, mock<INotificationService>({})).register(container);
   Registration.singleton(IEthereumService, EthereumService).register(container);
   ethereumService = container.get(IEthereumService);
-  ethereumService.initialize(network);
-  return ethereumService;
+  return ethereumService.initialize(network).then(() => ethereumService);
 }
 
 /**

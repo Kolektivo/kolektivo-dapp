@@ -10,7 +10,7 @@ import { toWei } from './ethereum-service';
 describe('contracts-service.ts', () => {
   it('transfers a token', async () => {
     const container = DI.createContainer();
-    const ethereumService = createEthereumService(container);
+    const ethereumService = await createEthereumService(container);
     await createContractsDeploymentService(container);
     ContractsService.register(container);
     const contractsService = container.get(IContractsService);
