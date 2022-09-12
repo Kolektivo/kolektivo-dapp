@@ -94,9 +94,11 @@ Typescript binding for Ethereum contracts
 
 - `@typechain/ethers-v5: ^10.1.0`
 
+
 ---
 
-### **Seed Offering**
+
+# **Seed Offering**
 
 The Kolektivo Network, a coalition of innovators, impact funders, and environmental stewards, announces its seed token offering. 
 
