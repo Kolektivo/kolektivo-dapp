@@ -79,18 +79,18 @@ Type-safe SDK for Ethereum smart contracts:
 - `@dethcrypto/eth-sdk: ^0.3.3`
 - `@dethcrypto/eth-sdk-client: ^0.1.6`
 
-Wallet providers: 
+Wallet providers:
 
 - `@walletconnect/web3-provider: ^1.8.0`
 - `web3modal: ^1.9.9`
 - `@metamask/detect-provider: ^1.2.0`
 
-Interactions with Ethereum and wallet provider
+Interactions with Ethereum and wallet provider:
 
 - `ethers: ^5.7.0`
 - `@celo-tools/celo-ethers-wrapper: ^0.3.0`
 
-Typescript binding for Ethereum contracts
+Typescript binding for Ethereum contracts:
 
 - `@typechain/ethers-v5: ^10.1.0`
 
