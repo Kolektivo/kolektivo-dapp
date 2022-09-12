@@ -34,7 +34,7 @@
     "fetchContracts": "node scripts/fetchContracts.js",
     "buildModels:alfajores": "node scripts/buildModels.js alfajores",
     "buildModels:celo": "node scripts/buildModels.js celo",
-    "test": "vitest --watch",
+    "test": "vitest",
     "coverage": "vitest run --coverage",
     "e2e": "playwright test",
     "e2e:watch": "playwright test --watch",
