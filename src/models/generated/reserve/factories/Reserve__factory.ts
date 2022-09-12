@@ -161,22 +161,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
         indexed: false,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -211,7 +205,7 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "DebtPayed",
+    name: "DebtPaid",
     type: "event",
   },
   {
@@ -288,6 +282,12 @@ const _abi = [
         name: "erc20",
         type: "address",
       },
+      {
+        indexed: false,
+        internalType: "enum IReserve.AssetType",
+        name: "assetType",
+        type: "uint8",
+      },
     ],
     name: "ERC20Registered",
     type: "event",
@@ -296,22 +296,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        indexed: true,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        indexed: false,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "ERC721IdDelistedAsBondable",
@@ -321,22 +315,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        indexed: true,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        indexed: false,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "ERC721IdDelistedAsRedeemable",
@@ -346,22 +334,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        indexed: true,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        indexed: false,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "ERC721IdDeregistered",
@@ -371,22 +353,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        indexed: true,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        indexed: false,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "ERC721IdListedAsBondable",
@@ -396,22 +372,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        indexed: true,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        indexed: false,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "ERC721IdListedAsRedeemable",
@@ -421,22 +391,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        indexed: true,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        indexed: false,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "ERC721IdRegistered",
@@ -509,22 +473,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
         indexed: false,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -665,22 +623,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        indexed: true,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        indexed: false,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -702,22 +654,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        indexed: true,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        indexed: false,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -739,22 +685,16 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        indexed: true,
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        indexed: false,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         indexed: true,
@@ -834,6 +774,44 @@ const _abi = [
     name: "acceptOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "allRegisteredERC20s",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "allRegisteredERC721Ids",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "erc721",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct IReserve.ERC721Id[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -1003,21 +981,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "bondERC721Id",
@@ -1028,21 +999,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "address",
@@ -1058,21 +1022,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "address",
@@ -1093,21 +1050,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "address",
@@ -1142,9 +1092,14 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "address",
         name: "",
-        type: "bytes32",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     name: "bondingDiscountPerERC721Id",
@@ -1199,9 +1154,14 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "address",
         name: "",
-        type: "bytes32",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     name: "bondingVestingDurationPerERC721Id",
@@ -1244,21 +1204,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "delistERC721IdAsBondable",
@@ -1269,21 +1222,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "delistERC721IdAsRedeemable",
@@ -1307,21 +1253,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "deregisterERC721Id",
@@ -1345,37 +1284,6 @@ const _abi = [
     name: "executeTx",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
-      },
-    ],
-    name: "hashOfERC721Id",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "pure",
     type: "function",
   },
   {
@@ -1432,9 +1340,14 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "address",
         name: "",
-        type: "bytes32",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     name: "isERC721IdBondable",
@@ -1451,9 +1364,14 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "address",
         name: "",
-        type: "bytes32",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     name: "isERC721IdRedeemable",
@@ -1496,21 +1414,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "listERC721IdAsBondable",
@@ -1521,21 +1432,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "listERC721IdAsRedeemable",
@@ -1612,9 +1516,14 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "address",
         name: "",
-        type: "bytes32",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     name: "oraclePerERC721Id",
@@ -1834,21 +1743,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
     name: "redeemERC721Id",
@@ -1859,21 +1761,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "address",
@@ -1889,21 +1784,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "address",
@@ -1924,21 +1812,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "address",
@@ -1982,6 +1863,11 @@ const _abi = [
         name: "oracle",
         type: "address",
       },
+      {
+        internalType: "enum IReserve.AssetType",
+        name: "assetType",
+        type: "uint8",
+      },
     ],
     name: "registerERC20",
     outputs: [],
@@ -1991,21 +1877,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "address",
@@ -2038,19 +1917,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "registeredERC20sSize",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -2068,19 +1934,6 @@ const _abi = [
       {
         internalType: "uint256",
         name: "id",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "registeredERC721IdsSize",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
         type: "uint256",
       },
     ],
@@ -2131,21 +1984,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "uint256",
@@ -2179,21 +2025,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "uint256",
@@ -2324,6 +2163,25 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "typeOfAsset",
+    outputs: [
+      {
+        internalType: "enum IReserve.AssetType",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "erc20",
         type: "address",
       },
@@ -2341,21 +2199,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "address",
@@ -2407,21 +2258,14 @@ const _abi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "address",
-            name: "erc721",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IReserve.ERC721Id",
-        name: "erc721Id",
-        type: "tuple",
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
       {
         internalType: "address",

@@ -19,7 +19,7 @@ export class TreasuryStore {
   public treasuryDistribution?: number;
   public reservesDistribution?: number;
   private treasuryContract?: Treasury;
-  public treasuryAssets: Asset[] = [];
+  public treasuryAssets: (Asset | undefined)[] = [];
   public transactions: Transaction[] = [];
   constructor(@IServices private readonly services: IServices, @ILogger private readonly logger: ILogger) {}
 
@@ -28,7 +28,7 @@ export class TreasuryStore {
   }
   public get treasuryValue(): number {
     if (this.treasuryAssets.length === 0) return 0;
-    return this.treasuryAssets.map((x) => x.total).sum();
+    return this.treasuryAssets.map((x) => x?.total ?? 0).sum();
   }
   public async loadTokenData(): Promise<void> {
     if (this.totalValuation && this.totalSupply) return;
@@ -46,28 +46,18 @@ export class TreasuryStore {
     const treasuryAddress = this.services.contractsService.getContractAddress(ContractNames.TREASURY) ?? '';
     if (!treasuryAddress) return;
 
-    //TODO: figure out the size of the array from the contract so we can do it async all
-    //const arraySize = await this.contractService.getArraySize(treasuryAddress);
-    //console.log('Array Size', BigNumber.from(arraySize).toNumber());
-
-    let i = 0;
-    while (i != -1) {
-      try {
-        const asset = await this.getTreasuryAsset(contract, treasuryAddress, i);
-        if (asset) {
-          this.treasuryAssets.push(asset);
-        }
-        i++;
-      } catch (ex) {
-        i = -1;
-      }
-    }
+    //get all token addresses from the contract
+    const addresses = (
+      await Promise.all([contract.allRegisteredERC20s(), contract.allRegisteredERC721Ids().then((x) => x.map((y) => y.erc721))])
+    ).flatMap((x) => x);
+    //get all token asset data
+    this.treasuryAssets = await Promise.all(
+      addresses.map((address): Promise<Asset | undefined> => this.getTreasuryAsset(address, contract, treasuryAddress)),
+    );
   }
 
-  private async getTreasuryAsset(contract: Treasury, treasuryAddress: string, i: number): Promise<Asset | undefined> {
-    const assetAddress = await contract.registeredAssets(BigNumber.from(i));
-    if (!assetAddress) return;
-    const oracleAddress = await contract.oraclePerAsset(assetAddress); // get the oracle address for the given asset
+  private async getTreasuryAsset(assetAddress: string, contract: Treasury, treasuryAddress: string): Promise<Asset | undefined> {
+    const oracleAddress = await contract.oraclePerERC20(assetAddress); // get the oracle address for the given asset
     if (!oracleAddress) return;
     const oracleContract = this.services.contractsService.getContractAtAddress<Oracle>(ContractNames.ORACLE, oracleAddress); //get the oracle contract for the given oracle address
     const data = await oracleContract.getData(); // get the data from the oracle contract
@@ -91,7 +81,7 @@ export class TreasuryStore {
       token: tokenInfo,
       total: 0,
     };
-    asset.total = this.services.numberService.fromString(fromWei(asset.quantity.mul(asset.token.price ?? 0), 18)) ?? 0;
+    asset.total = (this.services.numberService.fromString(fromWei(asset.quantity, 18)) ?? 0) * tokenInfo.price;
     return asset;
   }
 
@@ -104,7 +94,6 @@ export class TreasuryStore {
     const withdrawls = await tokenContract.queryFilter(tokenContract.filters.Transfer(treasuryAddress));
     const mappedWithdrawls = await this.mapTransactions(withdrawls, 'withdrawl', tokenInfo);
     this.transactions.push(...mappedWithdrawls);
-    //console.log('Mapped Transactions', this.transactions);
   }
 
   private async mapTransactions(transactions: TransferEvent[], type: 'deposit' | 'withdrawl', tokenInfo: ITokenInfo): Promise<Transaction[]> {

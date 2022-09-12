@@ -42,6 +42,8 @@ export declare namespace IReserve {
 export interface ReserveInterface extends utils.Interface {
   functions: {
     "acceptOwnership()": FunctionFragment;
+    "allRegisteredERC20s()": FunctionFragment;
+    "allRegisteredERC721Ids()": FunctionFragment;
     "bondERC20(address,uint256)": FunctionFragment;
     "bondERC20All(address)": FunctionFragment;
     "bondERC20AllFrom(address,address)": FunctionFragment;
@@ -50,36 +52,35 @@ export interface ReserveInterface extends utils.Interface {
     "bondERC20From(address,address,uint256)": FunctionFragment;
     "bondERC20FromTo(address,address,address,uint256)": FunctionFragment;
     "bondERC20To(address,address,uint256)": FunctionFragment;
-    "bondERC721Id((address,uint256))": FunctionFragment;
-    "bondERC721IdFrom((address,uint256),address)": FunctionFragment;
-    "bondERC721IdFromTo((address,uint256),address,address)": FunctionFragment;
-    "bondERC721IdTo((address,uint256),address)": FunctionFragment;
+    "bondERC721Id(address,uint256)": FunctionFragment;
+    "bondERC721IdFrom(address,uint256,address)": FunctionFragment;
+    "bondERC721IdFromTo(address,uint256,address,address)": FunctionFragment;
+    "bondERC721IdTo(address,uint256,address)": FunctionFragment;
     "bondingDiscountPerERC20(address)": FunctionFragment;
-    "bondingDiscountPerERC721Id(bytes32)": FunctionFragment;
+    "bondingDiscountPerERC721Id(address,uint256)": FunctionFragment;
     "bondingLimitPerERC20(address)": FunctionFragment;
     "bondingVestingDurationPerERC20(address)": FunctionFragment;
-    "bondingVestingDurationPerERC721Id(bytes32)": FunctionFragment;
+    "bondingVestingDurationPerERC721Id(address,uint256)": FunctionFragment;
     "delistERC20AsBondable(address)": FunctionFragment;
     "delistERC20AsRedeemable(address)": FunctionFragment;
-    "delistERC721IdAsBondable((address,uint256))": FunctionFragment;
-    "delistERC721IdAsRedeemable((address,uint256))": FunctionFragment;
+    "delistERC721IdAsBondable(address,uint256)": FunctionFragment;
+    "delistERC721IdAsRedeemable(address,uint256)": FunctionFragment;
     "deregisterERC20(address)": FunctionFragment;
-    "deregisterERC721Id((address,uint256))": FunctionFragment;
+    "deregisterERC721Id(address,uint256)": FunctionFragment;
     "executeTx(address,bytes)": FunctionFragment;
-    "hashOfERC721Id((address,uint256))": FunctionFragment;
     "incurDebt(uint256)": FunctionFragment;
     "isERC20Bondable(address)": FunctionFragment;
     "isERC20Redeemable(address)": FunctionFragment;
-    "isERC721IdBondable(bytes32)": FunctionFragment;
-    "isERC721IdRedeemable(bytes32)": FunctionFragment;
+    "isERC721IdBondable(address,uint256)": FunctionFragment;
+    "isERC721IdRedeemable(address,uint256)": FunctionFragment;
     "listERC20AsBondable(address)": FunctionFragment;
     "listERC20AsRedeemable(address)": FunctionFragment;
-    "listERC721IdAsBondable((address,uint256))": FunctionFragment;
-    "listERC721IdAsRedeemable((address,uint256))": FunctionFragment;
+    "listERC721IdAsBondable(address,uint256)": FunctionFragment;
+    "listERC721IdAsRedeemable(address,uint256)": FunctionFragment;
     "minBacking()": FunctionFragment;
     "onERC721Received(address,address,uint256,bytes)": FunctionFragment;
     "oraclePerERC20(address)": FunctionFragment;
-    "oraclePerERC721Id(bytes32)": FunctionFragment;
+    "oraclePerERC721Id(address,uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "payDebt(uint256)": FunctionFragment;
     "pendingOwner()": FunctionFragment;
@@ -91,22 +92,20 @@ export interface ReserveInterface extends utils.Interface {
     "redeemERC20From(address,address,uint256)": FunctionFragment;
     "redeemERC20FromTo(address,address,address,uint256)": FunctionFragment;
     "redeemERC20To(address,address,uint256)": FunctionFragment;
-    "redeemERC721Id((address,uint256))": FunctionFragment;
-    "redeemERC721IdFrom((address,uint256),address)": FunctionFragment;
-    "redeemERC721IdFromTo((address,uint256),address,address)": FunctionFragment;
-    "redeemERC721IdTo((address,uint256),address)": FunctionFragment;
+    "redeemERC721Id(address,uint256)": FunctionFragment;
+    "redeemERC721IdFrom(address,uint256,address)": FunctionFragment;
+    "redeemERC721IdFromTo(address,uint256,address,address)": FunctionFragment;
+    "redeemERC721IdTo(address,uint256,address)": FunctionFragment;
     "redeemLimitPerERC20(address)": FunctionFragment;
-    "registerERC20(address,address)": FunctionFragment;
-    "registerERC721Id((address,uint256),address)": FunctionFragment;
+    "registerERC20(address,address,uint8)": FunctionFragment;
+    "registerERC721Id(address,uint256,address)": FunctionFragment;
     "registeredERC20s(uint256)": FunctionFragment;
-    "registeredERC20sSize()": FunctionFragment;
     "registeredERC721Ids(uint256)": FunctionFragment;
-    "registeredERC721IdsSize()": FunctionFragment;
     "reserveStatus()": FunctionFragment;
     "setBondingDiscountForERC20(address,uint256)": FunctionFragment;
-    "setBondingDiscountForERC721Id((address,uint256),uint256)": FunctionFragment;
+    "setBondingDiscountForERC721Id(address,uint256,uint256)": FunctionFragment;
     "setBondingVestingForERC20(address,uint256)": FunctionFragment;
-    "setBondingVestingForERC721Id((address,uint256),uint256)": FunctionFragment;
+    "setBondingVestingForERC721Id(address,uint256,uint256)": FunctionFragment;
     "setERC20BondingLimit(address,uint256)": FunctionFragment;
     "setERC20RedeemLimit(address,uint256)": FunctionFragment;
     "setMinBacking(uint256)": FunctionFragment;
@@ -115,16 +114,19 @@ export interface ReserveInterface extends utils.Interface {
     "setVestingVault(address)": FunctionFragment;
     "token()": FunctionFragment;
     "tokenOracle()": FunctionFragment;
+    "typeOfAsset(address)": FunctionFragment;
     "updateOracleForERC20(address,address)": FunctionFragment;
-    "updateOracleForERC721Id((address,uint256),address)": FunctionFragment;
+    "updateOracleForERC721Id(address,uint256,address)": FunctionFragment;
     "vestingVault()": FunctionFragment;
     "withdrawERC20(address,address,uint256)": FunctionFragment;
-    "withdrawERC721Id((address,uint256),address)": FunctionFragment;
+    "withdrawERC721Id(address,uint256,address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "acceptOwnership"
+      | "allRegisteredERC20s"
+      | "allRegisteredERC721Ids"
       | "bondERC20"
       | "bondERC20All"
       | "bondERC20AllFrom"
@@ -149,7 +151,6 @@ export interface ReserveInterface extends utils.Interface {
       | "deregisterERC20"
       | "deregisterERC721Id"
       | "executeTx"
-      | "hashOfERC721Id"
       | "incurDebt"
       | "isERC20Bondable"
       | "isERC20Redeemable"
@@ -182,9 +183,7 @@ export interface ReserveInterface extends utils.Interface {
       | "registerERC20"
       | "registerERC721Id"
       | "registeredERC20s"
-      | "registeredERC20sSize"
       | "registeredERC721Ids"
-      | "registeredERC721IdsSize"
       | "reserveStatus"
       | "setBondingDiscountForERC20"
       | "setBondingDiscountForERC721Id"
@@ -198,6 +197,7 @@ export interface ReserveInterface extends utils.Interface {
       | "setVestingVault"
       | "token"
       | "tokenOracle"
+      | "typeOfAsset"
       | "updateOracleForERC20"
       | "updateOracleForERC721Id"
       | "vestingVault"
@@ -207,6 +207,14 @@ export interface ReserveInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "acceptOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allRegisteredERC20s",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allRegisteredERC721Ids",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -260,23 +268,32 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "bondERC721Id",
-    values: [IReserve.ERC721IdStruct]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "bondERC721IdFrom",
-    values: [IReserve.ERC721IdStruct, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "bondERC721IdFromTo",
     values: [
-      IReserve.ERC721IdStruct,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "bondERC721IdTo",
-    values: [IReserve.ERC721IdStruct, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "bondingDiscountPerERC20",
@@ -284,7 +301,7 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "bondingDiscountPerERC721Id",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "bondingLimitPerERC20",
@@ -296,7 +313,7 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "bondingVestingDurationPerERC721Id",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "delistERC20AsBondable",
@@ -308,11 +325,11 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "delistERC721IdAsBondable",
-    values: [IReserve.ERC721IdStruct]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "delistERC721IdAsRedeemable",
-    values: [IReserve.ERC721IdStruct]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "deregisterERC20",
@@ -320,15 +337,11 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "deregisterERC721Id",
-    values: [IReserve.ERC721IdStruct]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "executeTx",
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "hashOfERC721Id",
-    values: [IReserve.ERC721IdStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "incurDebt",
@@ -344,11 +357,11 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "isERC721IdBondable",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "isERC721IdRedeemable",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "listERC20AsBondable",
@@ -360,11 +373,11 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "listERC721IdAsBondable",
-    values: [IReserve.ERC721IdStruct]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "listERC721IdAsRedeemable",
-    values: [IReserve.ERC721IdStruct]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "minBacking",
@@ -385,7 +398,7 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "oraclePerERC721Id",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -447,23 +460,32 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "redeemERC721Id",
-    values: [IReserve.ERC721IdStruct]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemERC721IdFrom",
-    values: [IReserve.ERC721IdStruct, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemERC721IdFromTo",
     values: [
-      IReserve.ERC721IdStruct,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemERC721IdTo",
-    values: [IReserve.ERC721IdStruct, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemLimitPerERC20",
@@ -471,27 +493,27 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "registerERC20",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerERC721Id",
-    values: [IReserve.ERC721IdStruct, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registeredERC20s",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "registeredERC20sSize",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "registeredERC721Ids",
     values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "registeredERC721IdsSize",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "reserveStatus",
@@ -503,7 +525,11 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setBondingDiscountForERC721Id",
-    values: [IReserve.ERC721IdStruct, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "setBondingVestingForERC20",
@@ -511,7 +537,11 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setBondingVestingForERC721Id",
-    values: [IReserve.ERC721IdStruct, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "setERC20BondingLimit",
@@ -543,12 +573,20 @@ export interface ReserveInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "typeOfAsset",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "updateOracleForERC20",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "updateOracleForERC721Id",
-    values: [IReserve.ERC721IdStruct, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "vestingVault",
@@ -564,11 +602,23 @@ export interface ReserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawERC721Id",
-    values: [IReserve.ERC721IdStruct, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "acceptOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "allRegisteredERC20s",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "allRegisteredERC721Ids",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "bondERC20", data: BytesLike): Result;
@@ -661,10 +711,6 @@ export interface ReserveInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "executeTx", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "hashOfERC721Id",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "incurDebt", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isERC20Bondable",
@@ -782,15 +828,7 @@ export interface ReserveInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "registeredERC20sSize",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "registeredERC721Ids",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registeredERC721IdsSize",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -843,6 +881,10 @@ export interface ReserveInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "typeOfAsset",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "updateOracleForERC20",
     data: BytesLike
   ): Result;
@@ -866,33 +908,33 @@ export interface ReserveInterface extends utils.Interface {
   events: {
     "BackingUpdated(uint256,uint256)": EventFragment;
     "BondedERC20(address,uint256,uint256)": EventFragment;
-    "BondedERC721(tuple,uint256)": EventFragment;
+    "BondedERC721(address,uint256,uint256)": EventFragment;
     "DebtIncurred(uint256)": EventFragment;
-    "DebtPayed(uint256)": EventFragment;
+    "DebtPaid(uint256)": EventFragment;
     "ERC20DelistedAsBondable(address)": EventFragment;
     "ERC20DelistedAsRedeemable(address)": EventFragment;
     "ERC20Deregistered(address)": EventFragment;
     "ERC20ListedAsBondable(address)": EventFragment;
     "ERC20ListedAsRedeemable(address)": EventFragment;
-    "ERC20Registered(address)": EventFragment;
-    "ERC721IdDelistedAsBondable(tuple)": EventFragment;
-    "ERC721IdDelistedAsRedeemable(tuple)": EventFragment;
-    "ERC721IdDeregistered(tuple)": EventFragment;
-    "ERC721IdListedAsBondable(tuple)": EventFragment;
-    "ERC721IdListedAsRedeemable(tuple)": EventFragment;
-    "ERC721IdRegistered(tuple)": EventFragment;
+    "ERC20Registered(address,uint8)": EventFragment;
+    "ERC721IdDelistedAsBondable(address,uint256)": EventFragment;
+    "ERC721IdDelistedAsRedeemable(address,uint256)": EventFragment;
+    "ERC721IdDeregistered(address,uint256)": EventFragment;
+    "ERC721IdListedAsBondable(address,uint256)": EventFragment;
+    "ERC721IdListedAsRedeemable(address,uint256)": EventFragment;
+    "ERC721IdRegistered(address,uint256)": EventFragment;
     "NewOwner(address,address)": EventFragment;
     "NewPendingOwner(address,address)": EventFragment;
     "RedeemedERC20(address,uint256,uint256)": EventFragment;
-    "RedeemedERC721Id(tuple,uint256)": EventFragment;
+    "RedeemedERC721Id(address,uint256,uint256)": EventFragment;
     "SetERC20BondingDiscount(address,uint256,uint256)": EventFragment;
     "SetERC20BondingLimit(address,uint256,uint256)": EventFragment;
     "SetERC20BondingVesting(address,uint256,uint256)": EventFragment;
     "SetERC20Oracle(address,address,address)": EventFragment;
     "SetERC20RedeemLimit(address,uint256,uint256)": EventFragment;
-    "SetERC721IdBondingDiscount(tuple,uint256,uint256)": EventFragment;
-    "SetERC721IdBondingVesting(tuple,uint256,uint256)": EventFragment;
-    "SetERC721IdOracle(tuple,address,address)": EventFragment;
+    "SetERC721IdBondingDiscount(address,uint256,uint256,uint256)": EventFragment;
+    "SetERC721IdBondingVesting(address,uint256,uint256,uint256)": EventFragment;
+    "SetERC721IdOracle(address,uint256,address,address)": EventFragment;
     "SetMinBacking(uint256,uint256)": EventFragment;
     "SetTokenOracle(address,address)": EventFragment;
     "SetVestingVault(address,address)": EventFragment;
@@ -902,7 +944,7 @@ export interface ReserveInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "BondedERC20"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "BondedERC721"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DebtIncurred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DebtPayed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DebtPaid"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20DelistedAsBondable"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20DelistedAsRedeemable"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20Deregistered"): EventFragment;
@@ -958,11 +1000,12 @@ export type BondedERC20Event = TypedEvent<
 export type BondedERC20EventFilter = TypedEventFilter<BondedERC20Event>;
 
 export interface BondedERC721EventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
   tokensMinted: BigNumber;
 }
 export type BondedERC721Event = TypedEvent<
-  [IReserve.ERC721IdStructOutput, BigNumber],
+  [string, BigNumber, BigNumber],
   BondedERC721EventObject
 >;
 
@@ -978,12 +1021,12 @@ export type DebtIncurredEvent = TypedEvent<
 
 export type DebtIncurredEventFilter = TypedEventFilter<DebtIncurredEvent>;
 
-export interface DebtPayedEventObject {
+export interface DebtPaidEventObject {
   tokenAmount: BigNumber;
 }
-export type DebtPayedEvent = TypedEvent<[BigNumber], DebtPayedEventObject>;
+export type DebtPaidEvent = TypedEvent<[BigNumber], DebtPaidEventObject>;
 
-export type DebtPayedEventFilter = TypedEventFilter<DebtPayedEvent>;
+export type DebtPaidEventFilter = TypedEventFilter<DebtPaidEvent>;
 
 export interface ERC20DelistedAsBondableEventObject {
   erc20: string;
@@ -1042,19 +1085,21 @@ export type ERC20ListedAsRedeemableEventFilter =
 
 export interface ERC20RegisteredEventObject {
   erc20: string;
+  assetType: number;
 }
 export type ERC20RegisteredEvent = TypedEvent<
-  [string],
+  [string, number],
   ERC20RegisteredEventObject
 >;
 
 export type ERC20RegisteredEventFilter = TypedEventFilter<ERC20RegisteredEvent>;
 
 export interface ERC721IdDelistedAsBondableEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
 }
 export type ERC721IdDelistedAsBondableEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput],
+  [string, BigNumber],
   ERC721IdDelistedAsBondableEventObject
 >;
 
@@ -1062,10 +1107,11 @@ export type ERC721IdDelistedAsBondableEventFilter =
   TypedEventFilter<ERC721IdDelistedAsBondableEvent>;
 
 export interface ERC721IdDelistedAsRedeemableEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
 }
 export type ERC721IdDelistedAsRedeemableEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput],
+  [string, BigNumber],
   ERC721IdDelistedAsRedeemableEventObject
 >;
 
@@ -1073,10 +1119,11 @@ export type ERC721IdDelistedAsRedeemableEventFilter =
   TypedEventFilter<ERC721IdDelistedAsRedeemableEvent>;
 
 export interface ERC721IdDeregisteredEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
 }
 export type ERC721IdDeregisteredEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput],
+  [string, BigNumber],
   ERC721IdDeregisteredEventObject
 >;
 
@@ -1084,10 +1131,11 @@ export type ERC721IdDeregisteredEventFilter =
   TypedEventFilter<ERC721IdDeregisteredEvent>;
 
 export interface ERC721IdListedAsBondableEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
 }
 export type ERC721IdListedAsBondableEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput],
+  [string, BigNumber],
   ERC721IdListedAsBondableEventObject
 >;
 
@@ -1095,10 +1143,11 @@ export type ERC721IdListedAsBondableEventFilter =
   TypedEventFilter<ERC721IdListedAsBondableEvent>;
 
 export interface ERC721IdListedAsRedeemableEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
 }
 export type ERC721IdListedAsRedeemableEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput],
+  [string, BigNumber],
   ERC721IdListedAsRedeemableEventObject
 >;
 
@@ -1106,10 +1155,11 @@ export type ERC721IdListedAsRedeemableEventFilter =
   TypedEventFilter<ERC721IdListedAsRedeemableEvent>;
 
 export interface ERC721IdRegisteredEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
 }
 export type ERC721IdRegisteredEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput],
+  [string, BigNumber],
   ERC721IdRegisteredEventObject
 >;
 
@@ -1148,11 +1198,12 @@ export type RedeemedERC20Event = TypedEvent<
 export type RedeemedERC20EventFilter = TypedEventFilter<RedeemedERC20Event>;
 
 export interface RedeemedERC721IdEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
   tokensBurned: BigNumber;
 }
 export type RedeemedERC721IdEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput, BigNumber],
+  [string, BigNumber, BigNumber],
   RedeemedERC721IdEventObject
 >;
 
@@ -1224,12 +1275,13 @@ export type SetERC20RedeemLimitEventFilter =
   TypedEventFilter<SetERC20RedeemLimitEvent>;
 
 export interface SetERC721IdBondingDiscountEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
   oldDiscount: BigNumber;
   newDiscount: BigNumber;
 }
 export type SetERC721IdBondingDiscountEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput, BigNumber, BigNumber],
+  [string, BigNumber, BigNumber, BigNumber],
   SetERC721IdBondingDiscountEventObject
 >;
 
@@ -1237,12 +1289,13 @@ export type SetERC721IdBondingDiscountEventFilter =
   TypedEventFilter<SetERC721IdBondingDiscountEvent>;
 
 export interface SetERC721IdBondingVestingEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
   oldVestingDuration: BigNumber;
   newVestingDuration: BigNumber;
 }
 export type SetERC721IdBondingVestingEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput, BigNumber, BigNumber],
+  [string, BigNumber, BigNumber, BigNumber],
   SetERC721IdBondingVestingEventObject
 >;
 
@@ -1250,12 +1303,13 @@ export type SetERC721IdBondingVestingEventFilter =
   TypedEventFilter<SetERC721IdBondingVestingEvent>;
 
 export interface SetERC721IdOracleEventObject {
-  erc721Id: IReserve.ERC721IdStructOutput;
+  erc721: string;
+  id: BigNumber;
   oldOracle: string;
   newOracle: string;
 }
 export type SetERC721IdOracleEvent = TypedEvent<
-  [IReserve.ERC721IdStructOutput, string, string],
+  [string, BigNumber, string, string],
   SetERC721IdOracleEventObject
 >;
 
@@ -1326,6 +1380,12 @@ export interface Reserve extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    allRegisteredERC20s(overrides?: CallOverrides): Promise<[string[]]>;
+
+    allRegisteredERC721Ids(
+      overrides?: CallOverrides
+    ): Promise<[IReserve.ERC721IdStructOutput[]]>;
+
     bondERC20(
       erc20: PromiseOrValue<string>,
       erc20Amount: PromiseOrValue<BigNumberish>,
@@ -1379,25 +1439,29 @@ export interface Reserve extends BaseContract {
     ): Promise<ContractTransaction>;
 
     bondERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     bondERC721IdFrom(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     bondERC721IdFromTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     bondERC721IdTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1408,7 +1472,8 @@ export interface Reserve extends BaseContract {
     ): Promise<[BigNumber]>;
 
     bondingDiscountPerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
@@ -1423,7 +1488,8 @@ export interface Reserve extends BaseContract {
     ): Promise<[BigNumber]>;
 
     bondingVestingDurationPerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
@@ -1438,12 +1504,14 @@ export interface Reserve extends BaseContract {
     ): Promise<ContractTransaction>;
 
     delistERC721IdAsBondable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     delistERC721IdAsRedeemable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1453,7 +1521,8 @@ export interface Reserve extends BaseContract {
     ): Promise<ContractTransaction>;
 
     deregisterERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1462,11 +1531,6 @@ export interface Reserve extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    hashOfERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
 
     incurDebt(
       amount: PromiseOrValue<BigNumberish>,
@@ -1484,12 +1548,14 @@ export interface Reserve extends BaseContract {
     ): Promise<[boolean]>;
 
     isERC721IdBondable(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     isERC721IdRedeemable(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -1504,12 +1570,14 @@ export interface Reserve extends BaseContract {
     ): Promise<ContractTransaction>;
 
     listERC721IdAsBondable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     listERC721IdAsRedeemable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1529,7 +1597,8 @@ export interface Reserve extends BaseContract {
     ): Promise<[string]>;
 
     oraclePerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
@@ -1595,25 +1664,29 @@ export interface Reserve extends BaseContract {
     ): Promise<ContractTransaction>;
 
     redeemERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     redeemERC721IdFrom(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     redeemERC721IdFromTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     redeemERC721IdTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1626,11 +1699,13 @@ export interface Reserve extends BaseContract {
     registerERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       oracle: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1640,14 +1715,10 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    registeredERC20sSize(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     registeredERC721Ids(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { erc721: string; id: BigNumber }>;
-
-    registeredERC721IdsSize(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     reserveStatus(
       overrides?: CallOverrides
@@ -1660,7 +1731,8 @@ export interface Reserve extends BaseContract {
     ): Promise<ContractTransaction>;
 
     setBondingDiscountForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1672,7 +1744,8 @@ export interface Reserve extends BaseContract {
     ): Promise<ContractTransaction>;
 
     setBondingVestingForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       vestingDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1713,6 +1786,11 @@ export interface Reserve extends BaseContract {
 
     tokenOracle(overrides?: CallOverrides): Promise<[string]>;
 
+    typeOfAsset(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[number]>;
+
     updateOracleForERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
@@ -1720,7 +1798,8 @@ export interface Reserve extends BaseContract {
     ): Promise<ContractTransaction>;
 
     updateOracleForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       oracle: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1735,7 +1814,8 @@ export interface Reserve extends BaseContract {
     ): Promise<ContractTransaction>;
 
     withdrawERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1744,6 +1824,12 @@ export interface Reserve extends BaseContract {
   acceptOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  allRegisteredERC20s(overrides?: CallOverrides): Promise<string[]>;
+
+  allRegisteredERC721Ids(
+    overrides?: CallOverrides
+  ): Promise<IReserve.ERC721IdStructOutput[]>;
 
   bondERC20(
     erc20: PromiseOrValue<string>,
@@ -1798,25 +1884,29 @@ export interface Reserve extends BaseContract {
   ): Promise<ContractTransaction>;
 
   bondERC721Id(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   bondERC721IdFrom(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     from: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   bondERC721IdFromTo(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   bondERC721IdTo(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1827,7 +1917,8 @@ export interface Reserve extends BaseContract {
   ): Promise<BigNumber>;
 
   bondingDiscountPerERC721Id(
-    arg0: PromiseOrValue<BytesLike>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -1842,7 +1933,8 @@ export interface Reserve extends BaseContract {
   ): Promise<BigNumber>;
 
   bondingVestingDurationPerERC721Id(
-    arg0: PromiseOrValue<BytesLike>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -1857,12 +1949,14 @@ export interface Reserve extends BaseContract {
   ): Promise<ContractTransaction>;
 
   delistERC721IdAsBondable(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   delistERC721IdAsRedeemable(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1872,7 +1966,8 @@ export interface Reserve extends BaseContract {
   ): Promise<ContractTransaction>;
 
   deregisterERC721Id(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1881,11 +1976,6 @@ export interface Reserve extends BaseContract {
     data: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
-
-  hashOfERC721Id(
-    erc721Id: IReserve.ERC721IdStruct,
-    overrides?: CallOverrides
-  ): Promise<string>;
 
   incurDebt(
     amount: PromiseOrValue<BigNumberish>,
@@ -1903,12 +1993,14 @@ export interface Reserve extends BaseContract {
   ): Promise<boolean>;
 
   isERC721IdBondable(
-    arg0: PromiseOrValue<BytesLike>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   isERC721IdRedeemable(
-    arg0: PromiseOrValue<BytesLike>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -1923,12 +2015,14 @@ export interface Reserve extends BaseContract {
   ): Promise<ContractTransaction>;
 
   listERC721IdAsBondable(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   listERC721IdAsRedeemable(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1948,7 +2042,8 @@ export interface Reserve extends BaseContract {
   ): Promise<string>;
 
   oraclePerERC721Id(
-    arg0: PromiseOrValue<BytesLike>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -2014,25 +2109,29 @@ export interface Reserve extends BaseContract {
   ): Promise<ContractTransaction>;
 
   redeemERC721Id(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   redeemERC721IdFrom(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     from: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   redeemERC721IdFromTo(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   redeemERC721IdTo(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -2045,11 +2144,13 @@ export interface Reserve extends BaseContract {
   registerERC20(
     erc20: PromiseOrValue<string>,
     oracle: PromiseOrValue<string>,
+    assetType: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerERC721Id(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     oracle: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -2059,14 +2160,10 @@ export interface Reserve extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  registeredERC20sSize(overrides?: CallOverrides): Promise<BigNumber>;
-
   registeredERC721Ids(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<[string, BigNumber] & { erc721: string; id: BigNumber }>;
-
-  registeredERC721IdsSize(overrides?: CallOverrides): Promise<BigNumber>;
 
   reserveStatus(
     overrides?: CallOverrides
@@ -2079,7 +2176,8 @@ export interface Reserve extends BaseContract {
   ): Promise<ContractTransaction>;
 
   setBondingDiscountForERC721Id(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     discount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -2091,7 +2189,8 @@ export interface Reserve extends BaseContract {
   ): Promise<ContractTransaction>;
 
   setBondingVestingForERC721Id(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     vestingDuration: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -2132,6 +2231,11 @@ export interface Reserve extends BaseContract {
 
   tokenOracle(overrides?: CallOverrides): Promise<string>;
 
+  typeOfAsset(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<number>;
+
   updateOracleForERC20(
     erc20: PromiseOrValue<string>,
     oracle: PromiseOrValue<string>,
@@ -2139,7 +2243,8 @@ export interface Reserve extends BaseContract {
   ): Promise<ContractTransaction>;
 
   updateOracleForERC721Id(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     oracle: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -2154,13 +2259,20 @@ export interface Reserve extends BaseContract {
   ): Promise<ContractTransaction>;
 
   withdrawERC721Id(
-    erc721Id: IReserve.ERC721IdStruct,
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     recipient: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
+
+    allRegisteredERC20s(overrides?: CallOverrides): Promise<string[]>;
+
+    allRegisteredERC721Ids(
+      overrides?: CallOverrides
+    ): Promise<IReserve.ERC721IdStructOutput[]>;
 
     bondERC20(
       erc20: PromiseOrValue<string>,
@@ -2215,25 +2327,29 @@ export interface Reserve extends BaseContract {
     ): Promise<void>;
 
     bondERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     bondERC721IdFrom(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     bondERC721IdFromTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     bondERC721IdTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -2244,7 +2360,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     bondingDiscountPerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -2259,7 +2376,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     bondingVestingDurationPerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -2274,12 +2392,14 @@ export interface Reserve extends BaseContract {
     ): Promise<void>;
 
     delistERC721IdAsBondable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     delistERC721IdAsRedeemable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2289,7 +2409,8 @@ export interface Reserve extends BaseContract {
     ): Promise<void>;
 
     deregisterERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2298,11 +2419,6 @@ export interface Reserve extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    hashOfERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     incurDebt(
       amount: PromiseOrValue<BigNumberish>,
@@ -2320,12 +2436,14 @@ export interface Reserve extends BaseContract {
     ): Promise<boolean>;
 
     isERC721IdBondable(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     isERC721IdRedeemable(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -2340,12 +2458,14 @@ export interface Reserve extends BaseContract {
     ): Promise<void>;
 
     listERC721IdAsBondable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     listERC721IdAsRedeemable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2365,7 +2485,8 @@ export interface Reserve extends BaseContract {
     ): Promise<string>;
 
     oraclePerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -2431,25 +2552,29 @@ export interface Reserve extends BaseContract {
     ): Promise<void>;
 
     redeemERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     redeemERC721IdFrom(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     redeemERC721IdFromTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     redeemERC721IdTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -2462,11 +2587,13 @@ export interface Reserve extends BaseContract {
     registerERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     registerERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       oracle: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -2476,14 +2603,10 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    registeredERC20sSize(overrides?: CallOverrides): Promise<BigNumber>;
-
     registeredERC721Ids(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { erc721: string; id: BigNumber }>;
-
-    registeredERC721IdsSize(overrides?: CallOverrides): Promise<BigNumber>;
 
     reserveStatus(
       overrides?: CallOverrides
@@ -2496,7 +2619,8 @@ export interface Reserve extends BaseContract {
     ): Promise<void>;
 
     setBondingDiscountForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -2508,7 +2632,8 @@ export interface Reserve extends BaseContract {
     ): Promise<void>;
 
     setBondingVestingForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       vestingDuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -2549,6 +2674,11 @@ export interface Reserve extends BaseContract {
 
     tokenOracle(overrides?: CallOverrides): Promise<string>;
 
+    typeOfAsset(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<number>;
+
     updateOracleForERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
@@ -2556,7 +2686,8 @@ export interface Reserve extends BaseContract {
     ): Promise<void>;
 
     updateOracleForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       oracle: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -2571,7 +2702,8 @@ export interface Reserve extends BaseContract {
     ): Promise<void>;
 
     withdrawERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       recipient: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -2598,17 +2730,22 @@ export interface Reserve extends BaseContract {
       tokensMinted?: null
     ): BondedERC20EventFilter;
 
-    "BondedERC721(tuple,uint256)"(
-      erc721Id?: null,
+    "BondedERC721(address,uint256,uint256)"(
+      erc721?: null,
+      id?: null,
       tokensMinted?: null
     ): BondedERC721EventFilter;
-    BondedERC721(erc721Id?: null, tokensMinted?: null): BondedERC721EventFilter;
+    BondedERC721(
+      erc721?: null,
+      id?: null,
+      tokensMinted?: null
+    ): BondedERC721EventFilter;
 
     "DebtIncurred(uint256)"(tokenAmount?: null): DebtIncurredEventFilter;
     DebtIncurred(tokenAmount?: null): DebtIncurredEventFilter;
 
-    "DebtPayed(uint256)"(tokenAmount?: null): DebtPayedEventFilter;
-    DebtPayed(tokenAmount?: null): DebtPayedEventFilter;
+    "DebtPaid(uint256)"(tokenAmount?: null): DebtPaidEventFilter;
+    DebtPaid(tokenAmount?: null): DebtPaidEventFilter;
 
     "ERC20DelistedAsBondable(address)"(
       erc20?: PromiseOrValue<string> | null
@@ -2645,54 +2782,65 @@ export interface Reserve extends BaseContract {
       erc20?: PromiseOrValue<string> | null
     ): ERC20ListedAsRedeemableEventFilter;
 
-    "ERC20Registered(address)"(
-      erc20?: PromiseOrValue<string> | null
+    "ERC20Registered(address,uint8)"(
+      erc20?: PromiseOrValue<string> | null,
+      assetType?: null
     ): ERC20RegisteredEventFilter;
     ERC20Registered(
-      erc20?: PromiseOrValue<string> | null
+      erc20?: PromiseOrValue<string> | null,
+      assetType?: null
     ): ERC20RegisteredEventFilter;
 
-    "ERC721IdDelistedAsBondable(tuple)"(
-      erc721Id?: IReserve.ERC721IdStruct | null
+    "ERC721IdDelistedAsBondable(address,uint256)"(
+      erc721?: null,
+      id?: null
     ): ERC721IdDelistedAsBondableEventFilter;
     ERC721IdDelistedAsBondable(
-      erc721Id?: IReserve.ERC721IdStruct | null
+      erc721?: null,
+      id?: null
     ): ERC721IdDelistedAsBondableEventFilter;
 
-    "ERC721IdDelistedAsRedeemable(tuple)"(
-      erc721Id?: IReserve.ERC721IdStruct | null
+    "ERC721IdDelistedAsRedeemable(address,uint256)"(
+      erc721?: null,
+      id?: null
     ): ERC721IdDelistedAsRedeemableEventFilter;
     ERC721IdDelistedAsRedeemable(
-      erc721Id?: IReserve.ERC721IdStruct | null
+      erc721?: null,
+      id?: null
     ): ERC721IdDelistedAsRedeemableEventFilter;
 
-    "ERC721IdDeregistered(tuple)"(
-      erc721Id?: IReserve.ERC721IdStruct | null
+    "ERC721IdDeregistered(address,uint256)"(
+      erc721?: null,
+      id?: null
     ): ERC721IdDeregisteredEventFilter;
     ERC721IdDeregistered(
-      erc721Id?: IReserve.ERC721IdStruct | null
+      erc721?: null,
+      id?: null
     ): ERC721IdDeregisteredEventFilter;
 
-    "ERC721IdListedAsBondable(tuple)"(
-      erc721Id?: IReserve.ERC721IdStruct | null
+    "ERC721IdListedAsBondable(address,uint256)"(
+      erc721?: null,
+      id?: null
     ): ERC721IdListedAsBondableEventFilter;
     ERC721IdListedAsBondable(
-      erc721Id?: IReserve.ERC721IdStruct | null
+      erc721?: null,
+      id?: null
     ): ERC721IdListedAsBondableEventFilter;
 
-    "ERC721IdListedAsRedeemable(tuple)"(
-      erc721Id?: IReserve.ERC721IdStruct | null
+    "ERC721IdListedAsRedeemable(address,uint256)"(
+      erc721?: null,
+      id?: null
     ): ERC721IdListedAsRedeemableEventFilter;
     ERC721IdListedAsRedeemable(
-      erc721Id?: IReserve.ERC721IdStruct | null
+      erc721?: null,
+      id?: null
     ): ERC721IdListedAsRedeemableEventFilter;
 
-    "ERC721IdRegistered(tuple)"(
-      erc721Id?: IReserve.ERC721IdStruct | null
+    "ERC721IdRegistered(address,uint256)"(
+      erc721?: null,
+      id?: null
     ): ERC721IdRegisteredEventFilter;
-    ERC721IdRegistered(
-      erc721Id?: IReserve.ERC721IdStruct | null
-    ): ERC721IdRegisteredEventFilter;
+    ERC721IdRegistered(erc721?: null, id?: null): ERC721IdRegisteredEventFilter;
 
     "NewOwner(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
@@ -2723,12 +2871,14 @@ export interface Reserve extends BaseContract {
       tokensBurned?: null
     ): RedeemedERC20EventFilter;
 
-    "RedeemedERC721Id(tuple,uint256)"(
-      erc721Id?: null,
+    "RedeemedERC721Id(address,uint256,uint256)"(
+      erc721?: null,
+      id?: null,
       tokensBurned?: null
     ): RedeemedERC721IdEventFilter;
     RedeemedERC721Id(
-      erc721Id?: null,
+      erc721?: null,
+      id?: null,
       tokensBurned?: null
     ): RedeemedERC721IdEventFilter;
 
@@ -2787,35 +2937,41 @@ export interface Reserve extends BaseContract {
       newLimit?: null
     ): SetERC20RedeemLimitEventFilter;
 
-    "SetERC721IdBondingDiscount(tuple,uint256,uint256)"(
-      erc721Id?: IReserve.ERC721IdStruct | null,
+    "SetERC721IdBondingDiscount(address,uint256,uint256,uint256)"(
+      erc721?: null,
+      id?: null,
       oldDiscount?: null,
       newDiscount?: null
     ): SetERC721IdBondingDiscountEventFilter;
     SetERC721IdBondingDiscount(
-      erc721Id?: IReserve.ERC721IdStruct | null,
+      erc721?: null,
+      id?: null,
       oldDiscount?: null,
       newDiscount?: null
     ): SetERC721IdBondingDiscountEventFilter;
 
-    "SetERC721IdBondingVesting(tuple,uint256,uint256)"(
-      erc721Id?: IReserve.ERC721IdStruct | null,
+    "SetERC721IdBondingVesting(address,uint256,uint256,uint256)"(
+      erc721?: null,
+      id?: null,
       oldVestingDuration?: null,
       newVestingDuration?: null
     ): SetERC721IdBondingVestingEventFilter;
     SetERC721IdBondingVesting(
-      erc721Id?: IReserve.ERC721IdStruct | null,
+      erc721?: null,
+      id?: null,
       oldVestingDuration?: null,
       newVestingDuration?: null
     ): SetERC721IdBondingVestingEventFilter;
 
-    "SetERC721IdOracle(tuple,address,address)"(
-      erc721Id?: IReserve.ERC721IdStruct | null,
+    "SetERC721IdOracle(address,uint256,address,address)"(
+      erc721?: null,
+      id?: null,
       oldOracle?: PromiseOrValue<string> | null,
       newOracle?: PromiseOrValue<string> | null
     ): SetERC721IdOracleEventFilter;
     SetERC721IdOracle(
-      erc721Id?: IReserve.ERC721IdStruct | null,
+      erc721?: null,
+      id?: null,
       oldOracle?: PromiseOrValue<string> | null,
       newOracle?: PromiseOrValue<string> | null
     ): SetERC721IdOracleEventFilter;
@@ -2852,6 +3008,10 @@ export interface Reserve extends BaseContract {
     acceptOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    allRegisteredERC20s(overrides?: CallOverrides): Promise<BigNumber>;
+
+    allRegisteredERC721Ids(overrides?: CallOverrides): Promise<BigNumber>;
 
     bondERC20(
       erc20: PromiseOrValue<string>,
@@ -2906,25 +3066,29 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     bondERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     bondERC721IdFrom(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     bondERC721IdFromTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     bondERC721IdTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -2935,7 +3099,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     bondingDiscountPerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -2950,7 +3115,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     bondingVestingDurationPerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -2965,12 +3131,14 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     delistERC721IdAsBondable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     delistERC721IdAsRedeemable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2980,7 +3148,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     deregisterERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2988,11 +3157,6 @@ export interface Reserve extends BaseContract {
       target: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    hashOfERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     incurDebt(
@@ -3011,12 +3175,14 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     isERC721IdBondable(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isERC721IdRedeemable(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -3031,12 +3197,14 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     listERC721IdAsBondable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     listERC721IdAsRedeemable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -3056,7 +3224,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     oraclePerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -3122,25 +3291,29 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     redeemERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     redeemERC721IdFrom(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     redeemERC721IdFromTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     redeemERC721IdTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -3153,11 +3326,13 @@ export interface Reserve extends BaseContract {
     registerERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       oracle: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -3167,14 +3342,10 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    registeredERC20sSize(overrides?: CallOverrides): Promise<BigNumber>;
-
     registeredERC721Ids(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    registeredERC721IdsSize(overrides?: CallOverrides): Promise<BigNumber>;
 
     reserveStatus(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -3185,7 +3356,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     setBondingDiscountForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -3197,7 +3369,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     setBondingVestingForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       vestingDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -3238,6 +3411,11 @@ export interface Reserve extends BaseContract {
 
     tokenOracle(overrides?: CallOverrides): Promise<BigNumber>;
 
+    typeOfAsset(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     updateOracleForERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
@@ -3245,7 +3423,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     updateOracleForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       oracle: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -3260,7 +3439,8 @@ export interface Reserve extends BaseContract {
     ): Promise<BigNumber>;
 
     withdrawERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -3269,6 +3449,14 @@ export interface Reserve extends BaseContract {
   populateTransaction: {
     acceptOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    allRegisteredERC20s(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    allRegisteredERC721Ids(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     bondERC20(
@@ -3324,25 +3512,29 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     bondERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     bondERC721IdFrom(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     bondERC721IdFromTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     bondERC721IdTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -3353,7 +3545,8 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     bondingDiscountPerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3368,7 +3561,8 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     bondingVestingDurationPerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3383,12 +3577,14 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     delistERC721IdAsBondable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     delistERC721IdAsRedeemable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -3398,7 +3594,8 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     deregisterERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -3406,11 +3603,6 @@ export interface Reserve extends BaseContract {
       target: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    hashOfERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     incurDebt(
@@ -3429,12 +3621,14 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     isERC721IdBondable(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isERC721IdRedeemable(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3449,12 +3643,14 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     listERC721IdAsBondable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     listERC721IdAsRedeemable(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -3474,7 +3670,8 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     oraclePerERC721Id(
-      arg0: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3540,25 +3737,29 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     redeemERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     redeemERC721IdFrom(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     redeemERC721IdFromTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     redeemERC721IdTo(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -3571,11 +3772,13 @@ export interface Reserve extends BaseContract {
     registerERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       oracle: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -3585,16 +3788,8 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    registeredERC20sSize(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     registeredERC721Ids(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    registeredERC721IdsSize(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3607,7 +3802,8 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     setBondingDiscountForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -3619,7 +3815,8 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     setBondingVestingForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       vestingDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -3660,6 +3857,11 @@ export interface Reserve extends BaseContract {
 
     tokenOracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    typeOfAsset(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     updateOracleForERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
@@ -3667,7 +3869,8 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     updateOracleForERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       oracle: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -3682,7 +3885,8 @@ export interface Reserve extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     withdrawERC721Id(
-      erc721Id: IReserve.ERC721IdStruct,
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

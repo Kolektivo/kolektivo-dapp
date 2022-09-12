@@ -1,5 +1,4 @@
 import './assets.scss';
-import { Asset } from 'models/asset';
 import { I18N } from '@aurelia/i18n';
 import { ICustomElementViewModel, customElement } from 'aurelia';
 import { IGridColumn } from '../../../../../../../../design-system/elements/k-data-grid/grid-column';
@@ -9,7 +8,6 @@ import template from './assets.html';
 @customElement({ name: 'assets', template })
 export class Assets implements ICustomElementViewModel {
   columns: IGridColumn[] = [];
-  data: Asset[] = [];
   constructor(@I18N private readonly i18n: I18N, @ITreasuryStore private readonly treasuryStore: ITreasuryStore) {
     this.columns = [
       {
@@ -37,6 +35,8 @@ export class Assets implements ICustomElementViewModel {
         template: '<span>${total | currency}</span>',
       },
     ];
-    this.data = this.treasuryStore.treasuryAssets;
+  }
+  get data() {
+    return this.treasuryStore.treasuryAssets;
   }
 }
