@@ -2,12 +2,12 @@
   <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadAssets()"></k-loader>
   <k-stack direction="row">
     <k-chart cutout="70" type="doughnut" width="200"
-      colors.bind="['var(--terra-cotta)', 'var(--primary)', 'var(--green-apple)', ]" data.bind="[20,20,60]">
+      colors.bind="['var(--terra-cotta)', 'var(--primary)', 'var(--green-apple)', ]" data.bind="chartData">
     </k-chart>
     <k-stack gap="var(--spacing-xl)" id="t-o-vbatc-legend">
-      <avatar-text color="var(--green-apple)" size="20">60% Ecological</avatar-text>
-      <avatar-text color="var(--primary)" size="20">20% Stablecoins</avatar-text>
-      <avatar-text color="var(--terra-cotta)" size="20">20% Non Stablecoins</avatar-text>
+      <avatar-text color="var(--green-apple)" size="20">${ecologicalAssetPercentage | percentage} Ecological</avatar-text>
+      <avatar-text color="var(--primary)" size="20">${stablecoinAssetPercentage | percentage} Stablecoins</avatar-text>
+      <avatar-text color="var(--terra-cotta)" size="20">${nonStablecoinAssetPercentage | percentage} Non Stablecoins</avatar-text>
     </k-stack>
   </k-stack>
 </k-card>

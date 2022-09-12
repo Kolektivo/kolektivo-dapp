@@ -5,4 +5,10 @@ export interface Asset {
   token: ITokenInfo;
   quantity: BigNumber;
   total: number;
+  type: AssetType;
+}
+export enum AssetType {
+  NonStablecoin = 0,
+  Stablecoin = 1,
+  Ecological = 2,
 }

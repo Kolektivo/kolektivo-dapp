@@ -1,4 +1,4 @@
-import { Asset } from 'models/asset';
+import { Asset, AssetType } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { ContractNames } from '../services/contracts-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
@@ -19,7 +19,7 @@ export class TreasuryStore {
   public treasuryDistribution?: number;
   public reservesDistribution?: number;
   private treasuryContract?: Treasury;
-  public treasuryAssets: (Asset | undefined)[] = [];
+  public treasuryAssets?: (Asset | undefined)[] = [];
   public transactions: Transaction[] = [];
   constructor(@IServices private readonly services: IServices, @ILogger private readonly logger: ILogger) {}
 
@@ -27,8 +27,8 @@ export class TreasuryStore {
     container.register(Registration.singleton(ITreasuryStore, TreasuryStore));
   }
   public get treasuryValue(): number {
-    if (this.treasuryAssets.length === 0) return 0;
-    return this.treasuryAssets.map((x) => x?.total ?? 0).sum();
+    if (this.treasuryAssets?.length === 0) return 0;
+    return this.treasuryAssets?.map((x) => x?.total ?? 0).sum() ?? 0;
   }
   public async loadTokenData(): Promise<void> {
     if (this.totalValuation && this.totalSupply) return;
@@ -70,16 +70,19 @@ export class TreasuryStore {
     tokenInfo.price = this.services.numberService.fromString(fromWei(data[0], 18)) ?? 0; //price comes back as undefined from getTokenInfoFromAddress so set it
     let tokenQuantity = BigNumber.from(1); //all NFTs have a quantity of 1, so set the quantity to 1 initially
     const tokenContract = this.services.tokenService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
+    let assetType = AssetType.Ecological;
     if (!tokenInfo.id) {
+      //this is an ERC20 token so let's find it's asset type
+      assetType = await contract.assetTypeOfERC20(assetAddress);
       //if there is no id on the token, then it's not an NFT and we have to get more information about it
       tokenQuantity = await tokenContract.balanceOf(treasuryAddress); // find the amount of these tokens in the treasury
     }
     void this.populateTransactionsForAsset(tokenContract, treasuryAddress, tokenInfo); //while we are looping through the token contracts, populate the transactions on the treasury for the token contract
-
     const asset: Asset = {
       quantity: tokenInfo.id ? BigNumber.from(1) : tokenQuantity,
       token: tokenInfo,
       total: 0,
+      type: assetType,
     };
     asset.total = (this.services.numberService.fromString(fromWei(asset.quantity, 18)) ?? 0) * tokenInfo.price;
     return asset;

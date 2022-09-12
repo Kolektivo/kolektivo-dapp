@@ -2,8 +2,10 @@ import '../../../../../../utils-testing/setup-testing';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { INumberService } from 'services/number-service';
 import { IStore } from '../../../../../../stores';
 import { ITreasuryStore } from './../../../../../../stores/treasury-store';
+import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
 import { ValueByAssetTypeCard } from './value-by-asset-type-card';
 import { createFixture } from '@aurelia/testing';
@@ -55,10 +57,13 @@ describe('value-by-asset-type-card', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
+    const numberServiceRegistration = () => Registration.instance(INumberService, {});
     return [
       ValueByAssetTypeCard,
+      PercentageValueConverter,
       Global,
       Registration.instance(ITreasuryStore, vi.fn()),
+      numberServiceRegistration(),
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       designSystemConfiguration(),
