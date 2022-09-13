@@ -1,6 +1,5 @@
 import './k-toast.scss';
 import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { NotificationAction } from '../../services';
 import { ToastOptions } from './toast-options';
 import { getColorByType } from '../../common';
 import template from './k-toast.html';
@@ -17,8 +16,8 @@ export class KToast implements ICustomElementViewModel, ToastOptions {
   @bindable title?: string;
   @bindable message?: string;
   @bindable icon?: string;
-  @bindable type: NotificationType = 'info';
-  @bindable actions?: NotificationAction[];
+  @bindable type: NotificationType = 'success';
+  @bindable content?: string;
   @bindable position?: Position;
   @bindable animate = true;
   @bindable countdown?: number;
@@ -34,13 +33,13 @@ export class KToast implements ICustomElementViewModel, ToastOptions {
     if (this.icon) return this.icon;
     switch (this.type) {
       case 'danger':
-        return 'error_filled';
+        return 'cancel';
       case 'info':
         return 'info_filled';
       case 'success':
-        return 'check_circle_filled';
+        return 'check_circle';
       case 'warning':
-        return 'warning_filled';
+        return 'error';
       default:
         return ''; //TODO: choose default icon when none is passed and the NotificationType doesn't match anything
     }
