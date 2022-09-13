@@ -2,11 +2,14 @@ import '../../../../../../utils-testing/setup-testing';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../../../stores';
+import { NumberService } from './../../../../../../services/number-service';
+import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
 import { ValueByAssetTypeCard } from './value-by-asset-type-card';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('value-by-asset-type-card', () => {
   it('should have a k-card component', async () => {
@@ -55,6 +58,15 @@ describe('value-by-asset-type-card', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [ValueByAssetTypeCard, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
+    return [
+      ValueByAssetTypeCard,
+      Global,
+      NumberService,
+      PercentageValueConverter,
+      Registration.instance(IReserveStore, vi.fn()),
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+    ];
   }
 });

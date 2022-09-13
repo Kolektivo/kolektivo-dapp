@@ -24,6 +24,11 @@ export class ReserveStore {
   }
   constructor(@IServices private readonly services: IServices, @IContractStore private readonly contractStore: IContractStore) {}
 
+  public get reserveValue(): number {
+    if (this.reserveAssets?.length === 0) return 0;
+    return this.reserveAssets?.map((x) => x?.total ?? 0).sum() ?? 0;
+  }
+
   @callOnce()
   public async loadAssets(): Promise<void> {
     const contract = this.getReserveContract();
