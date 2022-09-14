@@ -133,18 +133,25 @@ export class Storybook {
 
   //toast examples
   public toast1(): void {
-    void this.notificationService.toast({ message: 'This is a normal toast. It will stay for 5 seconds by default.' });
+    void this.notificationService.toast({
+      message: 'This is a normal toast. It will stay for 5 seconds by default.',
+      content: '<k-link src="https://celoscan.io/" external>View on Celoscan</k-link> ',
+    });
   }
 
-  public toast2(): void {
-    void this.notificationService.toast({ message: 'This toast will hide after 10 seconds', timeOut: 100000 });
+  public toastWarning(): void {
+    void this.notificationService.toast({
+      message: 'This is a normal toast. It will stay for 5 seconds by default.',
+      type: 'warning',
+      content: '<k-link src="https://celoscan.io/" external>View on Celoscan</k-link> ',
+    });
   }
 
-  public toast3(): void {
-    void this.notificationService.toast({ message: 'This is a dangerous toast! =O', type: 'danger' });
-  }
-
-  public toast4(): void {
-    void this.notificationService.toast({ message: 'This is a bottom toast', position: 'bottom' });
+  public toastError(): void {
+    void this.notificationService.toast({
+      message: 'This is a normal toast. It will stay for 5 seconds by default.',
+      type: 'danger',
+      content: '<k-link src="https://celoscan.io/" external>View on Celoscan</k-link> ',
+    });
   }
 }

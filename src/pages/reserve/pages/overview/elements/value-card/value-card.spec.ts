@@ -6,6 +6,8 @@ import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../../../stores';
+import { NumberService } from 'services';
+import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
 import { ValueCard } from './value-card';
 import { createFixture } from '@aurelia/testing';
@@ -40,7 +42,9 @@ describe('value-card', () => {
     return [
       ValueCard,
       EthweiValueConverter,
+      PercentageValueConverter,
       CurrencyValueConverter,
+      NumberService,
       Registration.instance(IReserveStore, vi.fn()),
       Global,
       createMockStoreRegistration(),

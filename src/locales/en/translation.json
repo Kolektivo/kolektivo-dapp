@@ -22,26 +22,7 @@
             },
             "overview": {
                 "assets": {
-                    "title": "Treasury Assets",
-                    "assets-tab": {
-                        "title": "Assets",
-                        "grid-headers": {
-                            "token": "Token",
-                            "price": "Price",
-                            "quantity": "Quantity",
-                            "total": "Total Value"
-                        }
-                    },
-                    "transaction-history": {
-                        "title": "Transaction History",
-                        "grid-headers": {
-                            "token": "Token",
-                            "type": "Type",
-                            "amount": "Amount",
-                            "address": "Address",
-                            "age": "Age"
-                        }
-                    }
+                    "title": "Treasury Assets"
                 },
                 "ktt": {
                     "title": "Kolektivo Treasury Token (KTT)",
@@ -56,7 +37,39 @@
                 },
                 "value-over-time": {}
             },
-            "governance": {}
+            "governance": {
+                "description": "This is a basic & accessible description that the public can read to understand what it is.",
+                "title": "Kolektivo Network Governance",
+                "submit-card": {
+                    "title": "Submit Proposal",
+                    "tooltip": "IDK",
+                    "bonds-tab": {
+                        "title": "Bonds"
+                    },
+                    "bonds-admin-tab": {
+                        "title": "Bond Admin"
+                    },
+                    "treasury-tab": {
+                        "title": "Treasury"
+                    },
+                    "other-tab": {
+                        "title": "Other"
+                    }
+                },
+                "proposals-card": {
+                    "title": "Proposals",
+                    "tooltip": "IDK",
+                    "ready-to-execute-tab": {
+                        "title": "Ready to Execute"
+                    },
+                    "pending-veto-tab": {
+                        "title": "Pending Veto"
+                    },
+                    "history-tab": {
+                        "title": "History"
+                    }
+                }
+            }
         },
         "reserve": {
             "link-text": "Reserve",
@@ -79,26 +92,7 @@
                 },
                 "assets": {
                     "title": "Reserve Assets",
-                    "tooltip": "This is a tooltip for Reserve Assets",
-                    "assets-tab": {
-                        "title": "Assets",
-                        "grid-headers": {
-                            "token": "Token",
-                            "price": "Price",
-                            "quantity": "Quantity",
-                            "total": "Total Value"
-                        }
-                    },
-                    "transaction-history": {
-                        "title": "Transaction History",
-                        "grid-headers": {
-                            "token": "Token",
-                            "type": "Type",
-                            "amount": "Amount",
-                            "address": "Address",
-                            "age": "Age"
-                        }
-                    }
+                    "tooltip": "This is a tooltip for Reserve Assets"
                 }
             },
             "k-cur": {
@@ -211,6 +205,25 @@
         }
     },
     "general": {
+        "assets": {
+            "title": "Assets",
+            "grid-headers": {
+                "token": "Token",
+                "price": "Price",
+                "quantity": "Quantity",
+                "total": "Total Value"
+            }
+        },
+        "transaction-history": {
+            "title": "Transaction History",
+            "grid-headers": {
+                "token": "Token",
+                "type": "Type",
+                "amount": "Amount",
+                "address": "Address",
+                "age": "Age"
+            }
+        },
         "chart-time-filter": {
             "1h": "1H",
             "1d": "1D",

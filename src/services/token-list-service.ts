@@ -1,11 +1,11 @@
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { IEthereumService } from './ethereum-service';
+import { IHttpService } from './http-service';
 import { IIpfsService } from './ipfs-service';
 import { ITimingService } from './timing-service';
 import { ITokenInfoUniswap, ITokenListUniswap, TokenAddressId } from './token-types';
 import { TokenLists } from '../configurations/tokenLists';
 import { callOnce } from '../decorators/call-once';
-import axios from 'axios';
 
 export type ITokenListService = TokenListService;
 export const ITokenListService = DI.createInterface<ITokenListService>('TokenListService');
@@ -15,6 +15,7 @@ export class TokenListService {
   constructor(
     @IEthereumService private readonly ethereumService: IEthereumService,
     @IIpfsService private readonly ipfsService: IIpfsService,
+    @IHttpService private readonly httpService: IHttpService,
     @ILogger private readonly logger: ILogger,
     @ITimingService private readonly timingService: ITimingService,
   ) {}
@@ -68,7 +69,7 @@ export class TokenListService {
     }
 
     if (protocol === 'https') {
-      return axios.get<ITokenListUniswap>(uri).then((result: { data?: ITokenListUniswap }) => result.data?.tokens);
+      return this.httpService.call<ITokenListUniswap>(uri).then((data) => data.tokens);
     }
 
     if (protocol === 'ipns') {

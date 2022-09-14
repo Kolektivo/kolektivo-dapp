@@ -6,7 +6,9 @@ import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
 import { IReserveStore } from './../../../../stores/reserve-store';
 import { IStore } from '../../../../stores';
+import { NumberService } from 'services';
 import { Overview } from './overview';
+import { PercentageValueConverter } from './../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it, vi } from 'vitest';
@@ -72,6 +74,8 @@ describe('overview', () => {
     return [
       Overview,
       EthweiValueConverter,
+      PercentageValueConverter,
+      NumberService,
       CurrencyValueConverter,
       Registration.instance(IReserveStore, vi.fn()),
       Global,

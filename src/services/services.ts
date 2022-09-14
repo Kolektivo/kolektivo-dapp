@@ -1,10 +1,10 @@
-import { AxiosService, IAxiosService } from './axios-service';
 import { BrowserStorageService, IBrowserStorageService } from './browser-storage-service';
 import { CacheService, ICacheService } from './cache-service';
 import { ContractsDeploymentService, IContractsDeploymentService } from './contracts-deployment-service';
 import { ContractsService, IContractsService } from './contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { EthereumService, IEthereumService, Networks } from './ethereum-service';
+import { HttpService, IHttpService } from './http-service';
 import { IIpfsService, IpfsService } from './ipfs-service';
 import { IKolektivoIpfsClient, KolektivoIpfsClient } from './kolektivo-ipfs-service';
 import { INumberService, NumberService } from './number-service';
@@ -18,7 +18,7 @@ export const IServices = DI.createInterface<Services>();
 
 export class Services {
   constructor(
-    @IAxiosService public readonly axiosService: IAxiosService,
+    @IHttpService public readonly httpService: IHttpService,
     @INumberService public readonly numberService: INumberService,
     @IIpfsService public readonly ipfsService: IIpfsService,
     @IKolektivoIpfsClient public readonly kolektivoService: IKolektivoIpfsClient,
@@ -50,7 +50,7 @@ export class Services {
       .register(Registration.singleton(IServices, Services))
       .register(TimingService)
       .register(CacheService)
-      .register(AxiosService)
+      .register(HttpService)
       .register(NumberService)
       .register(IpfsService)
       .register(KolektivoIpfsClient)

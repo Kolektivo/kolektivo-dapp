@@ -5,13 +5,12 @@ import { DI, IContainer, ILogger, IPlatform, Registration, TaskQueue } from 'aur
 import { Erc20 as Erc20Type } from 'models/generated/erc20/Erc20';
 import { Erc721 as Erc721Type } from 'models/generated/erc721/Erc721';
 import { FormatTypes, Interface, getAddress } from 'ethers/lib/utils';
-import { IAxiosService } from './axios-service';
+import { IHttpService } from './http-service';
 import { ITimingService } from './timing-service';
 import { ITokenInfo, TokenAddressId } from './token-types';
 import { ITokenListService } from './token-list-service';
 import { callOnce } from 'decorators/call-once';
 import { getErrorMessage } from 'utils';
-import axios from 'axios';
 
 // don't need coingecko for now or ever
 // interface ICoingeckoTokenInfo {
@@ -44,7 +43,7 @@ export class TokenService {
     @ITokenListService private readonly tokenListProvider: ITokenListService,
     @IEthereumService private readonly ethereumService: IEthereumService,
     @ITimingService private readonly timingService: ITimingService,
-    @IAxiosService private readonly axiosService: IAxiosService,
+    @IHttpService private readonly httpService: IHttpService,
     @ILogger private readonly logger: ILogger,
     @IPlatform private readonly platform: IPlatform,
   ) {
@@ -216,10 +215,10 @@ export class TokenService {
           tokenAddress = proxyImplementation;
         }
 
-        const contractAbi = await axios
-          .get<{ message: string; result: string }>(`https://explorer.celo.org/api?module=contract&action=getabi&address=${tokenAddress}`)
+        const contractAbi = await this.httpService
+          .call<{ message: string; result: string }>(`https://explorer.celo.org/api?module=contract&action=getabi&address=${tokenAddress}`)
           .then((result) => {
-            return result.data.message !== 'OK' ? null : result.data.result;
+            return result.message !== 'OK' ? null : result.result;
           });
 
         if (!contractAbi) {

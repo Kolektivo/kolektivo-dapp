@@ -1,0 +1,10 @@
+<k-card tooltip-text="${i18n.tr('navigation.treasury.governance.submit-card.tooltip')}" id="t-g-submit-card"
+  title="${i18n.tr('navigation.treasury.governance.submit-card.title')}">
+  <card-nav active.two-way="active" routes.bind="routes"></card-nav>
+  <template switch.bind="active">
+    <bonds case="bonds">bond</bonds>
+    <bond-admin case="bond-admin"></bond-admin>
+    <treasury case="treasury"></treasury>
+    <other case="other"></other>
+  </template>
+</k-card>

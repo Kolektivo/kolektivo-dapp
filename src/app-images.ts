@@ -4,6 +4,7 @@ import account_circle from '@material-design-icons/svg/outlined/account_circle.s
 import add_circle from '@material-design-icons/svg/filled/add_circle_outline.svg';
 import alternate_email from '@material-design-icons/svg/outlined/alternate_email.svg';
 import calendar_today from '@material-design-icons/svg/outlined/calendar_today.svg';
+import cancel from '@material-design-icons/svg/outlined/cancel.svg';
 import check from '@material-design-icons/svg/filled/check.svg';
 import check_circle from '@material-design-icons/svg/outlined/check_circle.svg';
 import check_circle_filled from '@material-design-icons/svg/filled/check_circle.svg';
@@ -28,6 +29,7 @@ import open_in_new from '@material-design-icons/svg/outlined/open_in_new.svg';
 import remove from '@material-design-icons/svg/outlined/remove.svg';
 import savings from '@material-design-icons/svg/outlined/savings.svg';
 import swap_horiz from '@material-design-icons/svg/outlined/swap_horiz.svg';
+import warning from '@material-design-icons/svg/outlined/warning.svg';
 import warning_filled from '@material-design-icons/svg/filled/warning.svg';
 
 export const imageMap = new Map([
@@ -37,6 +39,7 @@ export const imageMap = new Map([
   ['add_circle', add_circle],
   ['alternate_email', alternate_email],
   ['alternate_email', alternate_email],
+  ['cancel', cancel],
   ['calendar_today', calendar_today],
   ['check_circle_filled', check_circle_filled],
   ['check_circle', check_circle],
@@ -61,6 +64,7 @@ export const imageMap = new Map([
   ['remove', remove],
   ['savings', savings],
   ['swap_horiz', swap_horiz],
+  ['warning', warning],
   ['warning_filled', warning_filled],
   ['help_outline', help_outline],
 ]);
