@@ -4,6 +4,10 @@
   "editor.formatOnPaste": false, // required 
   "editor.formatOnType": false, // required
   "editor.formatOnSave": true, // optional 
+  "editor.linkedEditing": true,
+  "html.autoClosingTags": true,
+  "javascript.autoClosingTags": true,
+  "typescript.autoClosingTags": true,
   "editor.formatOnSaveMode": "file", // required to format on save
   "files.autoSave": "onFocusChange", // optional but recommended
   "files.exclude": {

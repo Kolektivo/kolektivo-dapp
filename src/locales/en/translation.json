@@ -56,7 +56,39 @@
                 },
                 "value-over-time": {}
             },
-            "governance": {}
+            "governance": {
+                "description": "This is a basic & accessible description that the public can read to understand what it is.",
+                "title": "Kolektivo Network Governance",
+                "submit-card": {
+                    "title": "Submit Proposal",
+                    "tooltip": "IDK",
+                    "bonds-tab": {
+                        "title": "Bonds"
+                    },
+                    "bonds-admin-tab": {
+                        "title": "Bond Admin"
+                    },
+                    "treasury-tab": {
+                        "title": "Treasury"
+                    },
+                    "other-tab": {
+                        "title": "Other"
+                    }
+                },
+                "proposals-card": {
+                    "title": "Proposals",
+                    "tooltip": "IDK",
+                    "ready-to-execute-tab": {
+                        "title": "Ready to Execute"
+                    },
+                    "pending-veto-tab": {
+                        "title": "Pending Veto"
+                    },
+                    "history-tab": {
+                        "title": "History"
+                    }
+                }
+            }
         },
         "reserve": {
             "link-text": "Reserve",
