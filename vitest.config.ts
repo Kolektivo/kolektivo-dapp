@@ -6,7 +6,7 @@ export default defineConfig({
   test: {
     root: './src',
     exclude: ['**/e2e/**', 'node_modules'],
-    testTimeout: 20000,
+    testTimeout: 100000000,
   },
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   plugins: [tsconfigPaths(), loadHtml()],
