@@ -41,8 +41,7 @@
     "e2e:ci": "URL=$npm_config_url playwright test",
     "vercel:deploy": "vercel --token $npm_config_token",
     "vercel:deploy:production": "vercel --prod --token $npm_config_token",
-    "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope",
-    "postinstall": "npx eth-sdk"
+    "vercel:alias": "vercel alias set $npm_config_deployment $npm_config_branch --token $npm_config_token --scope $npm_config_scope"
   },
   "dependencies": {
     "@aurelia/i18n": "dev",
