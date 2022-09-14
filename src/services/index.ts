@@ -1,4 +1,4 @@
-export * from './axios-service';
+export * from './http-service';
 export * from './browser-storage-service';
 export * from './cache-service';
 export * from './contracts-deployment-service';

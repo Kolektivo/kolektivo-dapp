@@ -53,7 +53,6 @@
     "@metamask/detect-provider": "^1.2.0",
     "@walletconnect/web3-provider": "^1.8.0",
     "aurelia": "dev",
-    "axios": "latest",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "chart.js": "^3.9.1",

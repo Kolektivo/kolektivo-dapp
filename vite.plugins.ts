@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as rollupPluginutils from 'rollup-pluginutils';
+import { IOptionalPreprocessOptions, preprocess } from '@aurelia/plugin-conventions';
 import { Plugin } from 'vite';
 import { createFilter } from '@rollup/pluginutils';
-import { preprocess } from '@aurelia/plugin-conventions';
 
-export function au2(options: { include?: string; exclude?: string; pre?: boolean }) {
-  const filter = createFilter(options.include, options.exclude);
+export function au2({ include, exclude, ...options }: { include?: string; exclude?: string; pre?: boolean } & IOptionalPreprocessOptions) {
+  const filter = createFilter(include, exclude);
 
   return {
     name: 'au2',
@@ -19,7 +16,7 @@ export function au2(options: { include?: string; exclude?: string; pre?: boolean
           path: id,
           contents: code,
         },
-        { hmr: true, hmrModule: 'import.meta' },
+        { hmr: true, hmrModule: 'import.meta', ...options },
       )?.code;
       return { code: result ?? code };
     },

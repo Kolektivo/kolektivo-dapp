@@ -1,9 +1,9 @@
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Hash } from './ethereum-service';
+import { IHttpService } from './http-service';
 import { IPFS_GATEWAY } from '../environment-variables';
 import { callOnce } from '../decorators/call-once';
 import CID from 'cids';
-import axios from 'axios';
 
 export interface IIpfsClient {
   pinHash(hash: Hash, name?: string): Promise<void>;
@@ -23,7 +23,7 @@ export class IpfsService {
    */
   private ipfs = {} as IIpfsClient;
 
-  constructor(@ILogger private readonly logger: ILogger) {}
+  constructor(@ILogger private readonly logger: ILogger, @IHttpService private readonly httpService: IHttpService) {}
 
   @callOnce('IpfsService')
   public initialize(ipfs: IIpfsClient): void {
@@ -40,16 +40,10 @@ export class IpfsService {
     let url = 'n/a';
     try {
       url = this.getIpfsUrl(hash, protocol);
-      const response = await axios.get(url);
-
-      if (response.status !== 200) {
-        this.logger.fatal(`An error occurred getting the hash ${hash}: ${response.statusText}`);
-        return;
-      }
-
-      return typeof response.data === 'string' ? (JSON.parse(response.data) as T) : (response.data as T);
+      const data = await this.httpService.call<T | string>(url);
+      return typeof data === 'string' ? (JSON.parse(data) as T) : (data as T);
     } catch (ex) {
-      this.logger.error(`Error fetching from ${url}: ${(ex as { message: string }).message}`);
+      this.logger.fatal(`An error occurred getting the hash ${hash}: ${ex as string}`);
     }
   }
 

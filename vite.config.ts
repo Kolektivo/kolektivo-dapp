@@ -1,5 +1,5 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import { Plugin, defineConfig, splitVendorChunkPlugin } from 'vite';
+import { Plugin, PluginOption, defineConfig, splitVendorChunkPlugin } from 'vite';
 import { au2, rawHtml } from './vite.plugins';
 import { visualizer } from 'rollup-plugin-visualizer';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
@@ -23,7 +23,7 @@ export default defineConfig({
   plugins: [
     au2({ include: 'src/**/*.ts', pre: true }),
     au2({ include: 'src/**/*.html' }),
-    swc.vite(),
+    swc.vite() as PluginOption,
     splitVendorChunkPlugin(),
     tsconfigPaths(),
     rawHtml(),

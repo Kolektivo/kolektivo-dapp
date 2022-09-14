@@ -19,18 +19,22 @@
             "url": "http://localhost:9000",
             "webRoot": "${workspaceRoot}/src",
             "sourceMaps": true,
-            "smartStep": true,
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Debug Current Test File",
             "autoAttachChildProcesses": true,
-            "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
             "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
-            "args": ["run", "${relativeFile}"],
-            "smartStep": true,
+            "args": [
+                "run",
+                "${relativeFile}"
+            ],
             "console": "integratedTerminal"
-          }
+        }
     ]
 }
