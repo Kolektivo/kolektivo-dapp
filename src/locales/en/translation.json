@@ -22,26 +22,7 @@
             },
             "overview": {
                 "assets": {
-                    "title": "Treasury Assets",
-                    "assets-tab": {
-                        "title": "Assets",
-                        "grid-headers": {
-                            "token": "Token",
-                            "price": "Price",
-                            "quantity": "Quantity",
-                            "total": "Total Value"
-                        }
-                    },
-                    "transaction-history": {
-                        "title": "Transaction History",
-                        "grid-headers": {
-                            "token": "Token",
-                            "type": "Type",
-                            "amount": "Amount",
-                            "address": "Address",
-                            "age": "Age"
-                        }
-                    }
+                    "title": "Treasury Assets"
                 },
                 "ktt": {
                     "title": "Kolektivo Treasury Token (KTT)",
@@ -111,26 +92,7 @@
                 },
                 "assets": {
                     "title": "Reserve Assets",
-                    "tooltip": "This is a tooltip for Reserve Assets",
-                    "assets-tab": {
-                        "title": "Assets",
-                        "grid-headers": {
-                            "token": "Token",
-                            "price": "Price",
-                            "quantity": "Quantity",
-                            "total": "Total Value"
-                        }
-                    },
-                    "transaction-history": {
-                        "title": "Transaction History",
-                        "grid-headers": {
-                            "token": "Token",
-                            "type": "Type",
-                            "amount": "Amount",
-                            "address": "Address",
-                            "age": "Age"
-                        }
-                    }
+                    "tooltip": "This is a tooltip for Reserve Assets"
                 }
             },
             "k-cur": {
@@ -243,6 +205,25 @@
         }
     },
     "general": {
+        "assets": {
+            "title": "Assets",
+            "grid-headers": {
+                "token": "Token",
+                "price": "Price",
+                "quantity": "Quantity",
+                "total": "Total Value"
+            }
+        },
+        "transaction-history": {
+            "title": "Transaction History",
+            "grid-headers": {
+                "token": "Token",
+                "type": "Type",
+                "amount": "Amount",
+                "address": "Address",
+                "age": "Age"
+            }
+        },
         "chart-time-filter": {
             "1h": "1H",
             "1d": "1D",

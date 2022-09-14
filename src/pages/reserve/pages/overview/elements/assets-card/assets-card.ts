@@ -9,8 +9,8 @@ export class AssetsCard implements ICustomElementViewModel {
   routes: RouteLink[] = [];
   constructor(@I18N private readonly i18n: I18N) {
     this.routes = [
-      { name: this.i18n.tr('navigation.treasury.overview.assets.assets-tab.title'), path: 'assets', isActive: true },
-      { name: this.i18n.tr('navigation.treasury.overview.assets.transaction-history.title'), path: 'transaction-history', isActive: false },
+      { name: this.i18n.tr('general.assets.title'), path: 'assets', isActive: true },
+      { name: this.i18n.tr('general.transaction-history.title'), path: 'transaction-history', isActive: false },
     ];
   }
 
