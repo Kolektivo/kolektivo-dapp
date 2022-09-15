@@ -7,7 +7,8 @@ export type CacheOptions = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function cache<T extends Record<string, any>>(options: (this: T) => CacheOptions) {
-  return function (target: T, methodName: string, descriptor: TypedPropertyDescriptor<(...args: unknown[]) => unknown | Promise<unknown>>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return function (target: T, methodName: string, descriptor: TypedPropertyDescriptor<(...args: any[]) => any | Promise<any>>) {
     const cacheKeyPrefix = `${target.constructor.name}_${methodName}`;
     const originalMethod = descriptor.value;
 
