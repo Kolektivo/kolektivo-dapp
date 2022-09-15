@@ -19,7 +19,9 @@ export const IContractsDeploymentService = DI.createInterface<IContractsDeployme
 
 export class ContractsDeploymentService {
   private contractInfosJson?: IContractInfosJson;
+  private governanceContractInfosJson?: IContractInfosJson;
   private sharedContractAbisJson?: ISharedContractInfos;
+  private sharedGovernanceContractAbisJson?: ISharedContractInfos;
 
   public static register(container: IContainer) {
     Registration.singleton(IContractsDeploymentService, ContractsDeploymentService).register(container);
@@ -28,7 +30,9 @@ export class ContractsDeploymentService {
   public async initialize(targetedNetwork: AllowedNetworks): Promise<void> {
     const network = targetedNetwork.toLowerCase();
     this.contractInfosJson = (await import(`../contracts/${network}.json`)) as IContractInfosJson;
+    this.governanceContractInfosJson = (await import(`../contracts/governance/${network}.json`)) as IContractInfosJson;
     this.sharedContractAbisJson = (await import('../contracts/sharedAbis.json')) as unknown as ISharedContractInfos;
+    this.sharedGovernanceContractAbisJson = (await import('../contracts/governance/sharedAbis.json')) as unknown as ISharedContractInfos;
   }
 
   public getContractAbi(contractName: string): [] {
@@ -41,11 +45,21 @@ export class ContractsDeploymentService {
       // then maybe is shared by contract name
       abi = this.sharedContractAbisJson?.[contractName];
     }
+    if (!abi) {
+      abi = this.governanceContractInfosJson?.contracts[contractName]?.abi;
+      if (typeof abi === 'string') {
+        // is name of shared abi, such as ERC20
+        abi = this.sharedGovernanceContractAbisJson?.[abi];
+      } else if (typeof abi === 'undefined') {
+        // then maybe is shared by contract name
+        abi = this.sharedGovernanceContractAbisJson?.[contractName];
+      }
+    }
     return abi ?? [];
   }
 
   public getContractAddress(contractName: string): Address | null {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return this.contractInfosJson?.contracts[contractName]?.address ?? null;
+    return this.contractInfosJson?.contracts[contractName]?.address ?? this.governanceContractInfosJson?.contracts[contractName]?.address ?? null;
   }
 }

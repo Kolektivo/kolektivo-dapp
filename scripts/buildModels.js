@@ -11,6 +11,8 @@ const glob = require('glob');
 const { exit } = require('process');
 const contractPath = './src/contracts'; //where all the contract json files are from the fetchContracts.js
 let destPath = './src/models/generated'; //where all the model files will go
+//const contractPath = './src/contracts/governance'; //for governance
+//let destPath = './src/models/generated/governance'; //for governance
 let ethSdkPath = './eth-sdk/abis/';
 const { exec } = require('child_process');
 

@@ -6,8 +6,16 @@ export interface Proposal {
   title: string;
   token: ITokenInfo;
   quantity: BigNumber;
-  status: string;
+  status: ProposalStatus;
   verified: boolean;
   destinationAddress: string;
   transaction?: Transaction;
+}
+
+export enum ProposalStatus {
+  'Pending' = 'Pending',
+  'Approved' = 'Approved',
+  'Vetoed' = 'Vetoed',
+  'Ready' = 'Ready',
+  'Executed' = 'Executed',
 }
