@@ -8,6 +8,7 @@ import { HttpService, IHttpService } from './http-service';
 import { IIpfsService, IpfsService } from './ipfs-service';
 import { IKolektivoIpfsClient, KolektivoIpfsClient } from './kolektivo-ipfs-service';
 import { INumberService, NumberService } from './number-service';
+import { IObserverService, ObserverService } from './observer-service';
 import { ITimingService, TimingService } from './timing-service';
 import { ITokenListService, TokenListService } from './token-list-service';
 import { ITokenService, TokenService } from './token-service';
@@ -30,6 +31,7 @@ export class Services {
     @ITokenListService public readonly tokenListService: ITokenListService,
     @ITimingService public readonly timingService: ITimingService,
     @ICacheService public readonly cacheService: ICacheService,
+    @IObserverService public readonly observerService: IObserverService,
   ) {}
 
   public initialize(): Promise<unknown> {
@@ -48,6 +50,7 @@ export class Services {
   public static register(container: IContainer): void {
     container
       .register(Registration.singleton(IServices, Services))
+      .register(ObserverService)
       .register(TimingService)
       .register(CacheService)
       .register(HttpService)

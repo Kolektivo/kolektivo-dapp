@@ -15,3 +15,4 @@ export * from './token-list-service';
 export * from './token-service';
 export * from './token-types';
 export * from './transactions-service';
+export * from './observer-service';
