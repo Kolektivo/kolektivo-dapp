@@ -12,6 +12,14 @@ export class ObserverService {
 
   constructor(@IObserverLocator private readonly locator: IObserverLocator, @ICacheService private readonly cacheService: ICacheService) {}
 
+  /**
+   * Make a object property observable and subscribe to changes in its value.
+   * Viewmodels should use @watch.
+   * @param obj object having the property to observe
+   * @param property property to observe
+   * @param method ISubscriber, handles changes in the property's values
+   * @returns method to unsubscribe.  Singletons, such as services, don't need to call this.
+   */
   // @cache<ObserverService>(function () {
   //   return { storage: this.cacheService };
   // })
