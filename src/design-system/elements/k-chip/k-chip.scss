@@ -4,8 +4,10 @@
     font-size: 14px;
     display: grid;
     grid-template-columns: auto 1fr;
-    padding: var(--spacing-sm) var(--spacing);
-    border-radius: 20px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    align-items:center;
+    line-height: 18px;
 
     k-icon {
       margin-right: 5px;

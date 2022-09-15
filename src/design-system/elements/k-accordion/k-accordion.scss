@@ -3,7 +3,7 @@
   --border-top: 1px solid #e2e8f0;
   --box-shadow: 0 20px 25px -5px rgb(0 0 0 / 10%) 0 10px 10px -5px rgb(0 0 0 / 4%);
   --details-margin: 1em auto;
-  --background: var(--white);
+  --background: var(--don-juan-050);
 
   details {
     font-size: 1rem;
@@ -34,8 +34,6 @@
     .summary-chevron-up,
     .summary-chevron-down {
       pointer-events: none;
-      position: absolute;
-      top: 0.75em;
       right: var(--details-padding);
       background: var(--background);
 
@@ -51,6 +49,9 @@
     summary {
       list-style: none;
       padding: var(--details-padding);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap:10px;
 
       &:focus {
         outline: none;

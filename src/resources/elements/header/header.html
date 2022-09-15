@@ -10,9 +10,9 @@
       <k-button click.trigger="connectWallet()">Connect Wallet</k-button>
     </k-stack>
     <div else>
-      <k-stack justify-content="flex-end" direction="row" gap="var(--spacing)">
+      <k-stack justify-content="flex-end" direction="row" gap="20">
         <network-feedback></network-feedback>
-        <k-text color="var(--white)">${i18n.tr('status-bar.badge-title')}:</k-text>
+        <k-text color="var(--white)" if.bind="store.kolektivoStore.badges.length">${i18n.tr('status-bar.badge-title')}:</k-text>
         <k-avatar-group ref="badgeGroup">
           <k-avatar repeat.for="badge of store.kolektivoStore.badges" tooltip="value:${badge.name};position:bottom"
             src.bind="badge.imageUrl" size="32"></k-avatar>

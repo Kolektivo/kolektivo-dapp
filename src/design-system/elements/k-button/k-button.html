@@ -2,7 +2,7 @@
   class.bind="class" role="button" ...$attrs>
   <k-grid if.bind="!loading" justify-content="center" cols="auto auto" direction="row">
     <slot name="start">
-      <k-icon if.bind="icon" name.bind="icon" size.bind="iconSize"></k-icon>
+      <k-icon if.bind="icon" part="icon" name.bind="icon" size.bind="iconSize"></k-icon>
     </slot>
     <slot></slot>
   </k-grid>

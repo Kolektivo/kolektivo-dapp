@@ -112,8 +112,10 @@ export class KMenu implements ICustomElementViewModel {
       this.platform.window.removeEventListener('click', this.closeEvent);
     }
   }
-  private closeEvent = () => {
-    this.open = false;
+  private closeEvent = (e: Event) => {
+    if (e.target !== this.element && this.target !== e.target && !this.element.contains(e.target as HTMLElement)) {
+      this.open = false;
+    }
   };
 
   private showEvent = () => {

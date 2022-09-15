@@ -1,9 +1,14 @@
 map { 
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+    overflow: hidden;
+    z-index: 1;
 
-    p{
-        height: 100%;
+    div{
+        display:contents;
     }
  }

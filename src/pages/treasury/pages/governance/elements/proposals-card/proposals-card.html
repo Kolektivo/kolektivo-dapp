@@ -1,5 +1,6 @@
 <k-card tooltip-text="${i18n.tr('navigation.treasury.governance.proposals-card.tooltip')}" id="t-g-proposals-card"
   title="${i18n.tr('navigation.treasury.governance.proposals-card.title')}">
+  <k-loader fill="parent" color="var(--white)" loading.bind="store.treasuryStore.loadProposals()"></k-loader>
   <card-nav active.two-way="active" routes.bind="routes"></card-nav>
   <template switch.bind="active">
     <ready-to-execute case="ready-to-execute"></ready-to-execute>

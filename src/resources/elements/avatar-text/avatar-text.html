@@ -2,6 +2,6 @@
   <k-icon if.bind="icon" name.bind="icon" size.bind="size" color.bind="color"></k-icon>
   <k-avatar else src.bind="src" color.bind="color" size.bind="size"></k-avatar>
   <slot>
-    <k-text ref="avatarTextElem">${name}</k-text>
+    <k-text color.bind="color" ref="avatarTextElem">${name}</k-text>
   </slot>
 </div>

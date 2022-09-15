@@ -1,11 +1,10 @@
 @import '../../../design-system/styles/sizes';
 
 header {
-  padding: 20px 18px;
-
-  k-stack {
-    padding-right: var(--spacing);
-    padding-top: var(--spacing-small);
+  padding: 18px 40px;
+  z-index: 2;
+  k-button::part(icon){
+    transform: translateX(0px);
   }
 
   @include xl {

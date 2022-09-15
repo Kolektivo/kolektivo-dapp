@@ -1,7 +1,7 @@
 import { ICustomElementViewModel, INode, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from './../../common';
+import { watch } from '@aurelia/runtime-html';
 import css from './k-select.scss';
-
 import template from './k-select.html';
 
 @customElement({
@@ -21,8 +21,8 @@ export class KSelect implements ICustomElementViewModel {
   @bindable({ set: ifExistsThenTrue }) isError = false;
   @bindable({ set: numberToPixelsInterceptor }) width?: string; //defined width, otherwise will be auto width based on the selected value
   @bindable size = 10; //how many options should be shown before scroll in the dropdown
-  @bindable value? = ''; //Reflects the value of the first selected option. Setting the value property will update the selected state of the first option that matches the value. If no option with a matching value is present, the value will reset to a blank string.
-  options: { value: string; text: string }[] = [];
+  @bindable value?: unknown = ''; //Reflects the value of the first selected option. Setting the value property will update the selected state of the first option that matches the value. If no option with a matching value is present, the value will reset to a blank string.
+  options: { value: unknown; text: string }[] = [];
   text? = '';
   menuOpen = false;
   changed(): void {
@@ -33,6 +33,14 @@ export class KSelect implements ICustomElementViewModel {
     return {
       width: this.width,
     };
+  }
+
+  @watch<KSelect>((x) => x.options.map((x) => x.value))
+  optionsChanged(): void {
+    if (this.text) return;
+    const selectedValue = this.options.find((x) => x.value === this.value);
+    if (!selectedValue) return;
+    this.text = selectedValue.text;
   }
 
   get maxMenuHeight(): number | undefined {

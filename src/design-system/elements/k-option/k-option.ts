@@ -19,14 +19,13 @@ export class KOption implements ICustomElementViewModel {
   constructor(@IPlatform private readonly platform: IPlatform, @INode private readonly element: HTMLElement) {
     if (!this.text) this.text = this.element.innerText;
   }
-  @bindable value?: string;
+  @bindable value?: unknown;
   @bindable text?: string;
   vm?: KSelect;
-  attached() {
+  attaching() {
     if (!this.element.parentElement?.shadowRoot) return;
     this.vm = CustomElement.for(this.element.parentElement.shadowRoot).viewModel as KSelect;
-    if (!this.value || !this.text) return;
-    this.vm.options.push({ value: this.value, text: this.text });
+    this.vm.options.push({ value: this.value, text: this.text ?? JSON.stringify(this.value) });
     if (this.vm.value == this.value) {
       this.vm.text = this.text;
     }
