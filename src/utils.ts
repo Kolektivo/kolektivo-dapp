@@ -1,3 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber';
+import { getAddress } from 'ethers/lib/utils';
+
 /**
  * Remove precision from the decimals part of a number. Need this instead of `toFixed` because
  * the latter adds phantom numbers with decimals > 16
@@ -40,3 +43,22 @@ export const getErrorMessage = (error: ErrorType | unknown) => {
   const knownError = error as ErrorType;
   return typeof knownError === 'string' ? knownError : knownError.message ?? '';
 };
+
+/**
+ * null, undefined, '' and '0x0[...]' would be treated as empty.
+ * '0x' would be treated as not an address.
+ * @param address
+ * @param emptyOk
+ * @returns
+ */
+export function isAddress(address?: string | null, emptyOk = false): boolean {
+  try {
+    if (!address?.trim() || BigNumber.from(address).eq(0)) {
+      return emptyOk;
+    } else {
+      return !!getAddress(address);
+    }
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
+  return false;
+}

@@ -8,6 +8,7 @@ import { BaseContract, Wallet, ethers } from 'ethers';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
 import { IContractsDeploymentService } from './contracts-deployment-service';
 import { callOnce } from '../decorators/call-once';
+import { isAddress } from 'utils';
 
 export enum ContractNames {
   GEONFT = 'GeoNFT',
@@ -205,7 +206,10 @@ export class ContractsService {
         contract = ContractsService.Contracts.get(contractName)?.connect(signerOrProvider) ?? null;
       } else {
         const address = this.getContractAddress(contractName);
-        if (address) {
+        /**
+         * note this will reject '0x0000000000000000000000000000000000000000'
+         */
+        if (address && isAddress(address)) {
           contract = this.getContractAtAddress(contractName, address, signerOrProvider);
         } else {
           contract = null;
