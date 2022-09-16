@@ -1,46 +1,46 @@
 {
-  "name": "alfajores",
-  "chainId": 44787,
-  "contracts": {
-    "Badger": {
-      "abi": "Badger",
-      "address": "0x16d70b9255A60eC97B1Fd3fA5BE4E1561f22d18E"
-    },
-    "bacMD": {
-      "abi": "BACRoles",
-      "address": "0xf3ba7Db33fD6175137433e972955B259c46Dce10"
-    },
-    "bacFFD": {
-      "abi": "BACRoles",
-      "address": "0x67E146f2CD6a0Ea2444756c5bd049785F1bbAD98"
-    },
-    "bacMC": {
-      "abi": "BACRoles",
-      "address": "0x0EC599d7bFfD9893A14D2a9C6A36A60818C29abc"
-    },
-    "bacK": {
-      "abi": "BACRoles",
-      "address": "0x319c6427688D0F1c7AfC282d21dD0bDE5F56d354"
-    },
-    "monetaryDelegateScope": {
-      "abi": "ScopeGuard",
-      "address": "0x5507ed0060d9c5D0AdD2280a2c3550D0e63d9Ede"
-    },
-    "foodForestDelegateScope": {
-      "abi": "ScopeGuard",
-      "address": "0xDCDDc0467384be9f6DD60DbA231b53e38b4a3d37"
-    },
-    "monetaryMultisigScope": {
-      "abi": "ScopeGuard",
-      "address": "0x5438D24986411Cef9D990dcf1855f45c1cf5122E"
-    },
-    "monetaryDelay": {
-      "abi": "SecretDelay",
-      "address": "0x19EAa93B4C8820A05a8dfE874792cd076fFb5642"
-    },
-    "foodForestDelay": {
-      "abi": "SecretDelay",
-      "address": "0xd7b2d9b1F08648b37ed9A70D458baf1Bc6a9F26a"
-    }
-  }
+	"name": "alfajores",
+	"chainId": 44787,
+	"contracts": {
+		"badger": {
+			"abi": "Badger",
+			"address": "0x319D2C2498801a6194f813458AbDF9110B21363E"
+		},
+		"bacMD": {
+			"abi": "BACRoles",
+			"address": "0xFD932773e496D09fABC90ec23Dc9a808fEc41Dad"
+		},
+		"bacFFD": {
+			"abi": "BACRoles",
+			"address": "0x062287bbE4084eB855f8d2670Ad0bd46f5e34615"
+		},
+		"bacMC": {
+			"abi": "BACRoles",
+			"address": "0xCE6B8364097f5087ebf05cdDc936ad81aaeF1dAf"
+		},
+		"bacK": {
+			"abi": "BACRoles",
+			"address": "0x7bE1A6Fc28E3f9CEA8a1Ee2bf1c9B6E81b60C2B8"
+		},
+		"monetaryDelegateScope": {
+			"abi": "ScopeGuard",
+			"address": "0x74606Ff17aD30f3281F7c55966d0643566EC4Cbd"
+		},
+		"foodForestDelegateScope": {
+			"abi": "ScopeGuard",
+			"address": "0x59CC33cB2004DFb39f31cF52D4F562B66eE5a70f"
+		},
+		"monetaryMultisigScope": {
+			"abi": "ScopeGuard",
+			"address": "0xA75BD5165749CBE4332beb57733D1B71781b19A9"
+		},
+		"monetaryDelay": {
+			"abi": "SecretDelay",
+			"address": "0x65b0FaD8140dD828c7d7b57B05A5953AdD0A32CC"
+		},
+		"foodForestDelay": {
+			"abi": "SecretDelay",
+			"address": "0x216547D1C32f2575f1e4b7C5310312f5D058aA12"
+		}
+	}
 }
