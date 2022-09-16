@@ -8,7 +8,7 @@ import { Oracle } from 'models/generated/oracle';
 import { Reserve } from 'models/generated/reserve';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/treasury';
-import { getMonetaryContract } from './../services/contracts-service';
+import { getMonetaryContract, tokenInfos } from './../services/contracts-service';
 export type IContractStore = ContractStore;
 export const IContractStore = DI.createInterface<IContractStore>('IContractStore');
 
@@ -30,7 +30,7 @@ export class ContractStore {
     const oracleContract = getMonetaryContract<Oracle>('Oracle', oracleAddress);
     const data = await oracleContract.getData(); // get the data from the oracle contract
     if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
-    const tokenInfo = await this.services.tokenService.getTokenInfoFromAddress(assetAddress); //get the token info from the asset address
+    const tokenInfo = tokenInfos.find((y) => y.address === oracleAddress); //get the token info from the asset address
     if (!tokenInfo) {
       this.logger.error(`No token info was found for ${assetAddress}`);
       return;

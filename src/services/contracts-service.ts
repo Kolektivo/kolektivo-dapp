@@ -1,8 +1,10 @@
 import { Contract } from '@ethersproject/contracts';
+import { ITokenInfo } from 'services/token-types';
 import { Provider } from '@ethersproject/providers';
 
 import { ContractInterface, Signer, getDefaultProvider } from 'ethers';
 
+import { ITokenListUniswap } from './token-types';
 import governanceAlfajores from '../contracts/governance/alfajores.json';
 import governanceCelo from '../contracts/governance/celo.json';
 import governanceShared from '../contracts/governance/sharedAbis.json';
@@ -19,6 +21,11 @@ type GovernanceContracts = Extract<keyof GovernanceContractJson['contracts'], st
 
 const endpoint = import.meta.env.KOL_NETWORK === 'Celo' ? 'https://celo.rpcs.dev:8545' : `https://alfajores.rpcs.dev:8545`;
 const defaultProvider = getDefaultProvider(endpoint);
+
+const tokenListUri = 'https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json';
+export const tokenInfos = await fetch(tokenListUri, { method: 'GET', headers: { accept: 'application/json' } })
+  .then(async (y) => (await y.json()) as ITokenListUniswap)
+  .then((y) => y.tokens as ITokenInfo[]);
 
 export const getMonetaryContract = <T extends Contract>(
   contract: MonetaryContracts,
