@@ -36,4 +36,7 @@
     "/src/design-system/elements",
     "/src/pages"
   ],
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
 }

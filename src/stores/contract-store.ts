@@ -1,13 +1,14 @@
 import { Asset, AssetType } from 'models/asset';
 import { BigNumber } from 'ethers';
-import { ContractNames, IServices, ITokenInfo, fromWei } from '../services';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Erc20, TransferEvent } from 'models/generated/erc20/Erc20';
 import { Erc721 } from 'models/generated/erc721';
+import { IServices, ITokenInfo, fromWei } from '../services';
 import { Oracle } from 'models/generated/oracle';
 import { Reserve } from 'models/generated/reserve';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/treasury';
+import { getMonetaryContract } from './../services/contracts-service';
 export type IContractStore = ContractStore;
 export const IContractStore = DI.createInterface<IContractStore>('IContractStore');
 
@@ -26,7 +27,7 @@ export class ContractStore {
   ): Promise<Asset | undefined> {
     const oracleAddress = await contract.oraclePerERC20(assetAddress); // get the oracle address for the given asset
     if (!oracleAddress) return;
-    const oracleContract = this.services.contractsService.getContractAtAddress<Oracle>(ContractNames.ORACLE, oracleAddress); //get the oracle contract for the given oracle address
+    const oracleContract = getMonetaryContract<Oracle>('Oracle', oracleAddress);
     const data = await oracleContract.getData(); // get the data from the oracle contract
     if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
     const tokenInfo = await this.services.tokenService.getTokenInfoFromAddress(assetAddress); //get the token info from the asset address

@@ -1,6 +1,5 @@
 import { Address, IEthereumService, Networks } from './ethereum-service';
 import { Contract } from 'ethers';
-import { ContractNames, IContractsService } from './contracts-service';
 import { DI, IContainer, ILogger, IPlatform, Registration, TaskQueue } from 'aurelia';
 import { Erc20 as Erc20Type } from 'models/generated/erc20/Erc20';
 import { Erc721 as Erc721Type } from 'models/generated/erc721/Erc721';
@@ -39,7 +38,6 @@ export class TokenService {
   }
 
   constructor(
-    @IContractsService private readonly contractsService: IContractsService,
     @ITokenListService private readonly tokenListProvider: ITokenListService,
     @IEthereumService private readonly ethereumService: IEthereumService,
     @ITimingService private readonly timingService: ITimingService,
@@ -54,9 +52,6 @@ export class TokenService {
   @callOnce('TokenService')
   public initialize(): void {
     try {
-      this.erc20Abi = this.contractsService.getContractAbi(ContractNames.ERC20);
-      this.erc721Abi = this.contractsService.getContractAbi(ContractNames.ERC721);
-
       void this.tokenListProvider.initialize().then(() => {
         /**
          * note these will not automatically have id or price initialized
@@ -157,7 +152,7 @@ export class TokenService {
     } else {
       ercAbi = this.erc20Abi;
     }
-    return new Contract(tokenAddress, ercAbi, this.contractsService.createProvider()) as Erc20Type | Erc721Type;
+    return new Contract(tokenAddress, ercAbi, undefined) as Erc20Type | Erc721Type;
   }
 
   /**
@@ -210,11 +205,6 @@ export class TokenService {
 
     try {
       if (this.ethereumService.targetedNetwork === Networks.Celo) {
-        const proxyImplementation = await this.contractsService.getProxyImplementation(tokenAddress);
-        if (proxyImplementation) {
-          tokenAddress = proxyImplementation;
-        }
-
         const contractAbi = await this.httpService
           .call<{ message: string; result: string }>(`https://explorer.celo.org/api?module=contract&action=getabi&address=${tokenAddress}`)
           .then((result) => {

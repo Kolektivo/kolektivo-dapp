@@ -1,9 +1,8 @@
 import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
-import { ContractNames } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IContractStore } from './contract-store';
-import { IServices } from 'services';
+import { IServices, getMonetaryContract } from 'services';
 import { Reserve } from 'models/generated/reserve/Reserve';
 import { Transaction } from 'models/transaction';
 import { callOnce } from 'decorators/call-once';
@@ -33,7 +32,7 @@ export class ReserveStore {
   public async loadAssets(): Promise<void> {
     const contract = this.getReserveContract();
     if (!contract) return;
-    const reserveAddress = this.services.contractsService.getContractAddress(ContractNames.RESERVE) ?? '';
+    const reserveAddress = contract.address;
     if (!reserveAddress) return;
     //get all token addresses from the contract
     const addresses = (
@@ -55,7 +54,7 @@ export class ReserveStore {
 
   private getReserveContract(): Reserve | null {
     if (this.reserveContract) return this.reserveContract;
-    this.reserveContract = this.services.contractsService.getContractFor<Reserve>(ContractNames.RESERVE);
+    this.reserveContract = getMonetaryContract<Reserve>('Reserve');
     return this.reserveContract;
   }
 }

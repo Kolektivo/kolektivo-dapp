@@ -1,7 +1,5 @@
 import { BrowserStorageService, IBrowserStorageService } from './browser-storage-service';
 import { CacheService, ICacheService } from './cache-service';
-import { ContractsDeploymentService, IContractsDeploymentService } from './contracts-deployment-service';
-import { ContractsService, IContractsService } from './contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { EthereumService, IEthereumService, Networks } from './ethereum-service';
 import { HttpService, IHttpService } from './http-service';
@@ -25,8 +23,6 @@ export class Services {
     @IKolektivoIpfsClient public readonly kolektivoService: IKolektivoIpfsClient,
     @IEthereumService public readonly ethereumService: IEthereumService,
     @IBrowserStorageService public readonly browserStorageService: IBrowserStorageService,
-    @IContractsService public readonly contractsService: IContractsService,
-    @IContractsDeploymentService public readonly contractsDeploymentService: IContractsDeploymentService,
     @ITokenService public readonly tokenService: ITokenService,
     @ITokenListService public readonly tokenListService: ITokenListService,
     @ITimingService public readonly timingService: ITimingService,
@@ -39,12 +35,7 @@ export class Services {
     this.timingService.initialize(targetNetwork);
     this.ipfsService.initialize(this.kolektivoService);
 
-    return this.ethereumService.initialize(targetNetwork).then(() =>
-      this.contractsDeploymentService
-        .initialize(targetNetwork)
-        .then(() => this.contractsService.initialize())
-        .then(() => this.tokenService.initialize()),
-    );
+    return this.ethereumService.initialize(targetNetwork);
   }
 
   public static register(container: IContainer): void {
@@ -59,9 +50,7 @@ export class Services {
       .register(KolektivoIpfsClient)
       .register(EthereumService)
       .register(BrowserStorageService)
-      .register(ContractsService)
       .register(TokenListService)
-      .register(TokenService)
-      .register(ContractsDeploymentService);
+      .register(TokenService);
   }
 }

@@ -1,6 +1,46 @@
 {
-    "name": "celo",
-    "chainId": "42220",
+    "name": "rinkeby",
+    "chainId": 4,
     "contracts": {
+        "badger": {
+            "abi": "Badger",
+            "address": "0x886C61961810f98787f7BDB9140EBc55F00339D2"
+        },
+        "bacMD": {
+            "abi": "BACRoles",
+            "address": "0x4A43e96f902FA479165877A2540D96c0D595c9dB"
+        },
+        "bacFFD": {
+            "abi": "BACRoles",
+            "address": "0xF4DF9BD21d772d833496C7b5f2c95Be6F42c81cA"
+        },
+        "bacMC": {
+            "abi": "BACRoles",
+            "address": "0x0745c6BDA048370913B03dF6975D4979f236907A"
+        },
+        "bacK": {
+            "abi": "BACRoles",
+            "address": "0x6633475079efAC0179EEc0d68cd94A82862cc16a"
+        },
+        "monetaryDelegateScope": {
+            "abi": "ScopeGuard",
+            "address": "0x90d91CE8d694CC3F63071C583C0B31dde0808B4F"
+        },
+        "foodForestDelegateScope": {
+            "abi": "ScopeGuard",
+            "address": "0xd14698e470D071a7c1D0f220059a97630c219832"
+        },
+        "monetaryMultisigScope": {
+            "abi": "ScopeGuard",
+            "address": "0xeBb43060b925139058ff21251d57C73f3ED7038f"
+        },
+        "monetaryDelay": {
+            "abi": "SecretDelay",
+            "address": "0xb21145202372CC4F92621c5C41A3791755c0919b"
+        },
+        "foodForestDelay": {
+            "abi": "SecretDelay",
+            "address": "0xE16FBF400C8D7d14fD59Af379C826AdE9d6aD5F1"
+        }
     }
 }
