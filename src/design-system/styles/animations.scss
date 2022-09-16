@@ -119,6 +119,10 @@
   animation: ripple 2s forwards cubic-bezier(0, 0, 0.2, 1);
 }
 
+.ripple-container {
+  pointer-events: none;
+}
+
 .zoom-in {
   animation: zoom-in 0.2s;
 }

@@ -10,8 +10,6 @@ export * from './kolektivo-ipfs-service';
 export * from './number-service';
 export * from './services';
 export * from './timing-service';
-export * from './token-list-service';
-export * from './token-service';
 export * from './token-types';
 export * from './transactions-service';
 export * from './observer-service';

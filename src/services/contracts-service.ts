@@ -1,4 +1,6 @@
 import { Contract } from '@ethersproject/contracts';
+import { Erc20 } from 'models/generated/erc20/Erc20';
+import { Erc721 } from 'models/generated/erc721';
 import { ITokenInfo } from 'services/token-types';
 import { Provider } from '@ethersproject/providers';
 
@@ -33,7 +35,7 @@ export const getMonetaryContract = <T extends Contract>(
   signerOrProvider?: Provider | Signer | undefined,
 ) => {
   const contractJson = import.meta.env.KOL_NETWORK === 'Celo' ? monetaryCelo : monetaryAlfajores;
-  return getContract(contractJson.contracts, contract, monetaryShared, overrideAddress, signerOrProvider) as T;
+  return getLocalContract(contractJson.contracts, contract, monetaryShared, overrideAddress, signerOrProvider) as T;
 };
 
 export const getGovernanceContract = <T extends Contract>(
@@ -42,10 +44,10 @@ export const getGovernanceContract = <T extends Contract>(
   signerOrProvider?: Provider | Signer | undefined,
 ) => {
   const contractJson = import.meta.env.KOL_NETWORK === 'Celo' ? governanceCelo : governanceAlfajores;
-  return getContract(contractJson.contracts, contract, governanceShared, overrideAddress, signerOrProvider) as T;
+  return getLocalContract(contractJson.contracts, contract, governanceShared, overrideAddress, signerOrProvider) as T;
 };
 
-const getContract = <T extends Contracts>(
+const getLocalContract = <T extends Contracts>(
   contractJson: T,
   contractName: Extract<keyof T, string>,
   sharedAbis: Shared,
@@ -60,3 +62,7 @@ const getContract = <T extends Contracts>(
   }
   return new Contract(overrideAddress ?? contract.address, contract.abi, signerOrProvider ?? defaultProvider);
 };
+
+export function getTokenContract(tokenAddress: string, id?: number) {
+  return new Contract(tokenAddress, id ? monetaryShared.ERC721 : monetaryShared.ERC20, defaultProvider) as Erc20 | Erc721;
+}

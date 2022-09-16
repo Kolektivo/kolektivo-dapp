@@ -8,7 +8,7 @@ import { Oracle } from 'models/generated/oracle';
 import { Reserve } from 'models/generated/reserve';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/treasury';
-import { getMonetaryContract, tokenInfos } from './../services/contracts-service';
+import { getMonetaryContract, getTokenContract, tokenInfos } from './../services/contracts-service';
 export type IContractStore = ContractStore;
 export const IContractStore = DI.createInterface<IContractStore>('IContractStore');
 
@@ -37,7 +37,7 @@ export class ContractStore {
     }
     tokenInfo.price = this.services.numberService.fromString(fromWei(data[0], 18)) ?? 0; //price comes back as undefined from getTokenInfoFromAddress so set it
     let tokenQuantity = BigNumber.from(1); //all NFTs have a quantity of 1, so set the quantity to 1 initially
-    const tokenContract = this.services.tokenService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
+    const tokenContract = getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
     let assetType = AssetType.Ecological;
     if (!tokenInfo.id) {
       //this is an ERC20 token so let's find it's asset type

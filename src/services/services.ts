@@ -8,8 +8,6 @@ import { IKolektivoIpfsClient, KolektivoIpfsClient } from './kolektivo-ipfs-serv
 import { INumberService, NumberService } from './number-service';
 import { IObserverService, ObserverService } from './observer-service';
 import { ITimingService, TimingService } from './timing-service';
-import { ITokenListService, TokenListService } from './token-list-service';
-import { ITokenService, TokenService } from './token-service';
 import { ethereumNetwork, isDev } from './../environment-variables';
 
 export type IServices = Services;
@@ -23,8 +21,6 @@ export class Services {
     @IKolektivoIpfsClient public readonly kolektivoService: IKolektivoIpfsClient,
     @IEthereumService public readonly ethereumService: IEthereumService,
     @IBrowserStorageService public readonly browserStorageService: IBrowserStorageService,
-    @ITokenService public readonly tokenService: ITokenService,
-    @ITokenListService public readonly tokenListService: ITokenListService,
     @ITimingService public readonly timingService: ITimingService,
     @ICacheService public readonly cacheService: ICacheService,
     @IObserverService public readonly observerService: IObserverService,
@@ -49,8 +45,6 @@ export class Services {
       .register(IpfsService)
       .register(KolektivoIpfsClient)
       .register(EthereumService)
-      .register(BrowserStorageService)
-      .register(TokenListService)
-      .register(TokenService);
+      .register(BrowserStorageService);
   }
 }
