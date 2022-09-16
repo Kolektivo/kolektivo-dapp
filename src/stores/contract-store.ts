@@ -30,7 +30,7 @@ export class ContractStore {
     const oracleContract = getMonetaryContract<Oracle>('Oracle', oracleAddress);
     const data = await oracleContract.getData(); // get the data from the oracle contract
     if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
-    const tokenInfo = tokenInfos.find((y) => y.address === oracleAddress); //get the token info from the asset address
+    const tokenInfo = tokenInfos.find((y) => y.address === assetAddress); //get the token info from the asset address
     if (!tokenInfo) {
       this.logger.error(`No token info was found for ${assetAddress}`);
       return;
