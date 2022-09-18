@@ -91,8 +91,8 @@ export class EthereumService {
     // Celo: `https://forno.celo.org`,
     Celo: 'https://celo.rpcs.dev:8545',
     // Alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
-    Alfajores: `https://alfajores.rpcs.dev:8545`,
-    // Alfajores: `https://alfajores-forno.celo-testnet.org`,
+    // Alfajores: `https://alfajores.rpcs.dev:8545`,
+    Alfajores: `https://alfajores-forno.celo-testnet.org`,
     // Alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
   };
 

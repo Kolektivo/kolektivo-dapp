@@ -4,7 +4,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { Contract } from '@ethersproject/contracts';
 import { Signer } from '@ethersproject/abstract-signer';
 
-import { BaseContract, Wallet, ethers } from 'ethers';
+import { BaseContract, Wallet } from 'ethers';
 import { DI, IContainer, IEventAggregator, Registration } from 'aurelia';
 import { IContractsDeploymentService } from './contracts-deployment-service';
 import { callOnce } from '../decorators/call-once';
@@ -103,9 +103,9 @@ export class ContractsService {
 
     this.initializeContracts();
   }
-  public async getArraySize(address: string): Promise<BigNumber> {
-    return ethers.BigNumber.from(await ethers.getDefaultProvider().getStorageAt(address, 19));
-  }
+  // public async getArraySize(address: string): Promise<BigNumber> {
+  //   return ethers.BigNumber.from(await ethers.getDefaultProvider().getStorageAt(address, 19));
+  // }
 
   public getContractAbi(contractName: ContractNames): [] {
     return this.contractsDeploymentProvider.getContractAbi(contractName);
