@@ -123,7 +123,6 @@ export class ContractsDeploymentService {
   }
 
   public getContractAbi(contractName: string): [] {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     let abi = this.contractAbis.get(contractName);
     if (typeof abi === 'string') {
       // is name of shared abi, such as ERC20
@@ -133,7 +132,6 @@ export class ContractsDeploymentService {
   }
 
   public getContractAddress(contractName: string): Address | null {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return this.contractAddresses.get(contractName) ?? null;
   }
 }
