@@ -2,17 +2,15 @@
 
 ## Overview
 
-The Kolektivo framework is a collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
+This repository contains the frontend of the Kolektivo distributed application (dApp), which is currently under development. 
 
-- A more extended brief is available [here](https://github.com/Kolektivo?view_as=public).
-- The **Kolektivo Framework Bluepaper** is available [here](https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/6319a99a8861af08a497e3a9_Kolektivo%20Bluepaper.pdf).
-- The **Kolektivo Framework Whitepaper** is available [here](https://github.com/Curve-Labs/Kolektivo/blob/main/The%20Kolektivo%20Framework%20Whitepaper%20v.3.pdf).
+The Kolektivo dApp is being developed for the Kolektivo Framework, which is a collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
 
-This `kolektivo-dapp` repository contains the frontend of the Kolektivo web client (in development) and it’s bootstrapped with the [Aurelia 2.0](https://github.com/aurelia/new) framework.
+- You can find a more extended brief [here](https://github.com/Kolektivo?view_as=public).
+- And the **Kolektivo Framework Bluepaper** [here](https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/6319a99a8861af08a497e3a9_Kolektivo%20Bluepaper.pdf).
+- And the **Kolektivo Framework Whitepaper** [here](https://github.com/Curve-Labs/Kolektivo/blob/main/The%20Kolektivo%20Framework%20Whitepaper%20v.3.pdf).
 
-It is written mostly in Typescript, HTML and SCSS, and is bundled using Webpack.****
-
-It will be initially deployed on [Celo Layer-1 Blockchain](https://celo.org/).
+The dApp is bootstrapped by the [Aurelia 2.0](https://github.com/aurelia/new) framework.  It is written mostly in Typescript, HTML and SCSS, and is bundled using Vite.  It will initially be deployed on the [Celo Layer-1 Blockchain](https://celo.org/).
 
 ## Development
 
@@ -63,16 +61,6 @@ Then look in the dist folder for the stats.html file.
 ## Dependencies
 
 For an full and always updated list of dependencies please consult [package.json](https://github.com/Kolektivo/kolektivo-dapp/blob/development/package.json)
-
-Various custom Web3-related code dependencies include:
-
-- `start-celo: cross-env KOL_NETWORK=Celo vite`
-- `start-alfajores: cross-env KOL_NETWORK=Alfajores vite`
-- `build-celo: cross-env KOL_NETWORK=Celo vite build`
-- `build-alfajores: cross-env KOL_NETWORK=Alfajores vite build`
-- `fetchContracts: node scripts/fetchContracts.js`
-- `buildModels:alfajores: node scripts/buildModels.js alfajores`
-- `buildModels:celo: node scripts/buildModels.js celo`
 
 Type-safe SDK for Ethereum smart contracts:
 
