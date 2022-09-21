@@ -41,6 +41,7 @@ export const tokenInfos =
 
 export class ContractService {
   constructor(@ICacheService private readonly cacheService: ICacheService) {}
+
   public static register(container: IContainer) {
     Registration.singleton(IContractService, ContractService).register(container);
   }
@@ -85,7 +86,13 @@ export class ContractService {
   @cache<ContractService>(function () {
     return { storage: this.cacheService };
   })
-  public getTokenContract(tokenAddress: string, id?: number, signerOrProvider?: Provider | Signer | undefined): Erc20 | Erc721 {
-    return new Contract(tokenAddress, id ? monetaryShared.ERC721 : monetaryShared.ERC20, signerOrProvider ?? defaultProvider) as Erc20 | Erc721;
+  public getTokenContract<T extends number | undefined = undefined>(
+    tokenAddress: string,
+    id?: T,
+    signerOrProvider?: Provider | Signer | undefined,
+  ): T extends number ? Erc721 : Erc20 {
+    return new Contract(tokenAddress, id ? monetaryShared.ERC721 : monetaryShared.ERC20, signerOrProvider ?? defaultProvider) as T extends number
+      ? Erc721
+      : Erc20;
   }
 }
