@@ -19,7 +19,7 @@ export enum ContractNames {
   VESTINGVAULT = 'VestingVault',
   ERC20 = 'ERC20',
   ERC721 = 'ERC721',
-  KCT = 'Kolektivo Curacao Token',
+  KCUR = 'Kolektivo Curacao Token',
   KTT = 'Kolektivo Treasury Token',
 }
 
