@@ -86,7 +86,6 @@ export class ContractService {
     return { storage: this.cacheService };
   })
   public getTokenContract(tokenAddress: string, id?: number, signerOrProvider?: Provider | Signer | undefined): Erc20 | Erc721 {
-    console.log('DP', defaultProvider);
     return new Contract(tokenAddress, id ? monetaryShared.ERC721 : monetaryShared.ERC20, signerOrProvider ?? defaultProvider) as Erc20 | Erc721;
   }
 }
