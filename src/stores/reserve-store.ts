@@ -1,8 +1,8 @@
 import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { DI, IContainer, Registration } from 'aurelia';
+import { IContractService } from 'services';
 import { IContractStore } from './contract-store';
-import { IServices, getMonetaryContract } from 'services';
 import { Reserve } from 'models/generated/reserve/Reserve';
 import { Transaction } from 'models/transaction';
 import { callOnce } from 'decorators/call-once';
@@ -21,7 +21,7 @@ export class ReserveStore {
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IReserveStore, ReserveStore));
   }
-  constructor(@IServices private readonly services: IServices, @IContractStore private readonly contractStore: IContractStore) {}
+  constructor(@IContractStore private readonly contractStore: IContractStore, @IContractService private readonly contractService: IContractService) {}
 
   public get reserveValue(): number {
     if (this.reserveAssets?.length === 0) return 0;
@@ -54,7 +54,7 @@ export class ReserveStore {
 
   private getReserveContract(): Reserve | null {
     if (this.reserveContract) return this.reserveContract;
-    this.reserveContract = getMonetaryContract<Reserve>('Reserve');
+    this.reserveContract = this.contractService.getMonetaryContract<Reserve>('Reserve');
     return this.reserveContract;
   }
 }

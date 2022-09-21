@@ -4,11 +4,10 @@ import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from 'design-system';
 import { IStore } from 'stores';
-import { ITokenService } from 'services';
 import { Registration } from 'aurelia';
 import { TokenInfoCard } from './token-info-card';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('token-info-card', () => {
   it('should have a k-card component', async () => {
@@ -60,14 +59,6 @@ describe('token-info-card', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [
-      TokenInfoCard,
-      Registration.instance(ITokenService, vi.fn()),
-      CurrencyValueConverter,
-      Global,
-      createMockStoreRegistration(),
-      createMockI18nRegistration(),
-      designSystemConfiguration(),
-    ];
+    return [TokenInfoCard, CurrencyValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
   }
 });

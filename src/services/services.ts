@@ -1,5 +1,6 @@
 import { BrowserStorageService, IBrowserStorageService } from './browser-storage-service';
 import { CacheService, ICacheService } from './cache-service';
+import { ContractService, IContractService } from 'services';
 import { DI, IContainer, Registration } from 'aurelia';
 import { EthereumService, IEthereumService, Networks } from './ethereum-service';
 import { HttpService, IHttpService } from './http-service';
@@ -24,6 +25,7 @@ export class Services {
     @ITimingService public readonly timingService: ITimingService,
     @ICacheService public readonly cacheService: ICacheService,
     @IObserverService public readonly observerService: IObserverService,
+    @IObserverService public readonly contractService: IContractService,
   ) {}
 
   public initialize(): Promise<unknown> {
@@ -45,6 +47,7 @@ export class Services {
       .register(IpfsService)
       .register(KolektivoIpfsClient)
       .register(EthereumService)
+      .register(ContractService)
       .register(BrowserStorageService);
   }
 }

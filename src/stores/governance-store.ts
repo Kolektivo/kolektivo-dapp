@@ -1,13 +1,11 @@
 import { Badger } from 'models/generated/governance/badger';
 import { BigNumber } from 'ethers';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IContractStore } from './contract-store';
+import { IContractService, IServices } from 'services';
 import { IObserverService } from 'services/observer-service';
-import { IServices } from 'services';
 import { Proposal, ProposalStatus } from 'models/proposal';
 import { callOnce } from 'decorators/call-once';
 import { delay } from 'utils';
-import { getGovernanceContract } from './../services/contracts-service';
 
 export type IGovernanceStore = GovernanceStore;
 export const IGovernanceStore = DI.createInterface<IGovernanceStore>('IGovernanceStore');
@@ -17,7 +15,7 @@ export class GovernanceStore {
   private badgerContract?: Badger;
   constructor(
     @IServices private readonly services: IServices,
-    @IContractStore private readonly contractStore: IContractStore,
+    @IContractService private readonly contractService: IContractService,
     @IObserverService private readonly observerService: IObserverService,
   ) {
     this.observerService.listen(services.ethereumService, 'defaultAccountAddress', () => this.loadBadges());
@@ -89,7 +87,7 @@ export class GovernanceStore {
 
   private getBadgerContract(): Badger | null {
     if (this.badgerContract) return this.badgerContract;
-    this.badgerContract = getGovernanceContract<Badger>('badger');
+    this.badgerContract = this.contractService.getGovernanceContract<Badger>('badger');
     return this.badgerContract;
   }
 }

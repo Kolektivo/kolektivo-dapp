@@ -6,6 +6,7 @@ import { Registration } from 'aurelia';
 import { Reserve } from './reserve';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { instance } from 'main';
 
 describe('reserve', () => {
   it('should have an au-viewport with overview as default', async () => {
@@ -32,6 +33,6 @@ describe('reserve', () => {
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
       });
-    return [Reserve, Global, createMockStoreRegistration(), createMockI18nRegistration()];
+    return [instance, Reserve, Global, createMockStoreRegistration(), createMockI18nRegistration()];
   }
 });
