@@ -8,7 +8,7 @@ export class Ripple implements ICustomAttributeViewModel {
   ripple?: HTMLDivElement;
 
   constructor(private readonly htmlElement?: HTMLElement, @IPlatform private readonly platform?: IPlatform) {
-    htmlElement?.addEventListener('mousedown', this.rippleEvent, false);
+    htmlElement?.addEventListener('mousedown', this.rippleEvent);
   }
 
   rippleEvent = (event: MouseEvent) => {
@@ -37,7 +37,10 @@ export class Ripple implements ICustomAttributeViewModel {
 
   private createContainer(offsetInfo: DOMRect) {
     if (!this.htmlElement) return;
-    this.rippleContainer?.remove();
+    const ripplerContainer = this.htmlElement.querySelector('.ripple-container');
+    if (ripplerContainer) {
+      ripplerContainer.remove();
+    }
     this.rippleContainer = document.createElement('div');
     this.rippleContainer.style.position = 'fixed';
     this.rippleContainer.style.zIndex = '99';

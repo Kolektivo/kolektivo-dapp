@@ -3,14 +3,14 @@ import { CurrencyValueConverter } from 'design-system/value-converters';
 import { EthweiValueConverter, PercentageValueConverter } from 'resources';
 import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
-import { IContractsService, ITokenService, NumberService } from 'services';
+import { IContractService, NumberService } from 'services';
 import { IDesignSystemConfiguration } from 'design-system';
 import { IPlatform, PLATFORM, Registration } from 'aurelia';
 import { IStore, ITreasuryStore } from 'stores';
 import { Overview } from './overview';
 import { RelativeTime } from './../../../../resources/value-converters/relative-time';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('overview', () => {
@@ -74,7 +74,7 @@ describe('overview', () => {
 
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
-    const createMockContractsService = () => Registration.instance(IContractsService, mock<IContractsService>({}));
+    const createMockContractsService = () => Registration.instance(IContractService, mock<IContractService>({}));
     const createMockTreasuryStoreRegistration = () => Registration.instance(ITreasuryStore, {});
 
     const createMockI18nRegistration = () =>
@@ -92,7 +92,6 @@ describe('overview', () => {
       CurrencyValueConverter,
       PercentageValueConverter,
       NumberService,
-      Registration.instance(ITokenService, vi.fn()),
       Global,
       createMockTreasuryStoreRegistration(),
       createMockContractsService(),
