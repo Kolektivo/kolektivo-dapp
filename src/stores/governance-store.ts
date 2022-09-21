@@ -1,3 +1,4 @@
+import { BadgeType } from 'models/badge-type';
 import { Badger } from 'models/generated/governance/badger';
 import { BigNumber } from 'ethers';
 import { DI, IContainer, Registration } from 'aurelia';
@@ -18,7 +19,7 @@ export class GovernanceStore {
     @IContractService private readonly contractService: IContractService,
     @IObserverService private readonly observerService: IObserverService,
   ) {
-    this.observerService.listen(services.ethereumService, 'defaultAccountAddress', () => this.loadBadges());
+    this.observerService.listen(services.ethereumService, 'defaultAccountAddress', () => void this.loadBadges());
   }
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IGovernanceStore, GovernanceStore));
@@ -79,10 +80,22 @@ export class GovernanceStore {
     ] as Proposal[];
   }
 
-  public loadBadges(): void {
+  public async loadBadges(): Promise<void> {
     const contract = this.getBadgerContract();
     if (!contract) return;
-    //TODO: get badges from the connected wallet
+    if (!this.services.ethereumService.defaultAccountAddress) return;
+    const badgeNumbers: number[] = [];
+    for (const badgeType in BadgeType) {
+      const badgeNumber = Number(badgeType);
+      if (badgeNumber) {
+        badgeNumbers.push(badgeNumber);
+      }
+    }
+    const balanceOf = await Promise.all(
+      badgeNumbers.map(async (x) => await contract.balanceOf(this.services.ethereumService.defaultAccountAddress ?? '', BigNumber.from(x))),
+    );
+    console.log('Address', this.services.ethereumService.defaultAccountAddress);
+    console.log('Badges', balanceOf);
   }
 
   private getBadgerContract(): Badger | null {
