@@ -1,9 +1,9 @@
 {
   "files.eol": "\n",
   "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
-  "editor.formatOnPaste": false, // required 
+  "editor.formatOnPaste": false, // required
   "editor.formatOnType": false, // required
-  "editor.formatOnSave": true, // optional 
+  "editor.formatOnSave": true, // optional
   "editor.linkedEditing": true,
   "html.autoClosingTags": true,
   "javascript.autoClosingTags": true,
@@ -20,23 +20,12 @@
   "scss.validate": false,
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
-  "eslint.validate": [
-    "javascript",
-    "typescript"
-  ],
+  "eslint.validate": ["javascript", "typescript"],
   "eslint.alwaysShowStatus": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
-  "exportall.config.relExclusion": [
-    "/src/design-system"
-  ],
-  "exportall.config.folderListener": [
-    "/src/design-system/elements",
-    "/src/pages"
-  ],
-  "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
+  "exportall.config.relExclusion": ["/src/design-system"],
+  "exportall.config.folderListener": ["/src/design-system/elements", "/src/pages"]
 }

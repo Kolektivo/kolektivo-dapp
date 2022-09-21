@@ -25,7 +25,7 @@ export type MonetaryContracts = Extract<keyof MonetaryContractJson['contracts'],
 type GovernanceContracts = Extract<keyof GovernanceContractJson['contracts'], string>;
 
 const endpoint = import.meta.env.KOL_NETWORK === 'Celo' ? 'https://celo.rpcs.dev:8545' : `https://alfajores.rpcs.dev:8545`;
-const defaultProvider = getDefaultProvider(endpoint);
+export const defaultProvider = getDefaultProvider(endpoint);
 
 export type IContractService = ContractService;
 export const IContractService = DI.createInterface<IContractService>('ContractService');
