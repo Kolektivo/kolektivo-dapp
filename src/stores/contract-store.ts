@@ -20,11 +20,14 @@ export class ContractStore {
   public async getAsset(
     assetAddress: string,
     contract: Treasury | Reserve,
-    treasuryAddress: string,
-    transactions: Transaction[],
-    getAssetType: (address: string) => Promise<number>,
+    contractAddress: string,
+    transactions?: Transaction[],
+    getAssetType?: (address: string) => Promise<number>,
+    oracleAddress?: string,
   ): Promise<Asset | undefined> {
-    const oracleAddress = await contract.oraclePerERC20(assetAddress); // get the oracle address for the given asset
+    if (!oracleAddress) {
+      oracleAddress = await contract.oraclePerERC20(assetAddress); // get the oracle address for the given asset
+    }
     if (!oracleAddress) return;
     const oracleContract = this.services.contractsService.getContractAtAddress<Oracle>(ContractNames.ORACLE, oracleAddress); //get the oracle contract for the given oracle address
     const data = await oracleContract.getData(); // get the data from the oracle contract
@@ -35,21 +38,33 @@ export class ContractStore {
       return;
     }
     tokenInfo.price = this.services.numberService.fromString(fromWei(data[0], 18)) ?? 0; //price comes back as undefined from getTokenInfoFromAddress so set it
-    let tokenQuantity = BigNumber.from(1); //all NFTs have a quantity of 1, so set the quantity to 1 initially
     const tokenContract = this.services.tokenService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
-    let assetType = AssetType.Ecological;
+
+    let tokenQuantity = BigNumber.from(1); //all NFTs have a quantity of 1, so set the quantity to 1 initially
+    let totalSupply: BigNumber | undefined;
     if (!tokenInfo.id) {
-      //this is an ERC20 token so let's find it's asset type
-      assetType = await getAssetType(assetAddress);
-      //if there is no id on the token, then it's not an NFT and we have to get more information about it
-      tokenQuantity = await tokenContract.balanceOf(treasuryAddress); // find the amount of these tokens in the treasury
+      totalSupply = await (tokenContract as Erc20).totalSupply();
+      tokenQuantity = await tokenContract.balanceOf(contractAddress); // find the amount of these tokens in the treasury
     }
-    void this.populateTransactionsForAsset(transactions, tokenContract, treasuryAddress, tokenInfo); //while we are looping through the token contracts, populate the transactions on the treasury for the token contract
+    let assetType: AssetType | undefined;
+    if (getAssetType) {
+      if (!tokenInfo.id) {
+        //this is an ERC20 token so let's find it's asset type
+        assetType = await getAssetType(assetAddress);
+        //if there is no id on the token, then it's not an NFT and we have to get more information about it
+      } else {
+        assetType = AssetType.Ecological;
+      }
+    }
+    if (transactions) {
+      void this.populateTransactionsForAsset(transactions, tokenContract, contractAddress, tokenInfo); //while we are looping through the token contracts, populate the transactions on the treasury for the token contract
+    }
     const asset: Asset = {
       quantity: tokenInfo.id ? BigNumber.from(1) : tokenQuantity,
       token: tokenInfo,
       total: 0,
       type: assetType,
+      totalSupply: totalSupply,
     };
     asset.total = (this.services.numberService.fromString(fromWei(asset.quantity, 18)) ?? 0) * tokenInfo.price;
     return asset;
@@ -74,6 +89,7 @@ export class ContractStore {
   private async mapTransactions(transactions: TransferEvent[], type: 'deposit' | 'withdrawl', tokenInfo: ITokenInfo): Promise<Transaction[]> {
     return await Promise.all(
       transactions.map(async (transaction): Promise<Transaction> => {
+        console.log(transaction);
         const block = await transaction.getBlock();
         return {
           address: type === 'deposit' ? transaction.args.from : transaction.args.to,

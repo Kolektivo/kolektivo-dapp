@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { ContractNames } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IContractStore } from './contract-store';
-import { IServices } from 'services';
+import { IServices, fromWei } from 'services';
 import { Reserve } from 'models/generated/reserve/Reserve';
 import { Transaction } from 'models/transaction';
 import { callOnce } from 'decorators/call-once';
@@ -15,6 +15,8 @@ export class ReserveStore {
   public reserveValuation?: BigNumber;
   public supplyValuation?: BigNumber;
   public backing?: BigNumber;
+  public kCurPrice?: number;
+  public kCurSupply?: BigNumber;
   private reserveContract?: Reserve;
   public transactions: Transaction[] = [];
   public reserveAssets?: (Asset | undefined)[] = [];
@@ -47,10 +49,31 @@ export class ReserveStore {
           this.contractStore.getAsset(address, contract, reserveAddress, this.transactions, contract.typeOfAsset),
       ),
     );
+    console.log('assets', this.reserveAssets);
     const reserveStatus = await contract.reserveStatus();
     this.reserveValuation = reserveStatus[0];
     this.supplyValuation = reserveStatus[1];
     this.backing = reserveStatus[2];
+  }
+
+  @callOnce()
+  public async loadkCur(): Promise<void> {
+    const contract = this.getReserveContract(); // get reserve contract
+    if (!contract) return;
+    const kCurAddress = await contract.token(); // get kCur token address
+    if (!kCurAddress) return;
+    const reserveAddress = this.services.contractsService.getContractAddress(ContractNames.RESERVE) ?? ''; // get reserve address
+    if (!reserveAddress) return;
+    const oracleAddress = await contract.tokenOracle(); //get kCur oracle address
+    if (!oracleAddress) return;
+    const asset = await this.contractStore.getAsset(kCurAddress, contract, reserveAddress, undefined, undefined, oracleAddress);
+    this.kCurPrice = asset?.token.price;
+    this.kCurSupply = asset?.totalSupply;
+  }
+
+  public get marketCap(): number {
+    if (!this.kCurPrice || !this.kCurSupply || this.kCurSupply.eq(0)) return 0;
+    return Number(fromWei(this.kCurSupply, 18)) * this.kCurPrice;
   }
 
   private getReserveContract(): Reserve | null {

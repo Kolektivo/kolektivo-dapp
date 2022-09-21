@@ -2,14 +2,25 @@
 <k-card color="linear-gradient(to right, var(--primary), var(--ocean-blue-600))"
   title="${i18n.tr('navigation.reserve.k-cur.token-info.title')}"
   title-avatar="${i18n.tr('navigation.reserve.k-cur.token-info.avatar-src')}">
+  <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadkCur()"></k-loader>
   <k-stack gap="var(--spacing-xl)">
     <k-grid cols="3" id="r-kCur-tic-stats">
-      <label-value title="${i18n.tr('general.token-info-card.market-cap')}" value.bind="info.marketCap | currency"
-        tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}"></label-value>
-      <label-value title="${i18n.tr('general.token-info-card.current-price')}" value.bind="info.currentPrice | currency"
+      <label-value title="${i18n.tr('general.token-info-card.market-cap')}"
+        tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}">
+        <k-text type="h4">
+          <formatted-number show-tooltip currency commas decimals="0" value="${reserveStore.marketCap | ethwei}">
+          </formatted-number>
+        </k-text>
+      </label-value>
+      <label-value title="${i18n.tr('general.token-info-card.current-price')}" value.bind="reserveStore.kCurPrice | currency"
         tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}"></label-value>
-      <label-value title="${i18n.tr('general.token-info-card.total-supply')}" value.bind="info.totalSupply"
-        tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}"></label-value>
+      <label-value title="${i18n.tr('general.token-info-card.total-supply')}"
+        tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}">
+        <k-text type="h4">
+          <formatted-number show-tooltip commas decimals="0" value="${reserveStore.kCurSupply | ethwei}">
+          </formatted-number>
+        </k-text>
+      </label-value>
     </k-grid>
     <label-value id="r-kCur-tic-supply" gap="var(--spacing-lg)"
       title="${i18n.tr('general.token-info-card.supply-distribution')}"
