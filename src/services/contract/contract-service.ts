@@ -1,6 +1,4 @@
 import { Contract } from '@ethersproject/contracts';
-import { Erc20 } from 'models/generated/erc20/Erc20';
-import { Erc721 } from 'models/generated/erc721';
 import { Provider } from '@ethersproject/providers';
 
 import { ContractInterface, Signer } from 'ethers';
@@ -9,6 +7,8 @@ import { Shared } from './types';
 
 import { ContractType, Contracts, monetaryShared } from './contracts';
 import { DI, IContainer, Registration } from 'aurelia';
+import { Erc20 } from 'models/generated/monetary/erc20';
+import { Erc721 } from 'models/generated/monetary/erc721';
 import { ICacheService } from '../cache-service';
 import { cache } from 'decorators/cache';
 import { defaultProvider } from '.';
