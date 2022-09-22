@@ -50,6 +50,17 @@ const _abi = [
         type: "address",
       },
     ],
+    name: "Treasury__ERC20BondingLimitExceeded",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+    ],
     name: "Treasury__ERC20IsNotBondable",
     type: "error",
   },
@@ -73,6 +84,17 @@ const _abi = [
       },
     ],
     name: "Treasury__ERC20IsNotRegistered",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+    ],
+    name: "Treasury__ERC20RedeemLimitExceeded",
     type: "error",
   },
   {
@@ -337,6 +359,31 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "recipient",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "erc20sWithdrawn",
+        type: "uint256",
+      },
+    ],
+    name: "ERC20Withdrawn",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
         name: "who",
         type: "address",
       },
@@ -575,6 +622,31 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "recipient",
+        type: "address",
+      },
+    ],
+    name: "ERC721IdWithdrawn",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
         name: "who",
         type: "address",
       },
@@ -686,6 +758,56 @@ const _abi = [
       },
     ],
     name: "Rebase",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "oldLimit",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newLimit",
+        type: "uint256",
+      },
+    ],
+    name: "SetERC20BondingLimit",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "oldLimit",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newLimit",
+        type: "uint256",
+      },
+    ],
+    name: "SetERC20RedeemLimit",
     type: "event",
   },
   {
@@ -933,6 +1055,25 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "bondingLimitPerERC20",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "decimals",
     outputs: [
@@ -1040,7 +1181,7 @@ const _abi = [
       },
       {
         internalType: "bytes",
-        name: "callData",
+        name: "data",
         type: "bytes",
       },
     ],
@@ -1446,6 +1587,25 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "redeemLimitPerERC20",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "erc20",
         type: "address",
       },
@@ -1567,11 +1727,83 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "limit",
+        type: "uint256",
+      },
+    ],
+    name: "setERC20BondingLimit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "limit",
+        type: "uint256",
+      },
+    ],
+    name: "setERC20RedeemLimit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "pendingOwner_",
         type: "address",
       },
     ],
     name: "setPendingOwner",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "limit",
+        type: "uint256",
+      },
+    ],
+    name: "setupAndListERC20Bond",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "limit",
+        type: "uint256",
+      },
+    ],
+    name: "setupAndListERC20Redemption",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

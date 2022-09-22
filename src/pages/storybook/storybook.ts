@@ -139,9 +139,17 @@ export class Storybook {
     });
   }
 
+  public toastInfo(): void {
+    void this.notificationService.toast({
+      message: 'This is an informational toast. It will stay for 5 seconds by default.',
+      type: 'info',
+      content: '<k-link src="https://celoscan.io/" external>View on Celoscan</k-link> ',
+    });
+  }
+
   public toastWarning(): void {
     void this.notificationService.toast({
-      message: 'This is a normal toast. It will stay for 5 seconds by default.',
+      message: 'This is a warning toast. It will stay for 5 seconds by default.',
       type: 'warning',
       content: '<k-link src="https://celoscan.io/" external>View on Celoscan</k-link> ',
     });
@@ -149,7 +157,7 @@ export class Storybook {
 
   public toastError(): void {
     void this.notificationService.toast({
-      message: 'This is a normal toast. It will stay for 5 seconds by default.',
+      message: 'This is an error toast. It will stay for 5 seconds by default.',
       type: 'danger',
       content: '<k-link src="https://celoscan.io/" external>View on Celoscan</k-link> ',
     });

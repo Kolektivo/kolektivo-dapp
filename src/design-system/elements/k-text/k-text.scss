@@ -38,6 +38,27 @@
     letter-spacing: 5%;
     text-transform: uppercase;
   }
+  
+  *[type='statistic-lg'] {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: 0;
+  }
+
+  *[type='statistic'] {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0;
+  }
+
+  *[type='statistic-sm'] {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0;
+  }
 
   label,
   *[type='label'] {

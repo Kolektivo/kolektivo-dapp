@@ -770,6 +770,56 @@ const _abi = [
     type: "event",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "recipient",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "erc20sWithdrawn",
+        type: "uint256",
+      },
+    ],
+    name: "WithdrewERC20",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "recipient",
+        type: "address",
+      },
+    ],
+    name: "WithdrewERC721Id",
+    type: "event",
+  },
+  {
     inputs: [],
     name: "acceptOwnership",
     outputs: [],
@@ -809,6 +859,25 @@ const _abi = [
         internalType: "struct IReserve.ERC721Id[]",
         name: "",
         type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "assetTypeOfERC20",
+    outputs: [
+      {
+        internalType: "enum IReserve.AssetType",
+        name: "",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -2134,6 +2203,98 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "limit",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "discount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "vestingDuration",
+        type: "uint256",
+      },
+    ],
+    name: "setupAndListERC20Bond",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "limit",
+        type: "uint256",
+      },
+    ],
+    name: "setupAndListERC20Redemption",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "discount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "vestingDuration",
+        type: "uint256",
+      },
+    ],
+    name: "setupAndListERC721IdBond",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "setupAndListERC721IdRedemption",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "token",
     outputs: [
@@ -2154,25 +2315,6 @@ const _abi = [
         internalType: "address",
         name: "",
         type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "typeOfAsset",
-    outputs: [
-      {
-        internalType: "enum IReserve.AssetType",
-        name: "",
-        type: "uint8",
       },
     ],
     stateMutability: "view",

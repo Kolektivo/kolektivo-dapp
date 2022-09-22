@@ -5,7 +5,8 @@ export interface Asset {
   token: ITokenInfo;
   quantity: BigNumber;
   total: number;
-  type: AssetType;
+  type?: AssetType;
+  totalSupply?: BigNumber;
 }
 export enum AssetType {
   NonStablecoin = 0,

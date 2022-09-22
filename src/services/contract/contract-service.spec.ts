@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { CacheService } from './cache-service';
 import { ContractService, IContractService } from 'services';
 import { DI } from 'aurelia';
-import { Erc20 } from 'models/generated/erc20';
+import { Erc20 } from 'models/generated/monetary/erc20';
 import { defaultProvider } from './contract-service';
 import { describe, expect, it } from 'vitest';
 import { ethers } from 'ethers';

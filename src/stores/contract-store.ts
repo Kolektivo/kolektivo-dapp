@@ -1,13 +1,14 @@
 import { Asset, AssetType } from 'models/asset';
 import { BigNumber } from 'ethers';
+import { ContractNames, INumberService, IServices, ITokenInfo, fromWei, toWei } from '../services';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
-import { Erc20, TransferEvent } from 'models/generated/erc20/Erc20';
-import { Erc721 } from 'models/generated/erc721';
+import { Erc20, TransferEvent } from 'models/generated/monetary/erc20/Erc20';
+import { Erc721 } from 'models/generated/monetary/erc721';
 import { IContractService, IServices, ITokenInfo, fromWei } from 'services';
-import { Oracle, Oracle } from 'models/generated/oracle';
-import { Reserve } from 'models/generated/reserve';
+import { Oracle, Oracle } from 'models/generated/monetary/oracle';
+import { Reserve } from 'models/generated/monetary/reserve';
 import { Transaction } from 'models/transaction';
-import { Treasury } from 'models/generated/treasury';
+import { Treasury } from 'models/generated/monetary/treasury';
 import { tokenInfos } from 'services/contract';
 export type IContractStore = ContractStore;
 export const IContractStore = DI.createInterface<IContractStore>('IContractStore');
@@ -19,44 +20,70 @@ export class ContractStore {
   constructor(
     @IServices private readonly services: IServices,
     @ILogger private readonly logger: ILogger,
-    @IContractService private readonly contractService: IContractService,
+    @INumberService private readonly numberService: INumberService,
   ) {}
 
   public async getAsset(
     assetAddress: string,
+    assetId: BigNumber | undefined,
     contract: Treasury | Reserve,
-    treasuryAddress: string,
-    transactions: Transaction[],
-    getAssetType: (address: string) => Promise<number>,
+    contractAddress: string,
+    transactions?: Transaction[],
+    oracleAddress?: string,
   ): Promise<Asset | undefined> {
-    const oracleAddress = await contract.oraclePerERC20(assetAddress); // get the oracle address for the given asset
-    if (!oracleAddress) return;
-    const oracleContract = this.contractService.getContract('Monetary', 'GeoNFT') as Oracle;
-    const data = await oracleContract.getData(); // get the data from the oracle contract
-    if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
-    const tokenInfo = tokenInfos.find((y) => y.address === assetAddress); //get the token info from the asset address
+    let assetIdNumber: number | null | undefined = undefined;
+    if (assetId) {
+      assetIdNumber = Number(assetId);
+    }
+    const tokenInfo = await this.services.tokenService.getTokenInfoFromAddress(assetAddress, assetIdNumber ?? undefined); //get the token info from the asset address
     if (!tokenInfo) {
       this.logger.error(`No token info was found for ${assetAddress}`);
       return;
     }
+    const tokenContract = this.services.tokenService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
+
+    if (!oracleAddress) {
+      if (tokenInfo.id) {
+        // if an id exists on token info, then it's an NFT or an ERC721 and needs to call a differnt method to get the oracle address for that asset
+        oracleAddress = await contract.oraclePerERC721Id(assetAddress, tokenInfo.id);
+      } else {
+        oracleAddress = await contract.oraclePerERC20(assetAddress); // get the oracle address for the given asset
+      }
+    }
+
+    if (!oracleAddress || BigNumber.from(oracleAddress).isZero()) return;
+    const oracleContract = this.services.contractsService.getContractAtAddress<Oracle>(ContractNames.ORACLE, oracleAddress); //get the oracle contract for the given oracle address
+    const data = await oracleContract.getData(); // get the data from the oracle contract
+
+    if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
     tokenInfo.price = this.services.numberService.fromString(fromWei(data[0], 18)) ?? 0; //price comes back as undefined from getTokenInfoFromAddress so set it
-    let tokenQuantity = BigNumber.from(1); //all NFTs have a quantity of 1, so set the quantity to 1 initially
-    const tokenContract = this.contractService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
-    let assetType = AssetType.Ecological;
+
+    let tokenQuantity = toWei(1, 18); //all NFTs have a quantity of 1, so set the quantity to 1 initially
+    let totalSupply: BigNumber | undefined;
+    if (!tokenInfo.id) {
+      totalSupply = await (tokenContract as Erc20).totalSupply();
+      tokenQuantity = await tokenContract.balanceOf(contractAddress); // find the amount of these tokens in the treasury
+    }
+    let assetType: AssetType | undefined;
     if (!tokenInfo.id) {
       //this is an ERC20 token so let's find it's asset type
-      assetType = await getAssetType(assetAddress);
+      assetType = await contract.assetTypeOfERC20(assetAddress);
       //if there is no id on the token, then it's not an NFT and we have to get more information about it
-      tokenQuantity = await tokenContract.balanceOf(treasuryAddress); // find the amount of these tokens in the treasury
+    } else {
+      assetType = AssetType.Ecological;
     }
-    void this.populateTransactionsForAsset(transactions, tokenContract, treasuryAddress, tokenInfo); //while we are looping through the token contracts, populate the transactions on the treasury for the token contract
+
+    if (transactions) {
+      void this.populateTransactionsForAsset(transactions, tokenContract, contractAddress, tokenInfo); //while we are looping through the token contracts, populate the transactions on the treasury for the token contract
+    }
     const asset: Asset = {
-      quantity: tokenInfo.id ? BigNumber.from(1) : tokenQuantity,
+      quantity: tokenQuantity,
       token: tokenInfo,
       total: 0,
       type: assetType,
+      totalSupply: totalSupply,
     };
-    asset.total = (this.services.numberService.fromString(fromWei(asset.quantity, 18)) ?? 0) * tokenInfo.price;
+    asset.total = tokenInfo.id ? tokenInfo.price : (this.services.numberService.fromString(fromWei(asset.quantity, 18)) ?? 0) * tokenInfo.price;
     return asset;
   }
 
@@ -82,7 +109,8 @@ export class ContractStore {
         const block = await transaction.getBlock();
         return {
           address: type === 'deposit' ? transaction.args.from : transaction.args.to,
-          amount: transaction.args.amount,
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          amount: transaction.args.amount ?? toWei(1, 18),
           date: block.timestamp,
           id: transaction.transactionHash,
           token: tokenInfo,
