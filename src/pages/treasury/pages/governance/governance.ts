@@ -10,7 +10,7 @@ export class Governance {
   constructor(@IKolektivoStore private readonly kolektivoStore: IKolektivoStore, @I18N private readonly i18n: I18N) {}
 
   get hasSubmitAccess(): boolean {
-    return this.kolektivoStore.badges.some((x) => x.type === BadgeType.Treasury_Delegate);
+    return this.kolektivoStore.badges.some((x) => x.type === BadgeType.TREASURY_DELEGATE);
   }
 
   selectedBadgeChanged(): void {
@@ -24,7 +24,7 @@ export class Governance {
             name: 'Local Kolektivo Multi-Sig Member',
             description: 'Local Kolektivo Multi-Sig Member',
             imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
-            type: BadgeType.Local_Kolektivo_Multi_Sig_Member,
+            type: BadgeType.LOCAL_MULTI_SIG_MEMBER,
             verified: false,
           },
         ];
@@ -35,7 +35,7 @@ export class Governance {
             name: 'Reserve Arbitrageur',
             description: 'Reserve Arbitrageur',
             imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
-            type: BadgeType.Reserve_Arbitrageur,
+            type: BadgeType.RESERVE_ARBITRAGEUR,
             verified: false,
           },
         ];
@@ -46,7 +46,7 @@ export class Governance {
             name: 'Treasury Arbitrageur',
             description: 'Treasury Arbitrageur',
             imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
-            type: BadgeType.Treasury_Arbitrageur,
+            type: BadgeType.TREASURY_ARBITRAGEUR,
             verified: false,
           },
         ];
@@ -57,7 +57,7 @@ export class Governance {
             name: 'Topology Data Delegate',
             description: 'Topology Data Delegate',
             imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
-            type: BadgeType.Topology_Data_Delegate,
+            type: BadgeType.TOPOLOGY_DELEGATE,
             verified: false,
           },
         ];
@@ -68,7 +68,7 @@ export class Governance {
             name: 'Ecology Data Delegate',
             description: 'Ecology Data Delegate',
             imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
-            type: BadgeType.Ecology_Data_Delegate,
+            type: BadgeType.ECOLOGY_DELEGATE,
             verified: false,
           },
         ];
@@ -79,7 +79,7 @@ export class Governance {
             name: 'Treasury Delegate',
             description: 'Treasury Delegate',
             imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
-            type: BadgeType.Treasury_Delegate,
+            type: BadgeType.TREASURY_DELEGATE,
             verified: false,
           },
         ];
@@ -90,7 +90,7 @@ export class Governance {
             name: 'Reserve Monetary Delegate',
             description: 'Reserve Monetary Delegate',
             imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
-            type: BadgeType.Reserve_Monetary_Delegate,
+            type: BadgeType.RESERVE_DELEGATE,
             verified: false,
           },
         ];
@@ -101,7 +101,7 @@ export class Governance {
             name: 'Kolektivo Network Multi-Sig Member',
             description: 'Kolektivo Network Multi-Sig Member',
             imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
-            type: BadgeType.Kolektivo_Network_Multi_Sig_Member,
+            type: BadgeType.KOLEKTIVO_MULTI_SIG_MEMBER,
             verified: false,
           },
         ];

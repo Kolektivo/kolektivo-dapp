@@ -62,7 +62,6 @@ export class TokenService {
          * note these will not automatically have id or price initialized
          */
         this.tokenInfos = this.tokenListProvider.tokenInfos as Map<TokenAddressId, ITokenInfo>;
-        console.log('Token Info List JSON', this.tokenInfos);
       });
 
       // don't need coingecko for now or ever

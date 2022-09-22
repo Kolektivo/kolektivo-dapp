@@ -19,7 +19,7 @@ export class ProposalsCard implements ICustomElementViewModel {
   @watch<ProposalsCard>((x) => x.kolektivoStore.badges.map((x) => x.type))
   private getRoutes(): void {
     const routes = [{ name: this.i18n.tr('navigation.treasury.governance.proposals-card.history-tab.title'), path: 'history', isActive: false }];
-    if (this.kolektivoStore.badges.some((x) => x.type === BadgeType.Treasury_Delegate)) {
+    if (this.kolektivoStore.badges.some((x) => x.type === BadgeType.TREASURY_DELEGATE)) {
       this.active = 'ready-to-execute';
       routes.unshift({
         name: this.i18n.tr('navigation.treasury.governance.proposals-card.pending-veto-tab.title'),
