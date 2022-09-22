@@ -1,5 +1,5 @@
+import { Address, IEthereumService } from './ethereum-service';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
-import { IEthereumService } from './ethereum-service';
 import { IHttpService } from './http-service';
 import { IIpfsService } from './ipfs-service';
 import { ITimingService } from './timing-service';
@@ -46,9 +46,14 @@ export class TokenListService {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           tokenInfoArray!
             .filter((y) => y.chainId === this.ethereumService.targetedChainId)
-            .map((tokenInfo) => [tokenInfo.address.toLowerCase(), tokenInfo]),
+            .map((tokenInfo) => [this.getTokenAddressId(tokenInfo.address, tokenInfo.id), tokenInfo]),
         ),
     );
+  }
+
+  public getTokenAddressId(address: Address, id?: number) {
+    const lowerCaseAddress = address.toLowerCase();
+    return typeof id === 'undefined' ? lowerCaseAddress : `${lowerCaseAddress}_${id}`;
   }
 
   /**

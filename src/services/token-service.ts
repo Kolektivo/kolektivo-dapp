@@ -2,8 +2,8 @@ import { Address, IEthereumService, Networks } from './ethereum-service';
 import { Contract } from 'ethers';
 import { ContractNames, IContractsService } from './contracts-service';
 import { DI, IContainer, ILogger, IPlatform, Registration, TaskQueue } from 'aurelia';
-import { Erc20 as Erc20Type } from 'models/generated/erc20/Erc20';
-import { Erc721 as Erc721Type } from 'models/generated/erc721/Erc721';
+import { Erc20 as Erc20Type } from 'models/generated/monetary/erc20/Erc20';
+import { Erc721 as Erc721Type } from 'models/generated/monetary/erc721/Erc721';
 import { FormatTypes, Interface, getAddress } from 'ethers/lib/utils';
 import { IHttpService } from './http-service';
 import { ITimingService } from './timing-service';
@@ -62,6 +62,7 @@ export class TokenService {
          * note these will not automatically have id or price initialized
          */
         this.tokenInfos = this.tokenListProvider.tokenInfos as Map<TokenAddressId, ITokenInfo>;
+        console.log('Token Info List JSON', this.tokenInfos);
       });
 
       // don't need coingecko for now or ever
@@ -310,7 +311,7 @@ export class TokenService {
    * If there is an error, then throws an exception.
    */
   private async _getTokenInfoFromAddress(tokenAddress: Address, id?: number) {
-    const tokenAddressId = this.getTokenAddressId(tokenAddress, id);
+    const tokenAddressId = this.tokenListProvider.getTokenAddressId(tokenAddress, id);
     const foundTokenInfo = this.tokenInfos.get(tokenAddressId);
     if (foundTokenInfo) return foundTokenInfo;
 
@@ -338,11 +339,6 @@ export class TokenService {
 
     this.tokenInfos.set(tokenAddressId, tokenInfo as ITokenInfo);
     this.logger.info(`loaded token: ${tokenAddress}`);
-  }
-
-  private getTokenAddressId(address: Address, id?: number) {
-    const lowerCaseAddress = address.toLowerCase();
-    return typeof id === 'undefined' ? lowerCaseAddress : `${lowerCaseAddress}_${id}`;
   }
 
   private async getTokenInfoOnChain(address: string, id?: number): Promise<undefined | Partial<ITokenInfo>> {

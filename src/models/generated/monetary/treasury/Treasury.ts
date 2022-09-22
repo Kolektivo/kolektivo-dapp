@@ -54,6 +54,7 @@ export interface TreasuryInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "bondERC20(address,uint256)": FunctionFragment;
     "bondERC721Id(address,uint256)": FunctionFragment;
+    "bondingLimitPerERC20(address)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "delistERC20AsBondable(address)": FunctionFragment;
@@ -81,13 +82,18 @@ export interface TreasuryInterface extends utils.Interface {
     "rebase()": FunctionFragment;
     "redeemERC20(address,uint256)": FunctionFragment;
     "redeemERC721Id(address,uint256)": FunctionFragment;
+    "redeemLimitPerERC20(address)": FunctionFragment;
     "registerERC20(address,address,uint8)": FunctionFragment;
     "registerERC721Id(address,uint256,address)": FunctionFragment;
     "registeredERC20s(uint256)": FunctionFragment;
     "registeredERC721Ids(uint256)": FunctionFragment;
     "scaledBalanceOf(address)": FunctionFragment;
     "scaledTotalSupply()": FunctionFragment;
+    "setERC20BondingLimit(address,uint256)": FunctionFragment;
+    "setERC20RedeemLimit(address,uint256)": FunctionFragment;
     "setPendingOwner(address)": FunctionFragment;
+    "setupAndListERC20Bond(address,uint256)": FunctionFragment;
+    "setupAndListERC20Redemption(address,uint256)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "totalValuation()": FunctionFragment;
@@ -118,6 +124,7 @@ export interface TreasuryInterface extends utils.Interface {
       | "balanceOf"
       | "bondERC20"
       | "bondERC721Id"
+      | "bondingLimitPerERC20"
       | "decimals"
       | "decreaseAllowance"
       | "delistERC20AsBondable"
@@ -145,13 +152,18 @@ export interface TreasuryInterface extends utils.Interface {
       | "rebase"
       | "redeemERC20"
       | "redeemERC721Id"
+      | "redeemLimitPerERC20"
       | "registerERC20"
       | "registerERC721Id"
       | "registeredERC20s"
       | "registeredERC721Ids"
       | "scaledBalanceOf"
       | "scaledTotalSupply"
+      | "setERC20BondingLimit"
+      | "setERC20RedeemLimit"
       | "setPendingOwner"
+      | "setupAndListERC20Bond"
+      | "setupAndListERC20Redemption"
       | "symbol"
       | "totalSupply"
       | "totalValuation"
@@ -218,6 +230,10 @@ export interface TreasuryInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "bondERC721Id",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "bondingLimitPerERC20",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
@@ -329,6 +345,10 @@ export interface TreasuryInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "redeemLimitPerERC20",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "registerERC20",
     values: [
       PromiseOrValue<string>,
@@ -361,8 +381,24 @@ export interface TreasuryInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "setERC20BondingLimit",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setERC20RedeemLimit",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setPendingOwner",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setupAndListERC20Bond",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setupAndListERC20Redemption",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -470,6 +506,10 @@ export interface TreasuryInterface extends utils.Interface {
     functionFragment: "bondERC721Id",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "bondingLimitPerERC20",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "decreaseAllowance",
@@ -558,6 +598,10 @@ export interface TreasuryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "redeemLimitPerERC20",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "registerERC20",
     data: BytesLike
   ): Result;
@@ -582,7 +626,23 @@ export interface TreasuryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setERC20BondingLimit",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setERC20RedeemLimit",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setPendingOwner",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setupAndListERC20Bond",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setupAndListERC20Redemption",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -642,6 +702,7 @@ export interface TreasuryInterface extends utils.Interface {
     "ERC20PriceUpdated(address,address,uint256,uint256)": EventFragment;
     "ERC20Registered(address,address,uint8)": EventFragment;
     "ERC20Unregistered(address)": EventFragment;
+    "ERC20Withdrawn(address,address,uint256)": EventFragment;
     "ERC20sBonded(address,address,uint256)": EventFragment;
     "ERC20sRedeemed(address,address,uint256)": EventFragment;
     "ERC721IdDelistedAsBondable(address,uint256)": EventFragment;
@@ -652,11 +713,14 @@ export interface TreasuryInterface extends utils.Interface {
     "ERC721IdPriceUpdated(address,uint256,address,uint256,uint256)": EventFragment;
     "ERC721IdRegistered(address,uint256,address)": EventFragment;
     "ERC721IdUnregistered(address,uint256)": EventFragment;
+    "ERC721IdWithdrawn(address,uint256,address)": EventFragment;
     "ERC721IdsBonded(address,address,uint256,uint256)": EventFragment;
     "ERC721IdsRedeemed(address,address,uint256,uint256)": EventFragment;
     "NewOwner(address,address)": EventFragment;
     "NewPendingOwner(address,address)": EventFragment;
     "Rebase(uint256,uint256)": EventFragment;
+    "SetERC20BondingLimit(address,uint256,uint256)": EventFragment;
+    "SetERC20RedeemLimit(address,uint256,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
@@ -669,6 +733,7 @@ export interface TreasuryInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "ERC20PriceUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20Registered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20Unregistered"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ERC20Withdrawn"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20sBonded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20sRedeemed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdDelistedAsBondable"): EventFragment;
@@ -681,11 +746,14 @@ export interface TreasuryInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "ERC721IdPriceUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdRegistered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdUnregistered"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ERC721IdWithdrawn"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdsBonded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdsRedeemed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewOwner"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewPendingOwner"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Rebase"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetERC20BondingLimit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetERC20RedeemLimit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -794,6 +862,18 @@ export type ERC20UnregisteredEvent = TypedEvent<
 
 export type ERC20UnregisteredEventFilter =
   TypedEventFilter<ERC20UnregisteredEvent>;
+
+export interface ERC20WithdrawnEventObject {
+  erc20: string;
+  recipient: string;
+  erc20sWithdrawn: BigNumber;
+}
+export type ERC20WithdrawnEvent = TypedEvent<
+  [string, string, BigNumber],
+  ERC20WithdrawnEventObject
+>;
+
+export type ERC20WithdrawnEventFilter = TypedEventFilter<ERC20WithdrawnEvent>;
 
 export interface ERC20sBondedEventObject {
   who: string;
@@ -921,6 +1001,19 @@ export type ERC721IdUnregisteredEvent = TypedEvent<
 export type ERC721IdUnregisteredEventFilter =
   TypedEventFilter<ERC721IdUnregisteredEvent>;
 
+export interface ERC721IdWithdrawnEventObject {
+  erc721: string;
+  id: BigNumber;
+  recipient: string;
+}
+export type ERC721IdWithdrawnEvent = TypedEvent<
+  [string, BigNumber, string],
+  ERC721IdWithdrawnEventObject
+>;
+
+export type ERC721IdWithdrawnEventFilter =
+  TypedEventFilter<ERC721IdWithdrawnEvent>;
+
 export interface ERC721IdsBondedEventObject {
   who: string;
   erc721: string;
@@ -974,6 +1067,32 @@ export interface RebaseEventObject {
 export type RebaseEvent = TypedEvent<[BigNumber, BigNumber], RebaseEventObject>;
 
 export type RebaseEventFilter = TypedEventFilter<RebaseEvent>;
+
+export interface SetERC20BondingLimitEventObject {
+  erc20: string;
+  oldLimit: BigNumber;
+  newLimit: BigNumber;
+}
+export type SetERC20BondingLimitEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  SetERC20BondingLimitEventObject
+>;
+
+export type SetERC20BondingLimitEventFilter =
+  TypedEventFilter<SetERC20BondingLimitEvent>;
+
+export interface SetERC20RedeemLimitEventObject {
+  erc20: string;
+  oldLimit: BigNumber;
+  newLimit: BigNumber;
+}
+export type SetERC20RedeemLimitEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  SetERC20RedeemLimitEventObject
+>;
+
+export type SetERC20RedeemLimitEventFilter =
+  TypedEventFilter<SetERC20RedeemLimitEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -1066,6 +1185,11 @@ export interface Treasury extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    bondingLimitPerERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
@@ -1098,7 +1222,7 @@ export interface Treasury extends BaseContract {
 
     executeTx(
       target: PromiseOrValue<string>,
-      callData: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1209,6 +1333,11 @@ export interface Treasury extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    redeemLimitPerERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     registerERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
@@ -1240,8 +1369,32 @@ export interface Treasury extends BaseContract {
 
     scaledTotalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    setERC20BondingLimit(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setERC20RedeemLimit(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setPendingOwner(
       pendingOwner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setupAndListERC20Bond(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setupAndListERC20Redemption(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1366,6 +1519,11 @@ export interface Treasury extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  bondingLimitPerERC20(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
@@ -1398,7 +1556,7 @@ export interface Treasury extends BaseContract {
 
   executeTx(
     target: PromiseOrValue<string>,
-    callData: PromiseOrValue<BytesLike>,
+    data: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1509,6 +1667,11 @@ export interface Treasury extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  redeemLimitPerERC20(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   registerERC20(
     erc20: PromiseOrValue<string>,
     oracle: PromiseOrValue<string>,
@@ -1540,8 +1703,32 @@ export interface Treasury extends BaseContract {
 
   scaledTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+  setERC20BondingLimit(
+    erc20: PromiseOrValue<string>,
+    limit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setERC20RedeemLimit(
+    erc20: PromiseOrValue<string>,
+    limit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setPendingOwner(
     pendingOwner_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setupAndListERC20Bond(
+    erc20: PromiseOrValue<string>,
+    limit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setupAndListERC20Redemption(
+    erc20: PromiseOrValue<string>,
+    limit: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1664,6 +1851,11 @@ export interface Treasury extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    bondingLimitPerERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
@@ -1696,7 +1888,7 @@ export interface Treasury extends BaseContract {
 
     executeTx(
       target: PromiseOrValue<string>,
-      callData: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1805,6 +1997,11 @@ export interface Treasury extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    redeemLimitPerERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     registerERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
@@ -1836,8 +2033,32 @@ export interface Treasury extends BaseContract {
 
     scaledTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    setERC20BondingLimit(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setERC20RedeemLimit(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setPendingOwner(
       pendingOwner_: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setupAndListERC20Bond(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setupAndListERC20Redemption(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1992,6 +2213,17 @@ export interface Treasury extends BaseContract {
       erc20?: PromiseOrValue<string> | null
     ): ERC20UnregisteredEventFilter;
 
+    "ERC20Withdrawn(address,address,uint256)"(
+      erc20?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
+      erc20sWithdrawn?: null
+    ): ERC20WithdrawnEventFilter;
+    ERC20Withdrawn(
+      erc20?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
+      erc20sWithdrawn?: null
+    ): ERC20WithdrawnEventFilter;
+
     "ERC20sBonded(address,address,uint256)"(
       who?: PromiseOrValue<string> | null,
       erc20?: PromiseOrValue<string> | null,
@@ -2098,6 +2330,17 @@ export interface Treasury extends BaseContract {
       id?: PromiseOrValue<BigNumberish> | null
     ): ERC721IdUnregisteredEventFilter;
 
+    "ERC721IdWithdrawn(address,uint256,address)"(
+      erc721?: PromiseOrValue<string> | null,
+      id?: PromiseOrValue<BigNumberish> | null,
+      recipient?: PromiseOrValue<string> | null
+    ): ERC721IdWithdrawnEventFilter;
+    ERC721IdWithdrawn(
+      erc721?: PromiseOrValue<string> | null,
+      id?: PromiseOrValue<BigNumberish> | null,
+      recipient?: PromiseOrValue<string> | null
+    ): ERC721IdWithdrawnEventFilter;
+
     "ERC721IdsBonded(address,address,uint256,uint256)"(
       who?: PromiseOrValue<string> | null,
       erc721?: PromiseOrValue<string> | null,
@@ -2150,6 +2393,28 @@ export interface Treasury extends BaseContract {
       epoch?: PromiseOrValue<BigNumberish> | null,
       newScalar?: null
     ): RebaseEventFilter;
+
+    "SetERC20BondingLimit(address,uint256,uint256)"(
+      erc20?: PromiseOrValue<string> | null,
+      oldLimit?: null,
+      newLimit?: null
+    ): SetERC20BondingLimitEventFilter;
+    SetERC20BondingLimit(
+      erc20?: PromiseOrValue<string> | null,
+      oldLimit?: null,
+      newLimit?: null
+    ): SetERC20BondingLimitEventFilter;
+
+    "SetERC20RedeemLimit(address,uint256,uint256)"(
+      erc20?: PromiseOrValue<string> | null,
+      oldLimit?: null,
+      newLimit?: null
+    ): SetERC20RedeemLimitEventFilter;
+    SetERC20RedeemLimit(
+      erc20?: PromiseOrValue<string> | null,
+      oldLimit?: null,
+      newLimit?: null
+    ): SetERC20RedeemLimitEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
@@ -2214,6 +2479,11 @@ export interface Treasury extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    bondingLimitPerERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
@@ -2246,7 +2516,7 @@ export interface Treasury extends BaseContract {
 
     executeTx(
       target: PromiseOrValue<string>,
-      callData: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2357,6 +2627,11 @@ export interface Treasury extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    redeemLimitPerERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     registerERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
@@ -2388,8 +2663,32 @@ export interface Treasury extends BaseContract {
 
     scaledTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    setERC20BondingLimit(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setERC20RedeemLimit(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setPendingOwner(
       pendingOwner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setupAndListERC20Bond(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setupAndListERC20Redemption(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2517,6 +2816,11 @@ export interface Treasury extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    bondingLimitPerERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
@@ -2549,7 +2853,7 @@ export interface Treasury extends BaseContract {
 
     executeTx(
       target: PromiseOrValue<string>,
-      callData: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2660,6 +2964,11 @@ export interface Treasury extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    redeemLimitPerERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     registerERC20(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
@@ -2691,8 +3000,32 @@ export interface Treasury extends BaseContract {
 
     scaledTotalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    setERC20BondingLimit(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setERC20RedeemLimit(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setPendingOwner(
       pendingOwner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setupAndListERC20Bond(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setupAndListERC20Redemption(
+      erc20: PromiseOrValue<string>,
+      limit: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

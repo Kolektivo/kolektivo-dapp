@@ -1912,8 +1912,6 @@
                     "type": "function"
                 },
                 {
-<<<<<<< HEAD
-=======
                     "inputs": [
                         {
                             "internalType": "address",
@@ -1933,7 +1931,6 @@
                     "type": "function"
                 },
                 {
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "inputs": [
                         {
                             "internalType": "address",
@@ -3374,25 +3371,6 @@
                     "inputs": [
                         {
                             "internalType": "address",
-                            "name": "",
-                            "type": "address"
-                        }
-                    ],
-                    "name": "typeOfAsset",
-                    "outputs": [
-                        {
-                            "internalType": "enum IReserve.AssetType",
-                            "name": "",
-                            "type": "uint8"
-                        }
-                    ],
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "inputs": [
-                        {
-                            "internalType": "address",
                             "name": "erc20",
                             "type": "address"
                         },
@@ -3537,11 +3515,7 @@
                             "type": "address"
                         }
                     ],
-<<<<<<< HEAD
-                    "name": "Treasury__ERC20IsNotBondable",
-=======
                     "name": "Treasury__ERC20BondingLimitExceeded",
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "type": "error"
                 },
                 {
@@ -3552,11 +3526,7 @@
                             "type": "address"
                         }
                     ],
-<<<<<<< HEAD
-                    "name": "Treasury__ERC20IsNotRedeemable",
-=======
                     "name": "Treasury__ERC20IsNotBondable",
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "type": "error"
                 },
                 {
@@ -3567,19 +3537,13 @@
                             "type": "address"
                         }
                     ],
-<<<<<<< HEAD
-                    "name": "Treasury__ERC20IsNotRegistered",
-=======
                     "name": "Treasury__ERC20IsNotRedeemable",
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "type": "error"
                 },
                 {
                     "inputs": [
                         {
                             "internalType": "address",
-<<<<<<< HEAD
-=======
                             "name": "erc20",
                             "type": "address"
                         }
@@ -3602,7 +3566,6 @@
                     "inputs": [
                         {
                             "internalType": "address",
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                             "name": "erc721",
                             "type": "address"
                         },
@@ -3853,8 +3816,6 @@
                         }
                     ],
                     "name": "ERC20Unregistered",
-<<<<<<< HEAD
-=======
                     "type": "event"
                 },
                 {
@@ -3880,7 +3841,6 @@
                         }
                     ],
                     "name": "ERC20Withdrawn",
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "type": "event"
                 },
                 {
@@ -4127,8 +4087,6 @@
                         {
                             "indexed": true,
                             "internalType": "address",
-<<<<<<< HEAD
-=======
                             "name": "erc721",
                             "type": "address"
                         },
@@ -4154,7 +4112,6 @@
                         {
                             "indexed": true,
                             "internalType": "address",
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                             "name": "who",
                             "type": "address"
                         },
@@ -4540,27 +4497,6 @@
                         }
                     ],
                     "name": "bondERC20",
-<<<<<<< HEAD
-                    "outputs": [],
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "inputs": [
-                        {
-                            "internalType": "address",
-                            "name": "erc721",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "id",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "bondERC721Id",
-=======
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -5116,8 +5052,6 @@
                     "inputs": [
                         {
                             "internalType": "address",
-<<<<<<< HEAD
-=======
                             "name": "",
                             "type": "address"
                         }
@@ -5137,7 +5071,6 @@
                     "inputs": [
                         {
                             "internalType": "address",
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                             "name": "erc20",
                             "type": "address"
                         },
@@ -5596,13 +5529,6 @@
             ]
         },
         "Kolektivo Curacao Token": {
-<<<<<<< HEAD
-            "address": "0x0000000000000000000000000000000000000000",
-            "abi": "ERC20"
-        },
-        "Kolektivo Treasury Token": {
-=======
->>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
             "address": "0x0000000000000000000000000000000000000000",
             "abi": "ERC20"
         },

@@ -4,7 +4,7 @@ import { ContractNames } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IContractStore } from './contract-store';
 import { IServices, fromWei } from 'services';
-import { Reserve } from 'models/generated/reserve/Reserve';
+import { Reserve } from 'models/generated/monetary/reserve/Reserve';
 import { Transaction } from 'models/transaction';
 import { callOnce } from 'decorators/call-once';
 
@@ -17,9 +17,13 @@ export class ReserveStore {
   public backing?: BigNumber;
   public kCurPrice?: number;
   public kCurSupply?: BigNumber;
-  private reserveContract?: Reserve;
   public transactions: Transaction[] = [];
   public reserveAssets?: (Asset | undefined)[] = [];
+  public kCurReserveDistribution?: number;
+  public kCurMentoDistribution?: number;
+  public kCurPrimaryPoolDistribution?: number;
+
+  private reserveContract?: Reserve;
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IReserveStore, ReserveStore));
@@ -31,6 +35,11 @@ export class ReserveStore {
     return this.reserveAssets?.map((x) => x?.total ?? 0).sum() ?? 0;
   }
 
+  public get kCurCirculatingDistribution(): number {
+    if (!this.kCurReserveDistribution || !this.kCurMentoDistribution || !this.kCurPrimaryPoolDistribution) return 0;
+    return 1 - (this.kCurReserveDistribution + this.kCurMentoDistribution + this.kCurPrimaryPoolDistribution);
+  }
+
   @callOnce()
   public async loadAssets(): Promise<void> {
     const contract = this.getReserveContract();
@@ -39,17 +48,18 @@ export class ReserveStore {
     if (!reserveAddress) return;
     //get all token addresses from the contract
     const addresses = (
-      await Promise.all([contract.allRegisteredERC20s(), contract.allRegisteredERC721Ids().then((x) => x.map((y) => y.erc721))])
+      await Promise.all([
+        contract.allRegisteredERC20s().then((x) => x.map((y) => ({ tokenId: undefined, address: y } as { tokenId?: BigNumber; address: string }))),
+        contract.allRegisteredERC721Ids().then((x) => x.map((y) => ({ tokenId: y.id, address: y.erc721 }))),
+      ])
     ).flatMap((x) => x);
     //get all token asset data
     this.reserveAssets = await Promise.all(
       addresses.map(
         (address): Promise<Asset | undefined> =>
-          // eslint-disable-next-line @typescript-eslint/unbound-method
-          this.contractStore.getAsset(address, contract, reserveAddress, this.transactions, contract.typeOfAsset),
+          this.contractStore.getAsset(address.address, address.tokenId, contract, reserveAddress, this.transactions).catch(),
       ),
     );
-    console.log('assets', this.reserveAssets);
     const reserveStatus = await contract.reserveStatus();
     this.reserveValuation = reserveStatus[0];
     this.supplyValuation = reserveStatus[1];
@@ -66,9 +76,14 @@ export class ReserveStore {
     if (!reserveAddress) return;
     const oracleAddress = await contract.tokenOracle(); //get kCur oracle address
     if (!oracleAddress) return;
-    const asset = await this.contractStore.getAsset(kCurAddress, contract, reserveAddress, undefined, undefined, oracleAddress);
+    const asset = await this.contractStore.getAsset(kCurAddress, undefined, contract, reserveAddress, undefined, oracleAddress);
     this.kCurPrice = asset?.token.price;
     this.kCurSupply = asset?.totalSupply;
+
+    //TODO: Get the balances of kCur inside of the reserve, mento and the primary pool and set those values here
+    this.kCurReserveDistribution = 0.2;
+    this.kCurMentoDistribution = 0.3;
+    this.kCurPrimaryPoolDistribution = 0.4;
   }
 
   public get marketCap(): number {

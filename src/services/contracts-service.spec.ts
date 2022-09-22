@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { ContractNames, ContractsService, IContractsService } from './contracts-service';
 import { DI } from 'aurelia';
-import { Erc20 } from 'models/generated/erc20';
+import { Erc20 } from 'models/generated/monetary/erc20';
 import { createContractsDeploymentService, createEthereumService } from 'utils-testing/utils';
 import { describe, expect, it } from 'vitest';
 import { ethers } from 'ethers';

@@ -9,11 +9,12 @@
 const fs = require('fs-extra');
 const glob = require('glob');
 const { exit } = require('process');
-const contractPath = './src/contracts'; //where all the contract json files are from the fetchContracts.js
-let destPath = './src/models/generated'; //where all the model files will go
-//const contractPath = './src/contracts/governance'; //for governance
-//let destPath = './src/models/generated/governance'; //for governance
-let ethSdkPath = './eth-sdk/abis/';
+
+//get params passed into the script
+const params = process.argv.slice(2);
+const contractPath = `./src/contracts/${params[1]}`;
+let destPath = `./src/models/generated/${params[1]}`;
+
 const { exec } = require('child_process');
 
 //make sure the contract path exists
@@ -32,10 +33,6 @@ fs.mkdirSync(destPath);
 
 //get all the .json files from the contract path
 const files = glob.sync(contractPath + '/*.json');
-
-//get params passed into the script
-const params = process.argv.slice(2);
-ethSdkPath += params[0];
 
 files.forEach((file) => {
   //loop through each json file and process it
@@ -66,7 +63,6 @@ files.forEach((file) => {
         fs.mkdirSync(localDest);
         const filePath = localDest + '/' + fileName + '.json'; // path to the temp json file
         fs.writeJSONSync(filePath, abi); // create the new json file
-        fs.writeJSONSync(ethSdkPath + '/' + fileName + '.json', abi);
         const typechain = `npx typechain --target ethers-v5 --out-dir ${localDest} '${filePath}'`;
         exec(typechain, (...args) => {
           fs.unlinkSync(filePath); //delete the source json file afterwards

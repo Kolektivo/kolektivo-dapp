@@ -5,7 +5,7 @@ import { DI, IContainer, Registration } from 'aurelia';
 import { IContractStore } from './contract-store';
 import { IServices, fromWei } from 'services';
 import { Transaction } from 'models/transaction';
-import { Treasury } from 'models/generated/treasury/Treasury';
+import { Treasury } from 'models/generated/monetary/treasury/Treasury';
 import { callOnce } from './../decorators/call-once';
 
 export type ITreasuryStore = TreasuryStore;
@@ -48,16 +48,21 @@ export class TreasuryStore {
 
     //get all token addresses from the contract
     const addresses = (
-      await Promise.all([contract.allRegisteredERC20s(), contract.allRegisteredERC721Ids().then((x) => x.map((y) => y.erc721))])
+      await Promise.all([
+        contract.allRegisteredERC20s().then((x) => x.map((y) => ({ tokenId: undefined, address: y } as { tokenId?: BigNumber; address: string }))),
+        contract.allRegisteredERC721Ids().then((x) => x.map((y) => ({ tokenId: y.id, address: y.erc721 }))),
+      ])
     ).flatMap((x) => x);
+
     //get all token asset data
-    this.treasuryAssets = await Promise.all(
-      addresses.map(
-        (address): Promise<Asset | undefined> =>
-          // eslint-disable-next-line @typescript-eslint/unbound-method
-          this.contractStore.getAsset(address, contract, treasuryAddress, this.transactions, contract.assetTypeOfERC20),
-      ),
-    );
+    this.treasuryAssets = (
+      await Promise.all(
+        addresses.map(
+          (address): Promise<Asset | undefined> =>
+            this.contractStore.getAsset(address.address, address.tokenId, contract, treasuryAddress, this.transactions).catch(),
+        ),
+      )
+    ).filter(Boolean);
   }
 
   public async setValueOverTime(): Promise<void> {
