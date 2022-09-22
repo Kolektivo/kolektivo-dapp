@@ -11,6 +11,7 @@
             "url": "http://localhost:9000",
             "webRoot": "${workspaceFolder}/src",
             "sourceMaps": true,
+            "internalConsoleOptions": "neverOpen",
         },
         {
             "type": "msedge",
@@ -19,6 +20,7 @@
             "url": "http://localhost:9000",
             "webRoot": "${workspaceRoot}/src",
             "sourceMaps": true,
+            "internalConsoleOptions": "neverOpen",
         },
         {
             "type": "node",
@@ -34,7 +36,8 @@
                 "run",
                 "${relativeFile}"
             ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
         }
     ]
 }
