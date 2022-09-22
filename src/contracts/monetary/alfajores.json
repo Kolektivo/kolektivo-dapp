@@ -3,7 +3,11 @@
     "chainId": "44787",
     "contracts": {
         "GeoNFT": {
+<<<<<<< HEAD
             "address": "0x7E914eC3F65E1dc1B27258ffAE6B21Cc67330BA0",
+=======
+            "address": "0x3d088f32d7d83FD7868620f76C80604106b74702",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
             "abi": [
                 {
                     "inputs": [
@@ -1052,7 +1056,11 @@
             ]
         },
         "Reserve": {
+<<<<<<< HEAD
             "address": "0xBccd7dA2A8065C588caFD210c33FC08b00d36Df9",
+=======
+            "address": "0x9f4995f6a797Dd932A5301f22cA88104e7e42366",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
             "abi": [
                 {
                     "inputs": [
@@ -1817,6 +1825,56 @@
                     "type": "event"
                 },
                 {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "recipient",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "erc20sWithdrawn",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "WithdrewERC20",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "recipient",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "WithdrewERC721Id",
+                    "type": "event"
+                },
+                {
                     "inputs": [],
                     "name": "acceptOwnership",
                     "outputs": [],
@@ -1862,6 +1920,28 @@
                     "type": "function"
                 },
                 {
+<<<<<<< HEAD
+=======
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "assetTypeOfERC20",
+                    "outputs": [
+                        {
+                            "internalType": "enum IReserve.AssetType",
+                            "name": "",
+                            "type": "uint8"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "inputs": [
                         {
                             "internalType": "address",
@@ -3181,6 +3261,98 @@
                     "type": "function"
                 },
                 {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "limit",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "discount",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "vestingDuration",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setupAndListERC20Bond",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "limit",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setupAndListERC20Redemption",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "discount",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "vestingDuration",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setupAndListERC721IdBond",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setupAndListERC721IdRedemption",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
                     "inputs": [],
                     "name": "token",
                     "outputs": [
@@ -3328,7 +3500,11 @@
             ]
         },
         "Treasury": {
+<<<<<<< HEAD
             "address": "0x030Cd6F06FFf3728ac7bF50EF7b2a38DFD517237",
+=======
+            "address": "0xEAc68B2e33fA3dbde9bABf3edF17ed3437f3D992",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
             "abi": [
                 {
                     "inputs": [],
@@ -3373,7 +3549,11 @@
                             "type": "address"
                         }
                     ],
+<<<<<<< HEAD
                     "name": "Treasury__ERC20IsNotBondable",
+=======
+                    "name": "Treasury__ERC20BondingLimitExceeded",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "type": "error"
                 },
                 {
@@ -3384,13 +3564,34 @@
                             "type": "address"
                         }
                     ],
+<<<<<<< HEAD
                     "name": "Treasury__ERC20IsNotRedeemable",
+=======
+                    "name": "Treasury__ERC20IsNotBondable",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "type": "error"
                 },
                 {
                     "inputs": [
                         {
                             "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        }
+                    ],
+<<<<<<< HEAD
+                    "name": "Treasury__ERC20IsNotRegistered",
+=======
+                    "name": "Treasury__ERC20IsNotRedeemable",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
+                    "type": "error"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+<<<<<<< HEAD
+=======
                             "name": "erc20",
                             "type": "address"
                         }
@@ -3402,6 +3603,18 @@
                     "inputs": [
                         {
                             "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "Treasury__ERC20RedeemLimitExceeded",
+                    "type": "error"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                             "name": "erc721",
                             "type": "address"
                         },
@@ -3652,6 +3865,34 @@
                         }
                     ],
                     "name": "ERC20Unregistered",
+<<<<<<< HEAD
+=======
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "recipient",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "erc20sWithdrawn",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ERC20Withdrawn",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "type": "event"
                 },
                 {
@@ -3898,6 +4139,34 @@
                         {
                             "indexed": true,
                             "internalType": "address",
+<<<<<<< HEAD
+=======
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "recipient",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "ERC721IdWithdrawn",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                             "name": "who",
                             "type": "address"
                         },
@@ -4009,6 +4278,56 @@
                         }
                     ],
                     "name": "Rebase",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "oldLimit",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "newLimit",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "SetERC20BondingLimit",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "oldLimit",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "newLimit",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "SetERC20RedeemLimit",
                     "type": "event"
                 },
                 {
@@ -4233,6 +4552,27 @@
                         }
                     ],
                     "name": "bondERC20",
+<<<<<<< HEAD
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc721",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "bondERC721Id",
+=======
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -4253,6 +4593,25 @@
                     "name": "bondERC721Id",
                     "outputs": [],
                     "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "bondingLimitPerERC20",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
                     "type": "function"
                 },
                 {
@@ -4363,7 +4722,7 @@
                         },
                         {
                             "internalType": "bytes",
-                            "name": "callData",
+                            "name": "data",
                             "type": "bytes"
                         }
                     ],
@@ -4769,6 +5128,28 @@
                     "inputs": [
                         {
                             "internalType": "address",
+<<<<<<< HEAD
+=======
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "redeemLimitPerERC20",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
                             "name": "erc20",
                             "type": "address"
                         },
@@ -4890,11 +5271,83 @@
                     "inputs": [
                         {
                             "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "limit",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setERC20BondingLimit",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "limit",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setERC20RedeemLimit",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
                             "name": "pendingOwner_",
                             "type": "address"
                         }
                     ],
                     "name": "setPendingOwner",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "limit",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setupAndListERC20Bond",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "erc20",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "limit",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setupAndListERC20Redemption",
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
@@ -5155,6 +5608,7 @@
             ]
         },
         "Kolektivo Curacao Token": {
+<<<<<<< HEAD
             "address": "0x6f10D2FbcBEa5908bc0d4ed3656E61c29Db9c324",
             "abi": "ERC20"
         },
@@ -5172,11 +5626,35 @@
         },
         "Test Token #3": {
             "address": "0x290DB975a9Aa2cb6e34FC0A09794945B383d7cCE",
+=======
+            "address": "0x799aC807A4163899c09086A6C69490f6AecD65Cb",
+            "abi": "ERC20"
+        },
+        "Kolektivo Treasury Token": {
+            "address": "0xEAc68B2e33fA3dbde9bABf3edF17ed3437f3D992",
+            "abi": "ERC20"
+        },
+        "Test Token #1": {
+            "address": "0x8E7Af361418CDAb43333c6Bd0fA6906285C0E272",
+            "abi": "ERC20"
+        },
+        "Test Token #2": {
+            "address": "0x57f046C697B15D0933605F12152c5d96cB6f9cc5",
+            "abi": "ERC20"
+        },
+        "Test Token #3": {
+            "address": "0x32dB9295556D2B5193FD404253a4a3fD206B754b",
+>>>>>>> 54f18e405cdd7657edf8d113a63484d84ff308ed
             "abi": "ERC20"
         },
         "GeoNFT #1": {
-            "address": "0xc7D7407684c121d92f50440fC50353aefF6617b8",
+            "address": "0x3d088f32d7d83FD7868620f76C80604106b74702",
             "id": 1,
+            "abi": "ERC721"
+        },
+        "GeoNFT #2": {
+            "address": "0x3d088f32d7d83FD7868620f76C80604106b74702",
+            "id": 2,
             "abi": "ERC721"
         },
         "VestingVault": {
