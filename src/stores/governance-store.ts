@@ -101,7 +101,7 @@ export class GovernanceStore {
 
   private getBadgerContract(): Badger | null {
     if (this.badgerContract) return this.badgerContract;
-    this.badgerContract = this.services.contractsService.getContractFor<Badger>(ContractNames.BADGER);
+    this.badgerContract = this.services.contractsService.getContractFor<Badger>(ContractNames.MONETARYBADGER);
     return this.badgerContract;
   }
 }
