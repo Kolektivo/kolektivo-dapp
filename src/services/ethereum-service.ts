@@ -114,7 +114,8 @@ export class EthereumService {
           CELO_ALFAJORES_CHAIN_ID: this.endpoints[Networks.Alfajores],
         },
       },
-      connector: this.ConnectToWalletConnect,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      connector: (walletConnectProvider: any, opts?: IWalletConnectConnectorOptions) => this.ConnectToWalletConnect(walletConnectProvider, opts),
     },
     // TODO: test with walletconnect
     walletconnect: {
@@ -129,7 +130,7 @@ export class EthereumService {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private ConnectToWalletConnect(WalletConnectProvider: any, opts?: IWalletConnectConnectorOptions): Promise<unknown> {
+  private ConnectToWalletConnect(walletConnectProvider: any, opts?: IWalletConnectConnectorOptions): Promise<unknown> {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
     return new Promise(async (resolve, reject) => {
       let bridge = 'https://bridge.walletconnect.org';
@@ -140,16 +141,16 @@ export class EthereumService {
       let qrcodeModalOptions = undefined;
 
       if (opts) {
-        bridge = opts.bridge || bridge;
+        bridge = opts.bridge ?? bridge;
         qrcode = typeof opts.qrcode !== 'undefined' ? opts.qrcode : qrcode;
-        infuraId = opts.infuraId || '';
-        rpc = opts.rpc || undefined;
+        infuraId = opts.infuraId ?? '';
+        rpc = opts.rpc ?? undefined;
         chainId = opts.network && this.targetedChainId ? this.targetedChainId : 1;
-        qrcodeModalOptions = opts.qrcodeModalOptions || undefined;
+        qrcodeModalOptions = opts.qrcodeModalOptions ?? undefined;
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-      const provider = new WalletConnectProvider({
+      const provider = new walletConnectProvider({
         bridge,
         qrcode,
         infuraId,
