@@ -51,7 +51,7 @@ export class TokenListService {
     );
   }
 
-  public getTokenAddressId(address: Address, id?: number) {
+  public getTokenAddressId(address: Address, id?: number): string {
     const lowerCaseAddress = address.toLowerCase();
     return typeof id === 'undefined' ? lowerCaseAddress : `${lowerCaseAddress}_${id}`;
   }
