@@ -28,6 +28,10 @@ export class BlockChainStore {
     void this.ethereumService.connect();
   }
 
+  public connectKolektivoWallet(): void {
+    void this.ethereumService.connectKolektivoWallet();
+  }
+
   public connectToConnectedProvider(): Promise<void> {
     return this.ethereumService.connectToConnectedProvider();
   }
