@@ -54,7 +54,7 @@ export class ReserveStore {
 
   private getReserveContract(): Reserve | null {
     if (this.reserveContract) return this.reserveContract;
-    this.reserveContract = this.contractService.getMonetaryContract<Reserve>('Reserve');
+    this.reserveContract = this.contractService.getContract('Monetary', 'Reserve') as Reserve;
     return this.reserveContract;
   }
 }
