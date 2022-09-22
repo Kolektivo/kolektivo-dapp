@@ -4,7 +4,10 @@ import { ITokenInfo, ITokenListUniswap } from 'services/token-types';
 import { getDefaultProvider } from 'ethers';
 
 const tokenListUri = 'https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json';
-const endpoint = import.meta.env.KOL_NETWORK === 'Celo' ? 'https://celo.rpcs.dev:8545' : `https://alfajores.rpcs.dev:8545`;
+const endpoint =
+  import.meta.env.KOL_NETWORK === 'Celo'
+    ? 'https://celo.rpcs.dev:8545'
+    : `https://celo-alfajores-rpc.allthatnode.com/QpHXTMEr0FbAgsVRUg8eYMbOrQy6KLxr`;
 
 export const defaultProvider = getDefaultProvider(endpoint);
 

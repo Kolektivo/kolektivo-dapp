@@ -39,7 +39,10 @@ export class ContractStore {
       this.logger.error(`No token info was found for ${assetAddress}`);
       return;
     }
-    const tokenContract = this.services.contractService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
+
+    const tokenContract = tokenInfo.id
+      ? this.services.contractService.getTokenContract(assetAddress, tokenInfo.id)
+      : this.services.contractService.getTokenContract(assetAddress); //get the ERC20 contract from the asset's address
 
     if (!oracleAddress) {
       if (tokenInfo.id) {

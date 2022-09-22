@@ -74,7 +74,7 @@ describe('overview', () => {
 
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
-    const createMockContractsService = () => Registration.instance(IContractService, mock<IContractService>({}));
+    const createMockContractService = () => Registration.instance(IContractService, mock<IContractService>({}));
     const createMockTreasuryStoreRegistration = () => Registration.instance(ITreasuryStore, {});
 
     const createMockI18nRegistration = () =>
@@ -94,7 +94,7 @@ describe('overview', () => {
       NumberService,
       Global,
       createMockTreasuryStoreRegistration(),
-      createMockContractsService(),
+      createMockContractService(),
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       designSystemConfiguration(),

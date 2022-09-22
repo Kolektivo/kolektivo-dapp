@@ -25,7 +25,7 @@ export class Services {
     @ITimingService public readonly timingService: ITimingService,
     @ICacheService public readonly cacheService: ICacheService,
     @IObserverService public readonly observerService: IObserverService,
-    @IObserverService public readonly contractService: IContractService,
+    @IContractService public readonly contractService: IContractService,
   ) {}
 
   public initialize(): Promise<unknown> {
@@ -47,7 +47,7 @@ export class Services {
       .register(IpfsService)
       .register(KolektivoIpfsClient)
       .register(EthereumService)
-      .register(ContractService)
-      .register(BrowserStorageService);
+      .register(BrowserStorageService)
+      .register(ContractService);
   }
 }
