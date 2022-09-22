@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { CacheService } from './cache-service';
 import { ContractService, IContractService } from 'services';
 import { DI } from 'aurelia';
-import { Erc20 } from 'models/generated/monetary/erc20';
 import { defaultProvider } from './contract-service';
 import { describe, expect, it } from 'vitest';
 import { ethers } from 'ethers';
@@ -29,7 +28,7 @@ describe('contracts-service.ts', () => {
     const startingBalanceAccount1 = await token.balanceOf(testAccount1);
     const startingBalanceAccount2 = await token.balanceOf(testAccount2);
 
-    const tx = await (token as Erc20).transfer(testAccount2, transferAmount);
+    const tx = await token.transfer(testAccount2, transferAmount);
     expect(tx).toBeTypeOf('object');
 
     const endingBalanceAccount1 = await token.balanceOf(testAccount1);

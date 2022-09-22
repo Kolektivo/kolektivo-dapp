@@ -5,7 +5,6 @@ import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, 
 import { DesignSystemPlugin } from './design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { RouterConfiguration } from '@aurelia/router';
-import { Services } from './services/services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
 import { Store } from './stores';
 import { imageMap } from './app-images';
@@ -26,7 +25,6 @@ export const appContainer: IContainer = DI.createContainer()
     }),
   )
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
-  .register(Services)
   .register(Store)
   .register(hooks)
   .register(resources)

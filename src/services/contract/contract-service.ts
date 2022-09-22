@@ -14,7 +14,7 @@ import { cache } from 'decorators/cache';
 import { defaultProvider } from '.';
 
 export type IContractService = ContractService;
-export const IContractService = DI.createInterface<IContractService>('ContractService');
+export const IContractService = DI.createInterface<IContractService>();
 
 export class ContractService {
   constructor(@ICacheService private readonly cacheService: ICacheService) {}

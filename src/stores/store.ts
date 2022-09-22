@@ -6,6 +6,7 @@ import { IKolektivoStore, KolektivoStore } from './kolektivo-store';
 import { IReserveStore, ReserveStore } from './reserve-store';
 import { IServices } from '../services';
 import { ITreasuryStore, TreasuryStore } from './treasury-store';
+import { Services } from './../services/services';
 
 export type IStore = Store;
 export const IStore = DI.createInterface<IStore>('IStore');
@@ -17,8 +18,8 @@ export class Store {
     @ITreasuryStore public readonly treasuryStore: ITreasuryStore,
     @IReserveStore public readonly reserveStore: IReserveStore,
     @IContractStore public readonly contractStore: IContractStore,
-    @IServices private readonly services: IServices,
     @IGovernanceStore private readonly governanceStore: IGovernanceStore,
+    @IServices private readonly services: IServices,
   ) {}
 
   public static register(container: IContainer): void {
@@ -29,6 +30,7 @@ export class Store {
     container.register(ReserveStore);
     container.register(ContractStore);
     container.register(GovernanceStore);
+    container.register(Services);
   }
 
   initializeServices() {

@@ -1,6 +1,6 @@
 import { BrowserStorageService, IBrowserStorageService } from './browser-storage-service';
 import { CacheService, ICacheService } from './cache-service';
-import { ContractService, IContractService } from 'services';
+import { ContractService, IContractService } from './contract/contract-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { EthereumService, IEthereumService, Networks } from './ethereum-service';
 import { HttpService, IHttpService } from './http-service';
