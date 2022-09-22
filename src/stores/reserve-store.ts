@@ -1,9 +1,8 @@
 import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IContractService } from 'services';
+import { IContractService, fromWei } from 'services';
 import { IContractStore } from './contract-store';
-import { IServices, fromWei } from 'services';
 import { Reserve } from 'models/generated/monetary/reserve/Reserve';
 import { Transaction } from 'models/transaction';
 import { callOnce } from 'decorators/call-once';
@@ -72,7 +71,7 @@ export class ReserveStore {
     if (!contract) return;
     const kCurAddress = await contract.token(); // get kCur token address
     if (!kCurAddress) return;
-    const reserveAddress = this.services.contractsService.getContractAddress(ContractNames.RESERVE) ?? ''; // get reserve address
+    const reserveAddress = this.contractService.getContract('Monetary', 'Reserve').address;
     if (!reserveAddress) return;
     const oracleAddress = await contract.tokenOracle(); //get kCur oracle address
     if (!oracleAddress) return;

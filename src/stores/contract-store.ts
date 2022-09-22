@@ -1,11 +1,10 @@
 import { Asset, AssetType } from 'models/asset';
 import { BigNumber } from 'ethers';
-import { ContractNames, INumberService, IServices, ITokenInfo, fromWei, toWei } from '../services';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Erc20, TransferEvent } from 'models/generated/monetary/erc20/Erc20';
 import { Erc721 } from 'models/generated/monetary/erc721';
-import { IContractService, IServices, ITokenInfo, fromWei } from 'services';
-import { Oracle, Oracle } from 'models/generated/monetary/oracle';
+import { INumberService, IServices, ITokenInfo, fromWei, toWei } from '../services';
+import { Oracle } from 'models/generated/monetary/oracle';
 import { Reserve } from 'models/generated/monetary/reserve';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/monetary/treasury';
@@ -35,12 +34,12 @@ export class ContractStore {
     if (assetId) {
       assetIdNumber = Number(assetId);
     }
-    const tokenInfo = await this.services.tokenService.getTokenInfoFromAddress(assetAddress, assetIdNumber ?? undefined); //get the token info from the asset address
+    const tokenInfo = tokenInfos.find((y) => y.address === assetAddress && y.id == assetIdNumber);
     if (!tokenInfo) {
       this.logger.error(`No token info was found for ${assetAddress}`);
       return;
     }
-    const tokenContract = this.services.tokenService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
+    const tokenContract = this.services.contractService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
 
     if (!oracleAddress) {
       if (tokenInfo.id) {
@@ -52,7 +51,7 @@ export class ContractStore {
     }
 
     if (!oracleAddress || BigNumber.from(oracleAddress).isZero()) return;
-    const oracleContract = this.services.contractsService.getContractAtAddress<Oracle>(ContractNames.ORACLE, oracleAddress); //get the oracle contract for the given oracle address
+    const oracleContract = this.services.contractService.getContract('Monetary', 'Oracle', oracleAddress) as Oracle; //get the oracle contract for the given oracle address
     const data = await oracleContract.getData(); // get the data from the oracle contract
 
     if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
