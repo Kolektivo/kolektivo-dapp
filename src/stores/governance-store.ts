@@ -20,7 +20,7 @@ export class GovernanceStore {
     @IContractStore private readonly contractStore: IContractStore,
     @IObserverService private readonly observerService: IObserverService,
   ) {
-    this.observerService.listen(services.ethereumService, 'defaultAccountAddress', () => void this.loadBadges());
+    this.observerService.listen(services.ethereumService, 'defaultAccountAddress', () => this.loadBadges());
   }
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IGovernanceStore, GovernanceStore));
@@ -81,7 +81,7 @@ export class GovernanceStore {
     ] as Proposal[];
   }
 
-  public async loadBadges(): Promise<void> {
+  public loadBadges(): void {
     const contract = this.getBadgerContract();
     if (!contract) return;
     if (!this.services.ethereumService.defaultAccountAddress) return;
@@ -92,11 +92,11 @@ export class GovernanceStore {
         badgeNumbers.push(badgeNumber);
       }
     }
-    const balanceOf = await Promise.all(
-      badgeNumbers.map(async (x) => await contract.balanceOf(this.services.ethereumService.defaultAccountAddress ?? '', BigNumber.from(x))),
-    );
-    console.log('Address', this.services.ethereumService.defaultAccountAddress);
-    console.log('Badges', balanceOf);
+    // const balanceOf = await Promise.all(
+    //   badgeNumbers.map(async (x) => await contract.balanceOf(this.services.ethereumService.defaultAccountAddress ?? '', BigNumber.from(x))),
+    // );
+    // console.log('Address', this.services.ethereumService.defaultAccountAddress);
+    // console.log('Badges', balanceOf);
   }
 
   private getBadgerContract(): Badger | null {
