@@ -2,8 +2,9 @@ import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { ContractNames } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
+import { Erc20 } from 'models/generated/monetary/erc20';
 import { IContractStore } from './contract-store';
-import { IServices, fromWei } from 'services';
+import { INumberService, IServices, fromWei } from 'services';
 import { Reserve } from 'models/generated/monetary/reserve/Reserve';
 import { Transaction } from 'models/transaction';
 import { callOnce } from 'decorators/call-once';
@@ -28,7 +29,11 @@ export class ReserveStore {
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IReserveStore, ReserveStore));
   }
-  constructor(@IServices private readonly services: IServices, @IContractStore private readonly contractStore: IContractStore) {}
+  constructor(
+    @IServices private readonly services: IServices,
+    @IContractStore private readonly contractStore: IContractStore,
+    @INumberService private readonly numberService: INumberService,
+  ) {}
 
   public get reserveValue(): number {
     if (this.reserveAssets?.length === 0) return 0;
@@ -80,15 +85,19 @@ export class ReserveStore {
     this.kCurPrice = asset?.token.price;
     this.kCurSupply = asset?.totalSupply;
 
+    if (!this.kCurSupply) return; //can't get the distribution percentages without a total supply value so return if it's not there
     //TODO: Get the balances of kCur inside of the reserve, mento and the primary pool and set those values here
-    this.kCurReserveDistribution = 0.2;
+    const kCurContract = this.services.contractsService.getContractAtAddress<Erc20>(ContractNames.KCUR, kCurAddress); // get the kCur contract
+    const kCurInReserve = await kCurContract.balanceOf(reserveAddress); //get the balace of kCur in the reserve
+    this.kCurReserveDistribution =
+      this.numberService.fromString(fromWei(kCurInReserve, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
     this.kCurMentoDistribution = 0.3;
     this.kCurPrimaryPoolDistribution = 0.4;
   }
 
   public get marketCap(): number {
     if (!this.kCurPrice || !this.kCurSupply || this.kCurSupply.eq(0)) return 0;
-    return Number(fromWei(this.kCurSupply, 18)) * this.kCurPrice;
+    return this.numberService.fromString(fromWei(this.kCurSupply, 18)) * this.kCurPrice;
   }
 
   private getReserveContract(): Reserve | null {
