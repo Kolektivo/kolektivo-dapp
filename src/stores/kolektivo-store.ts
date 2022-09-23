@@ -100,3 +100,91 @@ export class KolektivoStore {
     totalSupply: 8000000,
   };
 }
+
+export const allBadges = [
+  {
+    name: 'Monetary Controller',
+    description: 'Monetary Controller',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.MONETARY_CONTROLLER,
+    verified: false,
+  },
+  {
+    name: 'Reserve Monetary Delegate',
+    description: 'Reserve Monetary Delegate',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.RESERVE_DELEGATE,
+    verified: false,
+  },
+  {
+    name: 'Reserve Monetary Veto Delegate',
+    description: 'Reserve Monetary Veto Delegate',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.RESERVE_VETO_DELEGATE,
+    verified: false,
+  },
+  {
+    name: 'Topology Data Delegate',
+    description: 'Topology Data Delegate',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.TOPOLOGY_DELEGATE,
+    verified: false,
+  },
+  {
+    name: 'Ecology Data Delegate',
+    description: 'Ecology Data Delegate',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.ECOLOGY_DELEGATE,
+    verified: false,
+  },
+  {
+    name: 'Ecology Data Delegate Proposer',
+    description: 'Ecology Data Delegate Proposer',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.ECOLOGY_DELEGATE_PROPOSER,
+    verified: false,
+  },
+  {
+    name: 'Reserve Arbitrageur',
+    description: 'Reserve Arbitrageur',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.RESERVE_ARBITRAGEUR,
+    verified: false,
+  },
+  {
+    name: 'Local Kolektivo Multi-Sig Member',
+    description: 'Local Kolektivo Multi-Sig Member',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.LOCAL_MULTI_SIG_MEMBER,
+    verified: false,
+  },
+  {
+    name: 'Treasury Delegate',
+    description: 'Treasury Delegate',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.TREASURY_DELEGATE,
+    verified: false,
+  },
+  {
+    name: 'Treasury Veto Delegate',
+    description: 'Treasury Veto Delegate',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.TREASURY_VETO_DELEGATE,
+    verified: false,
+  },
+  {
+    name: 'Treasury Arbitrageur',
+    description: 'Treasury Arbitrageur',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.TREASURY_ARBITRAGEUR,
+    verified: false,
+  },
+
+  {
+    name: 'Kolektivo Network Multi-Sig Member',
+    description: 'Kolektivo Network Multi-Sig Member',
+    imageUrl: 'https://pickaface.net/gallery/avatar/unr_randomavatar_170412_0236_9n4c2i.png',
+    type: BadgeType.KOLEKTIVO_MULTI_SIG_MEMBER,
+    verified: false,
+  },
+];

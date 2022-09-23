@@ -3,7 +3,7 @@ import { Badger } from 'models/generated/governance/badger';
 import { BigNumber } from 'ethers';
 import { ContractNames, IServices } from 'services';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IContractStore } from './contract-store';
+import { IKolektivoStore, allBadges } from 'stores';
 import { IObserverService } from 'services/observer-service';
 import { Proposal, ProposalStatus } from 'models/proposal';
 import { callOnce } from 'decorators/call-once';
@@ -17,10 +17,10 @@ export class GovernanceStore {
   private badgerContract?: Badger;
   constructor(
     @IServices private readonly services: IServices,
-    @IContractStore private readonly contractStore: IContractStore,
     @IObserverService private readonly observerService: IObserverService,
+    @IKolektivoStore private readonly kolektivoStore: IKolektivoStore,
   ) {
-    this.observerService.listen(services.ethereumService, 'defaultAccountAddress', () => this.loadBadges());
+    this.observerService.listen(services.ethereumService, 'defaultAccountAddress', () => void this.loadBadges());
   }
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IGovernanceStore, GovernanceStore));
@@ -81,7 +81,7 @@ export class GovernanceStore {
     ] as Proposal[];
   }
 
-  public loadBadges(): void {
+  public async loadBadges(): Promise<void> {
     const contract = this.getBadgerContract();
     if (!contract) return;
     if (!this.services.ethereumService.defaultAccountAddress) return;
@@ -92,11 +92,16 @@ export class GovernanceStore {
         badgeNumbers.push(badgeNumber);
       }
     }
-    // const balanceOf = await Promise.all(
-    //   badgeNumbers.map(async (x) => await contract.balanceOf(this.services.ethereumService.defaultAccountAddress ?? '', BigNumber.from(x))),
-    // );
-    // console.log('Address', this.services.ethereumService.defaultAccountAddress);
-    // console.log('Badges', balanceOf);
+    const badges = (
+      await Promise.all(
+        badgeNumbers.map(async (x) => {
+          const balance = await contract.balanceOf(this.services.ethereumService.defaultAccountAddress ?? '', BigNumber.from(x));
+          if (Number(balance) !== 1) return;
+          return x;
+        }),
+      )
+    ).filter(Boolean);
+    this.kolektivoStore.badges = allBadges.filter((x) => badges.some((y) => y === x.type));
   }
 
   private getBadgerContract(): Badger | null {
