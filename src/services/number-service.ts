@@ -73,11 +73,11 @@ export class NumberService {
    * returns number from string.
    * @param value the value
    */
-  public fromString(value?: string | number | null | undefined): number | null | undefined {
-    if (value === null || typeof value === 'undefined' || typeof value === 'number') {
-      return value;
+  public fromString(value?: string | number | null | undefined): number {
+    if (value === null || typeof value === 'undefined') {
+      return NaN;
     }
-
+    if (typeof value === 'number') return value;
     return this.i18n.uf(value);
   }
 }

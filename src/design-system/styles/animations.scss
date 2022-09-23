@@ -180,3 +180,38 @@
 .slide-out-bottom {
   animation: slide-in-bottom 1s reverse;
 }
+
+.dot1, .dot2, .dot3 {
+  background: #fff;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin: 2px;
+}
+
+.dot1 {
+  animation: jump 2s -0.32s linear infinite;
+  background: #FFF;
+}
+
+.dot2 {
+    animation: jump 2s -0.16s linear infinite;
+    background: #FFF;
+}
+
+.dot3 {
+    animation: jump 2s linear infinite;
+    background: #FFF;
+}
+
+@keyframes jump {
+  0%, 20%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 
+  
+  35%, 65% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}

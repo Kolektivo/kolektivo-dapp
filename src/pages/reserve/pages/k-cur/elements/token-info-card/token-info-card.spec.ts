@@ -1,10 +1,13 @@
 import 'utils-testing/setup-testing';
-import { CurrencyValueConverter } from 'resources';
+import { CurrencyValueConverter, EthweiValueConverter } from 'resources';
 import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from 'design-system';
+import { INumberService } from './../../../../../../services/number-service';
+import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from 'stores';
 import { ITokenService } from 'services';
+import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
 import { TokenInfoCard } from './token-info-card';
 import { createFixture } from '@aurelia/testing';
@@ -61,6 +64,10 @@ describe('token-info-card', () => {
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
+      Registration.instance(IReserveStore, {}),
+      EthweiValueConverter,
+      Registration.instance(INumberService, {}),
+      PercentageValueConverter,
       TokenInfoCard,
       Registration.instance(ITokenService, vi.fn()),
       CurrencyValueConverter,
