@@ -1,9 +1,11 @@
 import '../../../../utils-testing/setup-testing';
 import { CurrencyValueConverter } from '../../../../design-system/value-converters';
+import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
 import { Global } from '../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
 import { INumberService } from './../../../../services';
+import { IReserveStore } from './../../../../stores/reserve-store';
 import { IStore } from '../../../../stores';
 import { KCur } from './k-cur';
 import { PercentageValueConverter } from './../../../../resources/value-converters';
@@ -79,7 +81,9 @@ describe('k-cur', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
     return [
+      Registration.instance(IReserveStore, {}),
       KCur,
+      EthweiValueConverter,
       PercentageValueConverter,
       CurrencyValueConverter,
       Global,

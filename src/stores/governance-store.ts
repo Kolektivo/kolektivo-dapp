@@ -1,13 +1,12 @@
-import { BadgeType } from 'models/badge-type';
-import { Badger } from 'models/generated/governance/badger';
-import { BigNumber } from 'ethers';
-import { ContractNames, IServices } from 'services';
+import { Badger } from './../models/generated/governance/badger/Badger';
+import { BigNumber } from '@ethersproject/bignumber';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IKolektivoStore, allBadges } from 'stores';
+import { IKolektivoStore } from './kolektivo-store';
 import { IObserverService } from 'services/observer-service';
-import { Proposal, ProposalStatus } from 'models/proposal';
+import { IServices } from 'services/services';
+import { Proposal, ProposalStatus } from './../models/proposal';
 import { callOnce } from 'decorators/call-once';
-import { delay } from 'utils';
+import { delay } from '../utils';
 
 export type IGovernanceStore = GovernanceStore;
 export const IGovernanceStore = DI.createInterface<IGovernanceStore>('IGovernanceStore');
