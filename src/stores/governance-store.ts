@@ -1,7 +1,9 @@
+import { BadgeType } from 'models/badge-type';
 import { Badger } from './../models/generated/governance/badger/Badger';
 import { BigNumber } from '@ethersproject/bignumber';
+import { ContractNames } from 'services';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IKolektivoStore } from './kolektivo-store';
+import { IKolektivoStore, allBadges } from './kolektivo-store';
 import { IObserverService } from 'services/observer-service';
 import { IServices } from 'services/services';
 import { Proposal, ProposalStatus } from './../models/proposal';
