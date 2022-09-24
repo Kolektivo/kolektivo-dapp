@@ -55,7 +55,6 @@ export class NumberService {
     const useGrouping = options?.useGrouping ?? true;
     const isPercentage = options?.isPercentage ?? false;
     const isCurrency = options?.isCurrency ?? false;
-    // eslint-disable-next-line eqeqeq
     let fractionDigits = this.fromString(options?.fractionDigits);
     if (isNaN(fractionDigits)) {
       fractionDigits = 2;
