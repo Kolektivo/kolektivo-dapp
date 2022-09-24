@@ -56,7 +56,10 @@ export class NumberService {
     const isPercentage = options?.isPercentage ?? false;
     const isCurrency = options?.isCurrency ?? false;
     // eslint-disable-next-line eqeqeq
-    const fractionDigits = options?.fractionDigits == undefined ? 2 : this.fromString(options.fractionDigits) ?? 2;
+    let fractionDigits = this.fromString(options?.fractionDigits);
+    if (isNaN(fractionDigits)) {
+      fractionDigits = 2;
+    }
     const format = isCurrency ? { style: 'currency', currency: 'USD' } : isPercentage ? { style: 'percent' } : { style: 'decimal' };
 
     return this.i18n.nf(
