@@ -1,3 +1,5 @@
+import { IEthereumService } from './ethereum-service';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BadgeType } from 'models/badge-type';
@@ -5,7 +7,7 @@ import { BadgeType } from 'models/badge-type';
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { DI, IContainer, Registration } from 'aurelia';
-import { ethers } from 'ethers';
+import { IContractsService } from 'services';
 import LitJsSdk from 'lit-js-sdk';
 export type IEncryptionService = EncryptionService;
 export const IEncryptionService = DI.createInterface<IEncryptionService>('EncryptionService');
@@ -30,47 +32,46 @@ const accessControlConditions = (address: string) => {
 };
 
 export class EncryptionService {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  authSig: any;
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  encryptedSymmetricKey: any;
-  symmetricKey: any;
+  private authSig: any;
+  private encryptedSymmetricKey: any;
+  private badgerContractAddress?: string;
+  constructor(
+    @IEthereumService private readonly ethereumService: IEthereumService,
+    @IContractsService private readonly contractsService: IContractsService,
+  ) {
+    //TODO figure out why this.contractsService.getContractAddress always returns empty
+    //this.badgerContractAddress = this.contractsService.getContractAddress(ContractNames.MONETARYBADGER) ?? '';
+    this.badgerContractAddress = '0x74F9479B29CFb52Db30D76ffdD5F192a73BAD870';
+  }
   public static register(container: IContainer) {
     Registration.singleton(IEncryptionService, EncryptionService).register(container);
   }
 
-  public async encrypt(message: string) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
-    // await provider.send('eth_requestAccounts', []);
-    const account = (await provider.listAccounts())[0].toLowerCase();
-    const signer = provider.getSigner();
-
+  public async encrypt(message: string): Promise<string | undefined> {
     const params = {
-      web3: provider,
-      account: account,
+      web3: this.ethereumService.walletProvider,
+      account: this.ethereumService.defaultAccountAddress?.toLowerCase(),
       chainId: 44787,
     };
-
     this.authSig = await LitJsSdk.signAndSaveAuthMessage(params);
     const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(message);
+    if (!this.badgerContractAddress) return;
     this.encryptedSymmetricKey = LitJsSdk.uint8arrayToString(
       await client.saveEncryptionKey({
-        accessControlConditions: accessControlConditions('0x74F9479B29CFb52Db30D76ffdD5F192a73BAD870'),
+        accessControlConditions: accessControlConditions(this.badgerContractAddress),
         symmetricKey,
         authSig: this.authSig,
         chain,
       }),
       'base16',
     );
-    this.symmetricKey = symmetricKey;
-
     return encryptedString;
   }
 
   public async decrypt(encryptedString: string) {
+    if (!this.badgerContractAddress) return;
     const symmetricKey = await client.getEncryptionKey({
-      accessControlConditions: accessControlConditions('0x74F9479B29CFb52Db30D76ffdD5F192a73BAD870'),
+      accessControlConditions: accessControlConditions(this.badgerContractAddress),
       toDecrypt: this.encryptedSymmetricKey,
       chain,
       authSig: this.authSig,

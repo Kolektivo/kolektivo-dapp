@@ -33,7 +33,7 @@ export class Services {
     @ITimingService public readonly timingService: ITimingService,
     @ICacheService public readonly cacheService: ICacheService,
     @IObserverService public readonly observerService: IObserverService,
-    @IObserverService public readonly encryptionService: IEncryptionService,
+    @IEncryptionService public readonly encryptionService: IEncryptionService,
   ) {}
 
   public initialize(): Promise<unknown> {
