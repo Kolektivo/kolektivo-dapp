@@ -1,5 +1,15 @@
 <k-card tooltip-text="${i18n.tr('navigation.treasury.governance.submit-card.tooltip')}" id="t-g-submit-card"
   title="${i18n.tr('navigation.treasury.governance.submit-card.title')}">
+  <k-stack gap="20">
+    <k-text type="h6">Encrypt Message</k-text>
+    <k-input value.bind="messageToEncrypt"></k-input>
+    <k-button click.trigger="encrypt">Encrypt</k-button>
+    <k-button click.trigger="decrypt">Decrypt</k-button>
+    <k-text>Encrypted Message: ${encryptedResult}</k-text>
+    <k-text>Decrypted Message: ${decryptedResult}</k-text>
+    <k-text color="var(--error)" if.bind="error">${error}</k-text>
+  </k-stack>
+
   <card-nav active.two-way="active" routes.bind="routes"></card-nav>
   <template switch.bind="active">
     <bonds case="bonds">bond</bonds>

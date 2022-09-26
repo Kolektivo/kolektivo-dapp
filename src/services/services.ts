@@ -3,6 +3,7 @@ import { CacheService, ICacheService } from './cache-service';
 import { ContractsDeploymentService, IContractsDeploymentService } from './contracts-deployment-service';
 import { ContractsService, IContractsService } from './contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
+import { EncryptionService, IEncryptionService } from './encryption-service';
 import { EthereumService, IEthereumService, Networks } from './ethereum-service';
 import { HttpService, IHttpService } from './http-service';
 import { IIpfsService, IpfsService } from './ipfs-service';
@@ -32,6 +33,7 @@ export class Services {
     @ITimingService public readonly timingService: ITimingService,
     @ICacheService public readonly cacheService: ICacheService,
     @IObserverService public readonly observerService: IObserverService,
+    @IEncryptionService public readonly encryptionService: IEncryptionService,
   ) {}
 
   public initialize(): Promise<unknown> {
@@ -58,6 +60,7 @@ export class Services {
       .register(IpfsService)
       .register(KolektivoIpfsClient)
       .register(EthereumService)
+      .register(EncryptionService)
       .register(BrowserStorageService)
       .register(ContractsService)
       .register(TokenListService)

@@ -8,11 +8,9 @@ import template from './governance.html';
 export class Governance {
   @observable selectedBadge?: number;
   constructor(@IKolektivoStore private readonly kolektivoStore: IKolektivoStore, @I18N private readonly i18n: I18N) {}
-
   get hasSubmitAccess(): boolean {
-    return this.kolektivoStore.badges.some((x) => x.type === BadgeType.TREASURY_DELEGATE);
+    return this.kolektivoStore.badges.some((x) => x.type === BadgeType.RESERVE_DELEGATE || x.type === BadgeType.RESERVE_ARBITRAGEUR);
   }
-
   selectedBadgeChanged(): void {
     switch (this.selectedBadge) {
       case 0:
