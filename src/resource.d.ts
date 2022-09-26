@@ -11,7 +11,8 @@ declare module '*.html' {
   export const shadowOptions: { mode: 'open' | 'closed' } | undefined;
   export function register(container: IContainer): void;
 }
-
+declare module 'lit-js-sdk';
+declare module 'lit-connect-modal';
 declare module '*.css' {
   const value: string;
   export = value;

@@ -1,18 +1,25 @@
 import * as elements from './elements';
 import { BadgeType } from 'models/badge-type';
 import { I18N } from '@aurelia/i18n';
+import { IEncryptionService } from 'services/encryption-service';
 import { IKolektivoStore } from 'stores';
 import { customElement, observable } from 'aurelia';
 import template from './governance.html';
 @customElement({ name: 'governance', template, dependencies: [elements] })
 export class Governance {
   @observable selectedBadge?: number;
-  constructor(@IKolektivoStore private readonly kolektivoStore: IKolektivoStore, @I18N private readonly i18n: I18N) {}
+  constructor(
+    @IKolektivoStore private readonly kolektivoStore: IKolektivoStore,
+    @I18N private readonly i18n: I18N,
+    @IEncryptionService private readonly encryptionService: IEncryptionService,
+  ) {}
 
   get hasSubmitAccess(): boolean {
     return this.kolektivoStore.badges.some((x) => x.type === BadgeType.TREASURY_DELEGATE);
   }
-
+  async binding() {
+    await this.encryptionService.encrypt('test message');
+  }
   selectedBadgeChanged(): void {
     switch (this.selectedBadge) {
       case 0:
