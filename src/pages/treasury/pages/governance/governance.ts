@@ -18,7 +18,10 @@ export class Governance {
     return this.kolektivoStore.badges.some((x) => x.type === BadgeType.TREASURY_DELEGATE);
   }
   async binding() {
-    await this.encryptionService.encrypt('test message');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const t = await this.encryptionService.encrypt('test message');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    alert(await this.encryptionService.decrypt(t));
   }
   selectedBadgeChanged(): void {
     switch (this.selectedBadge) {
