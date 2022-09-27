@@ -22,6 +22,13 @@ export enum ContractNames {
   ERC721 = 'ERC721',
   KCUR = 'Kolektivo Curacao Token',
   KTT = 'Kolektivo Treasury Token',
+  MONETARYDELAY = 'monetaryDelay',
+  FOODFORESTDELAY = 'foodForestDelay',
+  KOLEKTIVODELAY = 'kolektivoDelay',
+  BACMD = 'bacMD',
+  BACFFD = 'bacFFD',
+  BACMC = 'bacMC',
+  BACK = 'bacK',
 }
 
 export interface IStandardEvent<TArgs> {

@@ -4,6 +4,7 @@ import { ContractNames } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IContractStore } from './contract-store';
 import { IServices, fromWei } from 'services';
+import { PopulatedTransaction } from 'ethers';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/monetary/treasury/Treasury';
 import { callOnce } from './../decorators/call-once';
@@ -73,9 +74,18 @@ export class TreasuryStore {
     this.valueOverTime = await Promise.all(
       rebaseEvents.map(async (x) => ({
         date: new Date((await x.getBlock()).timestamp * 1000),
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         value: this.services.numberService.fromString(fromWei(x.args.newScalar, 18)) ?? 0,
       })),
     );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async getDynamicMethodData(functionName: string, ...params: any[]): Promise<PopulatedTransaction | unknown> {
+    const contract = this.getTreasuryContract();
+    if (!contract || !functionName) return;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+    return (await (contract.populateTransaction as any)[functionName](...params)) as PopulatedTransaction;
   }
 
   public get circulatingDistribution(): number {

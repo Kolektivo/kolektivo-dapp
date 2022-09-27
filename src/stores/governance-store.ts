@@ -1,12 +1,15 @@
+import { Bacroles } from './../models/generated/governance/bacroles/Bacroles';
 import { BadgeType } from 'models/badge-type';
 import { Badger } from './../models/generated/governance/badger/Badger';
 import { BigNumber } from '@ethersproject/bignumber';
 import { ContractNames } from 'services';
+import { ContractTransaction, PopulatedTransaction } from 'ethers';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IKolektivoStore, allBadges } from './kolektivo-store';
 import { IObserverService } from 'services/observer-service';
 import { IServices } from 'services/services';
 import { Proposal, ProposalStatus } from './../models/proposal';
+import { Secretdelay } from './../models/generated/governance/secretdelay/Secretdelay';
 import { callOnce } from 'decorators/call-once';
 import { delay } from '../utils';
 
@@ -80,6 +83,36 @@ export class GovernanceStore {
         verified: false,
       },
     ] as Proposal[];
+  }
+
+  public async submitDynamicMethod(
+    isPublicProposal: boolean,
+    data: PopulatedTransaction,
+    ipfsHash: string,
+  ): Promise<ContractTransaction | undefined> {
+    if (!data.to || !data.data) return;
+    const secretDelayContract = this.services.contractsService.getContractFor<Secretdelay>(ContractNames.MONETARYDELAY);
+
+    let dataParamBAC: PopulatedTransaction | undefined = undefined;
+    if (isPublicProposal) {
+      dataParamBAC = await secretDelayContract.populateTransaction.execTransactionFromModule(data.to, data.value ?? 0, data.data, BigNumber.from(0));
+    } else {
+      if (!ipfsHash) return;
+      const salt = await secretDelayContract.salt();
+      const hash = await secretDelayContract.getSecretTransactionHash(data.to, data.value ?? 0, data.data, BigNumber.from(0), salt);
+      dataParamBAC = await secretDelayContract.populateTransaction.enqueueSecretTx(hash, ipfsHash);
+    }
+
+    const bacContract = this.services.contractsService.getContractFor<Bacroles>(ContractNames.BACMD);
+    if (!dataParamBAC.to || !dataParamBAC.value || !dataParamBAC.data) return;
+    const result = await bacContract.execTransactionFromModule(
+      dataParamBAC.to,
+      dataParamBAC.value,
+      dataParamBAC.data,
+      BigNumber.from(0),
+      BadgeType.ECOLOGY_DELEGATE,
+    );
+    return result;
   }
 
   public async loadBadges(): Promise<void> {
