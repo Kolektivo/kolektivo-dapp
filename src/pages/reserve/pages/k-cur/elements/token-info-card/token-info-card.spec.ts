@@ -6,7 +6,6 @@ import { IDesignSystemConfiguration } from 'design-system';
 import { INumberService } from './../../../../../../services/number-service';
 import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from 'stores';
-import { ITokenService } from 'services';
 import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
 import { TokenInfoCard } from './token-info-card';
@@ -69,7 +68,6 @@ describe('token-info-card', () => {
       Registration.instance(INumberService, {}),
       PercentageValueConverter,
       TokenInfoCard,
-      Registration.instance(ITokenService, vi.fn()),
       CurrencyValueConverter,
       Global,
       createMockStoreRegistration(),

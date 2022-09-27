@@ -1,11 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber';
-import { CacheService } from './cache-service';
-import { ContractService, IContractService } from 'services';
+import { CacheService, ContractService, IContractService, toWei } from 'services';
 import { DI } from 'aurelia';
-import { defaultProvider } from './contract-service';
+import { defaultProvider } from './token-info';
 import { describe, expect, it } from 'vitest';
 import { ethers } from 'ethers';
-import { toWei } from './ethereum-service';
 
 describe('contracts-service.ts', () => {
   it('transfers a token', async () => {

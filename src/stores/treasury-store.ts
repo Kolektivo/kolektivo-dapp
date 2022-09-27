@@ -77,7 +77,7 @@ export class TreasuryStore {
     this.valueOverTime = await Promise.all(
       rebaseEvents.map(async (x) => ({
         date: new Date((await x.getBlock()).timestamp * 1000),
-        value: this.services.numberService.fromString(fromWei(x.args.newScalar, 18)) ?? 0,
+        value: this.services.numberService.fromString(fromWei(x.args.newScalar, 18)),
       })),
     );
   }
@@ -101,7 +101,7 @@ export class TreasuryStore {
 
   private getTreasuryContract(): Treasury | null {
     if (this.treasuryContract) return this.treasuryContract;
-    this.treasuryContract = this.contractService.getContract('Monetary', 'Treasury') as Treasury;
+    this.treasuryContract = this.contractService.getContract('Monetary', 'Treasury');
     return this.treasuryContract;
   }
 }
