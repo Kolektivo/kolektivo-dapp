@@ -99,7 +99,7 @@ export class GovernanceStore {
     } else {
       if (!ipfsHash) return;
       const salt = await secretDelayContract.salt();
-      const hash = await secretDelayContract.getSecretTransactionHash(data.to, data.value ?? 0, data.data, BigNumber.from(0), salt);
+      const hash = await secretDelayContract.getSecretTransactionHash(secretDelayContract.address, 0, data.data, BigNumber.from(0), salt);
       dataParamBAC = await secretDelayContract.populateTransaction.enqueueSecretTx(hash, ipfsHash);
     }
 
