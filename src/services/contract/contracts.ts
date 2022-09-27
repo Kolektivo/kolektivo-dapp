@@ -1,4 +1,4 @@
-import { ContractJson, Shared } from './types';
+import { ContractJson, GovernanceContractJson, MonetaryContractJson } from './types';
 import { isCelo } from 'environment-variables';
 import governanceAlfajores from '../../contracts/governance/alfajores.json';
 import governanceCelo from '../../contracts/governance/celo.json';
@@ -8,7 +8,10 @@ import monetaryCelo from '../../contracts/monetary/celo.json';
 import monetaryShared from '../../contracts/monetary/sharedAbis.json';
 
 export { governanceAlfajores, governanceCelo, governanceShared, monetaryAlfajores, monetaryCelo, monetaryShared };
-export type ContractDetails<T extends ContractJson = ContractJson> = { main: T; shared: Shared };
+export type ContractDetails<T extends ContractJson = ContractJson> = {
+  main: T;
+  shared: T extends MonetaryContractJson ? typeof monetaryShared : typeof governanceShared;
+};
 
 export type ContractType = keyof typeof Contracts;
 
@@ -17,6 +20,9 @@ export const Contracts = {
   Governance: { main: isCelo ? governanceCelo : governanceAlfajores, shared: governanceShared },
 };
 
-export function getContract<T extends ContractType, TContractJson extends ContractJson>(type: T) {
+export function getContract<
+  T extends ContractType,
+  TContractJson extends ContractJson = T extends 'Monetary' ? MonetaryContractJson : GovernanceContractJson,
+>(type: T) {
   return Contracts[type] as ContractDetails<TContractJson>;
 }

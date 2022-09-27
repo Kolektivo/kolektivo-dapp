@@ -1,9 +1,9 @@
 import { I18N } from '@aurelia/i18n';
 import { IGridColumn } from './design-system/elements/k-data-grid/grid-column';
-import { instance } from 'main';
+import { appContainer } from 'app-container';
 
 export const assetsColumns = () => {
-  const i18n = instance.container.get(I18N);
+  const i18n = appContainer.get(I18N);
   return [
     {
       headerText: i18n.tr('general.assets.grid-headers.token'),
@@ -33,7 +33,7 @@ export const assetsColumns = () => {
 };
 
 export const transactionHistoryColumns = () => {
-  const i18n = instance.container.get(I18N);
+  const i18n = appContainer.get(I18N);
   return [
     {
       headerText: i18n.tr('general.transaction-history.grid-headers.token'),

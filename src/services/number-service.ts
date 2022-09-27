@@ -55,8 +55,10 @@ export class NumberService {
     const useGrouping = options?.useGrouping ?? true;
     const isPercentage = options?.isPercentage ?? false;
     const isCurrency = options?.isCurrency ?? false;
-    // eslint-disable-next-line eqeqeq
-    const fractionDigits = options?.fractionDigits == undefined ? 2 : this.fromString(options.fractionDigits) ?? 2;
+    let fractionDigits = this.fromString(options?.fractionDigits);
+    if (isNaN(fractionDigits)) {
+      fractionDigits = 2;
+    }
     const format = isCurrency ? { style: 'currency', currency: 'USD' } : isPercentage ? { style: 'percent' } : { style: 'decimal' };
 
     return this.i18n.nf(
@@ -73,11 +75,11 @@ export class NumberService {
    * returns number from string.
    * @param value the value
    */
-  public fromString(value?: string | number | null | undefined): number | null | undefined {
-    if (value === null || typeof value === 'undefined' || typeof value === 'number') {
-      return value;
+  public fromString(value?: string | number | null | undefined): number {
+    if (value === null || typeof value === 'undefined') {
+      return NaN;
     }
-
+    if (typeof value === 'number') return value;
     return this.i18n.uf(value);
   }
 }

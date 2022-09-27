@@ -1,7 +1,7 @@
 import { Contract } from '@ethersproject/contracts';
 import { Provider } from '@ethersproject/providers';
 
-import { ContractInterface, Signer } from 'ethers';
+import { BaseContract, ContractInterface, Signer } from 'ethers';
 
 import { Shared } from './types';
 
@@ -26,12 +26,12 @@ export class ContractService {
   @cache<ContractService>(function () {
     return { storage: this.cacheService };
   })
-  public getContract<TContractType extends ContractType>(
+  public getContract<TContractType extends ContractType, TResult extends BaseContract = Erc20>(
     contractType: TContractType,
     name: Extract<keyof typeof Contracts[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
     signerOrProvider?: Provider | Signer | undefined,
-  ) {
+  ): TResult {
     const contractData = Contracts[contractType];
     const contracts = contractData.main.contracts;
     const contract = contracts[name as keyof typeof contracts] as unknown as { abi: string | ContractInterface; address: string };
@@ -40,7 +40,7 @@ export class ContractService {
       const key = abi as keyof Shared;
       abi = contractData.shared[key] as ContractInterface;
     }
-    return new Contract(overrideAddress ?? contract.address, contract.abi, signerOrProvider ?? defaultProvider);
+    return new Contract(overrideAddress ?? contract.address, contract.abi, signerOrProvider ?? defaultProvider) as TResult;
   }
 
   @cache<ContractService>(function () {

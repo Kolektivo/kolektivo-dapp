@@ -1,7 +1,7 @@
 import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IContractService, fromWei } from 'services';
+import { IContractService, INumberService, fromWei } from 'services';
 import { IContractStore } from './contract-store';
 import { Reserve } from 'models/generated/monetary/reserve/Reserve';
 import { Transaction } from 'models/transaction';
@@ -27,7 +27,11 @@ export class ReserveStore {
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IReserveStore, ReserveStore));
   }
-  constructor(@IContractStore private readonly contractStore: IContractStore, @IContractService private readonly contractService: IContractService) {}
+  constructor(
+    @IContractStore private readonly contractStore: IContractStore,
+    @IContractService private readonly contractService: IContractService,
+    @INumberService private readonly numberService: INumberService,
+  ) {}
 
   public get reserveValue(): number {
     if (this.reserveAssets?.length === 0) return 0;
@@ -71,7 +75,7 @@ export class ReserveStore {
     if (!contract) return;
     const kCurAddress = await contract.token(); // get kCur token address
     if (!kCurAddress) return;
-    const reserveAddress = this.contractService.getContract('Monetary', 'Reserve').address;
+    const reserveAddress: string = contract.address;
     if (!reserveAddress) return;
     const oracleAddress = await contract.tokenOracle(); //get kCur oracle address
     if (!oracleAddress) return;
@@ -79,20 +83,24 @@ export class ReserveStore {
     this.kCurPrice = asset?.token.price;
     this.kCurSupply = asset?.totalSupply;
 
+    if (!this.kCurSupply) return; //can't get the distribution percentages without a total supply value so return if it's not there
     //TODO: Get the balances of kCur inside of the reserve, mento and the primary pool and set those values here
-    this.kCurReserveDistribution = 0.2;
+    const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token'); // get the kCur contract
+    const kCurInReserve = await kCurContract.balanceOf(reserveAddress); //get the balace of kCur in the reserve
+    this.kCurReserveDistribution =
+      this.numberService.fromString(fromWei(kCurInReserve, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
     this.kCurMentoDistribution = 0.3;
     this.kCurPrimaryPoolDistribution = 0.4;
   }
 
   public get marketCap(): number {
     if (!this.kCurPrice || !this.kCurSupply || this.kCurSupply.eq(0)) return 0;
-    return Number(fromWei(this.kCurSupply, 18)) * this.kCurPrice;
+    return this.numberService.fromString(fromWei(this.kCurSupply, 18)) * this.kCurPrice;
   }
 
   private getReserveContract(): Reserve | null {
     if (this.reserveContract) return this.reserveContract;
-    this.reserveContract = this.contractService.getContract('Monetary', 'Reserve') as Reserve;
+    this.reserveContract = this.contractService.getContract('Monetary', 'Reserve');
     return this.reserveContract;
   }
 }
