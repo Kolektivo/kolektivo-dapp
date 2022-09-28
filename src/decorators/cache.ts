@@ -12,14 +12,15 @@ export function cache<T extends Record<string, any>>(options: (this: T) => Cache
     const cacheKeyPrefix = `${target.constructor.name}_${methodName}`;
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function (...args: unknown[]): Promise<unknown> {
-      const { storage } = options.call(target);
+    descriptor.value = function (...args: unknown[]): unknown {
+      const { storage } = options.call(this as T);
 
       const key = `${cacheKeyPrefix}_${JSON.stringify(args)}`;
-      const result = storage.getItem(key);
+      let result = storage.getItem(key);
 
       if (result) return result;
-      storage.setItem(key, await originalMethod?.apply(this, args));
+      result = originalMethod?.apply(this, args);
+      storage.setItem(key, result);
 
       return result;
     };
