@@ -1,10 +1,9 @@
 import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
-import { ContractNames } from '../services/contracts-service';
 import { DI, IContainer, Registration } from 'aurelia';
+import { IContractService, IServices, fromWei } from 'services';
 import { IContractStore } from './contract-store';
-import { IServices, fromWei } from 'services';
-import { PopulatedTransaction } from 'ethers';
+import { MonetaryContracts } from 'services/contract/types';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/monetary/treasury/Treasury';
 import { callOnce } from './../decorators/call-once';
@@ -21,7 +20,11 @@ export class TreasuryStore {
   public treasuryAssets?: (Asset | undefined)[] = [];
   public transactions: Transaction[] = [];
   public valueOverTime?: { date: Date; value: number }[] = [];
-  constructor(@IServices private readonly services: IServices, @IContractStore private readonly contractStore: IContractStore) {}
+  constructor(
+    @IServices private readonly services: IServices,
+    @IContractStore private readonly contractStore: IContractStore,
+    @IContractService private readonly contractService: IContractService,
+  ) {}
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(ITreasuryStore, TreasuryStore));
@@ -35,8 +38,8 @@ export class TreasuryStore {
     const contract = this.getTreasuryContract();
     this.totalValuation = await contract?.totalValuation();
     this.totalSupply = await contract?.totalSupply();
-    this.treasuryDistribution = (await this.getDistributionPercentage(ContractNames.TREASURY)).toNumber() / 100;
-    this.reservesDistribution = (await this.getDistributionPercentage(ContractNames.RESERVE)).toNumber() / 100;
+    this.treasuryDistribution = (await this.getDistributionPercentage('Treasury')).toNumber() / 100;
+    this.reservesDistribution = (await this.getDistributionPercentage('Reserve')).toNumber() / 100;
   }
 
   @callOnce()
@@ -44,7 +47,7 @@ export class TreasuryStore {
     const contract = this.getTreasuryContract();
     void this.setValueOverTime();
     if (!contract) return;
-    const treasuryAddress = this.services.contractsService.getContractAddress(ContractNames.TREASURY) ?? '';
+    const treasuryAddress = contract.address;
     if (!treasuryAddress) return;
 
     //get all token addresses from the contract
@@ -74,18 +77,9 @@ export class TreasuryStore {
     this.valueOverTime = await Promise.all(
       rebaseEvents.map(async (x) => ({
         date: new Date((await x.getBlock()).timestamp * 1000),
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        value: this.services.numberService.fromString(fromWei(x.args.newScalar, 18)) ?? 0,
+        value: this.services.numberService.fromString(fromWei(x.args.newScalar, 18)),
       })),
     );
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async getDynamicMethodData(functionName: string, ...params: any[]): Promise<PopulatedTransaction | unknown> {
-    const contract = this.getTreasuryContract();
-    if (!contract || !functionName) return;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-    return (await (contract.populateTransaction as any)[functionName](...params)) as PopulatedTransaction;
   }
 
   public get circulatingDistribution(): number {
@@ -98,8 +92,8 @@ export class TreasuryStore {
     return this.totalSupply.div(this.totalValuation);
   }
 
-  private async getDistributionPercentage(contractName: string): Promise<BigNumber> {
-    const address = this.services.contractsService.getContractAddress(contractName);
+  private async getDistributionPercentage(contractName: MonetaryContracts): Promise<BigNumber> {
+    const address = this.contractService.getContract('Monetary', contractName).address;
     if (!address || !this.totalSupply) return BigNumber.from(0);
     const tokens = await this.getTreasuryContract()?.balanceOf(address);
     return tokens?.div(this.totalSupply) ?? BigNumber.from(0);
@@ -107,7 +101,7 @@ export class TreasuryStore {
 
   private getTreasuryContract(): Treasury | null {
     if (this.treasuryContract) return this.treasuryContract;
-    this.treasuryContract = this.services.contractsService.getContractFor<Treasury>(ContractNames.TREASURY);
+    this.treasuryContract = this.contractService.getContract('Monetary', 'Treasury');
     return this.treasuryContract;
   }
 }

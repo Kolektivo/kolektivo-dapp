@@ -1,10 +1,11 @@
 import { Asset, AssetType } from 'models/asset';
 import { BigNumber } from 'ethers';
-import { ContractNames, INumberService, IServices, ITokenInfo, fromWei, toWei } from '../services';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Erc20, TransferEvent } from 'models/generated/monetary/erc20/Erc20';
 import { Erc721 } from 'models/generated/monetary/erc721';
-import { Oracle } from 'models/generated/monetary/oracle';
+import { IContractService, tokenInfos } from 'services/contract';
+import { INumberService, ITokenInfo, fromWei, toWei } from '../services';
+import { Oracle } from './../models/generated/monetary/oracle/Oracle';
 import { Reserve } from 'models/generated/monetary/reserve';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/monetary/treasury';
@@ -16,7 +17,7 @@ export class ContractStore {
     container.register(Registration.singleton(IContractStore, ContractStore));
   }
   constructor(
-    @IServices private readonly services: IServices,
+    @IContractService private readonly contractService: IContractService,
     @ILogger private readonly logger: ILogger,
     @INumberService private readonly numberService: INumberService,
   ) {}
@@ -33,12 +34,13 @@ export class ContractStore {
     if (assetId) {
       assetIdNumber = Number(assetId);
     }
-    const tokenInfo = await this.services.tokenService.getTokenInfoFromAddress(assetAddress, assetIdNumber ?? undefined); //get the token info from the asset address
+    const tokenInfo = tokenInfos.find((y) => y.address === assetAddress && y.id == assetIdNumber);
     if (!tokenInfo) {
       this.logger.error(`No token info was found for ${assetAddress}`);
       return;
     }
-    const tokenContract = this.services.tokenService.getTokenContract(assetAddress, tokenInfo.id); //get the ERC20 contract from the asset's address
+
+    const tokenContract = this.contractService.getTokenContract(assetAddress, tokenInfo.id);
 
     if (!oracleAddress) {
       if (tokenInfo.id) {
@@ -50,11 +52,11 @@ export class ContractStore {
     }
 
     if (!oracleAddress || BigNumber.from(oracleAddress).isZero()) return;
-    const oracleContract = this.services.contractsService.getContractAtAddress<Oracle>(ContractNames.ORACLE, oracleAddress); //get the oracle contract for the given oracle address
+    const oracleContract: Oracle = this.contractService.getContract('Monetary', 'Oracle', oracleAddress); //get the oracle contract for the given oracle address
     const data = await oracleContract.getData(); // get the data from the oracle contract
 
     if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)
-    tokenInfo.price = this.services.numberService.fromString(fromWei(data[0], 18)) ?? 0; //price comes back as undefined from getTokenInfoFromAddress so set it
+    tokenInfo.price = this.numberService.fromString(fromWei(data[0], 18)); //price comes back as undefined from getTokenInfoFromAddress so set it
 
     let tokenQuantity = toWei(1, 18); //all NFTs have a quantity of 1, so set the quantity to 1 initially
     let totalSupply: BigNumber | undefined;
@@ -81,7 +83,7 @@ export class ContractStore {
       type: assetType,
       totalSupply: totalSupply,
     };
-    asset.total = tokenInfo.id ? tokenInfo.price : (this.services.numberService.fromString(fromWei(asset.quantity, 18)) ?? 0) * tokenInfo.price;
+    asset.total = tokenInfo.id ? tokenInfo.price : this.numberService.fromString(fromWei(asset.quantity, 18)) * tokenInfo.price;
     return asset;
   }
 

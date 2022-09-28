@@ -1,6 +1,6 @@
 import 'utils-testing/setup-testing';
 import { BlockChainStore, IStore, ITreasuryStore } from 'stores';
-import { BrowserStorageService, IContractsService, IEthereumService, ITokenService, NumberService } from 'services';
+import { BrowserStorageService, IContractService, IEthereumService, NumberService } from 'services';
 import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from 'resources';
 import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
@@ -8,7 +8,7 @@ import { IDesignSystemConfiguration } from 'design-system';
 import { Registration } from 'aurelia';
 import { TokenInfoCard } from './token-info-card';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('token-info-card', () => {
@@ -58,7 +58,7 @@ describe('token-info-card', () => {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
     const createMockTreasuryStoreRegistration = () => Registration.instance(ITreasuryStore, {});
     const createMockEthereumService = () => Registration.instance(IEthereumService, mock<IEthereumService>({}));
-    const createMockContractsService = () => Registration.instance(IContractsService, mock<IContractsService>({}));
+    const createMockContractService = () => Registration.instance(IContractService, mock<IContractService>({}));
 
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
@@ -69,8 +69,7 @@ describe('token-info-card', () => {
     return [
       TokenInfoCard,
       CurrencyValueConverter,
-      Registration.instance(ITokenService, vi.fn()),
-      createMockContractsService(),
+      createMockContractService(),
       createMockEthereumService(),
       BrowserStorageService,
       BlockChainStore,

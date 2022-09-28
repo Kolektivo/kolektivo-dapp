@@ -1,15 +1,14 @@
 import { Bacroles } from './../models/generated/governance/bacroles/Bacroles';
 import { BadgeType } from 'models/badge-type';
-import { Badger } from './../models/generated/governance/badger/Badger';
-import { BigNumber } from '@ethersproject/bignumber';
-import { ContractNames } from 'services';
-import { ContractTransaction, PopulatedTransaction } from 'ethers';
+import { Badger } from 'models/generated/governance/badger';
+import { BigNumber, ContractTransaction, PopulatedTransaction } from 'ethers';
 import { DI, IContainer, Registration } from 'aurelia';
+import { IContractService } from 'services/contract';
 import { IKolektivoStore, allBadges } from './kolektivo-store';
 import { IObserverService } from 'services/observer-service';
 import { IServices } from 'services/services';
 import { Proposal, ProposalStatus } from './../models/proposal';
-import { Secretdelay } from './../models/generated/governance/secretdelay/Secretdelay';
+import { Secretdelay } from 'models/generated/governance/secretdelay';
 import { callOnce } from 'decorators/call-once';
 import { delay } from '../utils';
 
@@ -18,9 +17,9 @@ export const IGovernanceStore = DI.createInterface<IGovernanceStore>('IGovernanc
 
 export class GovernanceStore {
   public proposals: Proposal[] = [];
-  private badgerContract?: Badger;
   constructor(
     @IServices private readonly services: IServices,
+    @IContractService private readonly contractService: IContractService,
     @IObserverService private readonly observerService: IObserverService,
     @IKolektivoStore private readonly kolektivoStore: IKolektivoStore,
   ) {
@@ -88,10 +87,10 @@ export class GovernanceStore {
   public async submitDynamicMethod(
     isPublicProposal: boolean,
     data: PopulatedTransaction,
-    ipfsHash: string,
+    ipfsHash?: string,
   ): Promise<ContractTransaction | undefined> {
     if (!data.to || !data.data) return;
-    const secretDelayContract = this.services.contractsService.getContractFor<Secretdelay>(ContractNames.MONETARYDELAY);
+    const secretDelayContract: Secretdelay = this.contractService.getContract('Governance', 'monetaryDelay');
 
     let dataParamBAC: PopulatedTransaction | undefined = undefined;
     if (isPublicProposal) {
@@ -102,8 +101,7 @@ export class GovernanceStore {
       const hash = await secretDelayContract.getSecretTransactionHash(secretDelayContract.address, 0, data.data, BigNumber.from(0), salt);
       dataParamBAC = await secretDelayContract.populateTransaction.enqueueSecretTx(hash, ipfsHash);
     }
-
-    const bacContract = this.services.contractsService.getContractFor<Bacroles>(ContractNames.BACMD);
+    const bacContract: Bacroles = this.contractService.getContract('Governance', 'bacMD');
     if (!dataParamBAC.to || !dataParamBAC.value || !dataParamBAC.data) return;
     const result = await bacContract.execTransactionFromModule(
       dataParamBAC.to,
@@ -117,15 +115,11 @@ export class GovernanceStore {
 
   public async loadBadges(): Promise<void> {
     const contract = this.getBadgerContract();
-    if (!contract) return;
     if (!this.services.ethereumService.defaultAccountAddress) return;
-    const badgeNumbers: number[] = [];
-    for (const badgeType in BadgeType) {
-      const badgeNumber = Number(badgeType);
-      if (badgeNumber) {
-        badgeNumbers.push(badgeNumber);
-      }
-    }
+    const badgeNumbers = Object.values(BadgeType)
+      .filter((y) => typeof y === 'number')
+      .map((y) => y as number);
+
     const badges = (
       await Promise.all(
         badgeNumbers.map(async (x) => {
@@ -138,9 +132,7 @@ export class GovernanceStore {
     this.kolektivoStore.badges = allBadges.filter((x) => badges.some((y) => y === x.type));
   }
 
-  private getBadgerContract(): Badger | null {
-    if (this.badgerContract) return this.badgerContract;
-    this.badgerContract = this.services.contractsService.getContractFor<Badger>(ContractNames.MONETARYBADGER);
-    return this.badgerContract;
+  private getBadgerContract(): Badger {
+    return this.contractService.getContract('Governance', 'monetaryBadger');
   }
 }

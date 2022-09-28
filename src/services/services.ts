@@ -1,7 +1,6 @@
 import { BrowserStorageService, IBrowserStorageService } from './browser-storage-service';
 import { CacheService, ICacheService } from './cache-service';
-import { ContractsDeploymentService, IContractsDeploymentService } from './contracts-deployment-service';
-import { ContractsService, IContractsService } from './contracts-service';
+import { ContractService, IContractService } from './contract/contract-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { EncryptionService, IEncryptionService } from './encryption-service';
 import { EthereumService, IEthereumService, Networks } from './ethereum-service';
@@ -11,8 +10,6 @@ import { IKolektivoIpfsClient, KolektivoIpfsClient } from './kolektivo-ipfs-serv
 import { INumberService, NumberService } from './number-service';
 import { IObserverService, ObserverService } from './observer-service';
 import { ITimingService, TimingService } from './timing-service';
-import { ITokenListService, TokenListService } from './token-list-service';
-import { ITokenService, TokenService } from './token-service';
 import { ethereumNetwork, isDev } from './../environment-variables';
 
 export type IServices = Services;
@@ -26,14 +23,11 @@ export class Services {
     @IKolektivoIpfsClient public readonly kolektivoService: IKolektivoIpfsClient,
     @IEthereumService public readonly ethereumService: IEthereumService,
     @IBrowserStorageService public readonly browserStorageService: IBrowserStorageService,
-    @IContractsService public readonly contractsService: IContractsService,
-    @IContractsDeploymentService public readonly contractsDeploymentService: IContractsDeploymentService,
-    @ITokenService public readonly tokenService: ITokenService,
-    @ITokenListService public readonly tokenListService: ITokenListService,
     @ITimingService public readonly timingService: ITimingService,
     @ICacheService public readonly cacheService: ICacheService,
     @IObserverService public readonly observerService: IObserverService,
     @IEncryptionService public readonly encryptionService: IEncryptionService,
+    @IContractService public readonly contractService: IContractService,
   ) {}
 
   public initialize(): Promise<unknown> {
@@ -41,12 +35,7 @@ export class Services {
     this.timingService.initialize(targetNetwork);
     this.ipfsService.initialize(this.kolektivoService);
 
-    return this.ethereumService.initialize(targetNetwork).then(() =>
-      this.contractsDeploymentService
-        .initialize(targetNetwork)
-        .then(() => this.contractsService.initialize())
-        .then(() => this.tokenService.initialize()),
-    );
+    return this.ethereumService.initialize(targetNetwork);
   }
 
   public static register(container: IContainer): void {
@@ -62,9 +51,6 @@ export class Services {
       .register(EthereumService)
       .register(EncryptionService)
       .register(BrowserStorageService)
-      .register(ContractsService)
-      .register(TokenListService)
-      .register(TokenService)
-      .register(ContractsDeploymentService);
+      .register(ContractService);
   }
 }

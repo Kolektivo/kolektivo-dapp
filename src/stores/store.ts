@@ -17,8 +17,8 @@ export class Store {
     @ITreasuryStore public readonly treasuryStore: ITreasuryStore,
     @IReserveStore public readonly reserveStore: IReserveStore,
     @IContractStore public readonly contractStore: IContractStore,
-    @IServices private readonly services: IServices,
     @IGovernanceStore private readonly governanceStore: IGovernanceStore,
+    @IServices private readonly services: IServices,
   ) {}
 
   public static register(container: IContainer): void {

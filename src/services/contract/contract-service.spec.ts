@@ -1,20 +1,17 @@
 import { BigNumber } from '@ethersproject/bignumber';
-import { ContractNames, ContractsService, IContractsService } from './contracts-service';
+import { CacheService, ContractService, IContractService, toWei } from 'services';
 import { DI } from 'aurelia';
-import { Erc20 } from 'models/generated/monetary/erc20';
-import { createContractsDeploymentService, createEthereumService } from 'utils-testing/utils';
+import { defaultProvider } from './token-info';
 import { describe, expect, it } from 'vitest';
 import { ethers } from 'ethers';
-import { toWei } from './ethereum-service';
 
 describe('contracts-service.ts', () => {
   it('transfers a token', async () => {
     const container = DI.createContainer();
-    const ethereumService = await createEthereumService(container);
-    await createContractsDeploymentService(container);
-    ContractsService.register(container);
-    const contractsService = container.get(IContractsService);
-    expect(contractsService).toBeTypeOf('object');
+    ContractService.register(container);
+    CacheService.register(container);
+    const contractService = container.get(IContractService);
+    expect(contractService).toBeTypeOf('object');
 
     const testAccount1 = '0xD4717ee259f8736af189F968Dadc6939c1568200';
     const testAccount2 = '0x27dC953040B725A543FBc2556641F62a213d55D4';
@@ -24,9 +21,7 @@ describe('contracts-service.ts', () => {
 
     const testTokenAddress = '0x44d7697a76cb17d858196797432f745e4bc5fe39';
     const transferAmount = BigNumber.from(toWei('.001', 18));
-
-    const wallet = new ethers.Wallet(testAccountKey1, ethereumService.readOnlyProvider);
-    const token = contractsService.getContractAtAddress<Erc20>(ContractNames.ERC20, testTokenAddress, wallet);
+    const token = contractService.getTokenContract(testTokenAddress, undefined, new ethers.Wallet(testAccountKey1, defaultProvider));
 
     const startingBalanceAccount1 = await token.balanceOf(testAccount1);
     const startingBalanceAccount2 = await token.balanceOf(testAccount2);
