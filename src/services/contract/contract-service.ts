@@ -40,7 +40,7 @@ export class ContractService {
       const key = abi as keyof Shared;
       abi = contractData.shared[key] as ContractInterface;
     }
-    return new Contract(overrideAddress ?? contract.address, contract.abi, signerOrProvider ?? defaultProvider) as TResult;
+    return new Contract(overrideAddress ?? contract.address, abi, signerOrProvider ?? defaultProvider) as TResult;
   }
 
   private async callContractMethod<
