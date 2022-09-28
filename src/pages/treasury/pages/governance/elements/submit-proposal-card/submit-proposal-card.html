@@ -10,6 +10,10 @@
     <k-text color="var(--error)" if.bind="error">${error}</k-text>
   </k-stack>
 
+  <k-stack>
+    <k-button click.trigger="sendTransaction">Send Transaction</k-button>
+  </k-stack>
+
   <card-nav active.two-way="active" routes.bind="routes"></card-nav>
   <template switch.bind="active">
     <bonds case="bonds">bond</bonds>

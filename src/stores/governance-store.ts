@@ -1,12 +1,14 @@
+import { Bacroles } from './../models/generated/governance/bacroles/Bacroles';
 import { BadgeType } from 'models/badge-type';
 import { Badger } from 'models/generated/governance/badger';
-import { BigNumber } from 'ethers';
+import { BigNumber, ContractTransaction, PopulatedTransaction } from 'ethers';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IContractService } from 'services/contract';
 import { IKolektivoStore, allBadges } from './kolektivo-store';
 import { IObserverService } from 'services/observer-service';
 import { IServices } from 'services/services';
 import { Proposal, ProposalStatus } from './../models/proposal';
+import { Secretdelay } from 'models/generated/governance/secretdelay';
 import { callOnce } from 'decorators/call-once';
 import { delay } from '../utils';
 
@@ -83,17 +85,42 @@ export class GovernanceStore {
     ] as Proposal[];
   }
 
+  public async submitDynamicMethod(
+    isPublicProposal: boolean,
+    data: PopulatedTransaction,
+    ipfsHash?: string,
+  ): Promise<ContractTransaction | undefined> {
+    if (!data.to || !data.data) return;
+    const secretDelayContract: Secretdelay = this.contractService.getContract('Governance', 'monetaryDelay');
+
+    let dataParamBAC: PopulatedTransaction | undefined = undefined;
+    if (isPublicProposal) {
+      dataParamBAC = await secretDelayContract.populateTransaction.execTransactionFromModule(data.to, data.value ?? 0, data.data, BigNumber.from(0));
+    } else {
+      if (!ipfsHash) return;
+      const salt = await secretDelayContract.salt();
+      const hash = await secretDelayContract.getSecretTransactionHash(secretDelayContract.address, 0, data.data, BigNumber.from(0), salt);
+      dataParamBAC = await secretDelayContract.populateTransaction.enqueueSecretTx(hash, ipfsHash);
+    }
+    const bacContract: Bacroles = this.contractService.getContract('Governance', 'bacMD');
+    if (!dataParamBAC.to || !dataParamBAC.value || !dataParamBAC.data) return;
+    const result = await bacContract.execTransactionFromModule(
+      dataParamBAC.to,
+      dataParamBAC.value,
+      dataParamBAC.data,
+      BigNumber.from(0),
+      BadgeType.ECOLOGY_DELEGATE,
+    );
+    return result;
+  }
+
   public async loadBadges(): Promise<void> {
     const contract = this.getBadgerContract();
-    if (!contract) return;
-    if (!this.services.ethereumService.defaultAccountAddress) return;
-    const badgeNumbers: number[] = [];
-    for (const badgeType in BadgeType) {
-      const badgeNumber = Number(badgeType);
-      if (badgeNumber) {
-        badgeNumbers.push(badgeNumber);
-      }
-    }
+    if (!contract || !this.services.ethereumService.defaultAccountAddress) return;
+    const badgeNumbers = Object.values(BadgeType)
+      .filter((y) => typeof y === 'number')
+      .map((y) => y as number);
+
     const badges = (
       await Promise.all(
         badgeNumbers.map(async (x) => {

@@ -1,7 +1,7 @@
 import { Contract } from '@ethersproject/contracts';
 import { Provider } from '@ethersproject/providers';
 
-import { BaseContract, ContractInterface, Signer } from 'ethers';
+import { BaseContract, ContractFunction, ContractInterface, Signer } from 'ethers';
 
 import { Shared } from './types';
 
@@ -41,6 +41,34 @@ export class ContractService {
       abi = contractData.shared[key] as ContractInterface;
     }
     return new Contract(overrideAddress ?? contract.address, contract.abi, signerOrProvider ?? defaultProvider) as TResult;
+  }
+
+  public async callContractMethod<
+    T extends BaseContract,
+    TFunction extends {
+      [P in Extract<keyof T[TKey], string>]: keyof T[TKey][P] extends ContractFunction ? P : never;
+    }[Extract<keyof T[TKey], string>],
+    TKey extends 'populateTransaction' | 'functions',
+  >(contract: T, functionName: TKey, subFunctionName: TFunction, ...params: Parameters<T[TKey][TFunction]>) {
+    return (await contract[functionName][subFunctionName].call(params)) as ReturnType<T[TKey][TFunction]>;
+  }
+
+  public callPopulateTransaction<
+    T extends BaseContract,
+    TFunction extends {
+      [P in Extract<keyof T['populateTransaction'], string>]: keyof T['populateTransaction'][P] extends ContractFunction ? P : never;
+    }[Extract<keyof T['populateTransaction'], string>],
+  >(contract: T, subFunctionName: TFunction, ...params: Parameters<T['populateTransaction'][TFunction]>) {
+    return this.callContractMethod(contract, 'populateTransaction', subFunctionName, ...params);
+  }
+
+  public callContractFunction<
+    T extends BaseContract,
+    TFunction extends {
+      [P in Extract<keyof T['functions'], string>]: keyof T['functions'][P] extends ContractFunction ? P : never;
+    }[Extract<keyof T['functions'], string>],
+  >(contract: T, subFunctionName: TFunction, ...params: Parameters<T['functions'][TFunction]>) {
+    return this.callContractMethod(contract, 'functions', subFunctionName, ...params);
   }
 
   @cache<ContractService>(function () {
