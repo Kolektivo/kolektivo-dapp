@@ -40,9 +40,7 @@ export class ContractStore {
       return;
     }
 
-    const tokenContract = tokenInfo.id
-      ? this.contractService.getTokenContract(assetAddress, tokenInfo.id)
-      : this.contractService.getTokenContract(assetAddress); //get the ERC20 contract from the asset's address
+    const tokenContract = this.contractService.getTokenContract(assetAddress, tokenInfo.id);
 
     if (!oracleAddress) {
       if (tokenInfo.id) {

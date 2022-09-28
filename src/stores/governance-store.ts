@@ -17,7 +17,6 @@ export const IGovernanceStore = DI.createInterface<IGovernanceStore>('IGovernanc
 
 export class GovernanceStore {
   public proposals: Proposal[] = [];
-  private badgerContract?: Badger;
   constructor(
     @IServices private readonly services: IServices,
     @IContractService private readonly contractService: IContractService,
@@ -116,7 +115,7 @@ export class GovernanceStore {
 
   public async loadBadges(): Promise<void> {
     const contract = this.getBadgerContract();
-    if (!contract || !this.services.ethereumService.defaultAccountAddress) return;
+    if (!this.services.ethereumService.defaultAccountAddress) return;
     const badgeNumbers = Object.values(BadgeType)
       .filter((y) => typeof y === 'number')
       .map((y) => y as number);
@@ -133,9 +132,7 @@ export class GovernanceStore {
     this.kolektivoStore.badges = allBadges.filter((x) => badges.some((y) => y === x.type));
   }
 
-  private getBadgerContract(): Badger | null {
-    if (this.badgerContract) return this.badgerContract;
-    this.badgerContract = this.contractService.getContract('Governance', 'monetaryBadger');
-    return this.badgerContract;
+  private getBadgerContract(): Badger {
+    return this.contractService.getContract('Governance', 'monetaryBadger');
   }
 }

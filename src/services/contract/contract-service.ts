@@ -43,7 +43,7 @@ export class ContractService {
     return new Contract(overrideAddress ?? contract.address, contract.abi, signerOrProvider ?? defaultProvider) as TResult;
   }
 
-  public async callContractMethod<
+  private async callContractMethod<
     T extends BaseContract,
     TFunction extends {
       [P in Extract<keyof T[TKey], string>]: keyof T[TKey][P] extends ContractFunction ? P : never;
@@ -71,16 +71,23 @@ export class ContractService {
     return this.callContractMethod(contract, 'functions', subFunctionName, ...params);
   }
 
+  /**
+   * Caches the contracts based of the paramaters being passed
+   * @param tokenAddress
+   * @param id
+   * @param signerOrProvider
+   * @returns
+   */
   @cache<ContractService>(function () {
     return { storage: this.cacheService };
   })
-  public getTokenContract<T extends number | undefined = undefined>(
+  public getTokenContract<T extends number>(
     tokenAddress: string,
     id?: T,
     signerOrProvider?: Provider | Signer | undefined,
-  ): T extends number ? Erc721 : Erc20 {
-    return new Contract(tokenAddress, id ? monetaryShared.ERC721 : monetaryShared.ERC20, signerOrProvider ?? defaultProvider) as T extends number
-      ? Erc721
-      : Erc20;
+  ): T extends undefined ? Erc20 : Erc721 | Erc20 {
+    return new Contract(tokenAddress, id ? monetaryShared.ERC721 : monetaryShared.ERC20, signerOrProvider ?? defaultProvider) as T extends undefined
+      ? Erc20
+      : Erc721 | Erc20;
   }
 }
