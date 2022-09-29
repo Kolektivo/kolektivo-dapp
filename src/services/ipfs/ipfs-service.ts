@@ -1,9 +1,9 @@
-import { AddResult } from 'ipfs-core-types/src/root';
 import { CID } from 'ipfs-http-client';
-import { Constructable, DI, IContainer, Registration } from 'aurelia';
-import { GetResult } from 'ipfs-core-types/src/dag';
+import { DI, IContainer, Registration } from 'aurelia';
 import { IIpfsApi } from './ipfs-interface';
 import { IPFSPath } from 'ipfs-core-types/src/utils';
+import { concat } from 'uint8arrays/concat';
+import { toString } from 'uint8arrays/to-string';
 
 export type IIpfsService = IpfsService;
 export const IIpfsService = DI.createInterface<IIpfsService>();
@@ -15,23 +15,40 @@ export class IpfsService {
 
   constructor(@IIpfsApi private readonly client: IIpfsApi) {}
 
-  public save<T extends string | Constructable>(value: T, pin = true): T extends string ? Promise<AddResult> : Promise<CID> {
-    return (
-      typeof value === 'string'
-        ? this.client.add(
+  public async all(source: AsyncIterable<Uint8Array>) {
+    const arr = [];
+
+    for await (const entry of source) {
+      arr.push(entry);
+    }
+
+    return arr;
+  }
+
+  public save<T extends string | Record<string, unknown>>(value: T, pin = true): Promise<CID> {
+    return typeof value === 'string'
+      ? this.client
+          .add(
             { content: value },
             {
               pin,
             },
           )
-        : this.client.dag.put(value, {
-            pin,
-          })
-    ) as T extends string ? Promise<AddResult> : Promise<CID>;
+          .then((y) => y.cid)
+      : this.client.dag.put(value, {
+          pin,
+        });
   }
 
-  public async get(cid: IPFSPath): Promise<GetResult | undefined> {
+  public async get(cid: IPFSPath, dag = false, path?: string): Promise<string | undefined> {
     const parsedCid = CID.asCID(cid);
-    return parsedCid ? this.client.dag.get(parsedCid) : undefined;
+    if (!parsedCid) return;
+    if (!dag) {
+      const data = this.client.cat(cid);
+      const allBits = concat(await this.all(data));
+      return toString(allBits);
+    }
+
+    return JSON.stringify((await this.client.dag.get(parsedCid, { path: path })).value);
   }
 }
