@@ -19,6 +19,7 @@ export default defineConfig({
     commonjsOptions: {
       transformMixedEsModules: true,
     },
+    target: 'es2022',
   },
   plugins: [
     au2({ include: 'src/**/*.ts', pre: true }),
@@ -42,6 +43,7 @@ export default defineConfig({
   envPrefix: 'KOL',
   resolve: {
     alias: {
+      micromodal: 'util',
       process: 'process/browser',
       stream: 'stream-browserify',
       zlib: 'browserify-zlib',
@@ -53,6 +55,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     esbuildOptions: {
+      target: 'es2022',
       // Node.js global to browser globalThis
       define: {
         global: 'globalThis',

@@ -46,7 +46,7 @@ export class SubmitProposalCard implements ICustomElementViewModel {
       if (!isPublic) {
         const encryptedData = await this.encryptionService.encrypt(JSON.stringify(data)); //TODO: Figure out what we're supposed to be encrypting here
         if (!encryptedData) return;
-        ipfsHash = await this.ipfsService.saveString(encryptedData.encryptedString);
+        ipfsHash = (await this.ipfsService.save(encryptedData.encryptedString)).cid.toString();
       }
       const result = await this.governanceStore.submitDynamicMethod(isPublic, data, ipfsHash);
     } catch (ex) {

@@ -5,8 +5,7 @@ import { DI, IContainer, Registration } from 'aurelia';
 import { EncryptionService, IEncryptionService } from './encryption-service';
 import { EthereumService, IEthereumService, Networks } from './ethereum-service';
 import { HttpService, IHttpService } from './http-service';
-import { IIpfsService, IpfsService } from './ipfs-service';
-import { IKolektivoIpfsClient, KolektivoIpfsClient } from './kolektivo-ipfs-service';
+import { IIpfsService, IpfsService } from './ipfs/ipfs-service';
 import { INumberService, NumberService } from './number-service';
 import { IObserverService, ObserverService } from './observer-service';
 import { ITimingService, TimingService } from './timing-service';
@@ -19,8 +18,6 @@ export class Services {
   constructor(
     @IHttpService public readonly httpService: IHttpService,
     @INumberService public readonly numberService: INumberService,
-    @IIpfsService public readonly ipfsService: IIpfsService,
-    @IKolektivoIpfsClient public readonly kolektivoService: IKolektivoIpfsClient,
     @IEthereumService public readonly ethereumService: IEthereumService,
     @IBrowserStorageService public readonly browserStorageService: IBrowserStorageService,
     @ITimingService public readonly timingService: ITimingService,
@@ -28,12 +25,12 @@ export class Services {
     @IObserverService public readonly observerService: IObserverService,
     @IEncryptionService public readonly encryptionService: IEncryptionService,
     @IContractService public readonly contractService: IContractService,
+    @IIpfsService public readonly ipfsService: IIpfsService,
   ) {}
 
   public initialize(): Promise<unknown> {
     const targetNetwork = ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Celo);
     this.timingService.initialize(targetNetwork);
-    this.ipfsService.initialize(this.kolektivoService);
 
     return this.ethereumService.initialize(targetNetwork);
   }
@@ -46,11 +43,10 @@ export class Services {
       .register(CacheService)
       .register(HttpService)
       .register(NumberService)
-      .register(IpfsService)
-      .register(KolektivoIpfsClient)
       .register(EthereumService)
       .register(EncryptionService)
       .register(BrowserStorageService)
+      .register(IpfsService)
       .register(ContractService);
   }
 }

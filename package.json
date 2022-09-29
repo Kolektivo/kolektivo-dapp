@@ -67,6 +67,8 @@
     "ethers": "^5.7.1",
     "events": "^3.3.0",
     "i18next-intervalplural-postprocessor": "^3.0.0",
+    "ipfs-core": "^0.16.1",
+    "ipfs-http-client": "^58.0.1",
     "lit-js-sdk": "^1.1.182",
     "process": "^0.11.10",
     "stream-browserify": "^3.0.0",
