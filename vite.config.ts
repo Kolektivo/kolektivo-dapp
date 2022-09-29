@@ -43,8 +43,6 @@ export default defineConfig({
   envPrefix: 'KOL',
   resolve: {
     alias: {
-      micromodal: 'util',
-      process: 'process/browser',
       stream: 'stream-browserify',
       zlib: 'browserify-zlib',
       util: 'util',
@@ -64,6 +62,7 @@ export default defineConfig({
       plugins: [
         NodeGlobalsPolyfillPlugin({
           buffer: true,
+          process: false,
         }),
       ],
     },
