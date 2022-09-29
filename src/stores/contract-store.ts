@@ -1,8 +1,8 @@
 import { Asset, AssetType } from 'models/asset';
 import { BigNumber } from 'ethers';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
-import { Erc20, TransferEvent } from 'models/generated/monetary/erc20/Erc20';
-import { Erc721 } from 'models/generated/monetary/erc721';
+import { Erc20, TransferEvent as Erc20TransferEvent } from 'models/generated/monetary/erc20/Erc20';
+import { Erc721, TransferEvent as Erc721TransferEvent } from 'models/generated/monetary/erc721/Erc721';
 import { IContractService, tokenInfos } from 'services/contract';
 import { INumberService, ITokenInfo, fromWei, toWei } from '../services';
 import { Oracle } from './../models/generated/monetary/oracle/Oracle';
@@ -87,9 +87,9 @@ export class ContractStore {
     return asset;
   }
 
-  private async populateTransactionsForAsset(
+  private async populateTransactionsForAsset<T extends Erc20 | Erc721>(
     transactions: Transaction[],
-    tokenContract: Erc20 | Erc721,
+    tokenContract: T,
     treasuryAddress: string,
     tokenInfo: ITokenInfo,
   ): Promise<void> {
@@ -103,14 +103,18 @@ export class ContractStore {
     transactions.push(...mappedWithdrawls);
   }
 
-  private async mapTransactions(transactions: TransferEvent[], type: 'deposit' | 'withdrawl', tokenInfo: ITokenInfo): Promise<Transaction[]> {
+  private async mapTransactions<T extends Erc20TransferEvent | Erc721TransferEvent>(
+    transactions: T[],
+    type: 'deposit' | 'withdrawl',
+    tokenInfo: ITokenInfo,
+  ): Promise<Transaction[]> {
     return await Promise.all(
       transactions.map(async (transaction): Promise<Transaction> => {
         const block = await transaction.getBlock();
+
         return {
           address: type === 'deposit' ? transaction.args.from : transaction.args.to,
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          amount: transaction.args.amount ?? toWei(1, 18),
+          amount: 'amount' in transaction.args ? transaction.args.amount : toWei(1, 18),
           date: block.timestamp,
           id: transaction.transactionHash,
           token: tokenInfo,
