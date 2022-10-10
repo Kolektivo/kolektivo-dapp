@@ -54,9 +54,13 @@ export class App {
 
   async confirmChangeNetwork(): Promise<void> {
     if (!this.confirmChangeNetworkInfo) return;
-    this.showConfirmChangeNetworkInfo = false;
-    if (!(await this.store.blockChainStore.switchToTargetedNetwork(this.confirmChangeNetworkInfo.provider))) {
-      this.cancelConfirmChangeNetwork(this.confirmChangeNetworkInfo);
+    try {
+      this.showConfirmChangeNetworkInfo = false;
+      if (!(await this.store.blockChainStore.switchToTargetedNetwork(this.confirmChangeNetworkInfo.provider))) {
+        this.cancelConfirmChangeNetwork(this.confirmChangeNetworkInfo);
+      }
+    } catch (e) {
+      void this.notificationService.toast({ message: e as string, type: 'danger' });
     }
   }
 

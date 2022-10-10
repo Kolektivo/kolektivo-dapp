@@ -3,7 +3,6 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
 import { IBrowserStorageService } from './browser-storage-service';
-import { INotificationService } from '../design-system/services/notification/notification-service';
 import { Signer } from '@ethersproject/abstract-signer';
 import { callOnce } from '../decorators/call-once';
 import { ethers } from 'ethers';
@@ -80,7 +79,6 @@ export class EthereumService {
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     @IBrowserStorageService private readonly storageService: IBrowserStorageService,
     @ILogger private readonly logger: ILogger,
-    @INotificationService private readonly notificationService: INotificationService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
   }
@@ -542,10 +540,8 @@ export class EthereumService {
          * we might be able to add it here, but for now:
          * Balancer does this:  // return importNetworkDetailsToWallet(provider);
          */
-        void this.notificationService.toast({
-          message: `The ${this.targetedNetwork ?? 'unknown'} network is not installed in your Metamask configuration`,
-          type: 'danger',
-        });
+
+        throw new Error(`The ${this.targetedNetwork ?? 'unknown'} network is not installed in your Metamask configuration`);
       }
     }
     return false;

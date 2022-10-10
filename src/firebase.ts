@@ -1,6 +1,9 @@
 import { CollectionReference, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore/lite';
+import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
+import { IIpfsService, Services } from 'services';
 import { ITreasuryStore } from './stores/treasury-store';
-import { appContainer } from 'app-container';
+import { Store } from 'stores';
 import { initializeApp } from 'firebase/app';
 
 enum Periods {
@@ -8,6 +11,18 @@ enum Periods {
   'hour',
   'day',
 }
+
+const conatiner = DI.createContainer()
+  .register(Registration.instance(IIpfsService, {}))
+  .register(Services)
+  .register(Store)
+  .register(
+    Registration.instance(I18N, {}),
+
+    Registration.instance(IObserverLocator, {}),
+    Registration.instance(IEventAggregator, {}),
+    Registration.instance(ILogger, { scopeTo: () => {} }),
+  );
 
 export const seed = async () => {
   let dataCaptured = false;
@@ -49,7 +64,7 @@ export const seed = async () => {
     await setDoc(doc(database, `chartData/${document}/${period}`, time.toString()), { value: value });
   };
   const getTreasuryValue = async (): Promise<string> => {
-    const treasuryStore = appContainer.get(ITreasuryStore);
+    const treasuryStore = conatiner.get(ITreasuryStore);
     const treasuryContract = treasuryStore.getTreasuryContract();
     return (await treasuryContract?.totalValuation())?.toHexString() ?? '';
   };
