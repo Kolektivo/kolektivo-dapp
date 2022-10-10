@@ -92,16 +92,16 @@ export class TreasuryStore {
     return this.totalSupply.div(this.totalValuation);
   }
 
+  public getTreasuryContract(): Treasury | null {
+    if (this.treasuryContract) return this.treasuryContract;
+    this.treasuryContract = this.contractService.getContract('Monetary', 'Treasury');
+    return this.treasuryContract;
+  }
+
   private async getDistributionPercentage(contractName: MonetaryContracts): Promise<BigNumber> {
     const address = this.contractService.getContract('Monetary', contractName).address;
     if (!address || !this.totalSupply) return BigNumber.from(0);
     const tokens = await this.getTreasuryContract()?.balanceOf(address);
     return tokens?.div(this.totalSupply) ?? BigNumber.from(0);
-  }
-
-  private getTreasuryContract(): Treasury | null {
-    if (this.treasuryContract) return this.treasuryContract;
-    this.treasuryContract = this.contractService.getContract('Monetary', 'Treasury');
-    return this.treasuryContract;
   }
 }

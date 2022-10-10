@@ -1,7 +1,20 @@
-import { CollectionReference, Timestamp, collection, doc, getDoc, getDocs, getFirestore, query } from 'firebase/firestore/lite';
+import { CollectionReference, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore/lite';
+import { ITreasuryStore } from './stores/treasury-store';
+import { appContainer } from 'app-container';
 import { initializeApp } from 'firebase/app';
 
+enum Periods {
+  'minute',
+  'hour',
+  'day',
+}
+
 export const seed = async () => {
+  let dataCaptured = false;
+  const minuteInterval = 5;
+  const hourInterval = 1;
+  const dayInterval = 1;
+  let kttValue = '';
   const firebaseConfig = {
     apiKey: 'AIzaSyAmcBzOuKPoswcKAZDabJ42dyN6EL-7Gw0',
     authDomain: 'kolektivo-613ca.firebaseapp.com',
@@ -15,13 +28,71 @@ export const seed = async () => {
   const app = initializeApp(firebaseConfig);
   const database = getFirestore(app);
 
-  const chartData = collection(database, 'chartData');
-  const lastSync = doc(chartData, 'lastSync');
-  const ktt = collection(database, 'chartData/ktt/1h');
+  const periods = Object.values(Periods)
+    .filter((y) => typeof y === 'number')
+    .map((y) => y as Periods);
+
+  const getLastSyncTime = async (interval: string): Promise<string> => {
+    const lastSync = collection(database, `chartData/lastSync/${interval}`);
+    const lastSyncDocs = await getDocs(lastSync);
+    return lastSyncDocs.docs[0]?.id;
+  };
+  const setLastSyncTime = async (period: string, time: number, prevDocName?: string): Promise<void> => {
+    if (prevDocName) {
+      //if a doc exists for last sync time for this interval then delete it
+      await deleteDoc(doc(database, `chartData/lastSync/${period}/${prevDocName}`));
+    }
+    //add a doc for the last sync time for the given interval
+    await setDoc(doc(database, `chartData/lastSync/${period}`, time.toString()), {});
+  };
+  const addData = async (document: string, period: string, time: number, value: string): Promise<void> => {
+    await setDoc(doc(database, `chartData/${document}/${period}`, time.toString()), { value: value });
+  };
+  const getTreasuryValue = async (): Promise<string> => {
+    const treasuryStore = appContainer.get(ITreasuryStore);
+    const treasuryContract = treasuryStore.getTreasuryContract();
+    return (await treasuryContract?.totalValuation())?.toHexString() ?? '';
+  };
+  const captureData = async () => {
+    kttValue = await getTreasuryValue();
+    dataCaptured = true;
+  };
+  //loop through each interval to determine if data needs to be collected for it
+  await Promise.all(
+    periods.map(async (period): Promise<void> => {
+      const lastSync = await getLastSyncTime(Periods[period]); //get last sync time for this period from firebase
+      const now = new Date();
+      let lastSyncTime = now;
+      if (lastSync) {
+        lastSyncTime = new Date(Number(lastSync));
+      }
+      const newSyncTime = lastSyncTime;
+      if (period === Periods.minute) {
+        newSyncTime.setMinutes(newSyncTime.getMinutes() + minuteInterval); // increase the time by the period
+        newSyncTime.setSeconds(0, 0);
+      } else if (period === Periods.hour) {
+        newSyncTime.setHours(newSyncTime.getHours() + hourInterval); // increase the time by the period
+        newSyncTime.setMinutes(0, 0, 0);
+      } else {
+        newSyncTime.setDate(newSyncTime.getDate() + dayInterval); // increase the time by the period
+        newSyncTime.setHours(0, 0, 0, 0);
+      }
+      if (now >= newSyncTime) {
+        //capture data for the new interval
+        if (!dataCaptured) {
+          //only capture data once even if more than one period needs it because it's the same data for more than on period
+          await captureData();
+        }
+        await addData('ktt', Periods[period], newSyncTime.getTime(), kttValue);
+        await setLastSyncTime(Periods[period], newSyncTime.getTime(), lastSync); //set latest sync time
+      }
+      return;
+    }),
+  );
+
+  //const ktt = collection(database, 'chartData/ktt/1h');
 
   //Check the timestamp of the most recent stored data point
-  const lastSyncTime = (await getDoc(lastSync)).data();
-  console.log(lastSyncTime && new Timestamp(lastSyncTime.syncTime.seconds as number, lastSyncTime.syncTime.nanoseconds as number).toDate());
   //Get and store current KTT value
 
   //Get and store current Reserve value
@@ -36,14 +107,14 @@ export const seed = async () => {
 
   //Get and store current kGuilder-kCur Value Ratio
 
-  const data = await getDocs(query(chartData));
+  //const data = await getDocs(query(chartData));
   //const data = await getDocs(query(chartData, where('chart', '==', 'ktt'), where('interval', '==', '1h')));
 
-  console.log(
-    'data',
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    data.docs.map((x) => ({ timeStamp: x.id, value: x.data().value })),
-  );
+  // console.log(
+  //   'data',
+  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  //   data.docs.map((x) => ({ timeStamp: x.id, value: x.data().value })),
+  // );
 
   //console.log('data', data.docs);
 
@@ -91,6 +162,7 @@ export const seed = async () => {
   // const end = await getDocs(query(events, where('createDate', '>=', new Date('10/01/2022')), limit(1)));
   // const result = await getDocs(query(events, orderBy('createDate'), startAt(start.docs[0]), endAt(end.docs[0])));
 };
+
 function ref(lastSync: CollectionReference): import('firebase/firestore/lite').CollectionReference<unknown> {
   throw new Error('Function not implemented.');
 }
