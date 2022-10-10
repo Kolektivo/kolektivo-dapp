@@ -57,7 +57,7 @@ export const seed = async () => {
     kttValue = await getTreasuryValue();
     dataCaptured = true;
   };
-  //loop through each interval to determine if data needs to be collected for it
+  //loop through each time period to determine if data needs to be collected for it
   await Promise.all(
     periods.map(async (period): Promise<void> => {
       const lastSync = await getLastSyncTime(Periods[period]); //get last sync time for this period from firebase
@@ -66,7 +66,7 @@ export const seed = async () => {
       if (lastSync) {
         lastSyncTime = new Date(Number(lastSync));
       }
-      const newSyncTime = lastSyncTime;
+      let newSyncTime = lastSyncTime;
       if (period === Periods.minute) {
         newSyncTime.setMinutes(newSyncTime.getMinutes() + minuteInterval); // increase the time by the period
         newSyncTime.setSeconds(0, 0);
@@ -78,6 +78,21 @@ export const seed = async () => {
         newSyncTime.setHours(0, 0, 0, 0);
       }
       if (now >= newSyncTime) {
+        //current time is past the new sync time so get the closest interval based on period to the current time
+        if (period === Periods.minute) {
+          //get the nearest minute based on the minuteInterval variable
+          const minuteCoeff = 1000 * 60 * minuteInterval;
+          newSyncTime = new Date(Math.floor(now.getTime() / minuteCoeff) * minuteCoeff);
+        } else if (period === Periods.hour) {
+          //set new sync time to now but with the minutes, seconds and ms = 0
+          newSyncTime = now;
+          newSyncTime.setMinutes(0, 0, 0);
+        } else {
+          //set new sync time to now but with the hours, minutes, seconds and ms = 0
+          newSyncTime = now;
+          newSyncTime.setHours(0, 0, 0, 0);
+        }
+
         //capture data for the new interval
         if (!dataCaptured) {
           //only capture data once even if more than one period needs it because it's the same data for more than on period
