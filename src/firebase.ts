@@ -1,7 +1,8 @@
 import { CollectionReference, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore/lite';
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
-import { IIpfsService, Services } from 'services';
+import { IIpfsService, INumberService, Services, fromWei } from 'services';
+import { IReserveStore } from './stores/reserve-store';
 import { ITreasuryStore } from './stores/treasury-store';
 import { Store } from 'stores';
 import { initializeApp } from 'firebase/app';
@@ -12,13 +13,12 @@ enum Periods {
   'day',
 }
 
-const conatiner = DI.createContainer()
+const container = DI.createContainer()
   .register(Registration.instance(IIpfsService, {}))
   .register(Services)
   .register(Store)
   .register(
     Registration.instance(I18N, {}),
-
     Registration.instance(IObserverLocator, {}),
     Registration.instance(IEventAggregator, {}),
     Registration.instance(ILogger, { scopeTo: () => {} }),
@@ -30,6 +30,15 @@ export const seed = async () => {
   const hourInterval = 1;
   const dayInterval = 1;
   let kttValue = '';
+  const numberService: INumberService = container.get(INumberService);
+  const reserveStore: IReserveStore = container.get(IReserveStore);
+  let reserveValue = '';
+  let leverageRatio = 0;
+  let kCurPrice = 0;
+  let kCurReserveDistribution = 0;
+  let kCurMentoDistribution = 0;
+  let kCurPrimaryPoolDistribution = 0;
+  let kCurCirculatingDistribution = 0;
   const firebaseConfig = {
     apiKey: 'AIzaSyAmcBzOuKPoswcKAZDabJ42dyN6EL-7Gw0',
     authDomain: 'kolektivo-613ca.firebaseapp.com',
@@ -60,16 +69,42 @@ export const seed = async () => {
     //add a doc for the last sync time for the given interval
     await setDoc(doc(database, `chartData/lastSync/${period}`, time.toString()), {});
   };
-  const addData = async (document: string, period: string, time: number, value: string): Promise<void> => {
+  const addData = async (document: string, period: string, time: number, value: string | number | object): Promise<void> => {
     await setDoc(doc(database, `chartData/${document}/${period}`, time.toString()), { value: value });
   };
   const getTreasuryValue = async (): Promise<string> => {
-    const treasuryStore = conatiner.get(ITreasuryStore);
+    const treasuryStore = container.get(ITreasuryStore);
     const treasuryContract = treasuryStore.getTreasuryContract();
     return (await treasuryContract?.totalValuation())?.toHexString() ?? '';
   };
+  const loadReserveData = async (): Promise<void> => {
+    await reserveStore.loadAssets(); //loads reserve value and assets
+    await reserveStore.loadkCur(); //loads kCur and the supply distributions
+  };
   const captureData = async () => {
+    //Get current KTT (Treasury) value
     kttValue = await getTreasuryValue();
+
+    //Get current Reserve value
+    await loadReserveData();
+    reserveValue = reserveStore.reserveValuation?.toHexString() ?? '';
+
+    //Get current kCur leverage ratio
+    leverageRatio = numberService.fromString(fromWei(reserveStore.backing ?? 0, 2));
+
+    //Get current kCur Price
+    kCurPrice = reserveStore.kCurPrice ?? 0;
+
+    //Get current kCur Supply Distribution
+    kCurReserveDistribution = reserveStore.kCurReserveDistribution ?? 0;
+    kCurMentoDistribution = reserveStore.kCurMentoDistribution ?? 0;
+    kCurPrimaryPoolDistribution = reserveStore.kCurPrimaryPoolDistribution ?? 0;
+    kCurCirculatingDistribution = reserveStore.kCurCirculatingDistribution;
+
+    //Get and store current Risk Value
+
+    //Get and store current kGuilder-kCur Value Ratio
+
     dataCaptured = true;
   };
   //loop through each time period to determine if data needs to be collected for it
@@ -77,22 +112,22 @@ export const seed = async () => {
     periods.map(async (period): Promise<void> => {
       const lastSync = await getLastSyncTime(Periods[period]); //get last sync time for this period from firebase
       const now = new Date();
-      let lastSyncTime = now;
+      let lastSyncTime = new Date();
       if (lastSync) {
         lastSyncTime = new Date(Number(lastSync));
       }
-      let newSyncTime = lastSyncTime;
       if (period === Periods.minute) {
-        newSyncTime.setMinutes(newSyncTime.getMinutes() + minuteInterval); // increase the time by the period
-        newSyncTime.setSeconds(0, 0);
+        lastSyncTime.setMinutes(lastSyncTime.getMinutes() + minuteInterval); // increase the time by the period
+        lastSyncTime.setSeconds(0, 0);
       } else if (period === Periods.hour) {
-        newSyncTime.setHours(newSyncTime.getHours() + hourInterval); // increase the time by the period
-        newSyncTime.setMinutes(0, 0, 0);
+        lastSyncTime.setHours(lastSyncTime.getHours() + hourInterval); // increase the time by the period
+        lastSyncTime.setMinutes(0, 0, 0);
       } else {
-        newSyncTime.setDate(newSyncTime.getDate() + dayInterval); // increase the time by the period
-        newSyncTime.setHours(0, 0, 0, 0);
+        lastSyncTime.setDate(lastSyncTime.getDate() + dayInterval); // increase the time by the period
+        lastSyncTime.setHours(0, 0, 0, 0);
       }
-      if (now >= newSyncTime) {
+      if (now >= lastSyncTime) {
+        let newSyncTime = new Date();
         //current time is past the new sync time so get the closest interval based on period to the current time
         if (period === Periods.minute) {
           //get the nearest minute based on the minuteInterval variable
@@ -100,11 +135,9 @@ export const seed = async () => {
           newSyncTime = new Date(Math.floor(now.getTime() / minuteCoeff) * minuteCoeff);
         } else if (period === Periods.hour) {
           //set new sync time to now but with the minutes, seconds and ms = 0
-          newSyncTime = now;
           newSyncTime.setMinutes(0, 0, 0);
         } else {
           //set new sync time to now but with the hours, minutes, seconds and ms = 0
-          newSyncTime = now;
           newSyncTime.setHours(0, 0, 0, 0);
         }
 
@@ -113,29 +146,18 @@ export const seed = async () => {
           //only capture data once even if more than one period needs it because it's the same data for more than on period
           await captureData();
         }
+
+        await addData('kCurPrice', Periods[period], newSyncTime.getTime(), kCurPrice);
+        await addData('kCurRatio', Periods[period], newSyncTime.getTime(), leverageRatio);
+        //await addData('kCurSupply', Periods[period], newSyncTime.getTime(), leverageRatio);
+
         await addData('ktt', Periods[period], newSyncTime.getTime(), kttValue);
+        await addData('reserve', Periods[period], newSyncTime.getTime(), reserveValue);
         await setLastSyncTime(Periods[period], newSyncTime.getTime(), lastSync); //set latest sync time
       }
       return;
     }),
   );
-
-  //const ktt = collection(database, 'chartData/ktt/1h');
-
-  //Check the timestamp of the most recent stored data point
-  //Get and store current KTT value
-
-  //Get and store current Reserve value
-
-  //Get and store current kCur leverage ratio
-
-  //Get and store current kCur Price
-
-  //Get and store current kCur Supply Distribution
-
-  //Get and store current Risk Value
-
-  //Get and store current kGuilder-kCur Value Ratio
 
   //const data = await getDocs(query(chartData));
   //const data = await getDocs(query(chartData, where('chart', '==', 'ktt'), where('interval', '==', '1h')));
