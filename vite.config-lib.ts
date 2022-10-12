@@ -6,10 +6,6 @@ import swc from 'unplugin-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  server: {
-    port: 9000,
-    strictPort: true,
-  },
   build: {
     rollupOptions: {
       plugins: [nodePolyfills() as Plugin],
@@ -17,11 +13,13 @@ export default defineConfig({
     commonjsOptions: {
       transformMixedEsModules: true,
     },
+    outDir: 'scripts',
     target: 'es2022',
     lib: {
       entry: resolve(__dirname, './src/firebase.ts'),
-      name: 'firebase',
-      fileName: 'firebase',
+      name: 'update-chart-data',
+
+      fileName: 'update-chart-data',
       formats: ['es'],
     },
   },
@@ -35,8 +33,6 @@ export default defineConfig({
       stream: 'stream-browserify',
       zlib: 'browserify-zlib',
       util: 'util',
-      http: 'http-browserify',
-      https: 'https-browserify',
       Buffer: 'buffer',
     },
   },

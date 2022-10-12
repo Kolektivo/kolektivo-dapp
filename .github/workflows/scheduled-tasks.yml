@@ -1,0 +1,13 @@
+name: Trigger scheduled tasks on a CRON Schedule
+on:
+  schedule:
+    # Runs "at minute 55 past every hour" (see https://crontab.guru)
+    - cron: '*/1 * * * *'
+jobs:
+  build:
+    name: Trigger Chart Data Refresh
+    runs-on: ubuntu-latest
+    steps:
+      - name: node script
+        # Hit the webhook endpoint to rebuild  from the "main" branch
+        run: node ./scripts/update-chart-data.mjs
