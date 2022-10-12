@@ -17,6 +17,8 @@ export class SubmitProposalCard implements ICustomElementViewModel {
   encryptedResult?: string;
   decryptedResult?: string;
   error = '';
+  isPublic = false;
+
   constructor(
     @I18N private readonly i18n: I18N,
     @IEncryptionService private readonly encryptionService: IEncryptionService,
@@ -34,7 +36,6 @@ export class SubmitProposalCard implements ICustomElementViewModel {
   }
 
   async sendTransaction(): Promise<void> {
-    const isPublic = true;
     try {
       const data = await this.contractService.callPopulateTransaction(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
@@ -43,12 +44,12 @@ export class SubmitProposalCard implements ICustomElementViewModel {
         '0x74F9479B29CFb52Db30D76ffdD5F192a73BAD870',
       );
       let ipfsHash: string | undefined;
-      if (!isPublic) {
+      if (!this.isPublic) {
         const encryptedData = await this.encryptionService.encrypt(JSON.stringify(data)); //TODO: Figure out what we're supposed to be encrypting here
         if (!encryptedData) return;
         ipfsHash = (await this.ipfsService.save(encryptedData.encryptedString)).toString();
       }
-      const result = await this.governanceStore.submitDynamicMethod(isPublic, data, ipfsHash);
+      await this.governanceStore.submitDynamicMethod(this.isPublic, data, ipfsHash);
     } catch (ex) {
       //TODO put an error somewhere
       //alert(JSON.stringify(ex));

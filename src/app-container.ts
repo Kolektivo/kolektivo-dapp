@@ -5,7 +5,6 @@ import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, 
 import { DesignSystemPlugin } from './design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
-import { IIpfsService } from 'services/ipfs';
 import { RouterConfiguration } from '@aurelia/router';
 import { Services } from './services/services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
@@ -71,7 +70,3 @@ export const appContainer: IContainer = DI.createContainer()
       x.defaultToastTimeout = 5000;
     }),
   );
-
-const service = appContainer.get(IIpfsService);
-// test her out buddy
-console.log(await service.get(await service.save('asdfasf')));

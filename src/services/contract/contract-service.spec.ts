@@ -1,9 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { CacheService, ContractService, IContractService, toWei } from 'services';
 import { DI } from 'aurelia';
-import { defaultProvider } from './token-info';
+import { Erc20 } from './../../models/generated/monetary/erc20/Erc20';
 import { describe, expect, it } from 'vitest';
-import { ethers } from 'ethers';
 
 describe('contracts-service.ts', () => {
   it('transfers a token', async () => {
@@ -21,7 +20,7 @@ describe('contracts-service.ts', () => {
 
     const testTokenAddress = '0x44d7697a76cb17d858196797432f745e4bc5fe39';
     const transferAmount = BigNumber.from(toWei('.001', 18));
-    const token = contractService.getTokenContract(testTokenAddress, undefined, new ethers.Wallet(testAccountKey1, defaultProvider));
+    const token = contractService.getTokenContract(testTokenAddress) as Erc20;
 
     const startingBalanceAccount1 = await token.balanceOf(testAccount1);
     const startingBalanceAccount2 = await token.balanceOf(testAccount2);

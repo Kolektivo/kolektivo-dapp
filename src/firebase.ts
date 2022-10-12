@@ -29,7 +29,11 @@ const container = DI.createContainer()
   .register(
     Registration.instance(IObserverLocator, {}),
     Registration.instance(IEventAggregator, {}),
-    Registration.instance(ILogger, { scopeTo: () => {} }),
+    Registration.instance(ILogger, {
+      scopeTo: () => {
+        // blah
+      },
+    }),
   );
 
 export const seed = async () => {
