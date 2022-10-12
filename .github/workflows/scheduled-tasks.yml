@@ -8,6 +8,8 @@ jobs:
     name: Trigger Chart Data Refresh
     runs-on: ubuntu-latest
     steps:
-      - name: node script
-        # Hit the webhook endpoint to rebuild  from the "main" branch
-        run: node ./scripts/update-chart-data.mjs
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - run: node ./scripts/update-chart-data.mjs
