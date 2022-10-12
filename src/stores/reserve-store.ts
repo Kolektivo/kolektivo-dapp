@@ -61,10 +61,6 @@ export class ReserveStore {
       ),
     );
     const reserveStatus = await contract.reserveStatus();
-    console.log('Reserve Status', reserveStatus);
-    console.log('Reserve Valuation', fromWei(reserveStatus[0], 18));
-    console.log('Reserve Supply', fromWei(reserveStatus[1], 18));
-    console.log('Reserve Collateralization Ratio', fromWei(reserveStatus[2], 2));
     this.reserveValuation = reserveStatus[0];
     this.supplyValuation = reserveStatus[1];
     this.backing = reserveStatus[2];
