@@ -1,11 +1,12 @@
-import { CollectionReference, collection, deleteDoc, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore/lite';
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
-import { I18N } from '@aurelia/i18n';
+import { I18nConfiguration } from '@aurelia/i18n';
 import { IIpfsService, INumberService, Services, fromWei } from 'services';
 import { IReserveStore } from './stores/reserve-store';
 import { ITreasuryStore } from './stores/treasury-store';
 import { Store } from 'stores';
+import { collection, deleteDoc, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore/lite';
 import { initializeApp } from 'firebase/app';
+import intervalPlural from 'i18next-intervalplural-postprocessor';
 
 enum Periods {
   'minute',
@@ -18,7 +19,14 @@ const container = DI.createContainer()
   .register(Services)
   .register(Store)
   .register(
-    Registration.instance(I18N, {}),
+    I18nConfiguration.customize((options) => {
+      options.initOptions = {
+        fallbackLng: { default: ['en'] },
+        plugins: [intervalPlural],
+      };
+    }),
+  )
+  .register(
     Registration.instance(IObserverLocator, {}),
     Registration.instance(IEventAggregator, {}),
     Registration.instance(ILogger, { scopeTo: () => {} }),
@@ -39,6 +47,7 @@ export const seed = async () => {
   let kCurMentoDistribution = 0;
   let kCurPrimaryPoolDistribution = 0;
   let kCurCirculatingDistribution = 0;
+  let captureDataPromise: Promise<void> | undefined = undefined;
   const firebaseConfig = {
     apiKey: 'AIzaSyAmcBzOuKPoswcKAZDabJ42dyN6EL-7Gw0',
     authDomain: 'kolektivo-613ca.firebaseapp.com',
@@ -70,7 +79,11 @@ export const seed = async () => {
     await setDoc(doc(database, `chartData/lastSync/${period}`, time.toString()), {});
   };
   const addData = async (document: string, period: string, time: number, value: string | number | object): Promise<void> => {
-    await setDoc(doc(database, `chartData/${document}/${period}`, time.toString()), { value: value });
+    let objectToSave = value;
+    if (typeof objectToSave !== 'object') {
+      objectToSave = { value: value };
+    }
+    await setDoc(doc(database, `chartData/${document}/${period}`, time.toString()), objectToSave);
   };
   const getTreasuryValue = async (): Promise<string> => {
     const treasuryStore = container.get(ITreasuryStore);
@@ -104,8 +117,6 @@ export const seed = async () => {
     //Get and store current Risk Value
 
     //Get and store current kGuilder-kCur Value Ratio
-
-    dataCaptured = true;
   };
   //loop through each time period to determine if data needs to be collected for it
   await Promise.all(
@@ -126,7 +137,7 @@ export const seed = async () => {
         lastSyncTime.setDate(lastSyncTime.getDate() + dayInterval); // increase the time by the period
         lastSyncTime.setHours(0, 0, 0, 0);
       }
-      if (now >= lastSyncTime) {
+      if (now >= lastSyncTime || !lastSync) {
         let newSyncTime = new Date();
         //current time is past the new sync time so get the closest interval based on period to the current time
         if (period === Periods.minute) {
@@ -143,78 +154,27 @@ export const seed = async () => {
 
         //capture data for the new interval
         if (!dataCaptured) {
+          dataCaptured = true;
           //only capture data once even if more than one period needs it because it's the same data for more than on period
-          await captureData();
+          captureDataPromise = captureData();
         }
 
-        await addData('kCurPrice', Periods[period], newSyncTime.getTime(), kCurPrice);
-        await addData('kCurRatio', Periods[period], newSyncTime.getTime(), leverageRatio);
-        //await addData('kCurSupply', Periods[period], newSyncTime.getTime(), leverageRatio);
+        void captureDataPromise?.then(async () => {
+          await addData('kCurPrice', Periods[period], newSyncTime.getTime(), kCurPrice);
+          await addData('kCurRatio', Periods[period], newSyncTime.getTime(), leverageRatio);
+          await addData('kCurSupply', Periods[period], newSyncTime.getTime(), {
+            kCurReserveDistribution,
+            kCurMentoDistribution,
+            kCurPrimaryPoolDistribution,
+            kCurCirculatingDistribution,
+          });
 
-        await addData('ktt', Periods[period], newSyncTime.getTime(), kttValue);
-        await addData('reserve', Periods[period], newSyncTime.getTime(), reserveValue);
-        await setLastSyncTime(Periods[period], newSyncTime.getTime(), lastSync); //set latest sync time
+          await addData('ktt', Periods[period], newSyncTime.getTime(), kttValue);
+          await addData('reserve', Periods[period], newSyncTime.getTime(), reserveValue);
+          await setLastSyncTime(Periods[period], newSyncTime.getTime(), lastSync); //set latest sync time
+        });
       }
       return;
     }),
   );
-
-  //const data = await getDocs(query(chartData));
-  //const data = await getDocs(query(chartData, where('chart', '==', 'ktt'), where('interval', '==', '1h')));
-
-  // console.log(
-  //   'data',
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  //   data.docs.map((x) => ({ timeStamp: x.id, value: x.data().value })),
-  // );
-
-  //console.log('data', data.docs);
-
-  // const c = Contracts.Monetary.main.contracts.Treasury;
-
-  // const logs = await defaultProvider.getLogs({
-  //   fromBlock: 0,
-  //   address: c.address,
-  // });
-
-  // const iface = new Interface(c.abi);
-
-  // const batch = writeBatch(database);
-  // const currentTime = new Date();
-  // const results = await Promise.all(
-  //   logs
-  //     .filter((a, y) => y === 0)
-  //     .map(
-  //       (y) => defaultProvider.getBlock(y.blockNumber).catch((e) => console.log(e)),
-  //       // .map(async (y) => {
-  //       //   const data = iface.parseLog(y);
-  //       //   const args: Record<string, unknown> = {};
-  //       //   const params = Object.keys(data.args)
-  //       //     .filter((x) => isNaN(Number(x)))
-  //       //     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment
-  //       //     .forEach((y) => (args[y] = data.args[y]));
-  //       //   batch.set(doc(events), {
-  //       //     contract: 'Kolektivo Treasury Token',
-  //       //     token: 'KTT',
-  //       //     args: args,
-  //       //     name: data.name,
-  //       //     timestamp: await defaultProvider.getBlock(y.blockNumber),
-  //       //     createDate: currentTime,
-  //       //   });
-  //       // }),
-  //     ),
-  // );
-  // console.log(results);
-  // await batch.commit();
-
-  // const start = await getDocs(
-  //   query(events, where('transactionTime', '<=', new Date('10/04/2022')), where('transactionTime', '>=', new Date('10/01/2022')), limit(1)),
-  // );
-
-  // const end = await getDocs(query(events, where('createDate', '>=', new Date('10/01/2022')), limit(1)));
-  // const result = await getDocs(query(events, orderBy('createDate'), startAt(start.docs[0]), endAt(end.docs[0])));
 };
-
-function ref(lastSync: CollectionReference): import('firebase/firestore/lite').CollectionReference<unknown> {
-  throw new Error('Function not implemented.');
-}
