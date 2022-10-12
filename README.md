@@ -2,6 +2,7 @@
 
 ## Overview
 
+
 This repository contains the frontend of the Kolektivo distributed application (dApp), which is currently under development. 
 
 The Kolektivo dApp is being developed for the Kolektivo Framework, which is a collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
