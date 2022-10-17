@@ -2,6 +2,7 @@ export * from './http-service';
 export * from './browser-storage-service';
 export * from './cache-service';
 export * from './contract/contract-service';
+export * from './contract/token-service';
 export * from './date-intl-service';
 export * from './DisposableCollection';
 export * from './ethereum-service';

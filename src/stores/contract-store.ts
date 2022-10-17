@@ -4,7 +4,7 @@ import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Erc20, TransferEvent as Erc20TransferEvent } from 'models/generated/monetary/erc20/Erc20';
 import { Erc721, TransferEvent as Erc721TransferEvent } from 'models/generated/monetary/erc721/Erc721';
 import { IContractService, tokenInfos } from 'services/contract';
-import { INumberService, ITokenInfo, fromWei, toWei } from '../services';
+import { INumberService, ITokenInfo, ITokenService, fromWei, toWei } from '../services';
 import { Oracle } from './../models/generated/monetary/oracle/Oracle';
 import { Reserve } from 'models/generated/monetary/reserve';
 import { Transaction } from 'models/transaction';
@@ -18,6 +18,7 @@ export class ContractStore {
   }
   constructor(
     @IContractService private readonly contractService: IContractService,
+    @ITokenService private readonly tokenService: ITokenService,
     @ILogger private readonly logger: ILogger,
     @INumberService private readonly numberService: INumberService,
   ) {}
@@ -40,7 +41,7 @@ export class ContractStore {
       return;
     }
 
-    const tokenContract = this.contractService.getTokenContract(assetAddress, tokenInfo.id);
+    const tokenContract = this.tokenService.getTokenContract(assetAddress, tokenInfo.id);
 
     if (!oracleAddress) {
       if (tokenInfo.id) {
