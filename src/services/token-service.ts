@@ -2,20 +2,15 @@ import { Contract } from '@ethersproject/contracts';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { Erc721 } from 'models/generated/monetary/erc721';
-import { ICacheService } from 'services/cache-service';
-import { IContractService, IEthereumService } from 'services';
+import { ICacheService, IEthereumService } from 'services';
 import { cache } from 'decorators/cache';
-import { monetaryShared } from './contracts';
+import { monetaryShared } from './contract/contracts';
 
 export type ITokenService = TokenService;
 export const ITokenService = DI.createInterface<ITokenService>();
 
 export class TokenService {
-  constructor(
-    @ICacheService private readonly cacheService: ICacheService,
-    @IEthereumService private readonly ethereumService: IEthereumService,
-    @IContractService private readonly contractService: IContractService,
-  ) {}
+  constructor(@ICacheService private readonly cacheService: ICacheService, @IEthereumService private readonly ethereumService: IEthereumService) {}
 
   public static register(container: IContainer) {
     Registration.singleton(ITokenService, TokenService).register(container);

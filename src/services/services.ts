@@ -9,7 +9,7 @@ import { IIpfsService, IpfsService } from './ipfs/ipfs-service';
 import { INumberService, NumberService } from './number-service';
 import { IObserverService, ObserverService } from './observer-service';
 import { ITimingService, TimingService } from './timing-service';
-import { ITokenService, TokenService } from './contract/token-service';
+import { ITokenService, TokenService } from './token-service';
 import { ethereumNetwork, isDev } from './../environment-variables';
 
 export type IServices = Services;
