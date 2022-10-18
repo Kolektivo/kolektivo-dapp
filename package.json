@@ -27,6 +27,7 @@
     "start": "vite",
     "build": "vite build",
     "build:chart-data-script": "vite build --config vite.config-lib.ts",
+    "build:dev:chart-data-script": "vite build --config vite.config-lib.ts --mode development",
     "build:dev": "vite build --mode development",
     "start-celo": "cross-env KOL_NETWORK=Celo vite",
     "start-alfajores": "cross-env KOL_NETWORK=Alfajores vite",
