@@ -1,5 +1,10 @@
 name: Trigger scheduled tasks on a CRON Schedule
 on:
+  push:
+    branches:
+      - main
+      - staging
+      - development
   schedule:
     # Runs every 5 minutes (see https://crontab.guru)
     - cron: '*/5 * * * *'
@@ -8,8 +13,8 @@ jobs:
     name: Trigger Chart Data Refresh
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '18'
       - run: node ./scripts/update-chart-data.mjs

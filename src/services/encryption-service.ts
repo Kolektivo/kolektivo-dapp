@@ -53,7 +53,7 @@ export class EncryptionService {
     const params = {
       web3: this.ethereumService.walletProvider,
       account: this.ethereumService.defaultAccountAddress?.toLowerCase(),
-      chainId: 44787,
+      chainId: this.ethereumService.targetedChainId,
     };
 
     this.authSig = await LitJsSdk.signAndSaveAuthMessage(params);

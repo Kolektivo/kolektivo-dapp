@@ -65,6 +65,16 @@ export const seed = async () => {
   const app = initializeApp(firebaseConfig);
   const database = getFirestore(app);
 
+  //Script to update all documents in a given path
+  // const path = 'chartData/kCurPrice/minute';
+  // const col = collection(database, path);
+  // const docs = await getDocs(col);
+  // docs.docs.forEach((x) => {
+  //   const value = x.data();
+  //   value.createdAt = Number(x.id);
+  //   void setDoc(doc(database, path, x.id), value);
+  // });
+
   const periods = Object.values(Periods)
     .filter((y) => typeof y === 'number')
     .map((y) => y as Periods);
@@ -87,6 +97,8 @@ export const seed = async () => {
     if (typeof objectToSave !== 'object') {
       objectToSave = { value: value };
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+    (objectToSave as any).createdAt = time;
     await setDoc(doc(database, `chartData/${document}/${period}`, time.toString()), objectToSave);
   };
   const getTreasuryValue = async (): Promise<string> => {
@@ -122,6 +134,7 @@ export const seed = async () => {
 
     //Get and store current kGuilder-kCur Value Ratio
   };
+
   //loop through each time period to determine if data needs to be collected for it
   await Promise.all(
     periods.map(async (period): Promise<void> => {
