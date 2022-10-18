@@ -43,14 +43,16 @@ export class ContractService {
    * @param contractType
    * @param name
    * @param overrideAddress
+   * @param signerOrProvider totally optional, by default is set to current signerOrProvider from EthereumService
    * @returns
    */
   public getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract = Erc20>(
     contractType: TContractType,
     name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
+    signerOrProvider?: BaseProvider | Signer | undefined,
   ): TResult {
-    const signerOrProvider = this.ethereumService.createSignerOrProvider();
+    signerOrProvider = signerOrProvider ?? this.ethereumService.createSignerOrProvider();
     return this.getContractCached(contractType, name, overrideAddress, signerOrProvider);
   }
 
