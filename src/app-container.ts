@@ -9,6 +9,7 @@ import { I18nConfiguration } from '@aurelia/i18n';
 import { IConfiguration } from 'configurations/configuration';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { IReadOnlyProvider } from 'provider';
+import { ITokenData, getTokenInfos } from './services/contract/token-info';
 import { RouterConfiguration } from '@aurelia/router';
 import { Services } from './services/services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
@@ -47,6 +48,11 @@ export const appContainer: IContainer = DI.createContainer()
   .register(hooks)
   .register(resources)
   .register(pages)
+  .register(
+    Registration.instance(ITokenData, {
+      tokens: getTokenInfos(),
+    }),
+  )
   .register(
     Registration.instance(IConfiguration, {
       chainId: CHAIN_ID,
