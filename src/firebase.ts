@@ -159,20 +159,21 @@ export const seed = async () => {
   await Promise.all(
     periods.map(async (period): Promise<void> => {
       const lastSync = await getLastSyncTime(Periods[period]); //get last sync time for this period from firebase
+      //lastSync = 1666051200000
       const now = new Date();
       let lastSyncTime = new Date();
       if (lastSync) {
         lastSyncTime = new Date(Number(lastSync));
       }
       if (period === Periods.minute) {
-        lastSyncTime.setMinutes(lastSyncTime.getMinutes() + minuteInterval); // increase the time by the period
-        lastSyncTime.setSeconds(0, 0);
+        lastSyncTime.setUTCMinutes(lastSyncTime.getUTCMinutes() + minuteInterval); // increase the time by the period
+        lastSyncTime.setUTCSeconds(0, 0);
       } else if (period === Periods.hour) {
-        lastSyncTime.setHours(lastSyncTime.getHours() + hourInterval); // increase the time by the period
-        lastSyncTime.setMinutes(0, 0, 0);
+        lastSyncTime.setUTCHours(lastSyncTime.getUTCHours() + hourInterval); // increase the time by the period
+        lastSyncTime.setUTCMinutes(0, 0, 0);
       } else {
-        lastSyncTime.setDate(lastSyncTime.getDate() + dayInterval); // increase the time by the period
-        lastSyncTime.setHours(0, 0, 0, 0);
+        lastSyncTime.setUTCDate(lastSyncTime.getUTCDate() + dayInterval); // increase the time by the period
+        lastSyncTime.setUTCHours(0, 0, 0, 0);
       }
       if (now >= lastSyncTime || !lastSync) {
         let newSyncTime = new Date();
@@ -183,10 +184,10 @@ export const seed = async () => {
           newSyncTime = new Date(Math.floor(now.getTime() / minuteCoeff) * minuteCoeff);
         } else if (period === Periods.hour) {
           //set new sync time to now but with the minutes, seconds and ms = 0
-          newSyncTime.setMinutes(0, 0, 0);
+          newSyncTime.setUTCMinutes(0, 0, 0);
         } else {
           //set new sync time to now but with the hours, minutes, seconds and ms = 0
-          newSyncTime.setHours(0, 0, 0, 0);
+          newSyncTime.setUTCHours(0, 0, 0, 0);
         }
 
         //capture data for the new interval
