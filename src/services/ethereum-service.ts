@@ -2,15 +2,16 @@ import { AllowedNetworks } from './../models/allowed-network';
 import { BigNumber } from '@ethersproject/bignumber';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
 import { IBrowserStorageService } from './browser-storage-service';
-import { Network, Web3Provider, getNetwork } from '@ethersproject/providers';
-import { Signer } from '@ethersproject/abstract-signer';
-import { formatString } from '../utils';
-import { getAddress } from '@ethersproject/address';
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+import { ICacheService } from './cache-service';
 import { IConfiguration } from 'configurations/configuration';
 import { IReadOnlyProvider } from 'provider';
 import { IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
+import { JsonRpcProvider, Network, Provider, Web3Provider, getNetwork } from '@ethersproject/providers';
 import { MetaMaskInpageProvider } from '@metamask/providers';
+import { Signer } from '@ethersproject/abstract-signer';
+import { cache } from 'decorators/cache';
+import { formatString } from '../utils';
+import { getAddress } from '@ethersproject/address';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal from 'web3modal';
 import detectEthereumProvider from '@metamask/detect-provider';
@@ -60,6 +61,7 @@ export class EthereumService {
     @ILogger private readonly logger: ILogger,
     @IConfiguration private readonly configuration: IConfiguration,
     @IReadOnlyProvider private readonly readOnlyProvider: IReadOnlyProvider,
+    @ICacheService private readonly cacheService: ICacheService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
   }
@@ -207,6 +209,33 @@ export class EthereumService {
     } else {
       return getAddress(this.defaultAccount);
     }
+  }
+
+  /**
+   * get signer or provider for use by ethers Contracts
+   * @returns
+   */
+  public createSignerOrProvider(): Provider | Signer {
+    return this.createSignerOrProviderCached(this.defaultAccountAddress, this.walletProvider);
+  }
+
+  /**
+   * The cache restricts this from being invoked unless it has new input parameters.
+   * @param accountAddress
+   * @param provider
+   * @returns
+   */
+  @cache<EthereumService>(function () {
+    return { storage: this.cacheService };
+  })
+  private createSignerOrProviderCached(accountAddress: Address | Signer | undefined, provider: JsonRpcProvider | undefined): Provider | Signer {
+    let signerOrProvider: Address | Signer | Provider;
+    if (accountAddress && provider) {
+      signerOrProvider = Signer.isSigner(accountAddress) ? accountAddress : provider.getSigner(accountAddress);
+    } else {
+      signerOrProvider = this.readOnlyProvider;
+    }
+    return signerOrProvider;
   }
 
   public getDefaultSigner(): Signer {

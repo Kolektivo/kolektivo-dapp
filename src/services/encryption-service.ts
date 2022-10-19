@@ -6,7 +6,7 @@ import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { IConfiguration } from 'configurations/configuration';
 import { IContractService } from './contract/contract-service';
 import { IEthereumService } from './ethereum-service';
-import { getContract } from './contract/contracts';
+import { getContractAbi } from './contract/contracts';
 import LitJsSdk from 'lit-js-sdk';
 export type IEncryptionService = EncryptionService;
 export const IEncryptionService = DI.createInterface<IEncryptionService>('EncryptionService');
@@ -17,7 +17,7 @@ export class EncryptionService {
   private authSig?: string;
   private encryptedSymmetricKey?: string;
   private client: LitJsSdk.LitNodeClient = new LitJsSdk.LitNodeClient();
-  public badgerContractAddress: string = getContract('Governance').main.contracts.monetaryBadger.address;
+  public badgerContractAddress: string = getContractAbi('Governance').main.contracts.monetaryBadger.address;
 
   public static register(container: IContainer) {
     Registration.singleton(IEncryptionService, EncryptionService).register(container);

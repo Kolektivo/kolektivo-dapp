@@ -4,7 +4,7 @@ import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Erc20, TransferEvent as Erc20TransferEvent } from 'models/generated/monetary/erc20/Erc20';
 import { Erc721, TransferEvent as Erc721TransferEvent } from 'models/generated/monetary/erc721/Erc721';
 import { IContractService, tokenInfos } from 'services/contract';
-import { INumberService, ITokenInfo } from '../services';
+import { INumberService, ITokenInfo, ITokenService } from '../services';
 import { Oracle } from './../models/generated/monetary/oracle/Oracle';
 import { Reserve } from 'models/generated/monetary/reserve';
 import { Transaction } from 'models/transaction';
@@ -19,6 +19,7 @@ export class ContractStore {
   }
   constructor(
     @IContractService private readonly contractService: IContractService,
+    @ITokenService private readonly tokenService: ITokenService,
     @ILogger private readonly logger: ILogger,
     @INumberService private readonly numberService: INumberService,
   ) {}
@@ -41,7 +42,7 @@ export class ContractStore {
       return;
     }
 
-    const tokenContract = this.contractService.getTokenContract(assetAddress, tokenInfo.id);
+    const tokenContract = this.tokenService.getTokenContract(assetAddress, tokenInfo.id) as Erc20;
 
     if (!oracleAddress) {
       if (tokenInfo.id) {
@@ -62,7 +63,7 @@ export class ContractStore {
     let tokenQuantity = toWei(1, 18); //all NFTs have a quantity of 1, so set the quantity to 1 initially
     let totalSupply: BigNumber | undefined;
     if (!tokenInfo.id) {
-      totalSupply = await (tokenContract as Erc20).totalSupply();
+      totalSupply = await tokenContract.totalSupply();
       tokenQuantity = await tokenContract.balanceOf(contractAddress); // find the amount of these tokens in the treasury
     }
     let assetType: AssetType | undefined;

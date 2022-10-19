@@ -1,5 +1,5 @@
+import { CacheService, IBrowserStorageService, ICacheService } from 'services';
 import { EthereumService, IEthereumService } from './../services/ethereum-service';
-import { IBrowserStorageService } from 'services';
 import { IConfiguration } from 'configurations/configuration';
 import { IContainer, Registration } from 'aurelia';
 import { INotificationService } from 'design-system/services';
@@ -27,6 +27,7 @@ export function createEthereumService(container: IContainer): IEthereumService {
   Registration.instance(INotificationService, mock<INotificationService>({})).register(container);
   Registration.instance(IReadOnlyProvider, getDefaultProvider()).register(container);
 
+  Registration.singleton(ICacheService, CacheService).register(container);
   Registration.singleton(IEthereumService, EthereumService).register(container);
   return container.get(IEthereumService);
 }
