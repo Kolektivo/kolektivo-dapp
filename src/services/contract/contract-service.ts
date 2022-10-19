@@ -4,11 +4,10 @@ import { Signer } from '@ethersproject/abstract-signer';
 
 import { ContractGroupsSharedJson } from './types';
 
+import { Address, IEthereumService } from 'services/ethereum-service';
 import { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 import { DI, IContainer, Registration } from 'aurelia';
-import { Erc20 } from 'models/generated/monetary/erc20';
 import { ICacheService } from '../cache-service';
-import { IEthereumService } from 'services/ethereum-service';
 import { cache } from 'decorators/cache';
 
 export type IContractService = ContractService;
@@ -25,35 +24,6 @@ export class ContractService {
 
   public static register(container: IContainer) {
     Registration.singleton(IContractService, ContractService).register(container);
-  }
-
-  /**
-   * Get the ethers.js Contract wrapper for a given contract.
-   *
-   * Examples:
-   *
-   *  const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token');
-   *
-   *  // for when you need to specify a specific instance of a contract
-   *  const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token', "0x1234...");
-   *
-   *  // for when you need to send transactions
-   *  const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token', undefined, signer);
-   *
-   * @param contractType
-   * @param name
-   * @param overrideAddress
-   * @param signerOrProvider totally optional, by default is set to current signerOrProvider from EthereumService
-   * @returns
-   */
-  public getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract = Erc20>(
-    contractType: TContractType,
-    name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
-    overrideAddress?: string,
-    signerOrProvider?: BaseProvider | Signer | undefined,
-  ): TResult {
-    signerOrProvider = signerOrProvider ?? this.ethereumService.createSignerOrProvider();
-    return this.getContractCached(contractType, name, overrideAddress, signerOrProvider);
   }
 
   /**
@@ -76,21 +46,25 @@ export class ContractService {
   }
 
   /**
-   * The cache restricts this from being invoked unless it has new input parameters.
-   * It is important that the consumer of this method not keep their own cache of these contracts,
-   * the reason being that the contract wrappers will not work properly if the current account or
-   * web3 provider has changed.  So the method must be called afresh whenever used, if it is possible
-   * that the input params could have changed.
+   * Get the ethers.js Contract wrapper for a given contract.
+   *
+   * Examples:
+   *
+   *  const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token');
+   *
+   *  // for when you need to specify a specific instance of a contract
+   *  const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token', "0x1234...");
+   *
+   *  // for when you need to send transactions
+   *  const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token', undefined, signer);
+   *
    * @param contractType
    * @param name
    * @param overrideAddress
-   * @param signerOrProvider
+   * @param signerOrProvider totally optional, by default is set to current signerOrProvider from EthereumService
    * @returns
    */
-  @cache<ContractService>(function () {
-    return { storage: this.cacheService };
-  })
-  private getContractCached<TContractType extends ContractGroupsAbis, TResult extends BaseContract = Erc20>(
+  public getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
     contractType: TContractType,
     name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
@@ -104,6 +78,34 @@ export class ContractService {
       const key = abi as keyof ContractGroupsSharedJson;
       abi = contractData.shared[key] as ContractInterface;
     }
-    return new Contract(overrideAddress ?? contract.address, abi, signerOrProvider) as TResult;
+    signerOrProvider = signerOrProvider ?? this.ethereumService.createSignerOrProvider();
+    overrideAddress = overrideAddress ?? contract.address;
+    if (!overrideAddress) {
+      throw new Error(`ContractService: requested contract has no address: ${name}`);
+    }
+    return this.getContractCached(overrideAddress, abi, signerOrProvider);
+  }
+
+  /**
+   * The cache restricts this from being invoked unless it has new input parameters.
+   * It is important that the consumer of this method not keep their own cache of these contracts,
+   * the reason being that the contract wrappers will not work properly if the current account or
+   * web3 provider has changed.  So the method must be called afresh whenever used, if it is possible
+   * that the input params could have changed.
+   * @param contractType
+   * @param name
+   * @param address
+   * @param signerOrProvider
+   * @returns
+   */
+  @cache<ContractService>(function () {
+    return { storage: this.cacheService };
+  })
+  private getContractCached<TResult extends BaseContract>(
+    address: Address,
+    abi: ContractInterface,
+    signerOrProvider: BaseProvider | Signer,
+  ): TResult {
+    return new Contract(address, abi, signerOrProvider) as TResult;
   }
 }
