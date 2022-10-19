@@ -1,5 +1,5 @@
 import { BaseProvider } from '@ethersproject/providers';
-import { Contract } from '@ethersproject/contracts';
+import { Contract, ContractInterface } from '@ethersproject/contracts';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { Erc721 } from 'models/generated/monetary/erc721';
@@ -26,18 +26,22 @@ export class TokenService {
    * @param signerOrProvider totally optional, by default is set to current signerOrProvider from EthereumService
    * @returns
    */
-  @cache<TokenService>(function () {
-    return { storage: this.cacheService };
-  })
-  public getTokenContract<T extends number>(
+  public getTokenContract<T extends number | undefined>(
     tokenAddress: string,
     id?: T,
     signerOrProvider?: BaseProvider | Signer | undefined,
   ): T extends undefined ? Erc20 : Erc721 | Erc20 {
-    return new Contract(
+    return this.getTokenContractCached(
       tokenAddress,
       id ? monetaryShared.ERC721 : monetaryShared.ERC20,
       signerOrProvider ?? this.ethereumService.createSignerOrProvider(),
     ) as T extends undefined ? Erc20 : Erc721 | Erc20;
+  }
+
+  @cache<TokenService>(function () {
+    return { storage: this.cacheService };
+  })
+  private getTokenContractCached(tokenAddress: string, abi: ContractInterface, signerOrProvider: BaseProvider | Signer | undefined): Erc721 | Erc20 {
+    return new Contract(tokenAddress, abi, signerOrProvider) as Erc721 | Erc20;
   }
 }
