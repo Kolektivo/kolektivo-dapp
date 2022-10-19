@@ -1,12 +1,12 @@
 import { AllowedNetworks } from './../models/allowed-network';
 import { BigNumber } from '@ethersproject/bignumber';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
+import { ExternalProvider, JsonRpcProvider, Network, Provider, Web3Provider, getNetwork } from '@ethersproject/providers';
 import { IBrowserStorageService } from './browser-storage-service';
 import { ICacheService } from './cache-service';
 import { IConfiguration } from 'configurations/configuration';
 import { IReadOnlyProvider } from 'provider';
 import { IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
-import { JsonRpcProvider, Network, Provider, Web3Provider, getNetwork } from '@ethersproject/providers';
 import { MetaMaskInpageProvider } from '@metamask/providers';
 import { Signer } from '@ethersproject/abstract-signer';
 import { cache } from 'decorators/cache';
@@ -248,7 +248,7 @@ export class EthereumService {
   public async connect(): Promise<void> {
     if (!this.walletProvider) {
       this.ensureWeb3Modal();
-      const web3ModalProvider = (await this.web3Modal?.connect()) as Web3Provider;
+      const web3ModalProvider = (await this.web3Modal?.connect()) as ExternalProvider;
       void this.setProvider(web3ModalProvider);
     }
   }
@@ -256,7 +256,7 @@ export class EthereumService {
   public async connectKolektivoWallet(): Promise<void> {
     if (!this.walletProvider) {
       this.ensureWeb3Modal();
-      const web3ModalProvider = (await this.web3Modal?.connectTo('walletconnect')) as Web3Provider;
+      const web3ModalProvider = (await this.web3Modal?.connectTo('walletconnect')) as ExternalProvider;
       void this.setProvider(web3ModalProvider);
     }
   }
@@ -301,7 +301,7 @@ export class EthereumService {
             // const account = getAddress(accounts[0]);
             // if (this.disclaimerService.isDappDisclaimed(account)) {
             // this.logger.info(`autoconnecting to ${account}`);
-            return this.setProvider(provider as unknown as Web3Provider);
+            return this.setProvider(provider as unknown as ExternalProvider);
             // }
           }
         }
@@ -349,11 +349,13 @@ export class EthereumService {
    *
    * @param provider The provider created by Web3Modal
    */
-  private async setProvider(provider: Web3Provider & { autoRefreshOnNetworkChange?: boolean }): Promise<void> {
+  private async setProvider(provider: ExternalProvider & { autoRefreshOnNetworkChange?: boolean }): Promise<void> {
     try {
+      this.walletProvider = new Web3Provider(provider);
+
       provider.autoRefreshOnNetworkChange = false; // mainly for metamask
 
-      const network = await this.getNetwork(provider);
+      const network = await this.getNetwork(this.walletProvider);
       if (!network) return;
 
       if (network.chainId !== this.targetedChainId) {
@@ -367,7 +369,6 @@ export class EthereumService {
          * we will keep the original readonly provider which should still be fine since
          * the targeted network cannot have changed.
          */
-        this.walletProvider = provider;
         this.defaultAccount = await this.getCurrentAccountFromProvider(this.walletProvider);
         this.defaultAccountAddress = await this.getDefaultAccountAddress();
         /**
@@ -448,7 +449,7 @@ export class EthereumService {
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: hexChainId }],
         });
-        await this.setProvider(web3ModalProvider);
+        await this.setProvider(web3ModalProvider.provider);
         return true;
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
