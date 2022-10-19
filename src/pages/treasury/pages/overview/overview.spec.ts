@@ -75,12 +75,19 @@ describe('overview', () => {
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
     const createMockContractService = () => Registration.instance(IContractService, mock<IContractService>({}));
-    const createMockTreasuryStoreRegistration = () => Registration.instance(ITreasuryStore, {});
+    const createMockTreasuryStoreRegistration = () =>
+      Registration.instance(
+        ITreasuryStore,
+        mock<ITreasuryStore>({
+          treasuryAssets: [],
+        }),
+      );
 
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
         nf: (s: string) => String(s),
+        
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [

@@ -3,13 +3,12 @@ import { CacheService, ICacheService } from './cache-service';
 import { ContractService, IContractService } from './contract/contract-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { EncryptionService, IEncryptionService } from './encryption-service';
-import { EthereumService, IEthereumService, Networks } from './ethereum-service';
+import { EthereumService, IEthereumService } from './ethereum-service';
 import { HttpService, IHttpService } from './http-service';
 import { IIpfsService, IpfsService } from './ipfs/ipfs-service';
 import { INumberService, NumberService } from './number-service';
 import { IObserverService, ObserverService } from './observer-service';
 import { ITimingService, TimingService } from './timing-service';
-import { ethereumNetwork, isDev } from './../environment-variables';
 
 export type IServices = Services;
 export const IServices = DI.createInterface<Services>();
@@ -27,13 +26,6 @@ export class Services {
     @IContractService public readonly contractService: IContractService,
     @IIpfsService public readonly ipfsService: IIpfsService,
   ) {}
-
-  public initialize(): Promise<unknown> {
-    const targetNetwork = ethereumNetwork ?? (isDev ? Networks.Alfajores : Networks.Celo);
-    this.timingService.initialize(targetNetwork);
-
-    return this.ethereumService.initialize(targetNetwork);
-  }
 
   public static register(container: IContainer): void {
     container

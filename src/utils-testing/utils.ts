@@ -1,7 +1,10 @@
+import { BaseProvider } from '@ethersproject/providers/lib/base-provider';
+import { Block } from '@ethersproject/providers';
 import { EthereumService, IEthereumService } from './../services/ethereum-service';
 import { IBrowserStorageService } from 'services';
 import { IContainer, Registration } from 'aurelia';
 import { INotificationService } from 'design-system/services';
+import { IReadOnlyProvider } from 'provider';
 import { mock } from 'vitest-mock-extended';
 
 /**
@@ -10,18 +13,25 @@ import { mock } from 'vitest-mock-extended';
  * @param network
  * @returns
  */
-export function createEthereumService(container: IContainer, network: AllowedNetworks = 'Alfajores'): Promise<IEthereumService> {
-  let ethereumService: IEthereumService;
-
-  try {
-    ethereumService = container.get(IEthereumService);
-    return Promise.resolve(ethereumService);
-    // eslint-disable-next-line no-empty
-  } catch {}
+export function createEthereumService(container: IContainer): IEthereumService {
+  if (container.has(IEthereumService, true)) return container.get(IEthereumService);
 
   Registration.instance(IBrowserStorageService, mock<IBrowserStorageService>({})).register(container);
   Registration.instance(INotificationService, mock<INotificationService>({})).register(container);
+  Registration.instance(
+    IReadOnlyProvider,
+    mock<BaseProvider>({
+      getBlock: (n: number) => {
+        return new Promise((res) =>
+          res(
+            mock<Block>({
+              number: n,
+            }),
+          ),
+        );
+      },
+    }),
+  ).register(container);
   Registration.singleton(IEthereumService, EthereumService).register(container);
-  ethereumService = container.get(IEthereumService);
-  return ethereumService.initialize(network).then(() => ethereumService);
+  return container.get(IEthereumService);
 }

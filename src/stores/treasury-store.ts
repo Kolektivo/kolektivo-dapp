@@ -2,7 +2,7 @@ import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { BigNumberOverTimeData, ValueChartData } from 'models/chart-data';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IContractService, IServices, fromWei } from 'services';
+import { IContractService, IServices } from 'services';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 import { Interval } from 'models/interval';
@@ -10,7 +10,7 @@ import { MonetaryContracts } from 'services/contract/types';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/monetary/treasury/Treasury';
 import { callOnce } from './../decorators/call-once';
-import { convertIntervalToRecordType, getTimeMinusInterval } from 'utils';
+import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from 'utils';
 
 export type ITreasuryStore = TreasuryStore;
 export const ITreasuryStore = DI.createInterface<ITreasuryStore>('TreasuryStore');

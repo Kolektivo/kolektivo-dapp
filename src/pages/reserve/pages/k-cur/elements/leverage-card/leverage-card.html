@@ -1,11 +1,12 @@
-<k-card title="${i18n.tr('navigation.reserve.k-cur.leverage.title')}" tooltip-text="${i18n.tr('navigation.reserve.k-cur.leverage.tooltip')}">
+<k-card title="${i18n.tr('navigation.reserve.k-cur.leverage.title')}"
+  tooltip-text="${i18n.tr('navigation.reserve.k-cur.leverage.tooltip')}">
   <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadAssets()"></k-loader>
   <k-loader fill="parent" color="var(--white)" if.bind="loading"></k-loader>
   <chart-time-filter current-filter.two-way="currentInterval">
-    <k-text color="var(--don-juan-200)" class="chart-ri.bindght-text">${i18n.tr('navigation.reserve.k-cur.leverage.ratio-text')} ${currentLeverageRatio | percentage}</k-text>
+    <k-text color="var(--don-juan-200)" class="chart-ri.bindght-text">
+      ${i18n.tr('navigation.reserve.k-cur.leverage.ratio-text')} ${currentLeverageRatio | percentage}</k-text>
   </chart-time-filter>
-  <k-chart if.bind="labels.length" gradient height="300" max-labels="2" hide-legend type="line" fill
-      labels.bind="labels"
-      border-color.bind="red" tension=".01" data-sets.bind="dataSets"></k-chart>
+  <k-chart gradient height="300" max-labels="2" hide-legend type="line" fill labels.bind="labels"
+    border-color.bind="red" tension=".01" data-sets.bind="dataSets"></k-chart>
   </k-stack>
 </k-card>

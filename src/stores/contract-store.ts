@@ -4,11 +4,12 @@ import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Erc20, TransferEvent as Erc20TransferEvent } from 'models/generated/monetary/erc20/Erc20';
 import { Erc721, TransferEvent as Erc721TransferEvent } from 'models/generated/monetary/erc721/Erc721';
 import { IContractService, tokenInfos } from 'services/contract';
-import { INumberService, ITokenInfo, fromWei, toWei } from '../services';
+import { INumberService, ITokenInfo } from '../services';
 import { Oracle } from './../models/generated/monetary/oracle/Oracle';
 import { Reserve } from 'models/generated/monetary/reserve';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/monetary/treasury';
+import { fromWei, toWei } from 'utils';
 export type IContractStore = ContractStore;
 export const IContractStore = DI.createInterface<IContractStore>('IContractStore');
 

@@ -1,5 +1,5 @@
 import { ContractJson, GovernanceContractJson, MonetaryContractJson } from './types';
-import { isCelo } from 'environment-variables';
+import { IS_CELO } from 'environment-variables';
 import governanceAlfajores from '../../contracts/governance/alfajores.json';
 import governanceCelo from '../../contracts/governance/celo.json';
 import governanceShared from '../../contracts/governance/sharedAbis.json';
@@ -16,8 +16,8 @@ export type ContractDetails<T extends ContractJson = ContractJson> = {
 export type ContractType = keyof typeof Contracts;
 
 export const Contracts = {
-  Monetary: { main: isCelo ? monetaryCelo : monetaryAlfajores, shared: monetaryShared },
-  Governance: { main: isCelo ? governanceCelo : governanceAlfajores, shared: governanceShared },
+  Monetary: { main: IS_CELO ? monetaryCelo : monetaryAlfajores, shared: monetaryShared },
+  Governance: { main: IS_CELO ? governanceCelo : governanceAlfajores, shared: governanceShared },
 };
 
 export function getContract<

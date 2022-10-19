@@ -34,9 +34,5 @@ export class Store {
     container.register(GovernanceStore);
   }
 
-  initializeServices() {
-    return this.services.initialize();
-  }
-
   sideBarOpen = false;
 }

@@ -4,10 +4,10 @@ import { I18N } from '@aurelia/i18n';
 import { IEventAggregator, ILogger, IPlatform, customElement } from 'aurelia';
 import { INotificationService } from './design-system/services';
 import { IStore } from './stores/store';
-import { WalletProvider } from './services';
+import { Web3Provider } from '@ethersproject/providers';
 import template from './app.html';
 
-type WrongNetworkInfo = { provider: WalletProvider; connectedTo?: string; need: string };
+type WrongNetworkInfo = { provider: Web3Provider; connectedTo?: string; need: string };
 @customElement({ name: 'app', template })
 export class App {
   xl = false;
@@ -43,13 +43,6 @@ export class App {
 
   detaching(): void {
     this.platform.window.removeEventListener('resize', this.recalc);
-  }
-
-  binding() {
-    return this.store.initializeServices().catch((e) => {
-      this.logger.error(e);
-      void this.notificationService.toast({ type: 'danger', message: 'There was an error initializing the application' });
-    });
   }
 
   async confirmChangeNetwork(): Promise<void> {

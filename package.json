@@ -60,6 +60,7 @@
     "@dethcrypto/eth-sdk-client": "^0.1.6",
     "@material-design-icons/svg": "^0.12.1",
     "@metamask/detect-provider": "^1.2.0",
+    "@metamask/providers": "^10.0.0",
     "@walletconnect/web3-provider": "^1.8.0",
     "aurelia": "dev",
     "browserify-zlib": "^0.2.0",

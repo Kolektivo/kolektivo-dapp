@@ -2,14 +2,14 @@ import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { BigNumberOverTimeData, NumberOverTimeData, ValueChartData } from 'models/chart-data';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IContractService, INumberService, fromWei } from 'services';
+import { IContractService, INumberService } from 'services';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 import { Interval } from 'models/interval';
 import { Reserve } from './../models/generated/monetary/reserve/Reserve';
 import { Transaction } from 'models/transaction';
 import { callOnce } from 'decorators/call-once';
-import { convertIntervalToRecordType, getTimeMinusInterval } from 'utils';
+import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from 'utils';
 
 export type IReserveStore = ReserveStore;
 export const IReserveStore = DI.createInterface<IReserveStore>('ReserveStore');

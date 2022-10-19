@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber';
+import { BigNumberish } from 'ethers';
 import { Interval } from 'models/interval';
-import { getAddress } from 'ethers/lib/utils';
+import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
 
 /**
  * Remove precision from the decimals part of a number. Need this instead of `toFixed` because
@@ -103,3 +104,47 @@ export const formatter = new Intl.DateTimeFormat(undefined, {
   timeStyle: 'short',
   dateStyle: 'short',
 });
+export const formatString = (string: string, placeholders: Record<string | number, unknown>) => {
+  for (const propertyName in placeholders) {
+    const re = new RegExp('{' + propertyName + '}', 'gm');
+    string = string.replace(re, placeholders[propertyName] as string);
+  }
+  return string;
+};
+
+/**
+ * @param ethValue
+ * @param decimals Can be a number or:
+ *  "wei",
+ *  "kwei",
+ *  "mwei",
+ *  "gwei",
+ *  "szabo",
+ *  "finney",
+ *  "ether",
+ * @returns
+ */
+export const toWei = (ethValue: BigNumberish, decimals: string | number): BigNumber => {
+  const t = typeof ethValue;
+  if (t === 'string' || t === 'number') {
+    // avoid underflows
+    ethValue = truncateDecimals(Number(ethValue), Number(decimals));
+  }
+  return parseUnits(ethValue.toString(), decimals);
+};
+
+/**
+ * @param weiValue
+ * @param decimals Can be a number or:
+ *  "wei",
+ *  "kwei",
+ *  "mwei",
+ *  "gwei",
+ *  "szabo",
+ *  "finney",
+ *  "ether",
+ * @returns
+ */
+export const fromWei = (weiValue: BigNumberish, decimals: string | number): string => {
+  return formatUnits(weiValue.toString(), decimals);
+};

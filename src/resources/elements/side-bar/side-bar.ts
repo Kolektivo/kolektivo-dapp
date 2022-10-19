@@ -3,7 +3,7 @@ import { BindingMode, ICustomElementViewModel, bindable, customElement } from 'a
 import { I18N } from '@aurelia/i18n';
 import { IRouter } from '@aurelia/router';
 import { ifExistsThenTrue } from '../../../design-system/common';
-import { isDev } from './../../../environment-variables';
+import { IS_DEV } from './../../../environment-variables';
 import template from './side-bar.html';
 
 import logo from '../../../../static/logo.svg';
@@ -41,7 +41,7 @@ export class SideBar implements ICustomElementViewModel {
         icon: this.i18n.tr('navigation.external-site.link-icon'),
       },
     ];
-    if (isDev) {
+    if (IS_DEV) {
       this.routes.push({ name: 'Storybook', path: 'storybook', location: 'bottom', icon: 'menu_book' });
     }
   }

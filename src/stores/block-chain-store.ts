@@ -1,23 +1,26 @@
-import { Address, IEthereumService, WalletProvider } from '../services';
+import { Address, IEthereumService } from '../services';
+import { AllowedNetworks } from 'models/allowed-network';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Hash } from './../services/ethereum-service';
+import { IConfiguration } from 'configurations/configuration';
+import { Web3Provider } from '@ethersproject/providers';
 
 export type IBlockChainStore = BlockChainStore;
 export const IBlockChainStore = DI.createInterface<IBlockChainStore>('BlockChainStore');
 
 export class BlockChainStore {
-  constructor(@IEthereumService private readonly ethereumService: IEthereumService) {}
+  constructor(@IEthereumService private readonly ethereumService: IEthereumService, @IConfiguration private readonly configuration: IConfiguration) {}
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IBlockChainStore, BlockChainStore));
   }
 
-  public get connectedWalletAddress(): Address | null {
+  public get connectedWalletAddress(): Address | undefined {
     return this.ethereumService.defaultAccountAddress;
   }
 
-  public get targetedNetwork(): AllowedNetworks | null {
-    return this.ethereumService.targetedNetwork;
+  public get targetedNetwork(): AllowedNetworks {
+    return this.configuration.chain;
   }
 
   public get walletConnected(): boolean {
@@ -36,7 +39,7 @@ export class BlockChainStore {
     return this.ethereumService.connectToConnectedProvider();
   }
 
-  public switchToTargetedNetwork(walletProvider: WalletProvider): Promise<boolean> {
+  public switchToTargetedNetwork(walletProvider: Web3Provider): Promise<boolean> {
     return this.ethereumService.switchToTargetedNetwork(walletProvider);
   }
 

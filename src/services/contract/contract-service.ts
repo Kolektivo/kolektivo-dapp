@@ -10,14 +10,14 @@ import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { Erc721 } from 'models/generated/monetary/erc721';
 import { ICacheService } from '../cache-service';
+import { IReadOnlyProvider } from 'provider';
 import { cache } from 'decorators/cache';
-import { defaultProvider } from '.';
 
 export type IContractService = ContractService;
 export const IContractService = DI.createInterface<IContractService>();
 
 export class ContractService {
-  constructor(@ICacheService private readonly cacheService: ICacheService) {}
+  constructor(@ICacheService private readonly cacheService: ICacheService, @IReadOnlyProvider private readonly readonlyProvider: IReadOnlyProvider) {}
 
   public static register(container: IContainer) {
     Registration.singleton(IContractService, ContractService).register(container);
@@ -40,7 +40,7 @@ export class ContractService {
       const key = abi as keyof Shared;
       abi = contractData.shared[key] as ContractInterface;
     }
-    return new Contract(overrideAddress ?? contract.address, abi, signerOrProvider ?? defaultProvider) as TResult;
+    return new Contract(overrideAddress ?? contract.address, abi, signerOrProvider ?? this.readonlyProvider) as TResult;
   }
 
   private async callContractMethod<
@@ -86,8 +86,10 @@ export class ContractService {
     id?: T,
     signerOrProvider?: Provider | Signer | undefined,
   ): T extends undefined ? Erc20 : Erc721 | Erc20 {
-    return new Contract(tokenAddress, id ? monetaryShared.ERC721 : monetaryShared.ERC20, signerOrProvider ?? defaultProvider) as T extends undefined
-      ? Erc20
-      : Erc721 | Erc20;
+    return new Contract(
+      tokenAddress,
+      id ? monetaryShared.ERC721 : monetaryShared.ERC20,
+      signerOrProvider ?? this.readonlyProvider,
+    ) as T extends undefined ? Erc20 : Erc721 | Erc20;
   }
 }

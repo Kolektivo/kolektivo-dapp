@@ -1,31 +1,23 @@
 import { DI, IContainer, Registration } from 'aurelia';
-import { callOnce } from '../decorators/call-once';
-import { isDev } from '../environment-variables';
-/* eslint-disable no-console */
-import { Networks } from './ethereum-service';
+import { IConfiguration } from 'configurations/configuration';
 
 export type ITimingService = TimingService;
 export const ITimingService = DI.createInterface<ITimingService>('TimingService');
 export class TimingService {
+  constructor(@IConfiguration private readonly configuration: IConfiguration) {}
+
   public static register(container: IContainer) {
     Registration.singleton(ITimingService, TimingService).register(container);
   }
 
-  private targetedNetwork?: AllowedNetworks;
-
-  @callOnce('Timing Service')
-  public initialize(network: AllowedNetworks): void {
-    this.targetedNetwork = network;
-  }
-
   public startTimer(label: string): void {
-    if (this.targetedNetwork !== Networks.Celo || isDev) {
+    if (this.configuration.isDevelopment) {
       console.time(label);
     }
   }
 
   public endTimer(label: string): void {
-    if (this.targetedNetwork !== Networks.Celo || isDev) {
+    if (this.configuration.isDevelopment) {
       console.timeEnd(label);
     }
   }
