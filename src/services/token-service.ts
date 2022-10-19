@@ -1,13 +1,15 @@
-import { Address, IEthereumService } from './ethereum-service';
-import { Contract, ContractInterface } from '@ethersproject/contracts';
+import { Contract } from '@ethersproject/contracts';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { Erc721 } from 'models/generated/monetary/erc721';
 import { ICacheService } from './cache-service';
+import { IEthereumService } from './ethereum-service';
 import { Provider } from '@ethersproject/providers';
 import { Signer } from '@ethersproject/abstract-signer';
 import { cache } from 'decorators/cache';
 import { monetaryShared } from './contract/contracts';
+// eslint-disable-next-line no-duplicate-imports
+import type { ContractInterface } from '@ethersproject/contracts';
 
 export type ITokenService = TokenService;
 export const ITokenService = DI.createInterface<ITokenService>();
@@ -41,7 +43,7 @@ export class TokenService {
   @cache<TokenService>(function () {
     return { storage: this.cacheService };
   })
-  private getTokenContractCached(tokenAddress: Address, abi: ContractInterface, signerOrProvider: Provider | Signer | undefined): Erc721 | Erc20 {
+  private getTokenContractCached(tokenAddress: string, abi: ContractInterface, signerOrProvider: Provider | Signer | undefined): Erc721 | Erc20 {
     return new Contract(tokenAddress, abi, signerOrProvider) as Erc721 | Erc20;
   }
 }

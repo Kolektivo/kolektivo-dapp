@@ -1,14 +1,16 @@
-import { BaseContract, Contract, ContractFunction, ContractInterface, PopulatedTransaction } from '@ethersproject/contracts';
-import { Provider } from '@ethersproject/providers';
+import { Provider } from '@ethersproject/providers/lib';
 import { Signer } from '@ethersproject/abstract-signer';
 
 import { ContractGroupsSharedJson } from './types';
 
-import { Address, IEthereumService } from 'services/ethereum-service';
+import { Contract } from 'ethers';
 import { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 import { DI, IContainer, Registration } from 'aurelia';
 import { ICacheService } from '../cache-service';
+import { IEthereumService } from 'services/ethereum-service';
 import { cache } from 'decorators/cache';
+// eslint-disable-next-line no-duplicate-imports
+import type { BaseContract, ContractFunction, ContractInterface, PopulatedTransaction } from 'ethers';
 
 export type IContractService = ContractService;
 export const IContractService = DI.createInterface<IContractService>();
@@ -101,7 +103,7 @@ export class ContractService {
   @cache<ContractService>(function () {
     return { storage: this.cacheService };
   })
-  private getContractCached<TResult extends BaseContract>(address: Address, abi: ContractInterface, signerOrProvider: Provider | Signer): TResult {
+  private getContractCached<TResult extends BaseContract>(address: string, abi: ContractInterface, signerOrProvider: Provider | Signer): TResult {
     return new Contract(address, abi, signerOrProvider) as TResult;
   }
 }

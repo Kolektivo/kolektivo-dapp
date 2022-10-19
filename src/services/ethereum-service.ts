@@ -16,15 +16,12 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal from 'web3modal';
 import detectEthereumProvider from '@metamask/detect-provider';
 
-export type Address = string;
-export type Hash = string;
-
 export interface IBlockInfoNative {
-  hash: Hash;
+  hash: string;
   /**
    * previous block
    */
-  parentHash: Hash;
+  parentHash: string;
   /**
    *The height(number) of this
    */
@@ -38,7 +35,7 @@ export interface IBlockInfoNative {
    * The total amount of gas used by all transactions in this
    */
   gasUsed: BigNumber;
-  transactions: Hash[];
+  transactions: string[];
 }
 
 export interface IBlockInfo extends IBlockInfoNative {
@@ -150,12 +147,12 @@ export class EthereumService {
    */
   public walletProvider?: Web3Provider;
 
-  public defaultAccountAddress?: Address;
+  public defaultAccountAddress?: string;
 
   /**
    * signer or address
    */
-  private defaultAccount?: Signer | Address | null;
+  private defaultAccount?: Signer | string | null;
 
   private web3Modal?: Web3Modal;
 
@@ -176,7 +173,7 @@ export class EthereumService {
     return account;
   }
 
-  private fireAccountsChangedHandler(account: Address | null): void {
+  private fireAccountsChangedHandler(account: string | null): void {
     // if (account && !(await this.disclaimerService.ensureDappDisclaimed(account))) {
     // this.disconnect({ code: -1, message: 'User declined the Prime Deals disclaimer' });
     // account = null;
@@ -200,7 +197,7 @@ export class EthereumService {
   /**
    * address, even if signer
    */
-  private async getDefaultAccountAddress(): Promise<Address> {
+  private async getDefaultAccountAddress(): Promise<string> {
     if (!this.defaultAccount) {
       throw new Error('getDefaultAccountAddress: no defaultAccount');
     }
@@ -228,8 +225,8 @@ export class EthereumService {
   @cache<EthereumService>(function () {
     return { storage: this.cacheService };
   })
-  private createSignerOrProviderCached(accountAddress: Address | Signer | undefined, provider: JsonRpcProvider | undefined): Provider | Signer {
-    let signerOrProvider: Address | Signer | Provider;
+  private createSignerOrProviderCached(accountAddress: string | Signer | undefined, provider: JsonRpcProvider | undefined): Provider | Signer {
+    let signerOrProvider: string | Signer | Provider;
     if (accountAddress && provider) {
       signerOrProvider = Signer.isSigner(accountAddress) ? accountAddress : provider.getSigner(accountAddress);
     } else {
@@ -389,7 +386,7 @@ export class EthereumService {
     }
   }
 
-  private handleAccountsChanged = async (accounts?: Address[]): Promise<void> => {
+  private handleAccountsChanged = async (accounts?: string[]): Promise<void> => {
     if (this.walletProvider) {
       this.defaultAccount = await this.getCurrentAccountFromProvider(this.walletProvider);
       this.defaultAccountAddress = await this.getDefaultAccountAddress();
@@ -475,7 +472,7 @@ export class EthereumService {
     return false;
   }
 
-  public async addTokenToMetamask(tokenAddress: Address, tokenSymbol: string, tokenDecimals: number, tokenImage: string): Promise<boolean> {
+  public async addTokenToMetamask(tokenAddress: string, tokenSymbol: string, tokenDecimals: number, tokenImage: string): Promise<boolean> {
     let wasAdded = false;
 
     if (this.walletProvider) {
@@ -510,21 +507,21 @@ export class EthereumService {
     return wasAdded;
   }
 
-  public getMetamaskHasToken(tokenAddress: Address): boolean {
+  public getMetamaskHasToken(tokenAddress: string): boolean {
     if (!this.defaultAccountAddress) {
       throw new Error('metamaskHasToken: no account');
     }
     return !!this.storageService.lsGet(this.getKeyForMetamaskHasToken(tokenAddress));
   }
 
-  private getKeyForMetamaskHasToken(tokenAddress: Address): string {
+  private getKeyForMetamaskHasToken(tokenAddress: string): string {
     if (!this.defaultAccountAddress) {
       throw new Error('getKeyForMetamaskHasToken: no account');
     }
     return `${this.defaultAccountAddress}_${tokenAddress}`;
   }
 
-  private setMetamaskHasToken(tokenAddress: Address): void {
+  private setMetamaskHasToken(tokenAddress: string): void {
     if (!this.defaultAccountAddress) {
       throw new Error('metamaskHasToken: no account');
     }
