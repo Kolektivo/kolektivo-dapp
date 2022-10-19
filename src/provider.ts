@@ -1,5 +1,5 @@
-import { BaseProvider } from '@ethersproject/providers/lib/base-provider';
 import { DI } from 'aurelia';
+import { Provider } from '@ethersproject/providers/lib';
 
-export type IReadOnlyProvider = BaseProvider;
-export const IReadOnlyProvider = DI.createInterface<BaseProvider>();
+export type IReadOnlyProvider = Provider;
+export const IReadOnlyProvider = DI.createInterface<Provider>();

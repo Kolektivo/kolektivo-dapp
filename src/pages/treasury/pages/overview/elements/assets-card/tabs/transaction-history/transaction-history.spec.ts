@@ -6,6 +6,7 @@ import { Registration } from 'aurelia';
 import { TransactionHistory } from './transaction-history';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('transaction-history', () => {
   it('should have a k-data-grid component', async () => {
@@ -19,7 +20,14 @@ describe('transaction-history', () => {
 
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
-    const createMockTreasuryStoreRegistration = () => Registration.instance(ITreasuryStore, {});
+    const createMockTreasuryStoreRegistration = () =>
+      Registration.instance(
+        ITreasuryStore,
+        mock<ITreasuryStore>({
+          treasuryAssets: [],
+          getValueOverTime: (a) => new Promise((res) => res([])),
+        }),
+      );
 
     const createMockI18nRegistration = () =>
       Registration.instance(I18N, {

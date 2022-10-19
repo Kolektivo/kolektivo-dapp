@@ -12,6 +12,7 @@ import { PercentageValueConverter } from './../../../../resources/value-converte
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('k-cur', () => {
   it('should have a k-page component', async () => {
@@ -81,7 +82,14 @@ describe('k-cur', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
     return [
-      Registration.instance(IReserveStore, {}),
+      Registration.instance(
+        IReserveStore,
+        mock<IReserveStore>({
+          reserveAssets: [],
+          getLeverageRatioValueOverTime: (a) => new Promise((res) => res([])),
+          getkCurPriceOverTime: (a) => new Promise((res) => res([])),
+        }),
+      ),
       KCur,
       EthweiValueConverter,
       PercentageValueConverter,

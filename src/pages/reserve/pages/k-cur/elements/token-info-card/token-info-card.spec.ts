@@ -11,6 +11,7 @@ import { Registration } from 'aurelia';
 import { TokenInfoCard } from './token-info-card';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('token-info-card', () => {
   it('should have a k-card component', async () => {
@@ -63,7 +64,14 @@ describe('token-info-card', () => {
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
-      Registration.instance(IReserveStore, {}),
+      Registration.instance(
+        IReserveStore,
+        mock<IReserveStore>({
+          reserveAssets: [],
+          getLeverageRatioValueOverTime: (a) => new Promise((res) => res([])),
+          getkCurPriceOverTime: (a) => new Promise((res) => res([])),
+        }),
+      ),
       EthweiValueConverter,
       Registration.instance(INumberService, {}),
       PercentageValueConverter,

@@ -7,7 +7,8 @@ import { IStore, ITreasuryStore } from 'stores';
 import { Registration } from 'aurelia';
 import { ValueCard } from './value-card';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('value-card', () => {
   it('should have a k-card component', async () => {
@@ -38,7 +39,13 @@ describe('value-card', () => {
     return [
       ValueCard,
       CurrencyValueConverter,
-      Registration.instance(ITreasuryStore, vi.fn()),
+      Registration.instance(
+        ITreasuryStore,
+        mock<ITreasuryStore>({
+          treasuryAssets: [],
+          getValueOverTime: (a) => new Promise((res) => res([])),
+        }),
+      ),
       Global,
       createMockStoreRegistration(),
       createMockI18nRegistration(),

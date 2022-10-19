@@ -80,6 +80,7 @@ describe('overview', () => {
         ITreasuryStore,
         mock<ITreasuryStore>({
           treasuryAssets: [],
+          getValueOverTime: (a) => new Promise((res) => res([])),
         }),
       );
 
@@ -87,7 +88,6 @@ describe('overview', () => {
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
         nf: (s: string) => String(s),
-        
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
