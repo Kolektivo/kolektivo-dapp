@@ -215,7 +215,7 @@ export class EthereumService {
     }
 
     this.readOnlyProvider = ethers.getDefaultProvider(this.endpoints[this.targetedNetwork]);
-    this.providerForCeloWithEthers = new CeloProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
+    this.providerForCeloWithEthers = new CeloProvider(this.endpoints[this.targetedNetwork]);
     return this.readOnlyProvider._networkPromise as Promise<unknown>;
   }
 
