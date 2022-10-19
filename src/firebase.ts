@@ -1,6 +1,6 @@
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
 import { I18nConfiguration } from '@aurelia/i18n';
-import { IIpfsService, INumberService, Services } from 'services';
+import { IIpfsService, Services } from 'services';
 import { IReserveStore } from './stores/reserve-store';
 import { ITreasuryStore } from './stores/treasury-store';
 import { Store } from 'stores';
@@ -42,7 +42,7 @@ export const seed = async () => {
   const hourInterval = 1;
   const dayInterval = 1;
   let kttValue = '';
-  const numberService: INumberService = container.get(INumberService);
+  // const numberService: INumberService = container.get(INumberService);
   const reserveStore: IReserveStore = container.get(IReserveStore);
   let reserveValue = '';
   let leverageRatio = 0;

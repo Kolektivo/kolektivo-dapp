@@ -2,6 +2,7 @@ import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { BigNumberOverTimeData, NumberOverTimeData, ValueChartData } from 'models/chart-data';
 import { DI, IContainer, Registration } from 'aurelia';
+import { Erc20 } from 'models/generated/monetary/erc20';
 import { IContractService, INumberService, fromWei } from 'services';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
@@ -81,7 +82,8 @@ export class ReserveStore {
     const contract = this.getReserveContract(); // get reserve contract
     if (!this.kCurSupply) return; //can't get the distribution percentages without a total supply value so return if it's not there
     //TODO: Get the balances of kCur inside of the reserve, mento and the primary pool and set those values here
-    const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token'); // get the kCur contract
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    const kCurContract: Erc20 = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token'); // get the kCur contract
     const kCurInReserve = await kCurContract.balanceOf(contract.address); //get the balace of kCur in the reserve
     this.kCurReserveDistribution =
       this.numberService.fromString(fromWei(kCurInReserve, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
