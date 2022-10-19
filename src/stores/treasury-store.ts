@@ -1,12 +1,16 @@
 import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
+import { BigNumberOverTimeData, ValueChartData } from 'models/chart-data';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IContractService, IServices, fromWei } from 'services';
 import { IContractStore } from './contract-store';
+import { IDataStore } from './data-store';
+import { Interval } from 'models/interval';
 import { MonetaryContractAbi } from 'services/contract/types';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/monetary/treasury/Treasury';
 import { callOnce } from './../decorators/call-once';
+import { convertIntervalToRecordType, getTimeMinusInterval } from 'utils';
 
 export type ITreasuryStore = TreasuryStore;
 export const ITreasuryStore = DI.createInterface<ITreasuryStore>('TreasuryStore');
@@ -17,13 +21,14 @@ export class TreasuryStore {
   public treasuryDistribution?: number;
   public reservesDistribution?: number;
   private treasuryContract?: Treasury;
+  public lastRebaseTime?: Date;
   public treasuryAssets?: (Asset | undefined)[] = [];
   public transactions: Transaction[] = [];
-  public valueOverTime?: { date: Date; value: number }[] = [];
   constructor(
     @IServices private readonly services: IServices,
     @IContractStore private readonly contractStore: IContractStore,
     @IContractService private readonly contractService: IContractService,
+    @IDataStore private readonly dataStore: IDataStore,
   ) {}
 
   public static register(container: IContainer): void {
@@ -45,7 +50,6 @@ export class TreasuryStore {
   @callOnce()
   public async loadAssets(): Promise<void> {
     const contract = this.getTreasuryContract();
-    void this.setValueOverTime();
     if (!contract) return;
     const treasuryAddress = contract.address;
     if (!treasuryAddress) return;
@@ -69,17 +73,45 @@ export class TreasuryStore {
     ).filter(Boolean);
   }
 
-  public async setValueOverTime(): Promise<void> {
+  public async getValueOverTime(interval: Interval): Promise<ValueChartData[]> {
+    //get data from datastore
+    const earliestTime = getTimeMinusInterval(interval);
+    const kttOverTimeData = await this.dataStore.getDocs<BigNumberOverTimeData[]>(
+      `chartData/ktt/${convertIntervalToRecordType(interval)}`,
+      'createdAt',
+      'desc',
+      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
+    );
+    //map data from datastore to what the UI needs
+    const chartData = kttOverTimeData.map((x) => {
+      return {
+        createdAt: new Date(x.createdAt),
+        value: this.services.numberService.fromString(fromWei(x.value, 18)),
+      } as unknown as ValueChartData;
+    });
+    //sort data by date ascending
+    chartData.sort((a, b) => {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+    //get latest data from the contract for last data point
+    const contract = this.getTreasuryContract();
+    const totalValuation = await contract?.totalValuation();
+    //add last data point
+    chartData.push({
+      createdAt: new Date(),
+      value: this.services.numberService.fromString(fromWei(totalValuation ?? BigNumber.from(0), 18)),
+    } as unknown as ValueChartData);
+    return chartData;
+  }
+
+  public async getLastRebaseTime() {
     const contract = this.getTreasuryContract();
     if (!contract) return;
     const rebaseEvents = await contract.queryFilter(contract.filters.Rebase());
-
-    this.valueOverTime = await Promise.all(
-      rebaseEvents.map(async (x) => ({
-        date: new Date((await x.getBlock()).timestamp * 1000),
-        value: this.services.numberService.fromString(fromWei(x.args.newScalar, 18)),
-      })),
-    );
+    rebaseEvents.sort((a, b) => {
+      return b.blockNumber - a.blockNumber;
+    });
+    this.lastRebaseTime = new Date((await rebaseEvents[0].getBlock()).timestamp * 1000);
   }
 
   public get circulatingDistribution(): number {

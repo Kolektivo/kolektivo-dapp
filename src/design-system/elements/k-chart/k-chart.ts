@@ -95,7 +95,7 @@ export class KChart implements ICustomElementViewModel {
   @bindable maxY?: number;
 
   chart?: HTMLCanvasElement;
-  chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
+  public chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
 
   constructor(@IPlatform private readonly platform: IPlatform) {}
 
@@ -104,6 +104,18 @@ export class KChart implements ICustomElementViewModel {
       height: this.height,
       width: this.width,
     };
+  }
+
+  get highestDataPoint(): number {
+    const data = this.dataSets.flatMap((x) => x.data);
+    data.sort();
+    return data[data.length - 1] as unknown as number;
+  }
+
+  get lowestDataPoint(): number {
+    const data = this.dataSets.flatMap((x) => x.data);
+    data.sort();
+    return data[0] as unknown as number;
   }
 
   createChart(): void {
@@ -212,6 +224,8 @@ export class KChart implements ICustomElementViewModel {
           },
         },
         y: {
+          suggestedMin: this.lowestDataPoint - this.lowestDataPoint * 0.1,
+          suggestedMax: this.highestDataPoint + this.highestDataPoint * 0.1,
           ticks: {
             maxTicksLimit: this.maxYLabels,
           },
@@ -260,8 +274,16 @@ export class KChart implements ICustomElementViewModel {
     });
   }
 
+  dataSetsChanged(): void {
+    this.refresh();
+  }
+
   dataChanged(): void {
-    this.chartJsInstance?.destroy();
+    this.refresh();
+  }
+
+  private refresh(): void {
+    void this.detaching();
     this.attaching();
   }
 

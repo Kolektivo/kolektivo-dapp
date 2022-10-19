@@ -1,10 +1,10 @@
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
 import { I18nConfiguration } from '@aurelia/i18n';
-import { IIpfsService, INumberService, Services, fromWei } from 'services';
+import { IIpfsService, INumberService, Services } from 'services';
 import { IReserveStore } from './stores/reserve-store';
 import { ITreasuryStore } from './stores/treasury-store';
 import { Store } from 'stores';
-import { collection, deleteDoc, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore/lite';
+import { collection, deleteDoc, doc, getDocs, getFirestore, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
 import { initializeApp } from 'firebase/app';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 
@@ -101,6 +101,12 @@ export const seed = async () => {
     (objectToSave as any).createdAt = time;
     await setDoc(doc(database, `chartData/${document}/${period}`, time.toString()), objectToSave);
   };
+  const deleteData = async (document: string, period: string, date: number) => {
+    const batch = writeBatch(database);
+    const docsToDelete = await getDocs(query(collection(database, `chartData/${document}/${period}`), where('createdAt', '<', date)));
+    docsToDelete.forEach((x) => batch.delete(x.ref));
+    await batch.commit();
+  };
   const getTreasuryValue = async (): Promise<string> => {
     const treasuryStore = container.get(ITreasuryStore);
     const treasuryContract = treasuryStore.getTreasuryContract();
@@ -109,6 +115,20 @@ export const seed = async () => {
   const loadReserveData = async (): Promise<void> => {
     await reserveStore.loadAssets(); //loads reserve value and assets
     await reserveStore.loadkCur(); //loads kCur and the supply distributions
+  };
+  const getTimeMinusInterval = (period: Periods): number => {
+    const now = new Date();
+    switch (period) {
+      case Periods.minute:
+        now.setMinutes(now.getMinutes() - 60, 0, 0); //get date 60 minutes ago
+        break;
+      case Periods.hour:
+        now.setHours(now.getHours() - 24, 0, 0, 0); //get date 24 hours ago
+        break;
+      case Periods.day:
+        return Number.MIN_VALUE; //never delete day data in case we need a MAX chart
+    }
+    return now.getTime();
   };
   const captureData = async () => {
     //Get current KTT (Treasury) value
@@ -119,7 +139,7 @@ export const seed = async () => {
     reserveValue = reserveStore.reserveValuation?.toHexString() ?? '';
 
     //Get current kCur leverage ratio
-    leverageRatio = numberService.fromString(fromWei(reserveStore.backing ?? 0, 2));
+    leverageRatio = reserveStore.leverageRatio;
 
     //Get current kCur Price
     kCurPrice = reserveStore.kCurPrice ?? 0;
@@ -139,20 +159,21 @@ export const seed = async () => {
   await Promise.all(
     periods.map(async (period): Promise<void> => {
       const lastSync = await getLastSyncTime(Periods[period]); //get last sync time for this period from firebase
+      //lastSync = 1666051200000
       const now = new Date();
       let lastSyncTime = new Date();
       if (lastSync) {
         lastSyncTime = new Date(Number(lastSync));
       }
       if (period === Periods.minute) {
-        lastSyncTime.setMinutes(lastSyncTime.getMinutes() + minuteInterval); // increase the time by the period
-        lastSyncTime.setSeconds(0, 0);
+        lastSyncTime.setUTCMinutes(lastSyncTime.getUTCMinutes() + minuteInterval); // increase the time by the period
+        lastSyncTime.setUTCSeconds(0, 0);
       } else if (period === Periods.hour) {
-        lastSyncTime.setHours(lastSyncTime.getHours() + hourInterval); // increase the time by the period
-        lastSyncTime.setMinutes(0, 0, 0);
+        lastSyncTime.setUTCHours(lastSyncTime.getUTCHours() + hourInterval); // increase the time by the period
+        lastSyncTime.setUTCMinutes(0, 0, 0);
       } else {
-        lastSyncTime.setDate(lastSyncTime.getDate() + dayInterval); // increase the time by the period
-        lastSyncTime.setHours(0, 0, 0, 0);
+        lastSyncTime.setUTCDate(lastSyncTime.getUTCDate() + dayInterval); // increase the time by the period
+        lastSyncTime.setUTCHours(0, 0, 0, 0);
       }
       if (now >= lastSyncTime || !lastSync) {
         let newSyncTime = new Date();
@@ -163,10 +184,10 @@ export const seed = async () => {
           newSyncTime = new Date(Math.floor(now.getTime() / minuteCoeff) * minuteCoeff);
         } else if (period === Periods.hour) {
           //set new sync time to now but with the minutes, seconds and ms = 0
-          newSyncTime.setMinutes(0, 0, 0);
+          newSyncTime.setUTCMinutes(0, 0, 0);
         } else {
           //set new sync time to now but with the hours, minutes, seconds and ms = 0
-          newSyncTime.setHours(0, 0, 0, 0);
+          newSyncTime.setUTCHours(0, 0, 0, 0);
         }
 
         //capture data for the new interval
@@ -189,6 +210,14 @@ export const seed = async () => {
           await addData('ktt', Periods[period], newSyncTime.getTime(), kttValue);
           await addData('reserve', Periods[period], newSyncTime.getTime(), reserveValue);
           await setLastSyncTime(Periods[period], newSyncTime.getTime(), lastSync); //set latest sync time
+
+          //delete unneeded records for this interval
+          const earliestTime = getTimeMinusInterval(period);
+          await deleteData('kCurPrice', Periods[period], earliestTime);
+          await deleteData('kCurRatio', Periods[period], earliestTime);
+          await deleteData('kCurSupply', Periods[period], earliestTime);
+          await deleteData('ktt', Periods[period], earliestTime);
+          await deleteData('reserve', Periods[period], earliestTime);
         });
       }
       return;

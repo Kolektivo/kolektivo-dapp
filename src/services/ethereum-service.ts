@@ -95,7 +95,7 @@ export class EthereumService {
     Celo: 'https://celo.rpcs.dev:8545',
     // Alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
     //Alfajores: `https://alfajores.rpcs.dev:8545`,
-    Alfajores: `https://alfajores-forno.celo-testnet.org`,
+    Alfajores: `https://alfajores.rpcs.dev:8545`,
     // Alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
     // Alfajores: `https://celo-alfajores-rpc.allthatnode.com/QpHXTMEr0FbAgsVRUg8eYMbOrQy6KLxr`,
   };
@@ -214,8 +214,8 @@ export class EthereumService {
       throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
     }
 
-    this.readOnlyProvider = ethers.getDefaultProvider(this.endpoints[this.targetedNetwork]);
-    this.providerForCeloWithEthers = new CeloProvider(this.endpoints[this.targetedNetwork]);
+    this.readOnlyProvider = ethers.getDefaultProvider(`https://alfajores.rpcs.dev:8545`);
+    this.providerForCeloWithEthers = new CeloProvider(`https://alfajores.rpcs.dev:8545`);
     return this.readOnlyProvider._networkPromise as Promise<unknown>;
   }
 

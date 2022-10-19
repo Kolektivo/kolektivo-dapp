@@ -1,7 +1,7 @@
-const params = new URLSearchParams(location.search);
-const stamp = params.get('seed-data');
-if (stamp) {
-  void import('./firebase').then(async (x) => await x.seed());
-} else {
-  import('./app-root');
-}
+import './prototypes';
+import { App } from './app';
+import { appContainer } from './app-container';
+import Aurelia from 'aurelia';
+
+export const instance = new Aurelia(appContainer);
+void instance.app(App).start();

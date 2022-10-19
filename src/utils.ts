@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber';
+import { Interval } from 'models/interval';
 import { getAddress } from 'ethers/lib/utils';
 
 /**
@@ -62,3 +63,43 @@ export function isAddress(address?: string | null, emptyOk = false): boolean {
   } catch (e) {}
   return false;
 }
+
+export function convertIntervalToRecordType(interval: Interval): string {
+  switch (interval) {
+    case Interval['1d']:
+      return 'hour';
+    case Interval['1h']:
+      return 'minute';
+    case Interval['1m']:
+    case Interval['1w']:
+    case Interval['1y']:
+      return 'day';
+  }
+}
+
+export function getTimeMinusInterval(interval: Interval): number {
+  const now = new Date();
+  switch (interval) {
+    case Interval['1h']:
+      now.setMinutes(now.getMinutes() - 60);
+      break;
+    case Interval['1d']:
+      now.setHours(now.getHours() - 24);
+      break;
+    case Interval['1w']:
+      now.setDate(now.getDate() - 7);
+      break;
+    case Interval['1m']:
+      now.setMonth(now.getMonth() - 1);
+      break;
+    case Interval['1y']:
+      now.setFullYear(now.getFullYear() - 1);
+      break;
+  }
+  return now.getTime();
+}
+
+export const formatter = new Intl.DateTimeFormat(undefined, {
+  timeStyle: 'short',
+  dateStyle: 'short',
+});
