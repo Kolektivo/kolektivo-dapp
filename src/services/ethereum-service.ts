@@ -1,4 +1,4 @@
-import { BaseProvider, ExternalProvider, Network, Web3Provider, getNetwork } from '@ethersproject/providers';
+import { BaseProvider, ExternalProvider, JsonRpcProvider, Network, Web3Provider, getNetwork } from '@ethersproject/providers';
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
@@ -10,7 +10,9 @@ import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
 import { truncateDecimals } from '../utils';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+import { ICacheService } from './cache-service';
 import { IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
+import { cache } from 'decorators/cache';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal from 'web3modal';
 import detectEthereumProvider from '@metamask/detect-provider';
@@ -79,6 +81,7 @@ export class EthereumService {
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     @IBrowserStorageService private readonly storageService: IBrowserStorageService,
     @ILogger private readonly logger: ILogger,
+    @ICacheService private readonly cacheService: ICacheService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
   }
@@ -282,6 +285,33 @@ export class EthereumService {
     } else {
       return getAddress(this.defaultAccount);
     }
+  }
+
+  /**
+   * get signer or provider for use by ethers Contracts
+   * @returns
+   */
+  public createSignerOrProvider(): BaseProvider | Signer {
+    return this.createSignerOrProviderCached(this.defaultAccountAddress, this.walletProvider);
+  }
+
+  /**
+   * The cache restricts this from being invoked unless it has new input parameters.
+   * @param accountAddress
+   * @param provider
+   * @returns
+   */
+  @cache<EthereumService>(function () {
+    return { storage: this.cacheService };
+  })
+  private createSignerOrProviderCached(accountAddress: Address | Signer | null, provider: JsonRpcProvider | undefined): BaseProvider | Signer {
+    let signerOrProvider: Address | Signer | JsonRpcProvider | BaseProvider;
+    if (accountAddress && provider) {
+      signerOrProvider = Signer.isSigner(accountAddress) ? accountAddress : provider.getSigner(accountAddress);
+    } else {
+      signerOrProvider = this.readOnlyProvider;
+    }
+    return signerOrProvider;
   }
 
   public getDefaultSigner(): Signer {

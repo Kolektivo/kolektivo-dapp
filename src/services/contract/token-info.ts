@@ -1,14 +1,6 @@
-import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { ITokenInfo, ITokenListUniswap } from 'services/token-types';
-import { isCelo } from 'environment-variables';
 
 const tokenListUri = 'https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json';
-const endpoint = isCelo ? 'https://celo.rpcs.dev:8545' : `https://alfajores.rpcs.dev:8545`;
-
-export const defaultProvider = new CeloProvider({
-  url: endpoint,
-  skipFetchSetup: true,
-});
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 export const tokenInfos = fetch
