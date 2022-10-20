@@ -12,19 +12,15 @@ export class AccountStore {
   public walletAddress?: string;
   public signer?: ReturnType<JsonRpcProvider['getSigner']>;
   public walletProvider?: Provider;
+  public selectedProvider?: Web3Provider;
 
   public get web3Provider(): Web3Provider | undefined {
     return this._web3Provider;
   }
 
   public set web3Provider(value: Web3Provider | undefined) {
-    if (value === undefined) {
-      this.clear();
-    }
-
     this._web3Provider = value;
     void this.setupProvider();
-    this.addListeners();
   }
 
   constructor(
@@ -44,17 +40,17 @@ export class AccountStore {
   }
 
   private addListeners() {
-    if (!this.web3Provider) return;
-    this.web3Provider.on('accountsChanged', this.handleAccountsChanged);
-    this.web3Provider.on('chainChanged', this.handleChainChanged);
-    this.web3Provider.on('disconnect', this.handleDisconnect);
+    if (!this.selectedProvider) return;
+    this.selectedProvider.on('accountsChanged', this.handleAccountsChanged);
+    this.selectedProvider.on('chainChanged', this.handleChainChanged);
+    this.selectedProvider.on('disconnect', this.handleDisconnect);
   }
 
   private removeListeners() {
-    if (!this.web3Provider) return;
-    this.web3Provider.removeListener('accountsChanged', this.handleAccountsChanged);
-    this.web3Provider.removeListener('chainChanged', this.handleChainChanged);
-    this.web3Provider.removeListener('disconnect', this.handleDisconnect);
+    if (!this.selectedProvider) return;
+    this.selectedProvider.removeListener('accountsChanged', this.handleAccountsChanged);
+    this.selectedProvider.removeListener('chainChanged', this.handleChainChanged);
+    this.selectedProvider.removeListener('disconnect', this.handleDisconnect);
   }
 
   private clear() {
@@ -79,7 +75,8 @@ export class AccountStore {
   private async autoConnect() {
     const provider = await this.ethereumService.getMetaMaskProvider();
     if (!provider) return;
-    this.web3Provider = new Web3Provider(provider as unknown as ExternalProvider);
+    this.selectedProvider = provider as unknown as Web3Provider;
+    this.web3Provider = new Web3Provider(this.selectedProvider as unknown as ExternalProvider);
     this.walletAddress = provider.selectedAddress ?? undefined;
   }
 

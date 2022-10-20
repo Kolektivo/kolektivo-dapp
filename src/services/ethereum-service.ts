@@ -142,27 +142,6 @@ export class EthereumService {
     theme: 'dark',
   });
 
-  private fireAccountsChangedHandler(account: string | null): void {
-    // if (account && !(await this.disclaimerService.ensureDappDisclaimed(account))) {
-    // this.disconnect({ code: -1, message: 'User declined the Prime Deals disclaimer' });
-    // account = null;
-    // }
-    this.logger.info(`account changed: ${account ?? 'null'}`);
-    this.eventAggregator.publish('Network.Changed.Account', account);
-  }
-  private fireChainChangedHandler(info: IChainEventInfo): void {
-    this.logger.info(`chain changed: ${info.chainId ?? 'undefined'}`);
-    this.eventAggregator.publish('Network.Changed.Id', info);
-  }
-  private fireConnectHandler(info: IChainEventInfo): void {
-    this.logger.info(`connected: ${info.chainName ?? 'undefined'}`);
-    this.eventAggregator.publish('Network.Changed.Connected', info);
-  }
-  private fireDisconnectHandler(error: { code: number; message: string }): void {
-    this.logger.info(`disconnected: ${error.code}: ${error.message}`);
-    this.eventAggregator.publish('Network.Changed.Disconnect', error);
-  }
-
   public async connect(connectTo?: string): Promise<ExternalProvider> {
     return connectTo ? ((await this.web3Modal.connectTo(connectTo)) as ExternalProvider) : ((await this.web3Modal.connect()) as ExternalProvider);
   }
