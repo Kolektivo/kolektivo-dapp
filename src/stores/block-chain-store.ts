@@ -1,6 +1,6 @@
 import { AllowedNetworks } from 'models/allowed-network';
 import { DI, IContainer, Registration } from 'aurelia';
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
+import { ExternalProvider, Network, Web3Provider, getNetwork } from '@ethersproject/providers';
 import { IAccountStore } from './account-store';
 import { IConfiguration } from 'configurations/configuration';
 import { IEthereumService } from '../services';
@@ -11,7 +11,7 @@ export const IBlockChainStore = DI.createInterface<IBlockChainStore>('BlockChain
 export class BlockChainStore {
   public provider?: Web3Provider;
   public walletProvider?: Web3Provider;
-
+  public network?: Network | null;
   constructor(
     @IEthereumService private readonly ethereumService: IEthereumService,
     @IConfiguration private readonly configuration: IConfiguration,
@@ -45,7 +45,12 @@ export class BlockChainStore {
   };
 
   private handleChainChanged = (chainId: number) => {
-    alert(chainId);
+    this.network = getNetwork(Number(chainId));
+    if (this.isTargetedNetwork) {
+      void this.autoConnect();
+    } else {
+      this.disconnect();
+    }
   };
 
   private handleAccountsChanged = (accounts?: string[]) => {
@@ -59,6 +64,10 @@ export class BlockChainStore {
 
   public get targetedNetwork(): AllowedNetworks {
     return this.configuration.chain;
+  }
+
+  public get isTargetedNetwork(): boolean {
+    return this.network?.chainId === this.configuration.chainId;
   }
 
   public get walletConnected(): boolean {
