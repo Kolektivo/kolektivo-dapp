@@ -3,12 +3,12 @@ import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { Erc721 } from 'models/generated/monetary/erc721';
 import { ICacheService } from './cache-service';
+import { IReadOnlyProvider } from 'read-only-provider';
 import { Provider } from '@ethersproject/providers';
 import { Signer } from '@ethersproject/abstract-signer';
 import { cache } from 'decorators/cache';
 import { monetaryShared } from './contract/contracts';
 // eslint-disable-next-line no-duplicate-imports
-import { IReadOnlyProvider } from 'read-only-provider';
 import type { ContractInterface } from '@ethersproject/contracts';
 
 export type ITokenService = TokenService;

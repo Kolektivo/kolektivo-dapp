@@ -1,5 +1,5 @@
 import { DI, IContainer, Registration } from 'aurelia';
-import { ExternalProvider, JsonRpcSigner, Provider, Web3Provider } from '@ethersproject/providers/lib';
+import { ExternalProvider, JsonRpcProvider, Provider, Web3Provider } from '@ethersproject/providers';
 import { IEthereumService } from 'services';
 import { IProviderFactory } from '../provider-factory';
 import { IReadOnlyProvider } from 'read-only-provider';
@@ -10,7 +10,7 @@ export const IAccountStore = DI.createInterface<IAccountStore>();
 export class AccountStore {
   private _web3Provider?: Web3Provider;
   public walletAddress?: string;
-  public signer?: JsonRpcSigner;
+  public signer?: ReturnType<JsonRpcProvider['getSigner']>;
   public walletProvider?: Provider;
 
   public get web3Provider(): Web3Provider | undefined {
