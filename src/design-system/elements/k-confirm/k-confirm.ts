@@ -4,7 +4,7 @@ import template from './k-confirm.html';
 export class KConfirm implements ICustomElementViewModel {
   @bindable message = 'Are you sure?';
 
-  confirm(result?: boolean): boolean {
+  confirm = (result?: boolean) => {
     return result ?? false;
-  }
+  };
 }
