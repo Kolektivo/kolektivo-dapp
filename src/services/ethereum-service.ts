@@ -1,10 +1,10 @@
 import { AllowedNetworks } from './../models/allowed-network';
 import { BigNumber } from '@ethersproject/bignumber';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
-import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
 import { IConfiguration } from 'configurations/configuration';
 import { IReadOnlyProvider } from 'read-only-provider';
 import { IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
+import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
 import { MetaMaskInpageProvider } from '@metamask/providers';
 import { Signer } from 'ethers';
 import { formatString } from '../utils';
@@ -142,8 +142,8 @@ export class EthereumService {
     theme: 'dark',
   });
 
-  public async connect(connectTo?: string): Promise<ExternalProvider> {
-    return connectTo ? ((await this.web3Modal.connectTo(connectTo)) as ExternalProvider) : ((await this.web3Modal.connect()) as ExternalProvider);
+  public async connect(connectTo?: string): Promise<Web3Provider> {
+    return connectTo ? ((await this.web3Modal.connectTo(connectTo)) as Web3Provider) : ((await this.web3Modal.connect()) as Web3Provider);
   }
 
   public async getMetaMaskProvider() {
