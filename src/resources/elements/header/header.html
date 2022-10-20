@@ -13,13 +13,14 @@
     <div else>
       <k-stack justify-content="flex-end" direction="row" gap="20">
         <network-feedback></network-feedback>
-        <k-text color="var(--white)" if.bind="store.kolektivoStore.badges.length">${i18n.tr('status-bar.badge-title')}:</k-text>
+        <k-text color="var(--white)" if.bind="store.kolektivoStore.badges.length">${i18n.tr('status-bar.badge-title')}:
+        </k-text>
         <k-avatar-group ref="badgeGroup">
           <k-avatar repeat.for="badge of store.kolektivoStore.badges" tooltip="value:${badge.name};position:bottom"
             src.bind="badge.imageUrl" size="32"></k-avatar>
         </k-avatar-group>
         <k-button ref="accountButton" type="utility-dark" icon="account_circle">
-          ${store.blockChainStore.connectedWalletAddress
+          ${store.accountStore.walletAddress
           | smallHexString}</k-button>
         <k-icon-button if.bind="pendingTransactions === 0" ref="activityButton" type="utility-dark"
           name="electric_bolt"></k-icon-button>

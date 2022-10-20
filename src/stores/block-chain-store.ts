@@ -1,22 +1,22 @@
-import { Address, IEthereumService } from '../services';
 import { AllowedNetworks } from 'models/allowed-network';
 import { DI, IContainer, Registration } from 'aurelia';
-import { Hash } from './../services/ethereum-service';
+import { IAccountStore } from './account-store';
 import { IConfiguration } from 'configurations/configuration';
+import { IEthereumService } from '../services';
 import { Web3Provider } from '@ethersproject/providers';
 
 export type IBlockChainStore = BlockChainStore;
 export const IBlockChainStore = DI.createInterface<IBlockChainStore>('BlockChainStore');
 
 export class BlockChainStore {
-  constructor(@IEthereumService private readonly ethereumService: IEthereumService, @IConfiguration private readonly configuration: IConfiguration) {}
+  constructor(
+    @IEthereumService private readonly ethereumService: IEthereumService,
+    @IConfiguration private readonly configuration: IConfiguration,
+    @IAccountStore private readonly accountStore: IAccountStore,
+  ) {}
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IBlockChainStore, BlockChainStore));
-  }
-
-  public get connectedWalletAddress(): Address | undefined {
-    return this.ethereumService.defaultAccountAddress;
   }
 
   public get targetedNetwork(): AllowedNetworks {
@@ -24,34 +24,35 @@ export class BlockChainStore {
   }
 
   public get walletConnected(): boolean {
-    return !!this.connectedWalletAddress;
+    return !!this.accountStore.walletAddress;
   }
 
-  public connect(): void {
-    void this.ethereumService.connect();
+  public async connect() {
+    const provider = await this.ethereumService.connect();
+    this.accountStore.web3Provider = new Web3Provider(provider);
   }
 
   public connectKolektivoWallet(): void {
-    void this.ethereumService.connectKolektivoWallet();
+    //
   }
 
-  public connectToConnectedProvider(): Promise<void> {
-    return this.ethereumService.connectToConnectedProvider();
+  public connectToConnectedProvider() {
+    return this.ethereumService.getMetaMaskProvider();
   }
 
-  public switchToTargetedNetwork(walletProvider: Web3Provider): Promise<boolean> {
+  public switchToTargetedNetwork(walletProvider: Web3Provider) {
     return this.ethereumService.switchToTargetedNetwork(walletProvider);
   }
 
-  public disconnect(error: { code: number; message: string }): void {
-    return this.ethereumService.disconnect(error);
+  public disconnect(): void {
+    return (this.accountStore.walletAddress = undefined);
   }
 
-  public getEtherscanLink(addressOrHash: Address | Hash, tx = false): string {
+  public getEtherscanLink(addressOrHash: string, tx = false): string {
     return this.ethereumService.getEtherscanLink(addressOrHash, tx);
   }
 
   public get connectedWalletEtherscanLink(): string {
-    return this.ethereumService.getEtherscanLink(this.connectedWalletAddress);
+    return this.ethereumService.getEtherscanLink(this.accountStore.walletAddress);
   }
 }

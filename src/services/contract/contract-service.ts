@@ -1,16 +1,16 @@
+import { Contract } from 'ethers';
 import { Provider } from '@ethersproject/providers/lib';
 import { Signer } from '@ethersproject/abstract-signer';
+// eslint-disable-next-line no-duplicate-imports
+import type { BaseContract, ContractFunction, ContractInterface, PopulatedTransaction } from 'ethers';
 
 import { ContractGroupsSharedJson } from './types';
 
-import { Contract } from 'ethers';
 import { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 import { DI, IContainer, Registration } from 'aurelia';
 import { ICacheService } from '../cache-service';
-import { IEthereumService } from 'services/ethereum-service';
+import { IReadOnlyProvider } from '../../read-only-provider';
 import { cache } from 'decorators/cache';
-// eslint-disable-next-line no-duplicate-imports
-import type { BaseContract, ContractFunction, ContractInterface, PopulatedTransaction } from 'ethers';
 
 export type IContractService = ContractService;
 export const IContractService = DI.createInterface<IContractService>();
@@ -22,7 +22,7 @@ export const IContractService = DI.createInterface<IContractService>();
  * Uses the ABIs obtained from `getContractAbi` in contracts.ts.
  */
 export class ContractService {
-  constructor(@ICacheService private readonly cacheService: ICacheService, @IEthereumService private readonly ethereumService: IEthereumService) {}
+  constructor(@ICacheService private readonly cacheService: ICacheService, @IReadOnlyProvider private readonly readOnlyProvider: IReadOnlyProvider) {}
 
   public static register(container: IContainer) {
     Registration.singleton(IContractService, ContractService).register(container);
@@ -80,12 +80,11 @@ export class ContractService {
       const key = abi as keyof ContractGroupsSharedJson;
       abi = contractData.shared[key] as ContractInterface;
     }
-    signerOrProvider = signerOrProvider ?? this.ethereumService.createSignerOrProvider();
     overrideAddress = overrideAddress ?? contract.address;
     if (!overrideAddress) {
       throw new Error(`ContractService: requested contract has no address: ${name}`);
     }
-    return this.getContractCached(overrideAddress, abi, signerOrProvider);
+    return this.getContractCached(overrideAddress, abi, signerOrProvider ?? this.readOnlyProvider);
   }
 
   /**

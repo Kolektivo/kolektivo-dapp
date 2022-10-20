@@ -3,7 +3,7 @@ import { EthereumService, IEthereumService } from './../services/ethereum-servic
 import { IConfiguration } from 'configurations/configuration';
 import { IContainer, Registration } from 'aurelia';
 import { INotificationService } from 'design-system/services';
-import { IReadOnlyProvider } from 'provider';
+import { IReadOnlyProvider } from 'read-only-provider';
 import { getDefaultProvider } from 'ethers';
 import { mock } from 'vitest-mock-extended';
 

@@ -30,7 +30,7 @@ export class App {
     this.platform.window.addEventListener('resize', this.recalc);
     this.recalc();
   }
-  async attached(): Promise<void> {
+  attached() {
     this.eventAggregator.subscribe('Network.wrongNetwork', (info: WrongNetworkInfo): void => {
       /**
        * This will put up a modal to prompt the user to change the network.  Handlers are below.
@@ -38,7 +38,6 @@ export class App {
       this.confirmChangeNetworkInfo = Object.assign(info, { connectedTo: info.connectedTo ?? this.i18n.tr('general.an-unknown-network') });
       this.showConfirmChangeNetworkInfo = true;
     });
-    await this.store.blockChainStore.connectToConnectedProvider();
   }
 
   detaching(): void {
@@ -58,7 +57,7 @@ export class App {
   }
 
   cancelConfirmChangeNetwork(info: WrongNetworkInfo | undefined): void {
-    this.store.blockChainStore.disconnect({ code: -1, message: 'wrong network' });
+    this.store.blockChainStore.disconnect();
     void this.notificationService.toast({
       message: `Please connect your wallet to ${info?.need ?? this.confirmChangeNetworkInfo?.need ?? this.i18n.tr('general.an-unknown-network')}`,
       type: 'danger',

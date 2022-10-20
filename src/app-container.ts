@@ -3,12 +3,13 @@ import * as pages from './pages';
 import * as resources from './resources';
 import { CHAIN, CHAIN_ID, CHAIN_URL, IPFS_GATEWAY, IS_DEV, SCAN_LINK } from './environment-variables';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
+import { CeloProviderFactory, IProviderFactory } from './provider-factory';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from './design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { IConfiguration } from 'configurations/configuration';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
-import { IReadOnlyProvider } from 'provider';
+import { IReadOnlyProvider } from 'read-only-provider';
 import { ITokenData, getTokenInfos } from './services/contract/token-info';
 import { RouterConfiguration } from '@aurelia/router';
 import { Services } from './services/services';
@@ -41,6 +42,7 @@ export const appContainer: IContainer = DI.createContainer()
         enableCoercion: true,
       };
     }),
+    Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })),
   )
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(Services)
@@ -63,8 +65,7 @@ export const appContainer: IContainer = DI.createContainer()
       scanLink: SCAN_LINK,
     }),
   )
-  .register(Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })))
-
+  .register(Registration.singleton(IProviderFactory, CeloProviderFactory))
   .register(
     LoggerConfiguration.create({
       level: IS_DEV ? LogLevel.debug : LogLevel.warn,
