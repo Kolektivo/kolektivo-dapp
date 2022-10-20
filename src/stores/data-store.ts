@@ -14,13 +14,13 @@ export type WhereClause = {
 
 export class DataStore {
   private firebaseConfig = {
-    apiKey: 'AIzaSyAmcBzOuKPoswcKAZDabJ42dyN6EL-7Gw0',
-    authDomain: 'kolektivo-613ca.firebaseapp.com',
-    projectId: 'kolektivo-613ca',
-    storageBucket: 'kolektivo-613ca.appspot.com',
-    messagingSenderId: '566529978919',
-    appId: '1:566529978919:web:0109b91d371b892db5d402',
-    measurementId: 'G-FNM37RE6TB',
+    apiKey: 'AIzaSyCItD_gHaRvRrd8evJtFKPALsZLY1EkHe4',
+    authDomain: 'kolektivo-36b63.firebaseapp.com',
+    projectId: 'kolektivo-36b63',
+    storageBucket: 'kolektivo-36b63.appspot.com',
+    messagingSenderId: '324595180464',
+    appId: '1:324595180464:web:69e6b83cdba3bf2d30ac75',
+    measurementId: 'G-7BSHV1Y6VS',
   };
   private app = initializeApp(this.firebaseConfig);
   private database = getFirestore(this.app);
