@@ -8,14 +8,14 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { cache } from 'decorators/cache';
 import { monetaryShared } from './contract/contracts';
 // eslint-disable-next-line no-duplicate-imports
-import { IAccountStore } from 'stores/account-store';
+import { IReadOnlyProvider } from 'read-only-provider';
 import type { ContractInterface } from '@ethersproject/contracts';
 
 export type ITokenService = TokenService;
 export const ITokenService = DI.createInterface<ITokenService>();
 
 export class TokenService {
-  constructor(@ICacheService private readonly cacheService: ICacheService, @IAccountStore private readonly accountStore: IAccountStore) {}
+  constructor(@ICacheService private readonly cacheService: ICacheService, @IReadOnlyProvider private readonly readonlyProvider: IReadOnlyProvider) {}
 
   public static register(container: IContainer) {
     Registration.singleton(ITokenService, TokenService).register(container);
@@ -36,7 +36,7 @@ export class TokenService {
     return this.getTokenContractCached(
       tokenAddress,
       id ? monetaryShared.ERC721 : monetaryShared.ERC20,
-      signerOrProvider ?? this.accountStore.walletProvider ?? this.accountStore.readonlyProvider,
+      signerOrProvider ?? this.readonlyProvider,
     ) as T extends undefined ? Erc20 : Erc721 | Erc20;
   }
 
