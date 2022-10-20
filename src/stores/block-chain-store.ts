@@ -78,13 +78,13 @@ export class BlockChainStore {
     this.removeListeners();
     this.provider = web3Provider;
     this.addListeners();
-    this.network = web3Provider?.network;
+    this.network = this.walletProvider?.network;
   }
 
   public async connect(web3Provider?: Web3Provider) {
     const provider = web3Provider ?? (await this.ethereumService.connect());
-    this.setProvider(web3Provider);
     this.walletProvider = new Web3Provider(provider as unknown as ExternalProvider);
+    this.setProvider(web3Provider);
 
     if (!this.isTargetedNetwork) {
       this.disconnect();
