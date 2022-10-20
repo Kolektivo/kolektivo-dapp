@@ -1,10 +1,9 @@
 import { Bacroles } from './../models/generated/governance/bacroles/Bacroles';
 import { BadgeType } from 'models/badge-type';
-import { Badger } from 'models/generated/governance/badger';
 import { BigNumber, ContractTransaction, PopulatedTransaction } from 'ethers';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IContractService } from 'services/contract';
-import { IKolektivoStore, allBadges } from './kolektivo-store';
+import { IKolektivoStore } from './kolektivo-store';
 import { IObserverService } from 'services/observer-service';
 import { IServices } from 'services/services';
 import { Proposal, ProposalStatus } from './../models/proposal';
@@ -22,9 +21,7 @@ export class GovernanceStore {
     @IContractService private readonly contractService: IContractService,
     @IObserverService private readonly observerService: IObserverService,
     @IKolektivoStore private readonly kolektivoStore: IKolektivoStore,
-  ) {
-    this.observerService.listen(services.ethereumService, 'defaultAccountAddress', () => void this.loadBadges());
-  }
+  ) {}
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IGovernanceStore, GovernanceStore));
   }
@@ -111,28 +108,5 @@ export class GovernanceStore {
       BadgeType.ECOLOGY_DELEGATE,
     );
     return result;
-  }
-
-  public async loadBadges(): Promise<void> {
-    const contract = this.getBadgerContract();
-    if (!this.services.ethereumService.defaultAccountAddress) return;
-    const badgeNumbers = Object.values(BadgeType)
-      .filter((y) => typeof y === 'number')
-      .map((y) => y as number);
-
-    const badges = (
-      await Promise.all(
-        badgeNumbers.map(async (x) => {
-          const balance = await contract.balanceOf(this.services.ethereumService.defaultAccountAddress ?? '', BigNumber.from(x));
-          if (Number(balance) !== 1) return;
-          return x;
-        }),
-      )
-    ).filter(Boolean);
-    this.kolektivoStore.badges = allBadges.filter((x) => badges.some((y) => y === x.type));
-  }
-
-  private getBadgerContract(): Badger {
-    return this.contractService.getContract('Governance', 'monetaryBadger');
   }
 }

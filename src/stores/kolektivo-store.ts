@@ -17,14 +17,6 @@ export type Transaction = {
   date: string;
 };
 
-export type Badge = {
-  name: string;
-  description?: string;
-  imageUrl?: string;
-  type?: BadgeType;
-  verified?: boolean;
-};
-
 export type SupplyDistribution = {
   treasury: number;
   reserves: number;
@@ -43,8 +35,6 @@ export class KolektivoStore {
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IKolektivoStore, KolektivoStore));
   }
-
-  public badges: Badge[] = [];
 
   public transactions: Transaction[] = [
     {
