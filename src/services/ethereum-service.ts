@@ -150,8 +150,6 @@ export class EthereumService {
     let provider: MetaMaskInpageProvider | null = null;
     provider = (await detectEthereumProvider({ mustBeMetaMask: true })) as MetaMaskInpageProvider;
     if (!(await provider._metamask.isUnlocked())) return;
-    const chainId = Number(await provider.request({ method: 'eth_chainId' }));
-    if (chainId !== this.targetedChainId) return;
     if (!((await provider.request({ method: 'eth_accounts' })) as string[]).length) return;
     return provider;
   }

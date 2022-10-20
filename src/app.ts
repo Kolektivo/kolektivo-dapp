@@ -72,11 +72,11 @@ export class App {
     this.showConfirmChangeNetworkInfo = false;
   };
 
-  chainChanged = (network: Network) => {
-    if (this.blockChainStore.isTargetedNetwork) return;
+  chainChanged = (newNetwork: Network, prevNetwork?: Network) => {
+    if (!prevNetwork || this.blockChainStore.isTargetedNetwork) return;
     this.confirmChangeNetworkInfo = {
       need: this.blockChainStore.targetedNetwork,
-      connectedTo: network.name ?? this.i18n.tr('general.an-unknown-network'),
+      connectedTo: newNetwork.name ?? this.i18n.tr('general.an-unknown-network'),
     };
     this.showConfirmChangeNetworkInfo = true;
   };

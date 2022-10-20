@@ -4,6 +4,7 @@ import { ExternalProvider, Network, Web3Provider, getNetwork } from '@ethersproj
 import { IAccountStore } from './account-store';
 import { IConfiguration } from 'configurations/configuration';
 import { IEthereumService } from '../services';
+import { INotificationService } from 'design-system/services';
 
 export type IBlockChainStore = BlockChainStore;
 export const IBlockChainStore = DI.createInterface<IBlockChainStore>('BlockChainStore');
@@ -16,6 +17,7 @@ export class BlockChainStore {
     @IEthereumService private readonly ethereumService: IEthereumService,
     @IConfiguration private readonly configuration: IConfiguration,
     @IAccountStore private readonly accountStore: IAccountStore,
+    @INotificationService private readonly notificationService: INotificationService,
   ) {
     void this.autoConnect();
   }
@@ -74,19 +76,23 @@ export class BlockChainStore {
     return !!this.accountStore.walletAddress;
   }
 
-  public setProvider(web3Provider?: Web3Provider) {
+  public async setProvider(web3Provider?: Web3Provider) {
     this.removeListeners();
     this.provider = web3Provider;
     this.addListeners();
-    this.network = this.walletProvider?.network;
+    this.network = await this.walletProvider?.getNetwork();
   }
 
   public async connect(web3Provider?: Web3Provider) {
     const provider = web3Provider ?? (await this.ethereumService.connect());
     this.walletProvider = new Web3Provider(provider as unknown as ExternalProvider);
-    this.setProvider(web3Provider);
+    await this.setProvider(web3Provider);
 
     if (!this.isTargetedNetwork) {
+      void this.notificationService.toast({
+        message: `To use the advanced features of this site, please connect your wallet to the ${this.targetedNetwork} network`,
+        type: 'info',
+      });
       this.disconnect();
       return;
     }
