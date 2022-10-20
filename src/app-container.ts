@@ -11,6 +11,7 @@ import { IConfiguration } from 'configurations/configuration';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { IReadOnlyProvider } from 'read-only-provider';
 import { ITokenData, getTokenInfos } from './services/contract/token-info';
+import { IWalletConnector, resolver } from 'wallet-provider';
 import { RouterConfiguration } from '@aurelia/router';
 import { Services } from './services/services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
@@ -48,6 +49,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(Services)
   .register(Store)
   .register(hooks)
+  .register(Registration.cachedCallback(IWalletConnector, resolver))
   .register(resources)
   .register(pages)
   .register(

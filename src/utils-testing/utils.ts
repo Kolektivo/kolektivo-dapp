@@ -1,10 +1,11 @@
+import { CacheService, ICacheService } from 'services/cache-service';
 import { EthereumService, IEthereumService } from './../services/ethereum-service';
 import { IBrowserStorageService } from 'services/browser-storage-service';
-import { ICacheService } from 'services/cache-service';
 import { IConfiguration } from 'configurations/configuration';
 import { IContainer, Registration } from 'aurelia';
 import { INotificationService } from 'design-system/services';
 import { IReadOnlyProvider } from 'read-only-provider';
+import { IWalletConnector } from 'wallet-provider';
 import { getDefaultProvider } from 'ethers';
 import { mock } from 'vitest-mock-extended';
 
@@ -24,6 +25,7 @@ export function createEthereumService(container: IContainer): IEthereumService {
     }),
   ).register(container);
 
+  Registration.instance(IWalletConnector, mock<IWalletConnector>()).register(container);
   Registration.instance(IBrowserStorageService, mock<IBrowserStorageService>({})).register(container);
   Registration.instance(INotificationService, mock<INotificationService>({})).register(container);
   Registration.instance(IReadOnlyProvider, getDefaultProvider()).register(container);
