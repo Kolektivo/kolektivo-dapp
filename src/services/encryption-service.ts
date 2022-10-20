@@ -1,8 +1,10 @@
+import { IAccountStore } from 'stores/account-store';
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { BadgeType } from 'models/badge-type';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
+import { IBlockChainStore } from 'stores/block-chain-store';
 import { IConfiguration } from 'configurations/configuration';
 import { IContractService } from './contract/contract-service';
 import { IEthereumService } from './ethereum-service';
@@ -28,6 +30,8 @@ export class EncryptionService {
     @IContractService private readonly contractService: IContractService,
     @ILogger private readonly logger: ILogger,
     @IConfiguration private readonly config: IConfiguration,
+    @IBlockChainStore private readonly blockChainStore: IBlockChainStore,
+    @IAccountStore private readonly accountStore: IAccountStore,
   ) {
     this.logger.scopeTo('EncryptionService');
     void this.connect();
@@ -54,14 +58,15 @@ export class EncryptionService {
   }
 
   private connect(): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.client.connect();
   }
 
   public async encrypt(message: string): Promise<EncryptionResult | undefined> {
     const params = {
-      web3: this.ethereumService.walletProvider,
-      account: this.ethereumService.defaultAccountAddress?.toLowerCase(),
-      chainId: this.ethereumService.targetedChainId,
+      web3: this.blockChainStore.walletProvider,
+      account: this.accountStore.walletAddress?.toLowerCase(),
+      chainId: this.config.chainId,
     };
 
     this.authSig = await LitJsSdk.signAndSaveAuthMessage(params);
