@@ -2,13 +2,10 @@ import { BaseContract, Contract, ContractFunction, ContractInterface, PopulatedT
 import { BaseProvider } from '@ethersproject/providers';
 import { Signer } from '@ethersproject/abstract-signer';
 
-import { ContractGroupsSharedJson } from './types';
-
 import { Address, IEthereumService } from 'services/ethereum-service';
-import { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
+import { ContractGroupAbiNames, ContractGroupsJsons, GovernanceSharedContractName, MonetarySharedContractName, getContractAbi } from './contracts';
 import { DI, IContainer, Registration } from 'aurelia';
 import { ICacheService } from '../cache-service';
-import { cache } from 'decorators/cache';
 
 export type IContractService = ContractService;
 export const IContractService = DI.createInterface<IContractService>();
@@ -64,18 +61,18 @@ export class ContractService {
    * @param signerOrProvider totally optional, by default is set to current signerOrProvider from EthereumService
    * @returns
    */
-  public getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
+  public getContract<TContractType extends ContractGroupAbiNames, TResult extends BaseContract>(
     contractType: TContractType,
     name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
     signerOrProvider?: BaseProvider | Signer | undefined,
   ): TResult {
-    const contractData = ContractGroupsJsons[contractType];
+    const contractData = getContractAbi(contractType);
     const contracts = contractData.main.contracts;
     const contract = contracts[name as keyof typeof contracts] as unknown as { abi: string | ContractInterface; address: string };
     let abi = contract.abi;
     if (typeof abi === 'string') {
-      const key = abi as keyof ContractGroupsSharedJson;
+      const key = abi as typeof contractType extends 'Monetary' ? MonetarySharedContractName : GovernanceSharedContractName;
       abi = contractData.shared[key] as ContractInterface;
     }
     signerOrProvider = signerOrProvider ?? this.ethereumService.createSignerOrProvider();
@@ -98,9 +95,9 @@ export class ContractService {
    * @param signerOrProvider
    * @returns
    */
-  @cache<ContractService>(function () {
-    return { storage: this.cacheService };
-  })
+  // @cache<ContractService>(function () {
+  //   return { storage: this.cacheService };
+  // })
   private getContractCached<TResult extends BaseContract>(
     address: Address,
     abi: ContractInterface,

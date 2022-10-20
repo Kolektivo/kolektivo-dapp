@@ -6,8 +6,7 @@ import { Erc20 } from 'models/generated/monetary/erc20';
 import { Erc721 } from 'models/generated/monetary/erc721';
 import { ICacheService } from './cache-service';
 import { Signer } from '@ethersproject/abstract-signer';
-import { cache } from 'decorators/cache';
-import { monetaryShared } from './contract/contracts';
+import { getContractAbi } from './contract/contracts';
 
 export type ITokenService = TokenService;
 export const ITokenService = DI.createInterface<ITokenService>();
@@ -33,14 +32,14 @@ export class TokenService {
   ): T extends undefined ? Erc20 : Erc721 | Erc20 {
     return this.getTokenContractCached(
       tokenAddress,
-      id ? monetaryShared.ERC721 : monetaryShared.ERC20,
+      getContractAbi('Monetary').shared[id ? 'ERC721' : 'ERC20'],
       signerOrProvider ?? this.ethereumService.createSignerOrProvider(),
     ) as T extends undefined ? Erc20 : Erc721 | Erc20;
   }
 
-  @cache<TokenService>(function () {
-    return { storage: this.cacheService };
-  })
+  // @cache<TokenService>(function () {
+  //   return { storage: this.cacheService };
+  // })
   private getTokenContractCached(tokenAddress: Address, abi: ContractInterface, signerOrProvider: BaseProvider | Signer | undefined): Erc721 | Erc20 {
     return new Contract(tokenAddress, abi, signerOrProvider) as Erc721 | Erc20;
   }

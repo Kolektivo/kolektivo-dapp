@@ -6,7 +6,6 @@ import { IContractService, IServices, fromWei } from 'services';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 import { Interval } from 'models/interval';
-import { MonetaryContractAbi } from 'services/contract/types';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/monetary/treasury/Treasury';
 import { callOnce } from './../decorators/call-once';
@@ -130,7 +129,7 @@ export class TreasuryStore {
     return this.treasuryContract;
   }
 
-  private async getDistributionPercentage(contractName: MonetaryContractAbi): Promise<BigNumber> {
+  private async getDistributionPercentage(contractName: 'Treasury' | 'Reserve'): Promise<BigNumber> {
     const address = this.contractService.getContract('Monetary', contractName).address;
     if (!address || !this.totalSupply) return BigNumber.from(0);
     const tokens = await this.getTreasuryContract()?.balanceOf(address);

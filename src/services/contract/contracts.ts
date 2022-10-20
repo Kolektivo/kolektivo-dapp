@@ -1,22 +1,30 @@
-import { ContractGroupsJson, GovernanceContractGroupJson, MonetaryContractsGroupJson } from './types';
-import { isCelo } from 'environment-variables';
+import { isCelo, isDev } from 'environment-variables';
 import governanceAlfajores from '../../contracts/governance/alfajores.json';
 import governanceCelo from '../../contracts/governance/celo.json';
 import governanceShared from '../../contracts/governance/sharedAbis.json';
 import monetaryAlfajores from '../../contracts/monetary/alfajores.json';
 import monetaryCelo from '../../contracts/monetary/celo.json';
+import monetaryCeloTest from '../../contracts/monetary/celo-test.json';
 import monetaryShared from '../../contracts/monetary/sharedAbis.json';
 
-export { governanceAlfajores, governanceCelo, governanceShared, monetaryAlfajores, monetaryCelo, monetaryShared };
-
 export const ContractGroupsJsons = {
-  Monetary: { main: isCelo ? monetaryCelo : monetaryAlfajores, shared: monetaryShared },
+  Monetary: { main: isCelo ? (isDev ? monetaryCeloTest : monetaryCelo) : monetaryAlfajores, shared: monetaryShared },
   Governance: { main: isCelo ? governanceCelo : governanceAlfajores, shared: governanceShared },
 };
 
-export type ContractGroupsAbis = keyof typeof ContractGroupsJsons;
+type MonetaryContractsGroupJson = typeof monetaryCelo | typeof monetaryAlfajores;
+type GovernanceContractGroupJson = typeof governanceCelo | typeof governanceAlfajores;
+type ContractGroupsJson = MonetaryContractsGroupJson | GovernanceContractGroupJson;
+export type MonetarySharedContractName = keyof typeof monetaryShared;
+export type GovernanceSharedContractName = keyof typeof governanceShared;
+// export type SharedContractNames = keyof typeof governanceShared | keyof typeof monetaryShared;
+// type ContractsAbi = ContractGroupsJson['contracts'];
+// type MonetaryContractName = Extract<keyof MonetaryContractsGroupJson['contracts'], string>;
+// type GovernanceContractName = Extract<keyof GovernanceContractGroupJson['contracts'], string>;
 
-type ContractGroupJsons<T extends ContractGroupsJson = ContractGroupsJson> = {
+export type ContractGroupAbiNames = keyof typeof ContractGroupsJsons;
+
+type ContractGroupJsons<T extends ContractGroupsJson> = {
   main: T;
   shared: T extends MonetaryContractsGroupJson ? typeof monetaryShared : typeof governanceShared;
 };
@@ -35,7 +43,7 @@ type ContractGroupJsons<T extends ContractGroupsJson = ContractGroupsJson> = {
  * @returns
  */
 export function getContractAbi<
-  T extends ContractGroupsAbis,
+  T extends ContractGroupAbiNames,
   TContractAbiJson extends ContractGroupsJson = T extends 'Monetary' ? MonetaryContractsGroupJson : GovernanceContractGroupJson,
 >(type: T) {
   return ContractGroupsJsons[type] as ContractGroupJsons<TContractAbiJson>;
