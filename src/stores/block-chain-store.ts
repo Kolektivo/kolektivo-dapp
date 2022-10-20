@@ -78,12 +78,19 @@ export class BlockChainStore {
     this.removeListeners();
     this.provider = web3Provider;
     this.addListeners();
+    this.network = web3Provider?.network;
   }
 
   public async connect(web3Provider?: Web3Provider) {
     const provider = web3Provider ?? (await this.ethereumService.connect());
     this.setProvider(web3Provider);
     this.walletProvider = new Web3Provider(provider as unknown as ExternalProvider);
+
+    if (!this.isTargetedNetwork) {
+      this.disconnect();
+      return;
+    }
+
     void this.accountStore.connect(this.walletProvider);
   }
 
@@ -103,6 +110,7 @@ export class BlockChainStore {
   public disconnect(): void {
     void this.accountStore.connect(undefined);
     this.provider = undefined;
+    this.network = undefined;
   }
 
   public getEtherscanLink(addressOrHash: string, tx = false): string {
