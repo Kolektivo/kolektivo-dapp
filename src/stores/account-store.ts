@@ -76,6 +76,7 @@ export class AccountStore {
     const provider = await this.ethereumService.getMetaMaskProvider();
     if (!provider) return;
     this.selectedProvider = provider as unknown as Web3Provider;
+    this.addListeners();
     this.web3Provider = new Web3Provider(this.selectedProvider as unknown as ExternalProvider);
     this.walletAddress = provider.selectedAddress ?? undefined;
   }
