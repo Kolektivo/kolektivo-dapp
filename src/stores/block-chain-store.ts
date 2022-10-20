@@ -86,7 +86,7 @@ export class BlockChainStore {
   public async connect(web3Provider?: Web3Provider) {
     const provider = web3Provider ?? (await this.ethereumService.connect());
     this.walletProvider = new Web3Provider(provider as unknown as ExternalProvider);
-    await this.setProvider(web3Provider);
+    await this.setProvider(provider as unknown as Web3Provider);
 
     if (!this.isTargetedNetwork) {
       void this.notificationService.toast({
@@ -116,7 +116,6 @@ export class BlockChainStore {
   public disconnect(): void {
     void this.accountStore.connect(undefined);
     this.provider = undefined;
-    this.network = undefined;
   }
 
   public getEtherscanLink(addressOrHash: string, tx = false): string {
