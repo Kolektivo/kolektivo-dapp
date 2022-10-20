@@ -1,7 +1,8 @@
 import { DI, IContainer, Registration } from 'aurelia';
+import { ExternalProvider, JsonRpcSigner, Provider, Web3Provider } from '@ethersproject/providers/lib';
 import { IEthereumService } from 'services';
 import { IProviderFactory } from '../provider-factory';
-import { JsonRpcSigner, Provider, Web3Provider } from '@ethersproject/providers/lib';
+import { IReadOnlyProvider } from 'read-only-provider';
 
 export type IAccountStore = AccountStore;
 export const IAccountStore = DI.createInterface<IAccountStore>();
@@ -29,6 +30,7 @@ export class AccountStore {
   constructor(
     @IProviderFactory private readonly providerFactory: IProviderFactory,
     @IEthereumService private readonly ethereumService: IEthereumService,
+    @IReadOnlyProvider public readonly readonlyProvider: IReadOnlyProvider,
   ) {
     void this.autoConnect();
   }
@@ -77,9 +79,8 @@ export class AccountStore {
   private async autoConnect() {
     const provider = await this.ethereumService.getMetaMaskProvider();
     if (!provider) return;
-    this.web3Provider = new Web3Provider(provider as ExternalProvider);
-
-    this.walletAddress = provider.selectedAddress;
+    this.web3Provider = new Web3Provider(provider as unknown as ExternalProvider);
+    this.walletAddress = provider.selectedAddress ?? undefined;
   }
 
   public static register(container: IContainer): void {
