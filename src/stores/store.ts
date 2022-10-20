@@ -6,7 +6,6 @@ import { DataStore, IDataStore } from './data-store';
 import { GovernanceStore, IGovernanceStore } from './governance-store';
 import { IKolektivoStore, KolektivoStore } from './kolektivo-store';
 import { IReserveStore, ReserveStore } from './reserve-store';
-import { IServices } from '../services';
 import { ITreasuryStore, TreasuryStore } from './treasury-store';
 
 export type IStore = Store;
@@ -22,19 +21,18 @@ export class Store {
     @IContractStore public readonly contractStore: IContractStore,
     @IGovernanceStore public readonly governanceStore: IGovernanceStore,
     @IAccountStore public readonly accountStore: IAccountStore,
-    @IServices public readonly services: IServices,
   ) {}
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IStore, Store));
-    container.register(BlockChainStore);
-    container.register(DataStore);
-    container.register(KolektivoStore);
     container.register(AccountStore);
+    container.register(BlockChainStore);
+    container.register(ContractStore);
+    container.register(DataStore);
+    container.register(GovernanceStore);
+    container.register(KolektivoStore);
     container.register(TreasuryStore);
     container.register(ReserveStore);
-    container.register(ContractStore);
-    container.register(GovernanceStore);
   }
 
   sideBarOpen = false;

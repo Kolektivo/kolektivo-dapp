@@ -1,7 +1,7 @@
 import './app.scss';
 import './shared.scss';
 import { I18N } from '@aurelia/i18n';
-import { IBlockChainStore } from 'stores';
+import { IBlockChainStore } from 'stores/block-chain-store';
 import { IEventAggregator, ILogger, IPlatform, customElement } from 'aurelia';
 import { INotificationService } from './design-system/services';
 import { IObserverService } from 'services';
