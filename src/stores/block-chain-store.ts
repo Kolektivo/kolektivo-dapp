@@ -1,9 +1,9 @@
 import { AllowedNetworks } from 'models/allowed-network';
 import { DI, IContainer, Registration } from 'aurelia';
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { IAccountStore } from './account-store';
 import { IConfiguration } from 'configurations/configuration';
 import { IEthereumService } from '../services';
-import { Web3Provider } from '@ethersproject/providers';
 
 export type IBlockChainStore = BlockChainStore;
 export const IBlockChainStore = DI.createInterface<IBlockChainStore>('BlockChainStore');
@@ -65,12 +65,17 @@ export class BlockChainStore {
     return !!this.accountStore.walletAddress;
   }
 
+  public setProvider(web3Provider?: Web3Provider) {
+    this.removeListeners();
+    this.provider = web3Provider;
+    this.addListeners();
+  }
+
   public async connect(web3Provider?: Web3Provider) {
     const provider = web3Provider ?? (await this.ethereumService.connect());
-    this.removeListeners();
-    this.provider = provider;
-    this.addListeners();
-    void this.accountStore.connect(this.provider);
+    this.setProvider(web3Provider);
+    this.walletProvider = new Web3Provider(provider as unknown as ExternalProvider);
+    void this.accountStore.connect(this.walletProvider);
   }
 
   public connectKolektivoWallet(): void {
