@@ -48,12 +48,19 @@ export type IEthereumService = EthereumService;
 export const IEthereumService = DI.createInterface<IEthereumService>('EthereumService');
 
 export class EthereumService {
+  private web3Modal: Web3Modal;
+
   constructor(
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     @ILogger private readonly logger: ILogger,
     @IConfiguration private readonly configuration: IConfiguration,
     @IReadOnlyProvider private readonly readOnlyProvider: IReadOnlyProvider,
   ) {
+    this.web3Modal = new Web3Modal({
+      cacheProvider: false,
+      providerOptions: this.providerOptions, // required
+      theme: 'dark',
+    });
     this.logger = logger.scopeTo('EthereumService');
   }
 
@@ -135,12 +142,6 @@ export class EthereumService {
   }
 
   public lastBlock?: IBlockInfo;
-
-  private web3Modal = new Web3Modal({
-    cacheProvider: false,
-    providerOptions: this.providerOptions, // required
-    theme: 'dark',
-  });
 
   public async connect(connectTo?: string): Promise<Web3Provider> {
     return connectTo ? ((await this.web3Modal.connectTo(connectTo)) as Web3Provider) : ((await this.web3Modal.connect()) as Web3Provider);

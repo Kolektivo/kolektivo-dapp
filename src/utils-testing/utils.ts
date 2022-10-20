@@ -1,5 +1,6 @@
-import { CacheService, IBrowserStorageService, ICacheService } from 'services';
 import { EthereumService, IEthereumService } from './../services/ethereum-service';
+import { IBrowserStorageService } from 'services/browser-storage-service';
+import { ICacheService } from 'services/cache-service';
 import { IConfiguration } from 'configurations/configuration';
 import { IContainer, Registration } from 'aurelia';
 import { INotificationService } from 'design-system/services';
