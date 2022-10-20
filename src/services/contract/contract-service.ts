@@ -66,7 +66,7 @@ export class ContractService {
    * @param signerOrProvider totally optional, by default is set to current signerOrProvider from EthereumService
    * @returns
    */
-  public getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
+  public getContract<TResult extends BaseContract, TContractType extends ContractGroupsAbis = ContractGroupsAbis>(
     contractType: TContractType,
     name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,

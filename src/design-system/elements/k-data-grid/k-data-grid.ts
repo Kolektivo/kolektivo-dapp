@@ -2,7 +2,8 @@ import { ICustomAttributeController, ICustomElementController, ViewModelKind } f
 import { ICustomAttributeViewModel, ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { IGridColumn } from './grid-column';
 import { captureFilter } from '../../common';
-type ElementOrAttributeViewModel<T> = ICustomElementController<T> | ICustomAttributeController<T>;
+type ElementOrAttributeViewModel = ICustomElementController | ICustomAttributeController;
+
 import css from './k-data-grid.scss';
 import template from './k-data-grid.html';
 
@@ -15,7 +16,7 @@ import template from './k-data-grid.html';
     mode: 'open',
   },
 })
-export class KDataGrid implements ICustomElementViewModel {
+export class KDataGrid {
   @bindable id?: string;
   @bindable condensed = false;
   @bindable public rows: [] = [];
@@ -32,9 +33,9 @@ export class KDataGrid implements ICustomElementViewModel {
     return this.columns.map((y) => y.width).join(' ');
   }
 
-  binding(top: ElementOrAttributeViewModel<this>, direct: ElementOrAttributeViewModel<this>): void {
+  binding(top: ElementOrAttributeViewModel, direct: ElementOrAttributeViewModel): void {
     this.context = direct.viewModel;
-    let controller: ElementOrAttributeViewModel<this> = top;
+    let controller: ElementOrAttributeViewModel = top;
     for (let i = 0; i < 4; i++) {
       if (controller.vmKind === ViewModelKind.customElement) {
         this.context = controller.viewModel;

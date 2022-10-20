@@ -5,7 +5,6 @@ import { IValidationController } from '@aurelia/validation-html';
 import { IValidationRules } from '@aurelia/validation';
 import { customElement } from 'aurelia';
 import { newInstanceForScope } from '@aurelia/kernel';
-import { seed } from './../../firebase';
 import template from './storybook.html';
 
 @customElement({ name: 'storybook', template })
@@ -163,7 +162,8 @@ export class Storybook {
       content: '<k-link src="https://celoscan.io/" external>View on Celoscan</k-link> ',
     });
   }
+
   syncData() {
-    void seed();
+    import('../../firebase');
   }
 }

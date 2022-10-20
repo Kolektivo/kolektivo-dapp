@@ -4,7 +4,6 @@ import { ExternalProvider, Network, Web3Provider, getNetwork } from '@ethersproj
 import { IAccountStore } from './account-store';
 import { IConfiguration } from 'configurations/configuration';
 import { IEthereumService } from 'services/ethereum-service';
-import { INotificationService } from 'design-system/services';
 
 export type IBlockChainStore = BlockChainStore;
 export const IBlockChainStore = DI.createInterface<IBlockChainStore>();
@@ -17,7 +16,6 @@ export class BlockChainStore {
     @IEthereumService private readonly ethereumService: IEthereumService,
     @IConfiguration private readonly configuration: IConfiguration,
     @IAccountStore private readonly accountStore: IAccountStore,
-    @INotificationService private readonly notificationService: INotificationService,
   ) {
     void this.autoConnect();
   }
@@ -89,10 +87,10 @@ export class BlockChainStore {
     await this.setProvider(provider as unknown as Web3Provider);
 
     if (!this.isTargetedNetwork) {
-      void this.notificationService.toast({
-        message: `To use the advanced features of this site, please connect your wallet to the ${this.targetedNetwork} network`,
-        type: 'info',
-      });
+      // void this.notificationService.toast({
+      //   message: `To use the advanced features of this site, please connect your wallet to the ${this.targetedNetwork} network`,
+      //   type: 'info',
+      // });
       this.disconnect();
       return;
     }
