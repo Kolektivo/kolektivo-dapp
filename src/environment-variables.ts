@@ -3,3 +3,4 @@ export const ethereumNetwork: AllowedNetworks | undefined = import.meta.env.KOL_
 export const isCelo = ethereumNetwork === 'Celo';
 export const IPFS_GATEWAY = import.meta.env.KOL_IPFS_GATEWAY;
 export const FIREBASE_API_KEY = import.meta.env.KOL_FIREBASE_API_KEY;
+export const CHAIN_URL = import.meta.env.KOL_CHAIN_URL ?? 'https://alfajores-forno.celo-testnet.org';

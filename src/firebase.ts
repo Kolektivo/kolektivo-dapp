@@ -1,11 +1,23 @@
+import { CHAIN_URL } from 'environment-variables';
+import { CacheService } from './services/cache-service';
+import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
+import { ContractService } from './services/contract/contract-service';
+import { ContractStore } from './stores/contract-store';
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
+import { DataStore } from './stores/data-store';
 import { FIREBASE_API_KEY } from './environment-variables';
+import { FirebaseService } from './services/firebase-service';
 import { I18nConfiguration } from '@aurelia/i18n';
-import { IIpfsService, Services } from 'services';
-import { IReserveStore } from './stores/reserve-store';
-import { ITreasuryStore } from './stores/treasury-store';
-import { Store } from 'stores';
+import { IFirebaseApp } from 'services/firebase-service';
+import { IIpfsService } from 'services';
+import { IReadOnlyProvider } from './read-only-provider';
+import { IReserveStore, ReserveStore } from 'stores/reserve-store';
+import { ITokenData, getTokenInfos } from 'services/contract';
+import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
+import { NumberService } from './services/number-service';
+import { TokenService } from './services/token-service';
 import { collection, deleteDoc, doc, getDocs, getFirestore, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
+import { firebaseConfig } from 'configurations/firebase';
 import { initializeApp } from 'firebase/app';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 
@@ -16,9 +28,23 @@ enum Periods {
 }
 
 const container = DI.createContainer()
+  .register(Registration.instance(IFirebaseApp, initializeApp(firebaseConfig)))
   .register(Registration.instance(IIpfsService, {}))
-  .register(Services)
-  .register(Store)
+  .register(ContractService)
+  .register(FirebaseService)
+  .register(ContractStore)
+  .register(TokenService)
+  .register(DataStore)
+  .register(CacheService)
+  .register(TreasuryStore)
+  .register(ReserveStore)
+  .register(
+    Registration.instance(ITokenData, {
+      tokens: getTokenInfos(),
+    }),
+  )
+  .register(NumberService)
+  .register(Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })))
   .register(
     I18nConfiguration.customize((options) => {
       options.initOptions = {

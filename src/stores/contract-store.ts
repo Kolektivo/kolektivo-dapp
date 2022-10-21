@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Erc20, TransferEvent as Erc20TransferEvent } from 'models/generated/monetary/erc20/Erc20';
 import { Erc721, TransferEvent as Erc721TransferEvent } from 'models/generated/monetary/erc721/Erc721';
-import { IContractService, tokenInfos } from 'services/contract';
+import { IContractService, ITokenData } from 'services/contract';
 import { INumberService, ITokenInfo, ITokenService, fromWei, toWei } from '../services';
 import { Oracle } from './../models/generated/monetary/oracle/Oracle';
 import { Reserve } from 'models/generated/monetary/reserve';
@@ -21,6 +21,7 @@ export class ContractStore {
     @ITokenService private readonly tokenService: ITokenService,
     @ILogger private readonly logger: ILogger,
     @INumberService private readonly numberService: INumberService,
+    @ITokenData private readonly tokenInfo: ITokenData,
   ) {}
 
   public async getAsset(
@@ -35,6 +36,7 @@ export class ContractStore {
     if (assetId) {
       assetIdNumber = Number(assetId);
     }
+    const tokenInfos = await this.tokenInfo.tokens;
     const tokenInfo = tokenInfos.find((y) => y.address === assetAddress && y.id == assetIdNumber);
     if (!tokenInfo) {
       this.logger.error(`No token info was found for ${assetAddress}`);
