@@ -4,6 +4,7 @@ import { ContractService, IContractService } from './contract/contract-service';
 import { DI, IContainer, Registration } from 'aurelia';
 import { EncryptionService, IEncryptionService } from './encryption-service';
 import { EthereumService, IEthereumService } from './ethereum-service';
+import { FirebaseService } from './firebase-service';
 import { HttpService, IHttpService } from './http-service';
 import { IIpfsService, IpfsService } from './ipfs/ipfs-service';
 import { INumberService, NumberService } from './number-service';
@@ -42,6 +43,7 @@ export class Services {
       .register(BrowserStorageService)
       .register(IpfsService)
       .register(ContractService)
+      .register(FirebaseService)
       .register(TokenService);
   }
 }

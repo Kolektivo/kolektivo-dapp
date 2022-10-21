@@ -5,7 +5,10 @@ import { ContractService } from './services/contract/contract-service';
 import { ContractStore } from './stores/contract-store';
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
 import { DataStore } from './stores/data-store';
+import { FIREBASE_API_KEY } from './environment-variables';
+import { FirebaseService } from './services/firebase-service';
 import { I18nConfiguration } from '@aurelia/i18n';
+import { IFirebaseApp } from 'services/firebase-service';
 import { IIpfsService } from 'services';
 import { IReadOnlyProvider } from './read-only-provider';
 import { IReserveStore, ReserveStore } from 'stores/reserve-store';
@@ -14,6 +17,7 @@ import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
 import { NumberService } from './services/number-service';
 import { TokenService } from './services/token-service';
 import { collection, deleteDoc, doc, getDocs, getFirestore, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
+import { firebaseConfig } from 'configurations/firebase';
 import { initializeApp } from 'firebase/app';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 
@@ -24,8 +28,10 @@ enum Periods {
 }
 
 const container = DI.createContainer()
+  .register(Registration.instance(IFirebaseApp, initializeApp(firebaseConfig)))
   .register(Registration.instance(IIpfsService, {}))
   .register(ContractService)
+  .register(FirebaseService)
   .register(ContractStore)
   .register(TokenService)
   .register(DataStore)
@@ -74,7 +80,7 @@ export const seed = async () => {
   let kCurCirculatingDistribution = 0;
   let captureDataPromise: Promise<void> | undefined = undefined;
   const firebaseConfig = {
-    apiKey: 'AIzaSyAmcBzOuKPoswcKAZDabJ42dyN6EL-7Gw0',
+    apiKey: FIREBASE_API_KEY,
     authDomain: 'kolektivo-613ca.firebaseapp.com',
     projectId: 'kolektivo-613ca',
     storageBucket: 'kolektivo-613ca.appspot.com',

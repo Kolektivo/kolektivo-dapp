@@ -8,6 +8,7 @@ import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, 
 import { DesignSystemPlugin } from './design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { IConfiguration } from 'configurations/configuration';
+import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { IReadOnlyProvider } from 'read-only-provider';
 import { ITokenData, getTokenInfos } from './services/contract/token-info';
@@ -16,7 +17,9 @@ import { RouterConfiguration } from '@aurelia/router';
 import { Services } from './services/services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
 import { Store } from './stores';
+import { firebaseConfig } from 'configurations/firebase';
 import { imageMap } from './app-images';
+import { initializeApp } from 'firebase/app';
 import designScss from './design-system/styles/shared.scss';
 import en from './locales/en/translation.json';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
@@ -52,6 +55,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(Registration.cachedCallback(IWalletConnector, resolver))
   .register(resources)
   .register(pages)
+  .register(Registration.instance(IFirebaseApp, initializeApp(firebaseConfig)))
   .register(
     Registration.instance(ITokenData, {
       tokens: getTokenInfos(),
