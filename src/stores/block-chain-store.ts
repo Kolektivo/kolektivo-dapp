@@ -44,8 +44,14 @@ export class BlockChainStore {
     this.accountStore.walletAddress = undefined;
   };
 
+  private fixNetworkName(network: Network) {
+    if (this.network?.name === 'homestead') this.network.name = 'Ethereum Mainnet';
+  }
+
   private handleChainChanged = (chainId: number) => {
     this.network = getNetwork(Number(chainId));
+    this.fixNetworkName(this.network);
+
     if (this.isTargetedNetwork) {
       void this.autoConnect();
     } else {

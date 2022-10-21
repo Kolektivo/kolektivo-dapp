@@ -36,15 +36,6 @@ export class App {
     this.platform.window.addEventListener('resize', this.recalc);
     this.recalc();
   }
-  attached() {
-    this.eventAggregator.subscribe('Network.wrongNetwork', (info: WrongNetworkInfo): void => {
-      /**
-       * This will put up a modal to prompt the user to change the network.  Handlers are below.
-       */
-      this.confirmChangeNetworkInfo = Object.assign(info, { connectedTo: info.connectedTo ?? this.i18n.tr('general.an-unknown-network') });
-      this.showConfirmChangeNetworkInfo = true;
-    });
-  }
 
   detaching(): void {
     this.platform.window.removeEventListener('resize', this.recalc);
