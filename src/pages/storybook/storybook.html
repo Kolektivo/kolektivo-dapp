@@ -868,11 +868,11 @@
         don't look great until we know more from the designers</k-alert>
       <div class="modals">
         <k-code>
-          <k-modal close-on-click if.bind="isOpen1" cancel.call="cancel1()" ok.call="ok1()"></k-modal>
+          <k-modal close-on-click if.bind="isOpen1" cancel.bind="cancel1" ok.bind="ok1"></k-modal>
         </k-code>
         <k-button click.trigger="openModal1()">Default Inline Modal</k-button>
         <k-code>
-          <k-modal close-on-click if.bind="isOpen2" cancel.call="cancel2()" ok.call="ok2()"
+          <k-modal close-on-click if.bind="isOpen2" cancel.bind="cancel2" ok.bind="ok2"
             title="This is a different title" ok-button-text="Sounds good!" cancel-button-text="No way!">
             This is a bunch of text for a modal. We're using a lot of text so we can show how it looks like in the modal
             when there is a lot. I'm not sure how much text we should have used here, but this is what we've got so far.
@@ -881,7 +881,7 @@
         </k-code>
         <k-button click.trigger="openModal2()">Attribute Modal</k-button>
         <k-code>
-          <k-modal if.bind="isOpen3" cancel.call="cancel3()" close-button>
+          <k-modal if.bind="isOpen3" cancel.bind="cancel3" close-button>
             <div au-slot="header">
               <k-grid gap="var(--spacing)" cols="auto 1fr">
                 <k-icon name="calendar_today"></k-icon>

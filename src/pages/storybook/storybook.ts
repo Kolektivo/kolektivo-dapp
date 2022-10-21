@@ -5,7 +5,6 @@ import { IValidationController } from '@aurelia/validation-html';
 import { IValidationRules } from '@aurelia/validation';
 import { customElement } from 'aurelia';
 import { newInstanceForScope } from '@aurelia/kernel';
-import { seed } from './../../firebase';
 import template from './storybook.html';
 
 @customElement({ name: 'storybook', template })
@@ -66,42 +65,42 @@ export class Storybook {
 
   //modal example #1
   isOpen1 = false;
-  openModal1(): void {
+  openModal1 = () => {
     this.isOpen1 = !this.isOpen1;
-  }
-  cancel1(): void {
+  };
+  cancel1 = () => {
     this.isOpen1 = !this.isOpen1;
-  }
+  };
   ok1(): void {
     this.isOpen1 = !this.isOpen1;
   }
 
   //modal example #2
   isOpen2 = false;
-  openModal2(): void {
+  openModal2 = () => {
     this.isOpen2 = !this.isOpen2;
-  }
-  cancel2(): void {
+  };
+  cancel2 = () => {
     this.isOpen2 = !this.isOpen2;
-  }
-  ok2(): void {
+  };
+  ok2 = () => {
     this.isOpen2 = !this.isOpen2;
-  }
+  };
 
   //modal example #3
   isOpen3 = false;
-  openModal3(): void {
+  openModal3 = () => {
     this.isOpen3 = !this.isOpen3;
-  }
-  ok3(): void {
+  };
+  ok3 = () => {
     this.isOpen3 = !this.isOpen3;
-  }
-  cancel3(): void {
+  };
+  cancel3 = () => {
     this.isOpen3 = !this.isOpen3;
-  }
-  customClick(): void {
+  };
+  customClick = () => {
     void this.notificationService.toast({ message: 'custom modal content button clicked!' });
-  }
+  };
 
   //data grid example
   testColumns1: IGridColumn[] = [
@@ -114,7 +113,7 @@ export class Storybook {
     { headerText: 'Price', field: 'price', width: '1fr', align: 'right', template: '${price | currency}' },
     { headerText: 'Quantity', field: 'quantity', width: '1fr', align: 'right' },
     { headerText: 'Total Value', field: 'totalValue', width: '1fr', align: 'right', template: '${price * quantity | currency}' },
-    { headerText: 'Action', field: 'action', width: '1fr', template: '<k-button size="xs" click.delegate="veto(price)">Veto</k-button>' },
+    { headerText: 'Action', field: 'action', width: '1fr', template: '<k-button size="xs" click.trigger="veto(price)">Veto</k-button>' },
   ];
 
   public veto(price: string): void {
@@ -164,6 +163,6 @@ export class Storybook {
     });
   }
   syncData() {
-    void seed();
+    import('../../firebase');
   }
 }
