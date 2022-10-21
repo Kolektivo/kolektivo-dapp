@@ -1,4 +1,5 @@
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
+import { FIREBASE_API_KEY } from './environment-variables';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { IIpfsService, Services } from 'services';
 import { IReserveStore } from './stores/reserve-store';
@@ -53,7 +54,7 @@ export const seed = async () => {
   let kCurCirculatingDistribution = 0;
   let captureDataPromise: Promise<void> | undefined = undefined;
   const firebaseConfig = {
-    apiKey: 'AIzaSyAmcBzOuKPoswcKAZDabJ42dyN6EL-7Gw0',
+    apiKey: FIREBASE_API_KEY,
     authDomain: 'kolektivo-613ca.firebaseapp.com',
     projectId: 'kolektivo-613ca',
     storageBucket: 'kolektivo-613ca.appspot.com',
