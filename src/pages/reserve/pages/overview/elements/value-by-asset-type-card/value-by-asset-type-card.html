@@ -6,12 +6,9 @@
       colors.bind="['var(--terra-cotta)', 'var(--primary)', 'var(--green-apple)', ]" data.bind="chartData">
     </k-chart>
     <k-stack gap="var(--spacing-xl)" id="r-o-vbatc-legend">
-      <avatar-text color="var(--green-apple)" size="20">${ecologicalAssetPercentage() | percentage} Ecological
-      </avatar-text>
-      <avatar-text color="var(--primary)" size="20">${stablecoinAssetPercentage() | percentage} Stablecoins
-      </avatar-text>
-      <avatar-text color="var(--terra-cotta)" size="20">${nonStablecoinAssetPercentage() | percentage} Non Stablecoins
-      </avatar-text>
+      <avatar-text color="var(--green-apple)" size="20">${ecologicalAssetPercentage() | percentage} Ecological</avatar-text>
+      <avatar-text color="var(--primary)" size="20">${stablecoinAssetPercentage() | percentage} Stablecoins</avatar-text>
+      <avatar-text color="var(--terra-cotta)" size="20">${nonStablecoinAssetPercentage() | percentage} Non Stablecoins</avatar-text>
     </k-stack>
   </k-stack>
 </k-card>
