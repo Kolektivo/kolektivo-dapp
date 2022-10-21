@@ -7,7 +7,8 @@ import { Registration } from 'aurelia';
 import { RelativeTime } from './../../../../../../resources/value-converters/relative-time';
 import { ValueOverTimeCard } from './value-over-time-card';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('value-over-time-card', () => {
   it('should have a k-card component', async () => {
@@ -48,7 +49,14 @@ describe('value-over-time-card', () => {
       ValueOverTimeCard,
       RelativeTime,
       Global,
-      Registration.instance(ITreasuryStore, vi.fn()),
+      Registration.instance(
+        ITreasuryStore,
+        mock<ITreasuryStore>({
+          getValueOverTime: () => {
+            return new Promise((res) => res([]));
+          },
+        }),
+      ),
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       designSystemConfiguration(),

@@ -162,6 +162,7 @@ export class Storybook {
       content: '<k-link src="https://celoscan.io/" external>View on Celoscan</k-link> ',
     });
   }
+
   syncData() {
     import('../../firebase');
   }

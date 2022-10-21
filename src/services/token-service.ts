@@ -1,19 +1,21 @@
-import { Address, IEthereumService } from './ethereum-service';
-import { BaseProvider } from '@ethersproject/providers';
-import { Contract, ContractInterface } from '@ethersproject/contracts';
+import { Contract } from '@ethersproject/contracts';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { Erc721 } from 'models/generated/monetary/erc721';
 import { ICacheService } from './cache-service';
+import { IReadOnlyProvider } from 'read-only-provider';
+import { Provider } from '@ethersproject/providers';
 import { Signer } from '@ethersproject/abstract-signer';
 import { cache } from 'decorators/cache';
 import { monetaryShared } from './contract/contracts';
+// eslint-disable-next-line no-duplicate-imports
+import type { ContractInterface } from '@ethersproject/contracts';
 
 export type ITokenService = TokenService;
 export const ITokenService = DI.createInterface<ITokenService>();
 
 export class TokenService {
-  constructor(@ICacheService private readonly cacheService: ICacheService, @IEthereumService private readonly ethereumService: IEthereumService) {}
+  constructor(@ICacheService private readonly cacheService: ICacheService, @IReadOnlyProvider private readonly readonlyProvider: IReadOnlyProvider) {}
 
   public static register(container: IContainer) {
     Registration.singleton(ITokenService, TokenService).register(container);
@@ -29,19 +31,19 @@ export class TokenService {
   public getTokenContract<T extends number | undefined>(
     tokenAddress: string,
     id?: T,
-    signerOrProvider?: BaseProvider | Signer | undefined,
+    signerOrProvider?: Provider | Signer | undefined,
   ): T extends undefined ? Erc20 : Erc721 | Erc20 {
     return this.getTokenContractCached(
       tokenAddress,
       id ? monetaryShared.ERC721 : monetaryShared.ERC20,
-      signerOrProvider ?? this.ethereumService.createSignerOrProvider(),
+      signerOrProvider ?? this.readonlyProvider,
     ) as T extends undefined ? Erc20 : Erc721 | Erc20;
   }
 
   @cache<TokenService>(function () {
     return { storage: this.cacheService };
   })
-  private getTokenContractCached(tokenAddress: Address, abi: ContractInterface, signerOrProvider: BaseProvider | Signer | undefined): Erc721 | Erc20 {
+  private getTokenContractCached(tokenAddress: string, abi: ContractInterface, signerOrProvider: Provider | Signer | undefined): Erc721 | Erc20 {
     return new Contract(tokenAddress, abi, signerOrProvider) as Erc721 | Erc20;
   }
 }

@@ -6,7 +6,8 @@ import { IStore } from 'stores';
 import { ITreasuryStore } from './../../../../../../stores/treasury-store';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('assets-card', () => {
   it('should have a k-card component', async () => {
@@ -56,6 +57,18 @@ describe('assets-card', () => {
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
       });
-    return [AssetsCard, Global, Registration.instance(ITreasuryStore, vi.fn()), createMockStoreRegistration(), createMockI18nRegistration()];
+    return [
+      AssetsCard,
+      Global,
+      Registration.instance(
+        ITreasuryStore,
+        mock<ITreasuryStore>({
+          treasuryAssets: [],
+          getValueOverTime: () => new Promise((res) => res([])),
+        }),
+      ),
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+    ];
   }
 });

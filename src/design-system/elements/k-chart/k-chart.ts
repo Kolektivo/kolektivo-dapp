@@ -138,7 +138,6 @@ export class KChart implements ICustomElementViewModel {
     }
 
     this.updateDataSets();
-
     const context = this.chart?.getContext('2d');
     if (!context) return;
 
@@ -290,11 +289,6 @@ export class KChart implements ICustomElementViewModel {
     this.updateDataSets();
     this.chartJsInstance.data.datasets = this.dataSets;
     this.chartJsInstance.update();
-  }
-
-  private refresh(): void {
-    void this.detaching();
-    this.attaching();
   }
 
   attaching(): void {

@@ -1,15 +1,18 @@
 import * as hooks from './hooks';
 import * as pages from './pages';
 import * as resources from './resources';
-import { CHAIN_URL, isDev } from './environment-variables';
+import { CHAIN, CHAIN_ID, CHAIN_URL, IPFS_GATEWAY, IS_DEV, SCAN_LINK } from './environment-variables';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
+import { CeloProviderFactory, IProviderFactory } from './provider-factory';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from './design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
+import { IConfiguration } from 'configurations/configuration';
 import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { IReadOnlyProvider } from 'read-only-provider';
 import { ITokenData, getTokenInfos } from './services/contract/token-info';
+import { IWalletConnector, resolver } from 'wallet-provider';
 import { RouterConfiguration } from '@aurelia/router';
 import { Services } from './services/services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
@@ -49,6 +52,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(Services)
   .register(Store)
   .register(hooks)
+  .register(Registration.cachedCallback(IWalletConnector, resolver))
   .register(resources)
   .register(pages)
   .register(Registration.instance(IFirebaseApp, initializeApp(firebaseConfig)))
@@ -58,8 +62,19 @@ export const appContainer: IContainer = DI.createContainer()
     }),
   )
   .register(
+    Registration.instance(IConfiguration, {
+      chainId: CHAIN_ID,
+      ipfsGateway: IPFS_GATEWAY,
+      chainUrl: CHAIN_URL,
+      chain: CHAIN,
+      isDevelopment: IS_DEV,
+      scanLink: SCAN_LINK,
+    }),
+  )
+  .register(Registration.singleton(IProviderFactory, CeloProviderFactory))
+  .register(
     LoggerConfiguration.create({
-      level: isDev ? LogLevel.debug : LogLevel.warn,
+      level: IS_DEV ? LogLevel.debug : LogLevel.warn,
       sinks: [ConsoleSink],
     }),
   )

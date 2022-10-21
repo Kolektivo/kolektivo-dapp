@@ -63,7 +63,10 @@ describe('value-by-asset-type-card', () => {
       Global,
       NumberService,
       PercentageValueConverter,
-      Registration.instance(IReserveStore, vi.fn()),
+      Registration.instance(
+        IReserveStore,
+        vi.fn(() => ({ reserveAssets: [] } as Partial<IReserveStore>)),
+      ),
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       designSystemConfiguration(),

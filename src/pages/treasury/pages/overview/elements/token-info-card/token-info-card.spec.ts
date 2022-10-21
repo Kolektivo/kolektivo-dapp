@@ -56,7 +56,14 @@ describe('token-info-card', () => {
 
   function getRegistrations() {
     const createMockStoreRegistration = () => Registration.instance(IStore, {});
-    const createMockTreasuryStoreRegistration = () => Registration.instance(ITreasuryStore, {});
+    const createMockTreasuryStoreRegistration = () =>
+      Registration.instance(
+        ITreasuryStore,
+        mock<ITreasuryStore>({
+          treasuryAssets: [],
+          getValueOverTime: () => new Promise((res) => res([])),
+        }),
+      );
     const createMockEthereumService = () => Registration.instance(IEthereumService, mock<IEthereumService>({}));
     const createMockContractService = () => Registration.instance(IContractService, mock<IContractService>({}));
 

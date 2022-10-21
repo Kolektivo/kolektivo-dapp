@@ -11,8 +11,6 @@ declare module '*.html' {
   export const shadowOptions: { mode: 'open' | 'closed' } | undefined;
   export function register(container: IContainer): void;
 }
-declare module 'lit-js-sdk';
-declare module 'lit-connect-modal';
 declare module '*.css' {
   const value: string;
   export = value;
@@ -38,10 +36,12 @@ interface ImportMeta {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface ImportMetaEnv {
-  readonly KOL_NETWORK?: AllowedNetworks;
-  readonly KOL_IPFS_GATEWAY: string;
-  readonly KOL_FIREBASE_API_KEY?: string;
+  readonly KOL_IPFS_GATEWAY?: string;
+  readonly KOL_CHAIN_ID?: string;
   readonly KOL_CHAIN_URL?: string;
+  readonly KOL_FIREBASE_API_KEY?: string;
+  readonly KOL_CHAIN?: string;
+  readonly KOL_SCAN_LINK?: string;
 }
 
 declare module 'rollup-plugin-html';

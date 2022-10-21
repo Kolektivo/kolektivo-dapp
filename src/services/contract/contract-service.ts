@@ -1,13 +1,15 @@
-import { BaseContract, Contract, ContractFunction, ContractInterface, PopulatedTransaction } from '@ethersproject/contracts';
-import { BaseProvider } from '@ethersproject/providers';
+import { Contract } from 'ethers';
+import { Provider } from '@ethersproject/providers/lib';
 import { Signer } from '@ethersproject/abstract-signer';
+// eslint-disable-next-line no-duplicate-imports
+import type { BaseContract, ContractFunction, ContractInterface, PopulatedTransaction } from 'ethers';
 
 import { ContractGroupsSharedJson } from './types';
 
-import { Address, IEthereumService } from 'services/ethereum-service';
 import { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 import { DI, IContainer, Registration } from 'aurelia';
 import { ICacheService } from '../cache-service';
+import { IReadOnlyProvider } from '../../read-only-provider';
 import { cache } from 'decorators/cache';
 
 export type IContractService = ContractService;
@@ -20,7 +22,7 @@ export const IContractService = DI.createInterface<IContractService>();
  * Uses the ABIs obtained from `getContractAbi` in contracts.ts.
  */
 export class ContractService {
-  constructor(@ICacheService private readonly cacheService: ICacheService, @IEthereumService private readonly ethereumService: IEthereumService) {}
+  constructor(@ICacheService private readonly cacheService: ICacheService, @IReadOnlyProvider private readonly readOnlyProvider: IReadOnlyProvider) {}
 
   public static register(container: IContainer) {
     Registration.singleton(IContractService, ContractService).register(container);
@@ -64,11 +66,11 @@ export class ContractService {
    * @param signerOrProvider totally optional, by default is set to current signerOrProvider from EthereumService
    * @returns
    */
-  public getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
+  public getContract<TResult extends BaseContract, TContractType extends ContractGroupsAbis = ContractGroupsAbis>(
     contractType: TContractType,
     name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
-    signerOrProvider?: BaseProvider | Signer | undefined,
+    signerOrProvider?: Provider | Signer | undefined,
   ): TResult {
     const contractData = ContractGroupsJsons[contractType];
     const contracts = contractData.main.contracts;
@@ -78,12 +80,11 @@ export class ContractService {
       const key = abi as keyof ContractGroupsSharedJson;
       abi = contractData.shared[key] as ContractInterface;
     }
-    signerOrProvider = signerOrProvider ?? this.ethereumService.createSignerOrProvider();
     overrideAddress = overrideAddress ?? contract.address;
     if (!overrideAddress) {
       throw new Error(`ContractService: requested contract has no address: ${name}`);
     }
-    return this.getContractCached(overrideAddress, abi, signerOrProvider);
+    return this.getContractCached(overrideAddress, abi, signerOrProvider ?? this.readOnlyProvider);
   }
 
   /**
@@ -101,11 +102,7 @@ export class ContractService {
   @cache<ContractService>(function () {
     return { storage: this.cacheService };
   })
-  private getContractCached<TResult extends BaseContract>(
-    address: Address,
-    abi: ContractInterface,
-    signerOrProvider: BaseProvider | Signer,
-  ): TResult {
+  private getContractCached<TResult extends BaseContract>(address: string, abi: ContractInterface, signerOrProvider: Provider | Signer): TResult {
     return new Contract(address, abi, signerOrProvider) as TResult;
   }
 }

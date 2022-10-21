@@ -51,8 +51,7 @@ export class SubmitProposalCard implements ICustomElementViewModel {
       }
       await this.governanceStore.submitDynamicMethod(this.isPublic, data, ipfsHash);
     } catch (ex) {
-      //TODO put an error somewhere
-      //alert(JSON.stringify(ex));
+      // meow
     }
   }
 

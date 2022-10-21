@@ -2,15 +2,16 @@ import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
 import { BigNumberOverTimeData, ValueChartData } from 'models/chart-data';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IContractService, IServices, fromWei } from 'services';
+import { IContractService } from 'services';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
+import { INumberService } from './../services/number-service';
 import { Interval } from 'models/interval';
 import { MonetaryContractAbi } from 'services/contract/types';
 import { Transaction } from 'models/transaction';
 import { Treasury } from 'models/generated/monetary/treasury/Treasury';
 import { callOnce } from './../decorators/call-once';
-import { convertIntervalToRecordType, getTimeMinusInterval } from 'utils';
+import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from 'utils';
 
 export type ITreasuryStore = TreasuryStore;
 export const ITreasuryStore = DI.createInterface<ITreasuryStore>('TreasuryStore');
@@ -25,7 +26,7 @@ export class TreasuryStore {
   public treasuryAssets?: (Asset | undefined)[] = [];
   public transactions: Transaction[] = [];
   constructor(
-    @IServices private readonly services: IServices,
+    @INumberService private readonly numberService: INumberService,
     @IContractStore private readonly contractStore: IContractStore,
     @IContractService private readonly contractService: IContractService,
     @IDataStore private readonly dataStore: IDataStore,
@@ -86,7 +87,7 @@ export class TreasuryStore {
     const chartData = kttOverTimeData.map((x) => {
       return {
         createdAt: new Date(x.createdAt),
-        value: this.services.numberService.fromString(fromWei(x.value, 18)),
+        value: this.numberService.fromString(fromWei(x.value, 18)),
       } as unknown as ValueChartData;
     });
     //sort data by date ascending
@@ -99,7 +100,7 @@ export class TreasuryStore {
     //add last data point
     chartData.push({
       createdAt: new Date(),
-      value: this.services.numberService.fromString(fromWei(totalValuation ?? BigNumber.from(0), 18)),
+      value: this.numberService.fromString(fromWei(totalValuation ?? BigNumber.from(0), 18)),
     } as unknown as ValueChartData);
     return chartData;
   }

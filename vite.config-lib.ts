@@ -1,6 +1,7 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import { Plugin, PluginOption, defineConfig, splitVendorChunkPlugin } from 'vite';
 import { resolve } from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import swc from 'unplugin-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -23,7 +24,17 @@ export default defineConfig({
       formats: ['es'],
     },
   },
-  plugins: [swc.vite() as PluginOption, splitVendorChunkPlugin(), tsconfigPaths()],
+  plugins: [
+    swc.vite() as PluginOption,
+    splitVendorChunkPlugin(),
+    tsconfigPaths(),
+
+    visualizer({
+      emitFile: true,
+      gzipSize: true,
+      filename: 'stats.html',
+    }) as Plugin,
+  ],
   define: {
     'process.env': process.env,
   },

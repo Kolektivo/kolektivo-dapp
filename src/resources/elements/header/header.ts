@@ -12,7 +12,7 @@ export class Header implements ICustomElementViewModel {
   }
 
   connectWallet(): void {
-    this.store.blockChainStore.connect();
+    void this.store.blockChainStore.connect();
   }
 
   connectKolektivoWallet() {
