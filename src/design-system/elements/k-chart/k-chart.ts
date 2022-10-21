@@ -137,26 +137,7 @@ export class KChart implements ICustomElementViewModel {
       });
     }
 
-    if (!this.dataSets.length && !isNaN(this.data[0] as number)) {
-      switch (this.type) {
-        case 'doughnut':
-          this.dataSets.push({
-            data: this.data as DataType[],
-            backgroundColor: this.colors,
-            borderColor: this.borderColor,
-          });
-          break;
-        case 'line':
-          this.dataSets.push({
-            label: this.labels?.[0],
-            data: this.data as DataType[],
-            borderColor: this.borderColor ?? 'red',
-            backgroundColor: this.backgroundColor,
-            tension: this.tension,
-          });
-          break;
-      }
-    }
+    this.updateDataSets();
     const context = this.chart?.getContext('2d');
     if (!context) return;
 
@@ -274,17 +255,40 @@ export class KChart implements ICustomElementViewModel {
     });
   }
 
+  private updateDataSets() {
+    if (!this.dataSets.length && !isNaN(this.data[0] as number)) {
+      switch (this.type) {
+        case 'doughnut':
+          this.dataSets.push({
+            data: this.data as DataType[],
+            backgroundColor: this.colors,
+            borderColor: this.borderColor,
+          });
+          break;
+        case 'line':
+          this.dataSets.push({
+            label: this.labels?.[0],
+            data: this.data as DataType[],
+            borderColor: this.borderColor ?? 'red',
+            backgroundColor: this.backgroundColor,
+            tension: this.tension,
+          });
+          break;
+      }
+    }
+  }
+
   dataSetsChanged(): void {
-    this.refresh();
+    if (!this.chartJsInstance?.options) return;
+    this.chartJsInstance.data.datasets = this.dataSets;
+    this.chartJsInstance.update();
   }
 
   dataChanged(): void {
-    this.refresh();
-  }
-
-  private refresh(): void {
-    void this.detaching();
-    this.attaching();
+    if (!this.chartJsInstance?.options) return;
+    this.updateDataSets();
+    this.chartJsInstance.data.datasets = this.dataSets;
+    this.chartJsInstance.update();
   }
 
   attaching(): void {

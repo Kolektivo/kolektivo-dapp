@@ -9,19 +9,23 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
   constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore) {}
 
   get chartData(): number[] {
-    return [this.nonStablecoinAssetPercentage * 100, this.stablecoinAssetPercentage * 100, this.ecologicalAssetPercentage * 100];
+    return [this.nonStablecoinAssetPercentage() * 100, this.stablecoinAssetPercentage() * 100, this.ecologicalAssetPercentage() * 100];
   }
 
-  get ecologicalAssetPercentage(): number {
-    return this.getAssetPercentage(AssetType.Ecological) / this.treasuryStore.treasuryValue;
+  get isReady() {
+    return this.treasuryStore.treasuryValue && this.treasuryStore.treasuryAssets?.length;
   }
 
-  get stablecoinAssetPercentage(): number {
-    return this.getAssetPercentage(AssetType.Stablecoin) / this.treasuryStore.treasuryValue;
+  ecologicalAssetPercentage(): number {
+    return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.Ecological) / this.treasuryStore.treasuryValue : 0;
   }
 
-  get nonStablecoinAssetPercentage(): number {
-    return this.getAssetPercentage(AssetType.NonStablecoin) / this.treasuryStore.treasuryValue;
+  stablecoinAssetPercentage(): number {
+    return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.Stablecoin) / this.treasuryStore.treasuryValue : 0;
+  }
+
+  nonStablecoinAssetPercentage(): number {
+    return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.NonStablecoin) / this.treasuryStore.treasuryValue : 0;
   }
 
   private getAssetPercentage(type: AssetType): number {
