@@ -23,6 +23,7 @@ export class Ripple implements ICustomAttributeViewModel {
     const circleD = maxLength * 2;
     this.ripple = document.createElement('div');
     this.ripple.style.position = 'absolute';
+    this.ripple.style.pointerEvents = 'none';
     this.ripple.style.width = `${circleD}px`;
     this.ripple.style.height = `${circleD}px`;
     this.ripple.style.borderRadius = '500px';
@@ -49,6 +50,7 @@ export class Ripple implements ICustomAttributeViewModel {
     this.rippleContainer.style.top = `${offsetInfo.top}px`;
     this.rippleContainer.style.height = `${offsetInfo.height}px`;
     this.rippleContainer.className = 'ripple-container';
+    this.rippleContainer.style.pointerEvents = 'none';
     this.rippleContainer.style.overflow = 'hidden';
     this.htmlElement.appendChild(this.rippleContainer);
   }

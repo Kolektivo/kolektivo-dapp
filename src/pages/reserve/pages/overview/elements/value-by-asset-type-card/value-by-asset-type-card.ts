@@ -9,18 +9,22 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
   constructor(@IReserveStore private readonly reserveStore: IReserveStore) {}
 
   get chartData(): number[] {
-    return [this.nonStablecoinAssetPercentage * 100, this.stablecoinAssetPercentage * 100, this.ecologicalAssetPercentage * 100];
+    return [this.nonStablecoinAssetPercentage() * 100, this.stablecoinAssetPercentage() * 100, this.ecologicalAssetPercentage() * 100];
   }
 
-  get ecologicalAssetPercentage(): number {
+  get isReady() {
+    return this.reserveStore.reserveValue && this.reserveStore.reserveAssets?.length;
+  }
+
+  ecologicalAssetPercentage(): number {
     return this.getAssetPercentage(AssetType.Ecological) / this.reserveStore.reserveValue;
   }
 
-  get stablecoinAssetPercentage(): number {
+  stablecoinAssetPercentage(): number {
     return this.getAssetPercentage(AssetType.Stablecoin) / this.reserveStore.reserveValue;
   }
 
-  get nonStablecoinAssetPercentage(): number {
+  nonStablecoinAssetPercentage(): number {
     return this.getAssetPercentage(AssetType.NonStablecoin) / this.reserveStore.reserveValue;
   }
 

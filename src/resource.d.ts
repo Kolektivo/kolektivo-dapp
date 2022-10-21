@@ -11,7 +11,6 @@ declare module '*.html' {
   export const shadowOptions: { mode: 'open' | 'closed' } | undefined;
   export function register(container: IContainer): void;
 }
-declare module 'lit-js-sdk';
 declare module 'lit-connect-modal';
 declare module '*.css' {
   const value: string;
@@ -40,6 +39,8 @@ interface ImportMeta {
 interface ImportMetaEnv {
   readonly KOL_NETWORK?: AllowedNetworks;
   readonly KOL_IPFS_GATEWAY: string;
+  readonly KOL_FIREBASE_API_KEY?: string;
+  readonly KOL_CHAIN_URL?: string;
 }
 
 declare module 'rollup-plugin-html';

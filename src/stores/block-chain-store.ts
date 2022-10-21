@@ -1,6 +1,5 @@
-import { Address, IEthereumService, WalletProvider } from '../services';
+import { Address, Hash, IEthereumService, WalletProvider } from './../services/ethereum-service';
 import { DI, IContainer, Registration } from 'aurelia';
-import { Hash } from './../services/ethereum-service';
 
 export type IBlockChainStore = BlockChainStore;
 export const IBlockChainStore = DI.createInterface<IBlockChainStore>('BlockChainStore');
