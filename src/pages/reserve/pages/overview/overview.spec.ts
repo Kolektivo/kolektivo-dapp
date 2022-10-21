@@ -82,7 +82,7 @@ describe('overview', () => {
         IReserveStore,
         mock<IReserveStore>({
           reserveAssets: [],
-          getReserveValueOverTime: (a) => new Promise((res) => res([])),
+          getReserveValueOverTime: () => new Promise((res) => res([])),
         }),
       ),
       Global,

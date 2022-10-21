@@ -52,7 +52,7 @@ describe('value-over-time-card', () => {
       Registration.instance(
         ITreasuryStore,
         mock<ITreasuryStore>({
-          getValueOverTime: (x) => {
+          getValueOverTime: () => {
             return new Promise((res) => res([]));
           },
         }),

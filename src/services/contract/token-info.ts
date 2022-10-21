@@ -5,6 +5,7 @@ const tokenListUri = 'https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/toke
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 export const getTokenInfos = () =>
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   fetch
     ? fetch(tokenListUri, { method: 'GET', headers: { accept: 'application/json' } })
         .then(async (y) => (await y.json()) as ITokenListUniswap)

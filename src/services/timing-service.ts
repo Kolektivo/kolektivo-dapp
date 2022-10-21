@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { DI, IContainer, Registration } from 'aurelia';
 import { IConfiguration } from 'configurations/configuration';
 

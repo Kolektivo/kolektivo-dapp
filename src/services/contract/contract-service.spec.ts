@@ -1,9 +1,9 @@
 import { describe, it } from 'vitest';
 
-const testAccount1 = '0xD4717ee259f8736af189F968Dadc6939c1568200';
-const testAccount2 = '0x27dC953040B725A543FBc2556641F62a213d55D4';
+// const testAccount1 = '0xD4717ee259f8736af189F968Dadc6939c1568200';
+// const testAccount2 = '0x27dC953040B725A543FBc2556641F62a213d55D4';
 
-const testAccountKey1 = '6f4d3eace598f27f60c59fa4132c5b4030a61bd50569c16f4cac33beae1eb0e0';
+// const testAccountKey1 = '6f4d3eace598f27f60c59fa4132c5b4030a61bd50569c16f4cac33beae1eb0e0';
 // const testAccountKey2 = '9d248ff51e5f66b5bbf4f17a417a93d7dceb971f3f44909bea806d581d9aa0fb';
 
 describe('contracts-service.ts', () => {

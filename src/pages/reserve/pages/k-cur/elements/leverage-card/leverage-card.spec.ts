@@ -62,8 +62,8 @@ describe('leverage-card', () => {
         IReserveStore,
         mock<IReserveStore>({
           reserveAssets: [],
-          getLeverageRatioValueOverTime: (a) => new Promise((res) => res([])),
-          getkCurPriceOverTime: (a) => new Promise((res) => res([])),
+          getLeverageRatioValueOverTime: () => new Promise((res) => res([])),
+          getkCurPriceOverTime: () => new Promise((res) => res([])),
         }),
       ),
       PercentageValueConverter,

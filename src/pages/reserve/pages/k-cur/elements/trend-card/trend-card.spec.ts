@@ -63,7 +63,7 @@ describe('trend-card', () => {
       Registration.instance(
         IReserveStore,
         mock<IReserveStore>({
-          getkCurPriceOverTime: (a) => new Promise((res) => res([])),
+          getkCurPriceOverTime: () => new Promise((res) => res([])),
         }),
       ),
       createMockStoreRegistration(),

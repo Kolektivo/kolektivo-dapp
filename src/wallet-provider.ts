@@ -7,6 +7,7 @@ import Web3Modal from 'web3modal';
 export type IWalletConnector = Web3Modal;
 export const IWalletConnector = DI.createInterface<IWalletConnector>();
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ConnectToWalletConnect = (walletConnectProvider: any, opts?: IWalletConnectConnectorOptions, targetedChainId?: number): Promise<unknown> => {
   // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
   return new Promise(async (resolve, reject) => {

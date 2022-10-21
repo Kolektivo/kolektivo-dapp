@@ -51,7 +51,7 @@ describe('value-over-time-card', () => {
       Registration.instance(
         IReserveStore,
         mock<IReserveStore>({
-          getReserveValueOverTime: (a) => new Promise((res) => res([])),
+          getReserveValueOverTime: () => new Promise((res) => res([])),
         }),
       ),
       createMockStoreRegistration(),

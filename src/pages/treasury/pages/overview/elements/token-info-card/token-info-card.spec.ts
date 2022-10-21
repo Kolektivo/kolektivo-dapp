@@ -61,7 +61,7 @@ describe('token-info-card', () => {
         ITreasuryStore,
         mock<ITreasuryStore>({
           treasuryAssets: [],
-          getValueOverTime: (a) => new Promise((res) => res([])),
+          getValueOverTime: () => new Promise((res) => res([])),
         }),
       );
     const createMockEthereumService = () => Registration.instance(IEthereumService, mock<IEthereumService>({}));

@@ -76,7 +76,8 @@ export class App {
     if (!prevNetwork || this.blockChainStore.isTargetedNetwork) return;
     this.confirmChangeNetworkInfo = {
       need: this.blockChainStore.targetedNetwork,
-      connectedTo: newNetwork.name ?? this.i18n.tr('general.an-unknown-network'),
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      connectedTo: newNetwork?.name ?? this.i18n.tr('general.an-unknown-network'),
     };
     this.showConfirmChangeNetworkInfo = true;
   };
