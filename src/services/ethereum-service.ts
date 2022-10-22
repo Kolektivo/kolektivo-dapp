@@ -292,7 +292,7 @@ export class EthereumService {
    * @returns
    */
   public createSignerOrProvider(): BaseProvider | Signer {
-    return this.createSignerOrProviderCached(this.defaultAccountAddress);
+    return this.createSignerOrProviderForAddress(this.defaultAccountAddress);
   }
 
   /**
@@ -304,7 +304,7 @@ export class EthereumService {
   @cache<EthereumService>(function () {
     return { storage: this.cacheService };
   })
-  private createSignerOrProviderCached(accountAddress: Address | Signer | null): BaseProvider | Signer {
+  public createSignerOrProviderForAddress(accountAddress: Address | Signer | null): BaseProvider | Signer {
     let signerOrProvider: Address | Signer | JsonRpcProvider | BaseProvider;
     if (accountAddress && this.walletProvider) {
       signerOrProvider = Signer.isSigner(accountAddress) ? accountAddress : this.walletProvider.getSigner(accountAddress);

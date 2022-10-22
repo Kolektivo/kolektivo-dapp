@@ -34,7 +34,7 @@ describe('contracts-service.ts', () => {
 
     const testTokenAddress = '0x44d7697a76cb17d858196797432f745e4bc5fe39';
     const transferAmount = BigNumber.from(toWei('.001', 18));
-    const token = tokenService.getTokenContract(testTokenAddress, undefined, createSigner(testAccountKey1, ethereumService));
+    const token = tokenService.getTokenContractForProvider(createSigner(testAccountKey1, ethereumService), testTokenAddress, undefined);
 
     const startingBalanceAccount1 = await token.balanceOf(testAccount1);
     const startingBalanceAccount2 = await token.balanceOf(testAccount2);
