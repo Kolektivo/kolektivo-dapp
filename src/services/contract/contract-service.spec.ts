@@ -22,6 +22,18 @@ describe('contracts-service.ts', () => {
     expect(contract).toBeTypeOf('object');
   });
 
+  it('gets a contract that can sign', async () => {
+    const container = DI.createContainer();
+    const ethereumService = await createEthereumService(container);
+    ContractService.register(container);
+    const contractService = container.get(IContractService);
+    expect(contractService).toBeTypeOf('object');
+
+    const contract = contractService.getContractForProvider(createSigner(testAccountKey1, ethereumService), 'Monetary', 'Kolektivo Treasury Token');
+    expect(contract).toBeTypeOf('object');
+    expect(contract.signer).toBeTypeOf('object');
+  });
+
   it('transfers a token', async () => {
     const container = DI.createContainer();
     const ethereumService = await createEthereumService(container);
