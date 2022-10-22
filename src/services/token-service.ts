@@ -21,7 +21,7 @@ export class TokenService {
   }
 
   public getTokenContract<T extends number | undefined>(tokenAddress: string, id?: T): T extends undefined ? Erc20 : Erc721 | Erc20 {
-    return this.getTokenContractForAddress(this.ethereumService.defaultAccountAddress, tokenAddress, id);
+    return this.getTokenContractForAccount(this.ethereumService.defaultAccountAddress, tokenAddress, id);
   }
 
   public getTokenContractForProvider<T extends number | undefined>(
@@ -43,7 +43,7 @@ export class TokenService {
   @cache<TokenService>(function () {
     return { storage: this.cacheService };
   })
-  private getTokenContractForAddress<T extends number | undefined>(
+  private getTokenContractForAccount<T extends number | undefined>(
     account: Address | Signer | null,
     tokenAddress: Address,
     id?: T,
