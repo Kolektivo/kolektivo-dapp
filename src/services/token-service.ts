@@ -1,4 +1,4 @@
-import { Address } from 'services/ethereum-service';
+import { type Address } from 'services/ethereum-service';
 import { BaseProvider } from '@ethersproject/providers';
 import { Contract, ContractInterface } from '@ethersproject/contracts';
 import { DI, IContainer, Registration } from 'aurelia';
