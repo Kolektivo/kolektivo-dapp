@@ -231,12 +231,9 @@ export const seed = async () => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-if (process.argv?.includes('seed')) {
-  let i = 15;
-  while (i--) {
-    console.log(`Seeding data ${i} as ${new Date().toString()}`);
-    await seed();
-    await delay(60000);
-  }
+let i = 15;
+while (i--) {
+  console.log(`Seeding data ${i} as ${new Date().toString()}`);
+  await seed();
+  await delay(60000);
 }

@@ -17,4 +17,4 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - run: node ./scripts/update-chart-data.mjs seed
+      - run: node ./scripts/update-chart-data.mjs
