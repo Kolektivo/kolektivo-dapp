@@ -3,8 +3,8 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
 import { IBrowserStorageService } from './browser-storage-service';
+import { IConfiguration } from 'configurations/configuration';
 import { Signer } from '@ethersproject/abstract-signer';
-import { callOnce } from '../decorators/call-once';
 import { ethers } from 'ethers';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
@@ -81,9 +81,11 @@ export class EthereumService {
     @IEventAggregator private readonly eventAggregator: IEventAggregator,
     @IBrowserStorageService private readonly storageService: IBrowserStorageService,
     @ILogger private readonly logger: ILogger,
+    @IConfiguration private readonly configuration: IConfiguration,
     @ICacheService private readonly cacheService: ICacheService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
+    this.initialize();
   }
 
   public static register(container: IContainer) {
@@ -196,26 +198,11 @@ export class EthereumService {
    */
   private defaultAccount?: Signer | Address | null;
 
-  @callOnce('Ethereum Service')
-  public initialize(network: AllowedNetworks): Promise<unknown> {
-    if (typeof network !== 'string') {
-      throw new Error('Ethereum.initialize: `network` must be specified');
-    }
-
-    if (!this.chainIdByName.get(network)) {
-      throw new Error('Ethereum.initialize: `unsupported network');
-    }
-
-    this.targetedNetwork = network;
-    this.targetedChainId = this.chainIdByName.get(network);
-
-    const readonlyEndPoint = this.endpoints[this.targetedNetwork];
-    if (typeof readonlyEndPoint !== 'string') {
-      throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
-    }
-
-    this.readOnlyProvider = ethers.getDefaultProvider(`https://alfajores.rpcs.dev:8545`);
-    this.providerForCeloWithEthers = new CeloProvider(`https://alfajores.rpcs.dev:8545`);
+  public initialize(): Promise<unknown> {
+    this.targetedNetwork = this.configuration.chain;
+    this.targetedChainId = this.configuration.chainId;
+    this.readOnlyProvider = ethers.getDefaultProvider(this.configuration.chainUrl);
+    this.providerForCeloWithEthers = new CeloProvider(this.configuration.chainUrl);
     return this.readOnlyProvider._networkPromise as Promise<unknown>;
   }
 
@@ -362,7 +349,7 @@ export class EthereumService {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unnecessary-condition
     if (detectEthereumProvider) {
-      provider = (await detectEthereumProvider({ mustBeMetaMask: true })) as MetamaskProvider | null;
+      provider = await detectEthereumProvider({ mustBeMetaMask: true });
     }
 
     if (typeof provider === 'object' && provider?._metamask?.isUnlocked && provider.request) {

@@ -37,10 +37,12 @@ interface ImportMeta {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface ImportMetaEnv {
-  readonly KOL_NETWORK?: AllowedNetworks;
-  readonly KOL_IPFS_GATEWAY: string;
-  readonly KOL_FIREBASE_API_KEY?: string;
+  readonly KOL_IPFS_GATEWAY?: string;
+  readonly KOL_CHAIN_ID?: string;
   readonly KOL_CHAIN_URL?: string;
+  readonly KOL_FIREBASE_API_KEY?: string;
+  readonly KOL_CHAIN?: string;
+  readonly KOL_SCAN_LINK?: string;
 }
 
 declare module 'rollup-plugin-html';
