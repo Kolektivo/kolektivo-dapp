@@ -280,16 +280,11 @@ export class KChart implements ICustomElementViewModel {
   }
 
   dataSetsChanged(): void {
-    if (!this.chartJsInstance?.options) return;
-    this.chartJsInstance.data.datasets = this.dataSets;
-    this.chartJsInstance.update();
+    this.refresh();
   }
 
   dataChanged(): void {
-    if (!this.chartJsInstance?.options) return;
-    this.updateDataSets();
-    this.chartJsInstance.data.datasets = this.dataSets;
-    this.chartJsInstance.update();
+    this.refresh();
   }
 
   private refresh(): void {

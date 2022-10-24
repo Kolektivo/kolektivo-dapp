@@ -9,7 +9,7 @@ import { captureFilter, ifExistsThenTrue } from '../../common';
  *    <pbutton type="primary" disabled>Primary - Disabled</pbutton>
  *    <pbutton type="secondary" disabled>Secondary - Disabled</pbutton>
  *    <pbutton type="tertiary" disabled>Tertiary - Disabled</pbutton>
- *    <pbutton type="primary" click.delegate="message('Hi!')">Clickable</pbutton>
+ *    <pbutton type="primary" click.trigger="message('Hi!')">Clickable</pbutton>
  *    <pbutton type="primary" no-animation>Not Animated</pbutton>
  *    <pbutton ... full-width>Full-Width</pbutton>
  */

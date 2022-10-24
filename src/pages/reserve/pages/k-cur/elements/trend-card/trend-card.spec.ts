@@ -2,12 +2,14 @@ import '../../../../../../utils-testing/setup-testing';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { INumberService } from '../../../../../../services/number-service';
+import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../../../stores';
 import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
 import { TrendCard } from './trend-card';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('trend-card', () => {
   it('should have a k-card component', async () => {
@@ -53,6 +55,19 @@ describe('trend-card', () => {
         tr: (s: string) => String(s),
       });
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
-    return [TrendCard, PercentageValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), numberServiceRegistration()];
+    return [
+      TrendCard,
+      PercentageValueConverter,
+      Registration.instance(
+        IReserveStore,
+        mock<IReserveStore>({
+          getkCurPriceOverTime: () => new Promise((res) => res([])),
+        }),
+      ),
+      Global,
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      numberServiceRegistration(),
+    ];
   }
 });
