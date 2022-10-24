@@ -26,7 +26,6 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
     return this.getAssetPercentage(AssetType.NonStablecoin) / this.reserveStore.reserveValue;
   }
 
-  
   private getAssetPercentage(type: AssetType): number {
     return (
       this.reserveStore.reserveAssets
