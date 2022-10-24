@@ -213,8 +213,8 @@ export class EthereumService {
       throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
     }
 
-    this.readOnlyProvider = new CeloProvider({ url: `https://alfajores.rpcs.dev:8545`, skipFetchSetup: true });
-    this.providerForCeloWithEthers = new CeloProvider({ url: `https://alfajores.rpcs.dev:8545`, skipFetchSetup: true });
+    this.readOnlyProvider = new JsonRpcProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
+    this.providerForCeloWithEthers = new CeloProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
     return this.readOnlyProvider._networkPromise as Promise<unknown>;
   }
 
