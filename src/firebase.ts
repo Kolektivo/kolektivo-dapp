@@ -4,20 +4,20 @@ import { ContractService } from './services/contract/contract-service';
 import { ContractStore } from './stores/contract-store';
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
 import { DataStore } from './stores/data-store';
-import { EthereumService, IBrowserStorageService, IIpfsService } from 'services';
+import { EthereumService } from 'services/ethereum-service';
 import { FirebaseService } from './services/firebase-service';
-import { I18nConfiguration } from '@aurelia/i18n';
+import { I18N } from '@aurelia/i18n';
+import { IBrowserStorageService } from 'services/browser-storage-service';
 import { IFirebaseApp, IFirebaseService } from 'services/firebase-service';
+import { IIpfsService } from 'services/ipfs';
 import { IReserveStore, ReserveStore } from 'stores/reserve-store';
 import { ITokenData, getTokenInfos } from 'services/contract';
 import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
 import { NumberService } from './services/number-service';
 import { TokenService } from './services/token-service';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
-import { delay } from 'utils';
 import { firebaseConfig } from 'configurations/firebase';
 import { initializeApp } from 'firebase/app';
-import intervalPlural from 'i18next-intervalplural-postprocessor';
 
 enum Periods {
   'minute',
@@ -44,14 +44,7 @@ const container = DI.createContainer()
     }),
   )
   .register(NumberService)
-  .register(
-    I18nConfiguration.customize((options) => {
-      options.initOptions = {
-        fallbackLng: { default: ['en'] },
-        plugins: [intervalPlural],
-      };
-    }),
-  )
+  .register(Registration.instance(I18N, {}))
   .register(
     Registration.instance(IObserverLocator, {}),
     Registration.instance(IEventAggregator, {}),
@@ -231,9 +224,4 @@ export const seed = async () => {
   );
 };
 
-let i = 15;
-while (i--) {
-  console.log(`Seeding data ${i} as ${new Date().toString()}`);
-  await seed();
-  await delay(60000);
-}
+await seed();
