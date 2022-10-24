@@ -1,6 +1,5 @@
 import { BadgeType } from 'models/badge-type';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
-import { IBlockChainStore } from 'stores/block-chain-store';
 import { IEncryptionClient } from 'encryption-client';
 import { IEthereumService } from './ethereum-service';
 import { getContractAbi } from './contract/contracts';
@@ -22,7 +21,6 @@ export class EncryptionService {
   constructor(
     @ILogger private readonly logger: ILogger,
     @IEncryptionClient private readonly encryptionClient: IEncryptionClient,
-    @IBlockChainStore private readonly blockChainStore: IBlockChainStore,
     @IEthereumService private readonly ethereumService: IEthereumService,
   ) {
     this.logger.scopeTo('EncryptionService');

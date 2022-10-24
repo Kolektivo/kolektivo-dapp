@@ -6,7 +6,7 @@ import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from './design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
-import { IEncryptionClient } from 'encryption-client';
+import { IEncryptionClient } from './encryption-client';
 import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { IReadOnlyProvider } from 'read-only-provider';
@@ -54,13 +54,16 @@ export const appContainer: IContainer = DI.createContainer()
   .register(resources)
   .register(pages)
   .register(Registration.instance(IFirebaseApp, initializeApp(firebaseConfig)))
-  .register(IEncryptionClient, {
-    ...new LitJsSdk.LitNodeClient(),
-    getAuthSig: LitJsSdk.signAndSaveAuthMessage,
-    encryptString: LitJsSdk.encryptString,
-    decryptString: LitJsSdk.decryptString,
-    uint8arrayToString: LitJsSdk.uint8arrayToString,
-  })
+  .register(
+    Registration.cachedCallback(IEncryptionClient, () => {
+      const client: Partial<IEncryptionClient> = new LitJsSdk.LitNodeClient();
+      client.getAuthSig = LitJsSdk.signAndSaveAuthMessage;
+      client.encryptString = LitJsSdk.encryptString;
+      client.decryptString = LitJsSdk.decryptString;
+      client.uint8arrayToString = LitJsSdk.uint8arrayToString;
+      return client as IEncryptionClient;
+    }),
+  )
   .register(
     Registration.instance(ITokenData, {
       tokens: getTokenInfos(),
