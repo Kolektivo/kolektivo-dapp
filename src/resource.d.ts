@@ -39,8 +39,8 @@ interface ImportMeta {
 interface ImportMetaEnv {
   readonly KOL_IPFS_GATEWAY?: string;
   readonly KOL_FIREBASE_API_KEY?: string;
-  readonly KOL_CHAIN?: string;
-  readonly KOL_SCAN_LINK?: string;
+  readonly KOL_NETWORK?: string;
+  readonly KOL_ETHERSCAN_LINK?: string;
 }
 
 declare module 'rollup-plugin-html';

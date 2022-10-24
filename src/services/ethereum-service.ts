@@ -56,8 +56,8 @@ export enum Networks {
   Celo = 'Celo',
   Alfajores = 'Alfajores',
 }
-
 const CELO_MAINNET_CHAIN_ID = 42220;
+
 const CELO_ALFAJORES_CHAIN_ID = 44787;
 
 export interface IChainEventInfo {
@@ -84,7 +84,7 @@ export class EthereumService {
     @ICacheService private readonly cacheService: ICacheService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
-    this.initialize(this.configuration.chain);
+    this.initialize(this.configuration.network);
   }
 
   public static register(container: IContainer) {

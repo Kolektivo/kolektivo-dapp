@@ -1,16 +1,14 @@
 import * as hooks from './hooks';
 import * as pages from './pages';
 import * as resources from './resources';
-import { CHAIN, CHAIN_ID, CHAIN_URL, ETHERSCAN_LINK, IPFS_GATEWAY, IS_DEV } from './environment-variables';
-import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from './design-system';
+import { ETHERSCAN_LINK, IPFS_GATEWAY, IS_DEV, NETWORK } from './environment-variables';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { IConfiguration } from 'configurations/configuration';
 import { IEncryptionClient } from './encryption-client';
 import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
-import { IReadOnlyProvider } from 'read-only-provider';
 import { ITokenData, getTokenInfos } from './services/contract/token-info';
 import { RouterConfiguration } from '@aurelia/router';
 import { Services } from './services/services';
@@ -46,7 +44,7 @@ export const appContainer: IContainer = DI.createContainer()
         enableCoercion: true,
       };
     }),
-    Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })),
+    // Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })),
   )
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(Services)
@@ -67,10 +65,8 @@ export const appContainer: IContainer = DI.createContainer()
   )
   .register(
     Registration.instance(IConfiguration, {
-      chainId: CHAIN_ID,
       ipfsGateway: IPFS_GATEWAY,
-      chainUrl: CHAIN_URL,
-      chain: CHAIN,
+      network: NETWORK,
       isDevelopment: IS_DEV,
       etherscanLink: ETHERSCAN_LINK,
     }),

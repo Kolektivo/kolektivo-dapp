@@ -11,9 +11,9 @@ const testAccountKey1 = '6f4d3eace598f27f60c59fa4132c5b4030a61bd50569c16f4cac33b
 // const testAccountKey2 = '9d248ff51e5f66b5bbf4f17a417a93d7dceb971f3f44909bea806d581d9aa0fb';
 
 describe('contracts-service.ts', () => {
-  it('gets a contract', async () => {
+  it('gets a contract', () => {
     const container = DI.createContainer();
-    await createEthereumService(container);
+    createEthereumService(container);
     ContractService.register(container);
     const contractService = container.get(IContractService);
     expect(contractService).toBeTypeOf('object');
@@ -24,7 +24,7 @@ describe('contracts-service.ts', () => {
 
   it('gets a contract that can sign', async () => {
     const container = DI.createContainer();
-    const ethereumService = await createEthereumService(container);
+    const ethereumService = createEthereumService(container);
     ContractService.register(container);
     const contractService = container.get(IContractService);
     expect(contractService).toBeTypeOf('object');
@@ -36,7 +36,7 @@ describe('contracts-service.ts', () => {
 
   it('transfers a token', async () => {
     const container = DI.createContainer();
-    const ethereumService = await createEthereumService(container);
+    const ethereumService = createEthereumService(container);
     ContractService.register(container);
     TokenService.register(container);
     const contractService = container.get(IContractService);
