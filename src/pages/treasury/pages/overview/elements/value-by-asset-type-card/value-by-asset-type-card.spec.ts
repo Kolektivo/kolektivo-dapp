@@ -9,7 +9,7 @@ import { PercentageValueConverter } from './../../../../../../resources/value-co
 import { Registration } from 'aurelia';
 import { ValueByAssetTypeCard } from './value-by-asset-type-card';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('value-by-asset-type-card', () => {
   it('should have a k-card component', async () => {
@@ -62,7 +62,11 @@ describe('value-by-asset-type-card', () => {
       ValueByAssetTypeCard,
       PercentageValueConverter,
       Global,
-      Registration.instance(ITreasuryStore, vi.fn()),
+      Registration.instance(ITreasuryStore, {
+        treasuryAssets: [{}],
+        treasuryValue: 1,
+        getValueOverTime: () => new Promise((res) => res([])),
+      }),
       numberServiceRegistration(),
       createMockStoreRegistration(),
       createMockI18nRegistration(),

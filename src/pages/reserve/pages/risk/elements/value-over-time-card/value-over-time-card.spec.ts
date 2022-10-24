@@ -2,11 +2,13 @@ import '../../../../../../utils-testing/setup-testing';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../../../stores';
 import { Registration } from 'aurelia';
 import { ValueOverTimeCard } from './value-over-time-card';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('value-over-time-card', () => {
   it('should have a k-card component', async () => {
@@ -62,6 +64,19 @@ describe('value-over-time-card', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [ValueOverTimeCard, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
+    return [
+      ValueOverTimeCard,
+      Global,
+
+      Registration.instance(
+        IReserveStore,
+        mock<IReserveStore>({
+          getReserveValueOverTime: () => new Promise((res) => res([])),
+        }),
+      ),
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+    ];
   }
 });
