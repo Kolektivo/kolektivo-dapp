@@ -62,7 +62,6 @@
     "@material-design-icons/svg": "^0.13.0",
     "@metamask/detect-provider": "^2.0.0",
     "@metamask/providers": "^10.0.0",
-    "@vitest/ui": "^0.24.3",
     "@walletconnect/web3-provider": "^1.8.0",
     "aurelia": "dev",
     "browserify-zlib": "^0.2.0",
@@ -130,6 +129,7 @@
     "vite-svg-loader": "^3.6.0",
     "vite-tsconfig-paths": "^3.5.2",
     "vitest": "^0.24.3",
+    "@vitest/ui": "^0.24.3",
     "vitest-mock-extended": "^1.0.2"
   },
   "resolutions": {

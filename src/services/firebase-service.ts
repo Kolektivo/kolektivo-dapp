@@ -30,7 +30,7 @@ export class FirebaseService {
     container.register(Registration.singleton(IFirebaseService, FirebaseService));
   }
 
-  private fireStore: Firestore;
+  public fireStore: Firestore;
   constructor(@IFirebaseApp private readonly app: IFirebaseApp) {
     this.fireStore = getFirestore(this.app);
   }

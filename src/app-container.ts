@@ -1,7 +1,7 @@
 import * as hooks from './hooks';
 import * as pages from './pages';
 import * as resources from './resources';
-import { CHAIN, CHAIN_ID, CHAIN_URL, IPFS_GATEWAY, IS_DEV, SCAN_LINK } from './environment-variables';
+import { CHAIN, CHAIN_ID, CHAIN_URL, ETHERSCAN_LINK, IPFS_GATEWAY, IS_DEV } from './environment-variables';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from './design-system';
@@ -72,7 +72,7 @@ export const appContainer: IContainer = DI.createContainer()
       chainUrl: CHAIN_URL,
       chain: CHAIN,
       isDevelopment: IS_DEV,
-      scanLink: SCAN_LINK,
+      etherscanLink: ETHERSCAN_LINK,
     }),
   )
   .register(

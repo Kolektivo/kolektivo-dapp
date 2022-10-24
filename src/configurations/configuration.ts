@@ -7,7 +7,7 @@ export type IConfiguration = {
   chainUrl: string;
   chain: AllowedNetworks;
   isDevelopment: boolean;
-  scanLink: string;
+  etherscanLink: string;
 };
 
 export const IConfiguration = DI.createInterface<IConfiguration>();

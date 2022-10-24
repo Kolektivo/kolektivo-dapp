@@ -5,7 +5,6 @@ import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia
 import { IBrowserStorageService } from './browser-storage-service';
 import { IConfiguration } from 'configurations/configuration';
 import { Signer } from '@ethersproject/abstract-signer';
-import { ethers } from 'ethers';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
 import { truncateDecimals } from '../utils';
@@ -85,7 +84,7 @@ export class EthereumService {
     @ICacheService private readonly cacheService: ICacheService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
-    this.initialize();
+    void this.initialize();
   }
 
   public static register(container: IContainer) {
@@ -199,10 +198,24 @@ export class EthereumService {
   private defaultAccount?: Signer | Address | null;
 
   public initialize(): Promise<unknown> {
+    if (typeof this.configuration.chain !== 'string') {
+      throw new Error('Ethereum.initialize: `chain` (network) configuration must be specified');
+    }
+
+    if (!this.chainIdByName.get(this.configuration.chain)) {
+      throw new Error('Ethereum.initialize: `unsupported network');
+    }
+
     this.targetedNetwork = this.configuration.chain;
-    this.targetedChainId = this.configuration.chainId;
-    this.readOnlyProvider = ethers.getDefaultProvider(this.configuration.chainUrl);
-    this.providerForCeloWithEthers = new CeloProvider(this.configuration.chainUrl);
+    this.targetedChainId = this.chainIdByName.get(this.configuration.chain);
+
+    const readonlyEndPoint = this.configuration.chainUrl;
+    if (typeof readonlyEndPoint !== 'string') {
+      throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
+    }
+
+    this.readOnlyProvider = new JsonRpcProvider({ url: this.configuration.chainUrl, skipFetchSetup: true });
+    this.providerForCeloWithEthers = new CeloProvider({ url: this.configuration.chainUrl, skipFetchSetup: true });
     return this.readOnlyProvider._networkPromise as Promise<unknown>;
   }
 
