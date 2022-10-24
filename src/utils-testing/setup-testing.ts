@@ -1,3 +1,4 @@
+import '../prototypes';
 import { BrowserPlatform } from '@aurelia/platform-browser';
 import { Window } from 'happy-dom';
 import { setPlatform } from '@aurelia/testing';

@@ -6,7 +6,7 @@ export class RelativeTime {
   public toView(value?: number | string): string | null {
     if (!value) return 'never';
     const result = this.timeDiff(new Date(), new Date(value));
-    return t.format(result.difference * -1, result.scale);
+    return t.format(isFinite(result.difference) ? result.difference * -1 : 0, result.scale);
   }
   private timeDiff(curr: Date | string, prev: Date | string): { difference: number; scale: 'second' | 'minute' | 'hour' | 'day' | 'month' | 'year' } {
     curr = new Date(curr);

@@ -362,7 +362,7 @@ export class EthereumService {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unnecessary-condition
     if (detectEthereumProvider) {
-      provider = (await detectEthereumProvider({ mustBeMetaMask: true })) as MetamaskProvider | null;
+      provider = await detectEthereumProvider({ mustBeMetaMask: true });
     }
 
     if (typeof provider === 'object' && provider?._metamask?.isUnlocked && provider.request) {
