@@ -61,14 +61,21 @@ export class ContractService {
    * @param contractType
    * @param name
    * @param overrideAddress
-   * @param signerOrProvider totally optional, by default is set to current signerOrProvider from EthereumService
    * @returns
    */
   public getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
     contractType: TContractType,
     name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
-    signerOrProvider?: BaseProvider | Signer | undefined,
+  ): TResult {
+    return this.getContractForAccount(this.ethereumService.defaultAccountAddress, contractType, name, overrideAddress);
+  }
+
+  public getContractForProvider<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
+    signerOrProvider: BaseProvider | Signer,
+    contractType: TContractType,
+    name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
+    overrideAddress?: string,
   ): TResult {
     const contractData = ContractGroupsJsons[contractType];
     const contracts = contractData.main.contracts;
@@ -78,12 +85,13 @@ export class ContractService {
       const key = abi as keyof ContractGroupsSharedJson;
       abi = contractData.shared[key] as ContractInterface;
     }
-    signerOrProvider = signerOrProvider ?? this.ethereumService.createSignerOrProvider();
+
     overrideAddress = overrideAddress ?? contract.address;
     if (!overrideAddress) {
       throw new Error(`ContractService: requested contract has no address: ${name}`);
     }
-    return this.getContractCached(overrideAddress, abi, signerOrProvider);
+
+    return new Contract(overrideAddress, abi, signerOrProvider) as TResult;
   }
 
   /**
@@ -101,11 +109,13 @@ export class ContractService {
   @cache<ContractService>(function () {
     return { storage: this.cacheService };
   })
-  private getContractCached<TResult extends BaseContract>(
-    address: Address,
-    abi: ContractInterface,
-    signerOrProvider: BaseProvider | Signer,
+  private getContractForAccount<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
+    account: Address | Signer | null,
+    contractType: TContractType,
+    name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
+    overrideAddress?: string,
   ): TResult {
-    return new Contract(address, abi, signerOrProvider) as TResult;
+    const signerOrProvider = this.ethereumService.createSignerOrProviderForAddress(account);
+    return this.getContractForProvider(signerOrProvider, contractType, name, overrideAddress);
   }
 }
