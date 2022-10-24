@@ -4,8 +4,6 @@ import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
 import { IBrowserStorageService } from './browser-storage-service';
 import { Signer } from '@ethersproject/abstract-signer';
-import { callOnce } from '../decorators/call-once';
-import { ethers } from 'ethers';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
 import { truncateDecimals } from '../utils';
@@ -13,6 +11,7 @@ import { truncateDecimals } from '../utils';
 import { ICacheService } from './cache-service';
 import { IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
 import { cache } from 'decorators/cache';
+import { ethereumNetwork } from 'environment-variables';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal from 'web3modal';
 import detectEthereumProvider from '@metamask/detect-provider';
@@ -84,6 +83,7 @@ export class EthereumService {
     @ICacheService private readonly cacheService: ICacheService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
+    ethereumNetwork && void this.initialize(ethereumNetwork);
   }
 
   public static register(container: IContainer) {
@@ -196,7 +196,6 @@ export class EthereumService {
    */
   private defaultAccount?: Signer | Address | null;
 
-  @callOnce('Ethereum Service')
   public initialize(network: AllowedNetworks): Promise<unknown> {
     if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: `network` must be specified');
@@ -214,8 +213,8 @@ export class EthereumService {
       throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
     }
 
-    this.readOnlyProvider = ethers.getDefaultProvider(`https://alfajores.rpcs.dev:8545`);
-    this.providerForCeloWithEthers = new CeloProvider(`https://alfajores.rpcs.dev:8545`);
+    this.readOnlyProvider = new CeloProvider({ url: `https://alfajores.rpcs.dev:8545`, skipFetchSetup: true });
+    this.providerForCeloWithEthers = new CeloProvider({ url: `https://alfajores.rpcs.dev:8545`, skipFetchSetup: true });
     return this.readOnlyProvider._networkPromise as Promise<unknown>;
   }
 

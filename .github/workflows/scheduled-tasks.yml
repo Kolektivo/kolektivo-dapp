@@ -7,8 +7,6 @@ on:
       - development
   schedule:
     # Runs every 5 minutes (see https://crontab.guru)
-    - cron: '*/5 * * * *'
-    - cron: '*/10 * * * *'
     - cron: '*/15 * * * *'
 jobs:
   build:
@@ -19,4 +17,4 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - run: node ./scripts/update-chart-data.mjs
+      - run: node ./scripts/update-chart-data.mjs seed
