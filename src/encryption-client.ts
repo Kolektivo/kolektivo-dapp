@@ -2,7 +2,7 @@ import { DI } from 'aurelia';
 import { Web3Provider } from '@ethersproject/providers/lib';
 import type LitJsSdk from 'lit-js-sdk';
 
-export type AuthSig = any;
+export type AuthSig = unknown;
 export type EncryptionResult = { encryptedString: string; symmetricKey: string };
 
 export type AuthSigData = {

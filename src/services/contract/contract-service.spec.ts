@@ -22,7 +22,7 @@ describe('contracts-service.ts', () => {
     expect(contract).toBeTypeOf('object');
   });
 
-  it('gets a contract that can sign', async () => {
+  it('gets a contract that can sign', () => {
     const container = DI.createContainer();
     const ethereumService = createEthereumService(container);
     ContractService.register(container);
