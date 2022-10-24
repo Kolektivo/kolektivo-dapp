@@ -1,4 +1,4 @@
-import { BaseProvider, ExternalProvider, JsonRpcProvider, Network, Web3Provider, getNetwork } from '@ethersproject/providers';
+import { BaseProvider, JsonRpcProvider, Network, Web3Provider, getNetwork } from '@ethersproject/providers';
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
@@ -6,23 +6,15 @@ import { IBrowserStorageService } from './browser-storage-service';
 import { IConfiguration } from 'configurations/configuration';
 import { Signer } from '@ethersproject/abstract-signer';
 import { ethers } from 'ethers';
+import { formatString, truncateDecimals } from '../utils';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
-import { truncateDecimals } from '../utils';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 import { ICacheService } from './cache-service';
-import { IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
+import { IWalletProvider, ProviderType } from 'wallet-provider';
+import { MetaMaskInpageProvider } from '@metamask/providers';
 import { cache } from 'decorators/cache';
-import WalletConnectProvider from '@walletconnect/web3-provider';
-import Web3Modal from 'web3modal';
 import detectEthereumProvider from '@metamask/detect-provider';
-
-interface IEIP1193 {
-  on(eventName: 'accountsChanged', handler: (accounts: Address[]) => void): void;
-  on(eventName: 'chainChanged', handler: (chainId: number) => void): void;
-  on(eventName: 'connect', handler: (info: { chainId: number }) => void): void;
-  on(eventName: 'disconnect', handler: (error: { code: number; message: string }) => void): void;
-}
 
 export type Address = string;
 export type Hash = string;
@@ -69,12 +61,6 @@ export interface IChainEventInfo {
 
 export type IEthereumService = EthereumService;
 export const IEthereumService = DI.createInterface<IEthereumService>('EthereumService');
-export type WalletProvider = Web3Provider & IEIP1193 & ExternalProvider;
-type MetamaskProvider = WalletProvider &
-  ExternalProvider & {
-    autoRefreshOnNetworkChange: boolean;
-    _metamask?: { isUnlocked?: () => Promise<boolean> };
-  };
 
 export class EthereumService {
   constructor(
@@ -83,92 +69,14 @@ export class EthereumService {
     @ILogger private readonly logger: ILogger,
     @IConfiguration private readonly configuration: IConfiguration,
     @ICacheService private readonly cacheService: ICacheService,
+    @IWalletProvider private readonly walletProvider: IWalletProvider,
   ) {
     this.logger = logger.scopeTo('EthereumService');
-    this.initialize();
+    void this.initialize();
   }
 
   public static register(container: IContainer) {
     Registration.singleton(IEthereumService, EthereumService).register(container);
-  }
-
-  public readonly endpoints: Record<AllowedNetworks, string> = {
-    // Celo: `https://forno.celo.org`,
-    Celo: 'https://celo.rpcs.dev:8545',
-    // Alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
-    Alfajores: `https://alfajores.rpcs.dev:8545`,
-    // Alfajores: `https://alfajores-forno.celo-testnet.org`,
-    // Alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
-    // Alfajores: `https://celo-alfajores-rpc.allthatnode.com/QpHXTMEr0FbAgsVRUg8eYMbOrQy6KLxr`,
-  };
-
-  private readonly providerOptions = {
-    'custom-kolektivo': {
-      display: {
-        logo: 'data:image/gif;base64,R0lGODlhyADIAMIAAP/yAAoKCgAAAcRiAO0cJAAAAAAAAAAAACH5BAEAAAUALAAAAADIAMgAAAP+WLrc/jDKSau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS09TV1tfY2drb3N3e3+Dh4uPk5eaTAukCzOrry+3s6sjtAfUB8MP09vjC+vX8wfzdk/dLoL2B6YAZ3EfQ18J/DXs9ROjOobqDBwGSmHj+ENJEjSM42vN4ESPEhCdE1iOZzuTJiiVUBmApwCVFEO3aAdjJs+fOjo8+RuSQU53PowCAOhKK0kPRdEh9Km3EFCbRp1F7TmWkEylIC12zZt26KKzPrxXMij1KVpFanmgpvF3Ls22iuQDiTsBL1y6Yp4AD28yI1evQvUbprvX7JbDjnIMZFo2q1wFfxT9HnnnMuWZkingrN7iMmbGXzo8/g058VDQD0opNZ5F5ELNtw00jwL4tGwtte7eDwz1smbVwpL2v/K53PLjo3baTW1keoPnt58at19VsRqZW4NrPEi8AXbj02SUjf2cevifa8sHP+04/eH319sNzv86OP/P+ys302WRffzu9x19/8m2BWkvg9WcgVMepBseCnrHn4Hjw2WfThAvWRuCDAjQn4RsUenihfgtkuF1kgJiIn2xmDSDjAPYx4mJ7MBo3I40rzrTIjeHlCOFOO9b4Y4MvcqebjjMaqYiLoR2YlJIQtLPjlTMmqAeUUuIlpABYYqllHlwOKZ6ZTi6ZTphXjolHmSHiFidbVD5gJZtZ1mnIQQT0ScBtfv7ZI4V3iqlnIXz6CaiigxK6Zphu3pFon4tS2qijbEZqx6SCYhaofY4+auh/jgCpXZE8oSqWpn2Yap2qAMAaFat8uNocrLIid6iNSLaHa5OL7fqIarf9KmNfwpaK+lmxwBLZ7FjJNkKsbcbyuGq0vKpH7bO50klqJ7YSmCYn4Yrrn4+elGsurYeoKy67e/ZqrrfogivvvONu4i6B8CJ6L77nguKigD0O7FK+mhhskoZIEhzwJwpjxLCFUy7co8ANH1xwxhY/LIpdIB/qmr6Hhvztfih+XPLKJ6c4HsYtK2ByvShb9UQCADs=',
-        name: 'Koletivo Wallet',
-        description: 'Connect to your Kolektivo Wallet',
-      },
-      package: WalletConnectProvider,
-      options: {
-        // apiKey: 'EXAMPLE_PROVIDER_API_KEY',
-        rpc: {
-          CELO_MAINNET_CHAIN_ID: this.endpoints[Networks.Celo],
-          CELO_ALFAJORES_CHAIN_ID: this.endpoints[Networks.Alfajores],
-        },
-      },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      connector: (walletConnectProvider: any, opts?: IWalletConnectConnectorOptions) => this.ConnectToWalletConnect(walletConnectProvider, opts),
-    },
-    // TODO: test with walletconnect
-    walletconnect: {
-      package: WalletConnectProvider, // required
-      options: {
-        rpc: {
-          CELO_MAINNET_CHAIN_ID: this.endpoints[Networks.Celo],
-          CELO_ALFAJORES_CHAIN_ID: this.endpoints[Networks.Alfajores],
-        },
-      },
-    },
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private ConnectToWalletConnect(walletConnectProvider: any, opts?: IWalletConnectConnectorOptions): Promise<unknown> {
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
-    return new Promise(async (resolve, reject) => {
-      let bridge = 'https://bridge.walletconnect.org';
-      let qrcode = true;
-      let infuraId = '';
-      let rpc = undefined;
-      let chainId = 1;
-      let qrcodeModalOptions = undefined;
-
-      if (opts) {
-        bridge = opts.bridge ?? bridge;
-        qrcode = typeof opts.qrcode !== 'undefined' ? opts.qrcode : qrcode;
-        infuraId = opts.infuraId ?? '';
-        rpc = opts.rpc ?? undefined;
-        chainId = opts.network && this.targetedChainId ? this.targetedChainId : 1;
-        qrcodeModalOptions = opts.qrcodeModalOptions ?? undefined;
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-      const provider = new walletConnectProvider({
-        bridge,
-        qrcode,
-        infuraId,
-        rpc,
-        chainId,
-        qrcodeModalOptions,
-      });
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        await provider.enable();
-        resolve(provider);
-      } catch (e) {
-        reject(e);
-      }
-    });
   }
 
   public targetedNetwork: AllowedNetworks | null = null;
@@ -190,7 +98,7 @@ export class EthereumService {
   /**
    * provided by ethers given provider from Web3Modal
    */
-  public walletProvider?: Web3Provider;
+  public currentProvider?: Web3Provider;
 
   public defaultAccountAddress: Address | null = null;
   /**
@@ -205,22 +113,6 @@ export class EthereumService {
     this.providerForCeloWithEthers = new CeloProvider(this.configuration.chainUrl);
     return this.readOnlyProvider._networkPromise as Promise<unknown>;
   }
-
-  private web3Modal?: Web3Modal;
-  /**
-   * provided by Web3Modal
-   */
-  private web3ModalProvider?: WalletProvider;
-
-  private chainNameById = new Map<number, AllowedNetworks>([
-    [CELO_MAINNET_CHAIN_ID, Networks.Celo],
-    [CELO_ALFAJORES_CHAIN_ID, Networks.Alfajores],
-  ]);
-
-  private chainIdByName = new Map<AllowedNetworks, number>([
-    [Networks.Celo, CELO_MAINNET_CHAIN_ID],
-    [Networks.Alfajores, CELO_ALFAJORES_CHAIN_ID],
-  ]);
 
   private async getCurrentAccountFromProvider(provider: Web3Provider): Promise<Signer | string | null> {
     let account: Signer | string | null;
@@ -293,8 +185,8 @@ export class EthereumService {
   })
   public createSignerOrProviderForAddress(accountAddress: Address | Signer | null): BaseProvider | Signer {
     let signerOrProvider: Address | Signer | JsonRpcProvider | BaseProvider;
-    if (accountAddress && this.walletProvider) {
-      signerOrProvider = Signer.isSigner(accountAddress) ? accountAddress : this.walletProvider.getSigner(accountAddress);
+    if (accountAddress && this.currentProvider) {
+      signerOrProvider = Signer.isSigner(accountAddress) ? accountAddress : this.currentProvider.getSigner(accountAddress);
     } else {
       signerOrProvider = this.readOnlyProvider;
     }
@@ -305,27 +197,20 @@ export class EthereumService {
     if (!this.defaultAccountAddress) {
       throw new Error('getDefaultSigner: no defaultAccountAddress');
     }
-    if (!this.walletProvider) {
+    if (!this.currentProvider) {
       throw new Error('getDefaultSigner: no walletProvider');
     }
-    return this.walletProvider.getSigner(this.defaultAccountAddress);
+    return this.currentProvider.getSigner(this.defaultAccountAddress);
   }
 
   public async connect(): Promise<void> {
-    if (!this.walletProvider) {
-      this.ensureWeb3Modal();
-      const web3ModalProvider = (await this.web3Modal?.connect()) as WalletProvider;
-      void this.setProvider(web3ModalProvider);
-    }
+    await this.walletProvider.connect();
+    void this.setProvider();
   }
 
   public async connectKolektivoWallet(): Promise<void> {
-    if (!this.walletProvider) {
-      this.ensureWeb3Modal();
-      // const web3ModalProvider = (await this.web3Modal?.connect()) as WalletProvider;
-      const web3ModalProvider = (await this.web3Modal?.connectTo('walletconnect')) as WalletProvider;
-      void this.setProvider(web3ModalProvider);
-    }
+    await this.walletProvider.connect('walletconnect');
+    void this.setProvider();
   }
 
   public ensureConnected(): boolean {
@@ -343,55 +228,16 @@ export class EthereumService {
    * without invoking Web3Modal nor MetaMask popups.
    */
   public async connectToConnectedProvider(): Promise<void> {
-    this.ensureWeb3Modal();
+    const provider: MetaMaskInpageProvider | null = await detectEthereumProvider({ mustBeMetaMask: true });
+    if (!provider) return;
+    if (!(await provider._metamask.isUnlocked())) return;
+    const chainId = Number(await provider.request({ method: 'eth_chainId' }));
+    if (chainId !== this.targetedChainId) return;
 
-    let provider: MetamaskProvider | null = null;
+    if (!((await provider.request({ method: 'eth_accounts' })) as string[]).length) return;
+    this.walletProvider.provider = provider as unknown as ProviderType;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unnecessary-condition
-    if (detectEthereumProvider) {
-      provider = await detectEthereumProvider({ mustBeMetaMask: true });
-    }
-
-    if (typeof provider === 'object' && provider?._metamask?.isUnlocked && provider.request) {
-      /**
-       * at this writing, `_metamask.isUnlocked` is "experimental", according to MetaMask.
-       * It tells us that the user has logged into Metamask.
-       * However, it doesn't tell us whether an account is connected to this dApp.
-       * but it sure helps us know whether we can connect without MetaMask asking the user to log in.
-       */
-      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-      if (await provider._metamask.isUnlocked()) {
-        const chainId = Number(await provider.request({ method: 'eth_chainId' }));
-        if (chainId === this.targetedChainId) {
-          const accounts = (await provider.request({ method: 'eth_accounts' })) as string[];
-          if (accounts.length) {
-            // const account = getAddress(accounts[0]);
-            // if (this.disclaimerService.isDappDisclaimed(account)) {
-            // this.logger.info(`autoconnecting to ${account}`);
-            return this.setProvider(provider);
-            // }
-          }
-        }
-      }
-    }
-  }
-
-  private ensureWeb3Modal(): void {
-    if (!this.web3Modal) {
-      this.web3Modal = new Web3Modal({
-        // network: Networks.CELO,
-        cacheProvider: false,
-        providerOptions: this.providerOptions, // required
-        theme: 'dark',
-      });
-      /**
-       * If a provider has been cached before, and is still set, Web3Modal will use it even
-       * if we have pass `cachedProvider: false` above. `cachedProvider: true` only controls
-       * whether the provider should be cached, not whether it should be used.
-       * So call clearCachedProvider() here to clear it, just in case it has ever been set.
-       */
-      this.web3Modal.clearCachedProvider();
-    }
+    return this.setProvider();
   }
 
   private cleanNetworkName(network: Network | null): Network | null {
@@ -429,43 +275,36 @@ export class EthereumService {
    *
    * @param web3ModalProvider The provider created by Web3Modal
    */
-  private async setProvider(web3ModalProvider?: WalletProvider): Promise<void> {
+  private async setProvider(): Promise<void> {
     try {
-      if (web3ModalProvider) {
-        const walletProvider = new Web3Provider(web3ModalProvider);
+      if (!this.walletProvider.provider) return;
+      const walletProvider = new Web3Provider(this.walletProvider.provider);
 
-        (walletProvider.provider as MetamaskProvider).autoRefreshOnNetworkChange = false; // mainly for metamask
+      const network = await this.getNetwork(walletProvider);
+      if (!network) return;
 
-        const network = await this.getNetwork(walletProvider);
-        if (!network) return;
+      if (network.chainId !== this.targetedChainId) {
+        this.eventAggregator.publish('Network.wrongNetwork', {
+          connectedTo: network.name,
+          need: this.targetedNetwork,
+        });
+      } else {
+        /**
+         * we will keep the original readonly provider which should still be fine since
+         * the targeted network cannot have changed.
+         */
+        this.currentProvider = walletProvider;
+        this.defaultAccount = await this.getCurrentAccountFromProvider(this.currentProvider);
+        this.defaultAccountAddress = await this.getDefaultAccountAddress();
+        /**
+         * because the events aren't fired on first connection
+         */
+        this.fireConnectHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.currentProvider });
+        this.fireAccountsChangedHandler(this.defaultAccountAddress);
 
-        if (network.chainId !== this.targetedChainId) {
-          this.eventAggregator.publish('Network.wrongNetwork', {
-            provider: web3ModalProvider,
-            connectedTo: network.name,
-            need: this.targetedNetwork,
-          });
-        } else {
-          /**
-           * we will keep the original readonly provider which should still be fine since
-           * the targeted network cannot have changed.
-           */
-          this.walletProvider = walletProvider;
-          this.web3ModalProvider = web3ModalProvider;
-          this.defaultAccount = await this.getCurrentAccountFromProvider(this.walletProvider);
-          this.defaultAccountAddress = await this.getDefaultAccountAddress();
-          /**
-           * because the events aren't fired on first connection
-           */
-          this.fireConnectHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.walletProvider });
-          this.fireAccountsChangedHandler(this.defaultAccountAddress);
-
-          this.web3ModalProvider.on('accountsChanged', (accounts?: Address[]) => void this.handleAccountsChanged(accounts));
-
-          this.web3ModalProvider.on('chainChanged', this.handleChainChanged);
-
-          this.web3ModalProvider.on('disconnect', (error: { code: number; message: string }) => this.handleDisconnect(error));
-        }
+        this.walletProvider.provider.on('accountsChanged', (accounts?: Address[]) => void this.handleAccountsChanged(accounts));
+        this.walletProvider.provider.on('chainChanged', this.handleChainChanged);
+        this.walletProvider.provider.on('disconnect', (error: { code: number; message: string }) => this.handleDisconnect(error));
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -477,8 +316,8 @@ export class EthereumService {
   }
 
   private async handleAccountsChanged(accounts?: Address[]): Promise<void> {
-    if (this.walletProvider) {
-      this.defaultAccount = await this.getCurrentAccountFromProvider(this.walletProvider);
+    if (this.currentProvider) {
+      this.defaultAccount = await this.getCurrentAccountFromProvider(this.currentProvider);
       this.defaultAccountAddress = await this.getDefaultAccountAddress();
       this.fireAccountsChangedHandler(accounts?.length ? getAddress(accounts[0]) : null);
     }
@@ -492,13 +331,12 @@ export class EthereumService {
 
     if (network.chainId !== this.targetedChainId) {
       this.eventAggregator.publish('Network.wrongNetwork', {
-        provider: this.web3ModalProvider,
         connectedTo: network.name,
         need: this.targetedNetwork,
       });
       return;
     } else {
-      this.fireChainChangedHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.walletProvider ?? null });
+      this.fireChainChangedHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.currentProvider ?? null });
     }
   };
 
@@ -507,17 +345,13 @@ export class EthereumService {
   };
 
   public disconnect(error: { code: number; message: string }): void {
-    // this.cachedProvider = null;
-    // this.cachedWalletAccount = null;
-    // this.web3Modal?.clearCachedProvider(); // so web3Modal will let the user reconnect
-    this.web3ModalProvider?.removeListener('accountsChanged', (accounts?: Address[]) => void this.handleAccountsChanged(accounts));
-    this.web3ModalProvider?.removeListener('chainChanged', this.handleChainChanged);
-    this.web3ModalProvider?.removeListener('disconnect', this.handleDisconnect);
+    this.walletProvider.provider?.removeListener('accountsChanged', (accounts?: Address[]) => void this.handleAccountsChanged(accounts));
+    this.walletProvider.provider?.removeListener('chainChanged', this.handleChainChanged);
+    this.walletProvider.provider?.removeListener('disconnect', this.handleDisconnect);
     this.defaultAccount = undefined;
     this.defaultAccountAddress = null;
     this.fireAccountsChangedHandler(null);
-    this.web3ModalProvider = undefined;
-    this.walletProvider = undefined;
+    this.currentProvider = undefined;
     this.fireDisconnectHandler(error);
   }
 
@@ -526,23 +360,21 @@ export class EthereumService {
    * @param web3ModalProvider should be a Web3Provider
    * @returns
    */
-  public async switchToTargetedNetwork(web3ModalProvider: WalletProvider): Promise<boolean> {
+  public async switchToTargetedNetwork(): Promise<boolean> {
     if (typeof this.targetedChainId !== 'number') {
       return false;
     }
     const hexChainId = `0x${this.targetedChainId.toString(16)}`;
     try {
-      if (web3ModalProvider.request) {
-        /**
-         * note this will simply throw an exception when the website is running on localhost
-         */
-        await web3ModalProvider.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: hexChainId }],
-        });
-        await this.setProvider(web3ModalProvider);
-        return true;
-      }
+      /**
+       * note this will simply throw an exception when the website is running on localhost
+       */
+      await this.walletProvider.provider?.request?.({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: hexChainId }],
+      });
+      await this.setProvider();
+      return true;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       // user rejected request
@@ -567,7 +399,7 @@ export class EthereumService {
   public async addTokenToMetamask(tokenAddress: Address, tokenSymbol: string, tokenDecimals: number, tokenImage: string): Promise<boolean> {
     let wasAdded = false;
 
-    if (this.walletProvider) {
+    if (this.currentProvider) {
       if (this.getMetamaskHasToken(tokenAddress)) {
         return true;
       }
@@ -575,17 +407,19 @@ export class EthereumService {
       try {
         // wasAdded is a boolean. Like any RPC method, an error may be thrown.
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
-        wasAdded = (await (this.web3ModalProvider as unknown as any).request({
+        wasAdded = (await this.walletProvider.provider?.request?.({
           method: 'wallet_watchAsset',
-          params: {
-            type: 'ERC20', // Initially only supports ERC20, but eventually more!
-            options: {
-              address: tokenAddress, // The address that the token is at.
-              symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
-              decimals: tokenDecimals, // The number of decimals in the token
-              image: tokenImage, // A string url of the token logo
+          params: [
+            {
+              type: 'ERC20', // Initially only supports ERC20, but eventually more!
+              options: {
+                address: tokenAddress, // The address that the token is at.
+                symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+                decimals: tokenDecimals, // The number of decimals in the token
+                image: tokenImage, // A string url of the token logo
+              },
             },
-          },
+          ],
         })) as boolean;
 
         if (wasAdded) {
@@ -626,14 +460,8 @@ export class EthereumService {
     return block;
   }
 
-  public getEtherscanLink(addressOrHash: Address | Hash | null, tx = false): string {
-    if (!addressOrHash) {
-      return '';
-    } else if (this.targetedNetwork === Networks.Celo) {
-      return `https://celoscan.io/${tx ? 'tx' : 'address'}/${addressOrHash}`;
-    } else {
-      return `https://alfajores-blockscout.celo-testnet.org/${tx ? 'tx' : 'address'}/${addressOrHash}`;
-    }
+  public getEtherscanLink(addressOrHash?: string, tx = false): string {
+    return formatString(this.configuration.scanLink, { type: tx ? 'tx' : 'address', address: addressOrHash });
   }
 
   /**

@@ -12,10 +12,13 @@ import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { IReadOnlyProvider } from 'read-only-provider';
 import { ITokenData, getTokenInfos } from './services/contract/token-info';
+import { IWalletConnector, resolver } from './wallet-connector';
+import { IWalletProvider } from 'wallet-provider';
 import { RouterConfiguration } from '@aurelia/router';
 import { Services } from './services/services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
 import { Store } from './stores';
+import { WalletProvider } from './wallet-provider';
 import { firebaseConfig } from 'configurations/firebase';
 import { imageMap } from './app-images';
 import { initializeApp } from 'firebase/app';
@@ -48,6 +51,8 @@ export const appContainer: IContainer = DI.createContainer()
     }),
     Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })),
   )
+  .register(Registration.singleton(IWalletProvider, WalletProvider))
+  .register(Registration.cachedCallback(IWalletConnector, resolver))
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(Services)
   .register(Store)

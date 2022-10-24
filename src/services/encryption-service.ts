@@ -52,9 +52,9 @@ export class EncryptionService {
   }
 
   public async encrypt(message: string): Promise<EncryptionResult | undefined> {
-    if (!this.ethereumService.walletProvider || !this.ethereumService.defaultAccountAddress || !this.ethereumService.targetedChainId) return;
+    if (!this.ethereumService.currentProvider || !this.ethereumService.defaultAccountAddress || !this.ethereumService.targetedChainId) return;
     const params = {
-      web3: this.ethereumService.walletProvider,
+      web3: this.ethereumService.currentProvider,
       account: this.ethereumService.defaultAccountAddress.toLowerCase(),
       chainId: this.ethereumService.targetedChainId,
     };
