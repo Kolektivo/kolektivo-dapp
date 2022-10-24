@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { CacheService } from './services/cache-service';
 import { ContractService } from './services/contract/contract-service';
 import { ContractStore } from './stores/contract-store';
@@ -234,6 +235,7 @@ export const seed = async () => {
 if (process.argv?.includes('seed')) {
   let i = 15;
   while (i--) {
+    console.log(`Seeding data ${i} as ${new Date().toString()}`);
     await seed();
     await delay(60000);
   }
