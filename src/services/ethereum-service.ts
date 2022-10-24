@@ -84,7 +84,7 @@ export class EthereumService {
     @ICacheService private readonly cacheService: ICacheService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
-    void this.initialize();
+    this.initialize(this.configuration.chain);
   }
 
   public static register(container: IContainer) {
@@ -197,26 +197,25 @@ export class EthereumService {
    */
   private defaultAccount?: Signer | Address | null;
 
-  public initialize(): Promise<unknown> {
-    if (typeof this.configuration.chain !== 'string') {
-      throw new Error('Ethereum.initialize: `chain` (network) configuration must be specified');
+  public initialize(network: AllowedNetworks): void {
+    if (typeof network !== 'string') {
+      throw new Error('Ethereum.initialize: `chain` (`network`) must be specified');
     }
 
-    if (!this.chainIdByName.get(this.configuration.chain)) {
+    if (!this.chainIdByName.get(network)) {
       throw new Error('Ethereum.initialize: `unsupported network');
     }
 
-    this.targetedNetwork = this.configuration.chain;
-    this.targetedChainId = this.chainIdByName.get(this.configuration.chain);
+    this.targetedNetwork = network;
+    this.targetedChainId = this.chainIdByName.get(network);
 
-    const readonlyEndPoint = this.configuration.chainUrl;
+    const readonlyEndPoint = this.endpoints[this.targetedNetwork];
     if (typeof readonlyEndPoint !== 'string') {
       throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
     }
 
-    this.readOnlyProvider = new JsonRpcProvider({ url: this.configuration.chainUrl, skipFetchSetup: true });
-    this.providerForCeloWithEthers = new CeloProvider({ url: this.configuration.chainUrl, skipFetchSetup: true });
-    return this.readOnlyProvider._networkPromise as Promise<unknown>;
+    this.readOnlyProvider = new JsonRpcProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
+    this.providerForCeloWithEthers = new CeloProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
   }
 
   private web3Modal?: Web3Modal;
