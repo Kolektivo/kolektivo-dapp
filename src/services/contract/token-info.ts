@@ -3,7 +3,6 @@ import { ITokenInfo, ITokenListUniswap } from 'services/token-types';
 
 const tokenListUri = 'https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json';
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 export const getTokenInfos = () =>
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   globalThis.fetch
