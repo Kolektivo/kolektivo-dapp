@@ -2,12 +2,14 @@ import 'utils-testing/setup-testing';
 import { Global } from 'hooks';
 import { I18N } from '@aurelia/i18n';
 import { INumberService } from 'services';
+import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from 'stores';
 import { LeverageCard } from './leverage-card';
 import { PercentageValueConverter } from 'resources';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('leverage-card', () => {
   it('should have a k-card component', async () => {
@@ -54,6 +56,21 @@ describe('leverage-card', () => {
         tr: (s: string) => String(s),
       });
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
-    return [LeverageCard, PercentageValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), numberServiceRegistration()];
+    return [
+      LeverageCard,
+      Registration.instance(
+        IReserveStore,
+        mock<IReserveStore>({
+          reserveAssets: [],
+          getLeverageRatioValueOverTime: () => new Promise((res) => res([])),
+          getkCurPriceOverTime: () => new Promise((res) => res([])),
+        }),
+      ),
+      PercentageValueConverter,
+      Global,
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      numberServiceRegistration(),
+    ];
   }
 });

@@ -1,16 +1,13 @@
 import * as hooks from './hooks';
 import * as pages from './pages';
 import * as resources from './resources';
-import { CHAIN, CHAIN_ID, CHAIN_URL, IPFS_GATEWAY, IS_DEV, SCAN_LINK } from './environment-variables';
-import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from './design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
-import { IConfiguration } from 'configurations/configuration';
 import { IEncryptionClient } from './encryption-client';
 import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
-import { IReadOnlyProvider } from 'read-only-provider';
+import { IS_DEV } from './environment-variables';
 import { ITokenData, getTokenInfos } from './services/contract/token-info';
 import { IWalletConnector, resolver } from './wallet-connector';
 import { IWalletProvider } from 'wallet-provider';
@@ -19,6 +16,7 @@ import { Services } from './services/services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
 import { Store } from './stores';
 import { WalletProvider } from './wallet-provider';
+import { configurationFromEnv } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { imageMap } from './app-images';
 import { initializeApp } from 'firebase/app';
@@ -49,7 +47,7 @@ export const appContainer: IContainer = DI.createContainer()
         enableCoercion: true,
       };
     }),
-    Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })),
+    // Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })),
   )
   .register(Registration.singleton(IWalletProvider, WalletProvider))
   .register(Registration.cachedCallback(IWalletConnector, resolver))
@@ -70,16 +68,7 @@ export const appContainer: IContainer = DI.createContainer()
       return client as IEncryptionClient;
     }),
   )
-  .register(
-    Registration.instance(IConfiguration, {
-      chainId: CHAIN_ID,
-      ipfsGateway: IPFS_GATEWAY,
-      chainUrl: CHAIN_URL,
-      chain: CHAIN,
-      isDevelopment: IS_DEV,
-      scanLink: SCAN_LINK,
-    }),
-  )
+  .register(configurationFromEnv())
   .register(
     Registration.instance(ITokenData, {
       tokens: getTokenInfos(),

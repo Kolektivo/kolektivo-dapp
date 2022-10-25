@@ -5,11 +5,11 @@ import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia
 import { IBrowserStorageService } from './browser-storage-service';
 import { IConfiguration } from 'configurations/configuration';
 import { Signer } from '@ethersproject/abstract-signer';
-import { ethers } from 'ethers';
 import { formatString, truncateDecimals } from '../utils';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+import { AllowedNetworks } from 'models/allowed-network';
 import { ICacheService } from './cache-service';
 import { IWalletProvider, ProviderType } from 'wallet-provider';
 import { MetaMaskInpageProvider } from '@metamask/providers';
@@ -45,12 +45,8 @@ export interface IBlockInfo extends IBlockInfoNative {
   blockDate: Date;
 }
 
-export enum Networks {
-  Celo = 'Celo',
-  Alfajores = 'Alfajores',
-}
-
 const CELO_MAINNET_CHAIN_ID = 42220;
+
 const CELO_ALFAJORES_CHAIN_ID = 44787;
 
 export interface IChainEventInfo {
@@ -72,7 +68,7 @@ export class EthereumService {
     @IWalletProvider private readonly walletProvider: IWalletProvider,
   ) {
     this.logger = logger.scopeTo('EthereumService');
-    void this.initialize();
+    this.initialize();
   }
 
   public static register(container: IContainer) {
@@ -106,13 +102,53 @@ export class EthereumService {
    */
   private defaultAccount?: Signer | Address | null;
 
-  public initialize(): Promise<unknown> {
-    this.targetedNetwork = this.configuration.chain;
-    this.targetedChainId = this.configuration.chainId;
-    this.readOnlyProvider = ethers.getDefaultProvider(this.configuration.chainUrl);
-    this.providerForCeloWithEthers = new CeloProvider(this.configuration.chainUrl);
-    return this.readOnlyProvider._networkPromise as Promise<unknown>;
+  public readonly endpoints: Record<AllowedNetworks, string> = {
+    // Celo: `https://forno.celo.org`,
+    Celo: 'https://celo.rpcs.dev:8545',
+    // Alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
+    Alfajores: `https://alfajores.rpcs.dev:8545`,
+    // Alfajores: `https://alfajores-forno.celo-testnet.org`,
+    // Alfajores: `https://celo-alfajores-rpc.allthatnode.com`,
+    // Alfajores: `https://celo-alfajores-rpc.allthatnode.com/QpHXTMEr0FbAgsVRUg8eYMbOrQy6KLxr`,
+  };
+
+  public initialize() {
+    if (typeof this.configuration.network !== 'string') {
+      throw new Error('Ethereum.initialize: network must be specified');
+    }
+
+    this.targetedNetwork = this.configuration.network;
+    this.targetedChainId = this.chainIdByName.get(this.targetedNetwork);
+
+    if (!this.chainIdByName.get(this.configuration.network)) {
+      throw new Error('Ethereum.initialize: `unsupported network');
+    }
+
+    const readonlyEndPoint = this.endpoints[this.targetedNetwork];
+    if (typeof readonlyEndPoint !== 'string') {
+      throw new Error(`Please connect your wallet to either ${AllowedNetworks.Celo} or ${AllowedNetworks.Alfajores}`);
+    }
+
+    this.readOnlyProvider = new JsonRpcProvider(
+      { url: this.endpoints[this.targetedNetwork], skipFetchSetup: true },
+      {
+        name: this.targetedNetwork.toLowerCase(),
+        chainId: this.targetedChainId ?? 0,
+      },
+    );
+    this.providerForCeloWithEthers = new CeloProvider(
+      { url: this.endpoints[this.targetedNetwork], skipFetchSetup: true },
+      {
+        name: this.targetedNetwork.toLowerCase(),
+        chainId: this.targetedChainId ?? 0,
+      },
+    );
   }
+
+  private chainIdByName = new Map<AllowedNetworks, number>([
+    [AllowedNetworks.Celo, CELO_MAINNET_CHAIN_ID],
+    [AllowedNetworks.Alfajores, CELO_ALFAJORES_CHAIN_ID],
+  ]);
 
   private async getCurrentAccountFromProvider(provider: Web3Provider): Promise<Signer | string | null> {
     let account: Signer | string | null;
@@ -251,10 +287,10 @@ export class EthereumService {
          */
         switch (clonedNetwork.chainId) {
           case CELO_ALFAJORES_CHAIN_ID:
-            clonedNetwork.name = Networks.Alfajores;
+            clonedNetwork.name = AllowedNetworks.Alfajores;
             break;
           case CELO_MAINNET_CHAIN_ID:
-            clonedNetwork.name = Networks.Celo;
+            clonedNetwork.name = AllowedNetworks.Celo;
             break;
           default:
             clonedNetwork.name = '';

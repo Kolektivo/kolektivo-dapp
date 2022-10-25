@@ -1,4 +1,5 @@
 import { Address, Hash, IEthereumService } from './../services/ethereum-service';
+import { AllowedNetworks } from 'models/allowed-network';
 import { DI, IContainer, Registration } from 'aurelia';
 
 export type IBlockChainStore = BlockChainStore;

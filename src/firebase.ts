@@ -1,25 +1,23 @@
-import { CHAIN_URL } from 'environment-variables';
+/* eslint-disable no-console */
 import { CacheService } from './services/cache-service';
-import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { ContractService } from './services/contract/contract-service';
 import { ContractStore } from './stores/contract-store';
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
 import { DataStore } from './stores/data-store';
-import { FIREBASE_API_KEY } from './environment-variables';
+import { EthereumService } from 'services/ethereum-service';
 import { FirebaseService } from './services/firebase-service';
-import { I18nConfiguration } from '@aurelia/i18n';
-import { IFirebaseApp } from 'services/firebase-service';
-import { IIpfsService } from 'services';
-import { IReadOnlyProvider } from './read-only-provider';
+import { I18N } from '@aurelia/i18n';
+import { IBrowserStorageService } from 'services/browser-storage-service';
+import { IFirebaseApp, IFirebaseService } from 'services/firebase-service';
+import { IIpfsService } from 'services/ipfs';
 import { IReserveStore, ReserveStore } from 'stores/reserve-store';
 import { ITokenData, getTokenInfos } from 'services/contract';
 import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
 import { NumberService } from './services/number-service';
 import { TokenService } from './services/token-service';
-import { collection, deleteDoc, doc, getDocs, getFirestore, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
+import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
 import { firebaseConfig } from 'configurations/firebase';
 import { initializeApp } from 'firebase/app';
-import intervalPlural from 'i18next-intervalplural-postprocessor';
 
 enum Periods {
   'minute',
@@ -31,6 +29,8 @@ const container = DI.createContainer()
   .register(Registration.instance(IFirebaseApp, initializeApp(firebaseConfig)))
   .register(Registration.instance(IIpfsService, {}))
   .register(ContractService)
+  .register(EthereumService)
+  .register(Registration.instance(IBrowserStorageService, { lsGet: () => '', lsSet: () => '' }))
   .register(FirebaseService)
   .register(ContractStore)
   .register(TokenService)
@@ -44,15 +44,7 @@ const container = DI.createContainer()
     }),
   )
   .register(NumberService)
-  .register(Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })))
-  .register(
-    I18nConfiguration.customize((options) => {
-      options.initOptions = {
-        fallbackLng: { default: ['en'] },
-        plugins: [intervalPlural],
-      };
-    }),
-  )
+  .register(Registration.instance(I18N, {}))
   .register(
     Registration.instance(IObserverLocator, {}),
     Registration.instance(IEventAggregator, {}),
@@ -79,28 +71,8 @@ export const seed = async () => {
   let kCurPrimaryPoolDistribution = 0;
   let kCurCirculatingDistribution = 0;
   let captureDataPromise: Promise<void> | undefined = undefined;
-  const firebaseConfig = {
-    apiKey: FIREBASE_API_KEY,
-    authDomain: 'kolektivo-613ca.firebaseapp.com',
-    projectId: 'kolektivo-613ca',
-    storageBucket: 'kolektivo-613ca.appspot.com',
-    messagingSenderId: '566529978919',
-    appId: '1:566529978919:web:0109b91d371b892db5d402',
-    measurementId: 'G-FNM37RE6TB',
-  };
 
-  const app = initializeApp(firebaseConfig);
-  const database = getFirestore(app);
-
-  //Script to update all documents in a given path
-  // const path = 'chartData/kCurPrice/minute';
-  // const col = collection(database, path);
-  // const docs = await getDocs(col);
-  // docs.docs.forEach((x) => {
-  //   const value = x.data();
-  //   value.createdAt = Number(x.id);
-  //   void setDoc(doc(database, path, x.id), value);
-  // });
+  const { fireStore: database } = container.get(IFirebaseService);
 
   const periods = Object.values(Periods)
     .filter((y) => typeof y === 'number')
@@ -251,3 +223,5 @@ export const seed = async () => {
     }),
   );
 };
+
+await seed();

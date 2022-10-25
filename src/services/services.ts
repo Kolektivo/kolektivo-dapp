@@ -6,6 +6,7 @@ import { EncryptionService, IEncryptionService } from './encryption-service';
 import { EthereumService, IEthereumService } from './ethereum-service';
 import { FirebaseService } from './firebase-service';
 import { HttpService, IHttpService } from './http-service';
+import { IConfiguration } from 'configurations/configuration';
 import { IIpfsService, IpfsService } from './ipfs/ipfs-service';
 import { INumberService, NumberService } from './number-service';
 import { IObserverService, ObserverService } from './observer-service';
@@ -28,7 +29,12 @@ export class Services {
     @IContractService public readonly contractService: IContractService,
     @ITokenService public readonly tokenService: ITokenService,
     @IIpfsService public readonly ipfsService: IIpfsService,
+    @IConfiguration private readonly configuration: IConfiguration,
   ) {}
+
+  public initialize(): Promise<unknown> {
+    return this.ethereumService.initialize(this.configuration.network);
+  }
 
   public static register(container: IContainer): void {
     container

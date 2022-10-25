@@ -1,15 +1,6 @@
 name: Trigger scheduled tasks on a CRON Schedule
 on:
-  push:
-    branches:
-      - main
-      - staging
-      - development
-  schedule:
-    # Runs every 5 minutes (see https://crontab.guru)
-    - cron: '*/5 * * * *'
-    - cron: '*/10 * * * *'
-    - cron: '*/15 * * * *'
+  workflow_dispatch:
 jobs:
   build:
     name: Trigger Chart Data Refresh

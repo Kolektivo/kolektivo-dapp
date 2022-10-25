@@ -12,8 +12,8 @@ export class TrendCard implements ICustomElementViewModel {
   private reserveData: ValueChartData[] = [];
   constructor(@IReserveStore private readonly reserveStore: IReserveStore) {}
 
-  async binding(): Promise<void> {
-    this.reserveData = await this.reserveStore.getkCurPriceOverTime(this.currentInterval);
+  binding() {
+    void this.intervalChanged();
   }
 
   @watch('currentInterval')
