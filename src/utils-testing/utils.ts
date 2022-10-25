@@ -3,6 +3,8 @@ import { CacheService, IBrowserStorageService, ICacheService } from 'services';
 import { EthereumService, IEthereumService } from './../services/ethereum-service';
 import { IContainer, Registration } from 'aurelia';
 import { INotificationService } from 'design-system/services';
+import { IWalletConnector } from 'wallet-connector';
+import { IWalletProvider } from 'wallet-provider';
 import { Signer } from '@ethersproject/abstract-signer';
 import { Wallet } from '@ethersproject/wallet';
 import { configurationFromCustom } from 'configurations/configuration';
@@ -22,6 +24,8 @@ export function createEthereumService(container: IContainer, network: AllowedNet
 
   Registration.instance(IBrowserStorageService, mock<IBrowserStorageService>({})).register(container);
   Registration.instance(INotificationService, mock<INotificationService>({})).register(container);
+  Registration.instance(IWalletProvider, mock<IWalletProvider>({})).register(container);
+  Registration.instance(IWalletConnector, mock<IWalletConnector>({})).register(container);
   Registration.singleton(ICacheService, CacheService).register(container);
   configurationFromCustom({
     network,

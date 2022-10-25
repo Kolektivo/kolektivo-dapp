@@ -5,9 +5,9 @@ import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia
 import { IBrowserStorageService } from './browser-storage-service';
 import { IConfiguration } from 'configurations/configuration';
 import { Signer } from '@ethersproject/abstract-signer';
-import { formatString, truncateDecimals } from '../utils';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
+import { truncateDecimals } from '../utils';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 import { AllowedNetworks } from 'models/allowed-network';
 import { ICacheService } from './cache-service';
@@ -496,8 +496,14 @@ export class EthereumService {
     return block;
   }
 
-  public getEtherscanLink(addressOrHash?: string, tx = false): string {
-    return formatString(this.configuration.scanLink, { type: tx ? 'tx' : 'address', address: addressOrHash });
+  public getEtherscanLink(addressOrHash: Address | Hash | null, tx = false): string {
+    if (!addressOrHash) {
+      return '';
+    } else if (this.targetedNetwork === AllowedNetworks.Celo) {
+      return `https://celoscan.io/${tx ? 'tx' : 'address'}/${addressOrHash}`;
+    } else {
+      return `https://alfajores-blockscout.celo-testnet.org/${tx ? 'tx' : 'address'}/${addressOrHash}`;
+    }
   }
 
   /**
