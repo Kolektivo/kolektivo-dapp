@@ -14,9 +14,9 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   private treasuryData: ValueChartData[] = [];
   constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore) {}
 
-  async binding(): Promise<void> {
-    this.treasuryData = await this.treasuryStore.getValueOverTime(this.currentInterval);
-    await this.treasuryStore.getLastRebaseTime();
+  binding() {
+    void this.intervalChanged();
+    void this.treasuryStore.getLastRebaseTime();
   }
 
   @watch('currentInterval')
