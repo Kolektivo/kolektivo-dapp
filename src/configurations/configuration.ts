@@ -1,10 +1,10 @@
-import { AllowedNetwork } from 'models/allowed-network';
+import { AllowedNetworks } from '../models/allowed-network';
 import { DI, IRegistration, Registration } from 'aurelia';
 import { ETHERSCAN_LINK, IPFS_GATEWAY, IS_DEV, NETWORK } from '../environment-variables';
 
 export type IConfiguration = {
   ipfsGateway: string;
-  network: AllowedNetwork;
+  network: AllowedNetworks;
   isDevelopment: boolean;
   etherscanLink: string;
 };

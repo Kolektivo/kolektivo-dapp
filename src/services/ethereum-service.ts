@@ -9,7 +9,7 @@ import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
 import { truncateDecimals } from '../utils';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-import { AllowedNetwork, AllowedNetworks } from 'models/allowed-network';
+import { AllowedNetworks } from 'models/allowed-network';
 import { ICacheService } from './cache-service';
 import { IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
 import { cache } from 'decorators/cache';
@@ -59,7 +59,7 @@ const CELO_ALFAJORES_CHAIN_ID = 44787;
 
 export interface IChainEventInfo {
   chainId?: number;
-  chainName?: AllowedNetwork;
+  chainName?: AllowedNetworks;
   provider?: Web3Provider | null;
 }
 
@@ -81,13 +81,14 @@ export class EthereumService {
     @ICacheService private readonly cacheService: ICacheService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
+    this.initialize();
   }
 
   public static register(container: IContainer) {
     Registration.singleton(IEthereumService, EthereumService).register(container);
   }
 
-  public readonly endpoints: Record<AllowedNetwork, string> = {
+  public readonly endpoints: Record<AllowedNetworks, string> = {
     // Celo: `https://forno.celo.org`,
     Celo: 'https://celo.rpcs.dev:8545',
     // Alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
@@ -166,7 +167,7 @@ export class EthereumService {
     });
   }
 
-  public targetedNetwork: AllowedNetwork | null = null;
+  public targetedNetwork: AllowedNetworks | null = null;
   public targetedChainId?: number;
   public lastBlock?: IBlockInfo;
   /**
@@ -193,26 +194,37 @@ export class EthereumService {
    */
   private defaultAccount?: Signer | Address | null;
 
-  public initialize(network: AllowedNetwork): Promise<Network> {
-    if (typeof network !== 'string') {
+  public initialize() {
+    if (typeof this.configuration.network !== 'string') {
       throw new Error('Ethereum.initialize: network must be specified');
     }
 
-    if (!this.chainIdByName.get(network)) {
+    this.targetedNetwork = this.configuration.network;
+    this.targetedChainId = this.chainIdByName.get(this.targetedNetwork);
+
+    if (!this.chainIdByName.get(this.configuration.network)) {
       throw new Error('Ethereum.initialize: `unsupported network');
     }
-
-    this.targetedNetwork = network;
-    this.targetedChainId = this.chainIdByName.get(network);
 
     const readonlyEndPoint = this.endpoints[this.targetedNetwork];
     if (typeof readonlyEndPoint !== 'string') {
       throw new Error(`Please connect your wallet to either ${AllowedNetworks.Celo} or ${AllowedNetworks.Alfajores}`);
     }
 
-    this.readOnlyProvider = new JsonRpcProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
-    this.providerForCeloWithEthers = new CeloProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
-    return this.readOnlyProvider._networkPromise;
+    this.readOnlyProvider = new JsonRpcProvider(
+      { url: this.endpoints[this.targetedNetwork], skipFetchSetup: true },
+      {
+        name: this.targetedNetwork.toLowerCase(),
+        chainId: this.targetedChainId ?? 0,
+      },
+    );
+    this.providerForCeloWithEthers = new CeloProvider(
+      { url: this.endpoints[this.targetedNetwork], skipFetchSetup: true },
+      {
+        name: this.targetedNetwork.toLowerCase(),
+        chainId: this.targetedChainId ?? 0,
+      },
+    );
   }
 
   private web3Modal?: Web3Modal;
@@ -221,12 +233,7 @@ export class EthereumService {
    */
   private web3ModalProvider?: WalletProvider;
 
-  private chainNameById = new Map<number, AllowedNetwork>([
-    [CELO_MAINNET_CHAIN_ID, AllowedNetworks.Celo],
-    [CELO_ALFAJORES_CHAIN_ID, AllowedNetworks.Alfajores],
-  ]);
-
-  private chainIdByName = new Map<AllowedNetwork, number>([
+  private chainIdByName = new Map<AllowedNetworks, number>([
     [AllowedNetworks.Celo, CELO_MAINNET_CHAIN_ID],
     [AllowedNetworks.Alfajores, CELO_ALFAJORES_CHAIN_ID],
   ]);
@@ -466,7 +473,7 @@ export class EthereumService {
           /**
            * because the events aren't fired on first connection
            */
-          this.fireConnectHandler({ chainId: network.chainId, chainName: network.name as AllowedNetwork, provider: this.walletProvider });
+          this.fireConnectHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.walletProvider });
           this.fireAccountsChangedHandler(this.defaultAccountAddress);
 
           this.web3ModalProvider.on('accountsChanged', (accounts?: Address[]) => void this.handleAccountsChanged(accounts));
@@ -507,7 +514,7 @@ export class EthereumService {
       });
       return;
     } else {
-      this.fireChainChangedHandler({ chainId: network.chainId, chainName: network.name as AllowedNetwork, provider: this.walletProvider ?? null });
+      this.fireChainChangedHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.walletProvider ?? null });
     }
   };
 

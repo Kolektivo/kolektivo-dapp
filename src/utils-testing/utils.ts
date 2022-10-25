@@ -1,4 +1,4 @@
-import { AllowedNetwork, AllowedNetworks } from 'models/allowed-network';
+import { AllowedNetworks } from 'models/allowed-network';
 import { CacheService, IBrowserStorageService, ICacheService } from 'services';
 import { EthereumService, IEthereumService } from './../services/ethereum-service';
 import { IContainer, Registration } from 'aurelia';
@@ -14,12 +14,9 @@ import { mock } from 'vitest-mock-extended';
  * @param network
  * @returns
  */
-export function createEthereumService(container: IContainer, network: AllowedNetwork = AllowedNetworks.Alfajores): Promise<IEthereumService> {
-  let ethereumService: IEthereumService;
-
+export function createEthereumService(container: IContainer, network: AllowedNetworks = AllowedNetworks.Alfajores): IEthereumService {
   try {
-    ethereumService = container.get(IEthereumService);
-    return Promise.resolve(ethereumService);
+    return container.get(IEthereumService);
     // eslint-disable-next-line no-empty
   } catch {}
 
@@ -31,8 +28,7 @@ export function createEthereumService(container: IContainer, network: AllowedNet
     isDevelopment: true,
   }).register(container);
   Registration.singleton(IEthereumService, EthereumService).register(container);
-  ethereumService = container.get(IEthereumService);
-  return ethereumService.initialize(network).then(() => ethereumService);
+  return container.get(IEthereumService);
 }
 
 export function createSigner(privateKey: string, ethereumService: IEthereumService): Signer {

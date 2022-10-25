@@ -43,7 +43,7 @@
     "buildModels:celo:governance": "node scripts/buildModels.js celo governance",
     "buildModels:celo:monetary": "node scripts/buildModels.js celo monetary",
     "buildModels:celo:map": "node scripts/buildModels.js celo map",
-    "test": "vitest",
+    "test": "vitest --no-threads",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
     "e2e": "playwright test",
