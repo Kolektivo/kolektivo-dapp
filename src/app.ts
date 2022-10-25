@@ -45,6 +45,13 @@ export class App {
     this.platform.window.removeEventListener('resize', this.recalc);
   }
 
+  binding() {
+    return this.store.initializeServices().catch((e) => {
+      this.logger.error(e);
+      void this.notificationService.toast({ type: 'danger', message: 'There was an error initializing the application' });
+    });
+  }
+
   async confirmChangeNetwork(): Promise<void> {
     if (!this.confirmChangeNetworkInfo) return;
     try {

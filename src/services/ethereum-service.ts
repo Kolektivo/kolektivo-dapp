@@ -81,7 +81,6 @@ export class EthereumService {
     @ICacheService private readonly cacheService: ICacheService,
   ) {
     this.logger = logger.scopeTo('EthereumService');
-    this.initialize(this.configuration.network);
   }
 
   public static register(container: IContainer) {
@@ -194,7 +193,7 @@ export class EthereumService {
    */
   private defaultAccount?: Signer | Address | null;
 
-  public initialize(network: AllowedNetwork): void {
+  public initialize(network: AllowedNetwork): Promise<Network> {
     if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: network must be specified');
     }
@@ -213,6 +212,7 @@ export class EthereumService {
 
     this.readOnlyProvider = new JsonRpcProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
     this.providerForCeloWithEthers = new CeloProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
+    return this.readOnlyProvider._networkPromise;
   }
 
   private web3Modal?: Web3Modal;
