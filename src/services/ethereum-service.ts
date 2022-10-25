@@ -14,6 +14,7 @@ import { ICacheService } from './cache-service';
 import { IWalletProvider, ProviderType } from 'wallet-provider';
 import { MetaMaskInpageProvider } from '@metamask/providers';
 import { cache } from 'decorators/cache';
+import { chainIdByName } from '../constants';
 import detectEthereumProvider from '@metamask/detect-provider';
 
 export type Address = string;
@@ -44,10 +45,6 @@ export interface IBlockInfoNative {
 export interface IBlockInfo extends IBlockInfoNative {
   blockDate: Date;
 }
-
-const CELO_MAINNET_CHAIN_ID = 42220;
-
-const CELO_ALFAJORES_CHAIN_ID = 44787;
 
 export interface IChainEventInfo {
   chainId?: number;
@@ -118,9 +115,9 @@ export class EthereumService {
     }
 
     this.targetedNetwork = this.configuration.network;
-    this.targetedChainId = this.chainIdByName.get(this.targetedNetwork);
+    this.targetedChainId = chainIdByName.get(this.targetedNetwork);
 
-    if (!this.chainIdByName.get(this.configuration.network)) {
+    if (!chainIdByName.get(this.configuration.network)) {
       throw new Error('Ethereum.initialize: `unsupported network');
     }
 
@@ -144,11 +141,6 @@ export class EthereumService {
       },
     );
   }
-
-  private chainIdByName = new Map<AllowedNetworks, number>([
-    [AllowedNetworks.Celo, CELO_MAINNET_CHAIN_ID],
-    [AllowedNetworks.Alfajores, CELO_ALFAJORES_CHAIN_ID],
-  ]);
 
   private async getCurrentAccountFromProvider(provider: Web3Provider): Promise<Signer | string | null> {
     let account: Signer | string | null;
@@ -282,19 +274,10 @@ export class EthereumService {
       if (clonedNetwork.name === 'homestead') {
         clonedNetwork.name = 'Ethereum Mainnet';
       } else if (clonedNetwork.name === 'unknown') {
-        /**
-         * metamask has a hard time recognizing these names
-         */
-        switch (clonedNetwork.chainId) {
-          case CELO_ALFAJORES_CHAIN_ID:
-            clonedNetwork.name = AllowedNetworks.Alfajores;
-            break;
-          case CELO_MAINNET_CHAIN_ID:
-            clonedNetwork.name = AllowedNetworks.Celo;
-            break;
-          default:
-            clonedNetwork.name = '';
-            break;
+        if (clonedNetwork.chainId == this.targetedChainId) {
+          clonedNetwork.name = this.targetedNetwork ?? '';
+        } else {
+          clonedNetwork.name = '';
         }
       }
       return clonedNetwork;

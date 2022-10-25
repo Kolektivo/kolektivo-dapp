@@ -18,6 +18,8 @@ export class WalletProvider<T extends ProviderType = ProviderType> {
   constructor(@IWalletConnector private readonly walletConnector: IWalletConnector) {}
 
   public async connect(connectTo?: string): Promise<void> {
-    this.provider = connectTo ? ((await this.walletConnector.connectTo(connectTo)) as T) : ((await this.walletConnector.connect()) as T);
+    this.provider = connectTo
+      ? ((await (await this.walletConnector).connectTo(connectTo)) as T)
+      : ((await (await this.walletConnector).connect()) as T);
   }
 }

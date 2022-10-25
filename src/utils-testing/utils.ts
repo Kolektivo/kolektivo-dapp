@@ -25,7 +25,7 @@ export function createEthereumService(container: IContainer, network: AllowedNet
   Registration.instance(IBrowserStorageService, mock<IBrowserStorageService>({})).register(container);
   Registration.instance(INotificationService, mock<INotificationService>({})).register(container);
   Registration.instance(IWalletProvider, mock<IWalletProvider>({})).register(container);
-  Registration.instance(IWalletConnector, mock<IWalletConnector>({})).register(container);
+  Registration.instance(IWalletConnector, mock<IWalletConnector>()).register(container);
   Registration.singleton(ICacheService, CacheService).register(container);
   configurationFromCustom({
     network,
