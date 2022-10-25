@@ -34,7 +34,6 @@ describe('ethereum-service.ts', () => {
     const ethereumService = await createEthereumService(container);
     expect(ethereumService.readOnlyProvider).toBeTruthy();
     expect(ethereumService.readOnlyProvider).toBeTypeOf('object');
-    await ethereumService.readOnlyProvider._networkPromise;
     expect(ethereumService.readOnlyProvider.network).toBeTypeOf('object');
   });
 
