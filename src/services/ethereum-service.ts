@@ -9,6 +9,7 @@ import { formatUnits, parseUnits } from '@ethersproject/units';
 import { getAddress } from '@ethersproject/address';
 import { truncateDecimals } from '../utils';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+import { AllowedNetwork, AllowedNetworks } from 'models/allowed-network';
 import { ICacheService } from './cache-service';
 import { IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
 import { cache } from 'decorators/cache';
@@ -52,17 +53,13 @@ export interface IBlockInfo extends IBlockInfoNative {
   blockDate: Date;
 }
 
-export enum Networks {
-  Celo = 'Celo',
-  Alfajores = 'Alfajores',
-}
 const CELO_MAINNET_CHAIN_ID = 42220;
 
 const CELO_ALFAJORES_CHAIN_ID = 44787;
 
 export interface IChainEventInfo {
   chainId?: number;
-  chainName?: AllowedNetworks;
+  chainName?: AllowedNetwork;
   provider?: Web3Provider | null;
 }
 
@@ -91,7 +88,7 @@ export class EthereumService {
     Registration.singleton(IEthereumService, EthereumService).register(container);
   }
 
-  public readonly endpoints: Record<AllowedNetworks, string> = {
+  public readonly endpoints: Record<AllowedNetwork, string> = {
     // Celo: `https://forno.celo.org`,
     Celo: 'https://celo.rpcs.dev:8545',
     // Alfajores: `https://e761db8d40ea4f95a10923da3ffa47a3.eth.rpc.rivet.cloud/`,
@@ -112,8 +109,8 @@ export class EthereumService {
       options: {
         // apiKey: 'EXAMPLE_PROVIDER_API_KEY',
         rpc: {
-          CELO_MAINNET_CHAIN_ID: this.endpoints[Networks.Celo],
-          CELO_ALFAJORES_CHAIN_ID: this.endpoints[Networks.Alfajores],
+          CELO_MAINNET_CHAIN_ID: this.endpoints[AllowedNetworks.Celo],
+          CELO_ALFAJORES_CHAIN_ID: this.endpoints[AllowedNetworks.Alfajores],
         },
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -124,8 +121,8 @@ export class EthereumService {
       package: WalletConnectProvider, // required
       options: {
         rpc: {
-          CELO_MAINNET_CHAIN_ID: this.endpoints[Networks.Celo],
-          CELO_ALFAJORES_CHAIN_ID: this.endpoints[Networks.Alfajores],
+          CELO_MAINNET_CHAIN_ID: this.endpoints[AllowedNetworks.Celo],
+          CELO_ALFAJORES_CHAIN_ID: this.endpoints[AllowedNetworks.Alfajores],
         },
       },
     },
@@ -170,7 +167,7 @@ export class EthereumService {
     });
   }
 
-  public targetedNetwork: AllowedNetworks | null = null;
+  public targetedNetwork: AllowedNetwork | null = null;
   public targetedChainId?: number;
   public lastBlock?: IBlockInfo;
   /**
@@ -197,7 +194,7 @@ export class EthereumService {
    */
   private defaultAccount?: Signer | Address | null;
 
-  public initialize(network: AllowedNetworks): void {
+  public initialize(network: AllowedNetwork): void {
     if (typeof network !== 'string') {
       throw new Error('Ethereum.initialize: network must be specified');
     }
@@ -211,7 +208,7 @@ export class EthereumService {
 
     const readonlyEndPoint = this.endpoints[this.targetedNetwork];
     if (typeof readonlyEndPoint !== 'string') {
-      throw new Error(`Please connect your wallet to either ${Networks.Celo} or ${Networks.Alfajores}`);
+      throw new Error(`Please connect your wallet to either ${AllowedNetworks.Celo} or ${AllowedNetworks.Alfajores}`);
     }
 
     this.readOnlyProvider = new JsonRpcProvider({ url: this.endpoints[this.targetedNetwork], skipFetchSetup: true });
@@ -224,14 +221,14 @@ export class EthereumService {
    */
   private web3ModalProvider?: WalletProvider;
 
-  private chainNameById = new Map<number, AllowedNetworks>([
-    [CELO_MAINNET_CHAIN_ID, Networks.Celo],
-    [CELO_ALFAJORES_CHAIN_ID, Networks.Alfajores],
+  private chainNameById = new Map<number, AllowedNetwork>([
+    [CELO_MAINNET_CHAIN_ID, AllowedNetworks.Celo],
+    [CELO_ALFAJORES_CHAIN_ID, AllowedNetworks.Alfajores],
   ]);
 
-  private chainIdByName = new Map<AllowedNetworks, number>([
-    [Networks.Celo, CELO_MAINNET_CHAIN_ID],
-    [Networks.Alfajores, CELO_ALFAJORES_CHAIN_ID],
+  private chainIdByName = new Map<AllowedNetwork, number>([
+    [AllowedNetworks.Celo, CELO_MAINNET_CHAIN_ID],
+    [AllowedNetworks.Alfajores, CELO_ALFAJORES_CHAIN_ID],
   ]);
 
   private async getCurrentAccountFromProvider(provider: Web3Provider): Promise<Signer | string | null> {
@@ -391,7 +388,7 @@ export class EthereumService {
   private ensureWeb3Modal(): void {
     if (!this.web3Modal) {
       this.web3Modal = new Web3Modal({
-        // network: Networks.CELO,
+        // network: AllowedNetworks.CELO,
         cacheProvider: false,
         providerOptions: this.providerOptions, // required
         theme: 'dark',
@@ -417,10 +414,10 @@ export class EthereumService {
          */
         switch (clonedNetwork.chainId) {
           case CELO_ALFAJORES_CHAIN_ID:
-            clonedNetwork.name = Networks.Alfajores;
+            clonedNetwork.name = AllowedNetworks.Alfajores;
             break;
           case CELO_MAINNET_CHAIN_ID:
-            clonedNetwork.name = Networks.Celo;
+            clonedNetwork.name = AllowedNetworks.Celo;
             break;
           default:
             clonedNetwork.name = '';
@@ -469,7 +466,7 @@ export class EthereumService {
           /**
            * because the events aren't fired on first connection
            */
-          this.fireConnectHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.walletProvider });
+          this.fireConnectHandler({ chainId: network.chainId, chainName: network.name as AllowedNetwork, provider: this.walletProvider });
           this.fireAccountsChangedHandler(this.defaultAccountAddress);
 
           this.web3ModalProvider.on('accountsChanged', (accounts?: Address[]) => void this.handleAccountsChanged(accounts));
@@ -510,7 +507,7 @@ export class EthereumService {
       });
       return;
     } else {
-      this.fireChainChangedHandler({ chainId: network.chainId, chainName: network.name as AllowedNetworks, provider: this.walletProvider ?? null });
+      this.fireChainChangedHandler({ chainId: network.chainId, chainName: network.name as AllowedNetwork, provider: this.walletProvider ?? null });
     }
   };
 
@@ -641,7 +638,7 @@ export class EthereumService {
   public getEtherscanLink(addressOrHash: Address | Hash | null, tx = false): string {
     if (!addressOrHash) {
       return '';
-    } else if (this.targetedNetwork === Networks.Celo) {
+    } else if (this.targetedNetwork === AllowedNetworks.Celo) {
       return `https://celoscan.io/${tx ? 'tx' : 'address'}/${addressOrHash}`;
     } else {
       return `https://alfajores-blockscout.celo-testnet.org/${tx ? 'tx' : 'address'}/${addressOrHash}`;

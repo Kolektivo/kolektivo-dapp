@@ -1,8 +1,8 @@
-import { AllowedNetworks } from './models/allowed-network';
+import { AllowedNetwork, AllowedNetworks } from './models/allowed-network';
 export const IS_DEV = import.meta.env.DEV;
 export const IPFS_GATEWAY = import.meta.env.KOL_IPFS_GATEWAY;
 export const FIREBASE_API_KEY = import.meta.env.KOL_FIREBASE_API_KEY;
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-export const NETWORK: AllowedNetworks = (import.meta.env.KOL_NETWORK as AllowedNetworks) || AllowedNetworks.Alfajores;
+export const NETWORK: AllowedNetwork = (import.meta.env.KOL_NETWORK as AllowedNetwork) || AllowedNetworks.Alfajores;
 export const ETHERSCAN_LINK = import.meta.env.KOL_ETHERSCAN_LINK ?? 'https://alfajores-blockscout.celo-testnet.org/{type}/{address}';
 export const IS_CELO = NETWORK === AllowedNetworks.Celo;
