@@ -1,5 +1,5 @@
 import { ContractGroupsJson, GovernanceContractGroupJson, MonetaryContractsGroupJson } from './types';
-import { isCelo } from 'environment-variables';
+import { IS_CELO } from 'environment-variables';
 import governanceAlfajores from '../../contracts/governance/alfajores.json';
 import governanceCelo from '../../contracts/governance/celo.json';
 import governanceShared from '../../contracts/governance/sharedAbis.json';
@@ -10,8 +10,8 @@ import monetaryShared from '../../contracts/monetary/sharedAbis.json';
 export { governanceAlfajores, governanceCelo, governanceShared, monetaryAlfajores, monetaryCelo, monetaryShared };
 
 export const ContractGroupsJsons = {
-  Monetary: { main: isCelo ? monetaryCelo : monetaryAlfajores, shared: monetaryShared },
-  Governance: { main: isCelo ? governanceCelo : governanceAlfajores, shared: governanceShared },
+  Monetary: { main: IS_CELO ? monetaryCelo : monetaryAlfajores, shared: monetaryShared },
+  Governance: { main: IS_CELO ? governanceCelo : governanceAlfajores, shared: governanceShared },
 };
 
 export type ContractGroupsAbis = keyof typeof ContractGroupsJsons;

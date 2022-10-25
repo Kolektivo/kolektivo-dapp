@@ -3,9 +3,9 @@ import { BindingMode, ICustomElementViewModel, bindable, customElement } from 'a
 import { I18N } from '@aurelia/i18n';
 import { IRouter } from '@aurelia/router';
 import { ifExistsThenTrue } from '../../../design-system/common';
-import { isDev } from './../../../environment-variables';
 import template from './side-bar.html';
 
+import { IConfiguration } from 'configurations/configuration';
 import logo from '../../../../static/logo.svg';
 
 @customElement({ template, name: 'side-bar' })
@@ -15,7 +15,7 @@ export class SideBar implements ICustomElementViewModel {
   routes: RouteLink[] = [];
   logo = logo;
 
-  constructor(@IRouter private readonly router: IRouter, @I18N private readonly i18n: I18N) {
+  constructor(@IRouter private readonly router: IRouter, @I18N private readonly i18n: I18N, @IConfiguration private readonly config: IConfiguration) {
     this.routes = [
       { name: this.i18n.tr('navigation.map.link-text'), path: 'map', location: 'top', icon: this.i18n.tr('navigation.map.link-icon') },
       { name: this.i18n.tr('navigation.treasury.link-text'), path: 'treasury', location: 'top', icon: this.i18n.tr('navigation.treasury.link-icon') },
@@ -41,7 +41,7 @@ export class SideBar implements ICustomElementViewModel {
         icon: this.i18n.tr('navigation.external-site.link-icon'),
       },
     ];
-    if (isDev) {
+    if (this.config.isDevelopment) {
       this.routes.push({ name: 'Storybook', path: 'storybook', location: 'bottom', icon: 'menu_book' });
     }
   }

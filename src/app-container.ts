@@ -1,20 +1,19 @@
 import * as hooks from './hooks';
 import * as pages from './pages';
 import * as resources from './resources';
-import { CHAIN_URL, isDev } from './environment-variables';
-import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from './design-system';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { IEncryptionClient } from './encryption-client';
 import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
-import { IReadOnlyProvider } from 'read-only-provider';
+import { IS_DEV } from './environment-variables';
 import { ITokenData, getTokenInfos } from './services/contract/token-info';
 import { RouterConfiguration } from '@aurelia/router';
 import { Services } from './services/services';
 import { StandardConfiguration } from '@aurelia/runtime-html';
 import { Store } from './stores';
+import { configurationFromEnv } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { imageMap } from './app-images';
 import { initializeApp } from 'firebase/app';
@@ -45,7 +44,7 @@ export const appContainer: IContainer = DI.createContainer()
         enableCoercion: true,
       };
     }),
-    Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })),
+    // Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })),
   )
   .register(StyleConfiguration.shadowDOM({ sharedStyles: [designScss, scss] }))
   .register(Services)
@@ -64,6 +63,7 @@ export const appContainer: IContainer = DI.createContainer()
       return client as IEncryptionClient;
     }),
   )
+  .register(configurationFromEnv())
   .register(
     Registration.instance(ITokenData, {
       tokens: getTokenInfos(),
@@ -71,7 +71,7 @@ export const appContainer: IContainer = DI.createContainer()
   )
   .register(
     LoggerConfiguration.create({
-      level: isDev ? LogLevel.debug : LogLevel.warn,
+      level: IS_DEV ? LogLevel.debug : LogLevel.warn,
       sinks: [ConsoleSink],
     }),
   )

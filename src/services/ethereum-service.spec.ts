@@ -29,9 +29,9 @@ describe('ethereum-service.ts', () => {
     expect((await service.getBlock(1)).number).toBe(1);
   });
 
-  it('confirms creation of readonlyProvider', async () => {
+  it('confirms creation of readonlyProvider', () => {
     const container = DI.createContainer();
-    const ethereumService = await createEthereumService(container);
+    const ethereumService = createEthereumService(container);
     expect(ethereumService.readOnlyProvider).toBeTruthy();
     expect(ethereumService.readOnlyProvider).toBeTypeOf('object');
     expect(ethereumService.readOnlyProvider.network).toBeTypeOf('object');
@@ -39,7 +39,7 @@ describe('ethereum-service.ts', () => {
 
   it('getBlock works', async () => {
     const container = DI.createContainer();
-    const ethereumService = await createEthereumService(container);
+    const ethereumService = createEthereumService(container);
     expect((await ethereumService.getBlock(1)).number).toBe(1);
   });
 });
