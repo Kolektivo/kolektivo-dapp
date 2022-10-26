@@ -49,6 +49,6 @@ export class BlockChainStore {
   }
 
   public get connectedWalletEtherscanLink(): string {
-    return this.connectedWalletAddress ? this.ethereumService.getEtherscanLink() : '';
+    return this.connectedWalletAddress ? this.ethereumService.getEtherscanLink(this.connectedWalletAddress) : '';
   }
 }
