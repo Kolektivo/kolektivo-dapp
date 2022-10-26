@@ -65,6 +65,8 @@ export const seed = async () => {
   const reserveStore: IReserveStore = container.get(IReserveStore);
   let reserveValue = '';
   let leverageRatio = 0;
+  let minLeverageRatio = 0;
+  let maxLeverageRatio = 0;
   let kCurPrice = 0;
   let kCurReserveDistribution = 0;
   let kCurMentoDistribution = 0;
@@ -139,6 +141,8 @@ export const seed = async () => {
 
     //Get current kCur leverage ratio
     leverageRatio = reserveStore.leverageRatio;
+    minLeverageRatio = reserveStore.minLeverageRatio;
+    maxLeverageRatio = reserveStore.maxLeverageRatio;
 
     //Get current kCur Price
     kCurPrice = reserveStore.kCurPrice ?? 0;
@@ -198,7 +202,7 @@ export const seed = async () => {
 
         void captureDataPromise?.then(async () => {
           await addData('kCurPrice', Periods[period], newSyncTime.getTime(), kCurPrice);
-          await addData('kCurRatio', Periods[period], newSyncTime.getTime(), leverageRatio);
+          await addData('kCurRatio', Periods[period], newSyncTime.getTime(), { leverageRatio, maxLeverageRatio, minLeverageRatio });
           await addData('kCurSupply', Periods[period], newSyncTime.getTime(), {
             kCurReserveDistribution,
             kCurMentoDistribution,

@@ -1,0 +1,13 @@
+#k-cur-leverage-card{
+    div.chart-line{
+        border:2px solid var(--primary);
+        width: 15px;
+        height: 0;
+    }
+    
+    div.chart-dashed-line{
+        border:2px dashed var(--don-juan-200);
+        width: 15px;
+        height: 0;
+    }
+}

@@ -13,3 +13,10 @@ export interface ValueChartData {
   createdAt: Date;
   value: number;
 }
+
+export interface LeverageChartData {
+  createdAt: Date;
+  leverageRatio: number;
+  maxLeverageRatio: number;
+  minLeverageRatio: number;
+}

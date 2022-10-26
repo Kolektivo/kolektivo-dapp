@@ -1,15 +1,15 @@
+import './leverage-card.scss';
 import { ICustomElementViewModel, customElement, watch } from '@aurelia/runtime-html';
 import { IReserveStore } from 'stores/reserve-store';
 import { Interval } from 'models/interval';
-import { ValueChartData } from 'models/chart-data';
+import { LeverageChartData } from 'models/chart-data';
 import { formatter } from 'utils';
 import template from './leverage-card.html';
-
 @customElement({ name: 'leverage-card', template })
 export class LeverageCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
-  private reserveData: ValueChartData[] = [];
+  private reserveData: LeverageChartData[] = [];
   constructor(@IReserveStore private readonly reserveStore: IReserveStore) {}
 
   binding() {
@@ -28,17 +28,23 @@ export class LeverageCard implements ICustomElementViewModel {
   get labels() {
     return this.reserveData.map((x) => formatter.format(x.createdAt).replace(',', ''));
   }
-  get data(): number[] {
-    return this.reserveData.map((x) => x.value);
+  get leverageRatioData(): number[] {
+    return this.reserveData.map((x) => x.leverageRatio);
+  }
+  get maxLeverageRatioData(): number[] {
+    return this.reserveData.map((x) => x.maxLeverageRatio);
   }
   get currentLeverageRatio(): number {
     return this.reserveStore.leverageRatio / 100;
+  }
+  get maxLeverageRatio(): number {
+    return this.reserveStore.maxLeverageRatio / 100;
   }
   get dataSets() {
     return [
       {
         label: 'Leverage Ratio',
-        data: this.data,
+        data: this.leverageRatioData,
         fill: true,
         borderColor: 'rgba(69, 173, 168, 0.77)',
         tension: 0.5,
@@ -48,7 +54,7 @@ export class LeverageCard implements ICustomElementViewModel {
       },
       {
         label: 'Collateral Celing',
-        data: [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90],
+        data: this.maxLeverageRatioData,
         borderDash: [5],
         borderColor: 'rgba(190, 183, 183, 0.77)',
         tension: 0.5,

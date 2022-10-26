@@ -1,6 +1,6 @@
 import { Asset } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
-import { BigNumberOverTimeData, NumberOverTimeData, ValueChartData } from 'models/chart-data';
+import { BigNumberOverTimeData, LeverageChartData, NumberOverTimeData, ValueChartData } from 'models/chart-data';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { IContractService, INumberService, fromWei } from 'services';
@@ -26,6 +26,7 @@ export class ReserveStore {
   public kCurReserveDistribution?: number;
   public kCurMentoDistribution?: number;
   public kCurPrimaryPoolDistribution?: number;
+  public minBacking?: BigNumber;
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IReserveStore, ReserveStore));
@@ -51,6 +52,14 @@ export class ReserveStore {
     return this.numberService.fromString(fromWei(this.backing ?? 0, 2));
   }
 
+  public get maxLeverageRatio(): number {
+    return (1 / (this.numberService.fromString(fromWei(this.minBacking ?? 0, 2)) / 100)) * 100;
+  }
+
+  public get minLeverageRatio(): number {
+    return this.numberService.fromString(fromWei(this.minBacking ?? 0, 2));
+  }
+
   @callOnce()
   public async loadAssets(): Promise<void> {
     const contract = this.getReserveContract();
@@ -74,6 +83,7 @@ export class ReserveStore {
     this.reserveValuation = reserveStatus[0];
     this.supplyValuation = reserveStatus[1];
     this.backing = reserveStatus[2];
+    this.minBacking = await contract.minBacking();
   }
 
   @callOnce()
@@ -139,35 +149,31 @@ export class ReserveStore {
     return chartData;
   }
 
-  public async getLeverageRatioValueOverTime(interval: Interval): Promise<ValueChartData[]> {
+  public async getLeverageRatioValueOverTime(interval: Interval): Promise<LeverageChartData[]> {
     //get data from datastore
     const earliestTime = getTimeMinusInterval(interval);
-    const valueOverTimeData = await this.dataStore.getDocs<BigNumberOverTimeData[]>(
+    const valueOverTimeData = await this.dataStore.getDocs<LeverageChartData[]>(
       `chartData/kCurRatio/${convertIntervalToRecordType(interval)}`,
       'createdAt',
       'desc',
       { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
     );
-    //map data from datastore to what the UI needs
-    const chartData = valueOverTimeData.map((x) => {
-      return {
-        createdAt: new Date(x.createdAt),
-        value: x.value,
-      } as unknown as ValueChartData;
-    });
     //sort data by date ascending
-    chartData.sort((a, b) => {
+    valueOverTimeData.sort((a, b) => {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     });
     //get latest data from the contract for last data point
     const contract = this.getReserveContract();
     const reserveStatus = await contract.reserveStatus();
+    const minBacking = await contract.minBacking();
     //add last data point
-    chartData.push({
+    valueOverTimeData.push({
       createdAt: new Date(),
-      value: this.numberService.fromString(fromWei(reserveStatus[2], 2)),
-    } as unknown as ValueChartData);
-    return chartData;
+      leverageRatio: this.numberService.fromString(fromWei(reserveStatus[2], 2)),
+      maxLeverageRatio: (1 / (this.numberService.fromString(fromWei(minBacking, 2)) / 100)) * 100,
+      minLeverageRatio: this.numberService.fromString(fromWei(minBacking, 2)),
+    } as unknown as LeverageChartData);
+    return valueOverTimeData;
   }
 
   public async getkCurPriceOverTime(interval: Interval): Promise<ValueChartData[]> {
