@@ -39,7 +39,7 @@ export class SubmitProposalCard implements ICustomElementViewModel {
     try {
       const data = await this.contractService.callPopulateTransaction(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        this.contractService.getContract('Monetary', 'Treasury') as Treasury,
+        (await this.contractService.getContract('monetary', 'Treasury')) as Treasury,
         'listERC20AsBondable',
         '0x74F9479B29CFb52Db30D76ffdD5F192a73BAD870',
       );

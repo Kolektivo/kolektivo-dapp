@@ -1,4 +1,3 @@
-import { configurationFromEnv } from 'configurations/configuration';
 /* eslint-disable no-console */
 import { CacheService } from './services/cache-service';
 import { ContractService } from './services/contract/contract-service';
@@ -17,6 +16,7 @@ import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
 import { NumberService } from './services/number-service';
 import { TokenService } from './services/token-service';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
+import { configurationFromEnv } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { initializeApp } from 'firebase/app';
 
@@ -76,7 +76,8 @@ export const seed = async () => {
   let kCurCirculatingDistribution = 0;
   let captureDataPromise: Promise<void> | undefined = undefined;
 
-  const { fireStore: database } = container.get(IFirebaseService);
+  const service = container.get(IFirebaseService);
+  const database = await service.connect();
 
   const periods = Object.values(Periods)
     .filter((y) => typeof y === 'number')
@@ -112,8 +113,8 @@ export const seed = async () => {
   };
   const getTreasuryValue = async (): Promise<string> => {
     const treasuryStore = container.get(ITreasuryStore);
-    const treasuryContract = treasuryStore.getTreasuryContract();
-    return (await treasuryContract?.totalValuation())?.toHexString() ?? '';
+    const treasuryContract = await treasuryStore.getTreasuryContract();
+    return (await treasuryContract.totalValuation()).toHexString();
   };
   const loadReserveData = async (): Promise<void> => {
     await reserveStore.loadAssets(); //loads reserve value and assets
