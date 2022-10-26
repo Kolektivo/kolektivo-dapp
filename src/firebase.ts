@@ -1,3 +1,4 @@
+import { configurationFromEnv } from 'configurations/configuration';
 /* eslint-disable no-console */
 import { CacheService } from './services/cache-service';
 import { ContractService } from './services/contract/contract-service';
@@ -35,6 +36,7 @@ const container = DI.createContainer()
   .register(ContractStore)
   .register(TokenService)
   .register(DataStore)
+  .register(configurationFromEnv())
   .register(CacheService)
   .register(TreasuryStore)
   .register(ReserveStore)
@@ -44,7 +46,7 @@ const container = DI.createContainer()
     }),
   )
   .register(NumberService)
-  .register(Registration.instance(I18N, {}))
+  .register(Registration.instance(I18N, { uf: (s: unknown) => Number(s) }))
   .register(
     Registration.instance(IObserverLocator, {}),
     Registration.instance(IEventAggregator, {}),
