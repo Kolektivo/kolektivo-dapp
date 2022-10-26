@@ -1,4 +1,4 @@
-import type { governanceAlfajores, governanceCelo, governanceShared, monetaryAlfajores, monetaryCelo, monetaryShared } from './contracts';
+import { governanceAlfajores, governanceCelo, governanceShared, monetaryAlfajores, monetaryCelo, monetaryShared } from './contracts';
 
 export type MonetaryContractsGroupJson = typeof monetaryCelo | typeof monetaryAlfajores;
 export type GovernanceContractGroupJson = typeof governanceCelo | typeof governanceAlfajores;

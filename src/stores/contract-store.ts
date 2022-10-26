@@ -43,7 +43,7 @@ export class ContractStore {
       return;
     }
 
-    const tokenContract = await this.tokenService.getTokenContract(assetAddress, tokenInfo.id);
+    const tokenContract = this.tokenService.getTokenContract(assetAddress, tokenInfo.id);
 
     if (!oracleAddress) {
       if (tokenInfo.id) {
@@ -55,7 +55,7 @@ export class ContractStore {
     }
 
     if (!oracleAddress || BigNumber.from(oracleAddress).isZero()) return;
-    const oracleContract: Oracle = await this.contractService.getContract('monetary', 'Oracle', oracleAddress); //get the oracle contract for the given oracle address
+    const oracleContract: Oracle = this.contractService.getContract('Monetary', 'Oracle', oracleAddress); //get the oracle contract for the given oracle address
     const data = await oracleContract.getData(); // get the data from the oracle contract
 
     if (!data[1]) return; // if the oracleContract.getData() returns false don't use this token's data (according to Marvin G.)

@@ -32,6 +32,10 @@ export class Services {
     @IConfiguration private readonly configuration: IConfiguration,
   ) {}
 
+  public initialize(): Promise<unknown> {
+    return this.ethereumService.initialize(this.configuration.network);
+  }
+
   public static register(container: IContainer): void {
     container
       .register(Registration.singleton(IServices, Services))

@@ -90,7 +90,7 @@ export class GovernanceStore {
     ipfsHash?: string,
   ): Promise<ContractTransaction | undefined> {
     if (!data.to || !data.data) return;
-    const secretDelayContract: Secretdelay = await this.contractService.getContract('governance', 'monetaryDelay');
+    const secretDelayContract: Secretdelay = this.contractService.getContract('Governance', 'monetaryDelay');
 
     let dataParamBAC: PopulatedTransaction | undefined = undefined;
     if (isPublicProposal) {
@@ -101,7 +101,7 @@ export class GovernanceStore {
       const hash = await secretDelayContract.getSecretTransactionHash(secretDelayContract.address, 0, data.data, BigNumber.from(0), salt);
       dataParamBAC = await secretDelayContract.populateTransaction.enqueueSecretTx(hash, ipfsHash);
     }
-    const bacContract: Bacroles = await this.contractService.getContract('governance', 'bacMD');
+    const bacContract: Bacroles = this.contractService.getContract('Governance', 'bacMD');
     if (!dataParamBAC.to || !dataParamBAC.value || !dataParamBAC.data) return;
     const result = await bacContract.execTransactionFromModule(
       dataParamBAC.to,
@@ -114,7 +114,7 @@ export class GovernanceStore {
   }
 
   public async loadBadges(): Promise<void> {
-    const contract = await this.getBadgerContract();
+    const contract = this.getBadgerContract();
     if (!this.services.ethereumService.defaultAccountAddress) return;
     const badgeNumbers = Object.values(BadgeType)
       .filter((y) => typeof y === 'number')
@@ -132,7 +132,7 @@ export class GovernanceStore {
     this.kolektivoStore.badges = allBadges.filter((x) => badges.some((y) => y === x.type));
   }
 
-  private getBadgerContract(): Promise<Badger> {
-    return this.contractService.getContract('governance', 'monetaryBadger');
+  private getBadgerContract(): Badger {
+    return this.contractService.getContract('Governance', 'monetaryBadger');
   }
 }

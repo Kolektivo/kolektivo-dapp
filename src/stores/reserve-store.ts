@@ -7,7 +7,7 @@ import { IContractService, INumberService, fromWei } from 'services';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 import { Interval } from 'models/interval';
-import { Reserve } from 'models/generated/monetary/reserve/Reserve';
+import { Reserve } from './../models/generated/monetary/reserve/Reserve';
 import { Transaction } from 'models/transaction';
 import { callOnce } from 'decorators/call-once';
 import { convertIntervalToRecordType, getTimeMinusInterval } from 'utils';
@@ -62,7 +62,7 @@ export class ReserveStore {
 
   @callOnce()
   public async loadAssets(): Promise<void> {
-    const contract = await this.getReserveContract();
+    const contract = this.getReserveContract();
     const reserveAddress = contract.address;
     if (!reserveAddress) return;
     //get all token addresses from the contract
@@ -89,11 +89,11 @@ export class ReserveStore {
   @callOnce()
   public async loadkCur(): Promise<void> {
     await this.loadkCurData();
-    const contract = await this.getReserveContract(); // get reserve contract
+    const contract = this.getReserveContract(); // get reserve contract
     if (!this.kCurSupply) return; //can't get the distribution percentages without a total supply value so return if it's not there
     //TODO: Get the balances of kCur inside of the reserve, mento and the primary pool and set those values here
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    const kCurContract: Erc20 = await this.contractService.getContract('monetary', 'Kolektivo Curacao Token'); // get the kCur contract
+    const kCurContract: Erc20 = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token'); // get the kCur contract
     const kCurInReserve = await kCurContract.balanceOf(contract.address); //get the balace of kCur in the reserve
     this.kCurReserveDistribution =
       this.numberService.fromString(fromWei(kCurInReserve, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
@@ -102,7 +102,7 @@ export class ReserveStore {
   }
 
   private async loadkCurData(): Promise<void> {
-    const contract = await this.getReserveContract(); // get reserve contract
+    const contract = this.getReserveContract(); // get reserve contract
     const kCurAddress = await contract.token(); // get kCur token address
     if (!kCurAddress) return;
     const reserveAddress: string = contract.address;
@@ -114,8 +114,8 @@ export class ReserveStore {
     this.kCurSupply = asset?.totalSupply;
   }
 
-  public getReserveContract(): Promise<Reserve> {
-    return this.contractService.getContract('monetary', 'Reserve');
+  public getReserveContract(): Reserve {
+    return this.contractService.getContract('Monetary', 'Reserve');
   }
 
   public async getReserveValueOverTime(interval: Interval): Promise<ValueChartData[]> {
@@ -139,7 +139,7 @@ export class ReserveStore {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     });
     //get latest data from the contract for last data point
-    const contract = await this.getReserveContract();
+    const contract = this.getReserveContract();
     const reserveStatus = await contract.reserveStatus();
     //add last data point
     chartData.push({
@@ -163,7 +163,7 @@ export class ReserveStore {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     });
     //get latest data from the contract for last data point
-    const contract = await this.getReserveContract();
+    const contract = this.getReserveContract();
     const reserveStatus = await contract.reserveStatus();
     const minBacking = await contract.minBacking();
     //add last data point

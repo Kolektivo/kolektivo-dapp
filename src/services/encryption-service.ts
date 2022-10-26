@@ -2,6 +2,7 @@ import { BadgeType } from 'models/badge-type';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { EncryptionClient, IEncryptionClient } from './../encryption-client';
 import { IEthereumService } from './ethereum-service';
+import { getContractAbi } from './contract/contracts';
 
 export type IEncryptionService = EncryptionService;
 export const IEncryptionService = DI.createInterface<IEncryptionService>('EncryptionService');
@@ -16,7 +17,7 @@ export class EncryptionService {
 
   private authSig?: string;
   private encryptedSymmetricKey?: string;
-  public badgerContractAddress = '';
+  public badgerContractAddress: string = getContractAbi('Governance').main.contracts.monetaryBadger.address;
 
   constructor(
     @ILogger private readonly logger: ILogger,

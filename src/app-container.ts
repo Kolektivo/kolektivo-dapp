@@ -16,6 +16,7 @@ import { Store } from './stores';
 import { configurationFromEnv } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { imageMap } from './app-images';
+import { initializeApp } from 'firebase/app';
 import designScss from './design-system/styles/shared.scss';
 import en from './locales/en/translation.json';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
@@ -50,7 +51,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(hooks)
   .register(resources)
   .register(pages)
-  .register(Registration.cachedCallback(IFirebaseApp, () => import('firebase/app').then((x) => x.initializeApp(firebaseConfig))))
+  .register(Registration.instance(IFirebaseApp, initializeApp(firebaseConfig)))
   .register(
     Registration.cachedCallback(IEncryptionClient, async () => {
       const LitJsSdk = (await import('lit-js-sdk')).default;
