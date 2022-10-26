@@ -12,11 +12,13 @@ export type AuthSigData = {
   chainId: number;
 };
 
-export type IEncryptionClient = {
+export type EncryptionClient = {
   getAuthSig: (data: AuthSigData) => Promise<AuthSig>;
   encryptString: (data: string) => Promise<EncryptionResult>;
   decryptString: (data: string, key: unknown) => Promise<string>;
   uint8arrayToString: (data: Uint8Array, type: string) => string | undefined;
 } & LitJsSdk.LitNodeClient;
+
+export type IEncryptionClient = Promise<EncryptionClient> | EncryptionClient;
 
 export const IEncryptionClient = DI.createInterface<IEncryptionClient>();
