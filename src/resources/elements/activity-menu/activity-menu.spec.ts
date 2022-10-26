@@ -1,6 +1,6 @@
 import '../../../utils-testing/setup-testing';
 import { ActivityMenu } from './activity-menu';
-import { AllowedNetwork } from 'models/allowed-network';
+import { AllowedNetworks } from 'models/allowed-network';
 import { Global } from '../../../hooks/';
 import { I18N } from '@aurelia/i18n';
 import { IBlockChainStore, IStore } from '../../../stores';
@@ -12,11 +12,11 @@ import { createFixture } from '@aurelia/testing';
 
 describe('<activity-menu />', () => {
   let transactions: Transaction[];
-  let targetedNetwork: AllowedNetwork | null;
+  let targetedNetwork: AllowedNetworks | null;
 
   beforeEach(() => {
     transactions = [];
-    targetedNetwork = 'Celo';
+    AllowedNetworks.Celo;
   });
 
   it('displays empty message when theres no transactions', async () => {

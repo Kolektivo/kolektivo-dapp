@@ -1,5 +1,5 @@
 import './network-feedback.scss';
-import { AllowedNetwork } from 'models/allowed-network';
+import { AllowedNetworks } from 'models/allowed-network';
 import { IConfiguration } from 'configurations/configuration';
 import { ICustomElementViewModel, containerless, customElement } from 'aurelia';
 import { IStore } from './../../../stores/store';
@@ -10,7 +10,7 @@ import template from './network-feedback.html';
 export class NetworkFeedback implements ICustomElementViewModel {
   constructor(@IStore private readonly store: IStore, @IConfiguration private readonly configuration: IConfiguration) {}
 
-  get networkName(): AllowedNetwork | null {
+  get networkName(): AllowedNetworks | null {
     return this.store.blockChainStore.targetedNetwork;
   }
 
