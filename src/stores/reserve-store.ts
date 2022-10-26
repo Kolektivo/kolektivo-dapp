@@ -104,11 +104,6 @@ export class ReserveStore {
     this.kCurSupply = asset?.totalSupply;
   }
 
-  public get marketCap(): number {
-    if (!this.kCurPrice || !this.kCurSupply || this.kCurSupply.eq(0)) return 0;
-    return this.numberService.fromString(fromWei(this.kCurSupply, 18)) * this.kCurPrice;
-  }
-
   public getReserveContract(): Reserve {
     return this.contractService.getContract('Monetary', 'Reserve');
   }
