@@ -17,7 +17,6 @@ import { configurationFromEnv } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { imageMap } from './app-images';
 import { initializeApp } from 'firebase/app';
-import LitJsSdk from 'lit-js-sdk';
 import designScss from './design-system/styles/shared.scss';
 import en from './locales/en/translation.json';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
@@ -54,7 +53,8 @@ export const appContainer: IContainer = DI.createContainer()
   .register(pages)
   .register(Registration.instance(IFirebaseApp, initializeApp(firebaseConfig)))
   .register(
-    Registration.cachedCallback(IEncryptionClient, () => {
+    Registration.cachedCallback(IEncryptionClient, async () => {
+      const LitJsSdk = (await import('lit-js-sdk')).default;
       const client: Partial<IEncryptionClient> = new LitJsSdk.LitNodeClient();
       client.getAuthSig = LitJsSdk.signAndSaveAuthMessage;
       client.encryptString = LitJsSdk.encryptString;

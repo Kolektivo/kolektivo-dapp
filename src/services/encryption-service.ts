@@ -1,6 +1,6 @@
 import { BadgeType } from 'models/badge-type';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
-import { IEncryptionClient } from 'encryption-client';
+import { EncryptionClient, IEncryptionClient } from './../encryption-client';
 import { IEthereumService } from './ethereum-service';
 import { getContractAbi } from './contract/contracts';
 
@@ -10,6 +10,7 @@ export const IEncryptionService = DI.createInterface<IEncryptionService>('Encryp
 type EncryptionResult = { encryptedString: string; symmetricKey: string };
 
 export class EncryptionService {
+  private client?: EncryptionClient;
   public static register(container: IContainer) {
     Registration.singleton(IEncryptionService, EncryptionService).register(container);
   }
@@ -20,12 +21,9 @@ export class EncryptionService {
 
   constructor(
     @ILogger private readonly logger: ILogger,
-    @IEncryptionClient private readonly encryptionClient: IEncryptionClient,
     @IEthereumService private readonly ethereumService: IEthereumService,
-  ) {
-    this.logger.scopeTo('EncryptionService');
-    void this.connect();
-  }
+    @IContainer private readonly container: IContainer,
+  ) {}
 
   private get chain(): string {
     return this.ethereumService.targetedNetwork?.toLowerCase() ?? '';
@@ -47,24 +45,29 @@ export class EncryptionService {
     ];
   }
 
-  private connect(): Promise<void> {
-    return this.encryptionClient.connect();
+  private async connect(): Promise<void> {
+    if (this.client) return;
+    const client = await this.container.get(IEncryptionClient);
+    this.client = client;
+    return await this.client.connect();
   }
 
   public async encrypt(message: string): Promise<EncryptionResult | undefined> {
     if (!this.ethereumService.walletProvider || !this.ethereumService.defaultAccountAddress || !this.ethereumService.targetedChainId) return;
+    await this.connect();
+    if (!this.client) return;
     const params = {
       web3: this.ethereumService.walletProvider,
-      account: this.ethereumService.defaultAccountAddress.toLowerCase(),
+      account: this.ethereumService.defaultAccountAddress,
       chainId: this.ethereumService.targetedChainId,
+      expiration: new Date(Date.now() + 300000), // 5 minutes
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    this.authSig = await this.encryptionClient.getAuthSig(params);
-    const { encryptedString, symmetricKey } = await this.encryptionClient.encryptString(message);
-    this.encryptedSymmetricKey = this.encryptionClient.uint8arrayToString(
+    this.authSig = await this.client.getAuthSig(params);
+    const { encryptedString, symmetricKey } = await this.client.encryptString(message);
+    this.encryptedSymmetricKey = this.client.uint8arrayToString(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      await this.encryptionClient.saveEncryptionKey({
+      await this.client.saveEncryptionKey({
         accessControlConditions: this.getAccessControlConditions(this.badgerContractAddress),
         symmetricKey,
         authSig: this.authSig,
@@ -77,15 +80,17 @@ export class EncryptionService {
   }
 
   public async decryptAs<T = string>(encryptedString: string): Promise<T | string> {
+    await this.connect();
+    if (!this.client) throw new Error('No encryption client connected');
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const symmetricKey = await this.encryptionClient.getEncryptionKey({
+    const symmetricKey = await this.client.getEncryptionKey({
       accessControlConditions: this.getAccessControlConditions(this.badgerContractAddress),
       toDecrypt: this.encryptedSymmetricKey,
       chain: this.chain,
       authSig: this.authSig,
     });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const decryptedString: string = await this.encryptionClient.decryptString(encryptedString, symmetricKey);
+    const decryptedString: string = await this.client.decryptString(encryptedString, symmetricKey);
     try {
       return JSON.parse(decryptedString) as T;
     } catch (e) {

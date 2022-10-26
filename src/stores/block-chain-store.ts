@@ -1,5 +1,5 @@
 import { Address, Hash, IEthereumService, WalletProvider } from './../services/ethereum-service';
-import { AllowedNetwork } from 'models/allowed-network';
+import { AllowedNetworks } from 'models/allowed-network';
 import { DI, IContainer, Registration } from 'aurelia';
 
 export type IBlockChainStore = BlockChainStore;
@@ -16,7 +16,7 @@ export class BlockChainStore {
     return this.ethereumService.defaultAccountAddress;
   }
 
-  public get targetedNetwork(): AllowedNetwork | null {
+  public get targetedNetwork(): AllowedNetworks | null {
     return this.ethereumService.targetedNetwork;
   }
 
