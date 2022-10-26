@@ -111,7 +111,7 @@ export class TreasuryStore {
     rebaseEvents.sort((a, b) => {
       return b.blockNumber - a.blockNumber;
     });
-    this.lastRebaseTime = new Date((await rebaseEvents[0].getBlock()).timestamp * 1000);
+    this.lastRebaseTime = rebaseEvents[0] && new Date((await rebaseEvents[0].getBlock()).timestamp * 1000);
   }
 
   public get circulatingDistribution(): number {
