@@ -79,6 +79,7 @@ export class ReserveStore {
           this.contractStore.getAsset(address.address, address.tokenId, contract, reserveAddress, this.transactions).catch(),
       ),
     );
+    void this.loadkCurData();
     const reserveStatus = await contract.reserveStatus();
     this.reserveValuation = reserveStatus[0];
     this.supplyValuation = reserveStatus[1];
@@ -102,6 +103,7 @@ export class ReserveStore {
   }
 
   private async loadkCurData(): Promise<void> {
+    if (this.kCurPrice || this.kCurSupply) return;
     const contract = this.getReserveContract(); // get reserve contract
     const kCurAddress = await contract.token(); // get kCur token address
     if (!kCurAddress) return;

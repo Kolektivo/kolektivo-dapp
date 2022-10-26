@@ -80,7 +80,9 @@
         "description": "This is a basic & accessible description that the public can read to understand what it is.",
         "value": {
           "title": "Reserve Value",
-          "tooltip": "This is a tooltip for the reserve value"
+          "tooltip": "This is a tooltip for the reserve value",
+          "kCurPrice": "kCUR price",
+          "ratio": "Collateralization Ratio"
         },
         "value-by-asset-type": {
           "title": "Value by Asset Type",
