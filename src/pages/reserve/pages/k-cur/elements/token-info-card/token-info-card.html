@@ -8,7 +8,7 @@
       <label-value title="${i18n.tr('general.token-info-card.market-cap')}"
         tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}">
         <k-text type="h4">
-          <formatted-number show-tooltip currency commas decimals="0" value="${reserveStore.marketCap | ethwei}">
+          <formatted-number show-tooltip currency commas decimals="0" value="${reserveStore.supplyValuation | ethwei}">
           </formatted-number>
         </k-text>
       </label-value>
