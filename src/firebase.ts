@@ -76,7 +76,8 @@ export const seed = async () => {
   let kCurCirculatingDistribution = 0;
   let captureDataPromise: Promise<void> | undefined = undefined;
 
-  const { fireStore: database } = container.get(IFirebaseService);
+  const service = container.get(IFirebaseService);
+  const database = await service.connect();
 
   const periods = Object.values(Periods)
     .filter((y) => typeof y === 'number')
