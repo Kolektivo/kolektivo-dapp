@@ -16,6 +16,7 @@ export default defineConfig({
     rollupOptions: {
       plugins: [nodePolyfills() as Plugin],
     },
+    minify: 'terser',
     commonjsOptions: {
       transformMixedEsModules: true,
     },
@@ -51,6 +52,7 @@ export default defineConfig({
       Buffer: 'buffer',
     },
   },
+
   optimizeDeps: {
     esbuildOptions: {
       target: 'es2022',
