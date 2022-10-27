@@ -5,7 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   test: {
     root: './src',
-    exclude: ['**/e2e/**', 'node_modules', '/scripts'],
+    exclude: ['**/__e2e__/**', 'node_modules', '/scripts'],
     testTimeout: 200000,
   },
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
