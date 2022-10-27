@@ -93,3 +93,7 @@ export const appContainer: IContainer = DI.createContainer()
       x.defaultToastTimeout = 5000;
     }),
   );
+
+if (import.meta.env.DEV) {
+  appContainer.register(await import('./pages/storybook'));
+}
