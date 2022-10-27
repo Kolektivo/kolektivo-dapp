@@ -1,4 +1,4 @@
-import { ChartDataset } from 'chart.js';
+import { type ChartDataset } from 'chart.js';
 import { I18N } from '@aurelia/i18n';
 import { ICustomElementViewModel, customElement } from '@aurelia/runtime-html';
 import template from './value-over-time-card.html';

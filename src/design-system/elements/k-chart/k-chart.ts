@@ -1,66 +1,42 @@
-import {
-  ArcElement,
-  BarController,
-  BarElement,
-  BubbleController,
-  CategoryScale,
-  Chart,
-  Decimation,
-  DoughnutController,
-  Filler,
-  Legend,
-  LineController,
-  LineElement,
-  LinearScale,
-  LogarithmicScale,
-  PieController,
-  PointElement,
-  PolarAreaController,
-  RadarController,
-  RadialLinearScale,
-  ScatterController,
-  SubTitle,
-  TimeScale,
-  TimeSeriesScale,
-  Title,
-  Tooltip,
-} from 'chart.js';
-
 import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
 import css from './k-chart.scss';
 import template from './k-chart.html';
-// eslint-disable-next-line no-duplicate-imports
-import type { BubbleDataPoint, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint } from 'chart.js';
+import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint } from 'chart.js';
 
 export type DataType = number | ScatterDataPoint | BubbleDataPoint;
 
-Chart.register(
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Decimation,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-  SubTitle,
-);
+let initialized = false;
+const initializeChartJs = async () => {
+  const chartJs = await import('chart.js');
+  chartJs.Chart.register(
+    chartJs.ArcElement,
+    chartJs.LineElement,
+    chartJs.BarElement,
+    chartJs.PointElement,
+    chartJs.BarController,
+    chartJs.BubbleController,
+    chartJs.DoughnutController,
+    chartJs.LineController,
+    chartJs.PieController,
+    chartJs.PolarAreaController,
+    chartJs.RadarController,
+    chartJs.ScatterController,
+    chartJs.CategoryScale,
+    chartJs.LinearScale,
+    chartJs.LogarithmicScale,
+    chartJs.RadialLinearScale,
+    chartJs.TimeScale,
+    chartJs.TimeSeriesScale,
+    chartJs.Decimation,
+    chartJs.Filler,
+    chartJs.Legend,
+    chartJs.Title,
+    chartJs.Tooltip,
+    chartJs.SubTitle,
+  );
+  initialized = true;
+};
 
 @customElement({
   name: 'k-chart',
@@ -97,7 +73,9 @@ export class KChart implements ICustomElementViewModel {
   chart?: HTMLCanvasElement;
   public chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
 
-  constructor(@IPlatform private readonly platform: IPlatform) {}
+  constructor(@IPlatform private readonly platform: IPlatform) {
+    !initialized && void initializeChartJs();
+  }
 
   get styles() {
     return {
@@ -118,7 +96,7 @@ export class KChart implements ICustomElementViewModel {
     return data[0] as unknown as number;
   }
 
-  createChart(): void {
+  async createChart() {
     const ctx = this.chart?.getContext('2d');
     if (this.gradient && typeof this.dataSets[0].backgroundColor === 'string') {
       const gradient = ctx?.createLinearGradient(0, 0, 0, 400);
@@ -220,7 +198,7 @@ export class KChart implements ICustomElementViewModel {
       };
     }
 
-    this.chartJsInstance = new Chart(context, {
+    this.chartJsInstance = new (await import('chart.js')).Chart(context, {
       type: this.type,
       data: {
         labels: this.labels,
@@ -293,7 +271,7 @@ export class KChart implements ICustomElementViewModel {
   }
 
   attaching(): void {
-    this.createChart();
+    void this.createChart();
   }
 
   detaching(): void | Promise<void> {
