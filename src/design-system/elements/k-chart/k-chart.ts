@@ -2,7 +2,7 @@ import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS 
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
 import css from './k-chart.scss';
 import template from './k-chart.html';
-import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint, TooltipOptions } from 'chart.js';
+import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint } from 'chart.js';
 
 export type DataType = number | ScatterDataPoint | BubbleDataPoint;
 
@@ -69,16 +69,17 @@ export class KChart implements ICustomElementViewModel {
   @bindable({ set: ifExistsThenTrue }) gradient?: boolean;
   @bindable minY?: number;
   @bindable maxY?: number;
-  @bindable tooltipOptions?: TooltipOptions;
-  @bindable yLabelFormat?: Record<string, unknown>;
-  @bindable xLabelFormat?: Record<string, unknown>;
+
   chart?: HTMLCanvasElement;
   public chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
+  creatingPromise?: Promise<void>;
 
   constructor(@IPlatform private readonly platform: IPlatform) {}
+
   async binding() {
     !initialized && (await initializeChartJs());
   }
+
   get styles() {
     return {
       height: this.height,
@@ -165,7 +166,6 @@ export class KChart implements ICustomElementViewModel {
                 },
               }
             : undefined,
-          ...this.tooltipOptions,
         },
       },
     };
@@ -181,7 +181,6 @@ export class KChart implements ICustomElementViewModel {
         x: {
           ticks: {
             maxTicksLimit: this.maxXLabels,
-            ...this.xLabelFormat,
           },
           grid: {
             display: false,
@@ -192,7 +191,6 @@ export class KChart implements ICustomElementViewModel {
           suggestedMax: this.highestDataPoint + this.highestDataPoint * 0.1,
           ticks: {
             maxTicksLimit: this.maxYLabels,
-            ...this.yLabelFormat,
           },
           max: this.maxY,
           min: this.minY,
@@ -262,24 +260,25 @@ export class KChart implements ICustomElementViewModel {
     }
   }
 
-  async dataSetsChanged() {
-    await this.refresh();
+  dataSetsChanged(): void {
+    this.refresh();
   }
 
-  async dataChanged() {
-    await this.refresh();
+  dataChanged(): void {
+    this.refresh();
   }
 
-  private async refresh() {
-    await this.detaching();
-    await this.attaching();
+  private refresh(): void {
+    void this.detaching();
+    this.attaching();
   }
 
-  async attaching() {
-    await this.createChart();
+  attaching(): void {
+    this.creatingPromise = this.createChart();
   }
 
-  detaching(): void | Promise<void> {
+  async detaching() {
+    await this.creatingPromise;
     this.chartJsInstance?.destroy();
   }
 }
