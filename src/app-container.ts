@@ -16,8 +16,10 @@ import { Store } from './stores';
 import { configurationFromEnv } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { imageMap } from './app-images';
+import Backend from 'i18next-chained-backend';
+import HttpBackend from 'i18next-http-backend';
+import LocalStorageBackend from 'i18next-localstorage-backend';
 import designScss from './design-system/styles/shared.scss';
-import en from './locales/en/translation.json';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 import scss from './shared.scss';
 
@@ -32,6 +34,24 @@ import scss from './shared.scss';
 //   url: 'https://ipfs.rpcs.dev:5001',
 // });
 //await ipfs.id();
+
+const dateFormatters: Record<string, Intl.DateTimeFormat> = {
+  minute: new Intl.DateTimeFormat(undefined, {
+    hour: '2-digit',
+    minute: '2-digit',
+    dayPeriod: 'short',
+  }),
+  hour: new Intl.DateTimeFormat(undefined, {
+    hour: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit',
+  }),
+  day: new Intl.DateTimeFormat(undefined, {
+    hour: '2-digit',
+    day: '2-digit',
+  }),
+};
 
 export const appContainer: IContainer = DI.createContainer()
   .register(
@@ -79,10 +99,27 @@ export const appContainer: IContainer = DI.createContainer()
     I18nConfiguration.customize((options) => {
       options.initOptions = {
         fallbackLng: { default: ['en'] },
-        resources: {
-          en: { translation: en },
+        interpolation: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          format: function (value: any, format: any, lng: any): any {
+            if (!format) return value;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            if (value instanceof Date) return dateFormatters[format as string].format(value);
+            return value;
+          },
         },
-        plugins: [intervalPlural],
+        backend: {
+          backends: [LocalStorageBackend, HttpBackend],
+          backendOptions: [
+            {
+              expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 days
+            },
+            {
+              loadPath: '/locales/{{lng}}/{{ns}}.json',
+            },
+          ],
+        },
+        plugins: [Backend, intervalPlural],
       };
     }),
   )
