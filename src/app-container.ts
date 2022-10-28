@@ -37,9 +37,8 @@ import scss from './shared.scss';
 
 const dateFormatters: Record<string, Intl.DateTimeFormat> = {
   minute: new Intl.DateTimeFormat(undefined, {
-    hour: '2-digit',
-    minute: '2-digit',
-    dayPeriod: 'short',
+    hour: 'numeric',
+    minute: 'numeric',
   }),
   hour: new Intl.DateTimeFormat(undefined, {
     hour: '2-digit',
