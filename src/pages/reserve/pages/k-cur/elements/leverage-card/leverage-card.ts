@@ -43,6 +43,9 @@ export class LeverageCard implements ICustomElementViewModel {
   get maxLeverageRatioData(): number[] {
     return this.reserveData.map((x) => x.maxLeverageRatio);
   }
+  get referenceLineData(): number[] {
+    return this.reserveData.map(() => 100);
+  }
   get currentLeverageRatio(): number {
     return this.reserveStore.currentLeverageRatio / 100;
   }
@@ -51,7 +54,12 @@ export class LeverageCard implements ICustomElementViewModel {
   }
   get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
     return {
-      callbacks: { label: (x) => `${x.dataset.label ?? ''}: ${this.multiplierValueConverter.toView(Number(x.raw) / 100)}` },
+      callbacks: {
+        label: (x) => {
+          if (x.datasetIndex === 0) return '';
+          return `${x.dataset.label ?? ''}: ${this.multiplierValueConverter.toView(Number(x.raw) / 100)}`;
+        },
+      },
     };
   }
   get yLabelFormat(): Record<string, unknown> {
@@ -64,6 +72,15 @@ export class LeverageCard implements ICustomElementViewModel {
   }
   get dataSets() {
     return [
+      {
+        label: '',
+        data: this.referenceLineData,
+        borderColor: 'rgba(190, 183, 183, 0.77)',
+        tension: 0,
+        pointStyle: 'line',
+        pointBackgroundColor: 'rgba(190, 183, 183, 0.77)',
+        backgroundColor: 'rgba(75, 192, 192, .7)',
+      },
       {
         label: 'Current Leverage Ratio',
         data: this.leverageRatioData,
