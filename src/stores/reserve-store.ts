@@ -48,7 +48,8 @@ export class ReserveStore {
   }
 
   public get currentLeverageRatio(): number {
-    return (1 / this.numberService.fromString(fromWei(this.backing ?? 0, 4))) * 100;
+    if (!this.backing) return 0;
+    return this.calculateLeverage(this.backing);
   }
 
   public get maxLeverageRatio(): number {
@@ -176,10 +177,11 @@ export class ReserveStore {
     const contract = this.getReserveContract();
     const reserveStatus = await contract.reserveStatus();
     const minBacking = await contract.minBacking();
+
     //add last data point
     valueOverTimeData.push({
       createdAt: new Date(),
-      currentLeverageRatio: this.numberService.fromString(fromWei(reserveStatus[2], 2)),
+      currentLeverageRatio: this.calculateLeverage(reserveStatus[2]),
       maxLeverageRatio: (1 / (this.numberService.fromString(fromWei(minBacking, 2)) / 100)) * 100,
     } as unknown as LeverageChartData);
     return valueOverTimeData;
@@ -213,5 +215,9 @@ export class ReserveStore {
       value: this.kCurPrice,
     } as unknown as ValueChartData);
     return chartData;
+  }
+
+  private calculateLeverage(value: BigNumber): number {
+    return (1 / this.numberService.fromString(fromWei(value, 4))) * 100;
   }
 }
