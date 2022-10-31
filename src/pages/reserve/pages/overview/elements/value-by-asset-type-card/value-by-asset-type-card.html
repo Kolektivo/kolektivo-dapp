@@ -3,7 +3,7 @@
   <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadAssets()"></k-loader>
   <k-stack if.bind="isReady" direction="row">
     <k-chart cutout="70" type="doughnut" width="150"
-      colors.bind="['var(--terra-cotta)', 'var(--primary)', 'var(--green-apple)', ]" data.bind="chartData">
+      colors.bind="['var(--terra-cotta)', 'var(--primary)', 'var(--green-apple)', ]" data.bind="chartData" tooltip-options.bind="tooltipOptions">
     </k-chart>
     <k-stack gap="var(--spacing-xl)" id="r-o-vbatc-legend">
       <avatar-text color="var(--green-apple)" size="20">${ecologicalAssetPercentage() | percentage} Ecological</avatar-text>

@@ -16,8 +16,8 @@ export type IReserveStore = ReserveStore;
 export const IReserveStore = DI.createInterface<IReserveStore>('ReserveStore');
 
 export class ReserveStore {
-  public reserveValuation?: BigNumber;
-  public supplyValuation?: BigNumber;
+  public reserveValue?: BigNumber;
+  public kCurMarketCap?: BigNumber;
   public backing?: BigNumber;
   public kCurPrice?: number;
   public kCurSupply?: BigNumber;
@@ -38,26 +38,34 @@ export class ReserveStore {
     @IDataStore private readonly dataStore: IDataStore,
   ) {}
 
-  public get reserveValue(): number {
-    if (this.reserveAssets?.length === 0) return 0;
-    return this.reserveAssets?.map((x) => x?.total ?? 0).sum() ?? 0;
-  }
-
   public get kCurCirculatingDistribution(): number {
     if (!this.kCurReserveDistribution || !this.kCurMentoDistribution || !this.kCurPrimaryPoolDistribution) return 0;
     return 1 - (this.kCurReserveDistribution + this.kCurMentoDistribution + this.kCurPrimaryPoolDistribution);
   }
 
-  public get leverageRatio(): number {
+  public get currentCollateralizationRatio(): number {
     return this.numberService.fromString(fromWei(this.backing ?? 0, 2));
   }
 
-  public get maxLeverageRatio(): number {
-    return (1 / (this.numberService.fromString(fromWei(this.minBacking ?? 0, 2)) / 100)) * 100;
+  public get currentLeverageRatio(): number {
+    return (1 / this.numberService.fromString(fromWei(this.backing ?? 0, 4))) * 100;
   }
 
-  public get minLeverageRatio(): number {
+  public get maxLeverageRatio(): number {
+    return (1 / this.numberService.fromString(fromWei(this.minBacking ?? 0, 4))) * 100;
+  }
+
+  public get minCollateralizationRatio(): number {
     return this.numberService.fromString(fromWei(this.minBacking ?? 0, 2));
+  }
+
+  public get minCollateralizationValue(): number {
+    if (!this.kCurMarketCap || !this.kCurPrice) return 0;
+    return this.minCollateralizationRatio * this.numberService.fromString(fromWei(this.kCurMarketCap, 18)) * this.kCurPrice;
+  }
+
+  public get maxLeverageMultiplier(): string {
+    return `${Math.round((this.maxLeverageRatio / 100) * 100) / 100}x`;
   }
 
   @callOnce()
@@ -81,8 +89,8 @@ export class ReserveStore {
     );
     void this.loadkCurData();
     const reserveStatus = await contract.reserveStatus();
-    this.reserveValuation = reserveStatus[0];
-    this.supplyValuation = reserveStatus[1];
+    this.reserveValue = reserveStatus[0];
+    this.kCurMarketCap = reserveStatus[1];
     this.backing = reserveStatus[2];
     this.minBacking = await contract.minBacking();
   }
@@ -171,9 +179,8 @@ export class ReserveStore {
     //add last data point
     valueOverTimeData.push({
       createdAt: new Date(),
-      leverageRatio: this.numberService.fromString(fromWei(reserveStatus[2], 2)),
+      currentLeverageRatio: this.numberService.fromString(fromWei(reserveStatus[2], 2)),
       maxLeverageRatio: (1 / (this.numberService.fromString(fromWei(minBacking, 2)) / 100)) * 100,
-      minLeverageRatio: this.numberService.fromString(fromWei(minBacking, 2)),
     } as unknown as LeverageChartData);
     return valueOverTimeData;
   }

@@ -2,7 +2,8 @@ import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS 
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
 import css from './k-chart.scss';
 import template from './k-chart.html';
-import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint } from 'chart.js';
+import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint, TooltipOptions } from 'chart.js';
+import type { _DeepPartialObject } from 'chart.js/types/utils';
 
 export type DataType = number | ScatterDataPoint | BubbleDataPoint;
 
@@ -69,6 +70,9 @@ export class KChart implements ICustomElementViewModel {
   @bindable({ set: ifExistsThenTrue }) gradient?: boolean;
   @bindable minY?: number;
   @bindable maxY?: number;
+  @bindable tooltipOptions?: _DeepPartialObject<TooltipOptions>;
+  @bindable yLabelFormat?: Record<string, unknown>;
+  @bindable xLabelFormat?: Record<string, unknown>;
 
   chart?: HTMLCanvasElement;
   public chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
@@ -147,6 +151,7 @@ export class KChart implements ICustomElementViewModel {
             usePointStyle: true,
           },
         },
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         tooltip: {
           backgroundColor: 'rgba(213, 92, 56, 1)',
           bodyColor: 'white',
@@ -166,6 +171,7 @@ export class KChart implements ICustomElementViewModel {
                 },
               }
             : undefined,
+          ...this.tooltipOptions,
         },
       },
     };
@@ -181,6 +187,9 @@ export class KChart implements ICustomElementViewModel {
         x: {
           ticks: {
             maxTicksLimit: this.maxXLabels,
+            maxRotation: 0,
+            minRotation: 0,
+            ...this.xLabelFormat,
           },
           grid: {
             display: false,
@@ -191,6 +200,9 @@ export class KChart implements ICustomElementViewModel {
           suggestedMax: this.highestDataPoint + this.highestDataPoint * 0.1,
           ticks: {
             maxTicksLimit: this.maxYLabels,
+            maxRotation: 0,
+            minRotation: 0,
+            ...this.yLabelFormat,
           },
           max: this.maxY,
           min: this.minY,

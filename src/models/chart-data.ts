@@ -16,7 +16,6 @@ export interface ValueChartData {
 
 export interface LeverageChartData {
   createdAt: Date;
-  leverageRatio: number;
+  currentLeverageRatio: number;
   maxLeverageRatio: number;
-  minLeverageRatio: number;
 }

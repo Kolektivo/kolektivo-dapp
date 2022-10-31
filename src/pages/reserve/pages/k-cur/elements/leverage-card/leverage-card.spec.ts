@@ -5,6 +5,7 @@ import { INumberService } from 'services';
 import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from 'stores';
 import { LeverageCard } from './leverage-card';
+import { MultiplierValueConverter } from './../../../../../../resources/value-converters/multiplier';
 import { PercentageValueConverter } from 'resources';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
@@ -66,6 +67,7 @@ describe('leverage-card', () => {
           getkCurPriceOverTime: () => new Promise((res) => res([])),
         }),
       ),
+      MultiplierValueConverter,
       PercentageValueConverter,
       Global,
       createMockStoreRegistration(),

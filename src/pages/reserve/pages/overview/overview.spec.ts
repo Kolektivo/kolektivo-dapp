@@ -12,7 +12,6 @@ import { PercentageValueConverter } from './../../../../resources/value-converte
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
-import { mock } from 'vitest-mock-extended';
 
 describe('overview', () => {
   it('should have a k-page component', async () => {
@@ -78,13 +77,10 @@ describe('overview', () => {
       PercentageValueConverter,
       NumberService,
       CurrencyValueConverter,
-      Registration.instance(
-        IReserveStore,
-        mock<IReserveStore>({
-          reserveAssets: [],
-          getReserveValueOverTime: () => new Promise((res) => res([])),
-        }),
-      ),
+      Registration.instance(IReserveStore, {
+        reserveAssets: [],
+        getReserveValueOverTime: () => new Promise((res) => res([])),
+      }),
       Global,
       createMockStoreRegistration(),
       createMockI18nRegistration(),

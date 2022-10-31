@@ -41,14 +41,22 @@ const dateFormatters: Record<string, Intl.DateTimeFormat> = {
     minute: 'numeric',
   }),
   hour: new Intl.DateTimeFormat(undefined, {
-    hour: '2-digit',
-    day: '2-digit',
-    month: '2-digit',
-    year: '2-digit',
+    hour: 'numeric',
+    minute: 'numeric',
   }),
   day: new Intl.DateTimeFormat(undefined, {
-    hour: '2-digit',
-    day: '2-digit',
+    day: 'numeric',
+    month: 'short',
+    weekday: 'short',
+    year: 'numeric',
+  }),
+  timestamp: new Intl.DateTimeFormat(undefined, {
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    month: 'short',
+    weekday: 'short',
+    year: 'numeric',
   }),
 };
 
@@ -100,7 +108,7 @@ export const appContainer: IContainer = DI.createContainer()
         fallbackLng: { default: ['en'] },
         interpolation: {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          format: function (value: any, format: any, lng: any): any {
+          format: function (value: any, format: any): any {
             if (!format) return value;
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             if (value instanceof Date) return dateFormatters[format as string].format(value);

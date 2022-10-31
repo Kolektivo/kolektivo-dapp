@@ -1,9 +1,10 @@
 {
   "1HChart": "{{date, minute}}",
-  "1DChart": "{{date, minute}}",
-  "1WChart": "{{date, hour}}",
+  "1DChart": "{{date, hour}}",
+  "1WChart": "{{date, day}}",
   "1MChart": "{{date, day}}",
   "1YChart": "{{date, day}}",
+  "timestamp": "{{date, timestamp}}",
   "status-bar": {
     "badge-title": "My Badges",
     "connected-account-title": "Connected Account",
