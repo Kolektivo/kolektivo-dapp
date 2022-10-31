@@ -9,10 +9,14 @@ export default defineConfig({
   build: {
     rollupOptions: {
       plugins: [nodePolyfills() as Plugin],
+      output: {
+        manualChunks: () => 'update-chart-data',
+      },
     },
     commonjsOptions: {
       transformMixedEsModules: true,
     },
+    minify: 'terser',
     outDir: 'scripts',
     target: 'es2022',
     lib: {
