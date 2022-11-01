@@ -1,256 +1,261 @@
 {
-  "1HChart": "{{date, minute}}",
-  "1DChart": "{{date, hour}}",
-  "1WChart": "{{date, day}}",
-  "1MChart": "{{date, day}}",
-  "1YChart": "{{date, day}}",
-  "timestamp": "{{date, timestamp}}",
-  "status-bar": {
-    "badge-title": "My Badges",
-    "connected-account-title": "Connected Account",
-    "activity-title": "Recent Activity",
-    "activity-empty": "Your transactions will appear here.",
-    "activity-link-text": "View all activity on {{network}}"
-  },
-  "navigation": {
-    "map": {
-      "link-text": "Map",
-      "link-icon": "map"
+    "1HChart": "{{date, minute}}",
+    "1DChart": "{{date, hour}}",
+    "1WChart": "{{date, day}}",
+    "1MChart": "{{date, day}}",
+    "1YChart": "{{date, day}}",
+    "timestamp": "{{date, timestamp}}",
+    "status-bar": {
+        "badge-title": "My Badges",
+        "connected-account-title": "Connected Account",
+        "activity-title": "Recent Activity",
+        "activity-empty": "Your transactions will appear here.",
+        "activity-link-text": "View all activity on {{network}}"
     },
-    "treasury": {
-      "link-text": "Treasury",
-      "link-icon": "account_balance",
-      "title": "Kolektivo Network Treasury",
-      "description": "This is a basic & accessible description that the public can read to understand what it is.",
-      "menu": {
-        "overview": "Overview",
-        "governance": "Governance"
-      },
-      "overview": {
+    "navigation": {
+        "map": {
+            "link-text": "Map",
+            "link-icon": "map"
+        },
+        "treasury": {
+            "link-text": "Treasury",
+            "link-icon": "account_balance",
+            "title": "Kolektivo Network Treasury",
+            "description": "Explore how the total value, the assets and the asset type distribution in the Kolektivo Network Treasury are evolving over time.",
+            "menu": {
+                "overview": "Overview",
+                "governance": "Governance"
+            },
+            "overview": {
+                "assets": {
+                    "title": "Treasury Assets",
+                    "tooltip": "Explore all assets in the Treasury and their transactions."
+                },
+                "ktt": {
+                    "title": "Kolektivo Treasury Token (KTT)",
+                    "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
+                },
+                "value": {
+                    "title": "Treasury Value",
+                    "tooltip": "Treasury Value is the total value of all the assets held by the treasury expressed in USD."
+                },
+                "value-by-asset-type": {
+                    "title": "Value by Asset Type",
+                    "tooltip": "The distribution of each Asset Type held by the Treasury."
+                },
+                "value-over-time": {
+                    "title": "Treasury Value Over Time",
+                    "tooltip": "The ratio between Treasury and Reserve tokens over time."
+                }
+            },
+            "governance": {
+                "description": "Explore all proposals and submit your Monetary policy proposals for the global Kolektivo Network.",
+                "title": "Kolektivo Network Governance",
+                "submit-card": {
+                    "title": "Submit Proposal",
+                    "tooltip": "Submit a proposal for the Kolektivo Network Treasury.",
+                    "bonds-tab": {
+                        "title": "Bonds"
+                    },
+                    "bonds-admin-tab": {
+                        "title": "Bond Admin"
+                    },
+                    "treasury-tab": {
+                        "title": "Treasury"
+                    },
+                    "other-tab": {
+                        "title": "Other"
+                    }
+                },
+                "proposals-card": {
+                    "title": "Proposals",
+                    "tooltip": "Explore ongoing and past governance proposals. Check which ongoing proposals are pending veto and which are ready to be executed.",
+                    "ready-to-execute-tab": {
+                        "title": "Ready to Execute"
+                    },
+                    "pending-veto-tab": {
+                        "title": "Pending Veto"
+                    },
+                    "history-tab": {
+                        "title": "History"
+                    }
+                }
+            }
+        },
+        "reserve": {
+            "link-text": "Reserve",
+            "link-icon": "savings",
+            "overview": {
+                "menu": "Overview",
+                "title": "Kolektivo Curaçao Reserve",
+                "description": "Explore how the total value, the assets and the asset type distribution in the Kolektivo Curaçao Reserve are evolving over time.",
+                "value": {
+                    "title": "Reserve Value",
+                    "tooltip": "The total value of all the assets held by the Reserve expressed in USD.",
+                    "kCurPrice": "kCUR price",
+                    "ratio": "Collateralization Ratio"
+                },
+                "value-by-asset-type": {
+                    "title": "Value by Asset Type",
+                    "tooltip": "The distribution of each Asset Type held by the Reserve."
+                },
+                "value-over-time": {
+                    "title": "Reserve Value Over Time",
+                    "tooltip": "The distribution of Reserve Value by risk class, over time."
+                },
+                "assets": {
+                    "title": "Reserve Assets",
+                    "tooltip": "Explore all assets in the Reserve and their transactions."
+                }
+            },
+            "k-cur": {
+                "menu": "kCur",
+                "title": "kCUR",
+                "description": "The Kolektivo Reserve mints the Kolektivo Curaçao Reserve Token (kCUR) token by collateralizing KTT and other assets in the reserve.",
+                "token-info": {
+                    "title": "kCUR",
+                    "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
+                },
+                "pool": {
+                    "title": "Primary Pool (kCUR-cUSD)",
+                    "grid-headers": {
+                        "tokens": "Tokens",
+                        "volume": "Volume",
+                        "tvl": "TVL",
+                        "fees": "Fees (24h)",
+                        "range": "Range to Value"
+                    }
+                },
+                "leverage": {
+                    "title": "Leverage Ratio",
+                    "tooltip": "The ratio between the total supply of kCUR to the total value of Reserve Assets, over time.",
+                    "ratio-text": "Current Leverage Ratio",
+                    "max-ratio-text": "Maximum Leverage Ratio"
+                },
+                "trend": {
+                    "title": "kCUR Price Trend",
+                    "tooltip": "The evolution of kCUR price over time."
+                },
+                "supply": {
+                    "title": "kCUR Supply Distribution Over Time",
+                    "tooltip": "The total distribution of kCUR supply by allocation type over time.",
+                    "reserve": "Reserve",
+                    "primary-pool": "Primary Pool",
+                    "mento": "Mento",
+                    "external": "External"
+                }
+            },
+            "risk": {
+                "menu": "Risk",
+                "title": "Reserve Risk",
+                "description": "This is a basic & accessible description that the public can read to understand what it is.",
+                "value-over-time": {
+                    "title": "Reserve Value Over Time by Risk Class",
+                    "tooltip": "Tooltip for Reserve Value Over Time by Risk Class",
+                    "ceiling": "Collateral Ceiling",
+                    "low-risk": "Low Risk",
+                    "moderate-risk": "Moderate Risk",
+                    "high-risk": "High Risk",
+                    "alert": "The reserve is under-collateralized. Some copy about why this matters.",
+                    "alert-link-text": "Learn more"
+                },
+                "assets": {
+                    "title": "Risk by Asset",
+                    "tooltip": "Tooltip for Risk by Asset",
+                    "grid-headers": {
+                        "token": "Token",
+                        "risk-class": "Risk Class",
+                        "collateral-value": "Collateral Value",
+                        "percent-of-reserve": "% of Reserve"
+                    }
+                }
+            },
+            "k-guilder": {
+                "menu": "kGuilder",
+                "title": "kGuilder",
+                "description": "What is kGuilder? Why does it exist? Which blockchain does it live on? Basic & accessible description for the general public.",
+                "token-info": {
+                    "title": "kGuilder",
+                    "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
+                },
+                "value-ratio": {
+                    "title": "kCUR-kGuilder Value Ratio (USD)",
+                    "tooltip": "Tooltip for kCUR-kGuilder Value Ratio (USD)",
+                    "ratio-text": "kCUR-kGuilder Value Ratio"
+                },
+                "spread": {
+                    "title": "Spread"
+                },
+                "inflation-rate": {
+                    "title": "Inflation Rate"
+                },
+                "tobin-tax": {
+                    "title": "Tobin Tax"
+                }
+            },
+            "governance": {
+                "menu": "Governance"
+            }
+        },
+        "swap": {
+            "link-text": "Swap",
+            "link-icon": "swap_horiz"
+        },
+        "documentation": {
+            "link-text": "Documentation",
+            "link-icon": "description"
+        },
+        "contact": {
+            "link-text": "Contact Kolektivo",
+            "link-icon": "headset_mic"
+        },
+        "download-wallet": {
+            "link-text": "Download Wallet",
+            "link-icon": "account_balance_wallet"
+        },
+        "external-site": {
+            "link-text": "Kolektivo.cw",
+            "link-icon": "language"
+        }
+    },
+    "general": {
         "assets": {
-          "title": "Treasury Assets"
+            "title": "Assets",
+            "grid-headers": {
+                "token": "Token",
+                "price": "Price",
+                "quantity": "Quantity",
+                "total": "Total Value"
+            }
         },
-        "ktt": {
-          "title": "Kolektivo Treasury Token (KTT)",
-          "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
+        "transaction-history": {
+            "title": "Transaction History",
+            "grid-headers": {
+                "token": "Token",
+                "type": "Type",
+                "amount": "Amount",
+                "address": "Address",
+                "age": "Age"
+            }
         },
-        "value": {
-          "title": "Treasury Value",
-          "tooltip": "Treasury Value is this and that"
+        "chart-time-filter": {
+            "1h": "1H",
+            "1d": "1D",
+            "1w": "1W",
+            "1m": "1M",
+            "1y": "1Y"
         },
-        "value-by-asset-type": {
-          "title": "Value by Asset Type"
+        "token-info-card": {
+            "market-cap": "Market Cap",
+            "market-cap-tooltip": "Total value of all KTT existing.",
+            "current-price": "Current Price",
+            "current-price-tooltip": "The current price of 1 KTT expressed in USD.",
+            "total-supply": "Total Supply",
+            "total-supply-tooltip": "The total amount of KTT tokens existing.",
+            "supply-distribution": "Supply Distribution",
+            "supply-distribution-tooltip": "The current distribution of tokens between Treasury, Reserve and Circulating Supply."
         },
-        "value-over-time": {}
-      },
-      "governance": {
-        "description": "This is a basic & accessible description that the public can read to understand what it is.",
-        "title": "Kolektivo Network Governance",
-        "submit-card": {
-          "title": "Submit Proposal",
-          "tooltip": "IDK",
-          "bonds-tab": {
-            "title": "Bonds"
-          },
-          "bonds-admin-tab": {
-            "title": "Bond Admin"
-          },
-          "treasury-tab": {
-            "title": "Treasury"
-          },
-          "other-tab": {
-            "title": "Other"
-          }
-        },
-        "proposals-card": {
-          "title": "Proposals",
-          "tooltip": "IDK",
-          "ready-to-execute-tab": {
-            "title": "Ready to Execute"
-          },
-          "pending-veto-tab": {
-            "title": "Pending Veto"
-          },
-          "history-tab": {
-            "title": "History"
-          }
-        }
-      }
-    },
-    "reserve": {
-      "link-text": "Reserve",
-      "link-icon": "savings",
-      "overview": {
-        "menu": "Overview",
-        "title": "Kolektivo Curaçao Reserve",
-        "description": "This is a basic & accessible description that the public can read to understand what it is.",
-        "value": {
-          "title": "Reserve Value",
-          "tooltip": "This is a tooltip for the reserve value",
-          "kCurPrice": "kCUR price",
-          "ratio": "Collateralization Ratio"
-        },
-        "value-by-asset-type": {
-          "title": "Value by Asset Type",
-          "tooltip": "This is a tooltip for Value by Asset Type"
-        },
-        "value-over-time": {
-          "title": "Reserve Value Over Time",
-          "tooltip": "This is a tooltip for Value Over Time"
-        },
-        "assets": {
-          "title": "Reserve Assets",
-          "tooltip": "This is a tooltip for Reserve Assets"
-        }
-      },
-      "k-cur": {
-        "menu": "kCur",
-        "title": "kCUR",
-        "description": "What is kCUR? Why does it exist? Which blockchain does it live on? This is a basic & accessible description that the public can read to understand what it is.",
-        "token-info": {
-          "title": "kCUR",
-          "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
-        },
-        "pool": {
-          "title": "Primary Pool (kCUR-cUSD)",
-          "grid-headers": {
-            "tokens": "Tokens",
-            "volume": "Volume",
-            "tvl": "TVL",
-            "fees": "Fees (24h)",
-            "range": "Range to Value"
-          }
-        },
-        "leverage": {
-          "title": "Leverage Ratio",
-          "tooltip": "Tooltip for Leverage Ratio",
-          "ratio-text": "Current Leverage Ratio",
-          "max-ratio-text": "Maximum Leverage Ratio"
-        },
-        "trend": {
-          "title": "kCur Price Trend",
-          "tooltip": "Tooltip for kCur Price Trend"
-        },
-        "supply": {
-          "title": "kCur Supply Distribution Over Time",
-          "tooltip": "Tooltip for kCur Supply Distribution Over Time",
-          "reserve": "Reserve",
-          "primary-pool": "Primary Pool",
-          "mento": "Mento",
-          "external": "External"
-        }
-      },
-      "risk": {
-        "menu": "Risk",
-        "title": "Reserve Risk",
-        "description": "This is a basic & accessible description that the public can read to understand what it is.",
-        "value-over-time": {
-          "title": "Reserve Value Over Time by Risk Class",
-          "tooltip": "Tooltip for Reserve Value Over Time by Risk Class",
-          "ceiling": "Collateral Ceiling",
-          "low-risk": "Low Risk",
-          "moderate-risk": "Moderate Risk",
-          "high-risk": "High Risk",
-          "alert": "The reserve is under-collateralized. Some copy about why this matters.",
-          "alert-link-text": "Learn more"
-        },
-        "assets": {
-          "title": "Risk by Asset",
-          "tooltip": "Tooltip for Risk by Asset",
-          "grid-headers": {
-            "token": "Token",
-            "risk-class": "Risk Class",
-            "collateral-value": "Collateral Value",
-            "percent-of-reserve": "% of Reserve"
-          }
-        }
-      },
-      "k-guilder": {
-        "menu": "kGuilder",
-        "title": "kGuilder",
-        "description": "What is kGuilder? Why does it exist? Which blockchain does it live on? Basic & accessible description for the general public.",
-        "token-info": {
-          "title": "kGuilder",
-          "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
-        },
-        "value-ratio": {
-          "title": "kCUR-kGuilder Value Ratio (USD)",
-          "tooltip": "Tooltip for kCUR-kGuilder Value Ratio (USD)",
-          "ratio-text": "kCUR-kGuilder Value Ratio"
-        },
-        "spread": {
-          "title": "Spread"
-        },
-        "inflation-rate": {
-          "title": "Inflation Rate"
-        },
-        "tobin-tax": {
-          "title": "Tobin Tax"
-        }
-      },
-      "governance": {
-        "menu": "Governance"
-      }
-    },
-    "swap": {
-      "link-text": "Swap",
-      "link-icon": "swap_horiz"
-    },
-    "documentation": {
-      "link-text": "Documentation",
-      "link-icon": "description"
-    },
-    "contact": {
-      "link-text": "Contact Kolektivo",
-      "link-icon": "headset_mic"
-    },
-    "download-wallet": {
-      "link-text": "Download Wallet",
-      "link-icon": "account_balance_wallet"
-    },
-    "external-site": {
-      "link-text": "Kolektivo.cw",
-      "link-icon": "language"
+        "wrong-network-message": "Your wallet is connected to {{connectedTo}}, but we need you to connect to {{need}}. Do you want to switch your connection to {{needed}} now?",
+        "an-unknown-network": "an unknown network"
     }
-  },
-  "general": {
-    "assets": {
-      "title": "Assets",
-      "grid-headers": {
-        "token": "Token",
-        "price": "Price",
-        "quantity": "Quantity",
-        "total": "Total Value"
-      }
-    },
-    "transaction-history": {
-      "title": "Transaction History",
-      "grid-headers": {
-        "token": "Token",
-        "type": "Type",
-        "amount": "Amount",
-        "address": "Address",
-        "age": "Age"
-      }
-    },
-    "chart-time-filter": {
-      "1h": "1H",
-      "1d": "1D",
-      "1w": "1W",
-      "1m": "1M",
-      "1y": "1Y"
-    },
-    "token-info-card": {
-      "market-cap": "Market Cap",
-      "market-cap-tooltip": "This is a tooltip for market cap",
-      "current-price": "Current Price",
-      "current-price-tooltip": "This is a tooltip for current price",
-      "total-supply": "Total Supply",
-      "total-supply-tooltip": "This is a tooltip for total supply",
-      "supply-distribution": "Supply Distribution",
-      "supply-distribution-tooltip": "This is a tooltip for supply distribution"
-    },
-    "wrong-network-message": "Your wallet is connected to {{connectedTo}}, but we need you to connect to {{need}}. Do you want to switch your connection to {{needed}} now?",
-    "an-unknown-network": "an unknown network"
-  }
 }
