@@ -69,6 +69,11 @@ export class ReserveStore {
     return `${Math.round((this.maxLeverageRatio / 100) * 100) / 100}x`;
   }
 
+  public get kCurPriceFloor(): number {
+    if (!this.reserveValue || !this.kCurSupply) return 0;
+    return this.numberService.fromString(fromWei(this.reserveValue, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
+  }
+
   @callOnce()
   public async loadAssets(): Promise<void> {
     const contract = this.getReserveContract();
