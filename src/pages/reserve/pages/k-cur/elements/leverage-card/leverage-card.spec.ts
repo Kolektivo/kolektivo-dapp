@@ -38,7 +38,7 @@ describe('leverage-card', () => {
       .build().started;
     const filter = appHost.querySelector('chart-time-filter');
     expect(filter).exist;
-    expect(filter?.innerHTML).contains('k-text');
+    expect(filter?.innerHTML).contains('k-stack');
   });
 
   it('should have a line chart', async () => {

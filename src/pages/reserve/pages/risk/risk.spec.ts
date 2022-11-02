@@ -4,12 +4,13 @@ import { Global } from '../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
 import { INumberService } from './../../../../services';
+import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../stores';
 import { PercentageValueConverter } from './../../../../resources/value-converters';
 import { Registration } from 'aurelia';
 import { Risk } from './risk';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('risk', () => {
   it('should have a k-page component', async () => {
@@ -57,6 +58,7 @@ describe('risk', () => {
     return [
       Risk,
       PercentageValueConverter,
+      Registration.instance(IReserveStore, vi.fn()),
       CurrencyValueConverter,
       Global,
       createMockStoreRegistration(),

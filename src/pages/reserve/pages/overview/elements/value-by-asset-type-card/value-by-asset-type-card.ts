@@ -48,8 +48,8 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
   private getAssetPercentage(type: AssetType): number {
     return (
       this.reserveStore.reserveAssets
-        ?.filter((x) => x?.type === type)
-        .map((x) => x?.total ?? 0)
+        ?.filter((x) => x.type === type)
+        .map((x) => x.total)
         .sum() ?? 0
     );
   }

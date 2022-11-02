@@ -252,9 +252,9 @@ export class ReserveStore {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     });
     //get latest data from the contract for last data point
-    const contract = this.getReserveContract();
-    const reserveStatus = await contract.reserveStatus();
-    const minBacking = await contract.minBacking();
+    // const contract = this.getReserveContract();
+    // const reserveStatus = await contract.reserveStatus();
+    // const minBacking = await contract.minBacking();
 
     //add last data point
     valueOverTimeData.push({

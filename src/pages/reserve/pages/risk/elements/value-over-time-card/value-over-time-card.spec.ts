@@ -36,7 +36,7 @@ describe('value-over-time-card', () => {
       .build().started;
     const filter = appHost.querySelector('chart-time-filter');
     expect(filter).exist;
-    expect(filter?.querySelectorAll('avatar-text')).toHaveLength(4);
+    expect(filter?.querySelectorAll('avatar-text')).toHaveLength(5);
   });
 
   it('should have an alert', async () => {
