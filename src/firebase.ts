@@ -1,5 +1,6 @@
 import { configurationFromEnv } from 'configurations/configuration';
 /* eslint-disable no-console */
+import './prototypes';
 import { CacheService } from './services/cache-service';
 import { ContractService } from './services/contract/contract-service';
 import { ContractStore } from './stores/contract-store';
@@ -74,6 +75,11 @@ export const seed = async () => {
   let kCurPrimaryPoolDistribution = 0;
   let kCurCirculatingDistribution = 0;
   let captureDataPromise: Promise<void> | undefined = undefined;
+  let minCollateralValue = 0;
+  let marketCap = 0;
+  let lowRisk = 0;
+  let moderateRisk = 0;
+  let highRisk = 0;
 
   const service = container.get(IFirebaseService);
   const database = await service.connect();
@@ -155,6 +161,11 @@ export const seed = async () => {
     kCurCirculatingDistribution = reserveStore.kCurCirculatingDistribution;
 
     //Get and store current Risk Value
+    minCollateralValue = reserveStore.minCollateralizationValue;
+    marketCap = reserveStore.kCurTotalValue;
+    lowRisk = reserveStore.lowRiskAssets.map((x) => x.total).sum();
+    moderateRisk = reserveStore.moderateRiskAssets.map((x) => x.total).sum();
+    highRisk = reserveStore.highRiskAssets.map((x) => x.total).sum();
 
     //Get and store current kGuilder-kCur Value Ratio
   };
@@ -213,6 +224,13 @@ export const seed = async () => {
 
           await addData('ktt', Periods[period], newSyncTime.getTime(), kttValue);
           await addData('reserve', Periods[period], newSyncTime.getTime(), reserveValue);
+          await addData('risk', Periods[period], newSyncTime.getTime(), {
+            minCollateralValue,
+            marketCap,
+            lowRisk,
+            moderateRisk,
+            highRisk,
+          });
           await setLastSyncTime(Periods[period], newSyncTime.getTime(), lastSync); //set latest sync time
 
           //delete unneeded records for this interval

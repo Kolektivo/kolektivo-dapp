@@ -1,6 +1,6 @@
-import { Asset } from 'models/asset';
+import { Asset, AssetType } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
-import { BigNumberOverTimeData, LeverageChartData, NumberOverTimeData, ValueChartData } from 'models/chart-data';
+import { BigNumberOverTimeData, LeverageChartData, NumberOverTimeData, RiskChartData, ValueChartData } from 'models/chart-data';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { IContractService, INumberService, fromWei } from 'services';
@@ -22,7 +22,7 @@ export class ReserveStore {
   public kCurPrice?: number;
   public kCurSupply?: BigNumber;
   public transactions: Transaction[] = [];
-  public reserveAssets?: (Asset | undefined)[] = [];
+  public reserveAssets?: Asset[] = [];
   public kCurReserveDistribution?: number;
   public kCurMentoDistribution?: number;
   public kCurPrimaryPoolDistribution?: number;
@@ -57,21 +57,35 @@ export class ReserveStore {
   }
 
   public get minCollateralizationRatio(): number {
-    return this.numberService.fromString(fromWei(this.minBacking ?? 0, 2));
+    return this.numberService.fromString(fromWei(this.minBacking ?? 0, 4));
   }
 
   public get minCollateralizationValue(): number {
     if (!this.kCurMarketCap || !this.kCurPrice) return 0;
-    return this.minCollateralizationRatio * this.numberService.fromString(fromWei(this.kCurMarketCap, 18)) * this.kCurPrice;
+    return this.minCollateralizationRatio * this.numberService.fromString(fromWei(this.kCurMarketCap, 18));
   }
 
   public get maxLeverageMultiplier(): string {
     return `${Math.round((this.maxLeverageRatio / 100) * 100) / 100}x`;
   }
 
+  public get kCurTotalValue(): number {
+    return this.numberService.fromString(fromWei(this.kCurMarketCap ?? 0, 18));
+  }
+
   public get kCurPriceFloor(): number {
     if (!this.reserveValue || !this.kCurSupply) return 0;
     return this.numberService.fromString(fromWei(this.reserveValue, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
+  }
+
+  public get lowRiskAssets(): Asset[] {
+    return this.reserveAssets?.filter((x) => x.type === AssetType.Stablecoin) ?? [];
+  }
+  public get moderateRiskAssets(): Asset[] {
+    return this.reserveAssets?.filter((x) => x.type === AssetType.NonStablecoin) ?? [];
+  }
+  public get highRiskAssets(): Asset[] {
+    return this.reserveAssets?.filter((x) => x.type === AssetType.Ecological) ?? [];
   }
 
   @callOnce()
@@ -87,12 +101,14 @@ export class ReserveStore {
       ])
     ).flatMap((x) => x);
     //get all token asset data
-    this.reserveAssets = await Promise.all(
-      addresses.map(
-        (address): Promise<Asset | undefined> =>
-          this.contractStore.getAsset(address.address, address.tokenId, contract, reserveAddress, this.transactions).catch(),
-      ),
-    );
+    this.reserveAssets = (
+      await Promise.all(
+        addresses.map(
+          (address): Promise<Asset | undefined> =>
+            this.contractStore.getAsset(address.address, address.tokenId, contract, reserveAddress, this.transactions).catch(),
+        ),
+      )
+    ).filter(Boolean) as Asset[];
     void this.loadkCurData();
     const reserveStatus = await contract.reserveStatus();
     this.reserveValue = reserveStatus[0];
@@ -220,6 +236,36 @@ export class ReserveStore {
       value: this.kCurPrice,
     } as unknown as ValueChartData);
     return chartData;
+  }
+
+  public async getRiskOverTime(interval: Interval): Promise<RiskChartData[]> {
+    //get data from datastore
+    const earliestTime = getTimeMinusInterval(interval);
+    const valueOverTimeData = await this.dataStore.getDocs<RiskChartData[]>(
+      `chartData/risk/${convertIntervalToRecordType(interval)}`,
+      'createdAt',
+      'desc',
+      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
+    );
+    //sort data by date ascending
+    valueOverTimeData.sort((a, b) => {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+    //get latest data from the contract for last data point
+    const contract = this.getReserveContract();
+    const reserveStatus = await contract.reserveStatus();
+    const minBacking = await contract.minBacking();
+
+    //add last data point
+    valueOverTimeData.push({
+      createdAt: new Date(),
+      minCollateralValue: 0,
+      marketCap: 0,
+      lowRisk: 0,
+      moderateRisk: 0,
+      highRisk: 0,
+    } as unknown as RiskChartData);
+    return valueOverTimeData;
   }
 
   private calculateLeverage(value: BigNumber): number {
