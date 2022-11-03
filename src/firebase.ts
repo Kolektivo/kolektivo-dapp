@@ -240,6 +240,7 @@ export const seed = async () => {
           await deleteData('kCurSupply', Periods[period], earliestTime);
           await deleteData('ktt', Periods[period], earliestTime);
           await deleteData('reserve', Periods[period], earliestTime);
+          await deleteData('risk', Periods[period], earliestTime);
         });
       }
       return;
