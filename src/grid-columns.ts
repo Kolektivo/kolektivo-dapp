@@ -68,3 +68,28 @@ export const transactionHistoryColumns = () => {
     },
   ] as IGridColumn[];
 };
+
+export const riskAssetsColumns = () => {
+  const i18n = appContainer.get(I18N);
+  return [
+    {
+      headerText: i18n.tr('navigation.reserve.risk.assets.grid-headers.token'),
+      field: 'token',
+      width: '1fr',
+      template: '<avatar-text name.bind="token" src.bind="tokenIcon"></avatar-text>',
+    },
+    { headerText: i18n.tr('navigation.reserve.risk.assets.grid-headers.risk-class'), field: 'riskClass', width: '1fr' },
+    {
+      headerText: i18n.tr('navigation.reserve.risk.assets.grid-headers.collateral-value'),
+      field: 'collateralValue',
+      width: '1fr',
+      template: '${collateralValue | currency}',
+    },
+    {
+      headerText: i18n.tr('navigation.reserve.risk.assets.grid-headers.percent-of-reserve'),
+      field: 'percentOfReserve',
+      width: '1fr',
+      template: '${percentOfReserve | percentage}',
+    },
+  ] as IGridColumn[];
+};

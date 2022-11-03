@@ -39,15 +39,6 @@ describe('value-over-time-card', () => {
     expect(filter?.querySelectorAll('avatar-text')).toHaveLength(5);
   });
 
-  it('should have an alert', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-over-time-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const chart = appHost.querySelector('k-alert');
-    expect(chart).exist;
-  });
-
   it('should have a line chart', async () => {
     const { appHost } = await createFixture
       .html(`<value-over-time-card>`)
@@ -71,7 +62,7 @@ describe('value-over-time-card', () => {
       Registration.instance(
         IReserveStore,
         mock<IReserveStore>({
-          getReserveValueOverTime: () => new Promise((res) => res([])),
+          getRiskOverTime: () => new Promise((res) => res([])),
         }),
       ),
       createMockStoreRegistration(),

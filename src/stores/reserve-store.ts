@@ -8,6 +8,7 @@ import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 import { Interval } from 'models/interval';
 import { Reserve } from './../models/generated/monetary/reserve/Reserve';
+import { RiskClass } from 'models/risk-class';
 import { Transaction } from 'models/transaction';
 import { callOnce } from 'decorators/call-once';
 import { convertIntervalToRecordType, getTimeMinusInterval } from 'utils';
@@ -61,7 +62,7 @@ export class ReserveStore {
   }
 
   public get minCollateralizationValue(): number {
-    if (!this.kCurMarketCap || !this.kCurPrice) return 0;
+    if (!this.kCurMarketCap) return 0;
     return this.minCollateralizationRatio * this.numberService.fromString(fromWei(this.kCurMarketCap, 18));
   }
 
@@ -86,6 +87,17 @@ export class ReserveStore {
   }
   public get highRiskAssets(): Asset[] {
     return this.reserveAssets?.filter((x) => x.type === AssetType.Ecological) ?? [];
+  }
+
+  public getRiskClass(assetType: AssetType): RiskClass {
+    switch (assetType) {
+      case AssetType.Ecological:
+        return RiskClass.high;
+      case AssetType.NonStablecoin:
+        return RiskClass.moderate;
+      case AssetType.Stablecoin:
+        return RiskClass.low;
+    }
   }
 
   @callOnce()
@@ -252,18 +264,26 @@ export class ReserveStore {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     });
     //get latest data from the contract for last data point
-    // const contract = this.getReserveContract();
-    // const reserveStatus = await contract.reserveStatus();
-    // const minBacking = await contract.minBacking();
+    await this.loadAssets();
+    const contract = this.getReserveContract();
+    const reserveStatus = await contract.reserveStatus();
+    this.kCurMarketCap = reserveStatus[1];
+    this.minBacking = await contract.minBacking();
+
+    const minCollateralValue = this.minCollateralizationValue;
+    const marketCap = this.kCurTotalValue;
+    const lowRisk = this.lowRiskAssets.map((x) => x.total).sum();
+    const moderateRisk = this.moderateRiskAssets.map((x) => x.total).sum();
+    const highRisk = this.highRiskAssets.map((x) => x.total).sum();
 
     //add last data point
     valueOverTimeData.push({
       createdAt: new Date(),
-      minCollateralValue: 0,
-      marketCap: 0,
-      lowRisk: 0,
-      moderateRisk: 0,
-      highRisk: 0,
+      minCollateralValue,
+      marketCap,
+      lowRisk,
+      moderateRisk,
+      highRisk,
     } as unknown as RiskChartData);
     return valueOverTimeData;
   }

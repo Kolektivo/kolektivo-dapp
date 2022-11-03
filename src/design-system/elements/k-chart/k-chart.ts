@@ -229,16 +229,15 @@ export class KChart implements ICustomElementViewModel {
                   const activeElements = chart.tooltip?.getActiveElements();
                   if (activeElements?.length) {
                     const x = activeElements[0]?.element.x;
-                    const y = activeElements.map((y) => y.element.y).sort()[0];
                     const yAxis = chart.scales.y;
                     const ctx = chart.ctx;
                     ctx.save();
                     ctx.beginPath();
-                    ctx.moveTo(x, y);
+                    ctx.moveTo(x, 10);
                     ctx.lineTo(x, yAxis.bottom);
                     ctx.lineWidth = 1;
                     ctx.setLineDash([2, 2]);
-                    ctx.strokeStyle = 'orange';
+                    ctx.strokeStyle = 'rgba(76, 87, 92, 1)';
                     ctx.stroke();
                     ctx.restore();
                   }

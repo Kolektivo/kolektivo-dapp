@@ -1,5 +1,5 @@
 <k-card title="Treasury Value Over Time">
-  <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadAssets()"></k-loader>
+  <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadAssets() || loading"></k-loader>
   <k-loader fill="parent" color="var(--white)" if.bind="loading"></k-loader>
   <k-stack gap="var(--spacing-xl)">
     <chart-time-filter current-filter.two-way="currentInterval">

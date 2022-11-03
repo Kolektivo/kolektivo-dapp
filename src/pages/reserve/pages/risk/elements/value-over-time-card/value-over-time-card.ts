@@ -1,6 +1,6 @@
 import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement } from '@aurelia/runtime-html';
+import { ICustomElementViewModel, customElement, watch } from '@aurelia/runtime-html';
 import { IReserveStore } from 'stores/reserve-store';
 import { Interval } from 'models/interval';
 import { RiskChartData } from 'models/chart-data';
@@ -13,68 +13,74 @@ import type { _DeepPartialObject } from 'chart.js/types/utils';
 export class ValueOverTimeCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
-  private reserveData: RiskChartData[] = [];
+  private riskData: RiskChartData[] = [];
 
   constructor(
     @IReserveStore private readonly reserveStore: IReserveStore,
-    @I18N private readonly i18n: I18N,
     private readonly currencyValueConverter: CurrencyValueConverter,
+    @I18N private readonly i18n: I18N,
   ) {}
 
   binding() {
-    //void this.intervalChanged();
+    void this.intervalChanged();
   }
 
-  // @watch('currentInterval')
-  // async intervalChanged(): Promise<void> {
-  //   this.loading = true;
-  //   this.reserveData = await this.reserveStore.getRiskOverTime(this.currentInterval);
-  //   this.loading = false;
-  // }
+  @watch('currentInterval')
+  async intervalChanged(): Promise<void> {
+    this.loading = true;
+    this.riskData = await this.reserveStore.getRiskOverTime(this.currentInterval);
+    this.loading = false;
+  }
   getButtonType(value: string, current: string) {
     return current === value ? 'primary' : 'secondary';
   }
   get labels() {
-    return this.reserveData.map((x) => formatter.format(x.createdAt).replace(',', ''));
+    return this.riskData.map((x) => formatter.format(x.createdAt).replace(',', ''));
   }
   get minCollateralValue(): number[] {
-    return this.reserveData.map((x) => x.minCollateralValue);
+    return this.riskData.map((x) => x.minCollateralValue);
   }
   get marketCap(): number[] {
-    return this.reserveData.map((x) => x.marketCap);
+    return this.riskData.map((x) => x.marketCap);
   }
   get lowRisk(): number[] {
-    return this.reserveData.map((x) => x.lowRisk);
+    return this.riskData.map((x) => x.lowRisk);
   }
   get moderateRisk(): number[] {
-    return this.reserveData.map((x) => x.moderateRisk);
+    return this.riskData.map((x) => x.moderateRisk + x.lowRisk);
   }
   get highRisk(): number[] {
-    return this.reserveData.map((x) => x.highRisk);
+    return this.riskData.map((x) => x.highRisk + x.moderateRisk + x.lowRisk);
   }
   get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
     return {
       callbacks: {
+        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => {
-          if (x.datasetIndex === 0) return '';
-          return `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(x.raw as string)}`;
+          let value = Number(x.raw);
+          if (x.datasetIndex > 2) {
+            value -= Number(x.chart.data.datasets[x.datasetIndex - 1].data[x.datasetIndex]);
+          } else if (x.datasetIndex > 3) {
+            value -= Number(x.chart.data.datasets[x.datasetIndex - 2].data[x.datasetIndex]);
+          }
+          return `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(value.toString())}`;
         },
       },
     };
   }
   get yLabelFormat(): Record<string, unknown> {
     return {
-      callback: (value: number) => this.currencyValueConverter.toView(value.toString()),
+      callback: (value: number) => `$${(Number(value) / 1000000).toFixed(2)}M`,
     };
   }
   get xLabelFormat(): Record<string, unknown> {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
-  get dataSets() {
+  private dataSets(marketCap: number[], minCollateralValue: number[], lowRisk: number[], moderateRisk: number[], highRisk: number[]) {
     return [
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.market-cap'),
-        data: [56, 76, 65, 85, 63, 76, 87, 54, 65, 74],
+        data: marketCap,
         borderDash: [5],
         borderColor: 'rgba(30, 35, 37, 0.77)',
         tension: 0,
@@ -83,7 +89,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.min-value'),
-        data: [46, 66, 55, 75, 53, 66, 77, 44, 55, 64],
+        data: minCollateralValue,
         borderDash: [5],
         borderColor: 'rgba(220, 77, 77)',
         tension: 0,
@@ -92,7 +98,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.low-risk'),
-        data: [34, 23, 35, 22, 32, 34, 23, 35, 22, 32],
+        data: lowRisk,
         fill: true,
         backgroundColor: 'rgb(0, 160, 76)',
         tension: 0,
@@ -101,7 +107,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.moderate-risk'),
-        data: [56, 67, 48, 56, 48, 56, 67, 48, 56, 48],
+        data: moderateRisk,
         fill: true,
         backgroundColor: 'rgb(245, 161, 74)',
         tension: 0,
@@ -110,7 +116,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.high-risk'),
-        data: [75, 80, 70, 65, 75, 75, 80, 70, 65, 75],
+        data: highRisk,
         fill: true,
         backgroundColor: 'rgb(213, 92, 56)',
         tension: 0,

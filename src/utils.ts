@@ -101,16 +101,15 @@ export function getTimeMinusInterval(interval: Interval): number {
   return now.getTime();
 }
 
+const decodeHTML = (value: string): string => {
+  const span = document.createElement('span');
+  span.innerHTML = value;
+  return span.innerText;
+};
 export function getXLabelFormat(currentInterval: Interval, i18n: I18N): Record<string, unknown> {
-  const decodeHTML = (value: string): string => {
-    const span = document.createElement('span');
-    span.innerHTML = value;
-    return span.innerText;
-  };
   return {
     callback: function (this: Scale, value: number) {
       const date = new Date(this.getLabelForValue(value));
-      //console.log(`<span>${i18n.tr('1DChart', { date: date })}</span>`);
       switch (currentInterval) {
         case Interval['1h']:
           return i18n.tr('1HChart', { date: date });
