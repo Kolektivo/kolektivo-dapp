@@ -157,7 +157,8 @@
           "low-risk": "Low Risk",
           "moderate-risk": "Moderate Risk",
           "high-risk": "High Risk",
-          "alert": "The reserve is under-collateralized. Some copy about why this matters.",
+          "over-collateralized": "The reserve is over-collateralized. Some copy about why this matters.",
+          "under-collateralized": "The reserve is under-collateralized. Some copy about why this matters.",
           "alert-link-text": "Learn more"
         },
         "assets": {

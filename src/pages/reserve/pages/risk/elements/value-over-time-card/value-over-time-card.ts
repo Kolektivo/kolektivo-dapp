@@ -52,6 +52,15 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   get highRisk(): number[] {
     return this.riskData.map((x) => x.highRisk + x.moderateRisk + x.lowRisk);
   }
+  get alertText(): string {
+    if (!this.reserveStore.kCurMarketCap || !this.reserveStore.reserveValue || this.reserveStore.reserveValue.eq(this.reserveStore.kCurMarketCap))
+      return '';
+    return this.i18n.tr(
+      this.reserveStore.reserveValue.lt(this.reserveStore.kCurMarketCap)
+        ? 'navigation.reserve.risk.value-over-time.under-collateralized'
+        : 'navigation.reserve.risk.value-over-time.over-collateralized',
+    );
+  }
   get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
     return {
       callbacks: {

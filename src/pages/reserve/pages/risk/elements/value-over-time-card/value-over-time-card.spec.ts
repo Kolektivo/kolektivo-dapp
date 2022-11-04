@@ -4,13 +4,15 @@ import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../../../stores';
+import { Interval } from 'models/interval';
 import { Registration } from 'aurelia';
 import { ValueOverTimeCard } from './value-over-time-card';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
-import { mock } from 'vitest-mock-extended';
-
+import { mockDeep } from 'vitest-mock-extended';
+const reserveMock = mockDeep<IReserveStore>();
 describe('value-over-time-card', () => {
+  reserveMock.getRiskOverTime.calledWith(Interval['1d']).mockResolvedValue([]);
   it('should have a k-card component', async () => {
     const { appHost } = await createFixture
       .html(`<value-over-time-card>`)
@@ -45,6 +47,7 @@ describe('value-over-time-card', () => {
       .deps(...getRegistrations())
       .build().started;
     const chart = appHost.querySelector('k-chart');
+    expect(reserveMock.reserveValue?.eq).toHaveBeenCalled();
     expect(chart).exist;
   });
 
@@ -58,13 +61,7 @@ describe('value-over-time-card', () => {
     return [
       ValueOverTimeCard,
       Global,
-
-      Registration.instance(
-        IReserveStore,
-        mock<IReserveStore>({
-          getRiskOverTime: () => new Promise((res) => res([])),
-        }),
-      ),
+      Registration.instance(IReserveStore, reserveMock),
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       designSystemConfiguration(),
