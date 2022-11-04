@@ -10,7 +10,7 @@ import { PercentageValueConverter } from './../../../../resources/value-converte
 import { Registration } from 'aurelia';
 import { Risk } from './risk';
 import { createFixture } from '@aurelia/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('risk', () => {
   it('should have a k-page component', async () => {
@@ -58,7 +58,9 @@ describe('risk', () => {
     return [
       Risk,
       PercentageValueConverter,
-      Registration.instance(IReserveStore, vi.fn()),
+      Registration.instance(IReserveStore, {
+        getRiskOverTime: () => new Promise((res) => res([])),
+      }),
       CurrencyValueConverter,
       Global,
       createMockStoreRegistration(),
