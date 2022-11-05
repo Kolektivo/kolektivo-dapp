@@ -40,17 +40,16 @@ export class TreasuryStore {
   }
   public async loadTokenData(): Promise<void> {
     if (this.totalValuation && this.totalSupply) return;
-    const contract = this.getTreasuryContract();
-    this.totalValuation = await contract?.totalValuation();
-    this.totalSupply = await contract?.totalSupply();
+    const contract = await this.getTreasuryContract();
+    this.totalValuation = await contract.totalValuation();
+    this.totalSupply = await contract.totalSupply();
     this.treasuryDistribution = (await this.getDistributionPercentage('Treasury')).toNumber() / 100;
     this.reservesDistribution = (await this.getDistributionPercentage('Reserve')).toNumber() / 100;
   }
 
   @callOnce()
   public async loadAssets(): Promise<void> {
-    const contract = this.getTreasuryContract();
-    if (!contract) return;
+    const contract = await this.getTreasuryContract();
     const treasuryAddress = contract.address;
     if (!treasuryAddress) return;
 
@@ -94,19 +93,18 @@ export class TreasuryStore {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     });
     //get latest data from the contract for last data point
-    const contract = this.getTreasuryContract();
-    const totalValuation = await contract?.totalValuation();
+    const contract = await this.getTreasuryContract();
+    const totalValuation = await contract.totalValuation();
     //add last data point
     chartData.push({
       createdAt: new Date(),
-      value: this.numberService.fromString(fromWei(totalValuation ?? BigNumber.from(0), 18)),
+      value: this.numberService.fromString(fromWei(totalValuation, 18)),
     } as unknown as ValueChartData);
     return chartData;
   }
 
   public async getLastRebaseTime() {
-    const contract = this.getTreasuryContract();
-    if (!contract) return;
+    const contract = await this.getTreasuryContract();
     const rebaseEvents = await contract.queryFilter(contract.filters.Rebase());
     rebaseEvents.sort((a, b) => {
       return b.blockNumber - a.blockNumber;
@@ -124,16 +122,16 @@ export class TreasuryStore {
     return this.totalSupply.div(this.totalValuation);
   }
 
-  public getTreasuryContract(): Treasury | null {
+  public async getTreasuryContract(): Promise<Treasury> {
     if (this.treasuryContract) return this.treasuryContract;
-    this.treasuryContract = this.contractService.getContract('Monetary', 'Treasury');
+    this.treasuryContract = await this.contractService.getContract('monetary', 'Treasury');
     return this.treasuryContract;
   }
 
   private async getDistributionPercentage(contractName: MonetaryContractAbi): Promise<BigNumber> {
-    const address = this.contractService.getContract('Monetary', contractName).address;
+    const address = (await this.contractService.getContract('monetary', contractName)).address;
     if (!address || !this.totalSupply) return BigNumber.from(0);
-    const tokens = await this.getTreasuryContract()?.balanceOf(address);
-    return tokens?.div(this.totalSupply) ?? BigNumber.from(0);
+    const tokens = await (await this.getTreasuryContract()).balanceOf(address);
+    return tokens.div(this.totalSupply);
   }
 }

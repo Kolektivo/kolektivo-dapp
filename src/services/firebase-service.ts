@@ -1,20 +1,9 @@
 import { DI, IContainer, Registration } from 'aurelia';
-import {
-  FieldPath,
-  Firestore,
-  OrderByDirection,
-  WhereFilterOp,
-  collection,
-  getDocs,
-  getFirestore,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore/lite';
-import { FirebaseApp } from '@firebase/app';
+import { type FirebaseApp } from '@firebase/app';
+import type { FieldPath, Firestore, OrderByDirection, WhereFilterOp } from 'firebase/firestore/lite';
 
-export type IFirebaseApp = FirebaseApp;
-export const IFirebaseApp = DI.createInterface<FirebaseApp>();
+export type IFirebaseApp = Promise<FirebaseApp> | FirebaseApp;
+export const IFirebaseApp = DI.createInterface<IFirebaseApp>();
 
 export type IFirebaseService = FirebaseService;
 export const IFirebaseService = DI.createInterface<IFirebaseService>();
@@ -30,14 +19,19 @@ export class FirebaseService {
     container.register(Registration.singleton(IFirebaseService, FirebaseService));
   }
 
-  public fireStore: Firestore;
-  constructor(@IFirebaseApp private readonly app: IFirebaseApp) {
-    this.fireStore = getFirestore(this.app);
+  public fireStore?: Firestore;
+  constructor(@IContainer private readonly container: IContainer) {}
+
+  public async connect() {
+    const { getFirestore } = await import('firebase/firestore/lite');
+    this.fireStore ??= getFirestore(await this.container.get(IFirebaseApp));
+    return this.fireStore;
   }
 
   public async getDocs<T = unknown>(path: string, order: string | FieldPath, direction: OrderByDirection, whereClause: WhereClause): Promise<T> {
+    const { getDocs, query, collection, where, orderBy } = await import('firebase/firestore/lite');
     const data = await getDocs(
-      query(collection(this.fireStore, path), where(whereClause.fieldPath, whereClause.opStr, whereClause.value), orderBy(order, direction)),
+      query(collection(await this.connect(), path), where(whereClause.fieldPath, whereClause.opStr, whereClause.value), orderBy(order, direction)),
     );
     return data.docs.map((x) => x.data()) as T;
   }

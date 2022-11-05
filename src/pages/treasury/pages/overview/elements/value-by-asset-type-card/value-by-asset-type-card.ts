@@ -2,11 +2,14 @@ import './value-by-asset-type-card.scss';
 import { AssetType } from './../../../../../../models/asset';
 import { ICustomElementViewModel, customElement } from 'aurelia';
 import { ITreasuryStore } from './../../../../../../stores/treasury-store';
+import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import template from './value-by-asset-type-card.html';
+import type { TooltipOptions } from 'chart.js';
+import type { _DeepPartialObject } from 'chart.js/types/utils';
 
 @customElement({ name: 'value-by-asset-type-card', template })
 export class ValueByAssetTypeCard implements ICustomElementViewModel {
-  constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore) {}
+  constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore, private readonly percentageValueConverter: PercentageValueConverter) {}
 
   get chartData(): number[] {
     return [this.nonStablecoinAssetPercentage() * 100, this.stablecoinAssetPercentage() * 100, this.ecologicalAssetPercentage() * 100];
@@ -27,7 +30,14 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
   nonStablecoinAssetPercentage(): number {
     return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.NonStablecoin) / this.treasuryStore.treasuryValue : 0;
   }
-
+  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+    return {
+      backgroundColor: 'rgb(76, 87, 92)',
+      callbacks: {
+        label: (x) => `${(x.raw as number).toFixed(2)}%`,
+      },
+    };
+  }
   private getAssetPercentage(type: AssetType): number {
     return (
       this.treasuryStore.treasuryAssets

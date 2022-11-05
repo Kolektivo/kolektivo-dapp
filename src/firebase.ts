@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import './prototypes';
 import { CacheService } from './services/cache-service';
 import { ContractService } from './services/contract/contract-service';
 import { ContractStore } from './stores/contract-store';
@@ -16,6 +17,7 @@ import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
 import { NumberService } from './services/number-service';
 import { TokenService } from './services/token-service';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
+import { configurationFromEnv } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { initializeApp } from 'firebase/app';
 
@@ -35,6 +37,7 @@ const container = DI.createContainer()
   .register(ContractStore)
   .register(TokenService)
   .register(DataStore)
+  .register(configurationFromEnv())
   .register(CacheService)
   .register(TreasuryStore)
   .register(ReserveStore)
@@ -44,7 +47,7 @@ const container = DI.createContainer()
     }),
   )
   .register(NumberService)
-  .register(Registration.instance(I18N, {}))
+  .register(Registration.instance(I18N, { uf: (s: unknown) => Number(s) }))
   .register(
     Registration.instance(IObserverLocator, {}),
     Registration.instance(IEventAggregator, {}),
@@ -64,15 +67,22 @@ export const seed = async () => {
   // const numberService: INumberService = container.get(INumberService);
   const reserveStore: IReserveStore = container.get(IReserveStore);
   let reserveValue = '';
-  let leverageRatio = 0;
+  let currentLeverageRatio = 0;
+  let maxLeverageRatio = 0;
   let kCurPrice = 0;
   let kCurReserveDistribution = 0;
   let kCurMentoDistribution = 0;
   let kCurPrimaryPoolDistribution = 0;
   let kCurCirculatingDistribution = 0;
   let captureDataPromise: Promise<void> | undefined = undefined;
+  let minCollateralValue = 0;
+  let marketCap = 0;
+  let lowRisk = 0;
+  let moderateRisk = 0;
+  let highRisk = 0;
 
-  const { fireStore: database } = container.get(IFirebaseService);
+  const service = container.get(IFirebaseService);
+  const database = await service.connect();
 
   const periods = Object.values(Periods)
     .filter((y) => typeof y === 'number')
@@ -108,8 +118,8 @@ export const seed = async () => {
   };
   const getTreasuryValue = async (): Promise<string> => {
     const treasuryStore = container.get(ITreasuryStore);
-    const treasuryContract = treasuryStore.getTreasuryContract();
-    return (await treasuryContract?.totalValuation())?.toHexString() ?? '';
+    const treasuryContract = await treasuryStore.getTreasuryContract();
+    return (await treasuryContract.totalValuation()).toHexString();
   };
   const loadReserveData = async (): Promise<void> => {
     await reserveStore.loadAssets(); //loads reserve value and assets
@@ -135,10 +145,11 @@ export const seed = async () => {
 
     //Get current Reserve value
     await loadReserveData();
-    reserveValue = reserveStore.reserveValuation?.toHexString() ?? '';
+    reserveValue = reserveStore.reserveValue?.toHexString() ?? '';
 
     //Get current kCur leverage ratio
-    leverageRatio = reserveStore.leverageRatio;
+    currentLeverageRatio = reserveStore.currentLeverageRatio;
+    maxLeverageRatio = reserveStore.maxLeverageRatio;
 
     //Get current kCur Price
     kCurPrice = reserveStore.kCurPrice ?? 0;
@@ -150,6 +161,11 @@ export const seed = async () => {
     kCurCirculatingDistribution = reserveStore.kCurCirculatingDistribution;
 
     //Get and store current Risk Value
+    minCollateralValue = reserveStore.minCollateralizationValue;
+    marketCap = reserveStore.kCurTotalValue;
+    lowRisk = reserveStore.lowRiskAssets.map((x) => x.total).sum();
+    moderateRisk = reserveStore.moderateRiskAssets.map((x) => x.total).sum();
+    highRisk = reserveStore.highRiskAssets.map((x) => x.total).sum();
 
     //Get and store current kGuilder-kCur Value Ratio
   };
@@ -198,7 +214,7 @@ export const seed = async () => {
 
         void captureDataPromise?.then(async () => {
           await addData('kCurPrice', Periods[period], newSyncTime.getTime(), kCurPrice);
-          await addData('kCurRatio', Periods[period], newSyncTime.getTime(), leverageRatio);
+          await addData('kCurRatio', Periods[period], newSyncTime.getTime(), { currentLeverageRatio, maxLeverageRatio });
           await addData('kCurSupply', Periods[period], newSyncTime.getTime(), {
             kCurReserveDistribution,
             kCurMentoDistribution,
@@ -208,6 +224,13 @@ export const seed = async () => {
 
           await addData('ktt', Periods[period], newSyncTime.getTime(), kttValue);
           await addData('reserve', Periods[period], newSyncTime.getTime(), reserveValue);
+          await addData('risk', Periods[period], newSyncTime.getTime(), {
+            minCollateralValue,
+            marketCap,
+            lowRisk,
+            moderateRisk,
+            highRisk,
+          });
           await setLastSyncTime(Periods[period], newSyncTime.getTime(), lastSync); //set latest sync time
 
           //delete unneeded records for this interval
@@ -217,6 +240,7 @@ export const seed = async () => {
           await deleteData('kCurSupply', Periods[period], earliestTime);
           await deleteData('ktt', Periods[period], earliestTime);
           await deleteData('reserve', Periods[period], earliestTime);
+          await deleteData('risk', Periods[period], earliestTime);
         });
       }
       return;

@@ -1,9 +1,7 @@
-import { CID } from 'ipfs-http-client';
 import { DI, IContainer, Registration } from 'aurelia';
 import { IIpfsApi } from './ipfs-interface';
-import { IPFSPath } from 'ipfs-core-types/src/utils';
-import { concat } from 'uint8arrays/concat';
-import { toString } from 'uint8arrays/to-string';
+import type { CID } from 'ipfs-http-client';
+import type { IPFSPath } from 'ipfs-core-types/src/utils';
 
 export type IIpfsService = IpfsService;
 export const IIpfsService = DI.createInterface<IIpfsService>();
@@ -41,12 +39,12 @@ export class IpfsService {
   }
 
   public async get(cid: IPFSPath, dag = false, path?: string): Promise<string | undefined> {
-    const parsedCid = CID.asCID(cid);
+    const parsedCid = (await import('multiformats/cid')).CID.asCID(cid);
     if (!parsedCid) return;
     if (!dag) {
       const data = this.client.cat(cid);
-      const allBits = concat(await this.all(data));
-      return toString(allBits);
+      const allBits = (await import('uint8arrays/concat')).concat(await this.all(data));
+      return (await import('uint8arrays/to-string')).toString(allBits);
     }
 
     return JSON.stringify((await this.client.dag.get(parsedCid, { path: path })).value);

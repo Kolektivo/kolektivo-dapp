@@ -1,14 +1,15 @@
 import { BaseContract, Contract, ContractFunction, ContractInterface, PopulatedTransaction } from '@ethersproject/contracts';
 import { BaseProvider } from '@ethersproject/providers';
+import { IS_CELO } from './../../environment-variables';
 import { Signer } from '@ethersproject/abstract-signer';
 
 import { ContractGroupsSharedJson } from './types';
 
 import { Address, IEthereumService } from 'services/ethereum-service';
-import { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 import { DI, IContainer, Registration } from 'aurelia';
 import { ICacheService } from '../cache-service';
 import { cache } from 'decorators/cache';
+import type { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 
 export type IContractService = ContractService;
 export const IContractService = DI.createInterface<IContractService>();
@@ -65,25 +66,30 @@ export class ContractService {
    */
   public getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
     contractType: TContractType,
-    name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
+    name: Extract<keyof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
-  ): TResult {
+  ): Promise<TResult> {
     return this.getContractForAccount(this.ethereumService.defaultAccountAddress, contractType, name, overrideAddress);
   }
 
-  public getContractForProvider<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
+  public async getContractForProvider<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
     signerOrProvider: BaseProvider | Signer,
     contractType: TContractType,
-    name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
+    name: Extract<keyof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
-  ): TResult {
-    const contractData = ContractGroupsJsons[contractType];
-    const contracts = contractData.main.contracts;
+  ): Promise<TResult> {
+    const contractData = (
+      IS_CELO
+        ? ((await import(`../../contracts/${contractType}/celo.json`)) as unknown)
+        : ((await import(`../../contracts/${contractType}/alfajores.json`)) as unknown)
+    ) as ContractGroupsJsons[TContractType]['main'];
+
+    const contracts = contractData.contracts;
     const contract = contracts[name as keyof typeof contracts] as unknown as { abi: string | ContractInterface; address: string };
     let abi = contract.abi;
     if (typeof abi === 'string') {
       const key = abi as keyof ContractGroupsSharedJson;
-      abi = contractData.shared[key] as ContractInterface;
+      abi = (await this.getSharedAbi(contractType, key)) as ContractInterface;
     }
 
     overrideAddress = overrideAddress ?? contract.address;
@@ -92,6 +98,19 @@ export class ContractService {
     }
 
     return new Contract(overrideAddress, abi, signerOrProvider) as TResult;
+  }
+
+  public async getSharedAbi<TContractType extends ContractGroupsAbis>(
+    contractType: TContractType,
+    key: keyof ContractGroupsJsons[TContractType]['shared'],
+  ) {
+    const contractData = (
+      IS_CELO
+        ? ((await import(`../../contracts/${contractType}/sharedAbis.json`)) as unknown)
+        : ((await import(`../../contracts/${contractType}/sharedAbis.json`)) as unknown)
+    ) as ContractGroupsJsons[TContractType]['shared'];
+
+    return contractData[key];
   }
 
   /**
@@ -112,9 +131,9 @@ export class ContractService {
   private getContractForAccount<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
     account: Address | Signer | null,
     contractType: TContractType,
-    name: Extract<keyof typeof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
+    name: Extract<keyof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
-  ): TResult {
+  ): Promise<TResult> {
     const signerOrProvider = this.ethereumService.createSignerOrProviderForAddress(account);
     return this.getContractForProvider(signerOrProvider, contractType, name, overrideAddress);
   }

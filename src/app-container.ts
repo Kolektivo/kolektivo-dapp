@@ -20,9 +20,10 @@ import { Web3ModalConnect } from './web3modal-details';
 import { configurationFromEnv } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { imageMap } from './app-images';
-import { initializeApp } from 'firebase/app';
+import Backend from 'i18next-chained-backend';
+import HttpBackend from 'i18next-http-backend';
+import LocalStorageBackend from 'i18next-localstorage-backend';
 import designScss from './design-system/styles/shared.scss';
-import en from './locales/en/translation.json';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 import scss from './shared.scss';
 
@@ -37,6 +38,31 @@ import scss from './shared.scss';
 //   url: 'https://ipfs.rpcs.dev:5001',
 // });
 //await ipfs.id();
+
+const dateFormatters: Record<string, Intl.DateTimeFormat> = {
+  minute: new Intl.DateTimeFormat(undefined, {
+    hour: 'numeric',
+    minute: 'numeric',
+  }),
+  hour: new Intl.DateTimeFormat(undefined, {
+    hour: 'numeric',
+    minute: 'numeric',
+  }),
+  day: new Intl.DateTimeFormat(undefined, {
+    day: 'numeric',
+    month: 'short',
+    weekday: 'short',
+    year: 'numeric',
+  }),
+  timestamp: new Intl.DateTimeFormat(undefined, {
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    month: 'short',
+    weekday: 'short',
+    year: 'numeric',
+  }),
+};
 
 export const appContainer: IContainer = DI.createContainer()
   .register(
@@ -57,7 +83,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(hooks)
   .register(resources)
   .register(pages)
-  .register(Registration.instance(IFirebaseApp, initializeApp(firebaseConfig)))
+  .register(Registration.cachedCallback(IFirebaseApp, () => import('firebase/app').then((x) => x.initializeApp(firebaseConfig))))
   .register(
     Registration.cachedCallback(IEncryptionClient, async () => {
       const LitJsSdk = (await import('lit-js-sdk')).default;
@@ -86,10 +112,27 @@ export const appContainer: IContainer = DI.createContainer()
     I18nConfiguration.customize((options) => {
       options.initOptions = {
         fallbackLng: { default: ['en'] },
-        resources: {
-          en: { translation: en },
+        interpolation: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          format: function (value: any, format: any): any {
+            if (!format) return value;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            if (value instanceof Date) return dateFormatters[format as string].format(value);
+            return value;
+          },
         },
-        plugins: [intervalPlural],
+        backend: {
+          backends: [LocalStorageBackend, HttpBackend],
+          backendOptions: [
+            {
+              expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 days
+            },
+            {
+              loadPath: '/locales/{{lng}}/{{ns}}.json',
+            },
+          ],
+        },
+        plugins: [Backend, intervalPlural],
       };
     }),
   )
@@ -100,3 +143,7 @@ export const appContainer: IContainer = DI.createContainer()
       x.defaultToastTimeout = 5000;
     }),
   );
+
+if (import.meta.env.DEV) {
+  appContainer.register(await import('./pages/storybook'));
+}

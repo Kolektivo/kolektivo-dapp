@@ -5,6 +5,7 @@ import { INumberService } from 'services';
 import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from 'stores';
 import { LeverageCard } from './leverage-card';
+import { MultiplierValueConverter } from './../../../../../../resources/value-converters/multiplier';
 import { PercentageValueConverter } from 'resources';
 import { Registration } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
@@ -37,7 +38,7 @@ describe('leverage-card', () => {
       .build().started;
     const filter = appHost.querySelector('chart-time-filter');
     expect(filter).exist;
-    expect(filter?.innerHTML).contains('k-text');
+    expect(filter?.innerHTML).contains('k-stack');
   });
 
   it('should have a line chart', async () => {
@@ -66,6 +67,7 @@ describe('leverage-card', () => {
           getkCurPriceOverTime: () => new Promise((res) => res([])),
         }),
       ),
+      MultiplierValueConverter,
       PercentageValueConverter,
       Global,
       createMockStoreRegistration(),

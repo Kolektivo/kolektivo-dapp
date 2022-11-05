@@ -4,6 +4,7 @@ import { Global } from '../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
 import { INumberService } from './../../../../services';
+import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../stores';
 import { PercentageValueConverter } from './../../../../resources/value-converters';
 import { Registration } from 'aurelia';
@@ -57,6 +58,9 @@ describe('risk', () => {
     return [
       Risk,
       PercentageValueConverter,
+      Registration.instance(IReserveStore, {
+        getRiskOverTime: () => new Promise((res) => res([])),
+      }),
       CurrencyValueConverter,
       Global,
       createMockStoreRegistration(),
