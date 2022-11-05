@@ -1,66 +1,43 @@
-import {
-  ArcElement,
-  BarController,
-  BarElement,
-  BubbleController,
-  CategoryScale,
-  Chart,
-  Decimation,
-  DoughnutController,
-  Filler,
-  Legend,
-  LineController,
-  LineElement,
-  LinearScale,
-  LogarithmicScale,
-  PieController,
-  PointElement,
-  PolarAreaController,
-  RadarController,
-  RadialLinearScale,
-  ScatterController,
-  SubTitle,
-  TimeScale,
-  TimeSeriesScale,
-  Title,
-  Tooltip,
-} from 'chart.js';
-
 import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
 import css from './k-chart.scss';
 import template from './k-chart.html';
-// eslint-disable-next-line no-duplicate-imports
-import type { BubbleDataPoint, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint } from 'chart.js';
+import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint, TooltipOptions } from 'chart.js';
+import type { _DeepPartialObject } from 'chart.js/types/utils';
 
 export type DataType = number | ScatterDataPoint | BubbleDataPoint;
 
-Chart.register(
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Decimation,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-  SubTitle,
-);
+let initialized = false;
+const initializeChartJs = async () => {
+  const chartJs = await import('chart.js');
+  chartJs.Chart.register(
+    chartJs.ArcElement,
+    chartJs.LineElement,
+    chartJs.BarElement,
+    chartJs.PointElement,
+    chartJs.BarController,
+    chartJs.BubbleController,
+    chartJs.DoughnutController,
+    chartJs.LineController,
+    chartJs.PieController,
+    chartJs.PolarAreaController,
+    chartJs.RadarController,
+    chartJs.ScatterController,
+    chartJs.CategoryScale,
+    chartJs.LinearScale,
+    chartJs.LogarithmicScale,
+    chartJs.RadialLinearScale,
+    chartJs.TimeScale,
+    chartJs.TimeSeriesScale,
+    chartJs.Decimation,
+    chartJs.Filler,
+    chartJs.Legend,
+    chartJs.Title,
+    chartJs.Tooltip,
+    chartJs.SubTitle,
+  );
+  initialized = true;
+};
 
 @customElement({
   name: 'k-chart',
@@ -93,11 +70,19 @@ export class KChart implements ICustomElementViewModel {
   @bindable({ set: ifExistsThenTrue }) gradient?: boolean;
   @bindable minY?: number;
   @bindable maxY?: number;
+  @bindable tooltipOptions?: _DeepPartialObject<TooltipOptions>;
+  @bindable yLabelFormat?: Record<string, unknown>;
+  @bindable xLabelFormat?: Record<string, unknown>;
 
   chart?: HTMLCanvasElement;
   public chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
+  creatingPromise?: Promise<void>;
 
   constructor(@IPlatform private readonly platform: IPlatform) {}
+
+  async binding() {
+    !initialized && (await initializeChartJs());
+  }
 
   get styles() {
     return {
@@ -118,7 +103,7 @@ export class KChart implements ICustomElementViewModel {
     return data[0] as unknown as number;
   }
 
-  createChart(): void {
+  async createChart() {
     const ctx = this.chart?.getContext('2d');
     if (this.gradient && typeof this.dataSets[0].backgroundColor === 'string') {
       const gradient = ctx?.createLinearGradient(0, 0, 0, 400);
@@ -166,6 +151,7 @@ export class KChart implements ICustomElementViewModel {
             usePointStyle: true,
           },
         },
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         tooltip: {
           backgroundColor: 'rgba(213, 92, 56, 1)',
           bodyColor: 'white',
@@ -185,6 +171,7 @@ export class KChart implements ICustomElementViewModel {
                 },
               }
             : undefined,
+          ...this.tooltipOptions,
         },
       },
     };
@@ -200,6 +187,9 @@ export class KChart implements ICustomElementViewModel {
         x: {
           ticks: {
             maxTicksLimit: this.maxXLabels,
+            maxRotation: 0,
+            minRotation: 0,
+            ...this.xLabelFormat,
           },
           grid: {
             display: false,
@@ -210,6 +200,9 @@ export class KChart implements ICustomElementViewModel {
           suggestedMax: this.highestDataPoint + this.highestDataPoint * 0.1,
           ticks: {
             maxTicksLimit: this.maxYLabels,
+            maxRotation: 0,
+            minRotation: 0,
+            ...this.yLabelFormat,
           },
           max: this.maxY,
           min: this.minY,
@@ -220,7 +213,7 @@ export class KChart implements ICustomElementViewModel {
       };
     }
 
-    this.chartJsInstance = new Chart(context, {
+    this.chartJsInstance = new (await import('chart.js')).Chart(context, {
       type: this.type,
       data: {
         labels: this.labels,
@@ -236,16 +229,15 @@ export class KChart implements ICustomElementViewModel {
                   const activeElements = chart.tooltip?.getActiveElements();
                   if (activeElements?.length) {
                     const x = activeElements[0]?.element.x;
-                    const y = activeElements.map((y) => y.element.y).sort()[0];
                     const yAxis = chart.scales.y;
                     const ctx = chart.ctx;
                     ctx.save();
                     ctx.beginPath();
-                    ctx.moveTo(x, y);
+                    ctx.moveTo(x, 10);
                     ctx.lineTo(x, yAxis.bottom);
                     ctx.lineWidth = 1;
                     ctx.setLineDash([2, 2]);
-                    ctx.strokeStyle = 'orange';
+                    ctx.strokeStyle = 'rgba(76, 87, 92, 1)';
                     ctx.stroke();
                     ctx.restore();
                   }
@@ -293,10 +285,11 @@ export class KChart implements ICustomElementViewModel {
   }
 
   attaching(): void {
-    this.createChart();
+    this.creatingPromise = this.createChart();
   }
 
-  detaching(): void | Promise<void> {
+  async detaching() {
+    await this.creatingPromise;
     this.chartJsInstance?.destroy();
   }
 }

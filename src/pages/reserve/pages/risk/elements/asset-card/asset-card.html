@@ -1,3 +1,4 @@
 <k-card title="${i18n.tr('navigation.reserve.risk.assets.title')}" tooltip-text="${i18n.tr('navigation.reserve.risk.assets.tooltip')}">
+  <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadAssets()"></k-loader>
   <k-data-grid rows.bind="data" columns.bind="columns"></k-data-grid>
 </k-card>

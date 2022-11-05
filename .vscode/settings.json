@@ -20,12 +20,19 @@
   "scss.validate": false,
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
-  "eslint.validate": ["javascript", "typescript"],
+  "eslint.validate": [
+    "javascript",
+    "typescript"
+  ],
   "eslint.alwaysShowStatus": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
-  "exportall.config.relExclusion": ["/src/design-system"],
-  "exportall.config.folderListener": ["/src/design-system/elements", "/src/pages"]
+  "exportall.config.relExclusion": [
+    "/src/design-system"
+  ],
+  "exportall.config.folderListener": [
+    "/src/design-system/elements",
+  ]
 }

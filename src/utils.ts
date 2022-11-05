@@ -1,5 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber';
+import { I18N } from '@aurelia/i18n';
 import { Interval } from 'models/interval';
+import { Scale } from 'chart.js/types/index.esm';
 import { getAddress } from 'ethers/lib/utils';
 
 /**
@@ -97,6 +99,27 @@ export function getTimeMinusInterval(interval: Interval): number {
       break;
   }
   return now.getTime();
+}
+
+const decodeHTML = (value: string): string => {
+  const span = document.createElement('span');
+  span.innerHTML = value;
+  return span.innerText;
+};
+export function getXLabelFormat(currentInterval: Interval, i18n: I18N): Record<string, unknown> {
+  return {
+    callback: function (this: Scale, value: number) {
+      const date = new Date(this.getLabelForValue(value));
+      switch (currentInterval) {
+        case Interval['1h']:
+          return i18n.tr('1HChart', { date: date });
+        case Interval['1d']:
+          return decodeHTML(i18n.tr('1DChart', { date: date }));
+        default:
+          return decodeHTML(i18n.tr('1YChart', { date: date }));
+      }
+    },
+  };
 }
 
 export const formatter = new Intl.DateTimeFormat(undefined, {

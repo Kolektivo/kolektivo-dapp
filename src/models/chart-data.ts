@@ -16,7 +16,15 @@ export interface ValueChartData {
 
 export interface LeverageChartData {
   createdAt: Date;
-  leverageRatio: number;
+  currentLeverageRatio: number;
   maxLeverageRatio: number;
-  minLeverageRatio: number;
+}
+
+export interface RiskChartData {
+  createdAt: Date;
+  minCollateralValue: number;
+  marketCap: number;
+  lowRisk: number;
+  moderateRisk: number;
+  highRisk: number;
 }

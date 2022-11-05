@@ -57,6 +57,7 @@ describe('value-by-asset-type-card', () => {
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
         nf: (s: string) => String(s),
+        uf: (s: string) => Number(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [

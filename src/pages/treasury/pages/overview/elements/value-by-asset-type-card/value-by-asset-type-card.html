@@ -2,7 +2,7 @@
   <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadAssets()"></k-loader>
   <k-stack if.bind="isReady" direction="row">
     <k-chart cutout="70" type="doughnut" width="200"
-      colors.bind="['var(--terra-cotta)', 'var(--primary)', 'var(--green-apple)', ]" data.bind="chartData">
+      colors.bind="['var(--terra-cotta)', 'var(--primary)', 'var(--green-apple)', ]" data.bind="chartData" tooltip-options.bind="tooltipOptions">
     </k-chart>
     <k-stack gap="var(--spacing-xl)" id="t-o-vbatc-legend">
       <avatar-text color="var(--green-apple)" size="20">${ecologicalAssetPercentage() | percentage} Ecological</avatar-text>
