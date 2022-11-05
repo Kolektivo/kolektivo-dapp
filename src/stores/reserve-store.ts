@@ -265,7 +265,7 @@ export class ReserveStore {
     });
     //get latest data from the contract for last data point
     await this.loadAssets();
-    const contract = this.getReserveContract();
+    const contract = await this.getReserveContract();
     const reserveStatus = await contract.reserveStatus();
     this.kCurMarketCap = reserveStatus[1];
     this.minBacking = await contract.minBacking();

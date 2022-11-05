@@ -50,7 +50,6 @@ export class TreasuryStore {
   @callOnce()
   public async loadAssets(): Promise<void> {
     const contract = await this.getTreasuryContract();
-    if (!contract) return;
     const treasuryAddress = contract.address;
     if (!treasuryAddress) return;
 
@@ -99,14 +98,13 @@ export class TreasuryStore {
     //add last data point
     chartData.push({
       createdAt: new Date(),
-      value: this.numberService.fromString(fromWei(totalValuation ?? BigNumber.from(0), 18)),
+      value: this.numberService.fromString(fromWei(totalValuation, 18)),
     } as unknown as ValueChartData);
     return chartData;
   }
 
   public async getLastRebaseTime() {
     const contract = await this.getTreasuryContract();
-    if (!contract) return;
     const rebaseEvents = await contract.queryFilter(contract.filters.Rebase());
     rebaseEvents.sort((a, b) => {
       return b.blockNumber - a.blockNumber;
