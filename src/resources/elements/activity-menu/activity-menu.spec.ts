@@ -16,7 +16,7 @@ describe('<activity-menu />', () => {
 
   beforeEach(() => {
     transactions = [];
-    AllowedNetworks.Celo;
+    targetedNetwork = AllowedNetworks.Celo;
   });
 
   it('displays empty message when theres no transactions', async () => {

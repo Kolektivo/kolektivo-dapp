@@ -52,11 +52,11 @@ export class EncryptionService {
   }
 
   public async encrypt(message: string): Promise<EncryptionResult | undefined> {
-    if (!this.ethereumService.walletProvider || !this.ethereumService.defaultAccountAddress || !this.ethereumService.targetedChainId) return;
+    if (!this.ethereumService.currentProvider || !this.ethereumService.defaultAccountAddress || !this.ethereumService.targetedChainId) return;
     await this.connect();
     if (!this.client) return;
     const params = {
-      web3: this.ethereumService.walletProvider,
+      web3: this.ethereumService.currentProvider,
       account: this.ethereumService.defaultAccountAddress,
       chainId: this.ethereumService.targetedChainId,
       expiration: new Date(Date.now() + 300000), // 5 minutes

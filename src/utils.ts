@@ -126,3 +126,11 @@ export const formatter = new Intl.DateTimeFormat(undefined, {
   timeStyle: 'short',
   dateStyle: 'short',
 });
+
+export const formatString = (string: string, placeholders: Record<string | number, unknown>) => {
+  for (const propertyName in placeholders) {
+    const re = new RegExp('{' + propertyName + '}', 'gm');
+    string = string.replace(re, placeholders[propertyName] as string);
+  }
+  return string;
+};

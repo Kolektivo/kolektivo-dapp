@@ -1,4 +1,4 @@
-import { Address, Hash, IEthereumService, WalletProvider } from './../services/ethereum-service';
+import { Address, Hash, IEthereumService } from './../services/ethereum-service';
 import { AllowedNetworks } from 'models/allowed-network';
 import { DI, IContainer, Registration } from 'aurelia';
 
@@ -36,8 +36,8 @@ export class BlockChainStore {
     return this.ethereumService.connectToConnectedProvider();
   }
 
-  public switchToTargetedNetwork(walletProvider: WalletProvider): Promise<boolean> {
-    return this.ethereumService.switchToTargetedNetwork(walletProvider);
+  public switchToTargetedNetwork(): Promise<boolean> {
+    return this.ethereumService.switchToTargetedNetwork();
   }
 
   public disconnect(error: { code: number; message: string }): void {
@@ -49,6 +49,6 @@ export class BlockChainStore {
   }
 
   public get connectedWalletEtherscanLink(): string {
-    return this.ethereumService.getEtherscanLink(this.connectedWalletAddress);
+    return this.connectedWalletAddress ? this.ethereumService.getEtherscanLink(this.connectedWalletAddress) : '';
   }
 }
