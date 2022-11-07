@@ -4,51 +4,51 @@
 	"contracts": {
 		"monetaryBadger": {
 			"abi": "Badger",
-			"address": "0x74F9479B29CFb52Db30D76ffdD5F192a73BAD870"
+			"address": "0x17ED8C6F5ABB958d31e5a9E6538FEe57B177a859"
 		},
 		"kolektivoBadger": {
 			"abi": "Badger",
-			"address": "0x0f496eB239dCAA2fE7c8adbfb022a13208b06607"
+			"address": "0x100638252400114f168f043e02F2BD7555d2c682"
 		},
 		"bacMD": {
 			"abi": "BACRoles",
-			"address": "0x0A360F39E9C8A634C1E0eaEd622E18B014E2d1e6"
+			"address": "0x7428FA18E9B05903c7F1346eCFB63955BA5c4eE1"
 		},
 		"bacFFD": {
 			"abi": "BACRoles",
-			"address": "0x4C6C7B04725ED964305F0C15391594f539242cD8"
+			"address": "0x9337386C570627F1dd65e86D1B197B58C5D28a21"
 		},
 		"bacMC": {
 			"abi": "BACRoles",
-			"address": "0xE175CC8C24b3FaC86d0D6b65c5fE7DdA26B614cA"
+			"address": "0x351CF327Bd66880254FBA28221738E4f23caf4a8"
 		},
 		"bacK": {
 			"abi": "BACRoles",
-			"address": "0xE605E10AcA864203CC6219E5b5D63F146fe36b3B"
+			"address": "0x92F194D23b87770A2847067690A3A905A8E13760"
 		},
 		"reserveDelegateScope": {
 			"abi": "ScopeGuard",
-			"address": "0x331185c0284e4B2c20D80Ce728D59537c04DD3C6"
+			"address": "0x3A5fC6C9d99d33A9E38D94f3af18CC093a00A59f"
 		},
 		"foodForestDelegateScope": {
 			"abi": "ScopeGuard",
-			"address": "0x0016C34a6becA579dC9F74146BE16298325cFc51"
+			"address": "0x005DbB9DCC558B1486ba16572Cc6DB199fE4736E"
 		},
 		"monetaryMultisigScope": {
 			"abi": "ScopeGuard",
-			"address": "0xafF55632ec22386f2d92B06Ee3b6A9874308F244"
+			"address": "0x4991B0e921cD4b66A637ca9F7b978ee9316a6c16"
 		},
 		"monetaryDelay": {
 			"abi": "SecretDelay",
-			"address": "0xDE18be6227E59cAD9358D9148b6561Cf7598e4e0"
+			"address": "0x7b0ecd6795437B8Ad1c7Ac20011ECFc39de6F1df"
 		},
 		"foodForestDelay": {
 			"abi": "SecretDelay",
-			"address": "0xD2C0cF19066260214628aC584b1e85ba715Aa090"
+			"address": "0x87A709785b0CEa865143711E9bcD82fAeC1A48D7"
 		},
 		"kolektivoDelay": {
 			"abi": "SecretDelay",
-			"address": "0x54aD29AcA5c780dB3a86eF70b5d62dE79D8BAce3"
+			"address": "0x26d8b50d241ba577cCC9Db383e2349499a796dc0"
 		}
 	}
 }

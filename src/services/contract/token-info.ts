@@ -1,18 +1,13 @@
 import { DI } from 'aurelia';
-import { ITokenInfo, ITokenListUniswap } from 'services/token-types';
 
-const tokenListUri = 'https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json';
+import type TokenListType from '../../tokenlist.json';
 
-export const getTokenInfos = () =>
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  globalThis.fetch
-    ? globalThis
-        .fetch(tokenListUri, { method: 'GET', headers: { accept: 'application/json' } })
-        .then(async (y) => (await y.json()) as ITokenListUniswap)
-        .then((y) => y.tokens as ITokenInfo[])
-    : [];
+export const getTokenInfos = () => import('../../tokenlist.json').then((y) => y.tokens);
+
+export type ITokenInfo = typeof TokenListType['tokens'][0] & { price?: number };
 
 export type ITokenData = {
   tokens: Promise<ITokenInfo[]>;
 };
 export const ITokenData = DI.createInterface<ITokenData>();
+export { TokenListType };

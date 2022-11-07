@@ -64,6 +64,25 @@
 			"anonymous": false,
 			"inputs": [
 				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "tokenId",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "uri",
+					"type": "string"
+				}
+			],
+			"name": "TokenUriUpdated",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
 					"indexed": true,
 					"internalType": "address",
 					"name": "operator",
@@ -578,6 +597,11 @@
 		},
 		{
 			"inputs": [],
+			"name": "RedundantUpdateOfState",
+			"type": "error"
+		},
+		{
+			"inputs": [],
 			"name": "SetUpModulesAlreadyCalled",
 			"type": "error"
 		},
@@ -598,6 +622,19 @@
 				}
 			],
 			"name": "AvatarSet",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "badgerAddress",
+					"type": "address"
+				}
+			],
+			"name": "BadgerUpdated",
 			"type": "event"
 		},
 		{
@@ -1969,6 +2006,11 @@
 			"type": "error"
 		},
 		{
+			"inputs": [],
+			"name": "RedundantUpdateOfState",
+			"type": "error"
+		},
+		{
 			"anonymous": false,
 			"inputs": [
 				{
@@ -2061,6 +2103,32 @@
 			"anonymous": false,
 			"inputs": [
 				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "module",
+					"type": "address"
+				}
+			],
+			"name": "ExecutionFromModuleFailure",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "module",
+					"type": "address"
+				}
+			],
+			"name": "ExecutionFromModuleSuccess",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
 					"indexed": false,
 					"internalType": "uint8",
 					"name": "version",
@@ -2105,7 +2173,7 @@
 					"type": "bytes32"
 				},
 				{
-					"indexed": true,
+					"indexed": false,
 					"internalType": "string",
 					"name": "uri",
 					"type": "string"
@@ -2118,6 +2186,49 @@
 				}
 			],
 			"name": "SecretTransactionAdded",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "to",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "value",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "bytes",
+					"name": "data",
+					"type": "bytes"
+				},
+				{
+					"indexed": false,
+					"internalType": "enum Enum.Operation",
+					"name": "operation",
+					"type": "uint8"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "_salt",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "txIndex",
+					"type": "uint256"
+				}
+			],
+			"name": "SecretTransactionExecuted",
 			"type": "event"
 		},
 		{
@@ -2180,6 +2291,43 @@
 				}
 			],
 			"name": "TransactionAdded",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "to",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "value",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "bytes",
+					"name": "data",
+					"type": "bytes"
+				},
+				{
+					"indexed": false,
+					"internalType": "enum Enum.Operation",
+					"name": "operation",
+					"type": "uint8"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "txIndex",
+					"type": "uint256"
+				}
+			],
+			"name": "TransactionExecuted",
 			"type": "event"
 		},
 		{

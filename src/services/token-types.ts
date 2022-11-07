@@ -27,35 +27,6 @@ export interface IErc721Token {
  */
 export type TokenAddressId = string;
 
-export interface ITokenInfoUniswap {
-  readonly chainId: number;
-  readonly address: Address;
-  decimals: number;
-  logoURI?: string;
-  name: string;
-  symbol: string;
-  /**
-   * id does not exist unless the token represents an NFT.  Is technically not part of the
-   * Uniswap schema for TokenList.
-   */
-  id?: number | undefined;
-}
-
-/**
- * what we get from TokenLists, per:
- * https://github.com/Uniswap/token-lists
- */
-export interface ITokenListUniswap {
-  readonly tokens: ITokenInfoUniswap[];
-}
-
-export interface ITokenInfo extends ITokenInfoUniswap {
-  /**
-   * USD price
-   */
-  price?: number;
-}
-
 export interface ITokenHolder {
   /**
    * of: Address holder

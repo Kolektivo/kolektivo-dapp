@@ -1,0 +1,54 @@
+{
+	"name": "celo",
+	"chainId": 42220,
+	"contracts": {
+		"monetaryBadger": {
+			"abi": "Badger",
+			"address": "0x01CA5fbaF905c350F9B7EA573282217099403CF5"
+		},
+		"kolektivoBadger": {
+			"abi": "Badger",
+			"address": "0xfC5481685166352BB18992b6853D323365aC972A"
+		},
+		"bacMD": {
+			"abi": "BACRoles",
+			"address": "0xC8796bd3FcEca6f38f925e115B0163Ba6627Fd52"
+		},
+		"bacFFD": {
+			"abi": "BACRoles",
+			"address": "0x76E6db145f2650d91B02756e600F9f115B948526"
+		},
+		"bacMC": {
+			"abi": "BACRoles",
+			"address": "0x12A8726d68150d824B0F1BE4DE310FF3347AE306"
+		},
+		"bacK": {
+			"abi": "BACRoles",
+			"address": "0x1708eF497B907c44De584EE21BEdC579969Ee55E"
+		},
+		"reserveDelegateScope": {
+			"abi": "ScopeGuard",
+			"address": "0x150c862E9500963d665833B79C2B038FB93Cd70F"
+		},
+		"foodForestDelegateScope": {
+			"abi": "ScopeGuard",
+			"address": "0xC3E45284121B8c33501d9bE01f9935ff3177FeeE"
+		},
+		"monetaryMultisigScope": {
+			"abi": "ScopeGuard",
+			"address": "0x10cF9BDd4e3E4a615E8a3b58Eb0Ed0462a981A3f"
+		},
+		"monetaryDelay": {
+			"abi": "SecretDelay",
+			"address": "0x6898D92DD279E7f52509c3003Dd2218326D7a256"
+		},
+		"foodForestDelay": {
+			"abi": "SecretDelay",
+			"address": "0xCb021a33DCC0c2999E39dA0C674B1A8516a0D3da"
+		},
+		"kolektivoDelay": {
+			"abi": "SecretDelay",
+			"address": "0x2Ca3641Fe884B79Ec768Bbb5153eD970c7dfB50b"
+		}
+	}
+}

@@ -1,14 +1,14 @@
-import { Asset, AssetType } from 'models/asset';
+import { type Asset, AssetType } from 'models/asset';
 import { BigNumber } from 'ethers';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 import { Erc20, TransferEvent as Erc20TransferEvent } from 'models/generated/monetary/erc20/Erc20';
 import { Erc721, TransferEvent as Erc721TransferEvent } from 'models/generated/monetary/erc721/Erc721';
-import { IContractService, ITokenData } from 'services/contract';
-import { INumberService, ITokenInfo, ITokenService, fromWei, toWei } from '../services';
-import { Oracle } from './../models/generated/monetary/oracle/Oracle';
-import { Reserve } from 'models/generated/monetary/reserve';
-import { Transaction } from 'models/transaction';
-import { Treasury } from 'models/generated/monetary/treasury';
+import { IContractService, ITokenData, type ITokenInfo } from 'services/contract';
+import { INumberService, ITokenService, fromWei, toWei } from '../services';
+import type { Oracle } from './../models/generated/monetary/oracle/Oracle';
+import type { Reserve } from 'models/generated/monetary/reserve';
+import type { Transaction } from 'models/transaction';
+import type { Treasury } from 'models/generated/monetary/treasury';
 export type IContractStore = ContractStore;
 export const IContractStore = DI.createInterface<IContractStore>('IContractStore');
 
