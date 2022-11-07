@@ -21,17 +21,9 @@
         <k-button ref="accountButton" type="utility-dark" icon="account_circle">
           ${store.blockChainStore.connectedWalletAddress
           | smallHexString}</k-button>
-        <k-icon-button if.bind="pendingTransactions === 0" ref="activityButton" type="utility-dark"
-          name="electric_bolt"></k-icon-button>
-        <k-icon-button else ref="activityButton" type="utility-dark">
-          <k-spinner size="20" thickness="6" color="var(--primary)">
-            ${pendingTransactions >= 10 ? '9+' : pendingTransactions}
-          </k-spinner>
-        </k-icon-button>
       </k-stack>
       <badge-menu target.bind="badgeGroup"></badge-menu>
       <account-menu target.bind="accountButton"></account-menu>
-      <activity-menu target.bind="activityButton"></activity-menu>
     </div>
   </div>
 </k-app-bar>
