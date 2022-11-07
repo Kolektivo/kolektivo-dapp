@@ -7,8 +7,8 @@ import type monetaryShared from '../../contracts/monetary/sharedAbis.json';
 
 export { governanceAlfajores, governanceCelo, governanceShared, monetaryAlfajores, monetaryCelo, monetaryShared };
 
-type Monetary = { main: typeof monetaryAlfajores | typeof monetaryCelo; shared: typeof monetaryShared };
-type Governance = { main: typeof governanceAlfajores | typeof governanceCelo; shared: typeof governanceShared };
+type Monetary = { main: typeof monetaryAlfajores & typeof monetaryCelo; shared: typeof monetaryShared };
+type Governance = { main: typeof governanceAlfajores & typeof governanceCelo; shared: typeof governanceShared };
 
 export type ContractGroupsJsons = {
   monetary: Monetary;

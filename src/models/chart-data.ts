@@ -28,3 +28,10 @@ export interface RiskChartData {
   moderateRisk: number;
   highRisk: number;
 }
+
+export interface kCurPriceData {
+  createdAt: Date;
+  kCurPrice: number;
+  kCurPriceCeiling: number;
+  kCurPriceFloor: number;
+}

@@ -70,6 +70,8 @@ export const seed = async () => {
   let currentLeverageRatio = 0;
   let maxLeverageRatio = 0;
   let kCurPrice = 0;
+  let kCurPriceCeiling = 0;
+  let kCurPriceFloor = 0;
   let kCurReserveDistribution = 0;
   let kCurMentoDistribution = 0;
   let kCurPrimaryPoolDistribution = 0;
@@ -153,6 +155,8 @@ export const seed = async () => {
 
     //Get current kCur Price
     kCurPrice = reserveStore.kCurPrice ?? 0;
+    kCurPriceCeiling = reserveStore.kCurPriceCeiling;
+    kCurPriceFloor = reserveStore.kCurPriceFloor;
 
     //Get current kCur Supply Distribution
     kCurReserveDistribution = reserveStore.kCurReserveDistribution ?? 0;
@@ -213,7 +217,7 @@ export const seed = async () => {
         }
 
         void captureDataPromise?.then(async () => {
-          await addData('kCurPrice', Periods[period], newSyncTime.getTime(), kCurPrice);
+          await addData('kCurPrice', Periods[period], newSyncTime.getTime(), { kCurPrice, kCurPriceCeiling, kCurPriceFloor });
           await addData('kCurRatio', Periods[period], newSyncTime.getTime(), { currentLeverageRatio, maxLeverageRatio });
           await addData('kCurSupply', Periods[period], newSyncTime.getTime(), {
             kCurReserveDistribution,

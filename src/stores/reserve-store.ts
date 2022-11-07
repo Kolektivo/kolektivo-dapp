@@ -1,6 +1,6 @@
 import { Asset, AssetType } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
-import { BigNumberOverTimeData, LeverageChartData, NumberOverTimeData, RiskChartData, ValueChartData } from 'models/chart-data';
+import { BigNumberOverTimeData, LeverageChartData, RiskChartData, ValueChartData, kCurPriceData } from 'models/chart-data';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { IContractService, INumberService, fromWei } from 'services';
@@ -76,7 +76,15 @@ export class ReserveStore {
 
   public get kCurPriceFloor(): number {
     if (!this.reserveValue || !this.kCurSupply) return 0;
+    //price floor is defined in the BL as Reserve Value / kCUR Supply
     return this.numberService.fromString(fromWei(this.reserveValue, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
+  }
+
+  public get kCurPriceCeiling(): number {
+    if (!this.reserveValue || !this.kCurSupply) return 0;
+    //price ceiling is defined in the BL as Price Floor * Ceiling Multiplier
+    //TODO get ceiling multiplier from the proxy contract when we get it
+    return this.kCurPriceFloor * 1.9;
   }
 
   public get lowRiskAssets(): Asset[] {
@@ -220,34 +228,30 @@ export class ReserveStore {
     return valueOverTimeData;
   }
 
-  public async getkCurPriceOverTime(interval: Interval): Promise<ValueChartData[]> {
+  public async getkCurPriceOverTime(interval: Interval): Promise<kCurPriceData[]> {
     //get data from datastore
     const earliestTime = getTimeMinusInterval(interval);
-    const valueOverTimeData = await this.dataStore.getDocs<NumberOverTimeData[]>(
+    const valueOverTimeData = await this.dataStore.getDocs<kCurPriceData[]>(
       `chartData/kCurPrice/${convertIntervalToRecordType(interval)}`,
       'createdAt',
       'desc',
       { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
     );
-    //map data from datastore to what the UI needs
-    const chartData = valueOverTimeData.map((x) => {
-      return {
-        createdAt: new Date(x.createdAt),
-        value: x.value,
-      } as unknown as ValueChartData;
-    });
     //sort data by date ascending
-    chartData.sort((a, b) => {
+    valueOverTimeData.sort((a, b) => {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     });
     //get latest data from the contract for last data point
     await this.loadkCurData();
+    await this.loadAssets();
     //add last data point
-    chartData.push({
+    valueOverTimeData.push({
       createdAt: new Date(),
-      value: this.kCurPrice,
-    } as unknown as ValueChartData);
-    return chartData;
+      kCurPrice: this.kCurPrice,
+      kCurPriceCeiling: this.kCurPriceCeiling,
+      kCurPriceFloor: this.kCurPriceFloor,
+    } as unknown as kCurPriceData);
+    return valueOverTimeData;
   }
 
   public async getRiskOverTime(interval: Interval): Promise<RiskChartData[]> {
