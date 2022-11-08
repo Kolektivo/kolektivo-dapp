@@ -9,6 +9,9 @@ export default defineConfig({
   build: {
     rollupOptions: {
       plugins: [nodePolyfills() as Plugin],
+      output: {
+        inlineDynamicImports: true,
+      },
     },
     commonjsOptions: {
       transformMixedEsModules: true,
