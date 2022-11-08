@@ -8,7 +8,7 @@ import { IEncryptionClient } from './encryption-client';
 import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { IS_DEV } from './environment-variables';
-import { ITokenData, getTokenInfos } from './services/contract/token-info';
+import { ITokenData } from './services/contract/token-info';
 import { IWalletConnector } from './wallet-connector';
 import { IWalletProvider } from 'wallet-provider';
 import { RouterConfiguration } from '@aurelia/router';
@@ -26,6 +26,7 @@ import LocalStorageBackend from 'i18next-localstorage-backend';
 import designScss from './design-system/styles/shared.scss';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 import scss from './shared.scss';
+import tokenData from './tokenlist.json';
 
 // const ipfs = await create({
 //   repo: String(Math.random() + Date.now()),
@@ -98,7 +99,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(configurationFromEnv())
   .register(
     Registration.instance(ITokenData, {
-      tokens: getTokenInfos(),
+      tokens: tokenData.tokens,
     }),
   )
   .register(

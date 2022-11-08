@@ -1,33 +1,29 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import { Plugin, PluginOption, defineConfig, splitVendorChunkPlugin } from 'vite';
+import { Plugin, defineConfig, splitVendorChunkPlugin } from 'vite';
 import { resolve } from 'path';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
-import swc from 'unplugin-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
+  publicDir: false,
   build: {
     rollupOptions: {
       plugins: [nodePolyfills() as Plugin],
-      output: {
-        manualChunks: () => 'update-chart-data',
-      },
     },
     commonjsOptions: {
       transformMixedEsModules: true,
     },
-    minify: 'terser',
-    outDir: 'scripts',
-    target: 'es2022',
+    outDir: 'scripts/update-chart-data',
+    target: 'esnext',
     lib: {
       entry: resolve(__dirname, './src/firebase.ts'),
-      name: 'update-chart-data',
+      name: 'index',
 
-      fileName: 'update-chart-data',
+      fileName: 'index',
       formats: ['es'],
     },
   },
-  plugins: [swc.vite() as PluginOption, splitVendorChunkPlugin(), tsconfigPaths()],
+  plugins: [splitVendorChunkPlugin(), tsconfigPaths()],
   define: {
     'process.env': process.env,
   },
@@ -42,7 +38,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     esbuildOptions: {
-      target: 'es2022',
+      target: 'esnext',
       // Node.js global to browser globalThis
       define: {
         global: 'globalThis',

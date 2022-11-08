@@ -12,7 +12,7 @@ import { IBrowserStorageService } from 'services/browser-storage-service';
 import { IFirebaseApp, IFirebaseService } from 'services/firebase-service';
 import { IIpfsService } from 'services/ipfs';
 import { IReserveStore, ReserveStore } from 'stores/reserve-store';
-import { ITokenData, getTokenInfos } from 'services/contract';
+import { ITokenData } from 'services/contract';
 import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
 import { IWalletConnector } from 'wallet-connector';
 import { IWalletProvider } from 'wallet-provider';
@@ -22,6 +22,7 @@ import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch }
 import { configurationFromEnv } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { initializeApp } from 'firebase/app';
+import tokenData from './tokenlist.json';
 
 enum Periods {
   'minute',
@@ -48,7 +49,7 @@ const container = DI.createContainer()
 
   .register(
     Registration.instance(ITokenData, {
-      tokens: getTokenInfos(),
+      tokens: tokenData.tokens,
     }),
   )
   .register(NumberService)
