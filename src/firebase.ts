@@ -14,6 +14,8 @@ import { IIpfsService } from 'services/ipfs';
 import { IReserveStore, ReserveStore } from 'stores/reserve-store';
 import { ITokenData, getTokenInfos } from 'services/contract';
 import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
+import { IWalletConnector } from 'wallet-connector';
+import { IWalletProvider } from 'wallet-provider';
 import { NumberService } from './services/number-service';
 import { TokenService } from './services/token-service';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
@@ -32,6 +34,8 @@ const container = DI.createContainer()
   .register(Registration.instance(IIpfsService, {}))
   .register(ContractService)
   .register(EthereumService)
+  .register(Registration.instance(IWalletProvider, {}))
+  .register(Registration.instance(IWalletConnector, {}))
   .register(Registration.instance(IBrowserStorageService, { lsGet: () => '', lsSet: () => '' }))
   .register(FirebaseService)
   .register(ContractStore)
@@ -41,6 +45,7 @@ const container = DI.createContainer()
   .register(CacheService)
   .register(TreasuryStore)
   .register(ReserveStore)
+
   .register(
     Registration.instance(ITokenData, {
       tokens: getTokenInfos(),
