@@ -57,11 +57,12 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   get data(): number[] {
     return this.reserveData.map((x) => x.value);
   }
-  get dataSets() {
+  //TODO: Make i18n work in this method as a getter
+  private dataSets(data: number[]) {
     return [
       {
-        label: 'Reserve Value',
-        data: this.data,
+        label: this.i18n.tr('navigation.reserve.overview.value-over-time.chart-tooltip'),
+        data: data,
         fill: true,
         borderColor: 'rgba(69, 173, 168, 0.77)',
         tension: 0.5,

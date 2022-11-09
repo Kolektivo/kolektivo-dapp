@@ -69,6 +69,7 @@ export class SupplyCard implements ICustomElementViewModel {
   get xLabelFormat(): Record<string, unknown> {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
+  //TODO: Make i18n work in this method as a getter
   private dataSets(
     kCurCirculatingDistribution: number[],
     kCurMentoDistribution: number[],
