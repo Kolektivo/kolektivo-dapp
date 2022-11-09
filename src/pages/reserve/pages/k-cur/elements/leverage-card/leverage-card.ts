@@ -71,11 +71,12 @@ export class LeverageCard implements ICustomElementViewModel {
   get xLabelFormat(): Record<string, unknown> {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
-  get dataSets() {
+  //TODO: Make i18n work in this method as a getter
+  private dataSets(referenceLineData: number[], leverageRatioData: number[], maxLeverageRatioData: number[]) {
     return [
       {
         label: '',
-        data: this.referenceLineData,
+        data: referenceLineData,
         borderColor: 'rgba(190, 183, 183, 0.77)',
         tension: 0,
         pointStyle: 'line',
@@ -83,8 +84,8 @@ export class LeverageCard implements ICustomElementViewModel {
         backgroundColor: 'rgba(75, 192, 192, .7)',
       },
       {
-        label: 'Current Leverage Ratio',
-        data: this.leverageRatioData,
+        label: this.i18n.tr('navigation.reserve.k-cur.leverage.ratio-text'),
+        data: leverageRatioData,
         fill: true,
         borderColor: 'rgba(69, 173, 168, 0.77)',
         tension: 0.5,
@@ -93,8 +94,8 @@ export class LeverageCard implements ICustomElementViewModel {
         backgroundColor: 'rgba(75, 192, 192, .7)',
       },
       {
-        label: 'Max Leverage Ratio',
-        data: this.maxLeverageRatioData,
+        label: this.i18n.tr('navigation.reserve.k-cur.leverage.max-ratio-text'),
+        data: maxLeverageRatioData,
         borderDash: [5],
         borderColor: 'rgba(190, 183, 183, 0.77)',
         tension: 0.5,

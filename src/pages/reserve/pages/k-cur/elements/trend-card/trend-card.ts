@@ -64,10 +64,11 @@ export class TrendCard implements ICustomElementViewModel {
   get xLabelFormat(): Record<string, unknown> {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
+  //TODO: Make i18n work in this method as a getter
   private dataSets(priceCeiling: number[], priceFloor: number[], price: number[]) {
     return [
       {
-        label: 'Price Celing',
+        label: this.i18n.tr('navigation.reserve.k-cur.trend.ceiling'),
         data: priceCeiling,
         borderDash: [5],
         borderColor: 'rgba(190, 183, 183, 0.77)',
@@ -77,7 +78,7 @@ export class TrendCard implements ICustomElementViewModel {
         backgroundColor: 'rgba(75, 192, 192, .7)',
       },
       {
-        label: 'Price Floor',
+        label: this.i18n.tr('navigation.reserve.k-cur.trend.floor'),
         data: priceFloor,
         borderDash: [5],
         borderColor: 'rgba(190, 183, 183, 0.77)',
@@ -87,7 +88,7 @@ export class TrendCard implements ICustomElementViewModel {
         backgroundColor: 'rgba(75, 192, 192, .7)',
       },
       {
-        label: 'kCur Price',
+        label: this.i18n.tr('navigation.reserve.k-cur.trend.price'),
         data: price,
         fill: true,
         borderColor: 'rgba(69, 173, 168, 0.77)',

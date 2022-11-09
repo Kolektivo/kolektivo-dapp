@@ -85,6 +85,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   get xLabelFormat(): Record<string, unknown> {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
+  //TODO: Make i18n work in this method as a getter
   private dataSets(marketCap: number[], minCollateralValue: number[], lowRisk: number[], moderateRisk: number[], highRisk: number[]) {
     return [
       {

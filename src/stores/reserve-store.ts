@@ -97,6 +97,11 @@ export class ReserveStore {
     return this.reserveAssets?.filter((x) => x.type === AssetType.Ecological) ?? [];
   }
 
+  public get kGuilderValueRatio(): number {
+    if (!this.kCurPrice) return 0;
+    return 0.98 / this.kCurPrice;
+  }
+
   public getRiskClass(assetType: AssetType): RiskClass {
     switch (assetType) {
       case AssetType.Ecological:

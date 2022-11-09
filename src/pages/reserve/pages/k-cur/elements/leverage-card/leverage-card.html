@@ -9,6 +9,6 @@
     </k-stack>
   </chart-time-filter>
   <k-chart gradient height="300" max-labels="2" hide-legend type="line" fill labels.bind="labels"
-    border-color.bind="red" tension=".01" data-sets.bind="dataSets" tooltip-options.bind="tooltipOptions" y-label-format.bind="yLabelFormat" x-label-format.bind="xLabelFormat" max-x-labels="5">
+    border-color.bind="red" tension=".01" data-sets.bind="dataSets(referenceLineData, leverageRatioData, maxLeverageRatioData)" tooltip-options.bind="tooltipOptions" y-label-format.bind="yLabelFormat" x-label-format.bind="xLabelFormat" max-x-labels="5">
   </k-chart>
 </k-card>

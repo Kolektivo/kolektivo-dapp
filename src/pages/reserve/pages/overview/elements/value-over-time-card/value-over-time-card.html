@@ -4,6 +4,6 @@
   <k-stack gap="var(--spacing-xl)">
     <chart-time-filter current-filter.two-way="currentInterval"></chart-time-filter>
     <k-chart gradient height="300" max-labels="2" hide-legend type="line" fill labels.bind="labels"
-      border-color.bind="red" tension=".01" data-sets.bind="dataSets" tooltip-options.bind="tooltipOptions" y-label-format.bind="yLabelFormat" x-label-format.bind="xLabelFormat" max-x-labels="5"></k-chart>
+      border-color.bind="red" tension=".01" data-sets.bind="dataSets(data)" tooltip-options.bind="tooltipOptions" y-label-format.bind="yLabelFormat" x-label-format.bind="xLabelFormat" max-x-labels="5"></k-chart>
   </k-stack>
 </k-card>

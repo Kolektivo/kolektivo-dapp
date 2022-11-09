@@ -45,7 +45,8 @@
         },
         "value-over-time": {
           "title": "Treasury Value Over Time",
-          "tooltip": "The ratio between Treasury and Reserve tokens over time."
+          "tooltip": "The ratio between Treasury and Reserve tokens over time.",
+          "chart-tooltip": "Treasury Value"
         }
       },
       "governance": {
@@ -101,7 +102,8 @@
         },
         "value-over-time": {
           "title": "Reserve Value Over Time",
-          "tooltip": "The distribution of Reserve Value by risk class, over time."
+          "tooltip": "The distribution of Reserve Value by risk class, over time.",
+          "chart-tooltip": "Reserve Value"
         },
         "assets": {
           "title": "Reserve Assets",
@@ -134,7 +136,10 @@
         },
         "trend": {
           "title": "kCUR Price Trend",
-          "tooltip": "The evolution of kCUR price over time."
+          "tooltip": "The evolution of kCUR price over time.",
+          "price": "kCUR Price",
+          "ceiling": "Price Ceiling",
+          "floor": "Price Floor"
         },
         "supply": {
           "title": "kCUR Supply Distribution Over Time",

@@ -82,6 +82,7 @@ export const seed = async () => {
   let kCurMentoDistribution = 0;
   let kCurPrimaryPoolDistribution = 0;
   let kCurCirculatingDistribution = 0;
+  let kGuilderValueRatio = 0;
   let captureDataPromise: Promise<void> | undefined = undefined;
   let minCollateralValue = 0;
   let marketCap = 0;
@@ -178,6 +179,7 @@ export const seed = async () => {
     highRisk = reserveStore.highRiskAssets.map((x) => x.total).sum();
 
     //Get and store current kGuilder-kCur Value Ratio
+    kGuilderValueRatio = reserveStore.kGuilderValueRatio;
   };
 
   //loop through each time period to determine if data needs to be collected for it
@@ -241,6 +243,7 @@ export const seed = async () => {
             moderateRisk,
             highRisk,
           });
+          await addData('kGuilder', Periods[period], newSyncTime.getTime(), kGuilderValueRatio);
           await setLastSyncTime(Periods[period], newSyncTime.getTime(), lastSync); //set latest sync time
 
           //delete unneeded records for this interval
@@ -251,6 +254,7 @@ export const seed = async () => {
           await deleteData('ktt', Periods[period], earliestTime);
           await deleteData('reserve', Periods[period], earliestTime);
           await deleteData('risk', Periods[period], earliestTime);
+          await deleteData('kGuilder', Periods[period], earliestTime);
         });
       }
       return;
