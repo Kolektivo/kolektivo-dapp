@@ -30,7 +30,7 @@
     "build:dev:chart-data-script": "vite build --config vite.config-lib.ts --mode development",
     "build:dev": "vite build --mode development",
     "preview-build": "vite preview --open",
-    "postinstall": "node build/postinstall/index.js",
+    "postinstall": "node build/postinstall/index.mjs",
     "test": "vitest --no-threads",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
