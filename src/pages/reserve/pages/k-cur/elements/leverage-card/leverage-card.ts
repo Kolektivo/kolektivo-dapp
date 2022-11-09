@@ -55,6 +55,7 @@ export class LeverageCard implements ICustomElementViewModel {
   get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
     return {
       callbacks: {
+        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => {
           if (x.datasetIndex === 0) return '';
           return `${x.dataset.label ?? ''}: ${this.multiplierValueConverter.toView(Number(x.raw) / 100)}`;

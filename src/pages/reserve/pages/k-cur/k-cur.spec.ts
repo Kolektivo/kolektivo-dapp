@@ -89,6 +89,7 @@ describe('k-cur', () => {
           reserveAssets: [],
           getLeverageRatioValueOverTime: () => new Promise((res) => res([])),
           getkCurPriceOverTime: () => new Promise((res) => res([])),
+          getkCurSupplyData: () => new Promise((res) => res([])),
         }),
       ),
       KCur,

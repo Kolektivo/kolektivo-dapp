@@ -1,6 +1,6 @@
 import { Asset, AssetType } from 'models/asset';
 import { BigNumber } from '@ethersproject/bignumber';
-import { BigNumberOverTimeData, LeverageChartData, RiskChartData, ValueChartData, kCurPriceData } from 'models/chart-data';
+import { BigNumberOverTimeData, LeverageChartData, RiskChartData, ValueChartData, kCurPriceData, kCurSupplyData } from 'models/chart-data';
 import { DI, IContainer, Registration } from 'aurelia';
 import { Erc20 } from 'models/generated/monetary/erc20';
 import { IContractService, INumberService, fromWei } from 'services';
@@ -225,6 +225,32 @@ export class ReserveStore {
       currentLeverageRatio: this.calculateLeverage(reserveStatus[2]),
       maxLeverageRatio: (1 / (this.numberService.fromString(fromWei(minBacking, 2)) / 100)) * 100,
     } as unknown as LeverageChartData);
+    return valueOverTimeData;
+  }
+
+  public async getkCurSupplyData(interval: Interval): Promise<kCurSupplyData[]> {
+    //get data from datastore
+    const earliestTime = getTimeMinusInterval(interval);
+    const valueOverTimeData = await this.dataStore.getDocs<kCurSupplyData[]>(
+      `chartData/kCurSupply/${convertIntervalToRecordType(interval)}`,
+      'createdAt',
+      'desc',
+      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
+    );
+    //sort data by date ascending
+    valueOverTimeData.sort((a, b) => {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+    //get latest data from the contract for last data point
+    await this.loadkCur();
+    //add last data point
+    valueOverTimeData.push({
+      createdAt: new Date(),
+      kCurCirculatingDistribution: this.kCurCirculatingDistribution,
+      kCurMentoDistribution: this.kCurMentoDistribution,
+      kCurPrimaryPoolDistribution: this.kCurPrimaryPoolDistribution,
+      kCurReserveDistribution: this.kCurReserveDistribution,
+    } as unknown as kCurSupplyData);
     return valueOverTimeData;
   }
 

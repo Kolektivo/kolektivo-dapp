@@ -63,7 +63,6 @@ export class KChart implements ICustomElementViewModel {
   @bindable tension?: number = 0.01;
   @bindable maxYLabels = 11;
   @bindable maxXLabels = 11;
-  @bindable({ set: ifExistsThenTrue }) stacked = false;
   @bindable legend?: LegendOptions<ChartType>;
   @bindable({ set: ifExistsThenTrue }) hideLegend = false;
   @bindable({ set: ifExistsThenTrue }) fill?: boolean;
@@ -159,18 +158,6 @@ export class KChart implements ICustomElementViewModel {
           usePointStyle: true,
           displayColors: false,
           intersect: false,
-          callbacks: this.stacked
-            ? {
-                label: (x) => {
-                  switch (x.datasetIndex) {
-                    case 0:
-                      return `${x.dataset.label ?? ''}: ${x.raw as string}%`;
-                    default:
-                      return `${x.dataset.label ?? ''}: ${(x.raw as number) - (this.dataSets[x.datasetIndex - 1]?.data[x.dataIndex] as number)}%`;
-                  }
-                },
-              }
-            : undefined,
           ...this.tooltipOptions,
         },
       },
