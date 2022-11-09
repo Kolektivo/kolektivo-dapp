@@ -31,12 +31,7 @@ enum Periods {
 }
 
 const container = DI.createContainer()
-  .register(
-    Registration.instance(
-      IFirebaseApp,
-      initializeApp({ ...firebaseConfig, apiKey: globalThis.process.env.FIREBASE_API_KEY ?? firebaseConfig.apiKey }),
-    ),
-  )
+  .register(Registration.instance(IFirebaseApp, initializeApp({ ...firebaseConfig, apiKey: globalThis.process.env.FIREBASE_API_KEY })))
   .register(Registration.instance(IIpfsService, {}))
   .register(ContractService)
   .register(EthereumService)

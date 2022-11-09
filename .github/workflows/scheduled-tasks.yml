@@ -1,6 +1,8 @@
 name: Trigger scheduled tasks on a CRON Schedule
 on:
   workflow_dispatch:
+env:
+  FIREBASE_API_KEY: ${{ secrets.FirebaseApiKey }}
 jobs:
   build:
     name: Trigger Chart Data Refresh

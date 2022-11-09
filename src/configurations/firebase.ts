@@ -1,7 +1,5 @@
-import { FIREBASE_API_KEY } from './../environment-variables';
 import type { FirebaseOptions } from 'firebase/app';
 export const firebaseConfig: FirebaseOptions = {
-  apiKey: FIREBASE_API_KEY,
   authDomain: 'kolektivo-36b63.firebaseapp.com',
   projectId: 'kolektivo-36b63',
   storageBucket: 'kolektivo-36b63.appspot.com',

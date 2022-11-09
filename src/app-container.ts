@@ -3,11 +3,11 @@ import * as pages from './pages';
 import * as resources from './resources';
 import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { DesignSystemPlugin } from './design-system';
+import { FIREBASE_API_KEY, IS_DEV } from './environment-variables';
 import { I18nConfiguration } from '@aurelia/i18n';
 import { IEncryptionClient } from './encryption-client';
 import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
-import { IS_DEV } from './environment-variables';
 import { ITokenData } from './services/contract/token-info';
 import { IWalletConnector } from './wallet-connector';
 import { IWalletProvider } from 'wallet-provider';
@@ -84,7 +84,11 @@ export const appContainer: IContainer = DI.createContainer()
   .register(hooks)
   .register(resources)
   .register(pages)
-  .register(Registration.cachedCallback(IFirebaseApp, () => import('firebase/app').then((x) => x.initializeApp(firebaseConfig))))
+  .register(
+    Registration.cachedCallback(IFirebaseApp, () =>
+      import('firebase/app').then((x) => x.initializeApp({ ...firebaseConfig, apiKey: FIREBASE_API_KEY })),
+    ),
+  )
   .register(
     Registration.cachedCallback(IEncryptionClient, async () => {
       const LitJsSdk = (await import('lit-js-sdk')).default;
