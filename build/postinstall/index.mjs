@@ -2,7 +2,7 @@ import buildModels from "./buildModels.mjs";
 import fetchContracts from "./fetchContracts.mjs";
 import pullTokenLists from "./pullTokenLists.mjs";
 
-console.log(process.env);
+if(process.env.npm_command === 'ci') return;
 
 await Promise.all([
 // fetchContracts("map"),
