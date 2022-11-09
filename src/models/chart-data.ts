@@ -35,3 +35,11 @@ export interface kCurPriceData {
   kCurPriceCeiling: number;
   kCurPriceFloor: number;
 }
+
+export interface kCurSupplyData {
+  createdAt: Date;
+  kCurCirculatingDistribution: number;
+  kCurMentoDistribution: number;
+  kCurPrimaryPoolDistribution: number;
+  kCurReserveDistribution: number;
+}
