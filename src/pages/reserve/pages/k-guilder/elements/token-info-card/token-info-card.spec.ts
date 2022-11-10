@@ -1,13 +1,16 @@
 import '../../../../../../utils-testing/setup-testing';
 import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
+import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../../../stores';
 import { Registration } from 'aurelia';
 import { TokenInfoCard } from './token-info-card';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('token-info-card', () => {
   it('should have a k-card component', async () => {
@@ -48,6 +51,21 @@ describe('token-info-card', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [TokenInfoCard, CurrencyValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
+    return [
+      TokenInfoCard,
+      CurrencyValueConverter,
+      Registration.instance(
+        IReserveStore,
+        mock<IReserveStore>({
+          reserveAssets: [],
+          getkGuilderValueRatioOverTime: () => new Promise((res) => res([])),
+        }),
+      ),
+      EthweiValueConverter,
+      Global,
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+    ];
   }
 });

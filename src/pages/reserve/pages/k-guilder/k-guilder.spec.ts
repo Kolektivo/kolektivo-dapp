@@ -1,11 +1,14 @@
 import '../../../../utils-testing/setup-testing';
+import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
 import { Global } from '../../../../hooks/';
 import { I18N } from '@aurelia/i18n';
+import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../stores';
 import { KGuilder } from './k-guilder';
 import { Registration, ValueConverter } from 'aurelia';
 import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 describe('<k-guilder />', () => {
   it('should have a k-page component', async () => {
@@ -52,13 +55,8 @@ describe('<k-guilder />', () => {
     expect(gridCards).toHaveLength(3);
 
     const [card1, card2, card3] = gridCards;
-    expect(card1.textContent).toContain('0.2%');
     expect(card1.textContent).toContain('navigation.reserve.k-guilder.spread.title');
-
-    expect(card2.textContent).toContain('0.4%');
     expect(card2.textContent).toContain('navigation.reserve.k-guilder.inflation-rate.title');
-
-    expect(card3.textContent).toContain('0.4%');
     expect(card3.textContent).toContain('navigation.reserve.k-guilder.tobin-tax.title');
   });
 
@@ -76,6 +74,14 @@ describe('<k-guilder />', () => {
       });
     return [
       KGuilder,
+      Registration.instance(
+        IReserveStore,
+        mock<IReserveStore>({
+          reserveAssets: [],
+          getkGuilderValueRatioOverTime: () => new Promise((res) => res([])),
+        }),
+      ),
+      EthweiValueConverter,
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       Global,
