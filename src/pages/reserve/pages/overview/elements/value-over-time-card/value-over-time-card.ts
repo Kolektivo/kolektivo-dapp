@@ -1,10 +1,11 @@
 import './value-over-time-card.scss';
+import { BigNumberOverTimeData } from 'models/chart-data';
 import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
 import { I18N } from '@aurelia/i18n';
 import { ICustomElementViewModel, customElement } from 'aurelia';
+import { INumberService, fromWei } from 'services';
 import { IReserveStore } from 'stores/reserve-store';
 import { Interval } from 'models/interval';
-import { ValueChartData } from 'models/chart-data';
 import { formatter, getXLabelFormat } from 'utils';
 import { watch } from '@aurelia/runtime-html';
 import template from './value-over-time-card.html';
@@ -14,15 +15,16 @@ import type { _DeepPartialObject } from 'chart.js/types/utils';
 export class ValueOverTimeCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
-  private reserveData: ValueChartData[] = [];
+  private reserveData: BigNumberOverTimeData[] = [];
   constructor(
     @IReserveStore private readonly reserveStore: IReserveStore,
     private readonly currencyValueConverter: CurrencyValueConverter,
+    @INumberService private readonly numberService: INumberService,
     @I18N private readonly i18n: I18N,
   ) {}
 
-  async binding(): Promise<void> {
-    this.reserveData = await this.reserveStore.getReserveValueOverTime(this.currentInterval);
+  binding() {
+    void this.intervalChanged();
   }
 
   @watch('currentInterval')
@@ -55,7 +57,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return this.reserveData.map((x) => formatter.format(x.createdAt).replace(',', ''));
   }
   get data(): number[] {
-    return this.reserveData.map((x) => x.value);
+    return this.reserveData.map((x) => this.numberService.fromString(fromWei(x.value, 18)));
   }
   //TODO: Make i18n work in this method as a getter
   private dataSets(data: number[]) {

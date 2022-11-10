@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface BigNumberOverTimeData {
-  createdAt: number;
+  createdAt: Date;
   value: string;
 }
 

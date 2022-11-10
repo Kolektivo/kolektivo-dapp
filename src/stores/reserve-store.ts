@@ -198,53 +198,20 @@ export class ReserveStore {
     return this.contractService.getContract('monetary', 'Reserve');
   }
 
-  public async getReserveValueOverTime(interval: Interval): Promise<ValueChartData[]> {
-    //get data from datastore
-    const earliestTime = getTimeMinusInterval(interval);
-    const valueOverTimeData = await this.dataStore.getDocs<BigNumberOverTimeData[]>(
-      `chartData/reserve/${convertIntervalToRecordType(interval)}`,
-      'createdAt',
-      'desc',
-      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
-    );
-    //map data from datastore to what the UI needs
-    const chartData = valueOverTimeData.map((x) => {
-      return {
-        createdAt: new Date(x.createdAt),
-        value: this.numberService.fromString(fromWei(x.value, 18)),
-      } as unknown as ValueChartData;
-    });
-    //sort data by date ascending
-    chartData.sort((a, b) => {
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    });
-    //get latest data from the contract for last data point
-    const contract = await this.getReserveContract();
-    const reserveStatus = await contract.reserveStatus();
-    //add last data point
-    chartData.push({
+  public async getReserveValueOverTime(interval: Interval): Promise<BigNumberOverTimeData[]> {
+    const [valueOverTimeData, reserveStatus] = await Promise.all([
+      this.getData<BigNumberOverTimeData>('reserve', interval),
+      this.getReserveContract().then((contract) => contract.reserveStatus()),
+    ]);
+    valueOverTimeData.push({
       createdAt: new Date(),
-      value: this.numberService.fromString(fromWei(reserveStatus[0], 18)),
-    } as unknown as ValueChartData);
-    return chartData;
+      value: reserveStatus[0],
+    } as unknown as BigNumberOverTimeData);
+    return valueOverTimeData;
   }
 
   public async getkGuilderValueRatioOverTime(interval: Interval): Promise<ValueChartData[]> {
-    //get data from datastore
-    const earliestTime = getTimeMinusInterval(interval);
-    const valueOverTimeData = await this.dataStore.getDocs<ValueChartData[]>(
-      `chartData/kGuilder/${convertIntervalToRecordType(interval)}`,
-      'createdAt',
-      'desc',
-      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
-    );
-    //sort data by date ascending
-    valueOverTimeData.sort((a, b) => {
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    });
-    //get latest data from the contract for last data point
-    await this.loadkCurData();
-    //add last data point
+    const [valueOverTimeData] = await Promise.all([this.getData<ValueChartData>('kGuilder', interval), this.loadkCurData()]);
     valueOverTimeData.push({
       createdAt: new Date(),
       value: this.kGuilderValueRatio,
@@ -253,24 +220,10 @@ export class ReserveStore {
   }
 
   public async getLeverageRatioValueOverTime(interval: Interval): Promise<LeverageChartData[]> {
-    //get data from datastore
-    const earliestTime = getTimeMinusInterval(interval);
-    const valueOverTimeData = await this.dataStore.getDocs<LeverageChartData[]>(
-      `chartData/kCurRatio/${convertIntervalToRecordType(interval)}`,
-      'createdAt',
-      'desc',
-      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
-    );
-    //sort data by date ascending
-    valueOverTimeData.sort((a, b) => {
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    });
-    //get latest data from the contract for last data point
-    const contract = await this.getReserveContract();
-    const reserveStatus = await contract.reserveStatus();
-    const minBacking = await contract.minBacking();
-
-    //add last data point
+    const [valueOverTimeData, [reserveStatus, minBacking]] = await Promise.all([
+      this.getData<LeverageChartData>('kCurRatio', interval),
+      this.getReserveContract().then((contract) => Promise.all([contract.reserveStatus(), contract.minBacking()])),
+    ]);
     valueOverTimeData.push({
       createdAt: new Date(),
       currentLeverageRatio: this.calculateLeverage(reserveStatus[2]),
@@ -280,21 +233,7 @@ export class ReserveStore {
   }
 
   public async getkCurSupplyData(interval: Interval): Promise<kCurSupplyData[]> {
-    //get data from datastore
-    const earliestTime = getTimeMinusInterval(interval);
-    const valueOverTimeData = await this.dataStore.getDocs<kCurSupplyData[]>(
-      `chartData/kCurSupply/${convertIntervalToRecordType(interval)}`,
-      'createdAt',
-      'desc',
-      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
-    );
-    //sort data by date ascending
-    valueOverTimeData.sort((a, b) => {
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    });
-    //get latest data from the contract for last data point
-    await this.loadkCur();
-    //add last data point
+    const [valueOverTimeData] = await Promise.all([this.getData<kCurSupplyData>('kCurSupply', interval), this.loadkCur()]);
     valueOverTimeData.push({
       createdAt: new Date(),
       kCurCirculatingDistribution: this.kCurCirculatingDistribution,
@@ -306,21 +245,7 @@ export class ReserveStore {
   }
 
   public async getkCurPriceOverTime(interval: Interval): Promise<kCurPriceData[]> {
-    //get data from datastore
-    const earliestTime = getTimeMinusInterval(interval);
-    const valueOverTimeData = await this.dataStore.getDocs<kCurPriceData[]>(
-      `chartData/kCurPrice/${convertIntervalToRecordType(interval)}`,
-      'createdAt',
-      'desc',
-      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
-    );
-    //sort data by date ascending
-    valueOverTimeData.sort((a, b) => {
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    });
-    //get latest data from the contract for last data point
-    await this.loadkCurData();
-    await this.loadAssets();
+    const [valueOverTimeData] = await Promise.all([this.getData<kCurPriceData>('kCurPrice', interval), this.loadkCurData(), this.loadAssets()]);
     //add last data point
     valueOverTimeData.push({
       createdAt: new Date(),
@@ -332,41 +257,37 @@ export class ReserveStore {
   }
 
   public async getRiskOverTime(interval: Interval): Promise<RiskChartData[]> {
-    //get data from datastore
-    const earliestTime = getTimeMinusInterval(interval);
-    const valueOverTimeData = await this.dataStore.getDocs<RiskChartData[]>(
-      `chartData/risk/${convertIntervalToRecordType(interval)}`,
-      'createdAt',
-      'desc',
-      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
-    );
-    //sort data by date ascending
-    valueOverTimeData.sort((a, b) => {
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    });
-    //get latest data from the contract for last data point
-    await this.loadAssets();
-    const contract = await this.getReserveContract();
-    const reserveStatus = await contract.reserveStatus();
+    const [valueOverTimeData, [reserveStatus, minBacking]] = await Promise.all([
+      this.getData<RiskChartData>('risk', interval),
+      this.getReserveContract().then((contract) => Promise.all([contract.reserveStatus(), contract.minBacking()])),
+      this.loadAssets(),
+    ]);
     this.kCurMarketCap = reserveStatus[1];
-    this.minBacking = await contract.minBacking();
-
-    const minCollateralValue = this.minCollateralizationValue;
-    const marketCap = this.kCurTotalValue;
-    const lowRisk = this.lowRiskAssets.map((x) => x.total).sum();
-    const moderateRisk = this.moderateRiskAssets.map((x) => x.total).sum();
-    const highRisk = this.highRiskAssets.map((x) => x.total).sum();
-
-    //add last data point
+    this.minBacking = minBacking;
     valueOverTimeData.push({
       createdAt: new Date(),
-      minCollateralValue,
-      marketCap,
-      lowRisk,
-      moderateRisk,
-      highRisk,
+      minCollateralValue: this.minCollateralizationValue,
+      marketCap: this.kCurTotalValue,
+      lowRisk: this.lowRiskAssets.map((x) => x.total).sum(),
+      moderateRisk: this.moderateRiskAssets.map((x) => x.total).sum(),
+      highRisk: this.highRiskAssets.map((x) => x.total).sum(),
     } as unknown as RiskChartData);
     return valueOverTimeData;
+  }
+
+  private async getData<T extends { createdAt: Date }>(collection: string, interval: Interval): Promise<T[]> {
+    //get data from datastore
+    const earliestTime = getTimeMinusInterval(interval);
+    const data = await this.dataStore.getDocs<T[]>(`chartData/${collection}/${convertIntervalToRecordType(interval)}`, 'createdAt', 'desc', {
+      fieldPath: 'createdAt',
+      opStr: '>=',
+      value: earliestTime,
+    });
+    //sort data by date ascending
+    data.sort((a, b) => {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+    return data;
   }
 
   private calculateLeverage(value: BigNumber): number {

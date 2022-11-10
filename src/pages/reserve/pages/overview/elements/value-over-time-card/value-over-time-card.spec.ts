@@ -2,6 +2,7 @@ import '../../../../../../utils-testing/setup-testing';
 import { Global } from '../../../../../../hooks';
 import { I18N } from '@aurelia/i18n';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { INumberService } from 'services/number-service';
 import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../../../stores';
 import { Registration } from 'aurelia';
@@ -45,6 +46,7 @@ describe('value-over-time-card', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
+    const numberServiceRegistration = () => Registration.instance(INumberService, {});
     return [
       ValueOverTimeCard,
       Global,
@@ -54,6 +56,7 @@ describe('value-over-time-card', () => {
           getReserveValueOverTime: () => new Promise((res) => res([])),
         }),
       ),
+      numberServiceRegistration(),
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       designSystemConfiguration(),
