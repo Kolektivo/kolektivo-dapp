@@ -5,15 +5,15 @@
     <k-grid cols="1fr 1fr 1fr" gap="20">
       <k-card>
         <k-text type="h5" slot="header">${i18n.tr('navigation.reserve.k-guilder.spread.title')}</k-text>
-        <k-text type="h2">${0.2 | percentage}</k-text>
+        <k-text type="h2">${reserveStore.kGuilderSpread | percentage}</k-text>
       </k-card>
       <k-card>
         <k-text type="h5" slot="header">${i18n.tr('navigation.reserve.k-guilder.inflation-rate.title')}</k-text>
-        <k-text type="h2">${0.4 | percentage}</k-text>
+        <k-text type="h2">${reserveStore.kGuilderInflationRate | percentage}</k-text>
       </k-card>
       <k-card>
         <k-text type="h5" slot="header">${i18n.tr('navigation.reserve.k-guilder.tobin-tax.title')}</k-text>
-        <k-text type="h2">${0.4 | percentage}</k-text>
+        <k-text type="h2">${reserveStore.kGuilderTobinTax | percentage}</k-text>
       </k-card>
     </k-grid>
   </k-stack>

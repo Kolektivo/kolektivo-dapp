@@ -28,6 +28,11 @@ export class ReserveStore {
   public kCurMentoDistribution?: number;
   public kCurPrimaryPoolDistribution?: number;
   public minBacking?: BigNumber;
+  public kGuilderCurrentPrice?: number;
+  public kGuilderTotalSupply?: BigNumber;
+  public kGuilderSpread?: number;
+  public kGuilderInflationRate?: number;
+  public kGuilderTobinTax?: number;
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IReserveStore, ReserveStore));
@@ -74,6 +79,11 @@ export class ReserveStore {
     return this.numberService.fromString(fromWei(this.kCurMarketCap ?? 0, 18));
   }
 
+  public get kGuilderMarketCap(): number {
+    if (!this.kGuilderCurrentPrice) return 0;
+    return this.kGuilderCurrentPrice * this.numberService.fromString(fromWei(this.kGuilderTotalSupply ?? 0, 18));
+  }
+
   public get kCurPriceFloor(): number {
     if (!this.reserveValue || !this.kCurSupply) return 0;
     //price floor is defined in the BL as Reserve Value / kCUR Supply
@@ -99,7 +109,8 @@ export class ReserveStore {
 
   public get kGuilderValueRatio(): number {
     if (!this.kCurPrice) return 0;
-    return 0.98 / this.kCurPrice;
+    //TODO get the kGuilder price and divide that by kCurPrice
+    return 4 / this.kCurPrice;
   }
 
   public getRiskClass(assetType: AssetType): RiskClass {
@@ -157,6 +168,18 @@ export class ReserveStore {
     this.kCurPrimaryPoolDistribution = 0.4;
   }
 
+  @callOnce()
+  public async loadkGuilder(): Promise<void> {
+    const contract = await this.getReserveContract();
+    const reserveAddress = contract.address;
+    if (!reserveAddress) return;
+    this.kGuilderCurrentPrice = 4;
+    this.kGuilderTotalSupply = BigNumber.from(1934223345231232342413213n);
+    this.kGuilderSpread = 0.2;
+    this.kGuilderInflationRate = 0.01;
+    this.kGuilderTobinTax = 0.05;
+  }
+
   private async loadkCurData(): Promise<void> {
     if (this.kCurPrice || this.kCurSupply) return;
     const contract = await this.getReserveContract(); // get reserve contract
@@ -204,6 +227,29 @@ export class ReserveStore {
       value: this.numberService.fromString(fromWei(reserveStatus[0], 18)),
     } as unknown as ValueChartData);
     return chartData;
+  }
+
+  public async getkGuilderValueRatioOverTime(interval: Interval): Promise<ValueChartData[]> {
+    //get data from datastore
+    const earliestTime = getTimeMinusInterval(interval);
+    const valueOverTimeData = await this.dataStore.getDocs<ValueChartData[]>(
+      `chartData/kGuilder/${convertIntervalToRecordType(interval)}`,
+      'createdAt',
+      'desc',
+      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
+    );
+    //sort data by date ascending
+    valueOverTimeData.sort((a, b) => {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+    //get latest data from the contract for last data point
+    await this.loadkCurData();
+    //add last data point
+    valueOverTimeData.push({
+      createdAt: new Date(),
+      value: this.kGuilderValueRatio,
+    } as unknown as ValueChartData);
+    return valueOverTimeData;
   }
 
   public async getLeverageRatioValueOverTime(interval: Interval): Promise<LeverageChartData[]> {

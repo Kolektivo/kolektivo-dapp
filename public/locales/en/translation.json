@@ -188,7 +188,8 @@
         "value-ratio": {
           "title": "kCUR-kGuilder Value Ratio (USD)",
           "tooltip": "Tooltip for kCUR-kGuilder Value Ratio (USD)",
-          "ratio-text": "kCUR-kGuilder Value Ratio"
+          "ratio-text": "kCUR-kGuilder Value Ratio",
+          "chart-tooltip": "Value Ratio"
         },
         "spread": {
           "title": "Spread"
