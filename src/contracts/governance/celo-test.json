@@ -4,51 +4,51 @@
 	"contracts": {
 		"monetaryBadger": {
 			"abi": "Badger",
-			"address": "0x01CA5fbaF905c350F9B7EA573282217099403CF5"
+			"address": "0xac0c9314f008047228B18Aa0f2B0f69349B7cE15"
 		},
 		"kolektivoBadger": {
 			"abi": "Badger",
-			"address": "0xfC5481685166352BB18992b6853D323365aC972A"
+			"address": "0x4D7116B96a7A2dE170fe40e2dF59617aBcF56018"
 		},
 		"bacMD": {
 			"abi": "BACRoles",
-			"address": "0xC8796bd3FcEca6f38f925e115B0163Ba6627Fd52"
+			"address": "0x92ca28643FC27b35D7B706f373ba76aD675BeADa"
 		},
 		"bacFFD": {
 			"abi": "BACRoles",
-			"address": "0x76E6db145f2650d91B02756e600F9f115B948526"
+			"address": "0x615857388C1314Ee771643F1537307D5729facbA"
 		},
 		"bacMC": {
 			"abi": "BACRoles",
-			"address": "0x12A8726d68150d824B0F1BE4DE310FF3347AE306"
+			"address": "0x75E62731F9c9BB76989269f151bA9A049B615632"
 		},
 		"bacK": {
 			"abi": "BACRoles",
-			"address": "0x1708eF497B907c44De584EE21BEdC579969Ee55E"
+			"address": "0xda7316eBd1c475d79059b2C08337d53C23cCa0Ba"
 		},
 		"reserveDelegateScope": {
 			"abi": "ScopeGuard",
-			"address": "0x150c862E9500963d665833B79C2B038FB93Cd70F"
+			"address": "0xe134419f1955F254956A9E436005F60849f6a6c5"
 		},
 		"foodForestDelegateScope": {
 			"abi": "ScopeGuard",
-			"address": "0xC3E45284121B8c33501d9bE01f9935ff3177FeeE"
+			"address": "0xa578E29E64aa47a270f86d43623083e7FdEF84D4"
 		},
 		"monetaryMultisigScope": {
 			"abi": "ScopeGuard",
-			"address": "0x10cF9BDd4e3E4a615E8a3b58Eb0Ed0462a981A3f"
+			"address": "0x61171BB19fA468793856a7Ef23e62e263b5Ce8A2"
 		},
 		"monetaryDelay": {
 			"abi": "SecretDelay",
-			"address": "0x6898D92DD279E7f52509c3003Dd2218326D7a256"
+			"address": "0xAF5614E1577b85A3fd725532ce01D51881089945"
 		},
 		"foodForestDelay": {
 			"abi": "SecretDelay",
-			"address": "0xCb021a33DCC0c2999E39dA0C674B1A8516a0D3da"
+			"address": "0xeaae16F74A4851f2655289f6074f6457a4C7b033"
 		},
 		"kolektivoDelay": {
 			"abi": "SecretDelay",
-			"address": "0x2Ca3641Fe884B79Ec768Bbb5153eD970c7dfB50b"
+			"address": "0xce3614A5C6a3F15d71ED1AF70bcd1a113c3252ee"
 		}
 	}
 }

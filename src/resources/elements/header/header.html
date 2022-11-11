@@ -4,7 +4,7 @@
   </k-icon-button>
   <div></div>
   <div slot="end">
-    <k-stack if.bind="!store.blockChainStore.walletConnected" justify-content="flex-end" direction="row"
+    <k-stack if.bind="!blockChainStore.walletConnected" justify-content="flex-end" direction="row"
       gap="var(--spacing)">
       <network-feedback></network-feedback>
       <k-button click.trigger="connectKolektivoWallet()">Koletivo Wallet</k-button>
@@ -13,15 +13,14 @@
     <div else>
       <k-stack justify-content="flex-end" direction="row" gap="20">
         <network-feedback></network-feedback>
-        <k-text color="var(--white)" if.bind="store.kolektivoStore.badges.length">${i18n.tr('status-bar.badge-title')}:
+        <k-text color="var(--white)" if.bind="accountStore.badges.length">${i18n.tr('status-bar.badge-title')}:
         </k-text>
         <k-avatar-group ref="badgeGroup">
-          <k-avatar repeat.for="badge of store.kolektivoStore.badges" tooltip="value:${badge.name};position:bottom"
+          <k-avatar repeat.for="badge of accountStore.badges" tooltip="value:${badge.name};position:bottom"
             src.bind="badge.imageUrl" size="32"></k-avatar>
         </k-avatar-group>
         <k-button ref="accountButton" type="utility-dark" icon="account_circle">
-          ${blockChainStore.connectedWalletAddress
-          | smallHexString}</k-button>
+          ${accountStore.walletAddress | smallHexString}</k-button>
       </k-stack>
       <badge-menu target.bind="badgeGroup"></badge-menu>
       <account-menu target.bind="accountButton"></account-menu>
