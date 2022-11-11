@@ -1,9 +1,13 @@
-import './assets.scss';
-import { ICustomElementViewModel, customElement } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
 import { IGridColumn } from '../../../../../../../../design-system/elements/k-data-grid/grid-column';
-import { IReserveStore } from 'stores/reserve-store';
-import { assetsColumns } from 'grid-columns';
+
 import template from './assets.html';
+
+import './assets.scss';
+
+import { assetsColumns } from 'grid-columns';
+import { IReserveStore } from 'stores/reserve-store';
 
 @customElement({ name: 'assets', template })
 export class Assets implements ICustomElementViewModel {

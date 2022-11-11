@@ -1,5 +1,6 @@
-import { IDesignSystemConfiguration } from '../configuration';
 import { valueConverter } from 'aurelia';
+
+import { IDesignSystemConfiguration } from '../configuration';
 
 @valueConverter('currency')
 export class CurrencyValueConverter {

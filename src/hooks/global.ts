@@ -1,7 +1,8 @@
 import { I18N } from '@aurelia/i18n';
-import { ICustomAttributeController, ICustomElementController, lifecycleHooks } from '@aurelia/runtime-html';
-import { IStore } from 'stores/store';
 import { Scope } from '@aurelia/runtime';
+import { ICustomAttributeController, ICustomElementController, lifecycleHooks } from '@aurelia/runtime-html';
+
+import { IStore } from 'stores/store';
 export type IHydratedComponentController = ICustomElementController | ICustomAttributeController | { scope: Scope | null };
 
 @lifecycleHooks()

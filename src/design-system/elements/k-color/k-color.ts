@@ -1,8 +1,10 @@
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { captureFilter } from '../../common';
 
-import css from './k-color.scss';
 import template from './k-color.html';
+
+import css from './k-color.scss';
 
 @customElement({
   name: 'k-color',

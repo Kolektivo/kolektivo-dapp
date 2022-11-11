@@ -1,13 +1,15 @@
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement, watch } from '@aurelia/runtime-html';
-import { IReserveStore } from 'stores/reserve-store';
-import { Interval } from 'models/interval';
-import { PercentageValueConverter } from 'resources';
-import { formatter, getXLabelFormat } from 'utils';
-import { kCurSupplyData } from 'models/chart-data';
+import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
+
 import template from './supply-card.html';
+
 import type { TooltipOptions } from 'chart.js';
 import type { _DeepPartialObject } from 'chart.js/types/utils';
+import { kCurSupplyData } from 'models/chart-data';
+import { Interval } from 'models/interval';
+import { PercentageValueConverter } from 'resources';
+import { IReserveStore } from 'stores/reserve-store';
+import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'supply-card', template })
 export class SupplyCard implements ICustomElementViewModel {

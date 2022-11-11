@@ -1,9 +1,12 @@
-import './value-by-asset-type-card.scss';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
 import { AssetType } from './../../../../../../models/asset';
-import { ICustomElementViewModel, customElement } from 'aurelia';
-import { ITreasuryStore } from './../../../../../../stores/treasury-store';
 import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { ITreasuryStore } from './../../../../../../stores/treasury-store';
 import template from './value-by-asset-type-card.html';
+
+import './value-by-asset-type-card.scss';
+
 import type { TooltipOptions } from 'chart.js';
 import type { _DeepPartialObject } from 'chart.js/types/utils';
 

@@ -1,13 +1,17 @@
-import '../../../../../../utils-testing/setup-testing';
-import { Global } from '../../../../../../hooks';
+import { Registration } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
+import { createFixture } from '@aurelia/testing';
+
+import '../../../../../../utils-testing/setup-testing';
+
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { Global } from '../../../../../../hooks';
+import { IStore } from '../../../../../../stores';
+
+import { ValueOverTimeCard } from './value-over-time-card';
+
 import { INumberService } from 'services/number-service';
 import { IReserveStore } from 'stores/reserve-store';
-import { IStore } from '../../../../../../stores';
-import { Registration } from 'aurelia';
-import { ValueOverTimeCard } from './value-over-time-card';
-import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

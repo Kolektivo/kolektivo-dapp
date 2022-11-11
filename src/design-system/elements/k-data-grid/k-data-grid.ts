@@ -1,10 +1,13 @@
+import { bindable, customElement, ICustomAttributeViewModel, ICustomElementViewModel, shadowCSS } from 'aurelia';
 import { ICustomAttributeController, ICustomElementController, ViewModelKind } from '@aurelia/runtime-html';
-import { ICustomAttributeViewModel, ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { IGridColumn } from './grid-column';
+
 import { captureFilter } from '../../common';
+
+import { IGridColumn } from './grid-column';
 type ElementOrAttributeViewModel = ICustomElementController | ICustomAttributeController;
-import css from './k-data-grid.scss';
 import template from './k-data-grid.html';
+
+import css from './k-data-grid.scss';
 
 @customElement({
   name: 'k-data-grid',

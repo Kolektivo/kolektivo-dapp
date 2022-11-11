@@ -1,8 +1,12 @@
-import './chart-time-filter.scss';
-import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { Interval } from 'models/interval';
+import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
+
 import { captureFilter } from '../../../design-system/common';
+
 import template from './chart-time-filter.html';
+
+import './chart-time-filter.scss';
+
+import { Interval } from 'models/interval';
 
 @customElement({
   name: 'chart-time-filter',

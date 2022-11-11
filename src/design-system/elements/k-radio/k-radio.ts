@@ -1,7 +1,10 @@
-import './k-radio.scss';
-import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
+
 import { captureFilter, uid } from '../../common';
+
 import template from './k-radio.html';
+
+import './k-radio.scss';
 
 @customElement({
   name: 'k-radio',

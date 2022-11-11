@@ -1,13 +1,17 @@
-import '../../../../../../utils-testing/setup-testing';
-import { Global } from '../../../../../../hooks';
-import { I18N } from '@aurelia/i18n';
-import { INumberService } from '../../../../../../services/number-service';
-import { IReserveStore } from 'stores/reserve-store';
-import { IStore } from '../../../../../../stores';
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
-import { TrendCard } from './trend-card';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import '../../../../../../utils-testing/setup-testing';
+
+import { Global } from '../../../../../../hooks';
+import { INumberService } from '../../../../../../services/number-service';
+import { IStore } from '../../../../../../stores';
+
+import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { TrendCard } from './trend-card';
+
+import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

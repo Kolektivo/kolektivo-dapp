@@ -1,14 +1,17 @@
-import './leverage-card.scss';
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement, watch } from '@aurelia/runtime-html';
-import { IReserveStore } from 'stores/reserve-store';
-import { Interval } from 'models/interval';
-import { LeverageChartData } from 'models/chart-data';
+import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
+
 import { MultiplierValueConverter } from './../../../../../../resources/value-converters/multiplier';
-import { formatter, getXLabelFormat } from 'utils';
 import template from './leverage-card.html';
+
+import './leverage-card.scss';
+
 import type { TooltipOptions } from 'chart.js';
 import type { _DeepPartialObject } from 'chart.js/types/utils';
+import { LeverageChartData } from 'models/chart-data';
+import { Interval } from 'models/interval';
+import { IReserveStore } from 'stores/reserve-store';
+import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'leverage-card', template })
 export class LeverageCard implements ICustomElementViewModel {

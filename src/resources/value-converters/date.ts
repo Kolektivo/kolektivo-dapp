@@ -1,5 +1,6 @@
-﻿import { IDateServiceIntl, IDateTimeFormatOptions } from '../../services/date-intl-service';
-import { valueConverter } from 'aurelia';
+﻿import { valueConverter } from 'aurelia';
+
+import { IDateServiceIntl, IDateTimeFormatOptions } from '../../services/date-intl-service';
 
 /**
  * Display localized date and time formats using the browser javascript INTL.

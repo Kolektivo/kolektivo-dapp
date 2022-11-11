@@ -1,30 +1,23 @@
-import { Bacroles } from './../models/generated/governance/bacroles/Bacroles';
-import { BadgeType } from 'models/badge-type';
-import { Badger } from 'models/generated/governance/badger';
-import { BigNumber, ContractTransaction, PopulatedTransaction } from 'ethers';
 import { DI, IContainer, Registration } from 'aurelia';
-import { IContractService } from 'services/contract';
-import { IKolektivoStore, allBadges } from './kolektivo-store';
-import { IObserverService } from 'services/observer-service';
-import { IServices } from 'services/services';
-import { Proposal, ProposalStatus } from './../models/proposal';
-import { Secretdelay } from 'models/generated/governance/secretdelay';
-import { callOnce } from 'decorators/call-once';
+
 import { delay } from '../utils';
+
+import { Bacroles } from './../models/generated/governance/bacroles/Bacroles';
+import { Proposal, ProposalStatus } from './../models/proposal';
+
+import { callOnce } from 'decorators/call-once';
+import { BigNumber, ContractTransaction, PopulatedTransaction } from 'ethers';
+import { BadgeType } from 'models/badge-type';
+import { Secretdelay } from 'models/generated/governance/secretdelay';
+import { IContractService } from 'services/contract';
+import { IServices } from 'services/services';
 
 export type IGovernanceStore = GovernanceStore;
 export const IGovernanceStore = DI.createInterface<IGovernanceStore>('IGovernanceStore');
 
 export class GovernanceStore {
   public proposals: Proposal[] = [];
-  constructor(
-    @IServices private readonly services: IServices,
-    @IContractService private readonly contractService: IContractService,
-    @IObserverService private readonly observerService: IObserverService,
-    @IKolektivoStore private readonly kolektivoStore: IKolektivoStore,
-  ) {
-    this.observerService.listen(services.ethereumService, 'defaultAccountAddress', () => void this.loadBadges());
-  }
+  constructor(@IServices private readonly services: IServices, @IContractService private readonly contractService: IContractService) {}
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IGovernanceStore, GovernanceStore));
   }
@@ -111,28 +104,5 @@ export class GovernanceStore {
       BadgeType.ECOLOGY_DELEGATE,
     );
     return result;
-  }
-
-  public async loadBadges(): Promise<void> {
-    const contract = await this.getBadgerContract();
-    if (!this.services.ethereumService.defaultAccountAddress) return;
-    const badgeNumbers = Object.values(BadgeType)
-      .filter((y) => typeof y === 'number')
-      .map((y) => y as number);
-
-    const badges = (
-      await Promise.all(
-        badgeNumbers.map(async (x) => {
-          const balance = await contract.balanceOf(this.services.ethereumService.defaultAccountAddress ?? '', BigNumber.from(x));
-          if (Number(balance) !== 1) return;
-          return x;
-        }),
-      )
-    ).filter(Boolean);
-    this.kolektivoStore.badges = allBadges.filter((x) => badges.some((y) => y === x.type));
-  }
-
-  private getBadgerContract(): Promise<Badger> {
-    return this.contractService.getContract('governance', 'monetaryBadger');
   }
 }

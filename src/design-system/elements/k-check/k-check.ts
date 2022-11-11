@@ -1,9 +1,10 @@
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { captureFilter, uid } from '../../common';
 
-import css from './k-check.scss';
-
 import template from './k-check.html';
+
+import css from './k-check.scss';
 
 @customElement({
   name: 'k-check',

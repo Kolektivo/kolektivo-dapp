@@ -1,4 +1,5 @@
 import { DI, IContainer, Registration } from 'aurelia';
+
 import pkg from '../../package.json';
 
 interface IStorage {

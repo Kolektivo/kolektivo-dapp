@@ -1,5 +1,5 @@
 import { BigNumber, Transaction } from 'ethers';
-import { ITokenInfo } from 'services/token-types';
+import type { ITokenInfo } from 'services/contract/token-info';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface Proposal {

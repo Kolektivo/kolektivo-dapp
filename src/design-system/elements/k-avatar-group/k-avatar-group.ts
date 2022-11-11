@@ -1,4 +1,5 @@
-import { IAuSlotsInfo, ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { bindable, customElement, IAuSlotsInfo, ICustomElementViewModel } from 'aurelia';
+
 import { captureFilter } from '../../common';
 
 import template from './k-avatar-group.html';

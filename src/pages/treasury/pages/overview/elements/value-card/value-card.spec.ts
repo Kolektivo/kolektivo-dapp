@@ -1,12 +1,15 @@
+import { Registration } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
+import { createFixture } from '@aurelia/testing';
+
 import 'utils-testing/setup-testing';
+
+import { ValueCard } from './value-card';
+
+import { IDesignSystemConfiguration } from 'design-system';
 import { CurrencyValueConverter } from 'design-system/value-converters';
 import { Global } from 'hooks';
-import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from 'design-system';
 import { IStore, ITreasuryStore } from 'stores';
-import { Registration } from 'aurelia';
-import { ValueCard } from './value-card';
-import { createFixture } from '@aurelia/testing';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

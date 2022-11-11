@@ -1,8 +1,10 @@
-import { ICustomElementViewModel, IPlatform, Task, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, IPlatform, shadowCSS, Task } from 'aurelia';
+
 import { captureFilter, ifExistsThenTrue, numberToPixels } from '../../common';
 
-import css from './k-countdown.scss';
 import template from './k-countdown.html';
+
+import css from './k-countdown.scss';
 
 @customElement({
   name: 'k-countdown',

@@ -1,8 +1,11 @@
-import { ICustomElementViewModel, customElement } from '@aurelia/runtime-html';
 import { bindable, shadowCSS } from 'aurelia';
+import { customElement, ICustomElementViewModel } from '@aurelia/runtime-html';
+
 import { captureFilter } from '../../common';
-import css from './k-badge.scss';
+
 import template from './k-badge.html';
+
+import css from './k-badge.scss';
 
 @customElement({
   name: 'k-badge',

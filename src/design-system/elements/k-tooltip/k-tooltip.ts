@@ -1,8 +1,10 @@
-import { ICustomElementViewModel, INode, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, INode, IPlatform, shadowCSS } from 'aurelia';
+
 import { numberToPixels } from '../../common';
 
-import css from './k-tooltip.scss';
 import template from './k-tooltip.html';
+
+import css from './k-tooltip.scss';
 
 @customElement({ name: 'k-tooltip', template, dependencies: [shadowCSS(css)], shadowOptions: { mode: 'open' } })
 export class KTooltip implements ICustomElementViewModel {

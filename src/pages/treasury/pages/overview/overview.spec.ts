@@ -1,15 +1,18 @@
-import 'utils-testing/setup-testing';
-import { CurrencyValueConverter } from 'design-system/value-converters';
-import { EthweiValueConverter, PercentageValueConverter } from 'resources';
-import { Global } from 'hooks';
-import { I18N } from '@aurelia/i18n';
-import { IContractService, NumberService } from 'services';
-import { IDesignSystemConfiguration } from 'design-system';
 import { IPlatform, PLATFORM, Registration } from 'aurelia';
-import { IStore, ITreasuryStore } from 'stores';
-import { Overview } from './overview';
-import { RelativeTime } from './../../../../resources/value-converters/relative-time';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import 'utils-testing/setup-testing';
+
+import { RelativeTime } from './../../../../resources/value-converters/relative-time';
+import { Overview } from './overview';
+
+import { IDesignSystemConfiguration } from 'design-system';
+import { CurrencyValueConverter } from 'design-system/value-converters';
+import { Global } from 'hooks';
+import { EthweiValueConverter, PercentageValueConverter } from 'resources';
+import { IContractService, NumberService } from 'services';
+import { IStore, ITreasuryStore } from 'stores';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

@@ -1,8 +1,9 @@
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
 import * as elements from './elements';
-import { ICustomElementViewModel, customElement } from 'aurelia';
+import template from './overview.html';
 
 import './overview.scss';
-import template from './overview.html';
 
 @customElement({ name: 'overview', template, dependencies: [elements] })
 export class Overview implements ICustomElementViewModel {}

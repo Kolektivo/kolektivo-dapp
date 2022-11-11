@@ -1,7 +1,8 @@
-﻿import { BigNumber } from '@ethersproject/bignumber';
+﻿import { valueConverter } from 'aurelia';
 
 import { INumberService, IToStringOptions } from '../../services/number-service';
-import { valueConverter } from 'aurelia';
+
+import { BigNumber } from '@ethersproject/bignumber';
 
 /**
  * when a number is retrieved from the element to which it is bound, convert it from a string to a number.

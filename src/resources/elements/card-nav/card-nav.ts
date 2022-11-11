@@ -1,6 +1,8 @@
-import './card-nav.scss';
-import { BindingMode, ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { bindable, BindingMode, customElement, ICustomElementViewModel } from 'aurelia';
+
 import template from './card-nav.html';
+
+import './card-nav.scss';
 
 @customElement({ name: 'card-nav', template })
 export class CardNav implements ICustomElementViewModel {

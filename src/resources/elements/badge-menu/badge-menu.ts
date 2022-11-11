@@ -1,6 +1,8 @@
-import './badge-menu.scss';
-import { ICustomElementViewModel, customElement } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
 import template from './badge-menu.html';
+
+import './badge-menu.scss';
 
 @customElement({
   name: 'badge-menu',

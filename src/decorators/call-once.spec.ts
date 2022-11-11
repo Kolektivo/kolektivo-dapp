@@ -1,5 +1,6 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { callOnce } from './call-once';
+
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('@callOnce', () => {
   const mock = vi.fn();

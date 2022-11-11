@@ -1,8 +1,10 @@
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { captureFilter } from '../../common';
 
-import css from './k-app-bar.scss';
 import template from './k-app-bar.html';
+
+import css from './k-app-bar.scss';
 
 @customElement({
   name: 'k-app-bar',

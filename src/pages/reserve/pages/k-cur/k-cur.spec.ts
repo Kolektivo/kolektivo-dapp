@@ -1,17 +1,21 @@
-import '../../../../utils-testing/setup-testing';
-import { CurrencyValueConverter } from '../../../../design-system/value-converters';
-import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
-import { Global } from '../../../../hooks';
+import { Registration } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
+import { createFixture } from '@aurelia/testing';
+
+import '../../../../utils-testing/setup-testing';
+
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
+import { CurrencyValueConverter } from '../../../../design-system/value-converters';
+import { Global } from '../../../../hooks';
+import { IStore } from '../../../../stores';
+
+import { PercentageValueConverter } from './../../../../resources/value-converters';
+import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
+import { MultiplierValueConverter } from './../../../../resources/value-converters/multiplier';
 import { INumberService } from './../../../../services';
 import { IReserveStore } from './../../../../stores/reserve-store';
-import { IStore } from '../../../../stores';
 import { KCur } from './k-cur';
-import { MultiplierValueConverter } from './../../../../resources/value-converters/multiplier';
-import { PercentageValueConverter } from './../../../../resources/value-converters';
-import { Registration } from 'aurelia';
-import { createFixture } from '@aurelia/testing';
+
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

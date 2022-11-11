@@ -1,4 +1,4 @@
-import { ICustomAttributeViewModel, IPlatform, bindable, customAttribute } from 'aurelia';
+import { bindable, customAttribute, ICustomAttributeViewModel, IPlatform } from 'aurelia';
 
 @customAttribute({ name: 'ripple' })
 export class Ripple implements ICustomAttributeViewModel {

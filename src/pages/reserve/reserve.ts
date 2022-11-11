@@ -1,9 +1,10 @@
-import { ICustomElementViewModel, customElement } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
+
+import * as pages from './pages';
+import template from './reserve.html';
 
 import './reserve.scss';
-import * as pages from './pages';
-import { I18N } from '@aurelia/i18n';
-import template from './reserve.html';
 
 @customElement({ name: 'reserve', template, dependencies: [pages] })
 export class Reserve implements ICustomElementViewModel {

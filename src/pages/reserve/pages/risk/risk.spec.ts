@@ -1,15 +1,19 @@
+import { Registration } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
+import { createFixture } from '@aurelia/testing';
+
 import '../../../../utils-testing/setup-testing';
+
+import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
 import { CurrencyValueConverter } from '../../../../design-system/value-converters';
 import { Global } from '../../../../hooks';
-import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
-import { INumberService } from './../../../../services';
-import { IReserveStore } from 'stores/reserve-store';
 import { IStore } from '../../../../stores';
+
 import { PercentageValueConverter } from './../../../../resources/value-converters';
-import { Registration } from 'aurelia';
+import { INumberService } from './../../../../services';
 import { Risk } from './risk';
-import { createFixture } from '@aurelia/testing';
+
+import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 
 describe('risk', () => {

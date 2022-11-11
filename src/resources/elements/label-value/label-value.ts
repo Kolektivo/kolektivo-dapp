@@ -1,6 +1,8 @@
-import './label-value.scss';
-import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
+
 import template from './label-value.html';
+
+import './label-value.scss';
 
 @customElement({ template, name: 'label-value' })
 export class LabelValue implements ICustomElementViewModel {

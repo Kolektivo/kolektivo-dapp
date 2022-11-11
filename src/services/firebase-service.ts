@@ -1,4 +1,5 @@
 import { DI, IContainer, Registration } from 'aurelia';
+
 import { type FirebaseApp } from '@firebase/app';
 import type { FieldPath, Firestore, OrderByDirection, WhereFilterOp } from 'firebase/firestore/lite';
 

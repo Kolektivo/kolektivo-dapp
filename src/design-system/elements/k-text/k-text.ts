@@ -1,9 +1,10 @@
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { captureFilter, numberToPixels } from '../../common';
 
-import css from './k-text.scss';
-
 import template from './k-text.html';
+
+import css from './k-text.scss';
 
 @customElement({
   name: 'k-text',

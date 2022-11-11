@@ -1,8 +1,10 @@
-import './assets-card.scss';
-import * as tabs from './tabs';
+import { customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement } from 'aurelia';
+
 import template from './assets-card.html';
+import * as tabs from './tabs';
+
+import './assets-card.scss';
 
 @customElement({ name: 'assets-card', template, dependencies: [tabs] })
 export class AssetsCard implements ICustomElementViewModel {

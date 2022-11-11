@@ -1,7 +1,9 @@
-import './value-card.scss';
-import { ICustomElementViewModel, customElement } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
 import { IReserveStore } from './../../../../../../stores/reserve-store';
 import template from './value-card.html';
+
+import './value-card.scss';
 
 @customElement({ name: 'value-card', template })
 export class ValueCard implements ICustomElementViewModel {

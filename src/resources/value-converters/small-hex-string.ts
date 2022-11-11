@@ -1,5 +1,6 @@
-import { smallHexString } from '../../utils';
 import { valueConverter } from 'aurelia';
+
+import { smallHexString } from '../../utils';
 
 @valueConverter('smallHexString')
 export class SmallHexStringValueConverter {

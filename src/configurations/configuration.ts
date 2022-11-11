@@ -1,25 +1,14 @@
-import { AllowedNetworks } from '../models/allowed-network';
-import { DI, IRegistration, Registration } from 'aurelia';
-import { ETHERSCAN_LINK, IPFS_GATEWAY, IS_DEV, NETWORK } from '../environment-variables';
+import { DI } from 'aurelia';
+
+import { AllowedNetworks } from './../models/allowed-network';
 
 export type IConfiguration = {
+  chainId: number;
   ipfsGateway: string;
-  network: AllowedNetworks;
+  chainUrl: string;
+  chain: AllowedNetworks;
   isDevelopment: boolean;
-  etherscanLink: string;
+  scanLink: string;
 };
 
 export const IConfiguration = DI.createInterface<IConfiguration>();
-
-export function configurationFromEnv(): IRegistration {
-  return Registration.instance(IConfiguration, {
-    ipfsGateway: IPFS_GATEWAY,
-    network: NETWORK,
-    isDevelopment: IS_DEV,
-    etherscanLink: ETHERSCAN_LINK,
-  });
-}
-
-export function configurationFromCustom(custom: Partial<IConfiguration>): IRegistration {
-  return Registration.instance(IConfiguration, custom);
-}

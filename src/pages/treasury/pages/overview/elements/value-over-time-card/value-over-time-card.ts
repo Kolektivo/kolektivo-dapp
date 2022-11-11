@@ -1,16 +1,18 @@
-import './value-over-time-card.scss';
-import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
-
+import { customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement } from 'aurelia';
-import { ITreasuryStore } from 'stores';
-import { Interval } from 'models/interval';
-import { ValueChartData } from 'models/chart-data';
-import { formatter, getXLabelFormat } from 'utils';
 import { watch } from '@aurelia/runtime-html';
+
+import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
+
+import './value-over-time-card.scss';
+
 import type { TooltipOptions } from 'chart.js';
 import type { _DeepPartialObject } from 'chart.js/types/utils';
+import { ValueChartData } from 'models/chart-data';
+import { Interval } from 'models/interval';
+import { ITreasuryStore } from 'stores';
+import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'value-over-time-card', template })
 export class ValueOverTimeCard implements ICustomElementViewModel {

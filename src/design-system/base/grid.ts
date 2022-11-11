@@ -1,6 +1,8 @@
-import { Alignable } from './alignable';
 import { bindable } from 'aurelia';
+
 import { numberToPixelsInterceptor } from '../common';
+
+import { Alignable } from './alignable';
 
 export abstract class Grid extends Alignable {
   @bindable({ set: numberToPixelsInterceptor }) gap?: string;

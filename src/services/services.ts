@@ -1,17 +1,19 @@
+import { DI, IContainer, Registration } from 'aurelia';
+
+import { ContractService, IContractService } from './contract/contract-service';
+import { IIpfsService, IpfsService } from './ipfs/ipfs-service';
 import { BrowserStorageService, IBrowserStorageService } from './browser-storage-service';
 import { CacheService, ICacheService } from './cache-service';
-import { ContractService, IContractService } from './contract/contract-service';
-import { DI, IContainer, Registration } from 'aurelia';
 import { EncryptionService, IEncryptionService } from './encryption-service';
 import { EthereumService, IEthereumService } from './ethereum-service';
 import { FirebaseService } from './firebase-service';
 import { HttpService, IHttpService } from './http-service';
-import { IConfiguration } from 'configurations/configuration';
-import { IIpfsService, IpfsService } from './ipfs/ipfs-service';
 import { INumberService, NumberService } from './number-service';
 import { IObserverService, ObserverService } from './observer-service';
 import { ITimingService, TimingService } from './timing-service';
 import { ITokenService, TokenService } from './token-service';
+
+import { IConfiguration } from 'configurations/configuration';
 
 export type IServices = Services;
 export const IServices = DI.createInterface<Services>();

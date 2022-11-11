@@ -1,28 +1,32 @@
 /* eslint-disable no-console */
+import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
+
 import './prototypes';
+
 import { CacheService } from './services/cache-service';
 import { ContractService } from './services/contract/contract-service';
-import { ContractStore } from './stores/contract-store';
-import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
-import { DataStore } from './stores/data-store';
-import { EthereumService } from 'services/ethereum-service';
 import { FirebaseService } from './services/firebase-service';
-import { I18N } from '@aurelia/i18n';
+import { NumberService } from './services/number-service';
+import { TokenService } from './services/token-service';
+import { ContractStore } from './stores/contract-store';
+import { DataStore } from './stores/data-store';
+import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
+import tokenData from './tokenlist.json';
+
+import { IConfiguration } from 'configurations/configuration';
+import { firebaseConfig } from 'configurations/firebase';
+import { CHAIN, CHAIN_ID, CHAIN_URL, IPFS_GATEWAY, IS_DEV, SCAN_LINK } from 'environment-variables';
+import { initializeApp } from 'firebase/app';
+import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
 import { IBrowserStorageService } from 'services/browser-storage-service';
+import { ITokenData } from 'services/contract';
+import { EthereumService } from 'services/ethereum-service';
 import { IFirebaseApp, IFirebaseService } from 'services/firebase-service';
 import { IIpfsService } from 'services/ipfs';
 import { IReserveStore, ReserveStore } from 'stores/reserve-store';
-import { ITokenData } from 'services/contract';
-import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
 import { IWalletConnector } from 'wallet-connector';
 import { IWalletProvider } from 'wallet-provider';
-import { NumberService } from './services/number-service';
-import { TokenService } from './services/token-service';
-import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
-import { configurationFromEnv } from 'configurations/configuration';
-import { firebaseConfig } from 'configurations/firebase';
-import { initializeApp } from 'firebase/app';
-import tokenData from './tokenlist.json';
 
 enum Periods {
   'minute',
@@ -42,7 +46,16 @@ const container = DI.createContainer()
   .register(ContractStore)
   .register(TokenService)
   .register(DataStore)
-  .register(configurationFromEnv())
+  .register(
+    Registration.instance(IConfiguration, {
+      chainId: CHAIN_ID,
+      ipfsGateway: IPFS_GATEWAY,
+      chainUrl: CHAIN_URL,
+      chain: CHAIN,
+      isDevelopment: IS_DEV,
+      scanLink: SCAN_LINK,
+    }),
+  )
   .register(CacheService)
   .register(TreasuryStore)
   .register(ReserveStore)

@@ -1,7 +1,10 @@
-import { ICustomElementViewModel, customElement, shadowCSS } from 'aurelia';
+import { customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { captureFilter } from '../../common';
-import css from './k-accordion.scss';
+
 import template from './k-accordion.html';
+
+import css from './k-accordion.scss';
 
 @customElement({
   name: 'k-accordion',

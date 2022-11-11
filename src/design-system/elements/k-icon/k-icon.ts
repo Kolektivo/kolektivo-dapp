@@ -1,9 +1,11 @@
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { IDesignSystemConfiguration } from '../../configuration';
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { captureFilter, numberToPixelsInterceptor } from '../../common';
+import { IDesignSystemConfiguration } from '../../configuration';
+
+import template from './k-icon.html';
 
 import css from './k-icon.scss';
-import template from './k-icon.html';
 
 @customElement({
   name: 'k-icon',

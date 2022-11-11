@@ -25,6 +25,7 @@
     "clean": "npx -y rimraf node_modules package-lock.json && npm i",
     "dev": "vite",
     "start": "vite",
+    "typecheck": "tsc",
     "build": "tsc && vite build",
     "build:chart-data-script": "vite build --config vite.config-lib.ts",
     "build:dev:chart-data-script": "vite build --config vite.config-lib.ts --mode development",
@@ -73,6 +74,7 @@
     "web3modal": "^1.9.9"
   },
   "devDependencies": {
+    "eslint-plugin-simple-import-sort": "^8.0.0",
     "@aurelia/plugin-conventions": "dev",
     "@aurelia/testing": "dev",
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
@@ -90,7 +92,6 @@
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",

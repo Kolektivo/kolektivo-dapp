@@ -1,9 +1,11 @@
-import { BigNumber } from '@ethersproject/bignumber';
+import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
 
-import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { INumberService } from './../../../services';
 import { ifExistsThenTrue } from '../../../design-system/common';
+
+import { INumberService } from './../../../services';
 import template from './formatted-number.html';
+
+import { BigNumber } from '@ethersproject/bignumber';
 
 @customElement({ name: 'formatted-number', template })
 export class FormattedNumber implements ICustomElementViewModel {

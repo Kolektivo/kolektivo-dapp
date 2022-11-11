@@ -1,7 +1,10 @@
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
-import { captureFilter } from 'design-system/common';
-import css from './avatar-text.scss';
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import template from './avatar-text.html';
+
+import css from './avatar-text.scss';
+
+import { captureFilter } from 'design-system/common';
 
 @customElement({
   name: 'avatar-text',

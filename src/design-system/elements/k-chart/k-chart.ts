@@ -1,7 +1,11 @@
-import { ICustomElementViewModel, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, IPlatform, shadowCSS } from 'aurelia';
+
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
-import css from './k-chart.scss';
+
 import template from './k-chart.html';
+
+import css from './k-chart.scss';
+
 import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint, TooltipOptions } from 'chart.js';
 import type { _DeepPartialObject } from 'chart.js/types/utils';
 

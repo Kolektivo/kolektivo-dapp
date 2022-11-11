@@ -1,11 +1,15 @@
-import './value-by-asset-type-card.scss';
-import { AssetType } from 'models/asset';
-import { ICustomElementViewModel, customElement } from 'aurelia';
-import { INumberService, fromWei } from 'services';
-import { IReserveStore } from 'stores/reserve-store';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
 import template from './value-by-asset-type-card.html';
+
+import './value-by-asset-type-card.scss';
+
 import type { TooltipOptions } from 'chart.js';
 import type { _DeepPartialObject } from 'chart.js/types/utils';
+import { AssetType } from 'models/asset';
+import { INumberService } from 'services';
+import { IReserveStore } from 'stores/reserve-store';
+import { fromWei } from 'utils';
 
 @customElement({ name: 'value-by-asset-type-card', template })
 export class ValueByAssetTypeCard implements ICustomElementViewModel {

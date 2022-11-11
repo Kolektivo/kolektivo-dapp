@@ -1,18 +1,22 @@
-import '../../../utils-testing/setup-testing';
-import { ActivityMenu } from './activity-menu';
-import { AllowedNetworks } from 'models/allowed-network';
-import { Global } from '../../../hooks/';
-import { I18N } from '@aurelia/i18n';
-import { IBlockChainStore, IStore } from '../../../stores';
-import { IKolektivoStore, Transaction } from './../../../stores/kolektivo-store';
 import { Registration } from 'aurelia';
-import { TakeValueConverter } from '../../../design-system/value-converters';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import '../../../utils-testing/setup-testing';
+
+import { TakeValueConverter } from '../../../design-system/value-converters';
+import { Global } from '../../../hooks/';
+import { IBlockChainStore, IStore } from '../../../stores';
+
+import { IKolektivoStore, Transaction } from './../../../stores/kolektivo-store';
+import { ActivityMenu } from './activity-menu';
+
+import { AllowedNetworks } from 'models/allowed-network';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('<activity-menu />', () => {
   let transactions: Transaction[];
-  let targetedNetwork: AllowedNetworks | null;
+  let targetedNetwork: string | undefined;
 
   beforeEach(() => {
     transactions = [];

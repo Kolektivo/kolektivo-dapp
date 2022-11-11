@@ -1,7 +1,7 @@
-﻿import { BigNumber } from '@ethersproject/bignumber';
-
-import { DI, IContainer, Registration } from 'aurelia';
+﻿import { DI, IContainer, Registration } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
+
+import { BigNumber } from '@ethersproject/bignumber';
 
 export interface IToStringOptions {
   /**

@@ -1,14 +1,18 @@
-import '../../../../../../utils-testing/setup-testing';
-import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
-import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
-import { Global } from '../../../../../../hooks';
-import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
-import { IReserveStore } from 'stores/reserve-store';
-import { IStore } from '../../../../../../stores';
 import { Registration } from 'aurelia';
-import { TokenInfoCard } from './token-info-card';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import '../../../../../../utils-testing/setup-testing';
+
+import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
+import { Global } from '../../../../../../hooks';
+import { IStore } from '../../../../../../stores';
+
+import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
+import { TokenInfoCard } from './token-info-card';
+
+import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

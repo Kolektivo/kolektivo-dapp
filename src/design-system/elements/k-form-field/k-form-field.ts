@@ -1,9 +1,11 @@
-import { BindingMode, ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, BindingMode, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
 import { ValidationResult } from '@aurelia/validation';
+
 import { captureFilter, ifExistsThenTrue } from '../../common';
 
-import css from './k-form-field.scss';
 import template from './k-form-field.html';
+
+import css from './k-form-field.scss';
 
 @customElement({
   name: 'k-form-field',

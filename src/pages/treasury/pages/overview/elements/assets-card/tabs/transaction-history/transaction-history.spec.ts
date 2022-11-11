@@ -1,10 +1,14 @@
-import '../../../../../../../../utils-testing/setup-testing';
-import { Global } from '../../../../../../../../hooks';
-import { I18N } from '@aurelia/i18n';
-import { IStore, ITreasuryStore } from '../../../../../../../../stores';
 import { Registration } from 'aurelia';
-import { TransactionHistory } from './transaction-history';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import '../../../../../../../../utils-testing/setup-testing';
+
+import { Global } from '../../../../../../../../hooks';
+import { IStore, ITreasuryStore } from '../../../../../../../../stores';
+
+import { TransactionHistory } from './transaction-history';
+
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

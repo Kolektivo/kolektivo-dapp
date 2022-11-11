@@ -1,7 +1,8 @@
-import { ICustomElementViewModel, customElement } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
+import template from './swap.html';
 
 import './swap.scss';
-import template from './swap.html';
 
 @customElement({ name: 'swap', template })
 export class Swap implements ICustomElementViewModel {}

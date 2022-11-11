@@ -7,7 +7,7 @@ module.exports = {
   plugins: [
     "@typescript-eslint",
     "unused-imports",
-    "sort-imports-es6-autofix",
+    "simple-import-sort",
     "prettier"
   ],
   extends: [
@@ -72,12 +72,17 @@ module.exports = {
         prefix: ["I"]
       }
     ],
-    "sort-imports-es6-autofix/sort-imports-es6": [
-      2,
+    "simple-import-sort/imports": [
+      "error",
       {
-        ignoreCase: false,
-        ignoreMemberSort: false,
-        memberSyntaxSortOrder: ["none", "all", "multiple", "single"]
+        groups: [
+          ["^aurelia", "^@aurelia"],
+          ["^(@|lib)(/.*|$)"],
+          ["^\\u0000"],
+          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+          ["^.+\\.?(css)$"]
+        ]
       }
     ],
     "object-curly-spacing": ["error", "always"]

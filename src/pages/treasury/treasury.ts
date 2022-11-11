@@ -1,8 +1,10 @@
-import './treasury.scss';
-import * as pages from './pages';
+import { customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement } from 'aurelia';
+
+import * as pages from './pages';
 import template from './treasury.html';
+
+import './treasury.scss';
 @customElement({ name: 'treasury', template, dependencies: [pages] })
 export class Treasury implements ICustomElementViewModel {
   constructor(@I18N private readonly i18n: I18N) {}

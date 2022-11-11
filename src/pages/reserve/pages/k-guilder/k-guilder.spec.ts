@@ -1,12 +1,16 @@
-import '../../../../utils-testing/setup-testing';
-import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
-import { Global } from '../../../../hooks/';
-import { I18N } from '@aurelia/i18n';
-import { IReserveStore } from 'stores/reserve-store';
-import { IStore } from '../../../../stores';
-import { KGuilder } from './k-guilder';
 import { Registration, ValueConverter } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import '../../../../utils-testing/setup-testing';
+
+import { Global } from '../../../../hooks/';
+import { IStore } from '../../../../stores';
+
+import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
+import { KGuilder } from './k-guilder';
+
+import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

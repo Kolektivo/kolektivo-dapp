@@ -1,7 +1,9 @@
 import { DI, IContainer, Registration } from 'aurelia';
+
 import { IIpfsApi } from './ipfs-interface';
-import type { CID } from 'ipfs-http-client';
+
 import type { IPFSPath } from 'ipfs-core-types/src/utils';
+import type { CID } from 'ipfs-http-client';
 
 export type IIpfsService = IpfsService;
 export const IIpfsService = DI.createInterface<IIpfsService>();

@@ -1,13 +1,15 @@
-import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement, watch } from '@aurelia/runtime-html';
-import { IReserveStore } from 'stores/reserve-store';
-import { Interval } from 'models/interval';
-import { RiskChartData } from 'models/chart-data';
-import { formatter, getXLabelFormat } from 'utils';
+import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
+
+import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
+
 import type { TooltipOptions } from 'chart.js';
 import type { _DeepPartialObject } from 'chart.js/types/utils';
+import { RiskChartData } from 'models/chart-data';
+import { Interval } from 'models/interval';
+import { IReserveStore } from 'stores/reserve-store';
+import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'value-over-time-card', template })
 export class ValueOverTimeCard implements ICustomElementViewModel {

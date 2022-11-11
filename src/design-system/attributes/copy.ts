@@ -1,4 +1,5 @@
-import { ICustomAttributeViewModel, INode, IPlatform, bindable, customAttribute } from 'aurelia';
+import { bindable, customAttribute, ICustomAttributeViewModel, INode, IPlatform } from 'aurelia';
+
 import { INotificationService } from '../services';
 
 @customAttribute({ name: 'copy' })

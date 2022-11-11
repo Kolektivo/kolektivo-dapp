@@ -1,14 +1,14 @@
+import { IContainer, Registration } from 'aurelia';
+
+import { EthereumService, IEthereumService } from './../services/ethereum-service';
+
+import { IConfiguration } from 'configurations/configuration';
+import { INotificationService } from 'design-system/services';
 import { AllowedNetworks } from 'models/allowed-network';
 import { CacheService, IBrowserStorageService, ICacheService } from 'services';
-import { EthereumService, IEthereumService } from './../services/ethereum-service';
-import { IContainer, Registration } from 'aurelia';
-import { INotificationService } from 'design-system/services';
+import { mock } from 'vitest-mock-extended';
 import { IWalletConnector } from 'wallet-connector';
 import { IWalletProvider } from 'wallet-provider';
-import { Signer } from '@ethersproject/abstract-signer';
-import { Wallet } from '@ethersproject/wallet';
-import { configurationFromCustom } from 'configurations/configuration';
-import { mock } from 'vitest-mock-extended';
 
 /**
  * get or create a instance of IEthereumService in the given container
@@ -27,14 +27,10 @@ export function createEthereumService(container: IContainer, network: AllowedNet
   Registration.instance(IWalletProvider, mock<IWalletProvider>({})).register(container);
   Registration.instance(IWalletConnector, mock<IWalletConnector>()).register(container);
   Registration.singleton(ICacheService, CacheService).register(container);
-  configurationFromCustom({
-    network,
+  Registration.instance(IConfiguration, {
+    chain: network,
     isDevelopment: true,
   }).register(container);
   Registration.singleton(IEthereumService, EthereumService).register(container);
   return container.get(IEthereumService);
-}
-
-export function createSigner(privateKey: string, ethereumService: IEthereumService): Signer {
-  return new Wallet(privateKey, ethereumService.readOnlyProvider);
 }

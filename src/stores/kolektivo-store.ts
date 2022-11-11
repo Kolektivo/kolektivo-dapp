@@ -1,5 +1,6 @@
-import { BadgeType } from '../models/badge-type';
 import { DI, IContainer, Registration } from 'aurelia';
+
+import { BadgeType } from '../models/badge-type';
 export type IKolektivoStore = KolektivoStore;
 export const IKolektivoStore = DI.createInterface<IKolektivoStore>('KolektivoStore');
 

@@ -1,7 +1,10 @@
-import './history.scss';
-import { ICustomElementViewModel, customElement } from '@aurelia/runtime-html';
-import { ProposalStatus } from 'models/proposal';
+import { customElement, ICustomElementViewModel } from '@aurelia/runtime-html';
+
 import template from './history.html';
+
+import './history.scss';
+
+import { ProposalStatus } from 'models/proposal';
 
 @customElement({ name: 'history', template })
 export class History implements ICustomElementViewModel {

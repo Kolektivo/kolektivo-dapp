@@ -1,4 +1,5 @@
-import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
+
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
 export type LoaderType = 'spinner';
 export type LoaderFill = 'page' | 'parent';

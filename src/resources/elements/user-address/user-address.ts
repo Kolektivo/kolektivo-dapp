@@ -1,7 +1,10 @@
-import './user-address.scss';
-import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { ifExistsThenTrue } from 'design-system/common';
+import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
+
 import template from './user-address.html';
+
+import './user-address.scss';
+
+import { ifExistsThenTrue } from 'design-system/common';
 
 @customElement({ name: 'user-address', template })
 export class UserAddress implements ICustomElementViewModel {

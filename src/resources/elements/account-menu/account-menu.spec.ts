@@ -1,11 +1,15 @@
-import '../../../utils-testing/setup-testing';
-import { AccountMenu } from './account-menu';
-import { Global } from '../../../hooks';
-import { I18N } from '@aurelia/i18n';
-import { IStore } from '../../../stores';
 import { Registration } from 'aurelia';
-import { SmallHexStringValueConverter } from '../../value-converters';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import '../../../utils-testing/setup-testing';
+
+import { Global } from '../../../hooks';
+import { IStore } from '../../../stores';
+import { SmallHexStringValueConverter } from '../../value-converters';
+
+import { AccountMenu } from './account-menu';
+
 import { describe, expect, it } from 'vitest';
 
 describe('<account-menu />', () => {

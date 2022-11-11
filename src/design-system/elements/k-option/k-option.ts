@@ -1,10 +1,11 @@
-import { CustomElement, ICustomElementViewModel, INode, bindable, customElement, shadowCSS } from 'aurelia';
-import { KSelect } from './../k-select/k-select';
-import { captureFilter } from './../../common';
-
+import { bindable, CustomElement, customElement, ICustomElementViewModel, INode, shadowCSS } from 'aurelia';
 import { IPlatform, watch } from '@aurelia/runtime-html';
-import css from './k-option.scss';
+
+import { captureFilter } from './../../common';
+import { KSelect } from './../k-select/k-select';
 import template from './k-option.html';
+
+import css from './k-option.scss';
 
 @customElement({
   name: 'k-option',

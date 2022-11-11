@@ -1,13 +1,17 @@
-import '../../../../../../utils-testing/setup-testing';
-import { Global } from '../../../../../../hooks';
-import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
-import { IReserveStore } from 'stores/reserve-store';
-import { IStore } from '../../../../../../stores';
-import { Interval } from 'models/interval';
 import { Registration } from 'aurelia';
-import { ValueOverTimeCard } from './value-over-time-card';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import '../../../../../../utils-testing/setup-testing';
+
+import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { Global } from '../../../../../../hooks';
+import { IStore } from '../../../../../../stores';
+
+import { ValueOverTimeCard } from './value-over-time-card';
+
+import { Interval } from 'models/interval';
+import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 const reserveMock = mockDeep<IReserveStore>();

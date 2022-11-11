@@ -1,15 +1,18 @@
-import 'utils-testing/setup-testing';
-import { CurrencyValueConverter, EthweiValueConverter } from 'resources';
-import { Global } from 'hooks';
-import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from 'design-system';
-import { INumberService } from './../../../../../../services/number-service';
-import { IReserveStore } from 'stores/reserve-store';
-import { IStore } from 'stores';
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
-import { TokenInfoCard } from './token-info-card';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import 'utils-testing/setup-testing';
+
+import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { INumberService } from './../../../../../../services/number-service';
+import { TokenInfoCard } from './token-info-card';
+
+import { IDesignSystemConfiguration } from 'design-system';
+import { Global } from 'hooks';
+import { CurrencyValueConverter, EthweiValueConverter } from 'resources';
+import { IStore } from 'stores';
+import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

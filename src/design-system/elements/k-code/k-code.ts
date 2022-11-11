@@ -1,5 +1,7 @@
-import { ICustomElementViewModel, customElement } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
 import { captureFilter } from '../../common';
+
 import template from './k-code.html';
 
 @customElement({

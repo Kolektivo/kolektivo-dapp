@@ -1,12 +1,15 @@
-import './side-bar.scss';
-import { BindingMode, ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { bindable, BindingMode, customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 import { IRouter } from '@aurelia/router';
+
+import logo from '../../../../static/logo.svg';
 import { ifExistsThenTrue } from '../../../design-system/common';
+
 import template from './side-bar.html';
 
+import './side-bar.scss';
+
 import { IConfiguration } from 'configurations/configuration';
-import logo from '../../../../static/logo.svg';
 
 @customElement({ template, name: 'side-bar' })
 export class SideBar implements ICustomElementViewModel {

@@ -1,9 +1,11 @@
-import * as elements from './elements';
-import { BadgeType } from 'models/badge-type';
-import { I18N } from '@aurelia/i18n';
-import { IKolektivoStore } from 'stores';
 import { customElement, observable } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
+
+import * as elements from './elements';
 import template from './governance.html';
+
+import { BadgeType } from 'models/badge-type';
+import { IKolektivoStore } from 'stores';
 @customElement({ name: 'governance', template, dependencies: [elements] })
 export class Governance {
   @observable selectedBadge?: number;

@@ -1,16 +1,20 @@
-import '../../../../../../utils-testing/setup-testing';
-import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
-import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
-import { Global } from '../../../../../../hooks';
-import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
-import { IReserveStore } from 'stores/reserve-store';
-import { IStore } from '../../../../../../stores';
-import { NumberService } from 'services';
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { Registration } from 'aurelia';
-import { ValueCard } from './value-card';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import '../../../../../../utils-testing/setup-testing';
+
+import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
+import { Global } from '../../../../../../hooks';
+import { IStore } from '../../../../../../stores';
+
+import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
+import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { ValueCard } from './value-card';
+
+import { NumberService } from 'services';
+import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('value-card', () => {

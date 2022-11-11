@@ -1,4 +1,4 @@
-import { ICustomAttributeViewModel, INode, IPlatform, bindable, customAttribute } from 'aurelia';
+import { bindable, customAttribute, ICustomAttributeViewModel, INode, IPlatform } from 'aurelia';
 
 @customAttribute({ name: 'link', noMultiBindings: true })
 export class Link implements ICustomAttributeViewModel {

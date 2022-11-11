@@ -1,10 +1,13 @@
-import './proposals-card.scss';
-import * as tabs from './tabs';
-import { BadgeType } from 'models/badge-type';
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement, watch } from '@aurelia/runtime-html';
-import { IKolektivoStore } from 'stores';
+import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
+
 import template from './proposals-card.html';
+import * as tabs from './tabs';
+
+import './proposals-card.scss';
+
+import { BadgeType } from 'models/badge-type';
+import { IKolektivoStore } from 'stores';
 
 @customElement({ name: 'proposals-card', template, dependencies: [tabs] })
 export class ProposalsCard implements ICustomElementViewModel {

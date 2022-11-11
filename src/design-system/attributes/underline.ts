@@ -1,4 +1,4 @@
-import { ICustomAttributeViewModel, INode, customAttribute } from 'aurelia';
+import { customAttribute, ICustomAttributeViewModel, INode } from 'aurelia';
 
 @customAttribute({ name: 'underline' })
 export class Underline implements ICustomAttributeViewModel {

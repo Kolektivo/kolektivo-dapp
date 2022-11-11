@@ -1,12 +1,13 @@
 import { IContainer, IRegistry, Registration } from 'aurelia';
+import { ValidationHtmlConfiguration, ValidationTrigger } from '@aurelia/validation-html';
 
-import './styles/main.scss';
 import * as attributes from './attributes';
+import { IDesignSystemConfiguration } from './configuration';
 import * as elements from './elements';
 import * as services from './services';
 import * as valueConverters from './value-converters';
-import { IDesignSystemConfiguration } from './configuration';
-import { ValidationHtmlConfiguration, ValidationTrigger } from '@aurelia/validation-html';
+
+import './styles/main.scss';
 
 export class DesignSystemPlugin implements IRegistry {
   #configuration?: IDesignSystemConfiguration;

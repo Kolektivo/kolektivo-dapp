@@ -1,11 +1,15 @@
-import '../../../../../../../../utils-testing/setup-testing';
-import { Assets } from './assets';
-import { Global } from '../../../../../../../../hooks';
-import { I18N } from '@aurelia/i18n';
-import { IReserveStore } from 'stores/reserve-store';
-import { IStore } from '../../../../../../../../stores';
 import { Registration } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import '../../../../../../../../utils-testing/setup-testing';
+
+import { Global } from '../../../../../../../../hooks';
+import { IStore } from '../../../../../../../../stores';
+
+import { Assets } from './assets';
+
+import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('assets', () => {

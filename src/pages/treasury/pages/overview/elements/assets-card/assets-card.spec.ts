@@ -1,11 +1,14 @@
-import 'utils-testing/setup-testing';
-import { AssetsCard } from './assets-card';
-import { Global } from 'hooks';
-import { I18N } from '@aurelia/i18n';
-import { IStore } from 'stores';
-import { ITreasuryStore } from './../../../../../../stores/treasury-store';
 import { Registration } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import 'utils-testing/setup-testing';
+
+import { ITreasuryStore } from './../../../../../../stores/treasury-store';
+import { AssetsCard } from './assets-card';
+
+import { Global } from 'hooks';
+import { IStore } from 'stores';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

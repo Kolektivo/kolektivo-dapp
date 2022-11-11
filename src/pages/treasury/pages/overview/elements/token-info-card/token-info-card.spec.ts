@@ -1,13 +1,16 @@
-import 'utils-testing/setup-testing';
-import { BlockChainStore, IStore, ITreasuryStore } from 'stores';
-import { BrowserStorageService, IContractService, IEthereumService, NumberService } from 'services';
-import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from 'resources';
-import { Global } from 'hooks';
-import { I18N } from '@aurelia/i18n';
-import { IDesignSystemConfiguration } from 'design-system';
 import { Registration } from 'aurelia';
-import { TokenInfoCard } from './token-info-card';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import 'utils-testing/setup-testing';
+
+import { TokenInfoCard } from './token-info-card';
+
+import { IDesignSystemConfiguration } from 'design-system';
+import { Global } from 'hooks';
+import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from 'resources';
+import { BrowserStorageService, IContractService, IEthereumService, NumberService } from 'services';
+import { BlockChainStore, IStore, ITreasuryStore } from 'stores';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

@@ -1,10 +1,13 @@
-import 'utils-testing/setup-testing';
-import { Assets } from './assets';
-import { Global } from 'hooks';
-import { I18N } from '@aurelia/i18n';
-import { IStore, ITreasuryStore } from 'stores';
 import { Registration } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
 import { createFixture } from '@aurelia/testing';
+
+import 'utils-testing/setup-testing';
+
+import { Assets } from './assets';
+
+import { Global } from 'hooks';
+import { IStore, ITreasuryStore } from 'stores';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

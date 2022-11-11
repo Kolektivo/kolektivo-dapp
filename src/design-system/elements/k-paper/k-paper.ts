@@ -1,9 +1,11 @@
-import { ICustomElementViewModel, customElement, shadowCSS } from 'aurelia';
+import { customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { Spaceable } from '../../base/spaceable';
 import { captureFilter } from '../../common';
 
-import css from './k-paper.scss';
 import template from './k-paper.html';
+
+import css from './k-paper.scss';
 
 @customElement({
   name: 'k-paper',

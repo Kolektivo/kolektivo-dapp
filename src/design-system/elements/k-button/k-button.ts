@@ -1,6 +1,8 @@
-import { ButtonSize } from './button-size';
 import { bindable, customElement, shadowCSS } from 'aurelia';
+
 import { captureFilter, ifExistsThenTrue } from '../../common';
+
+import { ButtonSize } from './button-size';
 /**
  * Usage:
  *    <pbutton type="primary">Primary</pbutton>
@@ -14,8 +16,9 @@ import { captureFilter, ifExistsThenTrue } from '../../common';
  *    <pbutton ... full-width>Full-Width</pbutton>
  */
 export type ButtonType = 'primary' | 'secondary' | 'tertiary' | 'utility-light' | 'utility-dark' | 'error';
-import css from './k-button.scss';
 import template from './k-button.html';
+
+import css from './k-button.scss';
 
 @customElement({
   name: 'k-button',

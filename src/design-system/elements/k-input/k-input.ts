@@ -1,8 +1,10 @@
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { captureFilter, ifExistsThenTrue } from '../../common';
 
-import css from './k-input.scss';
 import template from './k-input.html';
+
+import css from './k-input.scss';
 
 @customElement({
   name: 'k-input',

@@ -1,4 +1,5 @@
-import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
+
 import { captureFilter, uid } from '../../common';
 
 export type ContentLoaderType = 'list' | 'code' | 'facebook' | 'instagram' | 'bullet-list';

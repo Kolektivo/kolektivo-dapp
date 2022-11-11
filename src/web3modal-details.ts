@@ -1,9 +1,8 @@
-import { IConfiguration } from 'configurations/configuration';
-import { type IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
-import { IWalletConnector } from 'wallet-connector';
 import { Web3Provider } from '@ethersproject/providers/lib';
-import { chainIdByName } from './constants';
+import { IConfiguration } from 'configurations/configuration';
+import { IWalletConnector } from 'wallet-connector';
 import type Web3Modal from 'web3modal';
+import { type IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ConnectToWalletConnect = (walletConnectProvider: any, opts?: IWalletConnectConnectorOptions, targetedChainId?: number): Promise<unknown> => {
@@ -45,7 +44,7 @@ const ConnectToWalletConnect = (walletConnectProvider: any, opts?: IWalletConnec
 };
 
 export const getWeb3ModalInstance = async (configuration: IConfiguration) => {
-  const chainId = chainIdByName.get(configuration.network);
+  const chainId = configuration.chainId;
   if (!chainId) {
     throw new Error('Chain id is not found');
   }
@@ -63,7 +62,7 @@ export const getWeb3ModalInstance = async (configuration: IConfiguration) => {
         options: {
           // apiKey: 'EXAMPLE_PROVIDER_API_KEY',
           rpc: {
-            [chainId]: configuration.network,
+            [chainId]: configuration.chain.toLowerCase(),
           },
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,7 +74,7 @@ export const getWeb3ModalInstance = async (configuration: IConfiguration) => {
         package: (await import('@walletconnect/web3-provider')).default, // required
         options: {
           rpc: {
-            [chainId]: configuration.network,
+            [chainId]: configuration.chain.toLowerCase(),
           },
         },
       },

@@ -1,8 +1,10 @@
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { captureFilter, ifExistsThenTrue } from '../../common';
 
-import css from './k-chip.scss';
 import template from './k-chip.html';
+
+import css from './k-chip.scss';
 
 @customElement({
   name: 'k-chip',

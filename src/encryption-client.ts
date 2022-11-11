@@ -1,4 +1,5 @@
 import { DI } from 'aurelia';
+
 import { Web3Provider } from '@ethersproject/providers/lib';
 import type LitJsSdk from 'lit-js-sdk';
 

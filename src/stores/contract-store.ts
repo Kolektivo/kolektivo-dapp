@@ -1,14 +1,18 @@
-import { type Asset, AssetType } from 'models/asset';
-import { BigNumber } from 'ethers';
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
+
+import { INumberService, ITokenService } from '../services';
+
+import type { Oracle } from './../models/generated/monetary/oracle/Oracle';
+
+import { BigNumber } from 'ethers';
+import { type Asset, AssetType } from 'models/asset';
 import { Erc20, TransferEvent as Erc20TransferEvent } from 'models/generated/monetary/erc20/Erc20';
 import { Erc721, TransferEvent as Erc721TransferEvent } from 'models/generated/monetary/erc721/Erc721';
-import { IContractService, ITokenData, type ITokenInfo } from 'services/contract';
-import { INumberService, ITokenService, fromWei, toWei } from '../services';
-import type { Oracle } from './../models/generated/monetary/oracle/Oracle';
 import type { Reserve } from 'models/generated/monetary/reserve';
-import type { Transaction } from 'models/transaction';
 import type { Treasury } from 'models/generated/monetary/treasury';
+import type { Transaction } from 'models/transaction';
+import { type ITokenInfo, IContractService, ITokenData } from 'services/contract';
+import { fromWei, toWei } from 'utils';
 export type IContractStore = ContractStore;
 export const IContractStore = DI.createInterface<IContractStore>('IContractStore');
 
@@ -43,7 +47,7 @@ export class ContractStore {
       return;
     }
 
-    const tokenContract = await this.tokenService.getTokenContract(assetAddress, tokenInfo.id);
+    const tokenContract: Erc20 | Erc721 = await this.tokenService.getTokenContract(assetAddress, tokenInfo.id);
 
     if (!oracleAddress) {
       if (tokenInfo.id) {
@@ -64,7 +68,7 @@ export class ContractStore {
     let tokenQuantity = toWei(1, 18); //all NFTs have a quantity of 1, so set the quantity to 1 initially
     let totalSupply: BigNumber | undefined;
     if (!tokenInfo.id) {
-      totalSupply = await (tokenContract as Erc20).totalSupply();
+      totalSupply = await (tokenContract as unknown as Erc20).totalSupply();
       tokenQuantity = await tokenContract.balanceOf(contractAddress); // find the amount of these tokens in the treasury
     }
     let assetType: AssetType | undefined;

@@ -1,8 +1,11 @@
-import './k-toast.scss';
-import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
-import { ToastOptions } from './toast-options';
+import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
+
 import { getColorByType } from '../../common';
+
 import template from './k-toast.html';
+import { ToastOptions } from './toast-options';
+
+import './k-toast.scss';
 
 function getFlexFromPosition(position: Position): string {
   const alignContent = position.startsWith('top') ? 'flex-start' : position.startsWith('bottom') ? 'flex-end' : 'center';

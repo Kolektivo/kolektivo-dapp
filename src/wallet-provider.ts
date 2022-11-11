@@ -1,5 +1,6 @@
 import { DI } from 'aurelia';
-import { ExternalProvider, type Web3Provider } from '@ethersproject/providers';
+
+import { type Web3Provider, ExternalProvider } from '@ethersproject/providers';
 import { IWalletConnector } from 'wallet-connector';
 
 export type IWalletProvider<T extends ProviderType = ProviderType> = WalletProvider<T>;

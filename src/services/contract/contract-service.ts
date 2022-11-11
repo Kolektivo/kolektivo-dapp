@@ -1,15 +1,16 @@
-import { BaseContract, Contract, ContractFunction, ContractInterface, PopulatedTransaction } from '@ethersproject/contracts';
-import { BaseProvider } from '@ethersproject/providers';
-import { IS_CELO } from './../../environment-variables';
-import { Signer } from '@ethersproject/abstract-signer';
+import { DI, IContainer, Registration } from 'aurelia';
 
+import { IReadOnlyProvider } from '../../read-only-provider';
+import { ICacheService } from '../cache-service';
+
+import { IS_CELO } from './../../environment-variables';
+import type { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 import { ContractGroupsSharedJson } from './types';
 
-import { Address, IEthereumService } from 'services/ethereum-service';
-import { DI, IContainer, Registration } from 'aurelia';
-import { ICacheService } from '../cache-service';
+import { Signer } from '@ethersproject/abstract-signer';
+import { BaseContract, Contract, ContractFunction, ContractInterface, PopulatedTransaction } from '@ethersproject/contracts';
+import { BaseProvider } from '@ethersproject/providers';
 import { cache } from 'decorators/cache';
-import type { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 
 export type IContractService = ContractService;
 export const IContractService = DI.createInterface<IContractService>();
@@ -21,7 +22,7 @@ export const IContractService = DI.createInterface<IContractService>();
  * Uses the ABIs obtained from `getContractAbi` in contracts.ts.
  */
 export class ContractService {
-  constructor(@ICacheService private readonly cacheService: ICacheService, @IEthereumService private readonly ethereumService: IEthereumService) {}
+  constructor(@ICacheService private readonly cacheService: ICacheService, @IReadOnlyProvider private readonly readOnlyProvider: IReadOnlyProvider) {}
 
   public static register(container: IContainer) {
     Registration.singleton(IContractService, ContractService).register(container);
@@ -46,37 +47,14 @@ export class ContractService {
     return contract.populateTransaction[subFunctionName].call(params);
   }
 
-  /**
-   * Get the ethers.js Contract wrapper for a given contract.
-   *
-   * Examples:
-   *
-   *  const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token');
-   *
-   *  // for when you need to specify a specific instance of a contract
-   *  const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token', "0x1234...");
-   *
-   *  // for when you need to send transactions
-   *  const kCurContract = this.contractService.getContract('Monetary', 'Kolektivo Curacao Token', undefined, signer);
-   *
-   * @param contractType
-   * @param name
-   * @param overrideAddress
-   * @returns
-   */
-  public getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
+  @cache<ContractService>(function () {
+    return { storage: this.cacheService };
+  })
+  public async getContract<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
     contractType: TContractType,
     name: Extract<keyof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
     overrideAddress?: string,
-  ): Promise<TResult> {
-    return this.getContractForAccount(this.ethereumService.defaultAccountAddress, contractType, name, overrideAddress);
-  }
-
-  public async getContractForProvider<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
-    signerOrProvider: BaseProvider | Signer,
-    contractType: TContractType,
-    name: Extract<keyof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
-    overrideAddress?: string,
+    signerOrProvider?: BaseProvider | Signer,
   ): Promise<TResult> {
     const contractData = (
       IS_CELO
@@ -97,7 +75,7 @@ export class ContractService {
       throw new Error(`ContractService: requested contract has no address: ${name}`);
     }
 
-    return new Contract(overrideAddress, abi, signerOrProvider) as TResult;
+    return new Contract(overrideAddress, abi, signerOrProvider ?? this.readOnlyProvider) as TResult;
   }
 
   public async getSharedAbi<TContractType extends ContractGroupsAbis>(
@@ -111,30 +89,5 @@ export class ContractService {
     ) as ContractGroupsJsons[TContractType]['shared'];
 
     return contractData[key];
-  }
-
-  /**
-   * The cache restricts this from being invoked unless it has new input parameters.
-   * It is important that the consumer of this method not keep their own cache of these contracts,
-   * the reason being that the contract wrappers will not work properly if the current account or
-   * web3 provider has changed.  So the method must be called afresh whenever used, if it is possible
-   * that the input params could have changed.
-   * @param contractType
-   * @param name
-   * @param address
-   * @param signerOrProvider
-   * @returns
-   */
-  @cache<ContractService>(function () {
-    return { storage: this.cacheService };
-  })
-  private getContractForAccount<TContractType extends ContractGroupsAbis, TResult extends BaseContract>(
-    account: Address | Signer | null,
-    contractType: TContractType,
-    name: Extract<keyof ContractGroupsJsons[TContractType]['main']['contracts'], string>,
-    overrideAddress?: string,
-  ): Promise<TResult> {
-    const signerOrProvider = this.ethereumService.createSignerOrProviderForAddress(account);
-    return this.getContractForProvider(signerOrProvider, contractType, name, overrideAddress);
   }
 }

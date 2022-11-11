@@ -1,6 +1,7 @@
 import { DI, IContainer, IObserverLocator, Registration } from 'aurelia';
-import { ICacheService } from './cache-service';
 import { ISubscriber } from '@aurelia/runtime';
+
+import { ICacheService } from './cache-service';
 
 export type IObserverService = ObserverService;
 export const IObserverService = DI.createInterface<IObserverService>('ObserverService');

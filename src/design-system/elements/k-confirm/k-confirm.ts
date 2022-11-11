@@ -1,4 +1,5 @@
-import { ICustomElementViewModel, bindable, customElement } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
+
 import template from './k-confirm.html';
 @customElement({ name: 'k-confirm', template })
 export class KConfirm implements ICustomElementViewModel {

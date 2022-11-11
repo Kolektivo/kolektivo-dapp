@@ -1,14 +1,15 @@
-import { CurrencyValueConverter } from 'design-system/value-converters';
-
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement, watch } from '@aurelia/runtime-html';
-import { IReserveStore } from 'stores/reserve-store';
-import { Interval } from 'models/interval';
-import { formatter, getXLabelFormat } from 'utils';
-import { kCurPriceData } from 'models/chart-data';
+import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
+
 import template from './trend-card.html';
+
 import type { TooltipOptions } from 'chart.js';
 import type { _DeepPartialObject } from 'chart.js/types/utils';
+import { CurrencyValueConverter } from 'design-system/value-converters';
+import { kCurPriceData } from 'models/chart-data';
+import { Interval } from 'models/interval';
+import { IReserveStore } from 'stores/reserve-store';
+import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'trend-card', template })
 export class TrendCard implements ICustomElementViewModel {

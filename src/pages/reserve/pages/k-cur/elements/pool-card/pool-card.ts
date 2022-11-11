@@ -1,8 +1,11 @@
-import './pool-card.scss';
+import { customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
-import { ICustomElementViewModel, customElement } from 'aurelia';
+
 import { IGridColumn } from '../../../../../../design-system/elements/k-data-grid/grid-column';
+
 import template from './pool-card.html';
+
+import './pool-card.scss';
 
 @customElement({ name: 'pool-card', template })
 export class PoolCard implements ICustomElementViewModel {

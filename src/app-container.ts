@@ -1,32 +1,38 @@
+import { ConsoleSink, DI, IContainer, IPlatform, LoggerConfiguration, LogLevel, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
+import { I18nConfiguration } from '@aurelia/i18n';
+import { RouterConfiguration } from '@aurelia/router';
+import { StandardConfiguration } from '@aurelia/runtime-html';
+
+import { ITokenData } from './services/contract/token-info';
+import { IFirebaseApp } from './services/firebase-service';
+import { IIpfsApi } from './services/ipfs/ipfs-interface';
+import { Services } from './services/services';
+import { imageMap } from './app-images';
+import { DesignSystemPlugin } from './design-system';
+import { IEncryptionClient } from './encryption-client';
+import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_API_KEY, IPFS_GATEWAY, IS_DEV, SCAN_LINK } from './environment-variables';
 import * as hooks from './hooks';
 import * as pages from './pages';
 import * as resources from './resources';
-import { ConsoleSink, DI, IContainer, IPlatform, LogLevel, LoggerConfiguration, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
-import { DesignSystemPlugin } from './design-system';
-import { FIREBASE_API_KEY, IS_DEV } from './environment-variables';
-import { I18nConfiguration } from '@aurelia/i18n';
-import { IEncryptionClient } from './encryption-client';
-import { IFirebaseApp } from './services/firebase-service';
-import { IIpfsApi } from './services/ipfs/ipfs-interface';
-import { ITokenData } from './services/contract/token-info';
-import { IWalletConnector } from './wallet-connector';
-import { IWalletProvider } from 'wallet-provider';
-import { RouterConfiguration } from '@aurelia/router';
-import { Services } from './services/services';
-import { StandardConfiguration } from '@aurelia/runtime-html';
 import { Store } from './stores';
+import tokenData from './tokenlist.json';
+import { IWalletConnector } from './wallet-connector';
 import { WalletProvider } from './wallet-provider';
 import { Web3ModalConnect } from './web3modal-details';
-import { configurationFromEnv } from 'configurations/configuration';
+
+import designScss from './design-system/styles/shared.scss';
+import scss from './shared.scss';
+
+import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
+import { IConfiguration } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
-import { imageMap } from './app-images';
 import Backend from 'i18next-chained-backend';
 import HttpBackend from 'i18next-http-backend';
-import LocalStorageBackend from 'i18next-localstorage-backend';
-import designScss from './design-system/styles/shared.scss';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
-import scss from './shared.scss';
-import tokenData from './tokenlist.json';
+import LocalStorageBackend from 'i18next-localstorage-backend';
+import { CeloProviderFactory, IProviderFactory } from 'provider-factory';
+import { IReadOnlyProvider } from 'read-only-provider';
+import { IWalletProvider } from 'wallet-provider';
 
 // const ipfs = await create({
 //   repo: String(Math.random() + Date.now()),
@@ -90,6 +96,16 @@ export const appContainer: IContainer = DI.createContainer()
     ),
   )
   .register(
+    Registration.instance(IConfiguration, {
+      chainId: CHAIN_ID,
+      ipfsGateway: IPFS_GATEWAY,
+      chainUrl: CHAIN_URL,
+      chain: CHAIN,
+      isDevelopment: IS_DEV,
+      scanLink: SCAN_LINK,
+    }),
+  )
+  .register(
     Registration.cachedCallback(IEncryptionClient, async () => {
       const LitJsSdk = (await import('lit-js-sdk')).default;
       const client: Partial<IEncryptionClient> = new LitJsSdk.LitNodeClient();
@@ -100,7 +116,8 @@ export const appContainer: IContainer = DI.createContainer()
       return client as IEncryptionClient;
     }),
   )
-  .register(configurationFromEnv())
+  .register(Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })))
+  .register(Registration.singleton(IProviderFactory, CeloProviderFactory))
   .register(
     Registration.instance(ITokenData, {
       tokens: tokenData.tokens,

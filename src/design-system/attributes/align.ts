@@ -1,4 +1,4 @@
-import { ICustomAttributeViewModel, INode, bindable, customAttribute } from 'aurelia';
+import { bindable, customAttribute, ICustomAttributeViewModel, INode } from 'aurelia';
 
 @customAttribute({ name: 'align' })
 export class Align implements ICustomAttributeViewModel {

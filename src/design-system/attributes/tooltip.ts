@@ -1,7 +1,8 @@
-import { IContainer, ICustomAttributeViewModel, INode, bindable, customAttribute } from 'aurelia';
+import { bindable, customAttribute, IContainer, ICustomAttributeViewModel, INode } from 'aurelia';
 import { ICustomElementController } from '@aurelia/runtime-html';
-import { KTooltip } from '../elements';
+
 import { createCustomElement, destroyCustomElement } from '../aurelia-helpers';
+import { KTooltip } from '../elements';
 
 @customAttribute({ name: 'tooltip' })
 export class Tooltip implements ICustomAttributeViewModel {

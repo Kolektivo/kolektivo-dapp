@@ -1,10 +1,11 @@
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { Grid } from '../../base/grid';
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { captureFilter } from '../../common';
 
-import css from './k-stack.scss';
-
 import template from './k-stack.html';
+
+import css from './k-stack.scss';
 
 @customElement({
   name: 'k-stack',

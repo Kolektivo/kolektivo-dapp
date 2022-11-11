@@ -1,21 +1,27 @@
-import './header.scss';
-import { ICustomElementViewModel, customElement } from 'aurelia';
-import { IStore } from '../../../stores/store';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
 import template from './header.html';
+
+import './header.scss';
+
+import { IBlockChainStore, IKolektivoStore } from 'stores';
 @customElement({ name: 'header', template })
 export class Header implements ICustomElementViewModel {
   public badgeTarget?: HTMLElement;
-  constructor(@IStore private readonly store: IStore) {}
+  constructor(
+    @IBlockChainStore private readonly blockChainStore: IBlockChainStore,
+    @IKolektivoStore private readonly kolektivoStore: IKolektivoStore,
+  ) {}
 
   get pendingTransactions(): number {
-    return this.store.kolektivoStore.transactions.filter((x) => x.status === 'pending').length;
+    return this.kolektivoStore.transactions.filter((x) => x.status === 'pending').length;
   }
 
   connectWallet(): void {
-    this.store.blockChainStore.connect();
+    void this.blockChainStore.connect();
   }
 
   connectKolektivoWallet() {
-    this.store.blockChainStore.connectKolektivoWallet();
+    this.blockChainStore.connectKolektivoWallet();
   }
 }

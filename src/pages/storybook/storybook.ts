@@ -1,11 +1,14 @@
-import './storybook.scss';
-import { IGridColumn } from '../../design-system/elements/k-data-grid/grid-column';
-import { INotificationService } from '../../design-system/services';
-import { IValidationController } from '@aurelia/validation-html';
-import { IValidationRules } from '@aurelia/validation';
 import { customElement } from 'aurelia';
 import { newInstanceForScope } from '@aurelia/kernel';
+import { IValidationRules } from '@aurelia/validation';
+import { IValidationController } from '@aurelia/validation-html';
+
+import { IGridColumn } from '../../design-system/elements/k-data-grid/grid-column';
+import { INotificationService } from '../../design-system/services';
+
 import template from './storybook.html';
+
+import './storybook.scss';
 
 @customElement({ name: 'storybook', template })
 export class Storybook {

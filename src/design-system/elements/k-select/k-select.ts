@@ -1,8 +1,10 @@
-import { ICustomElementViewModel, INode, IPlatform, bindable, customElement, shadowCSS } from 'aurelia';
-import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from './../../common';
+import { bindable, customElement, ICustomElementViewModel, INode, IPlatform, shadowCSS } from 'aurelia';
 import { watch } from '@aurelia/runtime-html';
-import css from './k-select.scss';
+
+import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from './../../common';
 import template from './k-select.html';
+
+import css from './k-select.scss';
 
 @customElement({
   name: 'k-select',

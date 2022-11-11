@@ -1,9 +1,11 @@
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { Grid } from '../../base/grid';
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
 import { captureFilter, gridTemplateRowSetterInterceptor } from '../../common';
 
-import css from './k-grid.scss';
 import template from './k-grid.html';
+
+import css from './k-grid.scss';
 
 @customElement({
   name: 'k-grid',

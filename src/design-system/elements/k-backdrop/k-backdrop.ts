@@ -1,7 +1,10 @@
-import { ICustomElementViewModel, bindable, customElement, shadowCSS } from 'aurelia';
+import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
+
 import { captureFilter, numberToPixelsInterceptor } from '../../common';
-import css from './k-backdrop.scss';
+
 import template from './k-backdrop.html';
+
+import css from './k-backdrop.scss';
 
 @customElement({
   name: 'k-backdrop',

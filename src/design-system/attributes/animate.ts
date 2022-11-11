@@ -1,5 +1,6 @@
-import { IAnimationService, easings } from '../services';
-import { ICustomAttributeViewModel, INode, bindable, customAttribute } from 'aurelia';
+import { bindable, customAttribute, ICustomAttributeViewModel, INode } from 'aurelia';
+
+import { easings, IAnimationService } from '../services';
 
 @customAttribute({ name: 'animate' })
 export class AnimateAttribute implements ICustomAttributeViewModel {

@@ -1,7 +1,10 @@
-import { captureFilter } from '../../common';
 import { customElement, shadowCSS } from 'aurelia';
-import css from './k-button-group.scss';
+
+import { captureFilter } from '../../common';
+
 import template from './k-button-group.html';
+
+import css from './k-button-group.scss';
 
 @customElement({
   name: 'k-button-group',

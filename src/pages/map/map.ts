@@ -1,7 +1,8 @@
-import { ICustomElementViewModel, customElement } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
+
+import template from './map.html';
 
 import './map.scss';
-import template from './map.html';
 
 @customElement({ name: 'map', template })
 export class Map implements ICustomElementViewModel {}
