@@ -5,21 +5,21 @@ import * as elements from './elements';
 import template from './governance.html';
 
 import { BadgeType } from 'models/badge-type';
-import { IKolektivoStore } from 'stores';
+import { IAccountStore } from 'stores/account-store';
 @customElement({ name: 'governance', template, dependencies: [elements] })
 export class Governance {
   @observable selectedBadge?: number;
-  constructor(@IKolektivoStore private readonly kolektivoStore: IKolektivoStore, @I18N private readonly i18n: I18N) {}
+  constructor(@IAccountStore private readonly accountStore: IAccountStore, @I18N private readonly i18n: I18N) {}
   get hasSubmitAccess(): boolean {
-    return this.kolektivoStore.badges.some((x) => x.type === BadgeType.RESERVE_DELEGATE || x.type === BadgeType.RESERVE_ARBITRAGEUR);
+    return this.accountStore.badges.some((x) => x.type === BadgeType.RESERVE_DELEGATE || x.type === BadgeType.RESERVE_ARBITRAGEUR);
   }
   selectedBadgeChanged(): void {
     switch (this.selectedBadge) {
       case 0:
-        this.kolektivoStore.badges = [];
+        this.accountStore.badges = [];
         break;
       case 1:
-        this.kolektivoStore.badges = [
+        this.accountStore.badges = [
           {
             name: 'Local Kolektivo Multi-Sig Member',
             description: 'Local Kolektivo Multi-Sig Member',
@@ -30,7 +30,7 @@ export class Governance {
         ];
         break;
       case 2:
-        this.kolektivoStore.badges = [
+        this.accountStore.badges = [
           {
             name: 'Reserve Arbitrageur',
             description: 'Reserve Arbitrageur',
@@ -41,7 +41,7 @@ export class Governance {
         ];
         break;
       case 3:
-        this.kolektivoStore.badges = [
+        this.accountStore.badges = [
           {
             name: 'Treasury Arbitrageur',
             description: 'Treasury Arbitrageur',
@@ -52,7 +52,7 @@ export class Governance {
         ];
         break;
       case 4:
-        this.kolektivoStore.badges = [
+        this.accountStore.badges = [
           {
             name: 'Topology Data Delegate',
             description: 'Topology Data Delegate',
@@ -63,7 +63,7 @@ export class Governance {
         ];
         break;
       case 5:
-        this.kolektivoStore.badges = [
+        this.accountStore.badges = [
           {
             name: 'Ecology Data Delegate',
             description: 'Ecology Data Delegate',
@@ -74,7 +74,7 @@ export class Governance {
         ];
         break;
       case 6:
-        this.kolektivoStore.badges = [
+        this.accountStore.badges = [
           {
             name: 'Treasury Delegate',
             description: 'Treasury Delegate',
@@ -85,7 +85,7 @@ export class Governance {
         ];
         break;
       case 7:
-        this.kolektivoStore.badges = [
+        this.accountStore.badges = [
           {
             name: 'Reserve Monetary Delegate',
             description: 'Reserve Monetary Delegate',
@@ -96,7 +96,7 @@ export class Governance {
         ];
         break;
       case 8:
-        this.kolektivoStore.badges = [
+        this.accountStore.badges = [
           {
             name: 'Kolektivo Network Multi-Sig Member',
             description: 'Kolektivo Network Multi-Sig Member',

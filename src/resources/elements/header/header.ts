@@ -21,7 +21,7 @@ export class Header implements ICustomElementViewModel {
   }
 
   connectWallet(): void {
-    this.blockChainStore.connect();
+    void this.blockChainStore.connect();
   }
 
   connectKolektivoWallet() {
