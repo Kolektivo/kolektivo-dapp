@@ -160,14 +160,14 @@ export class ReserveStore {
     await this.loadkCurData();
     const contract = await this.getReserveContract(); // get reserve contract
     if (!this.kCurSupply) return; //can't get the distribution percentages without a total supply value so return if it's not there
-    //TODO: Get the balances of kCur inside of the reserve, mento and the primary pool and set those values here
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    const kCurContract: Erc20 = await this.contractService.getContract('monetary', 'Kolektivo Curacao Token'); // get the kCur contract
+    const kCurContract: Erc20 = await this.contractService.getContract('monetary', 'Kolektivo Curacao Reserve Token'); // get the kCur contract
     const kCurInReserve = await kCurContract.balanceOf(contract.address); //get the balace of kCur in the reserve
     this.kCurReserveDistribution =
       this.numberService.fromString(fromWei(kCurInReserve, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
-    this.kCurMentoDistribution = 0.3;
-    this.kCurPrimaryPoolDistribution = 0.4;
+    //TODO: Get the balances of kCur inside of the reserve, mento and the primary pool and set those values here
+    this.kCurMentoDistribution = 0;
+    this.kCurPrimaryPoolDistribution = 0;
   }
 
   @callOnce()
