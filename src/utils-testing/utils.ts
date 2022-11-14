@@ -4,7 +4,6 @@ import { EthereumService, IEthereumService } from './../services/ethereum-servic
 
 import { IConfiguration } from 'configurations/configuration';
 import { INotificationService } from 'design-system/services';
-import { AllowedNetworks } from 'models/allowed-network';
 import { CacheService, IBrowserStorageService, ICacheService } from 'services';
 import { mock } from 'vitest-mock-extended';
 import { IWalletConnector } from 'wallet-connector';
@@ -16,7 +15,7 @@ import { IWalletProvider } from 'wallet-provider';
  * @param network
  * @returns
  */
-export function createEthereumService(container: IContainer, network: AllowedNetworks = AllowedNetworks.Alfajores): IEthereumService {
+export function createEthereumService(container: IContainer, network: string): IEthereumService {
   try {
     return container.get(IEthereumService);
     // eslint-disable-next-line no-empty

@@ -1,7 +1,7 @@
-import type { governanceAlfajores, governanceCelo, governanceShared, monetaryAlfajores, monetaryCelo, monetaryShared } from './contracts';
+import type { governanceCelo, governanceCeloTest, governanceShared, monetaryCelo, monetaryCeloTest, monetaryShared } from './contracts';
 
-export type MonetaryContractsGroupJson = typeof monetaryCelo | typeof monetaryAlfajores;
-export type GovernanceContractGroupJson = typeof governanceCelo | typeof governanceAlfajores;
+export type MonetaryContractsGroupJson = typeof monetaryCelo | typeof monetaryCeloTest;
+export type GovernanceContractGroupJson = typeof governanceCelo | typeof governanceCeloTest;
 export type ContractGroupsJson = MonetaryContractsGroupJson | GovernanceContractGroupJson;
 export type ContractGroupsSharedJson = typeof governanceShared | typeof monetaryShared;
 export type ContractsAbi = ContractGroupsJson['contracts'];

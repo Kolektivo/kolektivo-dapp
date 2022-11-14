@@ -3,7 +3,7 @@ import { DI, IContainer, Registration } from 'aurelia';
 import { IReadOnlyProvider } from '../../read-only-provider';
 import { ICacheService } from '../cache-service';
 
-import { IS_CELO } from './../../environment-variables';
+import { IS_DEV } from './../../environment-variables';
 import type { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 import { ContractGroupsSharedJson } from './types';
 
@@ -57,9 +57,9 @@ export class ContractService {
     signerOrProvider?: BaseProvider | Signer,
   ): Promise<TResult> {
     const contractData = (
-      IS_CELO
-        ? ((await import(`../../contracts/${contractType}/celo.json`)) as unknown)
-        : ((await import(`../../contracts/${contractType}/alfajores.json`)) as unknown)
+      IS_DEV
+        ? ((await import(`../../contracts/${contractType}/celo-test.json`)) as unknown)
+        : ((await import(`../../contracts/${contractType}/celo.json`)) as unknown)
     ) as ContractGroupsJsons[TContractType]['main'];
 
     const contracts = contractData.contracts;
@@ -82,12 +82,7 @@ export class ContractService {
     contractType: TContractType,
     key: keyof ContractGroupsJsons[TContractType]['shared'],
   ) {
-    const contractData = (
-      IS_CELO
-        ? ((await import(`../../contracts/${contractType}/sharedAbis.json`)) as unknown)
-        : ((await import(`../../contracts/${contractType}/sharedAbis.json`)) as unknown)
-    ) as ContractGroupsJsons[TContractType]['shared'];
-
+    const contractData = (await import(`../../contracts/${contractType}/sharedAbis.json`)) as ContractGroupsJsons[TContractType]['shared'];
     return contractData[key];
   }
 }

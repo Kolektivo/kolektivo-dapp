@@ -12,9 +12,7 @@ import { IConfiguration } from 'configurations/configuration';
 export class NetworkFeedback implements ICustomElementViewModel {
   constructor(@IStore private readonly store: IStore, @IConfiguration private readonly configuration: IConfiguration) {}
 
-  get networkName(): string | null {
-    return this.store.blockChainStore.targetedNetwork;
-  }
+  readonly networkName = 'TEST';
 
   get isTestnet(): boolean {
     return this.configuration.isDevelopment;

@@ -119,9 +119,9 @@ export class TreasuryStore {
     return 1 - (this.treasuryDistribution + this.reservesDistribution);
   }
 
-  public get currentPrice(): BigNumber {
-    if (!this.totalSupply || !this.totalValuation) return BigNumber.from(0);
-    return this.totalSupply.div(this.totalValuation);
+  public get currentPrice(): number | string {
+    if (!this.totalSupply || !this.totalValuation) return 0;
+    return Number(fromWei(this.totalSupply, 18)) / Number(fromWei(this.totalValuation, 18));
   }
 
   public async getTreasuryContract(): Promise<Treasury> {

@@ -12,48 +12,48 @@
     ],
     "tokens": [
         {
-            "address": "0xEAc68B2e33fA3dbde9bABf3edF17ed3437f3D992",
-            "chainId": 44787,
+            "address": "0x74b06277Cd1efaA9f6595D25AdB54b4530d15BF5",
+            "chainId": 42220,
             "name": "Kolektivo Treasury Token",
             "symbol": "KTT",
             "decimals": 18,
             "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/ktt.svg"
         },
         {
-            "address": "0x799aC807A4163899c09086A6C69490f6AecD65Cb",
-            "chainId": 44787,
+            "address": "0xf4cb43D02842c65101e5DA329ED01dFeC2280EdA",
+            "chainId": 42220,
             "name": "Kolektivo Curacao Token",
             "symbol": "kCUR",
             "decimals": 18,
             "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/kcur.svg"
         },
         {
-            "address": "0x8E7Af361418CDAb43333c6Bd0fA6906285C0E272",
-            "chainId": 44787,
+            "address": "0x4cB13ED364bd2c212B694921CdAca979DCA76054",
+            "chainId": 42220,
             "name": "Test Token #1",
             "symbol": "TT1",
             "decimals": 18,
             "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/tt1.svg"
         },
         {
-            "address": "0x57f046C697B15D0933605F12152c5d96cB6f9cc5",
-            "chainId": 44787,
+            "address": "0x5bFE78b0d15eF0cdcA4077336e0bEbEc15CFb142",
+            "chainId": 42220,
             "name": "Test Token #2",
             "symbol": "TT2",
             "decimals": 18,
             "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/tt1.svg"
         },
         {
-            "address": "0x32dB9295556D2B5193FD404253a4a3fD206B754b",
-            "chainId": 44787,
+            "address": "0xd312bCeA257799a39e0C85d7EC45031612e4dd50",
+            "chainId": 42220,
             "name": "Test Token #3",
             "symbol": "TT3",
             "decimals": 18,
             "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/tt1.svg"
         },
         {
-            "address": "0x3d088f32d7d83FD7868620f76C80604106b74702",
-            "chainId": 44787,
+            "address": "0x9fC5461A1e6CF567C7E19Befa7c0351C9C6CB719",
+            "chainId": 42220,
             "name": "GeoNFT #1",
             "symbol": "GEO1",
             "decimals": 1,
@@ -61,8 +61,8 @@
             "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/geo1.svg"
         },
         {
-            "address": "0x3d088f32d7d83FD7868620f76C80604106b74702",
-            "chainId": 44787,
+            "address": "0x9fC5461A1e6CF567C7E19Befa7c0351C9C6CB719",
+            "chainId": 42220,
             "name": "GeoNFT #2",
             "symbol": "GEO2",
             "decimals": 1,

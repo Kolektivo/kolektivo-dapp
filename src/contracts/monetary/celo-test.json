@@ -3,7 +3,7 @@
     "chainId": "42220",
     "contracts": {
         "GeoNFT": {
-            "address": "0x3d088f32d7d83FD7868620f76C80604106b74702",
+            "address": "0x9fC5461A1e6CF567C7E19Befa7c0351C9C6CB719",
             "abi": [
                 {
                     "inputs": [
@@ -4328,7 +4328,7 @@
             ]
         },
         "Reserve": {
-            "address": "0x9f4995f6a797Dd932A5301f22cA88104e7e42366",
+            "address": "0xdb2B19C8e3ce01E7f5101652B9dEb500D1298716",
             "abi": [
                 {
                     "inputs": [
@@ -6776,7 +6776,7 @@
             ]
         },
         "Treasury": {
-            "address": "0xEAc68B2e33fA3dbde9bABf3edF17ed3437f3D992",
+            "address": "0x74b06277Cd1efaA9f6595D25AdB54b4530d15BF5",
             "abi": [
                 {
                     "inputs": [],
@@ -8109,6 +8109,19 @@
                     "type": "function"
                 },
                 {
+                    "inputs": [],
+                    "name": "lastRebase",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
                     "inputs": [
                         {
                             "internalType": "address",
@@ -8865,32 +8878,32 @@
             ]
         },
         "Kolektivo Curacao Reserve Token": {
-            "address": "0x799aC807A4163899c09086A6C69490f6AecD65Cb",
+            "address": "0xf4cb43D02842c65101e5DA329ED01dFeC2280EdA",
             "abi": "ERC20"
         },
         "Kolektivo Treasury Token": {
-            "address": "0xEAc68B2e33fA3dbde9bABf3edF17ed3437f3D992",
+            "address": "0x74b06277Cd1efaA9f6595D25AdB54b4530d15BF5",
             "abi": "ERC20"
         },
         "Test Token #1": {
-            "address": "0x8E7Af361418CDAb43333c6Bd0fA6906285C0E272",
+            "address": "0x4cB13ED364bd2c212B694921CdAca979DCA76054",
             "abi": "ERC20"
         },
         "Test Token #2": {
-            "address": "0x57f046C697B15D0933605F12152c5d96cB6f9cc5",
+            "address": "0x5bFE78b0d15eF0cdcA4077336e0bEbEc15CFb142",
             "abi": "ERC20"
         },
         "Test Token #3": {
-            "address": "0x32dB9295556D2B5193FD404253a4a3fD206B754b",
+            "address": "0xd312bCeA257799a39e0C85d7EC45031612e4dd50",
             "abi": "ERC20"
         },
         "GeoNFT #1": {
-            "address": "0x3d088f32d7d83FD7868620f76C80604106b74702",
+            "address": "0x9fC5461A1e6CF567C7E19Befa7c0351C9C6CB719",
             "id": 1,
             "abi": "ERC721"
         },
         "GeoNFT #2": {
-            "address": "0x3d088f32d7d83FD7868620f76C80604106b74702",
+            "address": "0x9fC5461A1e6CF567C7E19Befa7c0351C9C6CB719",
             "id": 2,
             "abi": "ERC721"
         },

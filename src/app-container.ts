@@ -129,7 +129,16 @@ export const appContainer: IContainer = DI.createContainer()
       sinks: [ConsoleSink],
     }),
   )
-  .register(RouterConfiguration.customize({ useUrlFragmentHash: false, useHref: false, useDirectRouting: true }))
+  .register(
+    RouterConfiguration.customize({
+      useUrlFragmentHash: false,
+      useHref: false,
+      useDirectRouting: true,
+      title: {
+        appTitle: '${componentTitles}${appTitleSeparator}Kolektivo',
+      },
+    }),
+  )
   .register(
     I18nConfiguration.customize((options) => {
       options.initOptions = {
