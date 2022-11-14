@@ -1,12 +1,10 @@
 import { DI } from 'aurelia';
 
-import { AllowedNetworks } from './../models/allowed-network';
-
 export type IConfiguration = {
   chainId: number;
   ipfsGateway: string;
   chainUrl: string;
-  chain: AllowedNetworks;
+  chain: string;
   isDevelopment: boolean;
   scanLink: string;
 };

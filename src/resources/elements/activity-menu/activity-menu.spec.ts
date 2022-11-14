@@ -11,7 +11,6 @@ import { IBlockChainStore, IStore } from '../../../stores';
 import { IKolektivoStore, Transaction } from './../../../stores/kolektivo-store';
 import { ActivityMenu } from './activity-menu';
 
-import { AllowedNetworks } from 'models/allowed-network';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('<activity-menu />', () => {
@@ -20,7 +19,7 @@ describe('<activity-menu />', () => {
 
   beforeEach(() => {
     transactions = [];
-    targetedNetwork = AllowedNetworks.Celo;
+    targetedNetwork = 'Celo';
   });
 
   it('displays empty message when theres no transactions', async () => {
