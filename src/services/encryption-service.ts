@@ -19,7 +19,6 @@ export class EncryptionService {
 
   private authSig?: string;
   private encryptedSymmetricKey?: string;
-  public badgerContractAddress = '';
 
   constructor(
     @ILogger private readonly logger: ILogger,
@@ -71,7 +70,7 @@ export class EncryptionService {
     this.encryptedSymmetricKey = this.client.uint8arrayToString(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await this.client.saveEncryptionKey({
-        accessControlConditions: this.getAccessControlConditions(this.badgerContractAddress),
+        accessControlConditions: this.getAccessControlConditions(contractAddress),
         symmetricKey,
         authSig: this.authSig,
         chain: this.chain,
@@ -82,12 +81,12 @@ export class EncryptionService {
     return { encryptedString, symmetricKey };
   }
 
-  public async decryptAs<T = string>(encryptedString: string): Promise<T | string> {
+  public async decryptAs<T = string>(encryptedString: string, contractAddress: string): Promise<T | string> {
     await this.connect();
     if (!this.client) throw new Error('No encryption client connected');
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const symmetricKey = await this.client.getEncryptionKey({
-      accessControlConditions: this.getAccessControlConditions(this.badgerContractAddress),
+      accessControlConditions: this.getAccessControlConditions(contractAddress),
       toDecrypt: this.encryptedSymmetricKey,
       chain: this.chain,
       authSig: this.authSig,
