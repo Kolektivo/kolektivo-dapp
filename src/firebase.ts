@@ -16,7 +16,7 @@ import tokenData from './tokenlist.json';
 
 import { IConfiguration } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
-import { CHAIN, CHAIN_ID, CHAIN_URL, IPFS_GATEWAY, IS_DEV, SCAN_LINK } from 'environment-variables';
+import { CHAIN, CHAIN_ID, CHAIN_URL, IPFS_GATEWAY, SCAN_LINK } from 'environment-variables';
 import { initializeApp } from 'firebase/app';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
 import { IBrowserStorageService } from 'services/browser-storage-service';
@@ -52,7 +52,7 @@ const container = DI.createContainer()
       ipfsGateway: IPFS_GATEWAY,
       chainUrl: CHAIN_URL,
       chain: CHAIN,
-      isDevelopment: IS_DEV,
+      isDevelopment: process.env.NODE_ENV !== 'production',
       scanLink: SCAN_LINK,
     }),
   )
