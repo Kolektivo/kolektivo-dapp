@@ -14,11 +14,13 @@ import { DataStore } from './stores/data-store';
 import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
 import tokenData from './tokenlist.json';
 
+import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { IConfiguration } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
 import { CHAIN, CHAIN_ID, CHAIN_URL, IPFS_GATEWAY, SCAN_LINK } from 'environment-variables';
 import { initializeApp } from 'firebase/app';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
+import { IReadOnlyProvider } from 'read-only-provider';
 import { IBrowserStorageService } from 'services/browser-storage-service';
 import { ITokenData } from 'services/contract';
 import { EthereumService } from 'services/ethereum-service';
@@ -46,6 +48,18 @@ const container = DI.createContainer()
   .register(ContractStore)
   .register(TokenService)
   .register(DataStore)
+  .register(
+    Registration.instance(
+      IReadOnlyProvider,
+      new CeloProvider(
+        { url: CHAIN_URL, skipFetchSetup: true },
+        {
+          name: CHAIN.toLowerCase(),
+          chainId: CHAIN_ID,
+        },
+      ),
+    ),
+  )
   .register(
     Registration.instance(IConfiguration, {
       chainId: CHAIN_ID,
