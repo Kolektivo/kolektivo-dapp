@@ -116,7 +116,18 @@ export const appContainer: IContainer = DI.createContainer()
       return client as IEncryptionClient;
     }),
   )
-  .register(Registration.instance(IReadOnlyProvider, new CeloProvider({ url: CHAIN_URL, skipFetchSetup: true })))
+  .register(
+    Registration.instance(
+      IReadOnlyProvider,
+      new CeloProvider(
+        { url: CHAIN_URL, skipFetchSetup: true },
+        {
+          name: CHAIN.toLowerCase(),
+          chainId: CHAIN_ID,
+        },
+      ),
+    ),
+  )
   .register(Registration.singleton(IProviderFactory, CeloProviderFactory))
   .register(
     Registration.instance(ITokenData, {

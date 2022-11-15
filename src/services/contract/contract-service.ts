@@ -3,7 +3,7 @@ import { DI, IContainer, Registration } from 'aurelia';
 import { IReadOnlyProvider } from '../../read-only-provider';
 import { ICacheService } from '../cache-service';
 
-import { IS_DEV } from './../../environment-variables';
+import { IS_TESTING } from './../../environment-variables';
 import type { ContractGroupsAbis, ContractGroupsJsons } from './contracts';
 import { ContractGroupsSharedJson } from './types';
 
@@ -57,7 +57,7 @@ export class ContractService {
     signerOrProvider?: BaseProvider | Signer,
   ): Promise<TResult> {
     const contractData = (
-      IS_DEV
+      IS_TESTING
         ? ((await import(`../../contracts/${contractType}/celo-test.json`)) as unknown)
         : ((await import(`../../contracts/${contractType}/celo.json`)) as unknown)
     ) as ContractGroupsJsons[TContractType]['main'];

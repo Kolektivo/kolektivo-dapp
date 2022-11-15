@@ -26,7 +26,7 @@
     "dev": "vite",
     "start": "vite",
     "typecheck": "tsc",
-    "build": "tsc && vite build --mode staging",
+    "build": "tsc && vite build",
     "build:chart-data-script": "vite build --config vite.config-lib.ts",
     "build:dev:chart-data-script": "vite build --config vite.config-lib.ts --mode development",
     "build:dev": "vite build --mode development",
