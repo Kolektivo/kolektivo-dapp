@@ -1,0 +1,77 @@
+:host {
+  --toolip-color: var(--don-juan-800);
+
+  display:block;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: var(--font);
+  
+  au-compose {
+    position: absolute;
+    background: var(--toolip-color);
+    color: var(--white);
+    padding: var(--spacing);
+    border-radius: 8px;
+    z-index: 999;
+
+    &.top {
+      transform: translate(-50%, -110%);
+    }
+
+    &.bottom {
+      transform: translate(-50%);
+    }
+
+    &.start {
+      transform: translate(-130%, -25%);
+    }
+
+    &.end {
+      transform: translate(30%, -25%);
+    }
+
+    &.top::after {
+      content: '';
+      position: absolute;
+      top: 99%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--toolip-color) transparent transparent transparent;
+    }
+
+    &.bottom::after {
+      content: '';
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent var(--toolip-color) transparent;
+    }
+
+    &.end::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -9px;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent var(--toolip-color) transparent transparent;
+    }
+
+    &.start::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent var(--toolip-color);
+    }
+  }
+}

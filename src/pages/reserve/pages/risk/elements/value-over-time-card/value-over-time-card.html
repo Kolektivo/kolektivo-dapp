@@ -1,0 +1,17 @@
+<k-card title="${i18n.tr('navigation.reserve.risk.value-over-time.title')}" tooltip-text="${i18n.tr('navigation.reserve.risk.value-over-time.tooltip')}">
+  <k-loader fill="parent" color="var(--white)" if.bind="loading"></k-loader>
+  <k-stack gap="var(--spacing-xl)">
+    <chart-time-filter current-filter.two-way="currentInterval">
+      <k-stack direction="row" gap="10">
+        <avatar-text size="24" icon="more_horiz" color="var(--error)">${i18n.tr('navigation.reserve.risk.value-over-time.min-value')}</avatar-text>
+        <avatar-text size="24" icon="more_horiz" color="var(--san-juan-800)">${i18n.tr('navigation.reserve.risk.value-over-time.market-cap')}</avatar-text>
+        <avatar-text size="14" color="var(--success)">${i18n.tr('navigation.reserve.risk.value-over-time.low-risk')}</avatar-text>
+        <avatar-text size="14" color="var(--sandy-brown)">${i18n.tr('navigation.reserve.risk.value-over-time.moderate-risk')}</avatar-text>
+        <avatar-text size="14" color="var(--dark-coral)">${i18n.tr('navigation.reserve.risk.value-over-time.high-risk')}</avatar-text>
+      </k-stack>
+    </chart-time-filter>
+    <k-alert if.bind="alertText.length" type="info">${alertText} <k-link path="/map">${i18n.tr('navigation.reserve.risk.value-over-time.alert-link-text')}</k-link></k-alert>
+    <k-chart height="300" max-labels="2" hide-legend type="line" fill labels.bind="labels"
+    border-color.bind="red" tension=".01" data-sets.bind="dataSets(marketCap, minCollateralValue, lowRisk, moderateRisk, highRisk)" tooltip-options.bind="tooltipOptions" y-label-format.bind="yLabelFormat" x-label-format.bind="xLabelFormat" max-x-labels="5"></k-chart>
+  </k-stack>
+</k-card>

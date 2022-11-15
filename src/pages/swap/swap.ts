@@ -1,7 +1,8 @@
-import { ICustomElementViewModel } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
 
-export class Swap implements ICustomElementViewModel {
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
-}
+import template from './swap.html';
+
+import './swap.scss';
+
+@customElement({ name: 'swap', template })
+export class Swap implements ICustomElementViewModel {}

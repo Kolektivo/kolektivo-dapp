@@ -1,0 +1,21 @@
+<template>  
+  <div part="control" role="button" style.bind="selectStyles" tabindex="0" class="${menuOpen ? 'open': ''}">
+      <slot name="button-container">
+          <div part="placeholder" if.bind="placeholder && (value === '' || value == null)">
+            ${placeholder}
+          </div>
+          <div else part="selected-value">
+              ${text}
+          </div>
+          <div part="indicator">
+              <slot name="indicator">
+                  <k-icon name="expand_more" class.bind="menuOpen ? 'rotate180': 'rotate0'"></k-icon>
+              </slot>
+          </div> 
+      </slot>
+  </div>
+  <input value.bind="value" hidden />
+  <k-menu target.bind="element" role="listbox" part="listbox" open.two-way="menuOpen" use-target max-height.bind="maxMenuHeight">
+    <slot></slot>
+  </k-menu>
+</template>

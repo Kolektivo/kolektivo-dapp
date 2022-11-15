@@ -1,7 +1,8 @@
-import { ICustomElementViewModel } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
 
-export class ActiveBonds implements ICustomElementViewModel {
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
-}
+import template from './active-bonds.html';
+
+import './active-bonds.scss';
+
+@customElement({ name: 'active-bonds', template })
+export class ActiveBonds implements ICustomElementViewModel {}

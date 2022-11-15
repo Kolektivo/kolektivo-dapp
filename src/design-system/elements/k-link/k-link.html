@@ -1,0 +1,22 @@
+<a if.bind="!path && !src && copyText" copy.bind="copyText" class="${small ? 'small' : ''}" ...$attrs>
+  <k-stack direction="row" gap="8">
+    <slot name="start"></slot>
+    <slot part="link-text">${text}</slot>
+    <k-icon name="content_copy" size="16"></k-icon>
+  </k-stack>
+</a>
+<a if.bind="path" load="${path}" class="${small ? 'small' : ''}" ...$attrs>
+  <k-stack direction="row" gap="8">
+    <slot name="start"></slot>
+    <slot part="link-text">
+      ${text}
+    </slot>
+  </k-stack>
+</a>
+<a if.bind="src" href.bind="src" target="_blank" class="${small ? 'small' : ''}" ...$attrs>
+  <k-stack direction="row" gap="8">
+    <slot name="start"></slot>
+    <slot part="link-text">${text}</slot>
+    <k-icon if.bind="external" name="open_in_new" size="16"></k-icon>
+  </k-stack>
+</a>

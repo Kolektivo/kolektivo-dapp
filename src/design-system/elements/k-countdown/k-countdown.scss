@@ -1,0 +1,13 @@
+:host {
+  cursor: pointer;
+
+  >div {
+    display: grid;
+    place-items: center;
+    position: relative;
+
+    >k-spinner {
+      display: inherit;
+    }
+  }
+}

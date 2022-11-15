@@ -1,0 +1,16 @@
+<k-card gap="var(--spacing-lg)" id="value-card" title="${i18n.tr('navigation.reserve.overview.value.title')}" tooltip-text="${i18n.tr('navigation.reserve.overview.value.tooltip')}">
+  <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadAssets()"></k-loader>
+  <k-text type="statistic-lg">
+    <formatted-number show-tooltip currency commas decimals="0" value="${reserveStore.reserveValue | ethwei}"></formatted-number>
+  </k-text>
+  <k-grid cols="1fr 1fr" slot="footer">
+    <k-stack gap="5">
+      <k-text type="label">${i18n.tr('navigation.reserve.overview.value.kCurPrice')}</k-text>
+      <k-text type="statistic-sm">${reserveStore.kCurPrice | currency}</k-text>
+    </k-stack>
+    <k-stack gap="5">
+      <k-text type="label">${i18n.tr('navigation.reserve.overview.value.ratio')}</k-text>
+      <k-text type="statistic-sm">${reserveStore.backing/10000 | percentage}</k-text>
+    </k-stack>
+  </k-grid>
+</k-card>

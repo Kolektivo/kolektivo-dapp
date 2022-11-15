@@ -1,7 +1,8 @@
-import { ICustomElementViewModel } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
 
-export class Governance implements ICustomElementViewModel {
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
-}
+import template from './governance.html';
+
+import './governance.scss';
+
+@customElement({ name: 'governance', template })
+export class Governance implements ICustomElementViewModel {}

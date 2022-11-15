@@ -1,0 +1,20 @@
+<template if.bind="loading">
+  <template promise.bind="loading">
+    <template pending>
+      <div if.bind="fill === 'page'" class="k-page-overlay" portal="body">
+        <k-spinner size.bind="size" color.bind="color"></k-spinner>
+      </div>
+      <div class="k-overlay rounded" else>
+        <k-spinner size.bind="size" color.bind="color"></k-spinner>
+      </div>
+    </template>
+  </template>
+</template>
+<template else>
+  <div if.bind="fill === 'page'" class="k-page-overlay" portal="body">
+    <k-spinner size.bind="size" color.bind="color"></k-spinner>
+  </div>
+  <div class="k-overlay rounded" else>
+    <k-spinner size.bind="size" color.bind="color"></k-spinner>
+  </div>
+</template>

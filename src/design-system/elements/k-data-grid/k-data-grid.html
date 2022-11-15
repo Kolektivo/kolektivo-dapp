@@ -1,0 +1,35 @@
+<k-grid cols.bind="cols" gap="var(--spacing-lg)">
+  <div repeat.for="column of columns"
+    class="${column.sortable ? 'sortable' : ''} ${column.headerClass ? column.headerClass : ''} ${column.align ? column.align : ''}"
+    click.trigger="column.sortable && sort(column.field)">
+    <k-text type="h6">
+      ${column.headerText === undefined ? column.field : column.headerText}
+      <i if.bind="column.sortable && $parent.sortColumn === column.field && $parent.sortDirection === 1"
+        class="fas fa-arrow-down" aria-hidden="true"></i>
+      <i if.bind="column.sortable && $parent.sortColumn === column.field && $parent.sortDirection === -1"
+        class="fas fa-arrow-up" aria-hidden="true"></i>
+    </k-text>
+  </div>
+</k-grid>
+<k-grid cols.bind="cols" gap="var(--spacing-lg)" repeat.for="row of rows"
+  if.to-view="!selectable && (!hideMore || (($index < numberToShow) || seeingMore))" class="row">
+  <div repeat.for="column of columns"
+    class="cell body hot ${condensed ? 'condensed' : ''} ${column.align ? column.align : ''}">
+    <au-compose if.bind="column.template" view.bind="column.template"
+      view-model.bind="getBuffedVm(row, rows, row[column.field])" containerless></au-compose>
+    <template else>${row[column.field]}</template>
+  </div>
+</k-grid>
+
+<div class="seeMoreSection" if.to-view="rows.length > numberToShow && hideMore">
+  <div class="centered">
+    <k-button type="tertiary" click.trigger="seeMore(true)" if.to-view="!seeingMore">
+      SHOW ALL
+      <div class="arrow">&darr;</div>
+    </k-button>
+    <k-button type="tertiary" click.trigger="seeMore(false)" if.to-view="seeingMore">
+      SHOW LESS
+      <div class="arrow">&uarr;</div>
+    </k-button>
+  </div>
+</div>

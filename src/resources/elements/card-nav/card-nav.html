@@ -1,0 +1,7 @@
+<k-app-bar>
+  <k-tabs gap="32">
+    <k-tab ripple click.trigger="handleClick(route)" repeat.for="route of routes" class="${route.isActive ? 'active': ''}">
+      ${route.name}
+    </k-tab>
+  </k-tabs>
+</k-app-bar>

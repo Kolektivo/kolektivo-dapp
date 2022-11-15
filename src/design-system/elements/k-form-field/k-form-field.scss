@@ -1,0 +1,34 @@
+:host {
+  width: 100%;
+
+  .form-field {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 5px;
+
+    .field-text {
+      display: grid;
+      width: 100%;
+      grid-template-columns: 1fr auto;
+      justify-content: space-between;
+      align-items: end;
+
+      k-text,
+      ::slotted([slot='label']) {
+        font-weight: 600;
+      }
+    }
+
+    label {
+      overflow-wrap: break-word;
+    }
+
+    &.error {
+      .helper-text {
+        ::part(content) {
+          color: var(--error);
+        }
+      }
+    }
+  }
+}

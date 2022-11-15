@@ -1,0 +1,26 @@
+<k-menu t="[title]status-bar.activity-title" id="activity-menu" position="bottom-end" width="320" ...$attrs>
+  <k-paper>
+    <k-text if.bind="store.kolektivoStore.transactions.length === 0">
+      ${i18n.tr('status-bar.activity-empty')}
+    </k-text>
+    <k-stack else gap="24">
+      <k-grid cols="auto 1fr" gap="10" repeat.for="t of orderedTransactions | take:3">
+        <span switch.bind="t.status">
+          <k-icon case="success" name="check_circle" color="var(--success)"></k-icon>
+          <k-icon case="failed" name="error" color="var(--error)"></k-icon>
+          <div case="pending" class="spinner-div">
+            <k-spinner size="18" thickness="5" color="var(--primary)"></k-spinner>
+          </div>
+        </span>
+        <k-link small class="activity" src="${store.blockChainStore.getEtherscanLink(t.id, true)}">
+          ${statusText(t.status)} ${t.fromAmount} ${t.fromToken} for ${t.toAmount} ${t.toToken}
+        </k-link>
+      </k-grid>
+    </k-stack>
+  </k-paper>
+  <div class="footer-link">
+    <k-link small src="#" external>
+      <span t="status-bar.activity-link-text" t-params.bind="network"></span>
+    </k-link>
+  </div>
+</k-menu>

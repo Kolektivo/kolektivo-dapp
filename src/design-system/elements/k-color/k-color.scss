@@ -1,0 +1,28 @@
+:host {
+  div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    place-items: center;
+    justify-items: left;
+    grid-column-gap: 10px;
+    width: auto;
+    cursor: pointer;
+
+    div {
+      &:hover {
+        border: 5px solid var(--primary);
+        padding: 5px;
+        margin: -10px;
+        content: 'copy';
+      }
+    }
+
+    span {
+      width: 75px;
+      height: 50px;
+      display: block;
+      filter: drop-shadow(var(--don-juan-200) 3px 3px 4px);
+      border-radius: 8px;
+    }
+  }
+}

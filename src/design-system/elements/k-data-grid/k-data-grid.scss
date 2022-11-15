@@ -1,0 +1,16 @@
+:host {
+  width: 100%;
+
+  >k-grid {
+    padding-top: var(--spacing);
+    padding-bottom: var(--spacing);
+
+    &:first-child {
+      border-bottom: 1px solid var(--don-juan-100);
+    }
+  }
+
+  >k-grid .right {
+    text-align: right;
+  }
+}

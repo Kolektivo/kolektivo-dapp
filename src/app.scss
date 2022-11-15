@@ -1,31 +1,41 @@
-@import '../design-system/styles/mixins.scss';
+@import './design-system/styles/mixins';
+@import './design-system/styles/sizes';
+
 @font-face {
-  font-family: 'Kaleko';
+  font-family: Kaleko;
   src: url('../static/Kaleko105-Bold.woff2') format('woff2');
   font-weight: bold;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: 'Kaleko';
+  font-family: Kaleko;
   src: url('../static/Kaleko105-Heavy.woff2') format('woff2');
   font-weight: bolder;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: 'Kaleko';
+  font-family: Kaleko;
   src: url('../static/Kaleko105-Light.woff2') format('woff2');
   font-weight: normal;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: 'Kaleko';
+  font-family: Kaleko;
   src: url('../static/Kaleko105-Thin.woff2') format('woff2');
   font-weight: lighter;
+  font-display: swap;
+}
+
+html {
+  overflow-y: overlay;
 }
 
 body {
   height: 100vh;
-  width: 100vw;
-  background-color: var(--concrete);
+  background-color: var(--san-juan-600);
   color: var(--san-juan-800);
   font-family: var(--font);
   margin: 0;
@@ -33,19 +43,30 @@ body {
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-  @include scrollbars(8px, 12px, var(--ocean-blue));
-  overflow-y: overlay;
+  @include scrollbars(8px, 12px, var(--primary));
+}
+
+.scrollbar {
+  @include scrollbars(8px, 12px, var(--primary));
 }
 
 .app {
-  display: grid;
-  grid-template-columns: minmax(auto, 288px) 1fr;
   height: 100%;
+
   main {
-    header {
-      background-color: var(--san-juan-800);
-    }
-    display: grid;
-    grid-template-rows: 80px 1fr auto;
+    position: relative;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+}
+
+au-viewport {
+  height: 100%;
+}
+
+@include xl {
+  main {
+    margin-left: 240px;
   }
 }

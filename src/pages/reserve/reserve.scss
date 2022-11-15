@@ -1,14 +1,5 @@
-#reserve-main {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  > k-paper {
-    padding-left: var(--spacing-xxl);
-    nav {
-      display: grid;
-      grid-template-columns: repeat(12, auto);
-      a.active {
-        text-decoration: underline;
-      }
-    }
+#reserve-page {
+  >inner-nav k-stack {
+    margin-left: var(--spacing-xxl);
   }
 }

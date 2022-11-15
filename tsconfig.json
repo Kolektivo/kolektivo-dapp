@@ -1,23 +1,39 @@
 {
   "compilerOptions": {
+    "noEmit": true,
+    "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "esnext",
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "target": "ESNext",
+    "target": "es2022",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importHelpers": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
+    "strictNullChecks": true,
+    "rootDir": ".",
     "paths": {
-      "pages/*": ["./src/pages/*"],
-      "design-system/*": ["design-system/*"],
-      "utils": ["./src/utils"]
+      "*": [
+        "./src/*"
+      ]
     }
   },
-  "include": ["test", "src", "design-system"],
-  "files": ["src/resource.d.ts"]
+  "typeAcquisition": {
+    "enable": true
+  },
+  "include": [
+    "src",
+    "./*.ts",
+    "eth-sdk"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "src/resource.d.ts",
+  ]
 }

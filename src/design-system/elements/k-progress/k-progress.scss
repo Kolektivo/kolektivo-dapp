@@ -1,0 +1,46 @@
+:host {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  align-content: center;
+
+  >div {
+    align-self: flex-end;
+    border-radius: 8px;
+    background-color: var(--don-juan-100);
+
+    div {
+      border-radius: 8px;
+      background-color: var(--primary);
+    }
+
+    &.warning {
+      background-color: var(--dark-coral-300);
+    }
+
+    &.error {
+      background-color: var(--error-light);
+
+      div {
+        background-color: var(--error);
+      }
+    }
+
+
+  }
+
+  span {
+    font-family: Lato, sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+
+    &.error {
+      color: var(--error);
+    }
+
+    &.warning {
+      color: var(--dark-coral-300);
+    }
+  }
+}

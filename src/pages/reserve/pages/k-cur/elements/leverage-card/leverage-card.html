@@ -1,0 +1,14 @@
+<k-card title="${i18n.tr('navigation.reserve.k-cur.leverage.title')}"
+  tooltip-text="${i18n.tr('navigation.reserve.k-cur.leverage.tooltip')}">
+  <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadAssets()"></k-loader>
+  <k-loader fill="parent" color="var(--white)" if.bind="loading"></k-loader>
+  <chart-time-filter current-filter.two-way="currentInterval">
+    <k-stack direction="row" gap="20">
+      <avatar-text size="24" icon="remove" color="var(--primary)">${i18n.tr('navigation.reserve.k-cur.leverage.ratio-text')} ${currentLeverageRatio | multiplier}</avatar-text>
+      <avatar-text size="24" icon="more_horiz" color="var(--don-juan-200)"> ${i18n.tr('navigation.reserve.k-cur.leverage.max-ratio-text')} ${maxLeverageRatio | multiplier}</avatar-text>
+    </k-stack>
+  </chart-time-filter>
+  <k-chart gradient height="300" max-labels="2" hide-legend type="line" fill labels.bind="labels"
+    border-color.bind="red" tension=".01" data-sets.bind="dataSets(referenceLineData, leverageRatioData, maxLeverageRatioData)" tooltip-options.bind="tooltipOptions" y-label-format.bind="yLabelFormat" x-label-format.bind="xLabelFormat" max-x-labels="5">
+  </k-chart>
+</k-card>

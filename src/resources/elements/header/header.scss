@@ -1,8 +1,22 @@
-:host {
-  background-color: var(--san-juan-800);
+@import '../../../design-system/styles/sizes';
 
-  k-stack {
-    padding-right: var(--spacing);
-    padding-top: var(--spacing-small);
+header {
+  padding: 18px 40px;
+  z-index: 2;
+
+  k-button::part(icon){
+    transform: translateX(0);
+  }
+
+  @include xl {
+    k-app-bar>k-icon-button {
+      display: none;
+    }
+  }
+
+  @include sm-max {
+    k-app-bar .network-feedback {
+      display: none;
+    }
   }
 }

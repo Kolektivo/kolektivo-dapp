@@ -1,0 +1,35 @@
+:host {
+    k-button::part(button) {
+        background-color: transparent;
+        color: var(--san-juan-300);
+        font-size: 20px;
+        line-height: 32px;
+        font-family: var(--header-font);
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 5px;
+
+        &:hover,
+        &:focus-visible {
+            color: var(--white);
+            outline: 0;
+        }
+
+        &:active {
+            color: var(--san-juan-200);
+        }
+    }
+}
+
+:host(.active) {
+    border-bottom: 5px var(--primary) solid;
+
+    k-button::part(button) {
+        padding-bottom: 0;
+        color: var(--white);
+
+        &:active {
+            color: var(--san-juan-200);
+        }
+    }
+}

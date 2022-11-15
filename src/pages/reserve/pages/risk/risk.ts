@@ -1,7 +1,9 @@
-import { ICustomElementViewModel } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
 
-export class Risk implements ICustomElementViewModel {
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
-}
+import * as elements from './elements';
+import template from './risk.html';
+
+import './risk.scss';
+
+@customElement({ name: 'risk', template, dependencies: [elements] })
+export class Risk implements ICustomElementViewModel {}

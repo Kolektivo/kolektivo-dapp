@@ -1,0 +1,14 @@
+<k-stack gap="20">
+  <k-accordion repeat.for="proposal of store.governanceStore.proposals">
+    <div slot="header">
+      <k-grid cols="auto auto 1fr" place-items="center" gap="12" justify-items="end">
+        <k-text type="h6">${proposal.title}</k-text>
+        <k-chip icon="verified" border type="success">verified</k-chip> 
+        <avatar-text if.bind="proposal.status === proposalStatus.Executed" color="var(--success)" name.bind="proposal.status" icon="check_circle"></avatar-text>
+        <avatar-text if.bind="proposal.status === proposalStatus.Pending" color="var(--warning)" name.bind="proposal.status" icon="check_circle"></avatar-text>
+        <avatar-text if.bind="proposal.status === proposalStatus.Vetoed" color="var(--error)" name.bind="proposal.status" icon="block"></avatar-text>
+
+      </k-grid>
+    </div>
+  </k-accordion>
+</k-stack>

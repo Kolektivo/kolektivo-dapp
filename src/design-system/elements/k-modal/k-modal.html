@@ -1,0 +1,17 @@
+<div click.trigger="overlayClicked()" class="k-page-overlay modal">
+  <k-card click.trigger="cardClicked($event)">
+    <k-icon name="close" if.bind="closeButton" click.trigger="cancel()" class="closeIcon"></k-icon>
+    <div slot="header">
+      <au-slot name="header">${title}</au-slot>
+    </div>
+    <au-slot>Are you sure you want to do this?</au-slot>
+    <div slot="footer">
+      <au-slot name="footer">
+        <k-grid gap="var(--spacing)" cols="1fr auto" place-items="end">
+          <k-button click.trigger="cancel()" type="link">${cancelButtonText}</k-button>
+          <k-button click.trigger="ok()">${okButtonText}</k-button>
+        </k-grid>
+      </au-slot>
+    </div>
+  </k-card>
+</div>

@@ -1,73 +1,96 @@
-# Kolektivo
+# Kolektivo dApp
 
-A collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
+## Overview
 
-A collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
 
-This project is bootstrapped by [aurelia/new](https://github.com/aurelia/new).
+This repository contains the frontend of the Kolektivo distributed application (dApp), which is currently under development. 
+
+The Kolektivo dApp is being developed for the Kolektivo Framework, which is a collection of institutional technologies that open up new opportunities for local communities to govern and finance their own regenerative economies.
+
+- You can find a more extended brief [here](https://github.com/Kolektivo?view_as=public).
+- And the **Kolektivo Framework Bluepaper** [here](https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/6319a99a8861af08a497e3a9_Kolektivo%20Bluepaper.pdf).
+- And the **Kolektivo Framework Whitepaper** [here](https://github.com/Curve-Labs/Kolektivo/blob/main/The%20Kolektivo%20Framework%20Whitepaper%20v.3.pdf).
+
+The dApp is bootstrapped by the [Aurelia 2.0](https://github.com/aurelia/new) framework.  It is written mostly in Typescript, HTML and SCSS, and is bundled using Vite.  It will initially be deployed on the [Celo Layer-1 Blockchain](https://celo.org/).
 
 ## Development
 
 ### Prerequisites
-Make sure you have [node.js version >= 14.11.0 < 15](https://nodejs.org/en/)
+
+Make sure you have [node.js version >= 16.0.0 < 17](https://nodejs.org/en/)
 
 ### Install
+
 Install dependencies with the following command:
-```
-npm ci
-```
 
-## Start dev web server
+`npm ci`
 
-    npm start
+## **Start development web server**
 
-## Build the app in production mode
+`npm run start`
 
-    npm run build
+## ****Build the app in production mode****
 
-It builds all files to dist folder. To deploy to production server, copy all the `dist/*` files to production root folder.
+This builds all files to dist folder from where you can host the app locally. 
 
-For example
-```
-dist/index.html
-dist/foo.12345.js
-```
-Copy to production root folder
-```
-root_folder/index.html
-root_folder/foo.12345.js
-```
+`npm run build`
 
-## Unit Tests
+## Automated Tests
 
-    npm run test
+Run all tests:
 
-Run unit tests in watch mode.
+`npm run test`
 
-    npm run test:watch
+Run tests in watch mode:
+
+`npm run test:watch`
+
+Run Playwright e2e tests:
+
+`npm run e2e`
+
+Run Playwrite interactively:
+
+`npm e2e:watch`
+
+## Analyze rollup bundle
+
+`npm run build`
+
+Then look in the dist folder for the stats.html file.
+
+## Dependencies
+
+For an full and always updated list of dependencies please consult [package.json](https://github.com/Kolektivo/kolektivo-dapp/blob/development/package.json)
+
+Type-safe SDK for Ethereum smart contracts:
+
+- `@dethcrypto/eth-sdk: ^0.3.3`
+- `@dethcrypto/eth-sdk-client: ^0.1.6`
+
+Wallet providers:
+
+- `@walletconnect/web3-provider: ^1.8.0`
+- `web3modal: ^1.9.9`
+- `@metamask/detect-provider: ^1.2.0`
+
+Interactions with Ethereum and wallet provider:
+
+- `ethers: ^5.7.0`
+- `@celo-tools/celo-ethers-wrapper: ^0.3.0`
+
+Typescript binding for Ethereum contracts:
+
+- `@typechain/ethers-v5: ^10.1.0`
 
 
-## Analyze webpack bundle
+---
 
-    npm run analyze
 
-## Cypress e2e test
+# **Seed Offering**
 
-All e2e tests are in `cypress/integration/`.
+The Kolektivo Network, a coalition of innovators, impact funders, and environmental stewards, announces its seed token offering. 
 
-Run e2e tests with:
+For the past four years, we've researched and developed tools that enable local regenerative economies. Now, we're planting the seed for a global Kolektivo Network.
 
-    npm run test:e2e
-
-Note the `test:e2e` script uses start-server-and-test to boot up dev server on port 9000 first, then run cypress test, it will automatically shutdown the dev server after test was finished.
-
-To run Cypress interactively, do
-
-```bash
-# Start the dev server in one terminal
-npm start
-# Start Cypress in another terminal
-npx cypress open
-```
-
-For more information, visit https://www.cypress.io
+If you are interested in joining the Seed register your interest [here](https://kolektivo.typeform.com/kolektivoseed).

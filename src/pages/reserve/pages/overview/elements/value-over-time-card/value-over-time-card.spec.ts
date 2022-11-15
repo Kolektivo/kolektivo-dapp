@@ -1,0 +1,69 @@
+import { Registration } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
+import { createFixture } from '@aurelia/testing';
+
+import '../../../../../../utils-testing/setup-testing';
+
+import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { Global } from '../../../../../../hooks';
+import { IStore } from '../../../../../../stores';
+
+import { ValueOverTimeCard } from './value-over-time-card';
+
+import { INumberService } from 'services/number-service';
+import { IReserveStore } from 'stores/reserve-store';
+import { describe, expect, it } from 'vitest';
+import { mock } from 'vitest-mock-extended';
+
+describe('value-over-time-card', () => {
+  it('should have a k-card component', async () => {
+    const { appHost } = await createFixture
+      .html(`<value-over-time-card>`)
+      .deps(...getRegistrations())
+      .build().started;
+    expect(appHost.querySelector('k-card')).exist;
+  });
+
+  it('should have a title and tooltip in the k-card component', async () => {
+    const { appHost } = await createFixture
+      .html(`<value-over-time-card>`)
+      .deps(...getRegistrations())
+      .build().started;
+    const card = appHost.querySelector('k-card');
+    expect(card?.getAttribute('title')).exist;
+    expect(card?.getAttribute('tooltip-text')).exist;
+  });
+
+  it('should have a line chart', async () => {
+    const { appHost } = await createFixture
+      .html(`<value-over-time-card>`)
+      .deps(...getRegistrations())
+      .build().started;
+    const chart = appHost.querySelector('k-chart');
+    expect(chart).exist;
+  });
+
+  function getRegistrations() {
+    const createMockStoreRegistration = () => Registration.instance(IStore, {});
+    const createMockI18nRegistration = () =>
+      Registration.instance(I18N, {
+        tr: (s: string) => String(s),
+      });
+    const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
+    const numberServiceRegistration = () => Registration.instance(INumberService, {});
+    return [
+      ValueOverTimeCard,
+      Global,
+      Registration.instance(
+        IReserveStore,
+        mock<IReserveStore>({
+          getReserveValueOverTime: () => new Promise((res) => res([])),
+        }),
+      ),
+      numberServiceRegistration(),
+      createMockStoreRegistration(),
+      createMockI18nRegistration(),
+      designSystemConfiguration(),
+    ];
+  }
+});

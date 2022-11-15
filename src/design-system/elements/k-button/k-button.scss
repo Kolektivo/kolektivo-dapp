@@ -1,0 +1,243 @@
+:host {
+  width: fit-content;
+  display: inline-block;
+
+  button {
+    border: 0;
+    color: var(--white);
+    background-color: var(--primary);
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: Lato, sans-serif;
+    letter-spacing: 1%;
+    align-items: center;
+    border-radius: var(--rounded);
+    cursor: pointer;
+    width: 100%;
+
+    k-icon,
+    ::slotted(k-icon) {
+      fill: var(--white);
+    }
+
+    k-icon, .loading {
+      margin-left: -8px;
+      padding-right: 10px;
+    }
+
+    &.xs {
+      font-size: 14px;
+      letter-spacing: 2%;
+      line-height: 13px;
+      padding: 6px 12px;
+
+      k-icon, .loading {
+        margin-left: -4px;
+        padding-right: 2px;
+      }
+    }
+
+    &.sm {
+      font-size: 14px;
+      letter-spacing: 1.5%;
+      line-height: 15px;
+      padding: 8px 16px;
+
+      k-icon, .loading {
+        margin-left: -4px;
+        padding-right: 5px;
+      }
+    }
+
+    &.lg {
+      font-size: 18px;
+      letter-spacing: 0.5%;
+      padding: 10px 28px;
+
+      k-icon, .loading {
+        margin-left: -8px;
+        padding-right: 10px;
+      }
+    }
+
+    &.xl {
+      font-size: 20px;
+      letter-spacing: 0%;
+      padding: 12px 32px;
+
+      k-icon, .loading {
+        margin-left: -8px;
+        padding-right: 10px;
+      }
+    }
+
+    &:hover {
+      background-color: var(--ocean-blue-600);
+    }
+
+    &:active {
+      background-color: var(--ocean-blue-700);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ocean-blue-300);
+      background-color: var(--primary);
+
+    }
+
+    &:disabled {
+      background-color: var(--don-juan-100);
+      cursor: inherit;
+    }
+
+
+    &.secondary {
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      background-color: var(--white);
+
+      k-icon {
+        fill: var(--primary);
+        transform: translateX(-8px);
+      }
+
+      &:hover {
+        k-icon {
+          fill: var(--white);
+        }
+
+        color: var(--white);
+        background-color: var(--ocean-blue-600);
+      }
+
+      &:active {
+        k-icon {
+          fill: var(--white);
+        }
+
+        color: var(--white);
+        background-color: var(--ocean-blue-700);
+      }
+
+      &:focus-visible {
+        k-icon {
+          fill: var(--primary);
+        }
+
+        color: var(--primary);
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--white);
+      }
+    }
+
+    &.tertiary {
+      border-color: transparent;
+      background-color: transparent;
+      color: var(--primary);
+
+      k-icon {
+        fill: var(--primary);
+        transform: translateX(-8px);
+      }
+
+      &:hover {
+        k-icon {
+          fill: var(--white);
+        }
+
+        color: var(--white);
+        background-color: var(--ocean-blue-600);
+      }
+
+      &:active {
+        k-icon {
+          fill: var(--white);
+        }
+
+        color: var(--white);
+        background-color: var(--ocean-blue-700);
+      }
+
+      &:focus-visible {
+        k-icon {
+          fill: var(--primary);
+        }
+
+        color: var(--primary);
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--white);
+      }
+    }
+
+    &.utility-light {
+      border-color: transparent;
+      background-color: transparent;
+      color: var(--don-juan-600);
+
+      k-icon {
+        fill: var(--don-juan-600);
+        transform: translateX(-8px);
+      }
+
+      &:hover {
+        background-color: var(--don-juan-050);
+      }
+
+      &:active {
+        background-color: var(--don-juan-100);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--white);
+      }
+    }
+
+    &.utility-dark {
+      border-color: var(--san-juan-500);
+      background-color: var(--san-juan-500);
+      color: var(--white);
+
+      k-icon {
+        fill: var(--white);
+        transform: translateX(-8px);
+      }
+
+      &:hover {
+        background-color: var(--san-juan-400);
+      }
+
+      &:active {
+        background-color: var(--san-juan-500);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--san-juan-400);
+      }
+    }
+
+    &.error {
+      color: var(--white);
+      background-color: var(--error);
+
+      k-icon {
+        fill: var(--white);
+      }
+
+      &:hover {
+        background-color: var(--error-dark);
+      }
+
+      &:active {
+        background-color: var(--error-dark);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--error);
+        background-color: var(--error-dark);
+      }
+    }
+  }
+}
