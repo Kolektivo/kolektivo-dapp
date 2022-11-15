@@ -17,7 +17,7 @@ import tokenData from './tokenlist.json';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { IConfiguration } from 'configurations/configuration';
 import { firebaseConfig } from 'configurations/firebase';
-import { CHAIN, CHAIN_ID, CHAIN_URL, IPFS_GATEWAY, SCAN_LINK } from 'environment-variables';
+import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_COLLECTION, IPFS_GATEWAY, SCAN_LINK } from 'environment-variables';
 import { initializeApp } from 'firebase/app';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
 import { IReadOnlyProvider } from 'read-only-provider';
@@ -68,6 +68,7 @@ const container = DI.createContainer()
       chain: CHAIN,
       isDevelopment: process.env.NODE_ENV !== 'production',
       scanLink: SCAN_LINK,
+      firebaseCollection: FIREBASE_COLLECTION,
     }),
   )
   .register(CacheService)
@@ -125,17 +126,17 @@ export const seed = async () => {
     .map((y) => y as Periods);
 
   const getLastSyncTime = async (interval: string): Promise<string> => {
-    const lastSync = collection(database, `chartData/lastSync/${interval}`);
+    const lastSync = collection(database, `${FIREBASE_COLLECTION}/lastSync/${interval}`);
     const lastSyncDocs = await getDocs(lastSync);
     return lastSyncDocs.docs[0]?.id;
   };
   const setLastSyncTime = async (period: string, time: number, prevDocName?: string): Promise<void> => {
     if (prevDocName) {
       //if a doc exists for last sync time for this interval then delete it
-      await deleteDoc(doc(database, `chartData/lastSync/${period}/${prevDocName}`));
+      await deleteDoc(doc(database, `${FIREBASE_COLLECTION}/lastSync/${period}/${prevDocName}`));
     }
     //add a doc for the last sync time for the given interval
-    await setDoc(doc(database, `chartData/lastSync/${period}`, time.toString()), {});
+    await setDoc(doc(database, `${FIREBASE_COLLECTION}/lastSync/${period}`, time.toString()), {});
   };
   const addData = async (document: string, period: string, time: number, value: string | number | object): Promise<void> => {
     let objectToSave = value;
@@ -144,11 +145,11 @@ export const seed = async () => {
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
     (objectToSave as any).createdAt = time;
-    await setDoc(doc(database, `chartData/${document}/${period}`, time.toString()), objectToSave);
+    await setDoc(doc(database, `${FIREBASE_COLLECTION}/${document}/${period}`, time.toString()), objectToSave);
   };
   const deleteData = async (document: string, period: string, date: number) => {
     const batch = writeBatch(database);
-    const docsToDelete = await getDocs(query(collection(database, `chartData/${document}/${period}`), where('createdAt', '<', date)));
+    const docsToDelete = await getDocs(query(collection(database, `${FIREBASE_COLLECTION}/${document}/${period}`), where('createdAt', '<', date)));
     docsToDelete.forEach((x) => batch.delete(x.ref));
     await batch.commit();
   };

@@ -5,6 +5,7 @@ import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 
 import { BigNumber } from '@ethersproject/bignumber';
+import { IConfiguration } from 'configurations/configuration';
 import { Asset } from 'models/asset';
 import { BigNumberOverTimeData, ValueChartData } from 'models/chart-data';
 import { Treasury } from 'models/generated/monetary/treasury/Treasury';
@@ -30,6 +31,7 @@ export class TreasuryStore {
     @INumberService private readonly numberService: INumberService,
     @IContractStore private readonly contractStore: IContractStore,
     @IContractService private readonly contractService: IContractService,
+    @IConfiguration private readonly configuration: IConfiguration,
     @IDataStore private readonly dataStore: IDataStore,
   ) {}
 
@@ -78,7 +80,7 @@ export class TreasuryStore {
     //get data from datastore
     const earliestTime = getTimeMinusInterval(interval);
     const kttOverTimeData = await this.dataStore.getDocs<BigNumberOverTimeData[]>(
-      `chartData/ktt/${convertIntervalToRecordType(interval)}`,
+      `${this.configuration.firebaseCollection}/ktt/${convertIntervalToRecordType(interval)}`,
       'createdAt',
       'desc',
       { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },

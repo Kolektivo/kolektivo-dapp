@@ -10,7 +10,7 @@ import { Services } from './services/services';
 import { imageMap } from './app-images';
 import { DesignSystemPlugin } from './design-system';
 import { IEncryptionClient } from './encryption-client';
-import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_API_KEY, IPFS_GATEWAY, IS_DEV, SCAN_LINK } from './environment-variables';
+import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_API_KEY, FIREBASE_COLLECTION, IPFS_GATEWAY, IS_DEV, SCAN_LINK } from './environment-variables';
 import * as hooks from './hooks';
 import * as pages from './pages';
 import * as resources from './resources';
@@ -103,6 +103,7 @@ export const appContainer: IContainer = DI.createContainer()
       chain: CHAIN,
       isDevelopment: IS_DEV,
       scanLink: SCAN_LINK,
+      firebaseCollection: FIREBASE_COLLECTION,
     }),
   )
   .register(

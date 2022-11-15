@@ -7,6 +7,7 @@ export type IConfiguration = {
   chain: string;
   isDevelopment: boolean;
   scanLink: string;
+  firebaseCollection: string;
 };
 
 export const IConfiguration = DI.createInterface<IConfiguration>();

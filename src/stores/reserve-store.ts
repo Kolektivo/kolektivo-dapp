@@ -5,6 +5,7 @@ import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 
 import { BigNumber } from '@ethersproject/bignumber';
+import { IConfiguration } from 'configurations/configuration';
 import { callOnce } from 'decorators/call-once';
 import { Asset, AssetType } from 'models/asset';
 import { BigNumberOverTimeData, kCurPriceData, kCurSupplyData, LeverageChartData, RiskChartData, ValueChartData } from 'models/chart-data';
@@ -43,6 +44,7 @@ export class ReserveStore {
     @IContractStore private readonly contractStore: IContractStore,
     @IContractService private readonly contractService: IContractService,
     @INumberService private readonly numberService: INumberService,
+    @IConfiguration private readonly configuration: IConfiguration,
     @IDataStore private readonly dataStore: IDataStore,
   ) {}
 
@@ -280,11 +282,16 @@ export class ReserveStore {
   private async getData<T extends { createdAt: Date }>(collection: string, interval: Interval): Promise<T[]> {
     //get data from datastore
     const earliestTime = getTimeMinusInterval(interval);
-    const data = await this.dataStore.getDocs<T[]>(`chartData/${collection}/${convertIntervalToRecordType(interval)}`, 'createdAt', 'desc', {
-      fieldPath: 'createdAt',
-      opStr: '>=',
-      value: earliestTime,
-    });
+    const data = await this.dataStore.getDocs<T[]>(
+      `${this.configuration.firebaseCollection}/${collection}/${convertIntervalToRecordType(interval)}`,
+      'createdAt',
+      'desc',
+      {
+        fieldPath: 'createdAt',
+        opStr: '>=',
+        value: earliestTime,
+      },
+    );
     //sort data by date ascending
     data.sort((a, b) => {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
