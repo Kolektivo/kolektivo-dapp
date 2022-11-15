@@ -47,8 +47,8 @@ export class TreasuryStore {
     const contract = await this.getTreasuryContract();
     this.totalValuation = await contract.totalValuation();
     this.totalSupply = await contract.totalSupply();
-    this.treasuryDistribution = (await this.getDistributionPercentage('Treasury')).toNumber() / 100;
-    this.reservesDistribution = (await this.getDistributionPercentage('Reserve')).toNumber() / 100;
+    this.treasuryDistribution = (await this.getDistributionPercentage('Treasury')).toNumber();
+    this.reservesDistribution = (await this.getDistributionPercentage('Reserve')).toNumber();
   }
 
   @callOnce()

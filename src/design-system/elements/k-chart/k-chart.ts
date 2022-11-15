@@ -187,8 +187,6 @@ export class KChart implements ICustomElementViewModel {
           },
         },
         y: {
-          suggestedMin: this.lowestDataPoint - this.lowestDataPoint * 0.1,
-          suggestedMax: this.highestDataPoint + this.highestDataPoint * 0.1,
           ticks: {
             maxTicksLimit: this.maxYLabels,
             maxRotation: 0,
