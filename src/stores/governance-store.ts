@@ -10,14 +10,13 @@ import { BigNumber, ContractTransaction, PopulatedTransaction } from 'ethers';
 import { BadgeType } from 'models/badge-type';
 import { Secretdelay } from 'models/generated/governance/secretdelay';
 import { IContractService } from 'services/contract';
-import { IServices } from 'services/services';
 
 export type IGovernanceStore = GovernanceStore;
 export const IGovernanceStore = DI.createInterface<IGovernanceStore>('IGovernanceStore');
 
 export class GovernanceStore {
   public proposals: Proposal[] = [];
-  constructor(@IServices private readonly services: IServices, @IContractService private readonly contractService: IContractService) {}
+  constructor(@IContractService private readonly contractService: IContractService) {}
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IGovernanceStore, GovernanceStore));
   }

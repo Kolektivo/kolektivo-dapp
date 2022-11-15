@@ -26,7 +26,6 @@ export class EncryptionService {
     @IConfiguration private readonly config: IConfiguration,
   ) {
     this.logger.scopeTo('EncryptionService');
-    void this.connect();
   }
   private get chain() {
     return this.config.chain.toLowerCase();
@@ -56,6 +55,7 @@ export class EncryptionService {
   }
 
   public async encrypt(message: string, provider: Web3Provider, address: string, contractAddress: string): Promise<EncryptionResult | undefined> {
+    await this.connect();
     if (!this.client) return;
 
     const params = {
