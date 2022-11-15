@@ -1,24 +1,23 @@
-<use-shadow-dom></use-shadow-dom>
-
 <k-grid rows="auto 1fr auto">
   <a load="map" class="logo">
-    <k-stack direction="row" gap="10">
-      <img src="https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg" />
-      <k-text> Kolektivo </k-text>
-    </k-stack>
+    <img src.bind="logo" alt="Kolektivo" />
   </a>
   <div>
     <nav id="main-nav" part="nav">
-      <k-stack direction="row" column-gap="20" repeat.for="route  of getRoutes('top')">
-        <k-avatar size="32"></k-avatar>
-        <a load="${route.path}"> <k-text tag="h5"> ${route.name} </k-text></a>
-      </k-stack>
+      <a load="${route.path}" repeat.for="route  of getRoutes('top')">
+        <k-stack direction="row" column-gap="15">
+          <k-icon size="20" name.bind="route.icon"></k-icon>
+          <k-text type="label">${route.name}</k-text>
+        </k-stack>
+      </a>
     </nav>
   </div>
   <nav id="footer-nav" part="footer-nav">
-    <k-grid cols="auto 1fr" gap="20" align-items="center" repeat.for="route of getRoutes('bottom')">
-      <k-avatar size="32"></k-avatar>
-      <a load="${route.path}"> <k-text tag="h6"> ${route.name} </k-text></a>
-    </k-grid>
+    <a load="${route.path}" repeat.for="route  of getRoutes('bottom')">
+      <k-stack direction="row" column-gap="10">
+        <k-icon size="20" name.bind="route.icon"></k-icon>
+        <k-text type="label">${route.name}</k-text>
+      </k-stack>
+    </a>
   </nav>
 </k-grid>

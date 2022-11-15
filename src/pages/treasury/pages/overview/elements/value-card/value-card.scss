@@ -1,0 +1,5 @@
+value-card {
+  > k-card::part(paper) {
+    height: 100%;
+  }
+}

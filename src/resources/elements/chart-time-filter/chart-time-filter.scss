@@ -1,0 +1,8 @@
+k-grid.chart-time-filter {
+    margin-top: var(--spacing);
+    margin-bottom: var(--spacing);
+
+    &::part(grid){
+        justify-items: end;
+    }
+}

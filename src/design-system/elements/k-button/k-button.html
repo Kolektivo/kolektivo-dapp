@@ -1,0 +1,14 @@
+<button style.bind="buttonStyle" disabled.bind="disabled || loading" part="button ${size}" class="${size} ${type}"
+  class.bind="class" role="button" ...$attrs>
+  <k-grid justify-content="center" cols="auto auto auto" direction="row">
+    <k-stack class="loading" direction="row" if.bind="loading">
+      <div class="dot1"> </div>
+      <div class="dot2"></div>
+      <div class="dot3"></div>
+    </k-stack>
+    <slot name="start">
+      <k-icon if.bind="icon" part="icon" name.bind="icon" size.bind="iconSize"></k-icon>
+    </slot>
+    <slot></slot>
+  </k-grid>
+</button>

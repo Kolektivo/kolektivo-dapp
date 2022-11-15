@@ -1,0 +1,13 @@
+<div animate="start-class.bind: startClass;end-class.bind: endClass" class="k-toast-container" style.bind="styles">
+  <div class.bind="type" mouseenter.trigger="mouseEnter()" mouseleave.trigger="mouseLeave()">
+    <k-icon name.bind="iconName" size="24"></k-icon>
+    <k-stack>
+      <k-text tag="h6">${getTitle()}</k-text>
+      <k-stack gap="10">
+        <k-text color="var(--don-juan-600)">${message}</k-text>
+        <au-compose view.bind="content" if.bind="content"></au-compose>      
+      </k-stack>
+    </k-stack>
+    <k-countdown size="24" slot="close" inherit-hover click.trigger="closeToast()" color.bind="closeColor" finished-color="closeColor" hovering.bind="hovering" icon="close" countdown.bind="countdown"></k-countdown>
+  </div>
+</div>

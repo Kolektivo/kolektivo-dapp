@@ -1,0 +1,20 @@
+@import "../../../design-system/styles/mixins";
+
+:host {
+  > div {
+    background-color: var(--white);
+    border-radius: var(--rounded);
+    position: absolute;
+    box-shadow: var(--elevation-small);
+    z-index: 100;
+    padding: 16px;
+    overflow: auto;
+
+    @include scrollbars(8px, 12px, var(--primary));
+
+    slot[name="title"] {
+      margin-bottom: 16px;
+      display: block;
+    }
+  }
+}

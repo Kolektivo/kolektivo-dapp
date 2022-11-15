@@ -1,0 +1,7 @@
+<div class="avatar-text" tooltip.bind="avatarTextElem.scrollWidth > avatarTextElem.offsetWidth ? name : undefined">
+  <k-icon if.bind="icon" name.bind="icon" size.bind="size" color.bind="color"></k-icon>
+  <k-avatar else src.bind="src" color.bind="color" size.bind="size"></k-avatar>
+  <slot>
+    <k-text color.bind="color" ref="avatarTextElem">${name}</k-text>
+  </slot>
+</div>

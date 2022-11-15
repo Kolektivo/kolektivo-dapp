@@ -1,26 +1,18 @@
+import { customElement, ICustomElementViewModel } from 'aurelia';
+import { I18N } from '@aurelia/i18n';
+
+import * as pages from './pages';
+import template from './treasury.html';
+
 import './treasury.scss';
-import { GridColumn } from './../../../design-system/elements/k-data-grid/grid-column';
-import { ICustomElementViewModel } from 'aurelia';
+@customElement({ name: 'treasury', template, dependencies: [pages] })
 export class Treasury implements ICustomElementViewModel {
-  testColumns: GridColumn[] = [
-    { headerText: 'Token', field: 'token', width: '1fr' },
-    { headerText: 'Price', field: 'price', width: '1fr' },
-    { headerText: 'Quantity', field: 'quantity', width: '1fr' },
-    { headerText: 'Total Value', field: 'totalValue', width: '1fr' },
-  ];
+  constructor(@I18N private readonly i18n: I18N) {}
 
-  testData = [
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-    { token: 'XXX', price: '$$$', quantity: 400, totalValue: '$$$' },
-  ];
-
-  constructor() {
-    // you can inject the element or any DI in the constructor
+  routes() {
+    return [
+      { name: this.i18n.tr('navigation.treasury.menu.overview', { defaultValue: 'Overview' }), path: 'overview' },
+      { name: this.i18n.tr('navigation.treasury.menu.governance', { defaultValue: 'Governance' }), path: 'governance' },
+    ];
   }
 }

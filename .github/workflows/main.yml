@@ -7,9 +7,43 @@ on:
       - development
   pull_request:
 jobs:
-  lint:
-    name: Install dependencies and Lint
+  install:
+    timeout-minutes: 15
+    name: Install Dependencies
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Cache Playwright binaries
+        uses: actions/cache@v3
+        id: cache-playwright
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+
+      - name: Install Playwright 
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+        run: npx playwright install
+
+  lint:
+    name: Lint
+    needs: install
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -17,24 +51,43 @@ jobs:
           node-version: '16'
           cache: 'npm'
 
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v2
+      - name: Cache node_modules
+        uses: actions/cache@v3
         with:
-          path: ./node_modules
+          path: |
+            node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
 
       - run: npm list
 
       - run: npm run lint
 
+  test:
+    name: Test
+    needs: install
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - run: npm list
+      - run: npm run test
+
   deploy:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     outputs:
       DEPLOYMENT_URL: ${{ steps.vercel-deploy.outputs.PREVIEW_URL }}
       INSPECT_URL: ${{ steps.vercel-deploy.outputs.INSPECT_URL }}
@@ -73,6 +126,10 @@ jobs:
             npm run vercel:deploy --token=${{ secrets.VERCEL_TOKEN }} |& tee deployment-output.txt
           fi
 
+          if grep -q Error! "deployment-output.txt"; then
+            exit 1
+          fi
+
           DEPLOYMENT_URL=$(grep -m 1 -o 'https[^"]*.vercel.app' deployment-output.txt)
           echo Deployment URL: $DEPLOYMENT_URL
           INSPECT_URL=$(grep -m 1 -o 'https://vercel[^"]*[[:blank:]]' deployment-output.txt)
@@ -80,34 +137,44 @@ jobs:
           echo "::set-output name=PREVIEW_URL::$DEPLOYMENT_URL"
           echo "::set-output name=INSPECT_URL::$INSPECT_URL"
 
-  cypress-run:
-    name: Cypress run
-    needs: [deploy, lint]
+  e2e:
+    name: e2e tests
+    needs: [lint, deploy]
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
 
-      # Run e2e tests against Vercel deployment
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+      - name: Cache node_modules
+        uses: actions/cache@v3
         with:
-          config: pageLoadTimeout=100000,baseUrl=${{needs.deploy.outputs.DEPLOYMENT_URL}}
-      # after the test run completes
-      # store videos and any screenshots
-      # NOTE: screenshots will be generated only if E2E test failed
-      # thus we store screenshots only on failures
-      - uses: actions/upload-artifact@v2
-        if: failure()
+          path: |
+            node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Cache Playwright
+        uses: actions/cache@v3
         with:
-          name: cypress-screenshots
-          path: test/e2e/screenshots
+          path: |
+            ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('package-lock.json') }}
+
+      - run: npx playwright install-deps
+
+      - name: Run playwright
+        run: npm run e2e:ci --url=${{ needs.deploy.outputs.DEPLOYMENT_URL }}/
 
   failed-e2e:
     name: Comment on PR with failing tests details
-    needs: [deploy, cypress-run]
+    needs: [deploy, e2e]
     runs-on: ubuntu-latest
-    if: always() && needs.cypress-run.result == 'failure' && (github.event_name == 'pull_request')
+    timeout-minutes: 2
+    if: always() && needs.e2e.result == 'failure' && (github.event_name == 'pull_request')
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -136,12 +203,13 @@ jobs:
           # Pass Github token so it's possible to comment on a PR
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # If the e2e tests were successful, assign a branch specific URL to the Vercel deployment
+  # If the lint, test and e2e were successful, assign a branch specific URL to the Vercel deployment
   # Otherwise the latest successful deployment for that branch will be still available under the branch specific URL
   assign-branch-url:
     name: Assign branch specific URL
-    needs: [deploy, cypress-run]
+    needs: [deploy, lint, test, e2e]
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     if: ${{needs.deploy.outputs.DEPLOYMENT_ENVIRONMENT == 'Preview' }}
     outputs:
       BRANCH_DOMAIN: ${{ steps.branch-deployment-url.outputs.BRANCH_DOMAIN }}
@@ -176,8 +244,9 @@ jobs:
   comment-pr:
     name: Comment on the Pull Request
     if: ${{ github.event_name == 'pull_request' }}
-    needs: [deploy, cypress-run, assign-branch-url]
+    needs: [deploy, assign-branch-url]
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     steps:
       - name: Checkout
         uses: actions/checkout@v3

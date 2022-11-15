@@ -1,0 +1,5 @@
+<k-button part="button" class="${type} ${size}" size.bind="size" ...$attrs>
+  <k-icon if.bind="name" name.bind="name" size.bind="iconSize"></k-icon>
+  <slot part="content">
+  </slot>
+</k-button>

@@ -1,0 +1,8 @@
+<div role="radiogroup" ...$attrs>
+  <au-slot>
+    <k-stack gap="var(--spacing)">
+      <k-radio model.bind="item.value" checked.bind="value" name.bind="name" repeat.for="item of items"> ${item.display}
+      </k-radio>
+    </k-stack>
+  </au-slot>
+</div>

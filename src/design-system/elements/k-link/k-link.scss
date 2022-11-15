@@ -1,0 +1,41 @@
+:host {
+    a {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0%;
+        color: var(--primary);
+        text-decoration: underline;
+        cursor: pointer;
+
+        &.small {
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 1%;
+        }
+
+        &:hover {
+            color: var(--ocean-blue-600);
+
+            k-icon {
+                fill: var(--ocean-blue-600);
+            }
+        }
+
+        &:active {
+            color: var(--ocean-blue-700);
+
+            k-icon {
+                fill: var(--ocean-blue-700);
+            }
+        }
+
+        k-icon {
+            fill: var(--primary);
+        }
+
+        k-stack {
+            display: inline-flex;
+        }
+    }
+}

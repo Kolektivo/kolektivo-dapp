@@ -1,0 +1,18 @@
+<k-stack part="main" gap="var(--spacing-sm)" ...$attrs>
+  <k-stack gap="20">
+    <slot name="title">
+      <k-text type="h1" color="var(--white)">${title}</k-text>
+    </slot>
+    <slot name="description">
+      <div class="description">
+        <k-text color="var(--white)">${description}</k-text>
+      </div>
+    </slot>
+    <slot name="learn-more">
+      <k-link class="learn-more-link" if.bind="learnMoreLink" path.bind="learnMoreLink" color="var(--white)">Learn More</k-link>
+    </slot>
+  </k-stack>
+  <slot name="instruction-text"></slot>
+  <slot name="additional-text"></slot>
+  <slot></slot>
+</k-stack>

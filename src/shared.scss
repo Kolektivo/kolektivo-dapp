@@ -10,24 +10,25 @@ body {
     margin-block-end: 0;
     margin-block-start: 0;
   }
+
   a {
-    text-decoration: none;
-    color: var(--san-juan-700);
+    color: var(--dark);
   }
 
   pre {
     display: block;
     width: 100%;
   }
+
   code {
     background-color: var(--san-juan-800);
-    color: var(--san-juan-050);
-    padding-right: 25px;
+    color: var(--dark-light);
     font-family: monospace;
     display: block;
     font-size: 14px;
     position: relative;
     padding: 15px 40px 15px 15px;
+
     k-icon {
       fill: var(--white);
       position: absolute;
@@ -36,4 +37,12 @@ body {
       font-size: 20px;
     }
   }
+}
+
+%callout {
+  background-color: var(--don-juan-025);
+  border: 1px solid var(--don-juan-050);
+  border-radius: var(--rounded);
+  padding: 16px;
+  margin-top: 8px;
 }

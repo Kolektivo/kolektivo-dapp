@@ -1,0 +1,80 @@
+:host {
+  --spacing-close-top: var(--spacing-sm);
+  --spacing-close-right: var(--spacing-sm);
+  --gap: var(--spacing);
+  --padding: var(--spacing-lg);
+  --font: Lato, sans-serif;
+  --radius: 8px;
+
+
+  >div {
+    font-family: var(--font);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--gap);
+    padding: var(--padding);
+    border-radius: var(--radius);
+    position: relative;
+
+    &.danger {
+      k-icon {
+        fill: var(--error);
+      }
+
+      color: var(--error);
+      background-color: var(--error-light);
+    }
+
+    &.success {
+      k-icon {
+        fill: var(--success);
+      }
+
+      color: var(--success);
+      background-color: var(--success-light);
+    }
+
+    &.warning {
+      k-icon {
+        fill: var(--warning);
+      }
+
+      color: var(--warning);
+      background-color: var(--warning-light);
+    }
+
+    &.info {
+      k-icon {
+        fill: var(--info);
+      }
+
+      color: var(--info);
+      background-color: var(--info-light);
+    }
+
+    &.secondary {
+      k-icon {
+        fill: var(--secondary);
+      }
+
+      color: var(--secondary);
+      background-color: var(--secondary-light);
+    }
+
+    &.dark {
+      k-icon {
+        fill: var(--dark);
+      }
+
+      color: var(--dark);
+      background-color: var(--dark-light);
+    }
+  }
+
+  slot[part=close] {
+    position: absolute;
+    top: var(--spacing-close-top);
+    right: var(--spacing-close-right);
+    display: block;
+  }
+}

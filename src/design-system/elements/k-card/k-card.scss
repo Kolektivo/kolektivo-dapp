@@ -1,0 +1,7 @@
+:host {
+    > k-paper > k-grid{
+        padding: var(--card-padding, var(--spacing-xxl));
+        height: 100%;
+        box-sizing: border-box;
+    }
+}

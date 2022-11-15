@@ -1,0 +1,72 @@
+@import "./../../styles/mixins";
+
+:host {
+  display: block;
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--don-juan-700);
+  appearance: none !important;
+  width: max-content;
+  position: relative;
+
+  div[part="control"] {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: 12px 14px 12px 20px;
+    border: 1px solid var(--don-juan);
+    background-color: var(--white);
+    border-radius: var(--rounded);
+    margin: 0;
+    gap: 10px;
+
+    [part="placeholder"] {
+      color: var(--don-juan-300);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    [part="selected-value"] {
+      color: var(--don-juan-700);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    [part="indicator"] {
+      padding: 0;
+    }
+
+    &.open,
+    &:focus,
+    &:focus-within,
+    &:focus-visible,
+    &:active {
+      border: 2px solid var(--primary);
+      outline: 2px solid var(--ocean-blue-200);
+      margin: -1px;
+    }
+
+    &:hover {
+      border: 2px solid var(--primary);
+      margin: -1px;
+    }
+  }
+
+  k-menu {
+    &::part(control) {
+      right: 0;
+      left: 0;
+      border: 2px solid var(--primary);
+      padding: 8px 0;
+      margin: 0 -1px;
+      box-shadow: 0 2px 4px rgb(169 217 215 / 80%);
+    }
+
+    &::part(title) {
+      display: none;
+    }
+  }
+}

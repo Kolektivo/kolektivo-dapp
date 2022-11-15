@@ -1,0 +1,31 @@
+card-nav {
+    k-app-bar::part(grid) {
+        border-bottom: 1px solid var(--don-juan-100);
+        margin-bottom: 20px;
+    }    
+
+    k-tab{
+        margin-bottom: -1px;
+    }
+
+    k-tab::part(content){
+        color: var(--don-juan-500);
+
+        &:hover{
+            color: var(--don-juan-400);
+        }
+
+        &:active{
+            color: var(--don-juan-300);
+        }
+    }
+
+    k-tab.active::part(content) {
+        padding-bottom: 0;
+        color: var(--primary);    
+        
+        &:active{
+            color: var(--san-juan-200);
+        }
+    }
+}

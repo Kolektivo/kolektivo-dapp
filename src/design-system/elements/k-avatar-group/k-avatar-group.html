@@ -1,0 +1,8 @@
+<div ref="div" ...$attrs>
+    <au-slot></au-slot>
+    <au-slot name="more">
+      <k-avatar if.bind="tooMany" color.bind="moreColor" size.bind="moreSize">
+        <k-icon name.bind="moreIcon" size.bind="moreSize" color.bind="moreIconColor"></k-icon>
+      </k-avatar>
+    </au-slot>
+</div>

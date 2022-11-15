@@ -1,0 +1,8 @@
+<k-stack direction="row" class="input-add-on">
+  <slot name="start" ref="start" error.bind="error" click.trigger="focusInput()" class="${error && 'error'}"></slot>
+  <textarea if.bind="multiline" focus.trigger="focused()" ref="input" name="${name}" class="${error && 'error'}"
+    rows.bind="rows" ...$attrs></textarea>
+  <input else name="${name}" focus.trigger="focused()" ref="input" style="padding-left: ${startWidth}px" part="input"
+    type="${type}" class="${error && 'error'}" ...$attrs />
+  <slot name="end" ref="end" error.bind="error" class="${error && 'error'}"></slot>
+</k-stack>

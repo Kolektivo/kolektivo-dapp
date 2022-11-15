@@ -1,0 +1,12 @@
+<div class="${type}" style.bind="styles">
+  <k-grid gap="var(--spacing)" cols="auto 1fr">
+    <slot part="start" name="start">
+      <k-icon name.bind="icon || getIconName()" size="16" top="2"></k-icon>
+    </slot>
+    <div part="content">
+      <slot></slot>
+    </div>
+    <slot part="end" name="end"></slot>
+  </k-grid>
+  <slot part="close" name="close"></slot>
+</div>

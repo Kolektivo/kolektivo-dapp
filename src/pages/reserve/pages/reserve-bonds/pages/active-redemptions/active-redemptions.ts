@@ -1,7 +1,8 @@
-import { ICustomElementViewModel } from 'aurelia';
+import { customElement, ICustomElementViewModel } from 'aurelia';
 
-export class ActiveRedemptions implements ICustomElementViewModel {
-  constructor() {
-    // you can inject the element or any DI in the constructor
-  }
-}
+import template from './active-redemptions.html';
+
+import './active-redemptions.scss';
+
+@customElement({ name: 'active-redemptions', template })
+export class ActiveRedemptions implements ICustomElementViewModel {}

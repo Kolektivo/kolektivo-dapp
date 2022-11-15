@@ -5,6 +5,10 @@
 # We recommend that you use a Global Gitignore for files that are not related
 # to the project. (https://help.github.com/articles/ignoring-files/#create-a-global-gitignore)
 
+#.env
+.env.**local
+
+
 # OS
 #
 # Ref: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore

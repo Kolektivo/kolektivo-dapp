@@ -1,0 +1,15 @@
+name: Trigger scheduled tasks on a CRON Schedule
+on:
+  workflow_dispatch:
+env:
+  FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+jobs:
+  build:
+    name: Trigger Chart Data Refresh
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: node ./scripts/update-chart-data/index.mjs

@@ -1,0 +1,10 @@
+<k-modal cancel.bind="confirm">
+  <div au-slot="header">Confirm</div>
+  <k-text>${message}</k-text>
+  <div au-slot="footer">
+    <k-stack direction="row" gap="10">
+      <k-button type="link" click.trigger="confirm(true)">Yes</k-button>
+      <k-button click.trigger="confirm(false)">No</k-button>
+    </k-stack>
+  </div>
+</k-modal>

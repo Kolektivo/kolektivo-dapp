@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "name": "kolektivo-dapp",
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/"
+    }
+  ],
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers" : [
+        {
+          "key" : "Cache-Control",
+          "value" : "public, no-transform, immutable, max-age=31536000"
+        }
+      ]
+    }
+  ]
+}

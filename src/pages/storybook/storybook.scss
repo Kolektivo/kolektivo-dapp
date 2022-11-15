@@ -6,21 +6,36 @@
     align-items: center;
     grid-column-gap: 20px;
   }
+
   .gridsystem k-code {
     grid-template-columns: minmax(550px, 25%) 1fr;
+
     div {
-      border: 1px solid var(--ocean-blue);
+      border: 1px solid var(--primary);
     }
   }
+
   .datagrids k-code {
-    grid-template-columns: minmax(550px, 25%) 1fr;
+    grid-template-columns: minmax(750px, 55%) 1fr;
   }
+
   .icons k-code {
     grid-template-columns: 48px 1fr;
   }
+
   k-grid {
     width: 100%;
   }
+
+  .avatars k-code,
+  .badges k-code,
+  .chips k-code,
+  .links k-code,
+  .toasts k-code,
+  .tooltips k-code,
+  .loaders k-code,
+  .countdowns k-code,
+  .animation k-code,
   .progress k-code,
   .accordions k-code,
   .alerts k-code,
@@ -29,11 +44,25 @@
   .selects k-code {
     grid-template-columns: minmax(150px, 25%) 1fr;
   }
-  .formFields k-code,
+
+  .tooltips k-text {
+    display: inline;
+  }
+
+  .form-fields k-code,
   .inputs k-code {
     grid-template-columns: minmax(150px, 15%) 1fr;
   }
+
   .typography k-code {
     grid-template-columns: minmax(375px, 35%) 1fr;
+  }
+
+  .animate {
+    display: grid;
+    place-items: center;
+    color: var(--white);
+    background: var(--primary);
+    padding: var(--spacing);
   }
 }
