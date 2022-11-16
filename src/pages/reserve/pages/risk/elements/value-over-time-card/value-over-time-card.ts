@@ -87,12 +87,12 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   get xLabelFormat(): Record<string, unknown> {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
-  //TODO: Make i18n work in this method as a getter
-  private dataSets(marketCap: number[], minCollateralValue: number[], lowRisk: number[], moderateRisk: number[], highRisk: number[]) {
+
+  get dataSets() {
     return [
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.market-cap'),
-        data: marketCap,
+        data: this.marketCap,
         borderDash: [5],
         borderColor: 'rgba(30, 35, 37, 0.77)',
         tension: 0,
@@ -101,7 +101,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.min-value'),
-        data: minCollateralValue,
+        data: this.minCollateralValue,
         borderDash: [5],
         borderColor: 'rgba(220, 77, 77)',
         tension: 0,
@@ -110,7 +110,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.low-risk'),
-        data: lowRisk,
+        data: this.lowRisk,
         fill: true,
         backgroundColor: 'rgb(0, 160, 76)',
         tension: 0,
@@ -119,7 +119,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.moderate-risk'),
-        data: moderateRisk,
+        data: this.moderateRisk,
         fill: true,
         backgroundColor: 'rgb(245, 161, 74)',
         tension: 0,
@@ -128,7 +128,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.high-risk'),
-        data: highRisk,
+        data: this.highRisk,
         fill: true,
         backgroundColor: 'rgb(213, 92, 56)',
         tension: 0,
