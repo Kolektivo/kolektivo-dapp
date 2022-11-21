@@ -167,7 +167,7 @@ export const appContainer: IContainer = DI.createContainer()
               expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 days
             },
             {
-              loadPath: '/locales/{{lng}}/{{ns}}.json',
+              loadPath: `/locales/{{lng}}/{{ns}}.json?id=${import.meta.env.KOL_VERCEL_GIT_COMMIT_SHA ?? 1}`,
             },
           ],
         },
