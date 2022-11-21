@@ -16,8 +16,7 @@ export class PoolCard implements ICustomElementViewModel {
         headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.tokens'),
         field: 'tokens',
         width: '1fr',
-        template:
-          '<k-avatar-group><k-avatar repeat.for="token of tokens" src.bind="token.icon" size="31" tooltip.bind="token.symbol"></k-avatar></k-avatar-group>',
+        template: '<k-avatar-group><k-avatar repeat.for="token of tokens" src.bind="token.icon" size="31" tooltip.bind="token.symbol"></k-avatar></k-avatar-group>',
       },
       {
         headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.volume'),

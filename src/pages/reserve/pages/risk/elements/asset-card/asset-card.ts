@@ -13,11 +13,7 @@ import { fromWei } from 'utils';
 @customElement({ name: 'asset-card', template })
 export class AssetCard implements ICustomElementViewModel {
   columns: IGridColumn[] = [];
-  constructor(
-    @IReserveStore private readonly reserveStore: IReserveStore,
-    @INumberService private readonly numberService: INumberService,
-    @I18N private readonly i18n: I18N,
-  ) {
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @INumberService private readonly numberService: INumberService, @I18N private readonly i18n: I18N) {
     this.columns = riskAssetsColumns();
   }
   get data() {

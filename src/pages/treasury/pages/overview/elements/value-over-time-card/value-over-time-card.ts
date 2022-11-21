@@ -19,11 +19,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private treasuryData: ValueChartData[] = [];
-  constructor(
-    @ITreasuryStore private readonly treasuryStore: ITreasuryStore,
-    private readonly currencyValueConverter: CurrencyValueConverter,
-    @I18N private readonly i18n: I18N,
-  ) {}
+  constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore, private readonly currencyValueConverter: CurrencyValueConverter, @I18N private readonly i18n: I18N) {}
 
   binding() {
     void this.intervalChanged();

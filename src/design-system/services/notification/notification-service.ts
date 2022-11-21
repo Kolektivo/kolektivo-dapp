@@ -18,10 +18,7 @@ export class NotificationService {
     @IDesignSystemConfiguration private readonly config: IDesignSystemConfiguration,
   ) {}
 
-  public async confirm(
-    message?: string,
-    component: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }> = KConfirm,
-  ): Promise<boolean> {
+  public async confirm(message?: string, component: Constructable<{ message?: string; confirm: (result?: boolean) => boolean | Promise<boolean> }> = KConfirm): Promise<boolean> {
     return new Promise((res) => {
       const { controller, instance } = createCustomElement(component, this.container, this.aurelia.root.host);
 

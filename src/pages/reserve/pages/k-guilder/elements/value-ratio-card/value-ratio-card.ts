@@ -20,11 +20,7 @@ export class ValueRatioCard implements ICustomElementViewModel {
   private currentInterval: Interval = Interval['1d'];
   private data: ValueChartData[] = [];
 
-  constructor(
-    @IReserveStore private readonly reserveStore: IReserveStore,
-    private readonly currencyValueConverter: CurrencyValueConverter,
-    @I18N private readonly i18n: I18N,
-  ) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, private readonly currencyValueConverter: CurrencyValueConverter, @I18N private readonly i18n: I18N) {}
 
   binding() {
     void this.intervalChanged();

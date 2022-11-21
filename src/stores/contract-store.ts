@@ -94,12 +94,7 @@ export class ContractStore {
     return asset;
   }
 
-  private async populateTransactionsForAsset<T extends Erc20 | Erc721>(
-    transactions: Transaction[],
-    tokenContract: T,
-    treasuryAddress: string,
-    tokenInfo: ITokenInfo,
-  ): Promise<void> {
+  private async populateTransactionsForAsset<T extends Erc20 | Erc721>(transactions: Transaction[], tokenContract: T, treasuryAddress: string, tokenInfo: ITokenInfo): Promise<void> {
     //get all the deposits to the treasury for the given token
     const deposits = await tokenContract.queryFilter(tokenContract.filters.Transfer(undefined, treasuryAddress));
     const mappedDeposits = await this.mapTransactions(deposits, 'deposit', tokenInfo);
@@ -110,11 +105,7 @@ export class ContractStore {
     transactions.push(...mappedWithdrawls);
   }
 
-  private async mapTransactions<T extends Erc20TransferEvent | Erc721TransferEvent>(
-    transactions: T[],
-    type: 'deposit' | 'withdrawl',
-    tokenInfo: ITokenInfo,
-  ): Promise<Transaction[]> {
+  private async mapTransactions<T extends Erc20TransferEvent | Erc721TransferEvent>(transactions: T[], type: 'deposit' | 'withdrawl', tokenInfo: ITokenInfo): Promise<Transaction[]> {
     return await Promise.all(
       transactions.map(async (transaction): Promise<Transaction> => {
         const block = await transaction.getBlock();

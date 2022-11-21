@@ -31,9 +31,7 @@ export class FirebaseService {
 
   public async getDocs<T = unknown>(path: string, order: string | FieldPath, direction: OrderByDirection, whereClause: WhereClause): Promise<T> {
     const { getDocs, query, collection, where, orderBy } = await import('firebase/firestore/lite');
-    const data = await getDocs(
-      query(collection(await this.connect(), path), where(whereClause.fieldPath, whereClause.opStr, whereClause.value), orderBy(order, direction)),
-    );
+    const data = await getDocs(query(collection(await this.connect(), path), where(whereClause.fieldPath, whereClause.opStr, whereClause.value), orderBy(order, direction)));
     return data.docs.map((x) => x.data()) as T;
   }
 }

@@ -80,14 +80,7 @@ export class SubmitProposalCard implements ICustomElementViewModel {
       if (!this.walletProvider.provider || !this.accountStore.walletAddress) return;
 
       this.encryptedResult = (
-        await this.encryptionService.encrypt(
-          this.messageToEncrypt,
-          this.walletProvider.provider,
-          this.accountStore.walletAddress,
-          (
-            await this.accountStore.getBadgerContract()
-          ).address,
-        )
+        await this.encryptionService.encrypt(this.messageToEncrypt, this.walletProvider.provider, this.accountStore.walletAddress, (await this.accountStore.getBadgerContract()).address)
       )?.encryptedString;
     } catch (ex) {
       this.error = JSON.stringify(ex);
@@ -97,8 +90,7 @@ export class SubmitProposalCard implements ICustomElementViewModel {
   async decrypt() {
     try {
       this.error = '';
-      this.decryptedResult =
-        this.encryptedResult && (await this.encryptionService.decryptAs(this.encryptedResult, (await this.accountStore.getBadgerContract()).address));
+      this.decryptedResult = this.encryptedResult && (await this.encryptionService.decryptAs(this.encryptedResult, (await this.accountStore.getBadgerContract()).address));
     } catch (ex) {
       this.error = JSON.stringify(ex);
     }

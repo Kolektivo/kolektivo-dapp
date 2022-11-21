@@ -18,11 +18,7 @@ export class LeverageCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private reserveData: LeverageChartData[] = [];
-  constructor(
-    @IReserveStore private readonly reserveStore: IReserveStore,
-    private readonly multiplierValueConverter: MultiplierValueConverter,
-    @I18N private readonly i18n: I18N,
-  ) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, private readonly multiplierValueConverter: MultiplierValueConverter, @I18N private readonly i18n: I18N) {}
 
   binding() {
     void this.intervalChanged();

@@ -9,14 +9,7 @@ export class AnimationService {
 
   constructor(@IPlatform private readonly platform: IPlatform) {}
 
-  public animate(
-    from: number,
-    to: number,
-    duration: number,
-    update: (value: number | string) => void,
-    easing?: keyof typeof easings,
-    done?: () => Promise<void> | void,
-  ): Task<void> | undefined {
+  public animate(from: number, to: number, duration: number, update: (value: number | string) => void, easing?: keyof typeof easings, done?: () => Promise<void> | void): Task<void> | undefined {
     // Early bail out if called incorrectly
     if (typeof from !== 'number' || typeof to !== 'number' || typeof duration !== 'number' || typeof update !== 'function') return;
     const easingFunc = typeof easing === 'string' ? easings[easing] : easings.linear;
@@ -73,46 +66,36 @@ export const easings = {
   },
 
   easeInCubic: (time: number, from: number, change: number, duration: number): number => change * (time /= duration) * time * time + from,
-  easeOutCubic: (time: number, from: number, change: number, duration: number): number =>
-    change * ((time = time / duration - 1) * time * time + 1) + from,
+  easeOutCubic: (time: number, from: number, change: number, duration: number): number => change * ((time = time / duration - 1) * time * time + 1) + from,
   easeInOutCubic: (time: number, from: number, change: number, duration: number): number => {
     if ((time /= duration / 2) < 1) return (change / 2) * time * time * time + from;
     return (change / 2) * ((time -= 2) * time * time + 2) + from;
   },
   easeInQuart: (time: number, from: number, change: number, duration: number): number => change * (time /= duration) * time * time * time + from,
-  easeOutQuart: (time: number, from: number, change: number, duration: number): number =>
-    -change * ((time = time / duration - 1) * time * time * time - 1) + from,
+  easeOutQuart: (time: number, from: number, change: number, duration: number): number => -change * ((time = time / duration - 1) * time * time * time - 1) + from,
   easeInOutQuart: (time: number, from: number, change: number, duration: number): number => {
     if ((time /= duration / 2) < 1) return (change / 2) * time * time * time * time + from;
     return (-change / 2) * ((time -= 2) * time * time * time - 2) + from;
   },
-  easeInQuint: (time: number, from: number, change: number, duration: number): number =>
-    change * (time /= duration) * time * time * time * time + from,
-  easeOutQuint: (time: number, from: number, change: number, duration: number): number =>
-    change * ((time = time / duration - 1) * time * time * time * time + 1) + from,
+  easeInQuint: (time: number, from: number, change: number, duration: number): number => change * (time /= duration) * time * time * time * time + from,
+  easeOutQuint: (time: number, from: number, change: number, duration: number): number => change * ((time = time / duration - 1) * time * time * time * time + 1) + from,
   easeInOutQuint: (time: number, from: number, change: number, duration: number): number => {
     if ((time /= duration / 2) < 1) return (change / 2) * time * time * time * time * time + from;
     return (change / 2) * ((time -= 2) * time * time * time * time + 2) + from;
   },
-  easeInSine: (time: number, from: number, change: number, duration: number): number =>
-    -change * Math.cos((time / duration) * (Math.PI / 2)) + change + from,
+  easeInSine: (time: number, from: number, change: number, duration: number): number => -change * Math.cos((time / duration) * (Math.PI / 2)) + change + from,
   easeOutSine: (time: number, from: number, change: number, duration: number): number => change * Math.sin((time / duration) * (Math.PI / 2)) + from,
-  easeInOutSine: (time: number, from: number, change: number, duration: number): number =>
-    (-change / 2) * (Math.cos((Math.PI * time) / duration) - 1) + from,
-  easeInExpo: (time: number, from: number, change: number, duration: number): number =>
-    time === 0 ? from : change * Math.pow(2, 10 * (time / duration - 1)) + from,
-  easeOutExpo: (time: number, from: number, change: number, duration: number): number =>
-    time === duration ? from + change : change * (-Math.pow(2, (-10 * time) / duration) + 1) + from,
+  easeInOutSine: (time: number, from: number, change: number, duration: number): number => (-change / 2) * (Math.cos((Math.PI * time) / duration) - 1) + from,
+  easeInExpo: (time: number, from: number, change: number, duration: number): number => (time === 0 ? from : change * Math.pow(2, 10 * (time / duration - 1)) + from),
+  easeOutExpo: (time: number, from: number, change: number, duration: number): number => (time === duration ? from + change : change * (-Math.pow(2, (-10 * time) / duration) + 1) + from),
   easeInOutExpo: (time: number, from: number, change: number, duration: number): number => {
     if (time === 0) return from;
     if (time === duration) return from + change;
     if ((time /= duration / 2) < 1) return (change / 2) * Math.pow(2, 10 * (time - 1)) + from;
     return (change / 2) * (-Math.pow(2, -10 * --time) + 2) + from;
   },
-  easeInCirc: (time: number, from: number, change: number, duration: number): number =>
-    -change * (Math.sqrt(1 - (time /= duration) * time) - 1) + from,
-  easeOutCirc: (time: number, from: number, change: number, duration: number): number =>
-    change * Math.sqrt(1 - (time = time / duration - 1) * time) + from,
+  easeInCirc: (time: number, from: number, change: number, duration: number): number => -change * (Math.sqrt(1 - (time /= duration) * time) - 1) + from,
+  easeOutCirc: (time: number, from: number, change: number, duration: number): number => change * Math.sqrt(1 - (time = time / duration - 1) * time) + from,
   easeInOutCirc: (time: number, from: number, change: number, duration: number): number => {
     if ((time /= duration / 2) < 1) return (-change / 2) * (Math.sqrt(1 - time * time) - 1) + from;
     return (change / 2) * (Math.sqrt(1 - (time -= 2) * time) + 1) + from;
@@ -173,8 +156,7 @@ export const easings = {
     if ((time /= duration / 2) < 1) return (change / 2) * (time * time * (((speed *= 1.525) + 1) * time - speed)) + from;
     return (change / 2) * ((time -= 2) * time * (((speed *= 1.525) + 1) * time + speed) + 2) + from;
   },
-  easeInBounce: (time: number, from: number, change: number, duration: number): number =>
-    change - easings.easeOutBounce(duration - time, 0, change, duration) + from,
+  easeInBounce: (time: number, from: number, change: number, duration: number): number => change - easings.easeOutBounce(duration - time, 0, change, duration) + from,
   easeOutBounce: (time: number, from: number, change: number, duration: number): number => {
     if ((time /= duration) < 1 / 2.75) {
       return change * (7.5625 * time * time) + from;
