@@ -16,11 +16,7 @@ export class TrendCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private kCurPriceData: kCurPriceData[] = [];
-  constructor(
-    @IReserveStore private readonly reserveStore: IReserveStore,
-    @I18N private readonly i18n: I18N,
-    private readonly currencyValueConverter: CurrencyValueConverter,
-  ) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly currencyValueConverter: CurrencyValueConverter) {}
 
   binding() {
     void this.intervalChanged();

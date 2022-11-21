@@ -67,24 +67,18 @@ export class TreasuryStore {
 
     //get all token asset data
     this.treasuryAssets = (
-      await Promise.all(
-        addresses.map(
-          (address): Promise<Asset | undefined> =>
-            this.contractStore.getAsset(address.address, address.tokenId, contract, treasuryAddress, this.transactions).catch(),
-        ),
-      )
+      await Promise.all(addresses.map((address): Promise<Asset | undefined> => this.contractStore.getAsset(address.address, address.tokenId, contract, treasuryAddress, this.transactions).catch()))
     ).filter(Boolean);
   }
 
   public async getValueOverTime(interval: Interval): Promise<ValueChartData[]> {
     //get data from datastore
     const earliestTime = getTimeMinusInterval(interval);
-    const kttOverTimeData = await this.dataStore.getDocs<BigNumberOverTimeData[]>(
-      `${this.configuration.firebaseCollection}/ktt/${convertIntervalToRecordType(interval)}`,
-      'createdAt',
-      'desc',
-      { fieldPath: 'createdAt', opStr: '>=', value: earliestTime },
-    );
+    const kttOverTimeData = await this.dataStore.getDocs<BigNumberOverTimeData[]>(`${this.configuration.firebaseCollection}/ktt/${convertIntervalToRecordType(interval)}`, 'createdAt', 'desc', {
+      fieldPath: 'createdAt',
+      opStr: '>=',
+      value: earliestTime,
+    });
     //map data from datastore to what the UI needs
     const chartData = kttOverTimeData.map((x) => {
       return {

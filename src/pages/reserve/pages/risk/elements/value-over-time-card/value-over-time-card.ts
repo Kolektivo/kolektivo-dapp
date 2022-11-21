@@ -17,11 +17,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   private currentInterval: Interval = Interval['1d'];
   private riskData: RiskChartData[] = [];
 
-  constructor(
-    @IReserveStore private readonly reserveStore: IReserveStore,
-    private readonly currencyValueConverter: CurrencyValueConverter,
-    @I18N private readonly i18n: I18N,
-  ) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, private readonly currencyValueConverter: CurrencyValueConverter, @I18N private readonly i18n: I18N) {}
 
   binding() {
     void this.intervalChanged();
@@ -55,8 +51,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return this.riskData.map((x) => x.highRisk + x.moderateRisk + x.lowRisk);
   }
   get alertText(): string {
-    if (!this.reserveStore.kCurMarketCap || !this.reserveStore.reserveValue || this.reserveStore.reserveValue.eq(this.reserveStore.kCurMarketCap))
-      return '';
+    if (!this.reserveStore.kCurMarketCap || !this.reserveStore.reserveValue || this.reserveStore.reserveValue.eq(this.reserveStore.kCurMarketCap)) return '';
     return this.i18n.tr(
       this.reserveStore.reserveValue.lt(this.reserveStore.kCurMarketCap)
         ? 'navigation.reserve.risk.value-over-time.under-collateralized'

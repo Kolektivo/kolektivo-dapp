@@ -69,13 +69,7 @@ export class EthereumService {
     }
   }
 
-  public async addTokenToMetamask(
-    provider: MetaMaskInpageProvider,
-    tokenAddress: string,
-    tokenSymbol: string,
-    tokenDecimals: number,
-    tokenImage: string,
-  ) {
+  public async addTokenToMetamask(provider: MetaMaskInpageProvider, tokenAddress: string, tokenSymbol: string, tokenDecimals: number, tokenImage: string) {
     try {
       (await provider.request({
         method: 'wallet_watchAsset',

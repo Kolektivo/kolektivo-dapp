@@ -57,9 +57,7 @@ export class ContractService {
     signerOrProvider?: BaseProvider | Signer,
   ): Promise<TResult> {
     const contractData = (
-      IS_TESTING
-        ? ((await import(`../../contracts/${contractType}/celo-test.json`)) as unknown)
-        : ((await import(`../../contracts/${contractType}/celo.json`)) as unknown)
+      IS_TESTING ? ((await import(`../../contracts/${contractType}/celo-test.json`)) as unknown) : ((await import(`../../contracts/${contractType}/celo.json`)) as unknown)
     ) as ContractGroupsJsons[TContractType]['main'];
 
     const contracts = contractData.contracts;
@@ -78,10 +76,7 @@ export class ContractService {
     return new Contract(overrideAddress, abi, signerOrProvider ?? this.readOnlyProvider) as TResult;
   }
 
-  public async getSharedAbi<TContractType extends ContractGroupsAbis>(
-    contractType: TContractType,
-    key: keyof ContractGroupsJsons[TContractType]['shared'],
-  ) {
+  public async getSharedAbi<TContractType extends ContractGroupsAbis>(contractType: TContractType, key: keyof ContractGroupsJsons[TContractType]['shared']) {
     const contractData = (await import(`../../contracts/${contractType}/sharedAbis.json`)) as ContractGroupsJsons[TContractType]['shared'];
     return contractData[key];
   }

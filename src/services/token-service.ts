@@ -28,14 +28,8 @@ export class TokenService {
   @cache<TokenService>(function () {
     return { storage: this.cacheService };
   })
-  public async getTokenContract<T extends number | undefined>(
-    tokenAddress: string,
-    id?: T,
-    signerOrProvider?: BaseProvider | Signer,
-  ): Promise<T extends undefined ? Erc20 : Erc721> {
-    const abi: ContractInterface = !id
-      ? await this.contractService.getSharedAbi('monetary', 'ERC20')
-      : await this.contractService.getSharedAbi('monetary', 'ERC721');
+  public async getTokenContract<T extends number | undefined>(tokenAddress: string, id?: T, signerOrProvider?: BaseProvider | Signer): Promise<T extends undefined ? Erc20 : Erc721> {
+    const abi: ContractInterface = !id ? await this.contractService.getSharedAbi('monetary', 'ERC20') : await this.contractService.getSharedAbi('monetary', 'ERC721');
 
     return new Contract(tokenAddress, abi, signerOrProvider ?? this.readonlyProvider) as T extends undefined ? Erc20 : Erc721;
   }

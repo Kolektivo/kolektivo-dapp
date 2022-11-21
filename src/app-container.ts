@@ -90,11 +90,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(hooks)
   .register(resources)
   .register(pages)
-  .register(
-    Registration.cachedCallback(IFirebaseApp, () =>
-      import('firebase/app').then((x) => x.initializeApp({ ...firebaseConfig, apiKey: FIREBASE_API_KEY })),
-    ),
-  )
+  .register(Registration.cachedCallback(IFirebaseApp, () => import('firebase/app').then((x) => x.initializeApp({ ...firebaseConfig, apiKey: FIREBASE_API_KEY }))))
   .register(
     Registration.instance(IConfiguration, {
       chainId: CHAIN_ID,

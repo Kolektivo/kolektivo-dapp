@@ -10,13 +10,7 @@ export function createCustomElement<T extends Constructable = Constructable>(
   const instance = container.get(component);
   Object.assign(instance, values);
   const definition = CustomElement.getDefinition(component);
-  const controller = Controller.$el(
-    container,
-    instance,
-    host ?? container.get(IAurelia).root.host,
-    null,
-    definition as unknown as CustomElementDefinition,
-  );
+  const controller = Controller.$el(container, instance, host ?? container.get(IAurelia).root.host, null, definition as unknown as CustomElementDefinition);
   void controller.activate(controller, null, LifecycleFlags.none, controller.scope);
   return { instance, controller, definition };
 }

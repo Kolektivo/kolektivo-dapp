@@ -142,12 +142,7 @@ export class ReserveStore {
     ).flatMap((x) => x);
     //get all token asset data
     this.reserveAssets = (
-      await Promise.all(
-        addresses.map(
-          (address): Promise<Asset | undefined> =>
-            this.contractStore.getAsset(address.address, address.tokenId, contract, reserveAddress, this.transactions).catch(),
-        ),
-      )
+      await Promise.all(addresses.map((address): Promise<Asset | undefined> => this.contractStore.getAsset(address.address, address.tokenId, contract, reserveAddress, this.transactions).catch()))
     ).filter(Boolean) as Asset[];
     void this.loadkCurData();
     const reserveStatus = await contract.reserveStatus();
@@ -165,8 +160,7 @@ export class ReserveStore {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const kCurContract: Erc20 = await this.contractService.getContract('monetary', 'Kolektivo Curacao Reserve Token'); // get the kCur contract
     const kCurInReserve = await kCurContract.balanceOf(contract.address); //get the balace of kCur in the reserve
-    this.kCurReserveDistribution =
-      this.numberService.fromString(fromWei(kCurInReserve, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
+    this.kCurReserveDistribution = this.numberService.fromString(fromWei(kCurInReserve, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
     //TODO: Get the balances of kCur inside of the reserve, mento and the primary pool and set those values here
     this.kCurMentoDistribution = 0;
     this.kCurPrimaryPoolDistribution = 0;
@@ -203,10 +197,7 @@ export class ReserveStore {
   }
 
   public async getReserveValueOverTime(interval: Interval): Promise<BigNumberOverTimeData[]> {
-    const [valueOverTimeData, reserveStatus] = await Promise.all([
-      this.getData<BigNumberOverTimeData>('reserve', interval),
-      this.getReserveContract().then((contract) => contract.reserveStatus()),
-    ]);
+    const [valueOverTimeData, reserveStatus] = await Promise.all([this.getData<BigNumberOverTimeData>('reserve', interval), this.getReserveContract().then((contract) => contract.reserveStatus())]);
     valueOverTimeData.push({
       createdAt: new Date(),
       value: reserveStatus[0],
@@ -282,16 +273,11 @@ export class ReserveStore {
   private async getData<T extends { createdAt: Date }>(collection: string, interval: Interval): Promise<T[]> {
     //get data from datastore
     const earliestTime = getTimeMinusInterval(interval);
-    const data = await this.dataStore.getDocs<T[]>(
-      `${this.configuration.firebaseCollection}/${collection}/${convertIntervalToRecordType(interval)}`,
-      'createdAt',
-      'desc',
-      {
-        fieldPath: 'createdAt',
-        opStr: '>=',
-        value: earliestTime,
-      },
-    );
+    const data = await this.dataStore.getDocs<T[]>(`${this.configuration.firebaseCollection}/${collection}/${convertIntervalToRecordType(interval)}`, 'createdAt', 'desc', {
+      fieldPath: 'createdAt',
+      opStr: '>=',
+      value: earliestTime,
+    });
     //sort data by date ascending
     data.sort((a, b) => {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();

@@ -66,8 +66,7 @@ export const getWeb3ModalInstance = async (configuration: IConfiguration) => {
           },
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        connector: (walletConnectProvider: any, opts?: IWalletConnectConnectorOptions) =>
-          ConnectToWalletConnect(walletConnectProvider, opts, chainId),
+        connector: (walletConnectProvider: any, opts?: IWalletConnectConnectorOptions) => ConnectToWalletConnect(walletConnectProvider, opts, chainId),
       },
       // TODO: test with walletconnect
       walletconnect: {

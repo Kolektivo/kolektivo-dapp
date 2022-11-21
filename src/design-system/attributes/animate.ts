@@ -68,9 +68,7 @@ export class AnimateAttribute implements ICustomAttributeViewModel {
       this.resolve = res;
 
       if (this.out && this.value && this.to != null && this.from != null && this.duration) {
-        this.animationService.animateCSS(this.element, this.value, 'px', this.to, this.from, this.duration, this.easing as keyof typeof easings, () =>
-          this.resolve?.(),
-        );
+        this.animationService.animateCSS(this.element, this.value, 'px', this.to, this.from, this.duration, this.easing as keyof typeof easings, () => this.resolve?.());
         return;
       }
 

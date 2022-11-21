@@ -16,11 +16,7 @@ export class SupplyCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private kCurSupplyData: kCurSupplyData[] = [];
-  constructor(
-    @IReserveStore private readonly reserveStore: IReserveStore,
-    @I18N private readonly i18n: I18N,
-    private readonly percentageValueConverter: PercentageValueConverter,
-  ) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly percentageValueConverter: PercentageValueConverter) {}
 
   binding() {
     void this.intervalChanged();
@@ -72,12 +68,7 @@ export class SupplyCard implements ICustomElementViewModel {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
   //TODO: Make i18n work in this method as a getter
-  private dataSets(
-    kCurCirculatingDistribution: number[],
-    kCurMentoDistribution: number[],
-    kCurPrimaryPoolDistribution: number[],
-    kCurReserveDistribution: number[],
-  ) {
+  private dataSets(kCurCirculatingDistribution: number[], kCurMentoDistribution: number[], kCurPrimaryPoolDistribution: number[], kCurReserveDistribution: number[]) {
     return [
       {
         label: this.i18n.tr('navigation.reserve.k-cur.supply.reserve'),

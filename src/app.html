@@ -1,15 +1,21 @@
 <div class="app">
-  <side-bar animate-out="true" animate-from="-275" animate-to="0" animate-duration="100" animate="left"
-    if.bind="!xl && store.sideBarOpen"></side-bar>
+  <side-bar animate-out="true" animate-from="-275" animate-to="0" animate-duration="100" animate="left" if.bind="!xl && store.sideBarOpen"></side-bar>
   <side-bar if.bind="xl && store.sideBarOpen"></side-bar>
   <main>
-    <k-modal show.bind="showConfirmChangeNetworkInfo" cancel.bind="cancelConfirmChangeNetwork"
-      ok.bind="confirmChangeNetwork" title="Unsupported Network" ok-button-text="Yes, Please!"
-      cancel-button-text="Not Now">
+    <k-modal
+      show.bind="showConfirmChangeNetworkInfo"
+      cancel.bind="cancelConfirmChangeNetwork"
+      ok.bind="confirmChangeNetwork"
+      title="Unsupported Network"
+      ok-button-text="Yes, Please!"
+      cancel-button-text="Not Now"
+    >
       <span t="general.wrong-network-message" t-params.bind="confirmChangeNetworkInfo"></span>
     </k-modal>
     <k-backdrop if.bind="!xl && store.sideBarOpen" click.trigger="store.sideBarOpen = false" blur="10"></k-backdrop>
-    <header></header>
-    <au-viewport default="map" fallback="not-found"></au-viewport>
+    <k-grid rows="auto 1fr">
+      <header></header>
+      <au-viewport default="map" fallback="not-found"></au-viewport>
+    </k-grid>
   </main>
 </div>

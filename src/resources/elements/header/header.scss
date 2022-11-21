@@ -4,7 +4,7 @@ header {
   padding: 18px 40px;
   z-index: 2;
 
-  k-button::part(icon){
+  k-button::part(icon) {
     transform: translateX(0);
   }
 

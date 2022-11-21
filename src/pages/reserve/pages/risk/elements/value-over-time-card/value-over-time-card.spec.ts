@@ -62,13 +62,6 @@ describe('value-over-time-card', () => {
         tr: (s: string) => String(s),
       });
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
-    return [
-      ValueOverTimeCard,
-      Global,
-      Registration.instance(IReserveStore, reserveMock),
-      createMockStoreRegistration(),
-      createMockI18nRegistration(),
-      designSystemConfiguration(),
-    ];
+    return [ValueOverTimeCard, Global, Registration.instance(IReserveStore, reserveMock), createMockStoreRegistration(), createMockI18nRegistration(), designSystemConfiguration()];
   }
 });

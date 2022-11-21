@@ -7,11 +7,7 @@ export class Copy implements ICustomAttributeViewModel {
   @bindable()
   public value?: string;
 
-  constructor(
-    @INode private readonly element: HTMLElement,
-    @IPlatform private readonly platform: IPlatform,
-    @INotificationService private readonly notificationService: INotificationService,
-  ) {
+  constructor(@INode private readonly element: HTMLElement, @IPlatform private readonly platform: IPlatform, @INotificationService private readonly notificationService: INotificationService) {
     element.addEventListener('click', this.copy);
   }
   private copy = () => {

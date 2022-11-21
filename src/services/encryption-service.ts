@@ -20,11 +20,7 @@ export class EncryptionService {
   private authSig?: string;
   private encryptedSymmetricKey?: string;
 
-  constructor(
-    @ILogger private readonly logger: ILogger,
-    @IContainer private readonly container: IContainer,
-    @IConfiguration private readonly config: IConfiguration,
-  ) {
+  constructor(@ILogger private readonly logger: ILogger, @IContainer private readonly container: IContainer, @IConfiguration private readonly config: IConfiguration) {
     this.logger.scopeTo('EncryptionService');
   }
   private get chain() {

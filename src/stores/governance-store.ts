@@ -76,11 +76,7 @@ export class GovernanceStore {
     ] as Proposal[];
   }
 
-  public async submitDynamicMethod(
-    isPublicProposal: boolean,
-    data: PopulatedTransaction,
-    ipfsHash?: string,
-  ): Promise<ContractTransaction | undefined> {
+  public async submitDynamicMethod(isPublicProposal: boolean, data: PopulatedTransaction, ipfsHash?: string): Promise<ContractTransaction | undefined> {
     if (!data.to || !data.data) return;
     const secretDelayContract: Secretdelay = await this.contractService.getContract('governance', 'monetaryDelay');
 
@@ -95,13 +91,7 @@ export class GovernanceStore {
     }
     const bacContract: Bacroles = await this.contractService.getContract('governance', 'bacMD');
     if (!dataParamBAC.to || !dataParamBAC.value || !dataParamBAC.data) return;
-    const result = await bacContract.execTransactionFromModule(
-      dataParamBAC.to,
-      dataParamBAC.value,
-      dataParamBAC.data,
-      BigNumber.from(0),
-      BadgeType.ECOLOGY_DELEGATE,
-    );
+    const result = await bacContract.execTransactionFromModule(dataParamBAC.to, dataParamBAC.value, dataParamBAC.data, BigNumber.from(0), BadgeType.ECOLOGY_DELEGATE);
     return result;
   }
 }
