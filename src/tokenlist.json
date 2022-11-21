@@ -3,7 +3,7 @@
     "timestamp": "2022-08-16T22:25:12+00:00",
     "version": {
         "major": 1,
-        "minor": 2,
+        "minor": 3,
         "patch": 0
     },
     "keywords": [
@@ -29,7 +29,7 @@
         },
         {
             "address": "0x4cB13ED364bd2c212B694921CdAca979DCA76054",
-            "chainId": 42220,
+            "chainId": 42229,
             "name": "Test Token #1",
             "symbol": "TT1",
             "decimals": 18,
