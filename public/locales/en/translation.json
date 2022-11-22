@@ -158,7 +158,7 @@
           "title": "Reserve Value Over Time by Risk Class",
           "tooltip": "Tooltip for Reserve Value Over Time by Risk Class",
           "min-value": "Minimum Collateral Value",
-          "market-cap": "kCUR Market Cap",
+          "market-cap": "Fully Diluted Market Cap",
           "low-risk": "Low Risk",
           "moderate-risk": "Moderate Risk",
           "high-risk": "High Risk",
