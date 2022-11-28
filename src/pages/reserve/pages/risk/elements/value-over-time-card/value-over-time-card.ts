@@ -65,9 +65,9 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
         label: (x) => {
           let value = Number(x.raw);
           if (x.datasetIndex > 2) {
-            value -= Number(x.chart.data.datasets[x.datasetIndex - 1].data[x.datasetIndex]);
+            value -= Number(x.chart.data.datasets[x.datasetIndex - 1].data[x.dataIndex]);
           } else if (x.datasetIndex > 3) {
-            value -= Number(x.chart.data.datasets[x.datasetIndex - 2].data[x.datasetIndex]);
+            value -= Number(x.chart.data.datasets[x.datasetIndex - 2].data[x.dataIndex]);
           }
           return `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(value.toString())}`;
         },
