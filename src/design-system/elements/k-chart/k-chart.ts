@@ -77,7 +77,7 @@ export class KChart implements ICustomElementViewModel {
   @bindable xLabelFormat?: Record<string, unknown>;
 
   chart?: HTMLCanvasElement;
-  public chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
+  public chartJsInstance?: Chart;
   creatingPromise?: Promise<void>;
 
   constructor(@IPlatform private readonly platform: IPlatform) {}

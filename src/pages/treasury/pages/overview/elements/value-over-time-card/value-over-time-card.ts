@@ -48,8 +48,8 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       callbacks: {
         title: (x: { label: string }[]) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x: { dataset: { label?: string }; raw: string }) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(`${x.raw}`)}`,
-      },
-    } as TooltipOptions;
+      } as Partial<TooltipOptions['callbacks']>,
+    } as Partial<TooltipOptions>;
   }
   get yLabelFormat(): Record<string, unknown> {
     return {

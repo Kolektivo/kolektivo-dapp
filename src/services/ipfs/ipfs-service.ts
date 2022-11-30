@@ -41,7 +41,7 @@ export class IpfsService {
   }
 
   public async get(cid: IPFSPath, dag = false, path?: string): Promise<string | undefined> {
-    const parsedCid = (await import('multiformats/cid')).CID.asCID(cid);
+    const parsedCid = (await import('multiformats/cid')).CID.asCID(cid) as unknown as CID | null;
     if (!parsedCid) return;
     if (!dag) {
       const data = this.client.cat(cid);
