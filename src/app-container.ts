@@ -29,7 +29,6 @@ import { firebaseConfig } from 'configurations/firebase';
 import Backend from 'i18next-chained-backend';
 import HttpBackend from 'i18next-http-backend';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
-import LocalStorageBackend from 'i18next-localstorage-backend';
 import { CeloProviderFactory, IProviderFactory } from 'provider-factory';
 import { IReadOnlyProvider } from 'read-only-provider';
 import { IWalletProvider } from 'wallet-provider';
@@ -161,7 +160,7 @@ export const appContainer: IContainer = DI.createContainer()
           },
         },
         backend: {
-          backends: [LocalStorageBackend, HttpBackend],
+          backends: [HttpBackend],
           backendOptions: [
             {
               expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 days
