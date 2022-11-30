@@ -3,7 +3,7 @@ import { I18nConfiguration } from '@aurelia/i18n';
 import { RouterConfiguration } from '@aurelia/router';
 import { StandardConfiguration } from '@aurelia/runtime-html';
 
-import { ITokenData } from './services/contract/token-info';
+import { ITokenData, tokenData } from './services/contract/token-info';
 import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { Services } from './services/services';
@@ -15,7 +15,6 @@ import * as hooks from './hooks';
 import * as pages from './pages';
 import * as resources from './resources';
 import { Store } from './stores';
-import tokenData from './tokenlist.json';
 import { IWalletConnector } from './wallet-connector';
 import { WalletProvider } from './wallet-provider';
 import { Web3ModalConnect } from './web3modal-details';
@@ -127,7 +126,7 @@ export const appContainer: IContainer = DI.createContainer()
   .register(Registration.singleton(IProviderFactory, CeloProviderFactory))
   .register(
     Registration.instance(ITokenData, {
-      tokens: tokenData.tokens,
+      tokens: tokenData,
     }),
   )
   .register(

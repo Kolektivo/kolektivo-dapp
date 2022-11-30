@@ -9,3 +9,12 @@ export type ITokenData = {
 };
 export const ITokenData = DI.createInterface<ITokenData>();
 export { TokenListType };
+
+const tokenListUri = 'https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json';
+
+export const tokenData: ITokenInfo[] = await fetch(tokenListUri, {
+  method: 'GET',
+  headers: { accept: 'application/json' },
+})
+  .then(async (y) => (await y.json()) as typeof TokenListType)
+  .then((x) => x.tokens);
