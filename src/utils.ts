@@ -1,7 +1,7 @@
 import { I18N } from '@aurelia/i18n';
 
 import { BigNumber } from '@ethersproject/bignumber';
-import { Scale } from 'chart.js/types/index.esm';
+import type { Scale } from 'chart.js';
 import { BigNumberish } from 'ethers/lib/ethers';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
 import { Interval } from 'models/interval';

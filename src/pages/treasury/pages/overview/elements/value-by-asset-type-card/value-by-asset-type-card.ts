@@ -8,7 +8,6 @@ import template from './value-by-asset-type-card.html';
 import './value-by-asset-type-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 
 @customElement({ name: 'value-by-asset-type-card', template })
 export class ValueByAssetTypeCard implements ICustomElementViewModel {
@@ -33,13 +32,14 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
   nonStablecoinAssetPercentage(): number {
     return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.NonStablecoin) / this.treasuryStore.treasuryValue : 0;
   }
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+
+  get tooltipOptions() {
     return {
       backgroundColor: 'rgb(76, 87, 92)',
       callbacks: {
         label: (x) => `${(x.raw as number).toFixed(2)}%`,
       },
-    };
+    } as TooltipOptions;
   }
   private getAssetPercentage(type: AssetType): number {
     return (

@@ -8,7 +8,6 @@ import template from './value-over-time-card.html';
 import './value-over-time-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 import { BigNumberOverTimeData } from 'models/chart-data';
 import { Interval } from 'models/interval';
 import { INumberService } from 'services';
@@ -40,13 +39,13 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return current === value ? 'primary' : 'secondary';
   }
 
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+  get tooltipOptions() {
     return {
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(`${x.raw as string}`)}`,
       },
-    };
+    } as TooltipOptions;
   }
   get yLabelFormat(): Record<string, unknown> {
     return {

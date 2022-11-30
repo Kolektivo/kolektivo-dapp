@@ -4,7 +4,6 @@ import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-
 import template from './trend-card.html';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 import { CurrencyValueConverter } from 'design-system/value-converters';
 import { kCurPriceData } from 'models/chart-data';
 import { Interval } from 'models/interval';
@@ -43,7 +42,7 @@ export class TrendCard implements ICustomElementViewModel {
   get priceFloor(): number[] {
     return this.kCurPriceData.map((x) => x.kCurPriceFloor);
   }
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+  get tooltipOptions() {
     return {
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
@@ -51,7 +50,7 @@ export class TrendCard implements ICustomElementViewModel {
           return `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(Number(x.raw).toString())}`;
         },
       },
-    };
+    } as TooltipOptions;
   }
   get yLabelFormat(): Record<string, unknown> {
     return {

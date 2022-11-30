@@ -4,7 +4,6 @@ import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-
 import template from './supply-card.html';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 import { kCurSupplyData } from 'models/chart-data';
 import { Interval } from 'models/interval';
 import { PercentageValueConverter } from 'resources';
@@ -30,7 +29,7 @@ export class SupplyCard implements ICustomElementViewModel {
     this.kCurSupplyData = await this.reserveStore.getkCurSupplyData(this.currentInterval);
     this.loading = false;
   }
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+  get tooltipOptions() {
     return {
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
@@ -42,7 +41,7 @@ export class SupplyCard implements ICustomElementViewModel {
           return `${x.dataset.label ?? ''}: ${this.percentageValueConverter.toView((Number(value) / 100) as unknown as string)}`;
         },
       },
-    };
+    } as TooltipOptions;
   }
   get kCurCirculatingDistribution(): number[] {
     //always return 100 because this will fill the chart completely

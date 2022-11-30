@@ -5,7 +5,6 @@ import template from './value-by-asset-type-card.html';
 import './value-by-asset-type-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 import { AssetType } from 'models/asset';
 import { INumberService } from 'services';
 import { IReserveStore } from 'stores/reserve-store';
@@ -23,13 +22,13 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
     return this.reserveStore.reserveValue && this.reserveStore.reserveAssets?.length;
   }
 
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+  get tooltipOptions() {
     return {
       backgroundColor: 'rgb(76, 87, 92)',
       callbacks: {
         label: (x) => `${(x.raw as number).toFixed(2)}%`,
       },
-    };
+    } as TooltipOptions;
   }
 
   get reserveValue(): number {

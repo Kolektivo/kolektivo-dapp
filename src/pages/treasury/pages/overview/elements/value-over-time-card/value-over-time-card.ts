@@ -8,7 +8,6 @@ import template from './value-over-time-card.html';
 import './value-over-time-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 import { ValueChartData } from 'models/chart-data';
 import { Interval } from 'models/interval';
 import { ITreasuryStore } from 'stores';
@@ -44,13 +43,13 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   get lastRebaseTime(): Date {
     return this.treasuryStore.lastRebaseTime ?? new Date();
   }
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+  get tooltipOptions() {
     return {
       callbacks: {
-        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
-        label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(`${x.raw as string}`)}`,
+        title: (x: { label: string }[]) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
+        label: (x: { dataset: { label?: string }; raw: string }) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(`${x.raw}`)}`,
       },
-    };
+    } as TooltipOptions;
   }
   get yLabelFormat(): Record<string, unknown> {
     return {
