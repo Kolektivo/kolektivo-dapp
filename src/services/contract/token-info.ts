@@ -13,12 +13,14 @@ export { TokenListType };
 const tokenListUri = 'https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json';
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-export const tokenData: ITokenInfo[] = globalThis.fetch
-  ? await fetch(tokenListUri, {
-      method: 'GET',
-      headers: { accept: 'application/json' },
-    })
-      .then(async (y) => (await y.json()) as typeof TokenListType)
-      .then((x) => x.tokens)
-  : [];
+export const tokenData: ITokenInfo[] =
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  globalThis.fetch !== undefined
+    ? await fetch(tokenListUri, {
+        method: 'GET',
+        headers: { accept: 'application/json' },
+      })
+        .then(async (y) => (await y.json()) as typeof TokenListType)
+        .then((x) => x.tokens)
+    : [];
 [];
