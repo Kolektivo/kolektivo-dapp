@@ -78,7 +78,7 @@ There are three main contracts that the dapp will be reliant on:
 - Badger (https://github.com/Kolektivo/kolektivo-governance-contracts)
 - GeoNFT (https://github.com/Kolektivo/geonft-registry-monorepo)
 
-Each of these contracts, when deployed, produce JSON files under the /export folder. These JSON files define all the names, chain ids and ABI data that is needed for the dapp to call the contract functions.
+Each of these contracts, when deployed, produce JSON files under their respective repos' /export folder. These JSON files define all the names, chain ids and ABI data that is needed for the dapp to call the contract functions.
 
 Because the dapp uses TypeScript, it has to data information from these ABIs and generate strongly typed models from them so be able to be used in the code. There is a node script located at /build/postinstall/buildModels.mjs that looks at all the JSON files and builds the models needed and puts them in the /src/models/generated folder.
 
