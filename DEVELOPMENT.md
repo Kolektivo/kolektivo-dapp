@@ -148,7 +148,9 @@ We use the default dependency injection in Aurelia 2. More information about how
 
 ## @customElement
 
-This is used to explictly define custom elements by allowing us passing parameters to the constructor
+This is used to explictly define custom elements by allowing us passing parameters to the constructor.
+
+There doesn't seem to be any documentation in the Aurelia 2 docs specifically for all the possible properties of @customElement, but it seems fairly well documented in the TypeScript file. That can be found here https://github.com/aurelia/aurelia/blob/4163dd438106f57d24573519c5f51fc22ba9f5cd/packages/runtime-html/src/resources/custom-element.ts
 
 ## Automated test
 
