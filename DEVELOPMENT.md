@@ -99,3 +99,59 @@ Doing this on post install allows the web server to always have the latest files
 In the future, we will need a watcher of some kind that watches the external repos that affect the dapp and when those repos get pushed to, the watcher will trigger an action on GitHub to rebuild the dapp and run this post install to get the latest data it needs.
 
 The post install currently runs one file called /build/postinstall/index.mjs which then handles all the other scripts it needs to run.
+
+# What is remaining for MVP
+
+For the Monetary pages (Treasury/Reserve not Governance) these are the things that still need to be developed:
+
+- Get data from Symmetric Pool
+- Get data from Mento
+- Get data from Proxy Pool
+
+For the governance pages these are the things that still need to be developed:
+
+- Build out dynamic form for submitting a proposal
+- Get the categories for each proposal type and build navigation for those
+- Get the public and private categorizations for the contract functions
+- Get the proposals from the Governance contract (Ready to Execute, Pending and History)
+- Wire up all the badge verification through litjs and test
+
+# Project Coding Guidelines
+
+## App data flow
+
+We have defined a certain flow in the app in terms of how the UI gets data delivered to it. The view communicate with stores and the stores communicate with services.
+
+- Views are the UI of the app. Stores are injected into the views and the views can call data from the stores. Views are supposed to be in charge of any formatting of data on the UI. (currency, numbers, strings, etc.)
+- Stores are the middle layer between the view (UI) and the services (Backend). Services are injected into stores and stores call the services needed to retrieve the data. Stores are also where the business logic (any data alteration needed) and data caching reside.
+- Services are the back end of the app that actually call the contracts and databases. This is the layer that returns the raw data from external services (contracts/firebase/etc.)
+
+## Styles
+
+In this project, we use a custom built design system that can be located at /src/design-system. This system is meant for reusable components or controls that don't only fit into this project, but could be used in any other project as well. It uses the shadow dom to make sure all components are encapsulated into their own styles so no styles bleed outside of the component. To learn more about how shadow dom works please visit https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM.
+
+Typically, no styles should ever change within a design system component. The unique style for that component should come from the parent that is using that component through parts.
+
+## Storybook
+
+We have created a small page at /src/pages/storybook (url: /storybook) that is only available on local environments. This page is manually updated every time there's a new design system component created to show examples of how to use that component. So if something changes on the design system, please make sure to update it in storybook with examples so others can see how to use it.
+
+## Routing
+
+This app uses direct routing which basically just derives the available routes from the exports of all the /pages throughout the app. Whatever is put into the /pages folder and exported will be an available route throughout the app automatically.
+
+## Dependency Injection
+
+We use the default dependency injection in Aurelia 2. More information about how this is set up can be found at https://docs.aurelia.io/getting-to-know-aurelia/dependency-injection-di.
+
+## @customElement
+
+This is used to explictly define custom elements by allowing us passing parameters to the constructor
+
+## Automated test
+
+We used playwrite to and vite to build automated tests that run and make sure everything is working as expected every build. All of the automated tests can be found right next to the html file they are testing using a `.spec.ts` extension.
+
+Builds will not complete unless all tests pass
+
+To run tests on local use the `npm test` command
