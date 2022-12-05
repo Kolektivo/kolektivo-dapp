@@ -140,6 +140,8 @@ We have created a small page at /src/pages/storybook (url: /storybook) that is o
 
 This app uses direct routing which basically just derives the available routes from the exports of all the /pages throughout the app. Whatever is put into the /pages folder and exported will be an available route throughout the app automatically.
 
+You can learn more about direct routing (routing without configration) here: https://docs.aurelia.io/developer-guides/cheat-sheet#new-in-v2-routing-without-configuration-direct-routing
+
 ## Dependency Injection
 
 We use the default dependency injection in Aurelia 2. More information about how this is set up can be found at https://docs.aurelia.io/getting-to-know-aurelia/dependency-injection-di.
