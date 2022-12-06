@@ -10,14 +10,14 @@ To do a complete wipe of node_modules/package lock and re-install run `npm run c
 
 # Web Service
 
-The web service was created to be able to capture contract data over time for charting reasons. The code for the web service can be found in kolektivo-dapp repo at /src/firebase.ts. This web service uses many of the same services and stores that the dapp uses for the sole purpose of not duplicating code.
+The web service was created to be able to capture contract data over time for charting reasons. The code for the web service can be found in kolektivo-dapp repo at /src/firebase.ts. This web service uses many of the same service and store classes that the dapp uses, for the sole purpose of not duplicating code.
 
 To build the web service, there are two commands in package.json.
 
 - `build:chart-data-script` (prod)
 - `build:dev:chart-data-script` (dev)
 
-When this command is run, it will build and bundle everything needed into /script/update-chart-data/index.mjs. This web service uses specific contract json data (just like the dapp) so when the contracts change, this web service will need to be updated and pushed to the dev/master branch so it can use the most updated contracts.
+When this command is run, it will build and bundle everything needed into /scripts/update-chart-data/index.mjs. This web service uses specific contract json data (just like the dapp) so when the contracts change, this web service will need to be updated and pushed to the dev/master branch so it can use the most updated contracts.
 
 TODO: We will need to get a version of the web service uploaded for dev and prod and have two different cron tab expressions calling each of them so we can store dev and prod data in firebase. The dev web service will look at the celo-test.json contracts and the prod web service will look at the celo.json contracts.
 
