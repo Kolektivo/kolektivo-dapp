@@ -102,7 +102,7 @@
         },
         "value-over-time": {
           "title": "Reserve Value Over Time",
-          "tooltip": "The distribution of Reserve Value by risk class, over time.",
+          "tooltip": "Monitor the total value of the Kolektivo reserve over time in USD terms, allowing you to track its growth and stability.",
           "chart-tooltip": "Reserve Value"
         },
         "assets": {
@@ -153,22 +153,22 @@
       "risk": {
         "menu": "Risk",
         "title": "Reserve Risk",
-        "description": "This is a basic & accessible description that the public can read to understand what it is.",
+        "description": "Make informed decisions by understanding the risk level of the Kolektivo reserve by asset as well as the current status of collateralization.",
         "value-over-time": {
           "title": "Reserve Value Over Time by Risk Class",
-          "tooltip": "Tooltip for Reserve Value Over Time by Risk Class",
+          "tooltip": "Monitor the value of the reserve by risk class, as well as the collateralization ceiling trend.",
           "min-value": "Minimum Collateral Value",
           "market-cap": "Fully Diluted Market Cap",
           "low-risk": "Low Risk",
           "moderate-risk": "Moderate Risk",
           "high-risk": "High Risk",
-          "over-collateralized": "The reserve is over-collateralized. Some copy about why this matters.",
-          "under-collateralized": "The reserve is under-collateralized. Some copy about why this matters.",
+          "over-collateralized": "The reserve is over-collateralized, and it means that there is a surplus of assets compared to the amount of debt that Kolektivo has taken on. This can be a positive thing because it indicates that Kolektivo has a strong financial position and is able to withstand market fluctuations. However, it can also mean that Kolektivo is not leveraging its assets as effectively as it could be, potentially missing out on opportunities for growth. As a result, it is important for the Kolektivo Network Multi-Sig Members and Monetary Delegates to regularly monitor the collateralization level and make adjustments as needed to ensure that the reserve is well-balanced and optimized for success.",
+          "under-collateralized": "The reserve is under-collateralized and it means that there is not enough collateral in the reserve to cover the potential losses from the assets held in the reserve. This puts Kolektivo at risk of not being able to cover its liabilities and can lead to instability in the monetary system. As a result, it is important for Monetary Delegates to monitor the under-collateralization status of the reserve and take action to mitigate the risk by depositing more collateral into the reserve.",
           "alert-link-text": "Learn more"
         },
         "assets": {
           "title": "Risk by Asset",
-          "tooltip": "Tooltip for Risk by Asset",
+          "tooltip": "See a current breakdown of the assets held in the reserve to assess how well-collateralized the reserve is",
           "grid-headers": {
             "token": "Token",
             "risk-class": "Risk Class",
@@ -180,14 +180,14 @@
       "k-guilder": {
         "menu": "kGuilder",
         "title": "kGuilder",
-        "description": "What is kGuilder? Why does it exist? Which blockchain does it live on? Basic & accessible description for the general public.",
+        "description": "kGuilder is a stable, low-risk alternative to traditional fiat currencies, and facilitate transactions within the local Kolektivo Curaçao ecosystem.",
         "token-info": {
           "title": "kGuilder",
           "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
         },
         "value-ratio": {
           "title": "kCUR-kGuilder Value Ratio (USD)",
-          "tooltip": "Tooltip for kCUR-kGuilder Value Ratio (USD)",
+          "tooltip": "It measures the relative value of kCUR to kGuilder in terms of USD. This ratio can be used to understand the market demand for kCUR and the stability of the Kolektivo ecosystem.",
           "ratio-text": "kCUR-kGuilder Value Ratio",
           "chart-tooltip": "Value Ratio"
         },
