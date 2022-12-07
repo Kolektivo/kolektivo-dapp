@@ -7,7 +7,6 @@ import template from './leverage-card.html';
 import './leverage-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 import { LeverageChartData } from 'models/chart-data';
 import { Interval } from 'models/interval';
 import { IReserveStore } from 'stores/reserve-store';
@@ -51,7 +50,7 @@ export class LeverageCard implements ICustomElementViewModel {
   get maxLeverageRatio(): number {
     return this.reserveStore.maxLeverageRatio / 100;
   }
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+  get tooltipOptions() {
     return {
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
@@ -60,16 +59,18 @@ export class LeverageCard implements ICustomElementViewModel {
           return `${x.dataset.label ?? ''}: ${this.multiplierValueConverter.toView(Number(x.raw) / 100)}`;
         },
       },
-    };
+    } as TooltipOptions;
   }
   get yLabelFormat(): Record<string, unknown> {
     return {
       callback: (value: number) => this.multiplierValueConverter.toView(Number(value) / 100),
     };
   }
+
   get xLabelFormat(): Record<string, unknown> {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
+
   //TODO: Make i18n work in this method as a getter
   private dataSets(referenceLineData: number[], leverageRatioData: number[], maxLeverageRatioData: number[]) {
     return [

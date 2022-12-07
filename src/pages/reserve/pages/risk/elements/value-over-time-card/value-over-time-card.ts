@@ -5,7 +5,6 @@ import { CurrencyValueConverter } from './../../../../../../design-system/value-
 import template from './value-over-time-card.html';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 import { RiskChartData } from 'models/chart-data';
 import { Interval } from 'models/interval';
 import { IReserveStore } from 'stores/reserve-store';
@@ -58,21 +57,21 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
         : 'navigation.reserve.risk.value-over-time.over-collateralized',
     );
   }
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+  get tooltipOptions() {
     return {
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => {
           let value = Number(x.raw);
           if (x.datasetIndex > 2) {
-            value -= Number(x.chart.data.datasets[x.datasetIndex - 1].data[x.datasetIndex]);
+            value -= Number(x.chart.data.datasets[x.datasetIndex - 1].data[x.dataIndex]);
           } else if (x.datasetIndex > 3) {
-            value -= Number(x.chart.data.datasets[x.datasetIndex - 2].data[x.datasetIndex]);
+            value -= Number(x.chart.data.datasets[x.datasetIndex - 2].data[x.dataIndex]);
           }
           return `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(value.toString())}`;
         },
       },
-    };
+    } as TooltipOptions;
   }
   get yLabelFormat(): Record<string, unknown> {
     return {

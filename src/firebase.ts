@@ -6,13 +6,13 @@ import './prototypes';
 
 import { CacheService } from './services/cache-service';
 import { ContractService } from './services/contract/contract-service';
+import { ITokenData, tokenData } from './services/contract/token-info';
 import { FirebaseService } from './services/firebase-service';
 import { NumberService } from './services/number-service';
 import { TokenService } from './services/token-service';
 import { ContractStore } from './stores/contract-store';
 import { DataStore } from './stores/data-store';
 import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
-import tokenData from './tokenlist.json';
 
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { IConfiguration } from 'configurations/configuration';
@@ -22,7 +22,6 @@ import { initializeApp } from 'firebase/app';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
 import { IReadOnlyProvider } from 'read-only-provider';
 import { IBrowserStorageService } from 'services/browser-storage-service';
-import { ITokenData } from 'services/contract';
 import { EthereumService } from 'services/ethereum-service';
 import { IFirebaseApp, IFirebaseService } from 'services/firebase-service';
 import { IIpfsService } from 'services/ipfs';
@@ -77,7 +76,7 @@ const container = DI.createContainer()
 
   .register(
     Registration.instance(ITokenData, {
-      tokens: tokenData.tokens,
+      tokens: tokenData,
     }),
   )
   .register(NumberService)

@@ -8,7 +8,6 @@ import template from './value-ratio-card.html';
 import './value-ratio-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 import { ValueChartData } from 'models/chart-data';
 import { Interval } from 'models/interval';
 import { IReserveStore } from 'stores/reserve-store';
@@ -44,13 +43,13 @@ export class ValueRatioCard implements ICustomElementViewModel {
   get baseLineData(): number[] {
     return this.data.map(() => 1);
   }
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+  get tooltipOptions() {
     return {
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => (x.dataset.label ? `${x.dataset.label}: ${this.currencyValueConverter.toView(`${x.raw as string}`)}` : ''),
       },
-    };
+    } as TooltipOptions;
   }
   get yLabelFormat(): Record<string, unknown> {
     return {

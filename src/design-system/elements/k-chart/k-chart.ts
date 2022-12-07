@@ -7,7 +7,6 @@ import template from './k-chart.html';
 import css from './k-chart.scss';
 
 import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint, TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
 
 export type DataType = number | ScatterDataPoint | BubbleDataPoint;
 
@@ -73,12 +72,12 @@ export class KChart implements ICustomElementViewModel {
   @bindable({ set: ifExistsThenTrue }) gradient?: boolean;
   @bindable minY?: number;
   @bindable maxY?: number;
-  @bindable tooltipOptions?: _DeepPartialObject<TooltipOptions>;
+  @bindable tooltipOptions?: TooltipOptions;
   @bindable yLabelFormat?: Record<string, unknown>;
   @bindable xLabelFormat?: Record<string, unknown>;
 
   chart?: HTMLCanvasElement;
-  public chartJsInstance?: Chart<ChartType, (number | ScatterDataPoint | BubbleDataPoint | null)[], string>;
+  public chartJsInstance?: Chart;
   creatingPromise?: Promise<void>;
 
   constructor(@IPlatform private readonly platform: IPlatform) {}
