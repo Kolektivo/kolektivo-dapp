@@ -70,7 +70,7 @@ In the root, there are two collections. One is called "chartData" and the other 
 
 The chartData collection is where the production data will be located while the testData collection is where the data for DEV/QA testing is located.
 
-Under each collection is a list of documents. 7 of them coincide with specific chart data and on of them logs when the last data sync happened.
+Under each collection is a list of documents. 7 of them coincide with specific chart data and one of them logs when the last data sync happened.
 
 Under each of the chart documents is a collection of "day", "hour" and "minute". These are different intervals of time that the chart can use.
 
