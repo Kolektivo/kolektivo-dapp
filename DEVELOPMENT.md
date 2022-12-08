@@ -69,7 +69,7 @@ In the root, there are two collections. One is called "chartData" and the other 
 
 The chartData collection is where the production data will be located while the testData collection is where the data for DEV/QA testing is located.
 
-Under each collection is a list of documents. 7 of them coincide with specific chart data and one of them logs when the last data sync happened.
+Under each collection is a list of documents. 7 of them coincide with specific chart data and one of them logs when the last data sync happened. The "LastSync" document has a "day", "hour" and "minute" collection and each of those have a document with a UTC timestamp as the name and they tell the app when the last time the data was synced.
 
 Under each of the chart documents is a collection of "day", "hour" and "minute". These are different intervals of time that the chart can use.
 
@@ -78,10 +78,16 @@ Under each of the chart documents is a collection of "day", "hour" and "minute".
 - Minute data is captured every 5 minutes. This data is only needed for a 1 hour period so every 5 minutes it captures a new data point, the 12th oldest data point is deleted by the web service
 - All date/time data is stored in GMT
 
-Before going live, we will need to make two different access tokens on firebase.
+##TODO
+
+We currently have one token with no restrictions that has read/write access, so before going live, we will need to make two different access tokens on firebase:
 
 - The first token will allow read rights on the data and that token will be used in the dapp to read the data and display it. This will be a publically available token, but should be limited by CORS to only be used from our dapp.
 - The second token will allow read and write access and will be private to our web service so no one else has access to it. This will be used by GitHub actions and will not be publically available.
+
+To edit the rules for the token, go here https://console.firebase.google.com/u/1/project/kolektivo-613ca/firestore/rules.
+
+I'm not sure yet how to create two different tokens for the same firestore database or if it's even possible so that has yet to be researched.
 
 # Token List
 
