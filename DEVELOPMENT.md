@@ -25,7 +25,7 @@ TODO: This currently needs to be run manually. We will need to make this script 
 
 ## Execution
 
-The web service is invoked by a github action on the repo. The code itself handles being triggered more times than is needed for the intervals defined, but still only stores data when needed based on the intervals defined. So even if it only needs to store data every 5 minutes, it can be called every minute and won't store data until the 5 minute interval is hit.
+The web service is invoked by a github action on the repo. The web service code itself handles being triggered more times than is needed for the intervals defined, but still only stores data when needed based on the intervals defined. So even if it only needs to store data every 5 minutes, it can be called every minute and won't store data until the 5 minute interval is hit.
 
 This is how the flow works:
 
@@ -53,9 +53,9 @@ function seed(){
 
 - Calls the GitHub action using a personal access token (PAT) for auth (a personal access token from GitHub is needed to call this action with "Workflow Action" rights )
 - GitHub action runs the code at /script/update-chart-data/index.mjs
-- Checks to make sure data is needed at a new interval
-- Calls the contracts and gathers the data it needs
-- Stores the data in firebase
+- The web service code checks to make sure data is needed at a new interval
+- The web service code calls the contracts and gathers the data it needs
+- The web service code stores the data in firebase
 
 # Firebase
 
