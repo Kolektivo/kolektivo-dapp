@@ -29,33 +29,33 @@ The web service is invoked by a github action on the repo. The web service code 
 
 This is how the flow works:
 
-- Cloudflare CRON job runs every minute. This doesn't have to be Cloudflare, just some service that can call a GitHub action every minute.  This is the current code in cloudflare below:
+- Cloudflare CRON job runs every minute. This doesn't have to be Cloudflare, just some service that can call a GitHub action every minute.  This is the current code in cloudflare:
 
-```
-export default {
-    async scheduled(event, env, ctx) {
-        ctx.waitUntil(seed());
-    },
-};
-function seed(){
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json;charset=UTF-8');
-    headers.append('Authorization', 'Bearer --- personal access token (PAT) from git ---');
-    headers.append('Accept', 'application/vnd.github.v3+json');
-    headers.append('User-Agent', 'Cloudflare-Workers');
-    return fetch('https://api.github.com/repos/Kolektivo/kolektivo-dapp/actions/workflows/37267987/dispatches', {
-        method: 'post',
-        headers: headers,
-        body: JSON.stringify({ ref: 'development' }),
-    });
-}
-```
+    ```
+    export default {
+        async scheduled(event, env, ctx) {
+            ctx.waitUntil(seed());
+        },
+    };
+    function seed(){
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json;charset=UTF-8');
+        headers.append('Authorization', 'Bearer --- personal access token (PAT) from git ---');
+        headers.append('Accept', 'application/vnd.github.v3+json');
+        headers.append('User-Agent', 'Cloudflare-Workers');
+        return fetch('https://api.github.com/repos/Kolektivo/kolektivo-dapp/actions/workflows/37267987/dispatches', {
+            method: 'post',
+            headers: headers,
+            body: JSON.stringify({ ref: 'development' }),
+        });
+    }
+    ```
 
-- Calls the GitHub action using a personal access token (PAT) for auth (a personal access token from GitHub is needed to call this action with "Workflow Action" rights )
-- GitHub action runs the code at /script/update-chart-data/index.mjs
-- The web service code checks to make sure data is needed at a new interval
-- The web service code calls the contracts and gathers the data it needs
-- The web service code stores the data in firebase
+- Calls the GitHub action using a personal access token (PAT) having "Workflow Action" rights
+- GitHub action runs the webservice code at /script/update-chart-data/index.mjs.  The webservice code:
+  - checks to make sure data is needed at a new interval
+  - calls the contracts and gathers the data it needs
+  - stores the data in firebase
 
 # Firebase
 
@@ -78,16 +78,21 @@ Under each of the chart documents is a collection of "day", "hour" and "minute".
 - Minute data is captured every 5 minutes. This data is only needed for a 1 hour period so every 5 minutes it captures a new data point, the 12th oldest data point is deleted by the web service
 - All date/time data is stored in GMT
 
-##TODO
+# Firebase Authentication
 
-We currently have one token with no restrictions that has read/write access, so before going live, we will need to make two different access tokens on firebase:
+On firebase we currently have one token having no restrictions, thus giving read/write access to everyone.
 
-- The first token will allow read rights on the data and that token will be used in the dapp to read the data and display it. This will be a publically available token, but should be limited by CORS to only be used from our dapp.
+You can edit the rules for that token here: https://console.firebase.google.com/u/1/project/kolektivo-613ca/firestore/rules.
+
+TODO:
+
+Before going live, in order to appropriately restrict access to the firebase data, we will want to create two more restrictive access tokens on firebase:
+
+- The first token will allow read rights on the data. This token will be used in the dapp to read the data and display it. This will be a publically available token, but should be limited by CORS to only be used from our dapp.
 - The second token will allow read and write access and will be private to our web service so no one else has access to it. This will be used by GitHub actions and will not be publically available.
 
-To edit the rules for the token, go here https://console.firebase.google.com/u/1/project/kolektivo-613ca/firestore/rules.
+However, tt is as yet uncertain how to create two different tokens for the same firestore database, or if it's even possible. This needs to be researched.
 
-I'm not sure yet how to create two different tokens for the same firestore database or if it's even possible so that has yet to be researched.
 
 # Token List
 
