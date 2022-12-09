@@ -21,7 +21,7 @@ When this command is run, it will build and bundle everything needed into /scrip
 
 TODO: We will need to get a version of the web service uploaded for dev and prod and have two different cron tab expressions calling each of them so we can store dev and prod data in firebase. The dev web service will look at the celo-test.json contracts and the prod web service will look at the celo.json contracts.
 
-TODO: This currently needs to be run manually. We will need to make this script run every time the contracts or the dapp code changes so it stays consistent with the common code and contracts that it interacts with. There is currently a problem with how the script is built and needs to be manually adjusted to work properly. The current manual process is
+TODO: This currently needs to be run manually. We will need to make this script run every time the contracts or the dapp code changes so it stays consistent with the common code and contracts that it interacts with. There is currently a problem with how the script is built and needs to be manually adjusted to work properly.
 
 ## Execution
 
@@ -29,7 +29,7 @@ The web service is invoked by a github action on the repo. The web service code 
 
 This is how the flow works:
 
-- Cloudflare CRON job runs every minute. This doesn't have to be Cloudflare, just some service that can call a GitHub action every minute (current code in cloudflare below)
+- Cloudflare CRON job runs every minute. This doesn't have to be Cloudflare, just some service that can call a GitHub action every minute.  This is the current code in cloudflare below:
 
 ```
 export default {
