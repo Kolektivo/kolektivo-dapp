@@ -31,7 +31,7 @@ This is how the flow works:
 
 - Cloudflare CRON job runs every minute. This doesn't have to be Cloudflare, just some service that can call a GitHub action every minute.
 - The CRON job calls the GitHub action using a git personal access token (PAT) having "Workflow Action" rights.
-- Following is the CRON job code in cloudflare.  Replace "PAT" with the git PAT.
+- Following is the CRON job code in cloudflare.  Replace "PAT" with the actual PAT.
 
     ```
     export default {
