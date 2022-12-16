@@ -29,7 +29,9 @@ The web service is invoked by a github action on the repo. The web service code 
 
 This is how the flow works:
 
-- Cloudflare CRON job runs every minute. This doesn't have to be Cloudflare, just some service that can call a GitHub action every minute.  This is the current code in cloudflare:
+- Cloudflare CRON job runs every minute. This doesn't have to be Cloudflare, just some service that can call a GitHub action every minute.
+- The CRON job calls the GitHub action using a git personal access token (PAT) having "Workflow Action" rights.
+- Following is the CRON job code in cloudflare.  Replace "PAT" with the git PAT.
 
     ```
     export default {
@@ -40,7 +42,7 @@ This is how the flow works:
     function seed(){
         const headers = new Headers();
         headers.append('Content-Type', 'application/json;charset=UTF-8');
-        headers.append('Authorization', 'Bearer --- personal access token (PAT) from git ---');
+        headers.append('Authorization', 'Bearer PAT');
         headers.append('Accept', 'application/vnd.github.v3+json');
         headers.append('User-Agent', 'Cloudflare-Workers');
         return fetch('https://api.github.com/repos/Kolektivo/kolektivo-dapp/actions/workflows/37267987/dispatches', {
@@ -50,12 +52,12 @@ This is how the flow works:
         });
     }
     ```
-
-- Calls the GitHub action using a personal access token (PAT) having "Workflow Action" rights
-- GitHub action runs the webservice code at /script/update-chart-data/index.mjs.  The webservice code:
+- The GitHub action runs the webservice code at /script/update-chart-data/index.mjs.  The webservice code:
   - checks to make sure data is needed at a new interval
   - calls the contracts and gathers the data it needs
   - stores the data in firebase
+
+- Github logs each invocation of the action.  The action will show success or failure depending on whether the webservice succeeds.
 
 # Firebase
 
