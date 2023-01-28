@@ -33,7 +33,7 @@
         },
         "ktt": {
           "title": "Kolektivo Treasury Token (KTT)",
-          "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
+          "avatar-src": "../static/token-icons/KTT.png"
         },
         "value": {
           "title": "Treasury Value",
@@ -116,7 +116,7 @@
         "description": "The Kolektivo Reserve mints the Kolektivo Curaçao Reserve Token (kCUR) token by collateralizing KTT and other assets in the reserve.",
         "token-info": {
           "title": "kCUR",
-          "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
+          "avatar-src": "../static/token-icons/kCUR.png"
         },
         "pool": {
           "title": "Primary Pool (kCUR-cUSD)",
@@ -183,7 +183,7 @@
         "description": "What is kGuilder? Why does it exist? Which blockchain does it live on? Basic & accessible description for the general public.",
         "token-info": {
           "title": "kGuilder",
-          "avatar-src": "https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg"
+          "avatar-src": "../static/token-icons/kG.png"
         },
         "value-ratio": {
           "title": "kCUR-kGuilder Value Ratio (USD)",
