@@ -1,6 +1,6 @@
 <k-card id="t-o-tic-card" color="linear-gradient(to right, var(--primary), var(--ocean-blue-600))"
   title="${i18n.tr('navigation.treasury.overview.ktt.title')}"
-  title-avatar="${i18n.tr('navigation.treasury.overview.ktt.avatar-src')}">
+  title-avatar="../static/token-icons/KTT.png">
   <k-loader fill="parent" color="var(--white)" loading.bind="treasuryStore.loadTokenData()"></k-loader>
   <k-stack gap="var(--spacing-xl)">
     <k-grid cols="3" id="t-o-tic-stats">

@@ -1,7 +1,7 @@
 <let info.bind="kolektivoStore.kCur"></let>
 <k-card color="linear-gradient(to right, var(--primary), var(--ocean-blue-600))"
   title="${i18n.tr('navigation.reserve.k-cur.token-info.title')}"
-  title-avatar="${i18n.tr('navigation.reserve.k-cur.token-info.avatar-src')}">
+  title-avatar="../static/token-icons/kCUR.png">
   <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadkCur()"></k-loader>
   <k-stack gap="var(--spacing-xl)">
     <k-grid cols="3" id="r-kCur-tic-stats">
