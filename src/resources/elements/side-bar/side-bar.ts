@@ -44,7 +44,7 @@ export class SideBar implements ICustomElementViewModel {
         icon: this.i18n.tr('navigation.external-site.link-icon'),
       },
     ];
-    if (this.config.isDevelopment) {
+    if (this.config.showStorybook) {
       this.routes.push({ name: 'Storybook', path: 'storybook', location: 'bottom', icon: 'menu_book' });
     }
   }
