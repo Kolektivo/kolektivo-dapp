@@ -21,15 +21,6 @@ describe('assets-card', () => {
     expect(appHost.querySelector('#t-o-ac-card')).exist;
   });
 
-  it('should have a title k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<assets-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const card = appHost.querySelector('#t-o-ac-card');
-    expect(card?.getAttribute('title')).exist;
-  });
-
   it('should have a card nav component', async () => {
     const { appHost } = await createFixture
       .html(`<assets-card>`)

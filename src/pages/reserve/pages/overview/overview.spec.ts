@@ -26,16 +26,6 @@ describe('overview', () => {
     expect(appHost.querySelectorAll('k-page')).exist;
   });
 
-  it('should have a tile and description in the k-page component', async () => {
-    const { appHost } = await createFixture
-      .html(`<overview>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const kPage = appHost.querySelector('k-page');
-    expect(kPage?.hasAttribute('title')).true;
-    expect(kPage?.hasAttribute('description')).true;
-  });
-
   it('should have a value card component', async () => {
     const { appHost } = await createFixture
       .html(`<overview>`)

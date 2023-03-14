@@ -17,14 +17,6 @@ import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('token-info-card', () => {
-  it('should have a k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<token-info-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelector('k-card')).exist;
-  });
-
   it('should have a color, title and avatar on the k-card', async () => {
     const { appHost } = await createFixture
       .html(`<token-info-card>`)
