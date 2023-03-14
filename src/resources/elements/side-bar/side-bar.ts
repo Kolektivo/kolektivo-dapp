@@ -20,7 +20,7 @@ export class SideBar implements ICustomElementViewModel {
 
   constructor(@IRouter private readonly router: IRouter, @I18N private readonly i18n: I18N, @IConfiguration private readonly config: IConfiguration) {
     this.routes = [
-      { name: this.i18n.tr('navigation.map.link-text'), path: 'map', location: 'top', icon: this.i18n.tr('navigation.map.link-icon') },
+      //{ name: this.i18n.tr('navigation.map.link-text'), path: 'map', location: 'top', icon: this.i18n.tr('navigation.map.link-icon') },
       { name: this.i18n.tr('navigation.treasury.link-text'), path: 'treasury', location: 'top', icon: this.i18n.tr('navigation.treasury.link-icon') },
       { name: this.i18n.tr('navigation.reserve.link-text'), path: 'reserve', location: 'top', icon: this.i18n.tr('navigation.reserve.link-icon') },
       // { name: this.i18n.tr('navigation.swap.link-text'), path: 'swap', location: 'top', icon: this.i18n.tr('navigation.swap.link-icon') },

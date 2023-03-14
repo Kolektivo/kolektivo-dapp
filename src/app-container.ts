@@ -96,7 +96,7 @@ export const appContainer: IContainer = DI.createContainer()
       chainUrl: CHAIN_URL,
       chain: CHAIN,
       isDevelopment: IS_DEV,
-      showStorybook: SHOW_STORYBOOK
+      showStorybook: SHOW_STORYBOOK,
       scanLink: SCAN_LINK,
       firebaseCollection: FIREBASE_COLLECTION,
     }),

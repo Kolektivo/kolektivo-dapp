@@ -20,7 +20,7 @@
     "treasury": {
       "link-text": "Treasury",
       "link-icon": "account_balance",
-      "title": "Kolektivo Network Treasury",
+      "title": "Network Treasury",
       "description": "Explore how the total value, the assets and the asset type distribution in the Kolektivo Network Treasury are evolving over time.",
       "menu": {
         "overview": "Overview",

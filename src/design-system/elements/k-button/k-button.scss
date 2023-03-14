@@ -21,7 +21,8 @@
       fill: var(--white);
     }
 
-    k-icon, .loading {
+    k-icon,
+    .loading {
       margin-left: -8px;
       padding-right: 10px;
     }
@@ -32,7 +33,8 @@
       line-height: 13px;
       padding: 6px 12px;
 
-      k-icon, .loading {
+      k-icon,
+      .loading {
         margin-left: -4px;
         padding-right: 2px;
       }
@@ -44,7 +46,8 @@
       line-height: 15px;
       padding: 8px 16px;
 
-      k-icon, .loading {
+      k-icon,
+      .loading {
         margin-left: -4px;
         padding-right: 5px;
       }
@@ -55,7 +58,8 @@
       letter-spacing: 0.5%;
       padding: 10px 28px;
 
-      k-icon, .loading {
+      k-icon,
+      .loading {
         margin-left: -8px;
         padding-right: 10px;
       }
@@ -66,7 +70,8 @@
       letter-spacing: 0%;
       padding: 12px 32px;
 
-      k-icon, .loading {
+      k-icon,
+      .loading {
         margin-left: -8px;
         padding-right: 10px;
       }
@@ -83,14 +88,12 @@
     &:focus-visible {
       outline: 2px solid var(--ocean-blue-300);
       background-color: var(--primary);
-
     }
 
     &:disabled {
       background-color: var(--don-juan-100);
       cursor: inherit;
     }
-
 
     &.secondary {
       color: var(--primary);
@@ -173,6 +176,30 @@
     &.utility-light {
       border-color: transparent;
       background-color: transparent;
+      color: var(--don-juan-600);
+
+      k-icon {
+        fill: var(--don-juan-600);
+        transform: translateX(-8px);
+      }
+
+      &:hover {
+        background-color: var(--don-juan-050);
+      }
+
+      &:active {
+        background-color: var(--don-juan-100);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--ocean-blue-300);
+        background-color: var(--white);
+      }
+    }
+
+    &.utility-light-bordered {
+      border: 1px solid var(--don-juan-600);
+      background-color: var(--white);
       color: var(--don-juan-600);
 
       k-icon {

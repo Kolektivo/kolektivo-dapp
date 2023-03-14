@@ -4,13 +4,16 @@ side-bar {
   width: 240px;
   z-index: 99;
   position: fixed;
+  box-shadow: 36px 0px 60px rgba(0, 0, 0, 0.06),
+    8px 0px 14px rgba(0, 0, 0, 0.0298054),
+    2.5px 4px 4px rgba(0, 0, 0, 0.0201946);
 
   a.logo {
     margin-top: 28px;
     margin-left: 30px;
     margin-right: 30px;
-    
-    >img {
+
+    > img {
       height: auto;
       width: 100%;
     }
@@ -61,7 +64,6 @@ side-bar {
 
       &.active k-text::part(content) {
         color: var(--primary);
-
       }
 
       &:focus-visible {

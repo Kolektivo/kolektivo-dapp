@@ -16,7 +16,7 @@ import { Interval } from 'models/interval';
 export class ChartTimeFilter implements ICustomElementViewModel {
   @bindable currentFilter = Interval['1d'];
   getButtonType(value: Interval | string, current: Interval) {
-    return current === value || Interval[current] === value ? 'primary' : 'secondary';
+    return current === value || Interval[current] === value ? 'primary' : 'utility-light-bordered';
   }
   changeFilter(interval: Interval) {
     this.currentFilter = Interval[interval] as unknown as Interval;

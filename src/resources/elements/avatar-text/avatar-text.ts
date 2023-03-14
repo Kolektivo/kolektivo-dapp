@@ -21,4 +21,6 @@ export class AvatarText implements ICustomElementViewModel {
   @bindable icon?: string;
   @bindable name?: string;
   @bindable color?: string;
+  @bindable textColor?: string;
+  @bindable textSize = 16;
 }

@@ -48,6 +48,12 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
       callbacks: {
         title: (x: { label: string }[]) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x: { dataset: { label?: string }; raw: string }) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(`${x.raw}`)}`,
+        labelColor: (context) => {
+          return {
+            backgroundColor: context.dataset.borderColor,
+            borderColor: context.dataset.borderColor,
+          };
+        },
       } as Partial<TooltipOptions['callbacks']>,
     } as Partial<TooltipOptions>;
   }
@@ -67,10 +73,10 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
         data: data,
         fill: true,
         borderColor: 'rgba(69, 173, 168, 0.77)',
-        tension: 0.5,
+        tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
-        backgroundColor: 'rgba(75, 192, 192, .7)',
+        pointBackgroundColor: '#FFFFFF',
+        backgroundColor: 'transparent',
       },
     ];
   }
