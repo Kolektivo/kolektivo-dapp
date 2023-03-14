@@ -12,9 +12,11 @@ header {
     display: grid;
     align-items: center;
   }
+
   k-icon-button {
     padding-right: 20px;
   }
+
   k-button::part(icon) {
     transform: translateX(0);
   }

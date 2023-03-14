@@ -1,30 +1,27 @@
 import { DI } from 'aurelia';
 
-export interface ITokenInfo 
-{
-  address: string,
-  chainId: number,
-  name: string,
-  symbol: string,
-  decimals: number,
-  logoURI: string,
-  id: number,
-  price?: number
+export interface ITokenInfo {
+  address: string;
+  chainId: number;
+  name: string;
+  symbol: string;
+  decimals: number;
+  logoURI: string;
+  id: number;
+  price?: number;
 }
 
-interface ITokenListType
-{
-  name: string,
-  timestamp: string,
+interface ITokenListType {
+  name: string;
+  timestamp: string;
   version: {
-      major: number,
-      minor: number,
-      patch: number
-  },
-  keywords: string[],
-  tokens: ITokenInfo[]
+    major: number;
+    minor: number;
+    patch: number;
+  };
+  keywords: string[];
+  tokens: ITokenInfo[];
 }
-
 
 export type ITokenData = {
   tokens: Promise<ITokenInfo[]>;

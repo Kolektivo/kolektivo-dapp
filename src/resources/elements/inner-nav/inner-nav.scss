@@ -17,12 +17,15 @@ inner-nav {
 
   k-tab {
     margin-bottom: -1px;
+
     &.active {
       border-bottom: 5px var(--primary) solid;
+
       &::part(content) {
         color: var(--primary);
       }
     }
+
     &:hover::part(content) {
       color: var(--don-juan-500);
     }
