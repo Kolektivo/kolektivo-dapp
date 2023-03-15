@@ -1,5 +1,9 @@
-<k-page id="governance-page" title="${i18n.tr('navigation.treasury.governance.title')}"
-  description="${i18n.tr('navigation.treasury.governance.description')}" learn-more-link="/map">
+<k-page
+  id="governance-page"
+  title="${i18n.tr('navigation.treasury.governance.title')}"
+  description="${i18n.tr('navigation.treasury.governance.description')}"
+  learn-more-link="${i18n.tr('navigation.treasury.governance.learn-more-link')}"
+>
   <k-stack gap="20">
     <k-select placeholder="Please select your badge for testing" width="350" value.two-way="selectedBadge">
       <k-option value.bind="0">No wallet connected</k-option>
@@ -13,8 +17,6 @@
       <k-option value.bind="8">Kolektivo Network Multi-Sig Member</k-option>
     </k-select>
     <submit-proposal-card if.bind="hasSubmitAccess"></submit-proposal-card>
-    <proposals-card>
-    </proposals-card>
+    <proposals-card> </proposals-card>
   </k-stack>
-
 </k-page>

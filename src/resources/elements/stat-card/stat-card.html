@@ -1,0 +1,7 @@
+<k-paper>
+  <k-stack direction="row" gap="var(--spacing)">
+    <k-text type="h6" color="var(--don-juan-400)">${title}</k-text>
+    <k-icon if.bind="tooltipText" color="var(--don-juan-400)" name="help_outline" size="16" tooltip="${tooltipText}"></k-icon>
+  </k-stack>
+  <k-text type="statistic" color="var(--don-juan-600)">${stat}</k-text>
+</k-paper>

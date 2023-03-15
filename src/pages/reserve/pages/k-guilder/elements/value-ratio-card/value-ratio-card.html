@@ -1,8 +1,36 @@
-<k-card title="${i18n.tr('navigation.reserve.k-guilder.value-ratio.title')}" tooltip-text="${i18n.tr('navigation.reserve.k-guilder.value-ratio.tooltip')}">
+<k-stack gap="var(--spacing-xl)">
   <k-loader fill="parent" color="var(--white)" if.bind="loading"></k-loader>
+  <k-stack direction="row" gap="var(--spacing-sm)">
+    <k-text type="h5">${i18n.tr('navigation.reserve.k-guilder.value-ratio.title')}</k-text>
+    <k-icon name="help_outline" size="20" tooltip="${i18n.tr('navigation.reserve.k-guilder.value-ratio.tooltip')}"></k-icon>
+  </k-stack>
   <chart-time-filter current-filter.two-way="currentInterval">
-    <avatar-text color="var(--primary)" size="14">${i18n.tr('navigation.reserve.k-guilder.value-ratio.ratio-text')}</avatar-text>
+    <k-stack direction="row" gap="10">
+      <avatar-text size="10" text-size="14" color="var(--primary)" text-color="var(--don-juan-400)" name="${i18n.tr('navigation.reserve.k-guilder.value-ratio.ratio-text')}"></avatar-text>
+      <avatar-text
+        size="24"
+        text-size="14"
+        icon="more_horiz"
+        color="var(--don-juan-200)"
+        text-color="var(--don-juan-400)"
+        name="${i18n.tr('navigation.reserve.k-guilder.value-ratio.price-parity')}"
+      ></avatar-text>
+    </k-stack>
   </chart-time-filter>
-  <k-chart gradient height="300" max-labels="2" hide-legend type="line" fill labels.bind="labels"
-    border-color.bind="red" tension=".01" data-sets.bind="dataSets(valueData, baseLineData)" tooltip-options.bind="tooltipOptions" y-label-format.bind="yLabelFormat" x-label-format.bind="xLabelFormat" max-x-labels="5"></k-chart>
-</k-card>
+  <k-chart
+    gradient
+    height="460"
+    max-labels="2"
+    hide-legend
+    type="line"
+    fill
+    labels.bind="labels"
+    border-color.bind="red"
+    tension="0"
+    data-sets.bind="dataSets(valueData, baseLineData)"
+    tooltip-options.bind="tooltipOptions"
+    y-label-format.bind="yLabelFormat"
+    x-label-format.bind="xLabelFormat"
+    max-x-labels="5"
+  ></k-chart>
+</k-stack>

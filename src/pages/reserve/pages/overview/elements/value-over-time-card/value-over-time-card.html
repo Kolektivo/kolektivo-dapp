@@ -1,7 +1,7 @@
 <k-stack>
   <k-loader fill="parent" color="var(--white)" if.bind="loading"></k-loader>
   <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadAssets()"></k-loader>
-  <k-stack gap="var(--spacing)">
+  <k-stack gap="var(--spacing-lg)">
     <k-stack direction="row" gap="var(--spacing-sm)">
       <k-text type="h5">${i18n.tr('navigation.reserve.overview.value.title')}</k-text>
       <k-icon name="help_outline" size="20" tooltip="${i18n.tr('navigation.reserve.overview.value-over-time.tooltip')}"></k-icon>

@@ -15,24 +15,6 @@ import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('asset-card', () => {
-  it('should have a k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<asset-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelector('k-card')).exist;
-  });
-
-  it('should have a title and tooltip in the k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<asset-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const card = appHost.querySelector('k-card');
-    expect(card?.getAttribute('title')).exist;
-    expect(card?.getAttribute('tooltip-text')).exist;
-  });
-
   it('should have a data grid component', async () => {
     const { appHost } = await createFixture
       .html(`<asset-card>`)

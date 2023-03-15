@@ -45,9 +45,21 @@ export class ValueRatioCard implements ICustomElementViewModel {
   }
   get tooltipOptions() {
     return {
+      itemSort: (a, b, data) => b.datasetIndex - a.datasetIndex,
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
-        label: (x) => (x.dataset.label ? `${x.dataset.label}: ${this.currencyValueConverter.toView(`${x.raw as string}`)}` : ''),
+        label: (x) => (x.dataset.label ? ` ${x.dataset.label}: ${this.currencyValueConverter.toView(`${x.raw as string}`)}` : ''),
+        labelColor: (context) => {
+          return {
+            backgroundColor: context.dataset.pointBorderColor,
+            borderColor: context.dataset.pointBorderColor,
+          };
+        },
+        labelPointStyle: (context) => {
+          return {
+            pointStyle: context.dataset.label === this.i18n.tr('navigation.reserve.k-guilder.value-ratio.price-parity') ? 'dash' : 'circle',
+          };
+        },
       },
     } as TooltipOptions;
   }
@@ -63,23 +75,26 @@ export class ValueRatioCard implements ICustomElementViewModel {
   private dataSets(valueData: number[], baseLineData: number[]) {
     return [
       {
+        label: this.i18n.tr('navigation.reserve.k-guilder.value-ratio.price-parity'),
         data: baseLineData,
         borderDash: [5],
-        borderColor: 'rgba(190, 183, 183, 0.77)',
-        tension: 0.5,
+        borderColor: 'rgba(76, 87, 92, 0.05)',
+        tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
-        backgroundColor: 'rgba(75, 192, 192, .7)',
+        pointBorderColor: 'rgba(76, 87, 92, 0.05)',
+        pointBackgroundColor: '#FFFFFF',
+        backgroundColor: 'transparent',
       },
       {
         label: this.i18n.tr('navigation.reserve.k-guilder.value-ratio.chart-tooltip'),
         data: valueData,
         fill: true,
         borderColor: 'rgba(69, 173, 168, 0.77)',
-        tension: 0.5,
+        tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
-        backgroundColor: 'rgba(75, 192, 192, .7)',
+        pointBorderColor: 'rgba(69, 173, 168, 0.77)',
+        pointBackgroundColor: '#FFFFFF',
+        backgroundColor: 'transparent',
       },
     ];
   }

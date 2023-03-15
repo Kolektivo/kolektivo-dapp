@@ -51,6 +51,7 @@
       "governance": {
         "description": "Explore all proposals and submit your Monetary policy proposals for the global Kolektivo Network.",
         "title": "Kolektivo Network Governance",
+        "learn-more-link": "/",
         "submit-card": {
           "title": "Submit Proposal",
           "tooltip": "Submit a proposal for the Kolektivo Network Treasury.",
@@ -88,6 +89,7 @@
       "overview": {
         "menu": "Overview",
         "title": "Kolektivo Curaçao Reserve",
+        "learn-more-link": "/",
         "description": "Explore how the total value, the assets and the asset type distribution in the Kolektivo Curaçao Reserve are evolving over time.",
         "value": {
           "title": "Reserve Value",
@@ -112,6 +114,7 @@
       "k-cur": {
         "menu": "kCur",
         "title": "kCUR",
+        "learn-more-link": "/",
         "description": "The Kolektivo Reserve mints the Kolektivo Curaçao Reserve Token (kCUR) token by collateralizing KTT and other assets in the reserve.",
         "token-info": {
           "title": "Kolektivo Curaçao Reserve Token (kCUR)",
@@ -154,18 +157,19 @@
       "risk": {
         "menu": "Risk",
         "title": "Reserve Risk",
+        "learn-more-link": "/",
         "description": "This is a basic & accessible description that the public can read to understand what it is.",
         "value-over-time": {
-          "title": "Reserve Value Over Time by Risk Class",
+          "title": "Collateralization Risk",
           "tooltip": "Tooltip for Reserve Value Over Time by Risk Class",
-          "min-value": "Minimum Collateral Value",
+          "min-value": "Minimum Collateral",
           "market-cap": "Fully Diluted Market Cap",
           "low-risk": "Low Risk",
           "moderate-risk": "Moderate Risk",
           "high-risk": "High Risk",
-          "over-collateralized": "The reserve is over-collateralized. Some copy about why this matters.",
-          "under-collateralized": "The reserve is under-collateralized. Some copy about why this matters.",
-          "alert-link-text": "Learn more"
+          "over-collateralized": "The reserve is currently over-collateralized.",
+          "under-collateralized": "The reserve is currently under-collateralized.",
+          "alert-link-text": "Learn about collateralization"
         },
         "assets": {
           "title": "Risk by Asset",
@@ -181,24 +185,30 @@
       "k-guilder": {
         "menu": "kGuilder",
         "title": "kGuilder",
+        "learn-more-link": "/",
         "description": "What is kGuilder? Why does it exist? Which blockchain does it live on? Basic & accessible description for the general public.",
         "token-info": {
-          "title": "kGuilder"
+          "title": "Kolektivo Guilder (kGuilder)",
+          "tooltip": "This is a tooltip that explains what kGuilder is"
         },
         "value-ratio": {
           "title": "kCUR-kGuilder Value Ratio (USD)",
           "tooltip": "Tooltip for kCUR-kGuilder Value Ratio (USD)",
-          "ratio-text": "kCUR-kGuilder Value Ratio",
+          "ratio-text": "Current Ratio",
+          "price-parity": "Price Parity",
           "chart-tooltip": "Value Ratio"
         },
         "spread": {
-          "title": "Spread"
+          "title": "Spread",
+          "tooltip": "What the spread is"
         },
         "inflation-rate": {
-          "title": "Inflation Rate"
+          "title": "Inflation Rate",
+          "tooltip": "What the inflation rate is"
         },
         "tobin-tax": {
-          "title": "Tobin Tax"
+          "title": "Tobin Tax",
+          "tooltip": "What the tobin tax is"
         }
       },
       "governance": {

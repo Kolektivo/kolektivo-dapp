@@ -15,24 +15,6 @@ import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('value-ratio-card', () => {
-  it('should have a k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-ratio-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelector('k-card')).exist;
-  });
-
-  it('should have a title and tooltip in the k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-ratio-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const card = appHost.querySelector('k-card');
-    expect(card?.getAttribute('title')).exist;
-    expect(card?.getAttribute('tooltip-text')).exist;
-  });
-
   it('should have a chart time filter component with one legends on the right', async () => {
     const { appHost } = await createFixture
       .html(`<value-ratio-card>`)
@@ -40,7 +22,7 @@ describe('value-ratio-card', () => {
       .build().started;
     const filter = appHost.querySelector('chart-time-filter');
     expect(filter).exist;
-    expect(filter?.querySelectorAll('avatar-text')).toHaveLength(1);
+    expect(filter?.querySelectorAll('avatar-text')).toHaveLength(2);
   });
 
   it('should have a line chart', async () => {

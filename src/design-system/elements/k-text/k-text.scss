@@ -74,6 +74,13 @@
     letter-spacing: 0;
   }
 
+  *[type="link-small"] {
+    font-weight: 4 00;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 1%;
+  }
+
   label,
   *[type="label"] {
     font-weight: 600;

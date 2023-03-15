@@ -1,7 +1,11 @@
-<k-page id="reserve-page" title="${i18n.tr('navigation.reserve.risk.title')}"
-  description="${i18n.tr('navigation.reserve.risk.description')}" learn-more-link="/map">
-  <k-stack gap="20">
+<k-page
+  id="risk-page"
+  title="${i18n.tr('navigation.reserve.risk.title')}"
+  description="${i18n.tr('navigation.reserve.risk.description')}"
+  learn-more-link="${i18n.tr('navigation.reserve.risk.learn-more-link')}"
+>
+  <k-stack gap="75">
     <value-over-time-card class="zoom-in"></value-over-time-card>
-    <asset-card class="zoom-in"></asset-card>    
+    <asset-card class="zoom-in"></asset-card>
   </k-stack>
 </k-page>
