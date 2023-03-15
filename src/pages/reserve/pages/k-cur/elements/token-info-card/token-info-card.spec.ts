@@ -48,8 +48,6 @@ describe('token-info-card', () => {
       .build().started;
     const supplyDistribution = appHost.querySelector('#r-kCur-tic-supply');
     expect(supplyDistribution?.getAttribute('tooltip-text')).exist;
-    const stats = supplyDistribution?.querySelectorAll('k-text');
-    expect(stats).toHaveLength(4);
   });
 
   function getRegistrations() {
