@@ -3,28 +3,28 @@
 
 @font-face {
   font-family: Kaleko;
-  src: url("../static/Kaleko105-Bold.woff2") format("woff2");
+  src: url("./fonts/Kaleko105-Bold.woff2") format("woff2");
   font-weight: bold;
   font-display: swap;
 }
 
 @font-face {
   font-family: Kaleko;
-  src: url("../static/Kaleko105-Heavy.woff2") format("woff2");
+  src: url("./fonts/Kaleko105-Heavy.woff2") format("woff2");
   font-weight: bolder;
   font-display: swap;
 }
 
 @font-face {
   font-family: Kaleko;
-  src: url("../static/Kaleko105-Light.woff2") format("woff2");
+  src: url("./fonts/Kaleko105-Light.woff2") format("woff2");
   font-weight: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: Kaleko;
-  src: url("../static/Kaleko105-Thin.woff2") format("woff2");
+  src: url("./fonts/Kaleko105-Thin.woff2") format("woff2");
   font-weight: lighter;
   font-display: swap;
 }
@@ -59,7 +59,7 @@ body {
     height: 100%;
     flex-direction: column;
 
-    > k-grid {
+    >k-grid {
       height: 100vh;
     }
   }

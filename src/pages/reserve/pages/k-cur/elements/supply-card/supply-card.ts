@@ -40,7 +40,7 @@ export class SupplyCard implements ICustomElementViewModel {
           if (x.datasetIndex > 0) {
             value = (x.raw as number) - (x.chart.data.datasets[x.datasetIndex - 1]?.data[x.dataIndex] as number);
           }
-          return ` ${x.dataset.label ?? ''}: ${this.percentageValueConverter.toView((Number(value) / 100) as unknown as string)}`;
+          return `${x.dataset.label ?? ''}: ${this.percentageValueConverter?.toView((Number(value) / 100) as unknown as string) ?? ''}`;
         },
         labelColor: (context) => {
           return {

@@ -70,7 +70,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
           } else if (x.datasetIndex > 3) {
             value -= Number(x.chart.data.datasets[x.datasetIndex - 2].data[x.dataIndex]);
           }
-          return `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(value.toString())}`;
+          return `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(value.toString()) ?? ''}`;
         },
         labelColor: (context) => {
           return {
