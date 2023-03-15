@@ -77,7 +77,7 @@ export const riskAssetsColumns = () => {
       headerText: i18n.tr('navigation.reserve.risk.assets.grid-headers.token'),
       field: 'token',
       width: '1fr',
-      template: '<avatar-text name.bind="token" src.bind="tokenIcon"></avatar-text>',
+      template: '<avatar-text text-size="14" name.bind="token" src.bind="tokenIcon"></avatar-text>',
     },
     { headerText: i18n.tr('navigation.reserve.risk.assets.grid-headers.risk-class'), field: 'riskClass', width: '1fr' },
     {

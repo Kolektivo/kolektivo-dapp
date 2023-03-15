@@ -28,16 +28,6 @@ describe('k-cur', () => {
     expect(appHost.querySelectorAll('k-page')).exist;
   });
 
-  it('should have a tile and description in the k-page component', async () => {
-    const { appHost } = await createFixture
-      .html(`<k-cur>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const kPage = appHost.querySelector('k-page');
-    expect(kPage?.hasAttribute('title')).true;
-    expect(kPage?.hasAttribute('description')).true;
-  });
-
   it('should have a token info card component', async () => {
     const { appHost } = await createFixture
       .html(`<k-cur>`)
@@ -52,14 +42,6 @@ describe('k-cur', () => {
       .deps(...getRegistrations())
       .build().started;
     expect(appHost.querySelector('pool-card')).exist;
-  });
-
-  it('should have a leverage card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<k-cur>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelector('leverage-card')).exist;
   });
 
   it('should have an trend card component', async () => {

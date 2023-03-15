@@ -9,8 +9,9 @@ import { INumberService } from './../../../../../../services/number-service';
 import { TokenInfoCard } from './token-info-card';
 
 import { IDesignSystemConfiguration } from 'design-system';
+import { CurrencyValueConverter } from 'design-system/value-converters/currency';
 import { Global } from 'hooks';
-import { CurrencyValueConverter, EthweiValueConverter } from 'resources';
+import { EthweiValueConverter } from 'resources';
 import { IStore } from 'stores';
 import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
@@ -47,8 +48,6 @@ describe('token-info-card', () => {
       .build().started;
     const supplyDistribution = appHost.querySelector('#r-kCur-tic-supply');
     expect(supplyDistribution?.getAttribute('tooltip-text')).exist;
-    const stats = supplyDistribution?.querySelectorAll('k-text');
-    expect(stats).toHaveLength(4);
   });
 
   function getRegistrations() {

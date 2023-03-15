@@ -60,6 +60,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   }
   get tooltipOptions() {
     return {
+      itemSort: (a, b, data) => b.datasetIndex - a.datasetIndex,
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => {
@@ -70,6 +71,21 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
             value -= Number(x.chart.data.datasets[x.datasetIndex - 2].data[x.dataIndex]);
           }
           return `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(value.toString())}`;
+        },
+        labelColor: (context) => {
+          return {
+            backgroundColor: context.dataset.pointBorderColor,
+            borderColor: context.dataset.pointBorderColor,
+          };
+        },
+        labelPointStyle: (context) => {
+          return {
+            pointStyle:
+              context.dataset.label === this.i18n.tr('navigation.reserve.risk.value-over-time.market-cap') ||
+              context.dataset.label === this.i18n.tr('navigation.reserve.risk.value-over-time.min-value')
+                ? 'dash'
+                : 'circle',
+          };
         },
       },
     } as TooltipOptions;
@@ -89,28 +105,31 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.market-cap'),
         data: marketCap,
         borderDash: [5],
-        borderColor: 'rgba(30, 35, 37, 0.77)',
+        borderColor: 'rgba(190, 183, 183)',
         tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
+        pointBorderColor: 'rgb(190, 183, 183)',
+        pointBackgroundColor: '#FFFFFF',
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.min-value'),
         data: minCollateralValue,
         borderDash: [5],
-        borderColor: 'rgba(220, 77, 77)',
+        borderColor: 'rgba(213, 92, 56)',
         tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
+        pointBorderColor: 'rgb(213, 92, 56)',
+        pointBackgroundColor: '#FFFFFF',
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.low-risk'),
         data: lowRisk,
         fill: true,
-        backgroundColor: 'rgb(0, 160, 76)',
+        backgroundColor: 'rgb(42 166 161)',
         tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
+        pointBorderColor: 'rgb(42 166 161)',
+        pointBackgroundColor: '#FFFFFF',
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.moderate-risk'),
@@ -119,7 +138,8 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
         backgroundColor: 'rgb(245, 161, 74)',
         tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
+        pointBorderColor: 'rgb(245, 161, 74)',
+        pointBackgroundColor: '#FFFFFF',
       },
       {
         label: this.i18n.tr('navigation.reserve.risk.value-over-time.high-risk'),
@@ -128,7 +148,8 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
         backgroundColor: 'rgb(213, 92, 56)',
         tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
+        pointBorderColor: 'rgb(213, 92, 56)',
+        pointBackgroundColor: '#FFFFFF',
       },
     ];
   }

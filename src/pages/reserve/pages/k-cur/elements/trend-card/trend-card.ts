@@ -50,6 +50,17 @@ export class TrendCard implements ICustomElementViewModel {
         label: (x) => {
           return `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(Number(x.raw).toString()) ?? ''}`;
         },
+        labelColor: (context) => {
+          return {
+            backgroundColor: context.dataset.borderColor,
+            borderColor: context.dataset.borderColor,
+          };
+        },
+        labelPointStyle: (context) => {
+          return {
+            pointStyle: context.dataset.label === this.i18n.tr('navigation.reserve.k-cur.trend.price') ? 'circle' : 'dash',
+          };
+        },
       },
     } as TooltipOptions;
   }
@@ -68,31 +79,36 @@ export class TrendCard implements ICustomElementViewModel {
         label: this.i18n.tr('navigation.reserve.k-cur.trend.ceiling'),
         data: priceCeiling,
         borderDash: [5],
-        borderColor: 'rgba(190, 183, 183, 0.77)',
-        tension: 0.5,
+        borderColor: 'rgba(190, 183, 183, 1)',
+        tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
-        backgroundColor: 'rgba(75, 192, 192, .7)',
+        pointBorderColor: 'rgba(190, 183, 183, 1)',
+        pointBackgroundColor: '#FFFFFF',
+        backgroundColor: 'rgba(92, 76, 76, 0.05)',
+        fill: false,
+      },
+      {
+        label: this.i18n.tr('navigation.reserve.k-cur.trend.price'),
+        data: price,
+        fill: '-1',
+        borderColor: 'rgba(69, 173, 168, 0.77)',
+        tension: 0,
+        pointRadius: 0,
+        pointBorderColor: 'rgba(69, 173, 168, 0.77)',
+        pointBackgroundColor: '#FFFFFF',
+        backgroundColor: 'rgba(92, 76, 76, 0.05)',
       },
       {
         label: this.i18n.tr('navigation.reserve.k-cur.trend.floor'),
         data: priceFloor,
         borderDash: [5],
-        borderColor: 'rgba(190, 183, 183, 0.77)',
-        tension: 0.5,
+        borderColor: 'rgba(213, 92, 56, 1)',
+        tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
-        backgroundColor: 'rgba(75, 192, 192, .7)',
-      },
-      {
-        label: this.i18n.tr('navigation.reserve.k-cur.trend.price'),
-        data: price,
-        fill: true,
-        borderColor: 'rgba(69, 173, 168, 0.77)',
-        tension: 0.5,
-        pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
-        backgroundColor: 'rgba(75, 192, 192, .7)',
+        pointBorderColor: 'rgba(213, 92, 56, 1)',
+        pointBackgroundColor: '#FFFFFF',
+        backgroundColor: 'rgba(92, 76, 76, 0.05)',
+        fill: '-1',
       },
     ];
   }

@@ -9,5 +9,5 @@ export class LabelValue implements ICustomElementViewModel {
   @bindable public title?: string;
   @bindable public value?: string;
   @bindable public tooltipText?: string;
-  @bindable public gap = 'var(--spacing)';
+  @bindable public gap = 'var(--spacing-xs)';
 }

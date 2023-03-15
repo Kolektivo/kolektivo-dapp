@@ -4,7 +4,7 @@
     class="${column.sortable ? 'sortable' : ''} ${column.headerClass ? column.headerClass : ''} ${column.align ? column.align : ''}"
     click.trigger="column.sortable && sort(column.field)"
   >
-    <k-text type="h6">
+    <k-text type="table-header">
       ${column.headerText === undefined ? column.field : column.headerText}
       <i if.bind="column.sortable && $parent.sortColumn === column.field && $parent.sortDirection === 1" class="fas fa-arrow-down" aria-hidden="true"></i>
       <i if.bind="column.sortable && $parent.sortColumn === column.field && $parent.sortDirection === -1" class="fas fa-arrow-up" aria-hidden="true"></i>
@@ -13,8 +13,10 @@
 </k-grid>
 <k-grid cols.bind="cols" gap="var(--spacing-lg)" repeat.for="row of rows" if.to-view="!selectable && (!hideMore || (($index < numberToShow) || seeingMore))" class="row">
   <div repeat.for="column of columns" class="cell body hot ${condensed ? 'condensed' : ''} ${column.align ? column.align : ''}">
-    <au-compose if.bind="column.template" template.bind="column.template" view-model.bind="getBuffedVm(row, rows, row[column.field])" containerless></au-compose>
-    <template else>${row[column.field]}</template>
+    <k-text type="table-body">
+      <au-compose if.bind="column.template" template.bind="column.template" view-model.bind="getBuffedVm(row, rows, row[column.field])" containerless></au-compose>
+      <template else>${row[column.field]}</template>
+    </k-text>
   </div>
 </k-grid>
 

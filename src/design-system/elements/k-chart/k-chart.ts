@@ -136,7 +136,6 @@ export class KChart implements ICustomElementViewModel {
         intersect: false,
         includeInvisible: true,
       },
-
       interaction: {
         intersect: false,
         includeInvisible: true,
@@ -192,6 +191,9 @@ export class KChart implements ICustomElementViewModel {
           },
           max: this.maxY,
           min: this.minY,
+          grid: {
+            z: 1,
+          },
         },
       };
     }

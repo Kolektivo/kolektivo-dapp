@@ -1,20 +1,30 @@
-<k-page id="k-guilder-page" title="${i18n.tr('navigation.reserve.k-guilder.title')}" description="${i18n.tr('navigation.reserve.k-guilder.description')}" learn-more-link="/map">
-  <k-stack gap="20">
-    <token-info-card class="zoom-in"></token-info-card>
-    <value-ratio-card class="zoom-in"></value-ratio-card>    
-    <k-grid cols="1fr 1fr 1fr" gap="20">
-      <k-card>
-        <k-text type="h5" slot="header">${i18n.tr('navigation.reserve.k-guilder.spread.title')}</k-text>
-        <k-text type="h2">${reserveStore.kGuilderSpread | percentage}</k-text>
-      </k-card>
-      <k-card>
-        <k-text type="h5" slot="header">${i18n.tr('navigation.reserve.k-guilder.inflation-rate.title')}</k-text>
-        <k-text type="h2">${reserveStore.kGuilderInflationRate | percentage}</k-text>
-      </k-card>
-      <k-card>
-        <k-text type="h5" slot="header">${i18n.tr('navigation.reserve.k-guilder.tobin-tax.title')}</k-text>
-        <k-text type="h2">${reserveStore.kGuilderTobinTax | percentage}</k-text>
-      </k-card>
-    </k-grid>
+<k-page
+  id="k-guilder-page"
+  title="${i18n.tr('navigation.reserve.k-guilder.title')}"
+  description="${i18n.tr('navigation.reserve.k-guilder.description')}"
+  learn-more-link="${i18n.tr('navigation.reserve.k-guilder.learn-more-link')}"
+>
+  <k-stack gap="80">
+    <k-stack gap="40">
+      <token-info-card class="zoom-in"></token-info-card>
+      <k-grid cols="1fr 1fr 1fr" gap="40">
+        <stat-card
+          title="${i18n.tr('navigation.reserve.k-guilder.spread.title')}"
+          tooltip-text="${i18n.tr('navigation.reserve.k-guilder.spread.tooltip')}"
+          stat="${reserveStore.kGuilderSpread | percentage}"
+        ></stat-card>
+        <stat-card
+          title="${i18n.tr('navigation.reserve.k-guilder.inflation-rate.title')}"
+          tooltip-text="${i18n.tr('navigation.reserve.k-guilder.inflation-rate.tooltip')}"
+          stat="${reserveStore.kGuilderInflationRate | percentage}"
+        ></stat-card>
+        <stat-card
+          title="${i18n.tr('navigation.reserve.k-guilder.tobin-tax.title')}"
+          tooltip-text="${i18n.tr('navigation.reserve.k-guilder.tobin-tax.tooltip')}"
+          stat="${reserveStore.kGuilderTobinTax | percentage}"
+        ></stat-card>
+      </k-grid>
+    </k-stack>
+    <value-ratio-card class="zoom-in"></value-ratio-card>
   </k-stack>
 </k-page>
