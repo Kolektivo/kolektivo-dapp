@@ -31,7 +31,7 @@ export class SupplyCard implements ICustomElementViewModel {
   }
   get tooltipOptions() {
     return {
-      itemSort: (a, b) => b.datasetIndex - a.datasetIndex,
+      itemSort: (a, b, data) => b.datasetIndex - a.datasetIndex,
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => {
