@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aur
 import { captureFilter, ifExistsThenTrue } from '../../common';
 
 import template from './k-input.html';
-
-import css from './k-input.scss';
+import css from './k-input.scss?inline';
 
 @customElement({
   name: 'k-input',

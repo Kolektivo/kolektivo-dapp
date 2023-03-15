@@ -1,10 +1,10 @@
 import { Constructable, DI, IAurelia, IContainer, IPlatform, Registration } from 'aurelia';
 import { ICustomElementController } from '@aurelia/runtime-html';
 
-import { createCustomElement, destroyCustomElement } from 'design-system/aurelia-helpers';
-import { IDesignSystemConfiguration } from 'design-system/configuration';
-import { KConfirm, KToast } from 'design-system/elements';
-import { ToastOptions } from 'design-system/elements/k-toast/toast-options';
+import { createCustomElement, destroyCustomElement } from '../../aurelia-helpers';
+import { IDesignSystemConfiguration } from '../../configuration';
+import { KConfirm, KToast } from '../../elements';
+import { ToastOptions } from '../../elements/k-toast/toast-options';
 
 export type INotificationService = NotificationService;
 export const INotificationService = DI.createInterface<INotificationService>('INotificationService');

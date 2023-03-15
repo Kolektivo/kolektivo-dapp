@@ -4,8 +4,7 @@ import { captureFilter, numberToPixelsInterceptor } from '../../common';
 import { IDesignSystemConfiguration } from '../../configuration';
 
 import template from './k-icon.html';
-
-import css from './k-icon.scss';
+import css from './k-icon.scss?inline';
 
 @customElement({
   name: 'k-icon',

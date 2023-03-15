@@ -1,20 +1,21 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { IConfiguration } from '../configurations/configuration';
+import { callOnce } from '../decorators/call-once';
+import { Asset, AssetType } from '../models/asset';
+import { BigNumberOverTimeData, kCurPriceData, kCurSupplyData, LeverageChartData, RiskChartData, ValueChartData } from '../models/chart-data';
+import { Erc20 } from '../models/generated/monetary/erc20';
+import { Interval } from '../models/interval';
+import { RiskClass } from '../models/risk-class';
+import { IContractService, INumberService } from '../services';
+import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from '../utils';
+
 import { Reserve } from './../models/generated/monetary/reserve/Reserve';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 
 import { BigNumber } from '@ethersproject/bignumber';
-import { IConfiguration } from 'configurations/configuration';
-import { callOnce } from 'decorators/call-once';
-import { Asset, AssetType } from 'models/asset';
-import { BigNumberOverTimeData, kCurPriceData, kCurSupplyData, LeverageChartData, RiskChartData, ValueChartData } from 'models/chart-data';
-import { Erc20 } from 'models/generated/monetary/erc20';
-import { Interval } from 'models/interval';
-import { RiskClass } from 'models/risk-class';
-import { Transaction } from 'models/transaction';
-import { IContractService, INumberService } from 'services';
-import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from 'utils';
+import { Transaction } from 'ethers';
 
 export type IReserveStore = ReserveStore;
 export const IReserveStore = DI.createInterface<IReserveStore>('ReserveStore');

@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, IPlatform, shadowCSS 
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
 
 import template from './k-chart.html';
-
-import css from './k-chart.scss';
+import css from './k-chart.scss?inline';
 
 import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint, TooltipOptions } from 'chart.js';
 

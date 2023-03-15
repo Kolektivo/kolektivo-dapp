@@ -5,9 +5,19 @@
       <k-text tag="h6">${getTitle()}</k-text>
       <k-stack gap="10">
         <k-text color="var(--don-juan-600)">${message}</k-text>
-        <au-compose view.bind="content" if.bind="content"></au-compose>      
+        <au-compose template.bind="content" if.bind="content"></au-compose>
       </k-stack>
     </k-stack>
-    <k-countdown size="24" slot="close" inherit-hover click.trigger="closeToast()" color.bind="closeColor" finished-color="closeColor" hovering.bind="hovering" icon="close" countdown.bind="countdown"></k-countdown>
+    <k-countdown
+      size="24"
+      slot="close"
+      inherit-hover
+      click.trigger="closeToast()"
+      color.bind="closeColor"
+      finished-color="closeColor"
+      hovering.bind="hovering"
+      icon="close"
+      countdown.bind="countdown"
+    ></k-countdown>
   </div>
 </div>

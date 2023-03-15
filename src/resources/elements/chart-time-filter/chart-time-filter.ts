@@ -1,12 +1,11 @@
 import { bindable, customElement, ICustomElementViewModel } from 'aurelia';
 
 import { captureFilter } from '../../../design-system/common';
+import { Interval } from '../../../models/interval';
 
 import template from './chart-time-filter.html';
 
 import './chart-time-filter.scss';
-
-import { Interval } from 'models/interval';
 
 @customElement({
   name: 'chart-time-filter',

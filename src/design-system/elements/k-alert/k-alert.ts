@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aur
 import { captureFilter } from '../../common';
 
 import template from './k-alert.html';
-
-import css from './k-alert.scss';
+import css from './k-alert.scss?inline';
 
 @customElement({
   name: 'k-alert',

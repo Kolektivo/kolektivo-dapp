@@ -1,21 +1,22 @@
 import { I18N } from '@aurelia/i18n';
 import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
 
+import { kCurSupplyData } from '../../../../../../models/chart-data';
+import { Interval } from '../../../../../../models/interval';
+import { PercentageValueConverter } from '../../../../../../resources';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
+import { formatter, getXLabelFormat } from '../../../../../../utils';
+
 import template from './supply-card.html';
 
 import type { TooltipOptions } from 'chart.js';
-import { kCurSupplyData } from 'models/chart-data';
-import { Interval } from 'models/interval';
-import { PercentageValueConverter } from 'resources';
-import { IReserveStore } from 'stores/reserve-store';
-import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'supply-card', template })
 export class SupplyCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private kCurSupplyData: kCurSupplyData[] = [];
-  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly percentageValueConverter: PercentageValueConverter) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly percentageValueConverter?: PercentageValueConverter) {}
 
   binding() {
     void this.intervalChanged();
@@ -38,7 +39,7 @@ export class SupplyCard implements ICustomElementViewModel {
           if (x.datasetIndex > 0) {
             value = (x.raw as number) - (x.chart.data.datasets[x.datasetIndex - 1]?.data[x.dataIndex] as number);
           }
-          return `${x.dataset.label ?? ''}: ${this.percentageValueConverter.toView((Number(value) / 100) as unknown as string)}`;
+          return `${x.dataset.label ?? ''}: ${this.percentageValueConverter?.toView((Number(value) / 100) as unknown as string) ?? ''}`;
         },
       },
     } as TooltipOptions;
@@ -60,7 +61,7 @@ export class SupplyCard implements ICustomElementViewModel {
   }
   get yLabelFormat(): Record<string, unknown> {
     return {
-      callback: (value: number) => `${this.percentageValueConverter.toView(Number(value) / 100, { fractionDigits: 0 })}`,
+      callback: (value: number) => `${this.percentageValueConverter?.toView(Number(value) / 100, { fractionDigits: 0 }) ?? ''}`,
     };
   }
   get xLabelFormat(): Record<string, unknown> {

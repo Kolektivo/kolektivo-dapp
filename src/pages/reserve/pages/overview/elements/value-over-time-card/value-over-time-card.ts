@@ -2,17 +2,18 @@ import { customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 import { watch } from '@aurelia/runtime-html';
 
+import { BigNumberOverTimeData } from '../../../../../../models/chart-data';
+import { Interval } from '../../../../../../models/interval';
+import { INumberService } from '../../../../../../services';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
+import { formatter, fromWei, getXLabelFormat } from '../../../../../../utils';
+
 import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
 
 import './value-over-time-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import { BigNumberOverTimeData } from 'models/chart-data';
-import { Interval } from 'models/interval';
-import { INumberService } from 'services';
-import { IReserveStore } from 'stores/reserve-store';
-import { formatter, fromWei, getXLabelFormat } from 'utils';
 @customElement({ name: 'value-over-time-card', template })
 export class ValueOverTimeCard implements ICustomElementViewModel {
   public loading = false;
@@ -20,9 +21,9 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   private reserveData: BigNumberOverTimeData[] = [];
   constructor(
     @IReserveStore private readonly reserveStore: IReserveStore,
-    private readonly currencyValueConverter: CurrencyValueConverter,
     @INumberService private readonly numberService: INumberService,
     @I18N private readonly i18n: I18N,
+    private readonly currencyValueConverter?: CurrencyValueConverter,
   ) {}
 
   binding() {
@@ -43,7 +44,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return {
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
-        label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(`${x.raw as string}`)}`,
+        label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(`${x.raw as string}`) ?? ''}`,
         labelColor: (context) => {
           return {
             backgroundColor: context.dataset.borderColor,

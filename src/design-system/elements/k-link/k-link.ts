@@ -1,11 +1,10 @@
 import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
 import { IRouter } from '@aurelia/router';
 
+import { captureFilter, ifExistsThenTrue } from '../../common';
+
 import template from './k-link.html';
-
-import css from './k-link.scss';
-
-import { captureFilter, ifExistsThenTrue } from 'design-system/common';
+import css from './k-link.scss?inline';
 
 @customElement({
   name: 'k-link',

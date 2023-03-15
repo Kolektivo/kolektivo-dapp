@@ -4,30 +4,27 @@ import { I18N } from '@aurelia/i18n';
 
 import './prototypes';
 
+import { IConfiguration } from './configurations/configuration';
+import { firebaseConfig } from './configurations/firebase';
 import { CacheService } from './services/cache-service';
 import { ContractService } from './services/contract/contract-service';
 import { ITokenData, tokenData } from './services/contract/token-info';
-import { FirebaseService } from './services/firebase-service';
+import { FirebaseService, IFirebaseApp, IFirebaseService } from './services/firebase-service';
 import { NumberService } from './services/number-service';
 import { TokenService } from './services/token-service';
 import { ContractStore } from './stores/contract-store';
 import { DataStore } from './stores/data-store';
+import { IReserveStore, ReserveStore } from './stores/reserve-store';
 import { ITreasuryStore, TreasuryStore } from './stores/treasury-store';
+import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_COLLECTION, IPFS_GATEWAY, SCAN_LINK } from './environment-variables';
+import { IReadOnlyProvider } from './read-only-provider';
+import { EthereumService, IBrowserStorageService, IIpfsService } from './services';
+import { IWalletConnector } from './wallet-connector';
+import { IWalletProvider } from './wallet-provider';
 
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
-import { IConfiguration } from 'configurations/configuration';
-import { firebaseConfig } from 'configurations/firebase';
-import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_COLLECTION, IPFS_GATEWAY, SCAN_LINK } from 'environment-variables';
 import { initializeApp } from 'firebase/app';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where, writeBatch } from 'firebase/firestore/lite';
-import { IReadOnlyProvider } from 'read-only-provider';
-import { IBrowserStorageService } from 'services/browser-storage-service';
-import { EthereumService } from 'services/ethereum-service';
-import { IFirebaseApp, IFirebaseService } from 'services/firebase-service';
-import { IIpfsService } from 'services/ipfs';
-import { IReserveStore, ReserveStore } from 'stores/reserve-store';
-import { IWalletConnector } from 'wallet-connector';
-import { IWalletProvider } from 'wallet-provider';
 
 enum Periods {
   'minute',

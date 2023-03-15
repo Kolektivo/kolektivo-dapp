@@ -3,34 +3,31 @@ import { I18nConfiguration } from '@aurelia/i18n';
 import { RouterConfiguration } from '@aurelia/router';
 import { StandardConfiguration } from '@aurelia/runtime-html';
 
+import { IConfiguration } from './configurations/configuration';
+import { firebaseConfig } from './configurations/firebase';
+import designScss from './design-system/styles/shared.scss?inline';
 import { ITokenData, tokenData } from './services/contract/token-info';
 import { IFirebaseApp } from './services/firebase-service';
 import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { Services } from './services/services';
 import { imageMap } from './app-images';
 import { DesignSystemPlugin } from './design-system';
-import { IEncryptionClient } from './encryption-client';
 import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_API_KEY, FIREBASE_COLLECTION, IPFS_GATEWAY, IS_DEV, SCAN_LINK, SHOW_STORYBOOK } from './environment-variables';
 import * as hooks from './hooks';
 import * as pages from './pages';
+import { CeloProviderFactory, IProviderFactory } from './provider-factory';
+import { IReadOnlyProvider } from './read-only-provider';
 import * as resources from './resources';
+import scss from './shared.scss?inline';
 import { Store } from './stores';
 import { IWalletConnector } from './wallet-connector';
-import { WalletProvider } from './wallet-provider';
+import { IWalletProvider, WalletProvider } from './wallet-provider';
 import { Web3ModalConnect } from './web3modal-details';
 
-import designScss from './design-system/styles/shared.scss';
-import scss from './shared.scss';
-
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
-import { IConfiguration } from 'configurations/configuration';
-import { firebaseConfig } from 'configurations/firebase';
 import Backend from 'i18next-chained-backend';
 import HttpBackend from 'i18next-http-backend';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
-import { CeloProviderFactory, IProviderFactory } from 'provider-factory';
-import { IReadOnlyProvider } from 'read-only-provider';
-import { IWalletProvider } from 'wallet-provider';
 
 // const ipfs = await create({
 //   repo: String(Math.random() + Date.now()),
@@ -68,7 +65,6 @@ const dateFormatters: Record<string, Intl.DateTimeFormat> = {
     year: 'numeric',
   }),
 };
-
 export const appContainer: IContainer = DI.createContainer()
   .register(
     Registration.instance(IPlatform, PLATFORM),
@@ -101,17 +97,17 @@ export const appContainer: IContainer = DI.createContainer()
       firebaseCollection: FIREBASE_COLLECTION,
     }),
   )
-  .register(
-    Registration.cachedCallback(IEncryptionClient, async () => {
-      const LitJsSdk = (await import('lit-js-sdk')).default;
-      const client: Partial<IEncryptionClient> = new LitJsSdk.LitNodeClient();
-      client.getAuthSig = LitJsSdk.signAndSaveAuthMessage;
-      client.encryptString = LitJsSdk.encryptString;
-      client.decryptString = LitJsSdk.decryptString;
-      client.uint8arrayToString = LitJsSdk.uint8arrayToString;
-      return client as IEncryptionClient;
-    }),
-  )
+  // .register(
+  //   Registration.cachedCallback(IEncryptionClient, async () => {
+  //     const LitJsSdk = (await import('lit-js-sdk')).default;
+  //     const client: Partial<IEncryptionClient> = new LitJsSdk.LitNodeClient();
+  //     client.getAuthSig = LitJsSdk.signAndSaveAuthMessage;
+  //     client.encryptString = LitJsSdk.encryptString;
+  //     client.decryptString = LitJsSdk.decryptString;
+  //     client.uint8arrayToString = LitJsSdk.uint8arrayToString;
+  //     return client as IEncryptionClient;
+  //   }),
+  // )
   .register(
     Registration.instance(
       IReadOnlyProvider,

@@ -1,21 +1,22 @@
 import { I18N } from '@aurelia/i18n';
 import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
 
+import { kCurPriceData } from '../../../../../../models/chart-data';
+import { Interval } from '../../../../../../models/interval';
+import { CurrencyValueConverter } from '../../../../../../resources';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
+import { formatter, getXLabelFormat } from '../../../../../../utils';
+
 import template from './trend-card.html';
 
 import type { TooltipOptions } from 'chart.js';
-import { CurrencyValueConverter } from 'design-system/value-converters';
-import { kCurPriceData } from 'models/chart-data';
-import { Interval } from 'models/interval';
-import { IReserveStore } from 'stores/reserve-store';
-import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'trend-card', template })
 export class TrendCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private kCurPriceData: kCurPriceData[] = [];
-  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly currencyValueConverter: CurrencyValueConverter) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly currencyValueConverter?: CurrencyValueConverter) {}
 
   binding() {
     void this.intervalChanged();
@@ -47,7 +48,7 @@ export class TrendCard implements ICustomElementViewModel {
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => {
-          return `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(Number(x.raw).toString())}`;
+          return `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(Number(x.raw).toString()) ?? ''}`;
         },
       },
     } as TooltipOptions;

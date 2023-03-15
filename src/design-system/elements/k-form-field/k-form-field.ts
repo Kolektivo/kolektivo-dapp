@@ -4,8 +4,7 @@ import { ValidationResult } from '@aurelia/validation';
 import { captureFilter, ifExistsThenTrue } from '../../common';
 
 import template from './k-form-field.html';
-
-import css from './k-form-field.scss';
+import css from './k-form-field.scss?inline';
 
 @customElement({
   name: 'k-form-field',

@@ -1,14 +1,15 @@
 import { I18N } from '@aurelia/i18n';
 import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
 
+import { RiskChartData } from '../../../../../../models/chart-data';
+import { Interval } from '../../../../../../models/interval';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
+import { formatter, getXLabelFormat } from '../../../../../../utils';
+
 import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
 
 import type { TooltipOptions } from 'chart.js';
-import { RiskChartData } from 'models/chart-data';
-import { Interval } from 'models/interval';
-import { IReserveStore } from 'stores/reserve-store';
-import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'value-over-time-card', template })
 export class ValueOverTimeCard implements ICustomElementViewModel {
@@ -16,7 +17,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   private currentInterval: Interval = Interval['1d'];
   private riskData: RiskChartData[] = [];
 
-  constructor(@IReserveStore private readonly reserveStore: IReserveStore, private readonly currencyValueConverter: CurrencyValueConverter, @I18N private readonly i18n: I18N) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly currencyValueConverter?: CurrencyValueConverter) {}
 
   binding() {
     void this.intervalChanged();
@@ -68,7 +69,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
           } else if (x.datasetIndex > 3) {
             value -= Number(x.chart.data.datasets[x.datasetIndex - 2].data[x.dataIndex]);
           }
-          return `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(value.toString())}`;
+          return `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(value.toString())}`;
         },
       },
     } as TooltipOptions;

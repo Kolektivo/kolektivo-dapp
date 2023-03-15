@@ -1,8 +1,7 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import { Plugin, defineConfig, splitVendorChunkPlugin } from 'vite';
 import { resolve } from 'path';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig, Plugin, splitVendorChunkPlugin } from 'vite';
 
 export default defineConfig({
   publicDir: false,
@@ -26,7 +25,7 @@ export default defineConfig({
       formats: ['es'],
     },
   },
-  plugins: [splitVendorChunkPlugin(), tsconfigPaths()],
+  plugins: [splitVendorChunkPlugin()],
   define: {
     'process.env': process.env,
   },

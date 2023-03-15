@@ -1,7 +1,8 @@
 import { DI } from 'aurelia';
 
+import type { LitNodeClient } from './lit-js-sdk';
+
 import { Web3Provider } from '@ethersproject/providers/lib';
-import type LitJsSdk from 'lit-js-sdk';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AuthSig = string | undefined;
@@ -18,7 +19,7 @@ export type EncryptionClient = {
   encryptString: (data: string) => Promise<EncryptionResult>;
   decryptString: (data: string, key: unknown) => Promise<string>;
   uint8arrayToString: (data: Uint8Array, type: string) => string | undefined;
-} & LitJsSdk.LitNodeClient;
+} & LitNodeClient;
 
 export type IEncryptionClient = Promise<EncryptionClient> | EncryptionClient;
 

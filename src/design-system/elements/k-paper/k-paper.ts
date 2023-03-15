@@ -4,8 +4,7 @@ import { Spaceable } from '../../base/spaceable';
 import { captureFilter } from '../../common';
 
 import template from './k-paper.html';
-
-import css from './k-paper.scss';
+import css from './k-paper.scss?inline';
 
 @customElement({
   name: 'k-paper',

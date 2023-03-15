@@ -1,23 +1,24 @@
 import { I18N } from '@aurelia/i18n';
 import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
 
+import { LeverageChartData } from '../../../../../../models/chart-data';
+import { Interval } from '../../../../../../models/interval';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
+import { formatter, getXLabelFormat } from '../../../../../../utils';
+
 import { MultiplierValueConverter } from './../../../../../../resources/value-converters/multiplier';
 import template from './leverage-card.html';
 
 import './leverage-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import { LeverageChartData } from 'models/chart-data';
-import { Interval } from 'models/interval';
-import { IReserveStore } from 'stores/reserve-store';
-import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'leverage-card', template })
 export class LeverageCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private reserveData: LeverageChartData[] = [];
-  constructor(@IReserveStore private readonly reserveStore: IReserveStore, private readonly multiplierValueConverter: MultiplierValueConverter, @I18N private readonly i18n: I18N) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly multiplierValueConverter?: MultiplierValueConverter) {}
 
   binding() {
     void this.intervalChanged();
@@ -56,14 +57,14 @@ export class LeverageCard implements ICustomElementViewModel {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => {
           if (x.datasetIndex === 0) return '';
-          return `${x.dataset.label ?? ''}: ${this.multiplierValueConverter.toView(Number(x.raw) / 100)}`;
+          return `${x.dataset.label ?? ''}: ${this.multiplierValueConverter?.toView(Number(x.raw) / 100) ?? ''}`;
         },
       },
     } as TooltipOptions;
   }
   get yLabelFormat(): Record<string, unknown> {
     return {
-      callback: (value: number) => this.multiplierValueConverter.toView(Number(value) / 100),
+      callback: (value: number) => this.multiplierValueConverter?.toView(Number(value) / 100),
     };
   }
 

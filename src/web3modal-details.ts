@@ -1,6 +1,7 @@
+import { IConfiguration } from './configurations/configuration';
+import { IWalletConnector } from './wallet-connector';
+
 import { Web3Provider } from '@ethersproject/providers/lib';
-import { IConfiguration } from 'configurations/configuration';
-import { IWalletConnector } from 'wallet-connector';
 import type Web3Modal from 'web3modal';
 import { type IWalletConnectConnectorOptions } from 'web3modal/dist/providers/connectors/walletconnect';
 

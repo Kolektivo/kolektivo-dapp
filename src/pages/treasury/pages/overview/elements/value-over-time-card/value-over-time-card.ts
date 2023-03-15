@@ -2,23 +2,24 @@ import { customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 import { watch } from '@aurelia/runtime-html';
 
+import { ValueChartData } from '../../../../../../models/chart-data';
+import { Interval } from '../../../../../../models/interval';
+import { ITreasuryStore } from '../../../../../../stores';
+import { formatter, getXLabelFormat } from '../../../../../../utils';
+
 import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
 
 import './value-over-time-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import { ValueChartData } from 'models/chart-data';
-import { Interval } from 'models/interval';
-import { ITreasuryStore } from 'stores';
-import { formatter, getXLabelFormat } from 'utils';
 
 @customElement({ name: 'value-over-time-card', template })
 export class ValueOverTimeCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private treasuryData: ValueChartData[] = [];
-  constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore, private readonly currencyValueConverter: CurrencyValueConverter, @I18N private readonly i18n: I18N) {}
+  constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore, @I18N private readonly i18n: I18N, private readonly currencyValueConverter?: CurrencyValueConverter) {}
 
   binding() {
     void this.intervalChanged();
@@ -47,7 +48,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return {
       callbacks: {
         title: (x: { label: string }[]) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
-        label: (x: { dataset: { label?: string }; raw: string }) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(`${x.raw}`)}`,
+        label: (x: { dataset: { label?: string }; raw: string }) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(`${x.raw}`) ?? ''}`,
         labelColor: (context) => {
           return {
             backgroundColor: context.dataset.borderColor,

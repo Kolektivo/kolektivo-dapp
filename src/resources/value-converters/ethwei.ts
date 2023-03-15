@@ -1,7 +1,8 @@
 ﻿import { valueConverter } from 'aurelia';
 
+import { fromWei, toWei } from '../../utils';
+
 import { BigNumber } from '@ethersproject/bignumber';
-import { fromWei, toWei } from 'utils';
 
 /**
  * Convert between Wei (as BigNumber) in viewmodel and eth (as string) in view.

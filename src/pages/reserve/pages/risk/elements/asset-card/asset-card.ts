@@ -2,13 +2,12 @@ import { I18N } from '@aurelia/i18n';
 import { customElement, ICustomElementViewModel } from '@aurelia/runtime-html';
 
 import { IGridColumn } from '../../../../../../design-system/elements/k-data-grid/grid-column';
+import { riskAssetsColumns } from '../../../../../../grid-columns';
+import { INumberService } from '../../../../../../services';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
+import { fromWei } from '../../../../../../utils';
 
 import template from './asset-card.html';
-
-import { riskAssetsColumns } from 'grid-columns';
-import { INumberService } from 'services/number-service';
-import { IReserveStore } from 'stores/reserve-store';
-import { fromWei } from 'utils';
 
 @customElement({ name: 'asset-card', template })
 export class AssetCard implements ICustomElementViewModel {

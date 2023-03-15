@@ -1,8 +1,7 @@
 import { I18N } from '@aurelia/i18n';
 
 import { IGridColumn } from './design-system/elements/k-data-grid/grid-column';
-
-import { appContainer } from 'app-container';
+import { appContainer } from './app-container';
 
 export const assetsColumns = () => {
   const i18n = appContainer.get(I18N);

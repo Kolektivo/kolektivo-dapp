@@ -6,8 +6,7 @@ import { captureFilter } from '../../common';
 import { IGridColumn } from './grid-column';
 type ElementOrAttributeViewModel = ICustomElementController | ICustomAttributeController;
 import template from './k-data-grid.html';
-
-import css from './k-data-grid.scss';
+import css from './k-data-grid.scss?inline';
 
 @customElement({
   name: 'k-data-grid',
