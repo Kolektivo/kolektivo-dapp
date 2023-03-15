@@ -11,7 +11,7 @@ export const assetsColumns = () => {
       headerText: i18n.tr('general.assets.grid-headers.token'),
       field: 'token',
       width: '1fr',
-      template: '<avatar-text name.bind="token.name" src.bind="token.logoURI"></avatar-text>',
+      template: '<avatar-text text-size="14" name.bind="token.name" src.bind="token.logoURI"></avatar-text>',
     },
     {
       headerText: i18n.tr('general.assets.grid-headers.price'),
@@ -41,7 +41,7 @@ export const transactionHistoryColumns = () => {
       headerText: i18n.tr('general.transaction-history.grid-headers.token'),
       field: 'token',
       width: '1fr',
-      template: '<avatar-text name.bind="token.name" src.bind="token.logoURI"></avatar-text>',
+      template: '<avatar-text text-size="14"  name.bind="token.name" src.bind="token.logoURI"></avatar-text>',
     },
     { headerText: i18n.tr('general.transaction-history.grid-headers.type'), field: 'type', width: '1fr' },
     {
