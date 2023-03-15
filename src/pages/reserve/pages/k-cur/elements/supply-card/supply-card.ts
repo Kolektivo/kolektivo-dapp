@@ -31,6 +31,7 @@ export class SupplyCard implements ICustomElementViewModel {
   }
   get tooltipOptions() {
     return {
+      itemSort: (a, b) => b.datasetIndex - a.datasetIndex,
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
         label: (x) => {
@@ -38,7 +39,13 @@ export class SupplyCard implements ICustomElementViewModel {
           if (x.datasetIndex > 0) {
             value = (x.raw as number) - (x.chart.data.datasets[x.datasetIndex - 1]?.data[x.dataIndex] as number);
           }
-          return `${x.dataset.label ?? ''}: ${this.percentageValueConverter.toView((Number(value) / 100) as unknown as string)}`;
+          return ` ${x.dataset.label ?? ''}: ${this.percentageValueConverter.toView((Number(value) / 100) as unknown as string)}`;
+        },
+        labelColor: (context) => {
+          return {
+            backgroundColor: context.dataset.pointBorderColor,
+            borderColor: context.dataset.pointBorderColor,
+          };
         },
       },
     } as TooltipOptions;
@@ -49,11 +56,11 @@ export class SupplyCard implements ICustomElementViewModel {
   }
   get kCurMentoDistribution(): number[] {
     //stacked chart so this has to be the sum of this and all below it
-    return this.kCurSupplyData.map((x) => (x.kCurMentoDistribution + x.kCurPrimaryPoolDistribution + x.kCurReserveDistribution) * 100);
+    return this.kCurSupplyData.map((x) => (x.kCurPrimaryPoolDistribution + x.kCurReserveDistribution) * 100);
   }
   get kCurPrimaryPoolDistribution(): number[] {
     //stacked chart so this has to be the sum of this and all below it
-    return this.kCurSupplyData.map((x) => (x.kCurPrimaryPoolDistribution + x.kCurReserveDistribution) * 100);
+    return this.kCurSupplyData.map((x) => (x.kCurMentoDistribution + x.kCurPrimaryPoolDistribution + x.kCurReserveDistribution) * 100);
   }
   get kCurReserveDistribution(): number[] {
     return this.kCurSupplyData.map((x) => x.kCurReserveDistribution * 100);
@@ -67,43 +74,53 @@ export class SupplyCard implements ICustomElementViewModel {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
   //TODO: Make i18n work in this method as a getter
-  private dataSets(kCurCirculatingDistribution: number[], kCurMentoDistribution: number[], kCurPrimaryPoolDistribution: number[], kCurReserveDistribution: number[]) {
+  private dataSets(kCurCirculatingDistribution: number[], kCurPrimaryPoolDistribution: number[], kCurMentoDistribution: number[], kCurReserveDistribution: number[]) {
     return [
       {
         label: this.i18n.tr('navigation.reserve.k-cur.supply.reserve'),
         data: kCurReserveDistribution,
         fill: true,
-        backgroundColor: 'rgb(76, 87, 92)',
-        tension: 0,
-        pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
-      },
-      {
-        label: this.i18n.tr('navigation.reserve.k-cur.supply.primary-pool'),
-        data: kCurPrimaryPoolDistribution,
-        fill: true,
         backgroundColor: 'rgb(42 166 161)',
         tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
+        pointBorderColor: 'rgb(42 166 161)',
+        pointBackgroundColor: '#FFFFFF',
+        borderColor: 'rgba(255, 255, 255, 0.5)',
+        borderWidth: 1,
       },
       {
         label: this.i18n.tr('navigation.reserve.k-cur.supply.mento'),
         data: kCurMentoDistribution,
         fill: true,
+        backgroundColor: 'rgb(240, 124, 75)',
+        tension: 0,
+        pointRadius: 0,
+        pointBorderColor: 'rgb(240, 124, 75)',
+        pointBackgroundColor: '#FFFFFF',
+        borderColor: 'rgba(255, 255, 255, 0.5)',
+        borderWidth: 1,
+      },
+      {
+        label: this.i18n.tr('navigation.reserve.k-cur.supply.primary-pool'),
+        data: kCurPrimaryPoolDistribution,
+        fill: true,
         backgroundColor: 'rgb(245, 161, 74)',
         tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
+        pointBorderColor: 'rgb(245, 161, 74)',
+        pointBackgroundColor: '#FFFFFF',
+        borderColor: 'rgba(255, 255, 255, 0.5)',
+        borderWidth: 1,
       },
       {
         label: this.i18n.tr('navigation.reserve.k-cur.supply.external'),
         data: kCurCirculatingDistribution,
         fill: true,
-        backgroundColor: 'rgb(213, 92, 56)',
+        backgroundColor: 'rgb(255, 191, 134)',
         tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
+        pointBorderColor: 'rgb(255, 191, 134)',
+        pointBackgroundColor: '#FFFFFF',
       },
     ];
   }

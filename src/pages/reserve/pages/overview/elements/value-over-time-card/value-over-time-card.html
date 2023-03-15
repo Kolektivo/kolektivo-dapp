@@ -8,7 +8,7 @@
     </k-stack>
     <k-text type="statistic-lg"> <formatted-number show-tooltip currency commas decimals="2" value="${reserveStore.reserveValue | ethwei}"></formatted-number></k-text>
     <chart-time-filter current-filter.two-way="currentInterval">
-      <avatar-text size="10" text-size="14" color="var(--primary)" text-color="var(--don-juan-400)" name="${i18n.tr('navigation.reserve.overview.value.title')}"></avatar-text>
+      <avatar-text size="10" text-size="14" text-color="var(--don-juan-400)" color="var(--primary)" name="${i18n.tr('navigation.reserve.overview.value.title')}"></avatar-text>
     </chart-time-filter>
     <k-chart
       height="400"

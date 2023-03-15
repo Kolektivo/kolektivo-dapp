@@ -11,6 +11,7 @@
   --text-lg: 1.5rem;
   --text-xl: 2rem;
   --text-xxl: 5rem;
+  --card-padding: 40px;
 }
 
 // Small tablets and large smartphones (landscape view)
@@ -55,7 +56,7 @@ $screen-xl-min: 1200px;
 
 // Custom devices
 @mixin rwd($screen) {
-  @media (min-width: ($screen + 'px')) {
+  @media (min-width: ($screen + "px")) {
     @content;
   }
 }
@@ -90,7 +91,7 @@ $screen-xl-min: 1200px;
 
 // Custom devices
 @mixin rwd-max($screen) {
-  @media (max-width: ($screen + 'px')) {
+  @media (max-width: ($screen + "px")) {
     @content;
   }
 }

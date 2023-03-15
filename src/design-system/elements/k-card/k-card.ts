@@ -21,8 +21,10 @@ export class KCard implements ICustomElementViewModel {
   @bindable title?: string;
   @bindable titleAvatar?: string;
   @bindable tooltipText?: string;
+  @bindable textColor = 'var(--white)';
   get style() {
     return {
+      color: this.textColor,
       background: this.color,
       borderRadius: this.rounded && `var(--rounded-${this.rounded})`,
     };

@@ -114,14 +114,17 @@
         "title": "kCUR",
         "description": "The Kolektivo Reserve mints the Kolektivo Curaçao Reserve Token (kCUR) token by collateralizing KTT and other assets in the reserve.",
         "token-info": {
-          "title": "kCUR"
+          "title": "Kolektivo Curaçao Reserve Token (kCUR)",
+          "tooltip": "This is the content that will go into the tooltip of the kCUR token info card"
         },
         "pool": {
           "title": "Primary Pool (kCUR-cUSD)",
+          "tooltip": "This is the tooltip for the Primary Pool (kCUR-cUSD) section",
+          "button": "Go to Symmetric Pool",
           "grid-headers": {
-            "tokens": "Tokens",
-            "volume": "Volume",
-            "tvl": "TVL",
+            "tokens": "Token",
+            "volume": "Volume (24h)",
+            "tvl": "Total Value Locked",
             "fees": "Fees (24h)",
             "range": "Range to Value"
           }
@@ -133,7 +136,7 @@
           "max-ratio-text": "Maximum Leverage Ratio"
         },
         "trend": {
-          "title": "kCUR Price Trend",
+          "title": "kCUR Price",
           "tooltip": "The evolution of kCUR price over time.",
           "price": "kCUR Price",
           "ceiling": "Price Ceiling",

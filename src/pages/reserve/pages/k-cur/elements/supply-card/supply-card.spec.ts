@@ -11,29 +11,12 @@ import { IStore } from '../../../../../../stores';
 import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { SupplyCard } from './supply-card';
 
+import { CurrencyValueConverter } from 'design-system/value-converters';
 import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('supply-card', () => {
-  it('should have a k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<supply-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelector('k-card')).exist;
-  });
-
-  it('should have a title and tooltip in the k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<supply-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const card = appHost.querySelector('k-card');
-    expect(card?.getAttribute('title')).exist;
-    expect(card?.getAttribute('tooltip-text')).exist;
-  });
-
   it('should have a chart time filter component with 4 legends on the right', async () => {
     const { appHost } = await createFixture
       .html(`<supply-card>`)
@@ -71,7 +54,7 @@ describe('supply-card', () => {
         }),
       ),
       Global,
-
+      CurrencyValueConverter,
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       numberServiceRegistration(),

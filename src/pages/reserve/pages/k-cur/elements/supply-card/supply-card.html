@@ -1,13 +1,32 @@
-<k-card title="${i18n.tr('navigation.reserve.k-cur.supply.title')}" tooltip-text="${i18n.tr('navigation.reserve.k-cur.supply.tooltip')}">
+<k-stack gap="var(--spacing-xl)">
   <k-loader fill="parent" color="var(--white)" if.bind="loading"></k-loader>
+  <k-stack direction="row" gap="var(--spacing-sm)">
+    <k-text type="h5">${i18n.tr('navigation.reserve.k-cur.supply.title')}</k-text>
+    <k-icon name="help_outline" size="20" tooltip="${i18n.tr('navigation.reserve.k-cur.supply.tooltip')}"></k-icon>
+  </k-stack>
   <chart-time-filter current-filter.two-way="currentInterval">
-    <k-stack direction="row" gap="40">
-      <avatar-text size="14" color="var(--san-juan-500)">${i18n.tr('navigation.reserve.k-cur.supply.reserve')}</avatar-text>
-      <avatar-text size="14" color="var(--primary)">${i18n.tr('navigation.reserve.k-cur.supply.primary-pool')}</avatar-text>
-      <avatar-text size="14" color="var(--sandy-brown)">${i18n.tr('navigation.reserve.k-cur.supply.mento')}</avatar-text>
-      <avatar-text size="14" color="var(--dark-coral)">${i18n.tr('navigation.reserve.k-cur.supply.external')}</avatar-text>
+    <k-stack direction="row" gap="15">
+      <avatar-text size="10" text-size="14" text-color="var(--don-juan-400)" color="var(--primary)" name="${i18n.tr('navigation.reserve.k-cur.supply.reserve')}"></avatar-text>
+      <avatar-text size="10" text-size="14" text-color="var(--don-juan-400)" color="var(--terra-cotta)" name="${i18n.tr('navigation.reserve.k-cur.supply.mento')}"></avatar-text>
+      <avatar-text size="10" text-size="14" text-color="var(--don-juan-400)" color="var(--sandy-brown)" name="${i18n.tr('navigation.reserve.k-cur.supply.primary-pool')}"></avatar-text>
+      <avatar-text size="10" text-size="14" text-color="var(--don-juan-400)" color="var(--cheese)" name="${i18n.tr('navigation.reserve.k-cur.supply.external')}"></avatar-text>
     </k-stack>
   </chart-time-filter>
-  <k-chart height="300" max-y="100" min-y="0" max-y-labels="6" hide-legend type="line" fill labels.bind="labels"
-    border-color.bind="red" tension=".01" data-sets.bind="dataSets(kCurCirculatingDistribution, kCurMentoDistribution, kCurPrimaryPoolDistribution, kCurReserveDistribution)" tooltip-options.bind="tooltipOptions" y-label-format.bind="yLabelFormat" x-label-format.bind="xLabelFormat" max-x-labels="5"></k-chart>
-</k-card>
+  <k-chart
+    height="400"
+    max-y="100"
+    min-y="0"
+    max-y-labels="6"
+    hide-legend
+    type="line"
+    fill
+    labels.bind="labels"
+    border-color.bind="red"
+    tension="0"
+    data-sets.bind="dataSets(kCurCirculatingDistribution, kCurPrimaryPoolDistribution, kCurMentoDistribution, kCurReserveDistribution)"
+    tooltip-options.bind="tooltipOptions"
+    y-label-format.bind="yLabelFormat"
+    x-label-format.bind="xLabelFormat"
+    max-x-labels="5"
+  ></k-chart>
+</k-stack>

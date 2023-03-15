@@ -1,4 +1,4 @@
-@import '../../styles/shared';
+@import "../../styles/shared";
 
 :host {
   font-family: Lato, sans-serif;
@@ -8,14 +8,14 @@
     text-align: right;
   }
 
-  *[type='small'] {
+  *[type="small"] {
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 1%;
   }
 
-  *[type='caption'] {
+  *[type="caption"] {
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
@@ -23,7 +23,7 @@
     color: var(--don-juan-600);
   }
 
-  *[type='small-caption'] {
+  *[type="small-caption"] {
     font-size: 12px;
     font-weight: 600;
     line-height: 16px;
@@ -31,37 +31,51 @@
     letter-spacing: 3%;
   }
 
-  *[type='overline'] {
+  *[type="overline"] {
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 5%;
     text-transform: uppercase;
   }
-  
-  *[type='statistic-lg'] {
+
+  *[type="statistic-lg"] {
     font-weight: 700;
     font-size: 40px;
     line-height: 48px;
     letter-spacing: 0;
   }
 
-  *[type='statistic'] {
+  *[type="statistic"] {
     font-weight: 700;
     font-size: 32px;
     line-height: 40px;
     letter-spacing: 0;
   }
 
-  *[type='statistic-sm'] {
+  *[type="statistic-sm"] {
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
     letter-spacing: 0;
   }
 
+  *[type="table-header"] {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 2%;
+  }
+
+  *[type="table-body"] {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+  }
+
   label,
-  *[type='label'] {
+  *[type="label"] {
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
@@ -70,7 +84,7 @@
   }
 
   h1,
-  *[type='h1'] {
+  *[type="h1"] {
     @extend %header-text;
 
     font-size: 40px;
@@ -79,7 +93,7 @@
   }
 
   h2,
-  *[type='h2'] {
+  *[type="h2"] {
     @extend %header-text;
 
     font-size: 32px;
@@ -88,7 +102,7 @@
   }
 
   h3,
-  *[type='h3'] {
+  *[type="h3"] {
     @extend %header-text;
 
     font-size: 28px;
@@ -97,7 +111,7 @@
   }
 
   h4,
-  *[type='h4'] {
+  *[type="h4"] {
     @extend %header-text;
 
     font-size: 24px;
@@ -106,7 +120,7 @@
   }
 
   h5,
-  *[type='h5'] {
+  *[type="h5"] {
     @extend %header-text;
 
     font-size: 20px;
@@ -115,7 +129,7 @@
   }
 
   h6,
-  *[type='h6'] {
+  *[type="h6"] {
     @extend %header-text;
 
     font-size: 16px;
