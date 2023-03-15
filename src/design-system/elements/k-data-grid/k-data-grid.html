@@ -14,7 +14,7 @@
 <k-grid cols.bind="cols" gap="var(--spacing-lg)" repeat.for="row of rows" if.to-view="!selectable && (!hideMore || (($index < numberToShow) || seeingMore))" class="row">
   <div repeat.for="column of columns" class="cell body hot ${condensed ? 'condensed' : ''} ${column.align ? column.align : ''}">
     <k-text type="table-body">
-      <au-compose if.bind="column.template" template.bind="column.template" view-model.bind="getBuffedVm(row, rows, row[column.field])" containerless></au-compose>
+      <au-compose if.bind="column.template" template.bind="column.template" component.bind="getBuffedVm(row, rows, row[column.field])" containerless></au-compose>
       <template else>${row[column.field]}</template>
     </k-text>
   </div>
