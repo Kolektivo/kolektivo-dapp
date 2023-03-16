@@ -5,12 +5,12 @@ import { createFixture } from '@aurelia/testing';
 import '../../../../../../utils-testing/setup-testing';
 
 import { Global } from '../../../../../../hooks';
+import { INumberService } from '../../../../../../services';
 import { IStore } from '../../../../../../stores';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
 
 import { AssetCard } from './asset-card';
 
-import { INumberService } from 'services/number-service';
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

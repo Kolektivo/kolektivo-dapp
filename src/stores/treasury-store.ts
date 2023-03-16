@@ -3,8 +3,9 @@ import { DI, IContainer, Registration } from 'aurelia';
 import { IConfiguration } from '../configurations/configuration';
 import { Asset } from '../models/asset';
 import { BigNumberOverTimeData, ValueChartData } from '../models/chart-data';
+import { Treasury } from '../models/generated/monetary/treasury';
 import { Interval } from '../models/interval';
-import { Treasury } from '../pages';
+import { Transaction } from '../models/transaction';
 import { IContractService, INumberService } from '../services';
 import { MonetaryContractAbi } from '../services/contract';
 import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from '../utils';
@@ -12,7 +13,6 @@ import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from '../u
 import { callOnce } from './../decorators/call-once';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
-import { Transaction } from './kolektivo-store';
 
 import { BigNumber } from '@ethersproject/bignumber';
 

@@ -4,13 +4,14 @@ import { createFixture } from '@aurelia/testing';
 
 import 'utils-testing/setup-testing';
 
+import { IDesignSystemConfiguration } from '../../../../../../design-system';
+import { Global } from '../../../../../../hooks';
+import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from '../../../../../../resources';
+import { BrowserStorageService, IContractService, IEthereumService, NumberService } from '../../../../../../services';
+import { BlockChainStore, IStore, ITreasuryStore } from '../../../../../../stores';
+
 import { TokenInfoCard } from './token-info-card';
 
-import { IDesignSystemConfiguration } from 'design-system';
-import { Global } from 'hooks';
-import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from 'resources';
-import { BrowserStorageService, IContractService, IEthereumService, NumberService } from 'services';
-import { BlockChainStore, IStore, ITreasuryStore } from 'stores';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

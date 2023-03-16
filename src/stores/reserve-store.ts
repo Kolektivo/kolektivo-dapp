@@ -7,6 +7,7 @@ import { BigNumberOverTimeData, kCurPriceData, kCurSupplyData, LeverageChartData
 import { Erc20 } from '../models/generated/monetary/erc20';
 import { Interval } from '../models/interval';
 import { RiskClass } from '../models/risk-class';
+import { Transaction } from '../models/transaction';
 import { IContractService, INumberService } from '../services';
 import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from '../utils';
 
@@ -15,7 +16,6 @@ import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 
 import { BigNumber } from '@ethersproject/bignumber';
-import { Transaction } from 'ethers';
 
 export type IReserveStore = ReserveStore;
 export const IReserveStore = DI.createInterface<IReserveStore>('ReserveStore');

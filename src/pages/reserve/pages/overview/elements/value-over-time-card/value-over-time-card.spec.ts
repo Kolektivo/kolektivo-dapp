@@ -6,13 +6,13 @@ import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { Global } from '../../../../../../hooks';
+import { EthweiValueConverter } from '../../../../../../resources';
+import { INumberService } from '../../../../../../services';
 import { IStore } from '../../../../../../stores';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
 
 import { ValueOverTimeCard } from './value-over-time-card';
 
-import { EthweiValueConverter } from 'resources';
-import { INumberService } from 'services/number-service';
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

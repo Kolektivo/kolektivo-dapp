@@ -8,12 +8,12 @@ import { IDesignSystemConfiguration } from '../../../../design-system/configurat
 import { CurrencyValueConverter } from '../../../../design-system/value-converters';
 import { Global } from '../../../../hooks';
 import { IStore } from '../../../../stores';
+import { IReserveStore } from '../../../../stores/reserve-store';
 
 import { PercentageValueConverter } from './../../../../resources/value-converters';
 import { INumberService } from './../../../../services';
 import { Risk } from './risk';
 
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 
 describe('risk', () => {

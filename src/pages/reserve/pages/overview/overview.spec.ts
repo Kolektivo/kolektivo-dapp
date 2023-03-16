@@ -7,6 +7,7 @@ import '../../../../utils-testing/setup-testing';
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
 import { CurrencyValueConverter } from '../../../../design-system/value-converters';
 import { Global } from '../../../../hooks';
+import { NumberService } from '../../../../services';
 import { IStore } from '../../../../stores';
 
 import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
@@ -14,7 +15,6 @@ import { PercentageValueConverter } from './../../../../resources/value-converte
 import { IReserveStore } from './../../../../stores/reserve-store';
 import { Overview } from './overview';
 
-import { NumberService } from 'services';
 import { describe, expect, it } from 'vitest';
 
 describe('overview', () => {

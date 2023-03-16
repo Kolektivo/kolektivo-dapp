@@ -7,14 +7,14 @@ import '../../../../../../utils-testing/setup-testing';
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
 import { Global } from '../../../../../../hooks';
+import { NumberService } from '../../../../../../services';
 import { IStore } from '../../../../../../stores';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
 
 import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
 import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
 import { ValueCard } from './value-card';
 
-import { NumberService } from 'services';
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('value-card', () => {

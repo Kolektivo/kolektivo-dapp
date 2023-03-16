@@ -6,11 +6,10 @@ import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { Global } from '../../../../../../hooks';
-import { IStore } from '../../../../../../stores';
+import { IReserveStore, IStore } from '../../../../../../stores';
 
 import { ValueRatioCard } from './value-ratio-card';
 
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 

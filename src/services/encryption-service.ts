@@ -1,6 +1,7 @@
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 
 import { IConfiguration } from '../configurations/configuration';
+import { BadgeType } from '../models/badge-type';
 
 import { EncryptionClient, IEncryptionClient } from './../encryption-client';
 
