@@ -11,7 +11,6 @@ import './reserve.scss';
 @customElement({ name: 'reserve', template, dependencies: [pages] })
 export class Reserve implements ICustomElementViewModel {
   constructor(@I18N private readonly i18n: I18N, @IStore private readonly store: IStore) {
-    this.store.pageTitle = this.i18n.tr('navigation.reserve.overview.title');
     this.store.routes = [
       { name: this.i18n.tr('navigation.reserve.overview.menu'), path: 'reserve/overview' },
       { name: this.i18n.tr('navigation.reserve.k-cur.menu'), path: 'reserve/k-cur' },

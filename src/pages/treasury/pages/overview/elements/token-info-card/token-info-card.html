@@ -25,9 +25,9 @@
       tooltip-text="${i18n.tr('general.token-info-card.supply-distribution-tooltip')}"
     >
       <k-stack direction="row" gap="var(--spacing-xl)">
-        <k-text>${treasuryStore.treasuryDistribution | percentage} in treasury</k-text>
-        <k-text>${treasuryStore.reservesDistribution | percentage} in reserves</k-text>
-        <k-text>${treasuryStore.circulatingDistribution | percentage} circulating supply</k-text>
+        <k-text>${treasuryStore.treasuryDistribution | percentage} ${i18n.tr('general.token-info-card.in-treasury')}</k-text>
+        <k-text>${treasuryStore.reservesDistribution | percentage} ${i18n.tr('general.token-info-card.in-reserves')}</k-text>
+        <k-text>${treasuryStore.circulatingDistribution | percentage} ${i18n.tr('general.token-info-card.circulating-supply')}</k-text>
       </k-stack>
     </label-value>
   </k-stack>
