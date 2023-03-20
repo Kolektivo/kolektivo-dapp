@@ -1,4 +1,4 @@
-import { Constructable, Controller, CustomElement, IAurelia, IContainer, LifecycleFlags, Resolved } from 'aurelia';
+import { Constructable, Controller, CustomElement, IAurelia, IContainer, Resolved } from 'aurelia';
 import { CustomElementDefinition, ICustomElementController } from '@aurelia/runtime-html';
 
 export function createCustomElement<T extends Constructable = Constructable>(
@@ -11,11 +11,11 @@ export function createCustomElement<T extends Constructable = Constructable>(
   Object.assign(instance, values);
   const definition = CustomElement.getDefinition(component);
   const controller = Controller.$el(container, instance, host ?? container.get(IAurelia).root.host, null, definition as unknown as CustomElementDefinition);
-  void controller.activate(controller, null, LifecycleFlags.none, controller.scope);
+  void controller.activate(controller, null, controller.scope);
   return { instance, controller, definition };
 }
 
 export const destroyCustomElement = async (controller: ICustomElementController): Promise<void> => {
-  await controller.deactivate(controller, null, LifecycleFlags.none);
+  await controller.deactivate(controller, null);
   controller.dispose();
 };
