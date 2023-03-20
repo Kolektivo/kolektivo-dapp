@@ -271,7 +271,14 @@
       "total-supply": "Total Supply",
       "total-supply-tooltip": "The total amount of KTT tokens existing.",
       "supply-distribution": "Supply Distribution",
-      "supply-distribution-tooltip": "The current distribution of tokens between Treasury, Reserve and Circulating Supply."
+      "supply-distribution-tooltip": "The current distribution of tokens between Treasury, Reserve and Circulating Supply.",
+      "in-reserve": "in Reserve",
+      "in-mento": "in Mento",
+      "primary-pool": "Circulating (Primary Pool)",
+      "external": "Circulating (External)",
+      "in-treasury": "in treasury",
+      "in-reserves": "in reserves",
+      "circulating-supply": "circulating supply"
     },
     "wrong-network-message": "Your wallet is connected to {{connectedTo}}, but we need you to connect to {{need}}. Do you want to switch your connection to {{needed}} now?",
     "an-unknown-network": "an unknown network"
