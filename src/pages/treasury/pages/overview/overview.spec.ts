@@ -97,7 +97,6 @@ describe('overview', () => {
       Overview,
       EthweiValueConverter,
       RelativeTime,
-      CurrencyValueConverter,
       PercentageValueConverter,
       NumberService,
       Global,

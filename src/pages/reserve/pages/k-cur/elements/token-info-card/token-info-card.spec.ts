@@ -25,7 +25,7 @@ describe('token-info-card', () => {
     const kCard = appHost.querySelector('k-card');
     expect(kCard?.hasAttribute('color')).true;
     expect(kCard?.hasAttribute('title')).true;
-    expect(kCard?.hasAttribute('title-avatar')).true;
+    expect(kCard?.hasAttribute('title-avatar.bind')).true;
   });
 
   it('should have a 3 col k-grid with three labels and tooltips', async () => {
