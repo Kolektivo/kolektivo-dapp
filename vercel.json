@@ -3,8 +3,8 @@
   "name": "kolektivo-dapp",
   "rewrites": [
     {
-      "source": "/:path*",
-      "destination": "/"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "trailingSlash": false
