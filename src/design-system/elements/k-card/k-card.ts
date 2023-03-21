@@ -26,7 +26,7 @@ export class KCard implements ICustomElementViewModel {
       color: this.textColor,
       background: this.color,
       borderRadius: this.rounded && `var(--rounded-${this.rounded})`,
-      boxShadow: '0px 36px 60px rgba(0, 0, 0, 0.06), 0px 8px 14px rgba(0, 0, 0, 0.0298054), 0px 2.5px 4px rgba(0, 0, 0, 0.0201946)',
+      boxShadow: '0px 18px 56px rgba(0, 0, 0, 0.21), 0px 4.02054px 12.5083px rgba(0, 0, 0, 0.125183), 0px 1.19702px 3.72406px rgba(0, 0, 0, 0.0848175)',
     };
   }
 }
