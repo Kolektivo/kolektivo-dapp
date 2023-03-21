@@ -10,7 +10,7 @@ import { BigNumber } from '@ethersproject/bignumber';
  * to the viewmodel as BigNumber.
  */
 @valueConverter('ethwei')
-export class EthweiValueConverter {
+export class Ethwei {
   /**
    * ETH string from HTML input ==> BigNumber for the model
    *

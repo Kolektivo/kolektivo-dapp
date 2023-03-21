@@ -6,7 +6,7 @@ import { Interval } from '../../../../../../models/interval';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
 import { formatter, getXLabelFormat } from '../../../../../../utils';
 
-import { MultiplierValueConverter } from './../../../../../../resources/value-converters/multiplier';
+import { Multiplier } from './../../../../../../resources/value-converters/multiplier';
 import template from './leverage-card.html';
 
 import './leverage-card.scss';
@@ -18,7 +18,7 @@ export class LeverageCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private reserveData: LeverageChartData[] = [];
-  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly multiplierValueConverter?: MultiplierValueConverter) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly multiplierValueConverter?: Multiplier) {}
 
   binding() {
     void this.intervalChanged();

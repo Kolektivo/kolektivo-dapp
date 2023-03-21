@@ -7,7 +7,7 @@ import { Interval } from '../../../../../../models/interval';
 import { ITreasuryStore } from '../../../../../../stores';
 import { formatter, getXLabelFormat } from '../../../../../../utils';
 
-import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
+import { ICurrency } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
 
 import './value-over-time-card.scss';
@@ -19,7 +19,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private treasuryData: ValueChartData[] = [];
-  constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore, @I18N private readonly i18n: I18N, private readonly currencyValueConverter?: CurrencyValueConverter) {}
+  constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore, @I18N private readonly i18n: I18N, @ICurrency private readonly currencyValueConverter?: ICurrency) {}
 
   binding() {
     void this.intervalChanged();

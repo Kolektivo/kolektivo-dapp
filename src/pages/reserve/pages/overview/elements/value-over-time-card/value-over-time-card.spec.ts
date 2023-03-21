@@ -6,7 +6,7 @@ import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { Global } from '../../../../../../hooks';
-import { EthweiValueConverter } from '../../../../../../resources';
+import { Ethwei } from '../../../../../../resources';
 import { INumberService } from '../../../../../../services';
 import { IStore } from '../../../../../../stores';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
@@ -42,7 +42,7 @@ describe('value-over-time-card', () => {
           getReserveValueOverTime: () => new Promise((res) => res([])),
         }),
       ),
-      EthweiValueConverter,
+      Ethwei,
       numberServiceRegistration(),
       createMockStoreRegistration(),
       createMockI18nRegistration(),

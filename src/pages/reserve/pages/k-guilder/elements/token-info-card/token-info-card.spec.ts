@@ -5,11 +5,11 @@ import { createFixture } from '@aurelia/testing';
 import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
-import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
+import { Currency } from '../../../../../../design-system/value-converters';
 import { Global } from '../../../../../../hooks';
 import { IReserveStore, IStore } from '../../../../../../stores';
 
-import { EthweiValueConverter } from './../../../../../../resources/value-converters/ethwei';
+import { Ethwei } from './../../../../../../resources/value-converters/ethwei';
 import { TokenInfoCard } from './token-info-card';
 
 import { describe, expect, it } from 'vitest';
@@ -56,7 +56,7 @@ describe('token-info-card', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       TokenInfoCard,
-      CurrencyValueConverter,
+      Currency,
       Registration.instance(
         IReserveStore,
         mock<IReserveStore>({
@@ -64,7 +64,7 @@ describe('token-info-card', () => {
           getkGuilderValueRatioOverTime: () => new Promise((res) => res([])),
         }),
       ),
-      EthweiValueConverter,
+      Ethwei,
       Global,
       createMockStoreRegistration(),
       createMockI18nRegistration(),

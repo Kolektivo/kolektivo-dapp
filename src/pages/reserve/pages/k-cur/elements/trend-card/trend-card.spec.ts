@@ -6,11 +6,11 @@ import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system';
 import { Global } from '../../../../../../hooks';
-import { CurrencyValueConverter } from '../../../../../../resources';
+import { Currency } from '../../../../../../resources';
 import { INumberService } from '../../../../../../services/number-service';
 import { IReserveStore, IStore } from '../../../../../../stores';
 
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { TrendCard } from './trend-card';
 
 import { describe, expect, it } from 'vitest';
@@ -45,8 +45,8 @@ describe('trend-card', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       TrendCard,
-      PercentageValueConverter,
-      CurrencyValueConverter,
+      Percentage,
+      Currency,
       Registration.instance(
         IReserveStore,
         mock<IReserveStore>({

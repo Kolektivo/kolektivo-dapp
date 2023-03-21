@@ -5,7 +5,7 @@ import { createFixture } from '@aurelia/testing';
 import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
-import { CurrencyValueConverter } from '../../../../../../design-system/value-converters';
+import { Currency } from '../../../../../../design-system/value-converters';
 import { Global } from '../../../../../../hooks';
 import { IStore, ITreasuryStore } from '../../../../../../stores';
 
@@ -33,7 +33,7 @@ describe('value-over-time-card', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       ValueOverTimeCard,
-      CurrencyValueConverter,
+      Currency,
       RelativeTime,
       Global,
       Registration.instance(

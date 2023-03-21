@@ -6,10 +6,10 @@ import 'utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system';
 import { Global } from '../../../../../../hooks';
-import { CurrencyValueConverter, EthweiValueConverter } from '../../../../../../resources';
+import { Currency, Ethwei } from '../../../../../../resources';
 import { IReserveStore, IStore } from '../../../../../../stores';
 
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { INumberService } from './../../../../../../services/number-service';
 import { TokenInfoCard } from './token-info-card';
 
@@ -65,11 +65,11 @@ describe('token-info-card', () => {
           getkCurPriceOverTime: () => new Promise((res) => res([])),
         }),
       ),
-      EthweiValueConverter,
+      Ethwei,
       Registration.instance(INumberService, {}),
-      PercentageValueConverter,
+      Percentage,
       TokenInfoCard,
-      CurrencyValueConverter,
+      Currency,
       Global,
       createMockStoreRegistration(),
       createMockI18nRegistration(),

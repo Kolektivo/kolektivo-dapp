@@ -6,7 +6,7 @@ import 'utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../design-system';
 import { Global } from '../../../../hooks';
-import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from '../../../../resources';
+import { Currency, Ethwei, Percentage } from '../../../../resources';
 import { IContractService, NumberService } from '../../../../services';
 import { IStore, ITreasuryStore } from '../../../../stores';
 
@@ -93,11 +93,11 @@ describe('overview', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       Registration.instance(IPlatform, PLATFORM),
-      CurrencyValueConverter,
+      Currency,
       Overview,
-      EthweiValueConverter,
+      Ethwei,
       RelativeTime,
-      PercentageValueConverter,
+      Percentage,
       NumberService,
       Global,
       createMockTreasuryStoreRegistration(),

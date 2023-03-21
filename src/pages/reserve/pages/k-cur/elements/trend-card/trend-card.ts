@@ -1,9 +1,9 @@
 import { I18N } from '@aurelia/i18n';
 import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
 
+import { ICurrency } from '../../../../../../design-system/value-converters';
 import { kCurPriceData } from '../../../../../../models/chart-data';
 import { Interval } from '../../../../../../models/interval';
-import { CurrencyValueConverter } from '../../../../../../resources';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
 import { formatter, getXLabelFormat } from '../../../../../../utils';
 
@@ -16,7 +16,7 @@ export class TrendCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private kCurPriceData: kCurPriceData[] = [];
-  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly currencyValueConverter?: CurrencyValueConverter) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, @ICurrency private readonly currencyValueConverter?: ICurrency) {}
 
   binding() {
     void this.intervalChanged();

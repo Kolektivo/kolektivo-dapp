@@ -7,7 +7,7 @@ import { Interval } from '../../../../../../models/interval';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
 import { formatter, getXLabelFormat } from '../../../../../../utils';
 
-import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
+import { ICurrency } from './../../../../../../design-system/value-converters/currency';
 import template from './value-ratio-card.html';
 
 import './value-ratio-card.scss';
@@ -20,7 +20,7 @@ export class ValueRatioCard implements ICustomElementViewModel {
   private currentInterval: Interval = Interval['1d'];
   private data: ValueChartData[] = [];
 
-  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly currencyValueConverter?: CurrencyValueConverter) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, @ICurrency private readonly currencyValueConverter?: ICurrency) {}
 
   binding() {
     void this.intervalChanged();

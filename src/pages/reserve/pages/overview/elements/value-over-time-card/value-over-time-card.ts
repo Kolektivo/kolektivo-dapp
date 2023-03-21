@@ -8,7 +8,7 @@ import { INumberService } from '../../../../../../services';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
 import { formatter, fromWei, getXLabelFormat } from '../../../../../../utils';
 
-import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
+import { ICurrency } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
 
 import './value-over-time-card.scss';
@@ -23,8 +23,10 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     @IReserveStore private readonly reserveStore: IReserveStore,
     @INumberService private readonly numberService: INumberService,
     @I18N private readonly i18n: I18N,
-    private readonly currencyValueConverter?: CurrencyValueConverter,
-  ) {}
+    @ICurrency private readonly currencyValueConverter?: ICurrency,
+  ) {
+    console.log(currencyValueConverter);
+  }
 
   binding() {
     void this.intervalChanged();
@@ -44,7 +46,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return {
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
-        label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(`${x.raw as string}`) ?? ''}`,
+        label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(String(x.raw)) ?? ''}`,
         labelColor: (context) => {
           return {
             backgroundColor: context.dataset.borderColor,

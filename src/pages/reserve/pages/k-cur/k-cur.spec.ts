@@ -5,13 +5,13 @@ import { createFixture } from '@aurelia/testing';
 import '../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
-import { CurrencyValueConverter } from '../../../../design-system/value-converters';
+import { Currency } from '../../../../design-system/value-converters';
 import { Global } from '../../../../hooks';
 import { IStore } from '../../../../stores';
 
-import { PercentageValueConverter } from './../../../../resources/value-converters';
-import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
-import { MultiplierValueConverter } from './../../../../resources/value-converters/multiplier';
+import { Percentage } from './../../../../resources/value-converters';
+import { Ethwei } from './../../../../resources/value-converters/ethwei';
+import { Multiplier } from './../../../../resources/value-converters/multiplier';
 import { INumberService } from './../../../../services';
 import { IReserveStore } from './../../../../stores/reserve-store';
 import { KCur } from './k-cur';
@@ -79,10 +79,10 @@ describe('k-cur', () => {
         }),
       ),
       KCur,
-      MultiplierValueConverter,
-      EthweiValueConverter,
-      PercentageValueConverter,
-      CurrencyValueConverter,
+      Multiplier,
+      Ethwei,
+      Percentage,
+      Currency,
       Global,
       createMockStoreRegistration(),
       createMockI18nRegistration(),

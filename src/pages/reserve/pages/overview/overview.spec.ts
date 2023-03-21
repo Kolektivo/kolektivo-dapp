@@ -5,13 +5,13 @@ import { createFixture } from '@aurelia/testing';
 import '../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
-import { CurrencyValueConverter } from '../../../../design-system/value-converters';
+import { Currency } from '../../../../design-system/value-converters';
 import { Global } from '../../../../hooks';
 import { NumberService } from '../../../../services';
 import { IStore } from '../../../../stores';
 
-import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
-import { PercentageValueConverter } from './../../../../resources/value-converters/percentage';
+import { Ethwei } from './../../../../resources/value-converters/ethwei';
+import { Percentage } from './../../../../resources/value-converters/percentage';
 import { IReserveStore } from './../../../../stores/reserve-store';
 import { Overview } from './overview';
 
@@ -67,10 +67,10 @@ describe('overview', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       Overview,
-      EthweiValueConverter,
-      PercentageValueConverter,
+      Ethwei,
+      Percentage,
       NumberService,
-      CurrencyValueConverter,
+      Currency,
       Registration.instance(IReserveStore, {
         reserveAssets: [],
         getReserveValueOverTime: () => new Promise((res) => res([])),

@@ -9,7 +9,7 @@ import { Global } from '../../../../../../hooks';
 import { INumberService } from '../../../../../../services/number-service';
 import { IStore } from '../../../../../../stores';
 
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { ITreasuryStore } from './../../../../../../stores/treasury-store';
 import { ValueByAssetTypeCard } from './value-by-asset-type-card';
 
@@ -64,7 +64,7 @@ describe('value-by-asset-type-card', () => {
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
     return [
       ValueByAssetTypeCard,
-      PercentageValueConverter,
+      Percentage,
       Global,
       Registration.instance(ITreasuryStore, {
         treasuryAssets: [{}],

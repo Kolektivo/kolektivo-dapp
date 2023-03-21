@@ -6,7 +6,7 @@ import 'utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system';
 import { Global } from '../../../../../../hooks';
-import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from '../../../../../../resources';
+import { Currency, Ethwei, Percentage } from '../../../../../../resources';
 import { BrowserStorageService, IContractService, IEthereumService, NumberService } from '../../../../../../services';
 import { BlockChainStore, IStore, ITreasuryStore } from '../../../../../../stores';
 
@@ -72,13 +72,13 @@ describe('token-info-card', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       TokenInfoCard,
-      CurrencyValueConverter,
+      Currency,
       createMockContractService(),
       createMockEthereumService(),
       BrowserStorageService,
       BlockChainStore,
-      PercentageValueConverter,
-      EthweiValueConverter,
+      Percentage,
+      Ethwei,
       NumberService,
       Global,
       createMockStoreRegistration(),

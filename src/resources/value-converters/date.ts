@@ -9,7 +9,7 @@ import { IDateServiceIntl, IDateTimeFormatOptions } from '../../services/date-in
  * This value converter supports everything from INTL.
  */
 @valueConverter('date')
-export class DateValueConverter {
+export class Date {
   constructor(@IDateServiceIntl private readonly dateServiceIntl: IDateServiceIntl) {}
 
   /**

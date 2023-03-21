@@ -5,11 +5,11 @@ import { createFixture } from '@aurelia/testing';
 import '../../../../../../utils-testing/setup-testing';
 
 import { Global } from '../../../../../../hooks';
-import { CurrencyValueConverter } from '../../../../../../resources';
+import { Currency } from '../../../../../../resources';
 import { INumberService } from '../../../../../../services/number-service';
 import { IReserveStore, IStore } from '../../../../../../stores';
 
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { SupplyCard } from './supply-card';
 
 import { describe, expect, it } from 'vitest';
@@ -44,7 +44,7 @@ describe('supply-card', () => {
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
     return [
       SupplyCard,
-      PercentageValueConverter,
+      Percentage,
       Registration.instance(
         IReserveStore,
         mock<IReserveStore>({
@@ -53,7 +53,7 @@ describe('supply-card', () => {
         }),
       ),
       Global,
-      CurrencyValueConverter,
+      Currency,
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       numberServiceRegistration(),

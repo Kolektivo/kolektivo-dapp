@@ -8,7 +8,7 @@ import { Global } from '../../../../../../hooks';
 import { INumberService } from '../../../../../../services/number-service';
 import { IStore } from '../../../../../../stores';
 
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { PoolCard } from './pool-card';
 
 import { describe, expect, it } from 'vitest';
@@ -43,6 +43,6 @@ describe('pool-card', () => {
         tr: (s: string) => String(s),
       });
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
-    return [PoolCard, PercentageValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), numberServiceRegistration()];
+    return [PoolCard, Percentage, Global, createMockStoreRegistration(), createMockI18nRegistration(), numberServiceRegistration()];
   }
 });

@@ -3,7 +3,7 @@ import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-
 
 import { kCurSupplyData } from '../../../../../../models/chart-data';
 import { Interval } from '../../../../../../models/interval';
-import { PercentageValueConverter } from '../../../../../../resources';
+import { IPercentage } from '../../../../../../resources';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
 import { formatter, getXLabelFormat } from '../../../../../../utils';
 
@@ -16,7 +16,7 @@ export class SupplyCard implements ICustomElementViewModel {
   public loading = false;
   private currentInterval: Interval = Interval['1d'];
   private kCurSupplyData: kCurSupplyData[] = [];
-  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, private readonly percentageValueConverter?: PercentageValueConverter) {}
+  constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, @IPercentage private readonly percentageValueConverter?: IPercentage) {}
 
   binding() {
     void this.intervalChanged();

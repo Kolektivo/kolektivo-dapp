@@ -8,7 +8,7 @@ import { IDesignSystemConfiguration } from '../../../../../../design-system/conf
 import { Global } from '../../../../../../hooks';
 import { IReserveStore, IStore } from '../../../../../../stores';
 
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { NumberService } from './../../../../../../services/number-service';
 import { ValueByAssetTypeCard } from './value-by-asset-type-card';
 
@@ -68,7 +68,7 @@ describe('value-by-asset-type-card', () => {
       Global,
       Registration.instance(IReserveStore, { reserveValue: 1, reserveAssets: [{}] }),
       NumberService,
-      PercentageValueConverter,
+      Percentage,
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       designSystemConfiguration(),

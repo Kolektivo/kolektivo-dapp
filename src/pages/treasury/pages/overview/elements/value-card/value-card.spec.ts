@@ -6,7 +6,7 @@ import 'utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system';
 import { Global } from '../../../../../../hooks';
-import { CurrencyValueConverter } from '../../../../../../resources';
+import { Currency } from '../../../../../../resources';
 import { IStore, ITreasuryStore } from '../../../../../../stores';
 
 import { ValueCard } from './value-card';
@@ -42,7 +42,7 @@ describe('value-card', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       ValueCard,
-      CurrencyValueConverter,
+      Currency,
       Registration.instance(
         ITreasuryStore,
         mock<ITreasuryStore>({

@@ -6,11 +6,11 @@ import '../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../design-system';
 import { Global } from '../../../../hooks/';
-import { CurrencyValueConverter } from '../../../../resources';
+import { Currency } from '../../../../resources';
 import { IStore } from '../../../../stores';
 import { IReserveStore } from '../../../../stores/reserve-store';
 
-import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
+import { Ethwei } from './../../../../resources/value-converters/ethwei';
 import { KGuilder } from './k-guilder';
 
 import { describe, expect, it } from 'vitest';
@@ -65,8 +65,8 @@ describe('<k-guilder />', () => {
           getkGuilderValueRatioOverTime: () => new Promise((res) => res([])),
         }),
       ),
-      EthweiValueConverter,
-      CurrencyValueConverter,
+      Ethwei,
+      Currency,
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       designSystemConfiguration(),
