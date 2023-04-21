@@ -45,7 +45,15 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   get tooltipOptions() {
     return {
       callbacks: {
-        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
+        title: (x) => {
+          try {
+            return this.i18n.tr('timestamp', { date: new Date(x[0].label) });
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log(e);
+          }
+          return x[0].label;
+        },
         label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(String(x.raw)) ?? ''}`,
         labelColor: (context) => {
           return {
