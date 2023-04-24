@@ -200,7 +200,7 @@ export class ReserveStore {
   public async getReserveValueOverTime(interval: Interval): Promise<BigNumberOverTimeData[]> {
     const [valueOverTimeData, reserveStatus] = await Promise.all([this.getData<BigNumberOverTimeData>('reserve', interval), this.getReserveContract().then((contract) => contract.reserveStatus())]);
     valueOverTimeData.push({
-      createdAt: new Date(),
+      createdAt: Number(new Date()),
       value: reserveStatus[0],
     } as unknown as BigNumberOverTimeData);
     return valueOverTimeData;
@@ -209,7 +209,7 @@ export class ReserveStore {
   public async getkGuilderValueRatioOverTime(interval: Interval): Promise<ValueChartData[]> {
     const [valueOverTimeData] = await Promise.all([this.getData<ValueChartData>('kGuilder', interval), this.loadkCurData()]);
     valueOverTimeData.push({
-      createdAt: new Date(),
+      createdAt: Number(new Date()),
       value: this.kGuilderValueRatio,
     } as unknown as ValueChartData);
     return valueOverTimeData;
@@ -221,7 +221,7 @@ export class ReserveStore {
       this.getReserveContract().then((contract) => Promise.all([contract.reserveStatus(), contract.minBacking()])),
     ]);
     valueOverTimeData.push({
-      createdAt: new Date(),
+      createdAt: Number(new Date()),
       currentLeverageRatio: this.calculateLeverage(reserveStatus[2]),
       maxLeverageRatio: (1 / (this.numberService.fromString(fromWei(minBacking, 2)) / 100)) * 100,
     } as unknown as LeverageChartData);
@@ -231,7 +231,7 @@ export class ReserveStore {
   public async getkCurSupplyData(interval: Interval): Promise<kCurSupplyData[]> {
     const [valueOverTimeData] = await Promise.all([this.getData<kCurSupplyData>('kCurSupply', interval), this.loadkCur()]);
     valueOverTimeData.push({
-      createdAt: new Date(),
+      createdAt: Number(new Date()),
       kCurCirculatingDistribution: this.kCurCirculatingDistribution,
       kCurMentoDistribution: this.kCurMentoDistribution,
       kCurPrimaryPoolDistribution: this.kCurPrimaryPoolDistribution,
@@ -244,7 +244,7 @@ export class ReserveStore {
     const [valueOverTimeData] = await Promise.all([this.getData<kCurPriceData>('kCurPrice', interval), this.loadkCurData(), this.loadAssets()]);
     //add last data point
     valueOverTimeData.push({
-      createdAt: new Date(),
+      createdAt: Number(new Date()),
       kCurPrice: this.kCurPrice,
       kCurPriceCeiling: this.kCurPriceCeiling,
       kCurPriceFloor: this.kCurPriceFloor,
@@ -261,7 +261,7 @@ export class ReserveStore {
     this.kCurMarketCap = reserveStatus[1];
     this.minBacking = minBacking;
     valueOverTimeData.push({
-      createdAt: new Date(),
+      createdAt: Number(new Date()),
       minCollateralValue: this.minCollateralizationValue,
       marketCap: this.kCurTotalValue,
       lowRisk: this.lowRiskAssets.map((x) => x.total).sum(),

@@ -5,7 +5,7 @@ import { kCurSupplyData } from '../../../../../../models/chart-data';
 import { Interval } from '../../../../../../models/interval';
 import { IPercentage } from '../../../../../../resources';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
-import { formatter, getXLabelFormat } from '../../../../../../utils';
+import { getXLabelFormat } from '../../../../../../utils';
 
 import template from './supply-card.html';
 
@@ -22,7 +22,7 @@ export class SupplyCard implements ICustomElementViewModel {
     void this.intervalChanged();
   }
   get labels() {
-    return this.kCurSupplyData.map((x) => formatter.format(x.createdAt).replace(',', ''));
+    return this.kCurSupplyData.map((x) => x.createdAt);
   }
   @watch('currentInterval')
   async intervalChanged(): Promise<void> {
@@ -34,7 +34,7 @@ export class SupplyCard implements ICustomElementViewModel {
     return {
       itemSort: (a, b, data) => b.datasetIndex - a.datasetIndex,
       callbacks: {
-        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
+        title: (x) => this.i18n.tr('timestamp', { date: new Date(Number(x[0].label)) }),
         label: (x) => {
           let value = x.raw;
           if (x.datasetIndex > 0) {

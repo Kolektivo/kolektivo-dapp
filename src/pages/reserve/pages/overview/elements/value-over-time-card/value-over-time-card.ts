@@ -6,7 +6,7 @@ import { BigNumberOverTimeData } from '../../../../../../models/chart-data';
 import { Interval } from '../../../../../../models/interval';
 import { INumberService } from '../../../../../../services';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
-import { formatter, fromWei, getXLabelFormat } from '../../../../../../utils';
+import { fromWei, getXLabelFormat } from '../../../../../../utils';
 
 import { ICurrency } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
@@ -45,15 +45,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   get tooltipOptions() {
     return {
       callbacks: {
-        title: (x) => {
-          try {
-            return this.i18n.tr('timestamp', { date: new Date(x[0].label) });
-          } catch (e) {
-            // eslint-disable-next-line no-console
-            console.log(e);
-          }
-          return x[0].label;
-        },
+        title: (x) => this.i18n.tr('timestamp', { date: new Date(Number(x[0].label)) }),
         label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(String(x.raw)) ?? ''}`,
         labelColor: (context) => {
           return {
@@ -73,7 +65,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
   get labels() {
-    return this.reserveData.map((x) => formatter.format(x.createdAt).replace(',', ''));
+    return this.reserveData.map((x) => x.createdAt);
   }
   get data(): number[] {
     return this.reserveData.map((x) => this.numberService.fromString(fromWei(x.value, 18)));

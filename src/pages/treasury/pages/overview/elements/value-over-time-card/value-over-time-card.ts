@@ -5,7 +5,7 @@ import { watch } from '@aurelia/runtime-html';
 import { ValueChartData } from '../../../../../../models/chart-data';
 import { Interval } from '../../../../../../models/interval';
 import { ITreasuryStore } from '../../../../../../stores';
-import { formatter, getXLabelFormat } from '../../../../../../utils';
+import { getXLabelFormat } from '../../../../../../utils';
 
 import { ICurrency } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
@@ -36,7 +36,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return current === value ? 'primary' : 'secondary';
   }
   get labels() {
-    return this.treasuryData.map((x) => formatter.format(x.createdAt).replace(',', ''));
+    return this.treasuryData.map((x) => x.createdAt);
   }
   get data(): number[] {
     return this.treasuryData.map((x) => x.value);
@@ -47,7 +47,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   get tooltipOptions() {
     return {
       callbacks: {
-        title: (x: { label: string }[]) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
+        title: (x: { label: string }[]) => this.i18n.tr('timestamp', { date: new Date(Number(x[0].label)) }),
         label: (x: { dataset: { label?: string }; raw: string }) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(`${x.raw}`) ?? ''}`,
         labelColor: (context) => {
           return {
