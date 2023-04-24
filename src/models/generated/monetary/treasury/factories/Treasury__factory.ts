@@ -243,6 +243,19 @@ const _abi = [
         type: "address",
       },
     ],
+    name: "ERC20Deregistered",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+    ],
     name: "ERC20ListedAsBondable",
     type: "event",
   },
@@ -336,21 +349,14 @@ const _abi = [
         name: "assetType",
         type: "uint8",
       },
-    ],
-    name: "ERC20Registered",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
-        indexed: true,
-        internalType: "address",
-        name: "erc20",
-        type: "address",
+        indexed: false,
+        internalType: "enum Treasury.RiskLevel",
+        name: "riskLevel",
+        type: "uint8",
       },
     ],
-    name: "ERC20Unregistered",
+    name: "ERC20Registered",
     type: "event",
   },
   {
@@ -482,6 +488,25 @@ const _abi = [
         type: "uint256",
       },
     ],
+    name: "ERC721IdDeregistered",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
     name: "ERC721IdListedAsBondable",
     type: "event",
   },
@@ -595,25 +620,6 @@ const _abi = [
       },
     ],
     name: "ERC721IdRegistered",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "erc721",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-    ],
-    name: "ERC721IdUnregistered",
     type: "event",
   },
   {
@@ -1176,6 +1182,37 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "erc20",
+        type: "address",
+      },
+    ],
+    name: "deregisterERC20",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "erc721",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "deregisterERC721Id",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "target",
         type: "address",
       },
@@ -1295,6 +1332,19 @@ const _abi = [
         internalType: "bool",
         name: "",
         type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "lastRebase",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -1619,6 +1669,11 @@ const _abi = [
         name: "assetType",
         type: "uint8",
       },
+      {
+        internalType: "enum Treasury.RiskLevel",
+        name: "riskLevel",
+        type: "uint8",
+      },
     ],
     name: "registerERC20",
     outputs: [],
@@ -1686,6 +1741,25 @@ const _abi = [
         internalType: "uint256",
         name: "id",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "riskLevelOfERC20",
+    outputs: [
+      {
+        internalType: "enum Treasury.RiskLevel",
+        name: "",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -1950,37 +2024,6 @@ const _abi = [
         name: "erc20",
         type: "address",
       },
-    ],
-    name: "unregisterERC20",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "erc721",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-    ],
-    name: "unregisterERC721Id",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "erc20",
-        type: "address",
-      },
       {
         internalType: "address",
         name: "oracle",
@@ -2061,7 +2104,7 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;
 
 export class Treasury__factory {
   static readonly abi = _abi;

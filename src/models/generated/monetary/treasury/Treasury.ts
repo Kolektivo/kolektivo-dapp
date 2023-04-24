@@ -61,12 +61,15 @@ export interface TreasuryInterface extends utils.Interface {
     "delistERC20AsRedeemable(address,uint256)": FunctionFragment;
     "delistERC20AsRedeemable(address)": FunctionFragment;
     "delistERC721IdAsBondable(address,uint256)": FunctionFragment;
+    "deregisterERC20(address)": FunctionFragment;
+    "deregisterERC721Id(address,uint256)": FunctionFragment;
     "executeTx(address,bytes)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "isERC20Bondable(address)": FunctionFragment;
     "isERC20Redeemable(address)": FunctionFragment;
     "isERC721IdBondable(address,uint256)": FunctionFragment;
     "isERC721IdRedeemable(address,uint256)": FunctionFragment;
+    "lastRebase()": FunctionFragment;
     "listERC20AsBondable(address)": FunctionFragment;
     "listERC20AsRedeemable(address)": FunctionFragment;
     "listERC721IdAsBondable(address,uint256)": FunctionFragment;
@@ -83,10 +86,11 @@ export interface TreasuryInterface extends utils.Interface {
     "redeemERC20(address,uint256)": FunctionFragment;
     "redeemERC721Id(address,uint256)": FunctionFragment;
     "redeemLimitPerERC20(address)": FunctionFragment;
-    "registerERC20(address,address,uint8)": FunctionFragment;
+    "registerERC20(address,address,uint8,uint8)": FunctionFragment;
     "registerERC721Id(address,uint256,address)": FunctionFragment;
     "registeredERC20s(uint256)": FunctionFragment;
     "registeredERC721Ids(uint256)": FunctionFragment;
+    "riskLevelOfERC20(address)": FunctionFragment;
     "scaledBalanceOf(address)": FunctionFragment;
     "scaledTotalSupply()": FunctionFragment;
     "setERC20BondingLimit(address,uint256)": FunctionFragment;
@@ -101,8 +105,6 @@ export interface TreasuryInterface extends utils.Interface {
     "transferAll(address)": FunctionFragment;
     "transferAllFrom(address,address)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "unregisterERC20(address)": FunctionFragment;
-    "unregisterERC721Id(address,uint256)": FunctionFragment;
     "updateERC20Oracle(address,address)": FunctionFragment;
     "updateERC721IdOracle(address,uint256,address)": FunctionFragment;
     "withdrawERC20(address,address,uint256)": FunctionFragment;
@@ -131,12 +133,15 @@ export interface TreasuryInterface extends utils.Interface {
       | "delistERC20AsRedeemable(address,uint256)"
       | "delistERC20AsRedeemable(address)"
       | "delistERC721IdAsBondable"
+      | "deregisterERC20"
+      | "deregisterERC721Id"
       | "executeTx"
       | "increaseAllowance"
       | "isERC20Bondable"
       | "isERC20Redeemable"
       | "isERC721IdBondable"
       | "isERC721IdRedeemable"
+      | "lastRebase"
       | "listERC20AsBondable"
       | "listERC20AsRedeemable"
       | "listERC721IdAsBondable"
@@ -157,6 +162,7 @@ export interface TreasuryInterface extends utils.Interface {
       | "registerERC721Id"
       | "registeredERC20s"
       | "registeredERC721Ids"
+      | "riskLevelOfERC20"
       | "scaledBalanceOf"
       | "scaledTotalSupply"
       | "setERC20BondingLimit"
@@ -171,8 +177,6 @@ export interface TreasuryInterface extends utils.Interface {
       | "transferAll"
       | "transferAllFrom"
       | "transferFrom"
-      | "unregisterERC20"
-      | "unregisterERC721Id"
       | "updateERC20Oracle"
       | "updateERC721IdOracle"
       | "withdrawERC20"
@@ -257,6 +261,14 @@ export interface TreasuryInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "deregisterERC20",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "deregisterERC721Id",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "executeTx",
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
@@ -279,6 +291,10 @@ export interface TreasuryInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "isERC721IdRedeemable",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lastRebase",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "listERC20AsBondable",
@@ -353,6 +369,7 @@ export interface TreasuryInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -371,6 +388,10 @@ export interface TreasuryInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "registeredERC721Ids",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "riskLevelOfERC20",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "scaledBalanceOf",
@@ -428,14 +449,6 @@ export interface TreasuryInterface extends utils.Interface {
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>
     ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "unregisterERC20",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "unregisterERC721Id",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "updateERC20Oracle",
@@ -531,6 +544,14 @@ export interface TreasuryInterface extends utils.Interface {
     functionFragment: "delistERC721IdAsBondable",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "deregisterERC20",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "deregisterERC721Id",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "executeTx", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
@@ -552,6 +573,7 @@ export interface TreasuryInterface extends utils.Interface {
     functionFragment: "isERC721IdRedeemable",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "lastRebase", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "listERC20AsBondable",
     data: BytesLike
@@ -618,6 +640,10 @@ export interface TreasuryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "riskLevelOfERC20",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "scaledBalanceOf",
     data: BytesLike
   ): Result;
@@ -668,14 +694,6 @@ export interface TreasuryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "unregisterERC20",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "unregisterERC721Id",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "updateERC20Oracle",
     data: BytesLike
   ): Result;
@@ -696,23 +714,23 @@ export interface TreasuryInterface extends utils.Interface {
     "Approval(address,address,uint256)": EventFragment;
     "ERC20DelistedAsBondable(address)": EventFragment;
     "ERC20DelistedAsRedeemable(address)": EventFragment;
+    "ERC20Deregistered(address)": EventFragment;
     "ERC20ListedAsBondable(address)": EventFragment;
     "ERC20ListedAsRedeemable(address)": EventFragment;
     "ERC20OracleUpdated(address,address,address)": EventFragment;
     "ERC20PriceUpdated(address,address,uint256,uint256)": EventFragment;
-    "ERC20Registered(address,address,uint8)": EventFragment;
-    "ERC20Unregistered(address)": EventFragment;
+    "ERC20Registered(address,address,uint8,uint8)": EventFragment;
     "ERC20Withdrawn(address,address,uint256)": EventFragment;
     "ERC20sBonded(address,address,uint256)": EventFragment;
     "ERC20sRedeemed(address,address,uint256)": EventFragment;
     "ERC721IdDelistedAsBondable(address,uint256)": EventFragment;
     "ERC721IdDelistedAsRedeemable(address,uint256)": EventFragment;
+    "ERC721IdDeregistered(address,uint256)": EventFragment;
     "ERC721IdListedAsBondable(address,uint256)": EventFragment;
     "ERC721IdListedAsRedeemable(address,uint256)": EventFragment;
     "ERC721IdOracleUpdated(address,uint256,address,address)": EventFragment;
     "ERC721IdPriceUpdated(address,uint256,address,uint256,uint256)": EventFragment;
     "ERC721IdRegistered(address,uint256,address)": EventFragment;
-    "ERC721IdUnregistered(address,uint256)": EventFragment;
     "ERC721IdWithdrawn(address,uint256,address)": EventFragment;
     "ERC721IdsBonded(address,address,uint256,uint256)": EventFragment;
     "ERC721IdsRedeemed(address,address,uint256,uint256)": EventFragment;
@@ -727,12 +745,12 @@ export interface TreasuryInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20DelistedAsBondable"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20DelistedAsRedeemable"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ERC20Deregistered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20ListedAsBondable"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20ListedAsRedeemable"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20OracleUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20PriceUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20Registered"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ERC20Unregistered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20Withdrawn"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20sBonded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20sRedeemed"): EventFragment;
@@ -740,12 +758,12 @@ export interface TreasuryInterface extends utils.Interface {
   getEvent(
     nameOrSignatureOrTopic: "ERC721IdDelistedAsRedeemable"
   ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ERC721IdDeregistered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdListedAsBondable"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdListedAsRedeemable"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdOracleUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdPriceUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdRegistered"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ERC721IdUnregistered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdWithdrawn"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdsBonded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721IdsRedeemed"): EventFragment;
@@ -790,6 +808,17 @@ export type ERC20DelistedAsRedeemableEvent = TypedEvent<
 
 export type ERC20DelistedAsRedeemableEventFilter =
   TypedEventFilter<ERC20DelistedAsRedeemableEvent>;
+
+export interface ERC20DeregisteredEventObject {
+  erc20: string;
+}
+export type ERC20DeregisteredEvent = TypedEvent<
+  [string],
+  ERC20DeregisteredEventObject
+>;
+
+export type ERC20DeregisteredEventFilter =
+  TypedEventFilter<ERC20DeregisteredEvent>;
 
 export interface ERC20ListedAsBondableEventObject {
   erc20: string;
@@ -844,24 +873,14 @@ export interface ERC20RegisteredEventObject {
   erc20: string;
   oracle: string;
   assetType: number;
+  riskLevel: number;
 }
 export type ERC20RegisteredEvent = TypedEvent<
-  [string, string, number],
+  [string, string, number, number],
   ERC20RegisteredEventObject
 >;
 
 export type ERC20RegisteredEventFilter = TypedEventFilter<ERC20RegisteredEvent>;
-
-export interface ERC20UnregisteredEventObject {
-  erc20: string;
-}
-export type ERC20UnregisteredEvent = TypedEvent<
-  [string],
-  ERC20UnregisteredEventObject
->;
-
-export type ERC20UnregisteredEventFilter =
-  TypedEventFilter<ERC20UnregisteredEvent>;
 
 export interface ERC20WithdrawnEventObject {
   erc20: string;
@@ -922,6 +941,18 @@ export type ERC721IdDelistedAsRedeemableEvent = TypedEvent<
 
 export type ERC721IdDelistedAsRedeemableEventFilter =
   TypedEventFilter<ERC721IdDelistedAsRedeemableEvent>;
+
+export interface ERC721IdDeregisteredEventObject {
+  erc721: string;
+  id: BigNumber;
+}
+export type ERC721IdDeregisteredEvent = TypedEvent<
+  [string, BigNumber],
+  ERC721IdDeregisteredEventObject
+>;
+
+export type ERC721IdDeregisteredEventFilter =
+  TypedEventFilter<ERC721IdDeregisteredEvent>;
 
 export interface ERC721IdListedAsBondableEventObject {
   erc721: string;
@@ -988,18 +1019,6 @@ export type ERC721IdRegisteredEvent = TypedEvent<
 
 export type ERC721IdRegisteredEventFilter =
   TypedEventFilter<ERC721IdRegisteredEvent>;
-
-export interface ERC721IdUnregisteredEventObject {
-  erc721: string;
-  id: BigNumber;
-}
-export type ERC721IdUnregisteredEvent = TypedEvent<
-  [string, BigNumber],
-  ERC721IdUnregisteredEventObject
->;
-
-export type ERC721IdUnregisteredEventFilter =
-  TypedEventFilter<ERC721IdUnregisteredEvent>;
 
 export interface ERC721IdWithdrawnEventObject {
   erc721: string;
@@ -1220,6 +1239,17 @@ export interface Treasury extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    deregisterERC20(
+      erc20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    deregisterERC721Id(
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     executeTx(
       target: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
@@ -1253,6 +1283,8 @@ export interface Treasury extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    lastRebase(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     listERC20AsBondable(
       erc20: PromiseOrValue<string>,
@@ -1342,6 +1374,7 @@ export interface Treasury extends BaseContract {
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
       assetType: PromiseOrValue<BigNumberish>,
+      riskLevel: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1361,6 +1394,11 @@ export interface Treasury extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { erc721: string; id: BigNumber }>;
+
+    riskLevelOfERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[number]>;
 
     scaledBalanceOf(
       who: PromiseOrValue<string>,
@@ -1425,17 +1463,6 @@ export interface Treasury extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokens: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    unregisterERC20(
-      erc20: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    unregisterERC721Id(
-      erc721: PromiseOrValue<string>,
-      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1554,6 +1581,17 @@ export interface Treasury extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  deregisterERC20(
+    erc20: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  deregisterERC721Id(
+    erc721: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   executeTx(
     target: PromiseOrValue<string>,
     data: PromiseOrValue<BytesLike>,
@@ -1587,6 +1625,8 @@ export interface Treasury extends BaseContract {
     arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  lastRebase(overrides?: CallOverrides): Promise<BigNumber>;
 
   listERC20AsBondable(
     erc20: PromiseOrValue<string>,
@@ -1676,6 +1716,7 @@ export interface Treasury extends BaseContract {
     erc20: PromiseOrValue<string>,
     oracle: PromiseOrValue<string>,
     assetType: PromiseOrValue<BigNumberish>,
+    riskLevel: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1695,6 +1736,11 @@ export interface Treasury extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<[string, BigNumber] & { erc721: string; id: BigNumber }>;
+
+  riskLevelOfERC20(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<number>;
 
   scaledBalanceOf(
     who: PromiseOrValue<string>,
@@ -1759,17 +1805,6 @@ export interface Treasury extends BaseContract {
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
     tokens: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  unregisterERC20(
-    erc20: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  unregisterERC721Id(
-    erc721: PromiseOrValue<string>,
-    id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1886,6 +1921,17 @@ export interface Treasury extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    deregisterERC20(
+      erc20: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    deregisterERC721Id(
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     executeTx(
       target: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
@@ -1919,6 +1965,8 @@ export interface Treasury extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    lastRebase(overrides?: CallOverrides): Promise<BigNumber>;
 
     listERC20AsBondable(
       erc20: PromiseOrValue<string>,
@@ -2006,6 +2054,7 @@ export interface Treasury extends BaseContract {
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
       assetType: PromiseOrValue<BigNumberish>,
+      riskLevel: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2025,6 +2074,11 @@ export interface Treasury extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { erc721: string; id: BigNumber }>;
+
+    riskLevelOfERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<number>;
 
     scaledBalanceOf(
       who: PromiseOrValue<string>,
@@ -2092,17 +2146,6 @@ export interface Treasury extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    unregisterERC20(
-      erc20: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    unregisterERC721Id(
-      erc721: PromiseOrValue<string>,
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     updateERC20Oracle(
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
@@ -2157,6 +2200,13 @@ export interface Treasury extends BaseContract {
       erc20?: PromiseOrValue<string> | null
     ): ERC20DelistedAsRedeemableEventFilter;
 
+    "ERC20Deregistered(address)"(
+      erc20?: PromiseOrValue<string> | null
+    ): ERC20DeregisteredEventFilter;
+    ERC20Deregistered(
+      erc20?: PromiseOrValue<string> | null
+    ): ERC20DeregisteredEventFilter;
+
     "ERC20ListedAsBondable(address)"(
       erc20?: PromiseOrValue<string> | null
     ): ERC20ListedAsBondableEventFilter;
@@ -2195,23 +2245,18 @@ export interface Treasury extends BaseContract {
       newPrice?: null
     ): ERC20PriceUpdatedEventFilter;
 
-    "ERC20Registered(address,address,uint8)"(
+    "ERC20Registered(address,address,uint8,uint8)"(
       erc20?: PromiseOrValue<string> | null,
       oracle?: PromiseOrValue<string> | null,
-      assetType?: null
+      assetType?: null,
+      riskLevel?: null
     ): ERC20RegisteredEventFilter;
     ERC20Registered(
       erc20?: PromiseOrValue<string> | null,
       oracle?: PromiseOrValue<string> | null,
-      assetType?: null
+      assetType?: null,
+      riskLevel?: null
     ): ERC20RegisteredEventFilter;
-
-    "ERC20Unregistered(address)"(
-      erc20?: PromiseOrValue<string> | null
-    ): ERC20UnregisteredEventFilter;
-    ERC20Unregistered(
-      erc20?: PromiseOrValue<string> | null
-    ): ERC20UnregisteredEventFilter;
 
     "ERC20Withdrawn(address,address,uint256)"(
       erc20?: PromiseOrValue<string> | null,
@@ -2263,6 +2308,15 @@ export interface Treasury extends BaseContract {
       erc721?: PromiseOrValue<string> | null,
       id?: PromiseOrValue<BigNumberish> | null
     ): ERC721IdDelistedAsRedeemableEventFilter;
+
+    "ERC721IdDeregistered(address,uint256)"(
+      erc721?: PromiseOrValue<string> | null,
+      id?: PromiseOrValue<BigNumberish> | null
+    ): ERC721IdDeregisteredEventFilter;
+    ERC721IdDeregistered(
+      erc721?: PromiseOrValue<string> | null,
+      id?: PromiseOrValue<BigNumberish> | null
+    ): ERC721IdDeregisteredEventFilter;
 
     "ERC721IdListedAsBondable(address,uint256)"(
       erc721?: PromiseOrValue<string> | null,
@@ -2320,15 +2374,6 @@ export interface Treasury extends BaseContract {
       id?: PromiseOrValue<BigNumberish> | null,
       oracle?: PromiseOrValue<string> | null
     ): ERC721IdRegisteredEventFilter;
-
-    "ERC721IdUnregistered(address,uint256)"(
-      erc721?: PromiseOrValue<string> | null,
-      id?: PromiseOrValue<BigNumberish> | null
-    ): ERC721IdUnregisteredEventFilter;
-    ERC721IdUnregistered(
-      erc721?: PromiseOrValue<string> | null,
-      id?: PromiseOrValue<BigNumberish> | null
-    ): ERC721IdUnregisteredEventFilter;
 
     "ERC721IdWithdrawn(address,uint256,address)"(
       erc721?: PromiseOrValue<string> | null,
@@ -2514,6 +2559,17 @@ export interface Treasury extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    deregisterERC20(
+      erc20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    deregisterERC721Id(
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     executeTx(
       target: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
@@ -2547,6 +2603,8 @@ export interface Treasury extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    lastRebase(overrides?: CallOverrides): Promise<BigNumber>;
 
     listERC20AsBondable(
       erc20: PromiseOrValue<string>,
@@ -2636,6 +2694,7 @@ export interface Treasury extends BaseContract {
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
       assetType: PromiseOrValue<BigNumberish>,
+      riskLevel: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2653,6 +2712,11 @@ export interface Treasury extends BaseContract {
 
     registeredERC721Ids(
       arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    riskLevelOfERC20(
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -2719,17 +2783,6 @@ export interface Treasury extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokens: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    unregisterERC20(
-      erc20: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    unregisterERC721Id(
-      erc721: PromiseOrValue<string>,
-      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2851,6 +2904,17 @@ export interface Treasury extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    deregisterERC20(
+      erc20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    deregisterERC721Id(
+      erc721: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     executeTx(
       target: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
@@ -2884,6 +2948,8 @@ export interface Treasury extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    lastRebase(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     listERC20AsBondable(
       erc20: PromiseOrValue<string>,
@@ -2973,6 +3039,7 @@ export interface Treasury extends BaseContract {
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
       assetType: PromiseOrValue<BigNumberish>,
+      riskLevel: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2990,6 +3057,11 @@ export interface Treasury extends BaseContract {
 
     registeredERC721Ids(
       arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    riskLevelOfERC20(
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3056,17 +3128,6 @@ export interface Treasury extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokens: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    unregisterERC20(
-      erc20: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    unregisterERC721Id(
-      erc721: PromiseOrValue<string>,
-      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
