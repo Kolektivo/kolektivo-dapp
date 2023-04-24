@@ -8,7 +8,7 @@ import { BigNumber } from '@ethersproject/bignumber';
  * when a number is retrieved from the element to which it is bound, convert it from a string to a number.
  */
 @valueConverter('number')
-export class NumberValueConverter {
+export class Number {
   constructor(@INumberService private readonly numberService: INumberService) {}
 
   public toView(value: number | string | BigNumber, options?: IToStringOptions): string {

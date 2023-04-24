@@ -1,8 +1,8 @@
-<import from="../value-converters/small-hex-string" />
+<import from="../value-converters/small-hex-string"></import>
 <k-app-bar>
   <k-icon-button slot="start" name="menu" type="utility-dark" click.trigger="store.sideBarOpen = !store.sideBarOpen"> </k-icon-button>
-  <div></div>
-  <div slot="end">
+  <div><k-text type="h5">${store.pageTitle}</k-text></div>
+  <!-- <div slot="end">
     <k-stack if.bind="!blockChainStore.walletConnected" justify-content="flex-end" direction="row" gap="var(--spacing)">
       <network-feedback></network-feedback>
       <k-button click.trigger="connectKolektivoWallet()">Koletivo Wallet</k-button>
@@ -20,5 +20,6 @@
       <badge-menu target.bind="badgeGroup"></badge-menu>
       <account-menu target.bind="accountButton"></account-menu>
     </div>
-  </div>
+  </div> -->
 </k-app-bar>
+<inner-nav if.bind="store.routes.length" routes.bind="store.routes"></inner-nav>

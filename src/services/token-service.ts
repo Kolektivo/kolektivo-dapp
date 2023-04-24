@@ -1,15 +1,16 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { cache } from '../decorators/cache';
+import { Erc20 } from '../models/generated/monetary/erc20';
+import { Erc721 } from '../models/generated/monetary/erc721';
+import { IReadOnlyProvider } from '../read-only-provider';
+
 import { ICacheService } from './cache-service';
 import { IContractService } from './contract';
 
 import { Signer } from '@ethersproject/abstract-signer';
 import { Contract, ContractInterface } from '@ethersproject/contracts';
 import { BaseProvider } from '@ethersproject/providers';
-import { cache } from 'decorators/cache';
-import { Erc20 } from 'models/generated/monetary/erc20/Erc20';
-import { Erc721 } from 'models/generated/monetary/erc721/Erc721';
-import { IReadOnlyProvider } from 'read-only-provider';
 
 export type ITokenService = TokenService;
 export const ITokenService = DI.createInterface<ITokenService>();

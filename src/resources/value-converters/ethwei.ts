@@ -1,7 +1,8 @@
 ﻿import { valueConverter } from 'aurelia';
 
+import { fromWei, toWei } from '../../utils';
+
 import { BigNumber } from '@ethersproject/bignumber';
-import { fromWei, toWei } from 'utils';
 
 /**
  * Convert between Wei (as BigNumber) in viewmodel and eth (as string) in view.
@@ -9,7 +10,7 @@ import { fromWei, toWei } from 'utils';
  * to the viewmodel as BigNumber.
  */
 @valueConverter('ethwei')
-export class EthweiValueConverter {
+export class Ethwei {
   /**
    * ETH string from HTML input ==> BigNumber for the model
    *

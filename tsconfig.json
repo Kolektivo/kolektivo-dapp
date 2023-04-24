@@ -13,14 +13,8 @@
     "importHelpers": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
     "strictNullChecks": true,
     "rootDir": ".",
-    "paths": {
-      "*": [
-        "./src/*"
-      ]
-    }
   },
   "typeAcquisition": {
     "enable": true

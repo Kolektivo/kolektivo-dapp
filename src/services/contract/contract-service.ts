@@ -1,5 +1,6 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { cache } from '../../decorators/cache';
 import { IReadOnlyProvider } from '../../read-only-provider';
 import { ICacheService } from '../cache-service';
 
@@ -10,7 +11,6 @@ import { ContractGroupsSharedJson } from './types';
 import { Signer } from '@ethersproject/abstract-signer';
 import { BaseContract, Contract, ContractFunction, ContractInterface, PopulatedTransaction } from '@ethersproject/contracts';
 import { BaseProvider } from '@ethersproject/providers';
-import { cache } from 'decorators/cache';
 
 export type IContractService = ContractService;
 export const IContractService = DI.createInterface<IContractService>();

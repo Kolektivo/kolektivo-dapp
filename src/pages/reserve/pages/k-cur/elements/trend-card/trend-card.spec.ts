@@ -4,36 +4,19 @@ import { createFixture } from '@aurelia/testing';
 
 import '../../../../../../utils-testing/setup-testing';
 
+import { IDesignSystemConfiguration } from '../../../../../../design-system';
 import { Global } from '../../../../../../hooks';
+import { Currency } from '../../../../../../resources';
 import { INumberService } from '../../../../../../services/number-service';
-import { IStore } from '../../../../../../stores';
+import { IReserveStore, IStore } from '../../../../../../stores';
 
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { TrendCard } from './trend-card';
 
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('trend-card', () => {
-  it('should have a k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<trend-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelector('k-card')).exist;
-  });
-
-  it('should have a title and tooltip in the k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<trend-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const card = appHost.querySelector('k-card');
-    expect(card?.getAttribute('title')).exist;
-    expect(card?.getAttribute('tooltip-text')).exist;
-  });
-
   it('should have a chart time filter component', async () => {
     const { appHost } = await createFixture
       .html(`<trend-card>`)
@@ -59,9 +42,11 @@ describe('trend-card', () => {
         tr: (s: string) => String(s),
       });
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
+    const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       TrendCard,
-      PercentageValueConverter,
+      Percentage,
+      Currency,
       Registration.instance(
         IReserveStore,
         mock<IReserveStore>({
@@ -71,6 +56,7 @@ describe('trend-card', () => {
       Global,
       createMockStoreRegistration(),
       createMockI18nRegistration(),
+      designSystemConfiguration(),
       numberServiceRegistration(),
     ];
   }

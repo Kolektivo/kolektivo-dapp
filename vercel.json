@@ -3,9 +3,9 @@
   "name": "kolektivo-dapp",
   "rewrites": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "destination": "/"
     }
   ],
-  "trailingSlash": false,
+  "trailingSlash": false
 }

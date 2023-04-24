@@ -1,34 +1,31 @@
 :host {
   display: grid;
   place-items: center;
-  padding: 40px 70px 150px;
-  
-  div.description{
-    max-width: 50%;
+  padding: 65px 70px 150px;
 
-    k-text::part(content){
-      font-size: 20px;
+  div.description {
+    max-width: 50%;
+    padding: 40px 0;
+
+    k-text::part(content) {
+      font-size: 16px;
+      line-height: 24px;
       font-weight: 400;
     }
   }
 
-  k-link.learn-more-link::part(link-text){
-    color: var(--white);
-  }
-
-  >k-stack {
+  > k-stack {
     max-width: 1200px;
     width: 100%;
-    
-    >slot[name='instruction-text'],
-    >slot[name='additional-text'],
-    >slot:last-of-type {
+
+    > slot[name="instruction-text"],
+    > slot[name="additional-text"],
+    > slot:last-of-type {
       grid-column: 1 / 2;
     }
 
-    >k-stack::part(main) {
+    > k-stack::part(main) {
       justify-content: space-between;
-      margin-bottom: 40px;
     }
   }
 }

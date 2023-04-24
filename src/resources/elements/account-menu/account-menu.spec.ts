@@ -6,7 +6,7 @@ import '../../../utils-testing/setup-testing';
 
 import { Global } from '../../../hooks';
 import { IStore } from '../../../stores';
-import { SmallHexStringValueConverter } from '../../value-converters';
+import { SmallHexString } from '../../value-converters';
 
 import { AccountMenu } from './account-menu';
 
@@ -34,6 +34,6 @@ describe('<account-menu />', () => {
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
       });
-    return [AccountMenu, SmallHexStringValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration()];
+    return [AccountMenu, SmallHexString, Global, createMockStoreRegistration(), createMockI18nRegistration()];
   }
 });

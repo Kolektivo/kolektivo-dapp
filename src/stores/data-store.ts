@@ -1,7 +1,8 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { IFirebaseService } from '../services/firebase-service';
+
 import { FieldPath, WhereFilterOp } from 'firebase/firestore/lite';
-import { IFirebaseService } from 'services/firebase-service';
 
 export type IDataStore = DataStore;
 export const IDataStore = DI.createInterface<IDataStore>('DataStore');

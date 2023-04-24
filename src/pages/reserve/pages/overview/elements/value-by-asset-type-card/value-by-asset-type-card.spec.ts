@@ -6,13 +6,12 @@ import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { Global } from '../../../../../../hooks';
-import { IStore } from '../../../../../../stores';
+import { IReserveStore, IStore } from '../../../../../../stores';
 
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { NumberService } from './../../../../../../services/number-service';
 import { ValueByAssetTypeCard } from './value-by-asset-type-card';
 
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 
 describe('value-by-asset-type-card', () => {
@@ -69,7 +68,7 @@ describe('value-by-asset-type-card', () => {
       Global,
       Registration.instance(IReserveStore, { reserveValue: 1, reserveAssets: [{}] }),
       NumberService,
-      PercentageValueConverter,
+      Percentage,
       createMockStoreRegistration(),
       createMockI18nRegistration(),
       designSystemConfiguration(),

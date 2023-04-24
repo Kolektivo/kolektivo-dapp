@@ -1,6 +1,12 @@
 import { I18N } from '@aurelia/i18n';
 import { customElement, ICustomElementViewModel } from '@aurelia/runtime-html';
 
+import { Treasury } from '../../../../../../models/generated/monetary/treasury';
+import { IContractService, IIpfsService } from '../../../../../../services';
+import { IEncryptionService } from '../../../../../../services/encryption-service';
+import { IAccountStore } from '../../../../../../stores/account-store';
+import { IWalletProvider } from '../../../../../../wallet-provider';
+
 import { IGovernanceStore } from './../../../../../../stores/governance-store';
 import template from './submit-proposal-card.html';
 import * as tabs from './tabs';
@@ -9,11 +15,6 @@ import * as tabs from './tabs';
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import './submit-proposal-card.scss';
 
-import { Treasury } from 'models/generated/monetary/treasury';
-import { IContractService, IIpfsService } from 'services';
-import { IEncryptionService } from 'services/encryption-service';
-import { IAccountStore } from 'stores/account-store';
-import { IWalletProvider } from 'wallet-provider';
 @customElement({ name: 'submit-proposal-card', template, dependencies: [tabs] })
 export class SubmitProposalCard implements ICustomElementViewModel {
   routes: RouteLink[] = [];

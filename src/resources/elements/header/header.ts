@@ -1,12 +1,13 @@
 import { customElement, ICustomElementViewModel } from 'aurelia';
 
+import { IBlockChainStore } from '../../../stores';
+
 import { IAccountStore } from './../../../stores/account-store';
 import { IKolektivoStore } from './../../../stores/kolektivo-store';
 import template from './header.html';
 
 import './header.scss';
 
-import { IBlockChainStore } from 'stores';
 @customElement({ name: 'header', template })
 export class Header implements ICustomElementViewModel {
   public badgeTarget?: HTMLElement;

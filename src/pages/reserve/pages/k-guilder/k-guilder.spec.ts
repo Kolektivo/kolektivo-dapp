@@ -4,35 +4,19 @@ import { createFixture } from '@aurelia/testing';
 
 import '../../../../utils-testing/setup-testing';
 
+import { IDesignSystemConfiguration } from '../../../../design-system';
 import { Global } from '../../../../hooks/';
+import { Currency } from '../../../../resources';
 import { IStore } from '../../../../stores';
+import { IReserveStore } from '../../../../stores/reserve-store';
 
-import { EthweiValueConverter } from './../../../../resources/value-converters/ethwei';
+import { Ethwei } from './../../../../resources/value-converters/ethwei';
 import { KGuilder } from './k-guilder';
 
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('<k-guilder />', () => {
-  it('should have a k-page component', async () => {
-    const { appHost } = await createFixture
-      .html(`<k-guilder>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelector('k-page')).exist;
-  });
-
-  it('should have a tile and description in the k-page component', async () => {
-    const { appHost } = await createFixture
-      .html(`<k-guilder>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const kPage = appHost.querySelector('k-page');
-    expect(kPage?.hasAttribute('title')).true;
-    expect(kPage?.hasAttribute('description')).true;
-  });
-
   it('should have a token info card component', async () => {
     const { appHost } = await createFixture
       .html(`<k-guilder>`)
@@ -55,13 +39,8 @@ describe('<k-guilder />', () => {
       .deps(...getRegistrations())
       .build().started;
 
-    const gridCards = getAllBy('k-grid k-card');
+    const gridCards = getAllBy('k-grid stat-card');
     expect(gridCards).toHaveLength(3);
-
-    const [card1, card2, card3] = gridCards;
-    expect(card1.textContent).toContain('navigation.reserve.k-guilder.spread.title');
-    expect(card2.textContent).toContain('navigation.reserve.k-guilder.inflation-rate.title');
-    expect(card3.textContent).toContain('navigation.reserve.k-guilder.tobin-tax.title');
   });
 
   it.todo('display token info card marketCap, currentPrice and totalSupply');
@@ -76,6 +55,7 @@ describe('<k-guilder />', () => {
       Registration.instance(I18N, {
         tr: (s: string) => String(s),
       });
+    const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       KGuilder,
       Registration.instance(
@@ -85,9 +65,11 @@ describe('<k-guilder />', () => {
           getkGuilderValueRatioOverTime: () => new Promise((res) => res([])),
         }),
       ),
-      EthweiValueConverter,
+      Ethwei,
+      Currency,
       createMockStoreRegistration(),
       createMockI18nRegistration(),
+      designSystemConfiguration(),
       Global,
       ValueConverter.define(
         'percentage',

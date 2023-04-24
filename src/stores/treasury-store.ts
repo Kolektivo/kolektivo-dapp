@@ -1,19 +1,20 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { IConfiguration } from '../configurations/configuration';
+import { Asset } from '../models/asset';
+import { BigNumberOverTimeData, ValueChartData } from '../models/chart-data';
+import { Treasury } from '../models/generated/monetary/treasury';
+import { Interval } from '../models/interval';
+import { Transaction } from '../models/transaction';
+import { IContractService, INumberService } from '../services';
+import { MonetaryContractAbi } from '../services/contract';
+import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from '../utils';
+
 import { callOnce } from './../decorators/call-once';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
 
 import { BigNumber } from '@ethersproject/bignumber';
-import { IConfiguration } from 'configurations/configuration';
-import { Asset } from 'models/asset';
-import { BigNumberOverTimeData, ValueChartData } from 'models/chart-data';
-import { Treasury } from 'models/generated/monetary/treasury/Treasury';
-import { Interval } from 'models/interval';
-import { Transaction } from 'models/transaction';
-import { IContractService, INumberService } from 'services';
-import { MonetaryContractAbi } from 'services/contract/types';
-import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from 'utils';
 
 export type ITreasuryStore = TreasuryStore;
 export const ITreasuryStore = DI.createInterface<ITreasuryStore>('TreasuryStore');

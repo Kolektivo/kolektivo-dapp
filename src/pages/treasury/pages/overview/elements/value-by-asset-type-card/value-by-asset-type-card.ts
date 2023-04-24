@@ -1,7 +1,7 @@
 import { customElement, ICustomElementViewModel } from 'aurelia';
 
 import { AssetType } from './../../../../../../models/asset';
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { ITreasuryStore } from './../../../../../../stores/treasury-store';
 import template from './value-by-asset-type-card.html';
 
@@ -11,7 +11,7 @@ import type { TooltipOptions } from 'chart.js';
 
 @customElement({ name: 'value-by-asset-type-card', template })
 export class ValueByAssetTypeCard implements ICustomElementViewModel {
-  constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore, private readonly percentageValueConverter: PercentageValueConverter) {}
+  constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore, private readonly percentageValueConverter: Percentage) {}
 
   get chartData(): number[] {
     return [this.nonStablecoinAssetPercentage() * 100, this.stablecoinAssetPercentage() * 100, this.ecologicalAssetPercentage() * 100];

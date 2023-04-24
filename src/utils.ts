@@ -1,10 +1,11 @@
 import { I18N } from '@aurelia/i18n';
 
+import { Interval } from './models/interval';
+
 import { BigNumber } from '@ethersproject/bignumber';
 import type { Scale } from 'chart.js';
 import { BigNumberish } from 'ethers/lib/ethers';
 import { formatUnits, getAddress, parseUnits } from 'ethers/lib/utils';
-import { Interval } from 'models/interval';
 
 /**
  * Remove precision from the decimals part of a number. Need this instead of `toFixed` because

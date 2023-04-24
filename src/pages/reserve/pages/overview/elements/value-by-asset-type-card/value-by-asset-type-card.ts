@@ -1,14 +1,15 @@
 import { customElement, ICustomElementViewModel } from 'aurelia';
 
+import { AssetType } from '../../../../../../models/asset';
+import { INumberService } from '../../../../../../services';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
+import { fromWei } from '../../../../../../utils';
+
 import template from './value-by-asset-type-card.html';
 
 import './value-by-asset-type-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import { AssetType } from 'models/asset';
-import { INumberService } from 'services';
-import { IReserveStore } from 'stores/reserve-store';
-import { fromWei } from 'utils';
 
 @customElement({ name: 'value-by-asset-type-card', template })
 export class ValueByAssetTypeCard implements ICustomElementViewModel {

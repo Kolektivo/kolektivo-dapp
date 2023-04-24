@@ -4,8 +4,7 @@ import { Grid } from '../../base/grid';
 import { captureFilter } from '../../common';
 
 import template from './k-stack.html';
-
-import css from './k-stack.scss';
+import css from './k-stack.scss?inline';
 
 @customElement({
   name: 'k-stack',

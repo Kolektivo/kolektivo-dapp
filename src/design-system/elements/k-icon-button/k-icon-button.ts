@@ -5,8 +5,7 @@ import type { ButtonType } from '../k-button';
 import { ButtonSize } from '../k-button/button-size';
 
 import template from './k-icon-button.html';
-
-import css from './k-icon-button.scss';
+import css from './k-icon-button.scss?inline';
 
 @customElement({ name: 'k-icon-button', template, capture: captureFilter, dependencies: [shadowCSS(css)], shadowOptions: { mode: 'open' } })
 export class KIconButton implements ICustomElementViewModel {

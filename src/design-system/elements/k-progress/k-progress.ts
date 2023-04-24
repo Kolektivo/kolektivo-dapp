@@ -4,8 +4,7 @@ import { captureFilter, numberToPixelsInterceptor } from '../../common';
 export type ProgressType = 'error' | 'warning';
 
 import template from './k-progress.html';
-
-import css from './k-progress.scss';
+import css from './k-progress.scss?inline';
 
 @customElement({
   name: 'k-progress',

@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, INode, IPlatform, sha
 import { numberToPixels } from '../../common';
 
 import template from './k-tooltip.html';
-
-import css from './k-tooltip.scss';
+import css from './k-tooltip.scss?inline';
 
 @customElement({ name: 'k-tooltip', template, dependencies: [shadowCSS(css)], shadowOptions: { mode: 'open' } })
 export class KTooltip implements ICustomElementViewModel {

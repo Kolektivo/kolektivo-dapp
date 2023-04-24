@@ -1,15 +1,15 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { callOnce } from '../decorators/call-once';
+import { BadgeType } from '../models/badge-type';
+import { Secretdelay } from '../models/generated/governance/secretdelay';
+import { IContractService } from '../services';
 import { delay } from '../utils';
 
 import { Bacroles } from './../models/generated/governance/bacroles/Bacroles';
 import { Proposal, ProposalStatus } from './../models/proposal';
 
-import { callOnce } from 'decorators/call-once';
 import { BigNumber, ContractTransaction, PopulatedTransaction } from 'ethers';
-import { BadgeType } from 'models/badge-type';
-import { Secretdelay } from 'models/generated/governance/secretdelay';
-import { IContractService } from 'services/contract';
 
 export type IGovernanceStore = GovernanceStore;
 export const IGovernanceStore = DI.createInterface<IGovernanceStore>('IGovernanceStore');

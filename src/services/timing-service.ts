@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { DI, IContainer, Registration } from 'aurelia';
 
-import { IConfiguration } from 'configurations/configuration';
+import { IConfiguration } from '../configurations/configuration';
 
 export type ITimingService = TimingService;
 export const ITimingService = DI.createInterface<ITimingService>('TimingService');

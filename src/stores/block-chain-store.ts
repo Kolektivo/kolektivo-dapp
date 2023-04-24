@@ -1,10 +1,11 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { IConfiguration } from '../configurations/configuration';
+import { IEthereumService } from '../services';
+
 import { IAccountStore } from './account-store';
 
 import { ExternalProvider, getNetwork, Network, Web3Provider } from '@ethersproject/providers';
-import { IConfiguration } from 'configurations/configuration';
-import { IEthereumService } from 'services/ethereum-service';
 
 export type IBlockChainStore = BlockChainStore;
 export const IBlockChainStore = DI.createInterface<IBlockChainStore>();

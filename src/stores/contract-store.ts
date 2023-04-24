@@ -1,18 +1,18 @@
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 
-import { INumberService, ITokenService } from '../services';
+import { Asset, AssetType } from '../models/asset';
+import { Erc20, TransferEvent as Erc20TransferEvent } from '../models/generated/monetary/erc20/Erc20';
+import { Erc721, TransferEvent as Erc721TransferEvent } from '../models/generated/monetary/erc721/Erc721';
+import { Reserve } from '../models/generated/monetary/reserve';
+import { Treasury } from '../models/generated/monetary/treasury';
+import type { Transaction } from '../models/transaction';
+import { IContractService, INumberService, ITokenService } from '../services';
+import { ITokenData, ITokenInfo } from '../services/contract';
+import { fromWei, toWei } from '../utils';
 
 import type { Oracle } from './../models/generated/monetary/oracle/Oracle';
 
 import { BigNumber } from 'ethers';
-import { type Asset, AssetType } from 'models/asset';
-import { Erc20, TransferEvent as Erc20TransferEvent } from 'models/generated/monetary/erc20/Erc20';
-import { Erc721, TransferEvent as Erc721TransferEvent } from 'models/generated/monetary/erc721/Erc721';
-import type { Reserve } from 'models/generated/monetary/reserve';
-import type { Treasury } from 'models/generated/monetary/treasury';
-import type { Transaction } from 'models/transaction';
-import { type ITokenInfo, IContractService, ITokenData } from 'services/contract';
-import { fromWei, toWei } from 'utils';
 export type IContractStore = ContractStore;
 export const IContractStore = DI.createInterface<IContractStore>('IContractStore');
 
@@ -31,7 +31,7 @@ export class ContractStore {
   public async getAsset(
     assetAddress: string,
     assetId: BigNumber | undefined,
-    contract: Treasury | Reserve,
+    contract: Reserve | Treasury,
     contractAddress: string,
     transactions?: Transaction[],
     oracleAddress?: string,

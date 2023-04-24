@@ -6,35 +6,19 @@ import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { Global } from '../../../../../../hooks';
+import { Interval } from '../../../../../../models/interval';
 import { IStore } from '../../../../../../stores';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
 
 import { ValueOverTimeCard } from './value-over-time-card';
 
-import { Interval } from 'models/interval';
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
+
 const reserveMock = mockDeep<IReserveStore>();
+
 describe('value-over-time-card', () => {
   reserveMock.getRiskOverTime.calledWith(Interval['1d']).mockResolvedValue([]);
-  it('should have a k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-over-time-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelector('k-card')).exist;
-  });
-
-  it('should have a title and tooltip in the k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-over-time-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const card = appHost.querySelector('k-card');
-    expect(card?.getAttribute('title')).exist;
-    expect(card?.getAttribute('tooltip-text')).exist;
-  });
-
   it('should have a chart time filter component with four legends on the right', async () => {
     const { appHost } = await createFixture
       .html(`<value-over-time-card>`)

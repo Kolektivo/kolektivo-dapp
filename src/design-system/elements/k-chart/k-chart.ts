@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, IPlatform, shadowCSS 
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from '../../common';
 
 import template from './k-chart.html';
-
-import css from './k-chart.scss';
+import css from './k-chart.scss?inline';
 
 import type { BubbleDataPoint, Chart, ChartDataset, ChartOptions, ChartType, LegendOptions, ScatterDataPoint, TooltipOptions } from 'chart.js';
 
@@ -137,7 +136,6 @@ export class KChart implements ICustomElementViewModel {
         intersect: false,
         includeInvisible: true,
       },
-
       interaction: {
         intersect: false,
         includeInvisible: true,
@@ -148,18 +146,17 @@ export class KChart implements ICustomElementViewModel {
           display: !this.hideLegend,
           position: 'right',
           labels: {
-            pointStyle: 'line',
-            color: 'red',
             usePointStyle: true,
           },
         },
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         tooltip: {
-          backgroundColor: 'rgba(213, 92, 56, 1)',
+          backgroundColor: 'rgba(46, 52, 55, 1)',
           bodyColor: 'white',
+          padding: 20,
           caretPadding: 6,
           usePointStyle: true,
-          displayColors: false,
+          displayColors: true,
           intersect: false,
           ...this.tooltipOptions,
         },
@@ -195,7 +192,7 @@ export class KChart implements ICustomElementViewModel {
           max: this.maxY,
           min: this.minY,
           grid: {
-            display: false,
+            z: 1,
           },
         },
       };
@@ -224,7 +221,6 @@ export class KChart implements ICustomElementViewModel {
                     ctx.moveTo(x, 10);
                     ctx.lineTo(x, yAxis.bottom);
                     ctx.lineWidth = 1;
-                    ctx.setLineDash([2, 2]);
                     ctx.strokeStyle = 'rgba(76, 87, 92, 1)';
                     ctx.stroke();
                     ctx.restore();

@@ -21,42 +21,43 @@ When this command is run, it will build and bundle everything needed into /scrip
 
 TODO: We will need to get a version of the web service uploaded for dev and prod and have two different cron tab expressions calling each of them so we can store dev and prod data in firebase. The dev web service will look at the celo-test.json contracts and the prod web service will look at the celo.json contracts.
 
-TODO: This currently needs to be run manually. We will need to make this script run every time the contracts or the dapp code changes so it stays consistent with the common code and contracts that it interacts with. There is currently a problem with how the script is built and needs to be manually adjusted to work properly. The current manual process is
+TODO: This currently needs to be run manually. We will need to make this script run every time the contracts or the dapp code changes so it stays consistent with the common code and contracts that it interacts with. There is currently a problem with how the script is built and needs to be manually adjusted to work properly.
 
 ## Execution
 
-The web service is invoked by a github action on the repo. The code itself handles being triggered more times than is needed for the intervals defined, but still only stores data when needed based on the intervals defined. So even if it only needs to store data every 5 minutes, it can be called every minute and won't store data until the 5 minute interval is hit.
+The web service is invoked by a github action on the repo. The web service code itself handles being triggered more times than is needed for the intervals defined, but still only stores data when needed based on the intervals defined. So even if it only needs to store data every 5 minutes, it can be called every minute and won't store data until the 5 minute interval is hit.
 
 This is how the flow works:
 
-- Cloudflare CRON job runs every minute. This doesn't have to be Cloudflare, just some service that can call a GitHub action every minute (current code in cloudflare below)
-- Calls the GitHub action using a personal access token (PAT) for auth (a personal access token from GitHub is needed to call this action with "Workflow Action" rights )
-- GitHub action runs the code at /script/update-chart-data/index.mjs
-- Checks to make sure data is needed at a new interval
-- Calls the contracts and gathers the data it needs
-- Stores the data in firebase
+- Cloudflare CRON job runs every minute. This doesn't have to be Cloudflare, just some service that can call a GitHub action every minute.
+- The CRON job calls the GitHub action using a git personal access token (PAT) having "Workflow Action" rights.
+- Following is the CRON job code in cloudflare.  Replace "PAT" with the actual PAT.
 
-`
-export default {
-async scheduled(event, env, ctx) {
-ctx.waitUntil(seed());
-},
-};
-function seed(){
-const headers = new Headers();
-headers.append('Content-Type', 'application/json;charset=UTF-8');
-headers.append('Authorization', 'Bearer --- personal access token (PAT) from git ---');
-headers.append('Accept', 'application/vnd.github.v3+json');
-headers.append('User-Agent', 'Cloudflare-Workers');
+    ```
+    export default {
+        async scheduled(event, env, ctx) {
+            ctx.waitUntil(seed());
+        },
+    };
+    function seed(){
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json;charset=UTF-8');
+        headers.append('Authorization', 'Bearer PAT');
+        headers.append('Accept', 'application/vnd.github.v3+json');
+        headers.append('User-Agent', 'Cloudflare-Workers');
+        return fetch('https://api.github.com/repos/Kolektivo/kolektivo-dapp/actions/workflows/37267987/dispatches', {
+            method: 'post',
+            headers: headers,
+            body: JSON.stringify({ ref: 'development' }),
+        });
+    }
+    ```
+- The GitHub action runs the webservice code at /script/update-chart-data/index.mjs.  The webservice code:
+  - checks to make sure data is needed at a new interval
+  - calls the contracts and gathers the data it needs
+  - stores the data in firebase
 
-    return fetch('https://api.github.com/repos/Kolektivo/kolektivo-dapp/actions/workflows/37267987/dispatches', {
-    method: 'post',
-    headers: headers,
-    body: JSON.stringify({ ref: 'development' }),
-    });
-
-}
-`
+- Github logs each invocation of the action.  The action will show success or failure depending on whether the webservice succeeds.
 
 # Firebase
 
@@ -70,7 +71,7 @@ In the root, there are two collections. One is called "chartData" and the other 
 
 The chartData collection is where the production data will be located while the testData collection is where the data for DEV/QA testing is located.
 
-Under each collection is a list of documents. 7 of them coincide with specific chart data and on of them logs when the last data sync happened.
+Under each collection is a list of documents. 7 of them coincide with specific chart data and one of them logs when the last data sync happened. The "LastSync" document has a "day", "hour" and "minute" collection and each of those have a document with a UTC timestamp as the name and they tell the app when the last time the data was synced.
 
 Under each of the chart documents is a collection of "day", "hour" and "minute". These are different intervals of time that the chart can use.
 
@@ -79,10 +80,21 @@ Under each of the chart documents is a collection of "day", "hour" and "minute".
 - Minute data is captured every 5 minutes. This data is only needed for a 1 hour period so every 5 minutes it captures a new data point, the 12th oldest data point is deleted by the web service
 - All date/time data is stored in GMT
 
-Before going live, we will need to make two different access tokens on firebase.
+# Firebase Authentication
 
-- The first token will allow read rights on the data and that token will be used in the dapp to read the data and display it. This will be a publically available token, but should be limited by CORS to only be used from our dapp.
+On firebase we currently have one token having no restrictions, thus giving read/write access to everyone.
+
+You can edit the rules for that token here: https://console.firebase.google.com/u/1/project/kolektivo-613ca/firestore/rules.
+
+TODO:
+
+Before going live, in order to appropriately restrict access to the firebase data, we will want to create two more restrictive access tokens on firebase:
+
+- The first token will allow read rights on the data. This token will be used in the dapp to read the data and display it. This will be a publically available token, but should be limited by CORS to only be used from our dapp.
 - The second token will allow read and write access and will be private to our web service so no one else has access to it. This will be used by GitHub actions and will not be publically available.
+
+However, tt is as yet uncertain how to create two different tokens for the same firestore database, or if it's even possible. This needs to be researched.
+
 
 # Token List
 
@@ -104,7 +116,7 @@ There are three main contracts that the dapp will be reliant on:
 
 Each of these contracts, when deployed, produce JSON files under their respective repos' /export folder. These JSON files define all the names, chain ids and ABI data that is needed for the dapp to call the contract functions.
 
-A node script located at /build/postinstall/buildModels.mjs builds "Model" files from the needed ABI JSON files and puts them in the /src/models/generated folder.  Typescript contract objects are generated by ethers.js, also from the ABI JSON files.  These Model files are used to supply typings to assist in using the ethers.js ethers.js contract objects.
+A node script located at /build/postinstall/buildModels.mjs builds "Model" files from the needed ABI JSON files and puts them in the /src/models/generated folder. Typescript contract objects are generated by ethers.js, also from the ABI JSON files. These Model files are used to supply typings to assist in using the ethers.js ethers.js contract objects.
 
 The buildModels script is run when `npm install` is run on the server.
 

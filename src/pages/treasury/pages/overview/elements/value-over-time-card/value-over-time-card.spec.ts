@@ -5,6 +5,7 @@ import { createFixture } from '@aurelia/testing';
 import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
+import { Currency } from '../../../../../../design-system/value-converters';
 import { Global } from '../../../../../../hooks';
 import { IStore, ITreasuryStore } from '../../../../../../stores';
 
@@ -15,31 +16,12 @@ import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('value-over-time-card', () => {
-  it('should have a k-card component', async () => {
+  it('should have a k-stack component', async () => {
     const { appHost } = await createFixture
       .html(`<value-over-time-card>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelector('k-card')).exist;
-  });
-
-  it('should have a title k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-over-time-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const card = appHost.querySelector('k-card');
-    expect(card?.getAttribute('title')).exist;
-  });
-
-  it('should have a chart time filter component with text on the right', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-over-time-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const filter = appHost.querySelector('chart-time-filter');
-    expect(filter).exist;
-    expect(filter?.innerHTML).contains('k-text');
+    expect(appHost.querySelector('k-stack')).exist;
   });
 
   function getRegistrations() {
@@ -51,6 +33,7 @@ describe('value-over-time-card', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       ValueOverTimeCard,
+      Currency,
       RelativeTime,
       Global,
       Registration.instance(

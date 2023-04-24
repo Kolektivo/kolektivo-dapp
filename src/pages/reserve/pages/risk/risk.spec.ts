@@ -5,15 +5,15 @@ import { createFixture } from '@aurelia/testing';
 import '../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../design-system/configuration';
-import { CurrencyValueConverter } from '../../../../design-system/value-converters';
+import { Currency } from '../../../../design-system/value-converters';
 import { Global } from '../../../../hooks';
 import { IStore } from '../../../../stores';
+import { IReserveStore } from '../../../../stores/reserve-store';
 
-import { PercentageValueConverter } from './../../../../resources/value-converters';
+import { Percentage } from './../../../../resources/value-converters';
 import { INumberService } from './../../../../services';
 import { Risk } from './risk';
 
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 
 describe('risk', () => {
@@ -61,11 +61,11 @@ describe('risk', () => {
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
     return [
       Risk,
-      PercentageValueConverter,
+      Percentage,
       Registration.instance(IReserveStore, {
         getRiskOverTime: () => new Promise((res) => res([])),
       }),
-      CurrencyValueConverter,
+      Currency,
       Global,
       createMockStoreRegistration(),
       createMockI18nRegistration(),

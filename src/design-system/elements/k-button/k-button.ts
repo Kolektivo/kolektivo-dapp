@@ -17,8 +17,7 @@ import { ButtonSize } from './button-size';
  */
 export type ButtonType = 'primary' | 'secondary' | 'tertiary' | 'utility-light' | 'utility-dark' | 'error';
 import template from './k-button.html';
-
-import css from './k-button.scss';
+import css from './k-button.scss?inline';
 
 @customElement({
   name: 'k-button',

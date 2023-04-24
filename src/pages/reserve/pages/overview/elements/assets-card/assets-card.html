@@ -1,5 +1,9 @@
-<k-card title="${i18n.tr('navigation.reserve.overview.assets.title')}" tooltip-text="${i18n.tr('navigation.reserve.overview.assets.tooltip')}">
+<k-stack gap="var(--spacing-lg)">
+  <k-stack direction="row" gap="var(--spacing-sm)">
+    <k-text type="h5">${i18n.tr('navigation.reserve.overview.assets.title')}</k-text>
+    <k-icon name="help_outline" size="20" tooltip="${i18n.tr('navigation.reserve.overview.assets.tooltip')}"></k-icon>
+  </k-stack>
   <card-nav routes.bind="routes"></card-nav>
   <assets if.bind="activeTab === 'assets'"></assets>
   <transaction-history if.bind="activeTab === 'transaction-history'"></transaction-history>
-</k-card>
+</k-stack>

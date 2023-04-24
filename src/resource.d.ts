@@ -41,6 +41,7 @@ interface ImportMetaEnv {
   readonly KOL_CHAIN_ID?: string;
   readonly KOL_CHAIN_URL?: string;
   readonly KOL_FIREBASE_API_KEY?: string;
+  readonly KOL_SHOW_STORYBOOK?: string;
   readonly KOL_CHAIN?: string;
   readonly KOL_SCAN_LINK?: string;
   readonly KOL_TESTING?: string;

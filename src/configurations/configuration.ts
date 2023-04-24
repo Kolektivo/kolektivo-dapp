@@ -6,6 +6,7 @@ export type IConfiguration = {
   chainUrl: string;
   chain: string;
   isDevelopment: boolean;
+  showStorybook: boolean;
   scanLink: string;
   firebaseCollection: string;
 };

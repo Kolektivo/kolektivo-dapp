@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aur
 import { captureFilter, uid } from '../../common';
 
 import template from './k-check.html';
-
-import css from './k-check.scss';
+import css from './k-check.scss?inline';
 
 @customElement({
   name: 'k-check',

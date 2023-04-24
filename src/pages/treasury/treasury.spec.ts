@@ -4,10 +4,11 @@ import { createFixture } from '@aurelia/testing';
 
 import 'utils-testing/setup-testing';
 
+import { Global } from '../../hooks';
+import { IStore } from '../../stores';
+
 import { Treasury } from './treasury';
 
-import { Global } from 'hooks';
-import { IStore } from 'stores';
 import { describe, expect, it } from 'vitest';
 
 describe('treasury', () => {
