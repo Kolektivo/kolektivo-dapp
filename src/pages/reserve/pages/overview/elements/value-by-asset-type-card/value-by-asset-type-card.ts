@@ -16,7 +16,7 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
   constructor(@IReserveStore private readonly reserveStore: IReserveStore, @INumberService private readonly numberService: INumberService) {}
 
   get chartData(): number[] {
-    return [this.nonStablecoinAssetPercentage() * 100, this.stablecoinAssetPercentage() * 100, this.ecologicalAssetPercentage() * 100];
+    return [this.highAssetPercentage() * 100, this.mediumAssetPercentage() * 100, this.lowAssetPercentage() * 100];
   }
 
   get isReady() {
@@ -37,16 +37,16 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
     return this.numberService.fromString(fromWei(this.reserveStore.reserveValue, 18));
   }
 
-  ecologicalAssetPercentage(): number {
-    return this.getAssetPercentage(AssetType.Ecological) / this.reserveValue;
+  lowAssetPercentage(): number {
+    return this.getAssetPercentage(AssetType.Low) / this.reserveValue;
   }
 
-  stablecoinAssetPercentage(): number {
-    return this.getAssetPercentage(AssetType.Stablecoin) / this.reserveValue;
+  mediumAssetPercentage(): number {
+    return this.getAssetPercentage(AssetType.Medium) / this.reserveValue;
   }
 
-  nonStablecoinAssetPercentage(): number {
-    return this.getAssetPercentage(AssetType.NonStablecoin) / this.reserveValue;
+  highAssetPercentage(): number {
+    return this.getAssetPercentage(AssetType.High) / this.reserveValue;
   }
 
   private getAssetPercentage(type: AssetType): number {

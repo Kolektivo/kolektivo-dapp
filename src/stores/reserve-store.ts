@@ -5,6 +5,9 @@ import { callOnce } from '../decorators/call-once';
 import { Asset } from '../models/asset';
 import { BigNumberOverTimeData, kCurPriceData, kCurSupplyData, LeverageChartData, RiskChartData, ValueChartData } from '../models/chart-data';
 import { Erc20 } from '../models/generated/monetary/erc20';
+import { Mentoexchange } from '../models/generated/monetary/mentoexchange';
+import { Mentoreserve } from '../models/generated/monetary/mentoreserve';
+import { Oracle } from '../models/generated/monetary/oracle';
 import { Interval } from '../models/interval';
 import { Transaction } from '../models/transaction';
 import { IContractService, INumberService } from '../services';
@@ -154,11 +157,27 @@ export class ReserveStore {
     const contract = await this.getReserveContract();
     const reserveAddress = contract.address;
     if (!reserveAddress) return;
-    this.kGuilderCurrentPrice = 4;
-    this.kGuilderTotalSupply = BigNumber.from(1934223345231232342413213n);
-    this.kGuilderSpread = 0.2;
+    const kGuilderContract: Erc20 = await this.contractService.getContract('monetary', 'KolektivoGuilder'); // get the kCur contract
+    console.log('kGuilder Contract', kGuilderContract);
+    const oracleAddress = await contract.tokenOracle();
+    console.log('kGuilder Oracle Address', oracleAddress);
+    const oracleContract: Oracle = await this.contractService.getContract('monetary', 'Oracle', oracleAddress); //get the oracle contract for the given oracle address
+    console.log('kGuilder Oracle Contact', oracleContract);
+    const data = await oracleContract.getData(); // get the data from the oracle contract
+    console.log('DATA', data);
+    const totalSupply = await kGuilderContract.totalSupply();
+    console.log('Total Supply', totalSupply);
+    const mentoExchange: Mentoexchange = await this.contractService.getContract('monetary', 'MentoExchange'); // get the kCur contract
+    const spread = await mentoExchange.spread();
+    console.log('Spread', spread);
+    const mentoReserve: Mentoreserve = await this.contractService.getContract('monetary', 'MentoReserve'); // get the kCur contract
+    const tobinTax = await mentoReserve.tobinTax();
+    console.log('Tobin Tax', tobinTax);
+    this.kGuilderCurrentPrice = this.numberService.fromString(fromWei(data[0], 18));
+    this.kGuilderTotalSupply = totalSupply;
+    this.kGuilderSpread = this.numberService.fromString(fromWei(spread, 18));
     this.kGuilderInflationRate = 0.01;
-    this.kGuilderTobinTax = 0.05;
+    this.kGuilderTobinTax = this.numberService.fromString(fromWei(tobinTax, 18));
   }
 
   private async loadkCurData(): Promise<void> {
