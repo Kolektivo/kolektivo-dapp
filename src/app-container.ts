@@ -1,6 +1,6 @@
 import { ConsoleSink, DI, IContainer, IPlatform, LoggerConfiguration, LogLevel, PLATFORM, Registration, StyleConfiguration } from 'aurelia';
 import { I18nConfiguration } from '@aurelia/i18n';
-import { RouterConfiguration } from '@aurelia/router';
+import { RouterConfiguration } from '@aurelia/router-lite';
 import { StandardConfiguration } from '@aurelia/runtime-html';
 
 import { IConfiguration } from './configurations/configuration';
@@ -14,7 +14,6 @@ import { imageMap } from './app-images';
 import { DesignSystemPlugin } from './design-system';
 import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_API_KEY, FIREBASE_COLLECTION, IPFS_GATEWAY, IS_DEV, SCAN_LINK, SHOW_STORYBOOK } from './environment-variables';
 import * as hooks from './hooks';
-import * as pages from './pages';
 import { CeloProviderFactory, IProviderFactory } from './provider-factory';
 import { IReadOnlyProvider } from './read-only-provider';
 import * as resources from './resources';
@@ -83,7 +82,6 @@ export const appContainer: IContainer = DI.createContainer()
   .register(Store)
   .register(hooks)
   .register(resources)
-  .register(pages)
   .register(Registration.cachedCallback(IFirebaseApp, () => import('firebase/app').then((x) => x.initializeApp({ ...firebaseConfig, apiKey: FIREBASE_API_KEY }))))
   .register(
     Registration.instance(IConfiguration, {
@@ -135,11 +133,8 @@ export const appContainer: IContainer = DI.createContainer()
   .register(
     RouterConfiguration.customize({
       useUrlFragmentHash: false,
-      useHref: false,
-      useDirectRouting: true,
-      title: {
-        appTitle: '${componentTitles}${appTitleSeparator}Kolektivo',
-      },
+      basePath: '/',
+      activeClass: 'active',
     }),
   )
   .register(

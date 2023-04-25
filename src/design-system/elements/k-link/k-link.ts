@@ -1,5 +1,5 @@
 import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
-import { IRouter } from '@aurelia/router';
+import { IRouter } from '@aurelia/router-lite';
 
 import { captureFilter, ifExistsThenTrue } from '../../common';
 
