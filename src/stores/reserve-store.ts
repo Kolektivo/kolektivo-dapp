@@ -2,7 +2,7 @@ import { DI, IContainer, Registration } from 'aurelia';
 
 import { IConfiguration } from '../configurations/configuration';
 import { callOnce } from '../decorators/call-once';
-import { Asset } from '../models/asset';
+import { Asset, AssetType } from '../models/asset';
 import { BigNumberOverTimeData, kCurPriceData, kCurSupplyData, LeverageChartData, RiskChartData, ValueChartData } from '../models/chart-data';
 import { Erc20 } from '../models/generated/monetary/erc20';
 import { Mentoexchange } from '../models/generated/monetary/mentoexchange';
@@ -13,6 +13,7 @@ import { Transaction } from '../models/transaction';
 import { IContractService, INumberService } from '../services';
 import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from '../utils';
 
+import { Kolektivoguilder } from './../models/generated/monetary/kolektivoguilder/Kolektivoguilder';
 import { Reserve } from './../models/generated/monetary/reserve/Reserve';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
@@ -157,10 +158,10 @@ export class ReserveStore {
     const contract = await this.getReserveContract();
     const reserveAddress = contract.address;
     if (!reserveAddress) return;
-    const kGuilderContract: Erc20 = await this.contractService.getContract('monetary', 'KolektivoGuilder'); // get the kCur contract
-    console.log('kGuilder Contract', kGuilderContract);
+    const kGuilderContract: Kolektivoguilder = await this.contractService.getContract('monetary', 'KolektivoGuilder'); // get the kCur contract
+    console.log('kGuilder Contract', kGuilderContract); // 0x76658A30cEc19FA312781dB3e9AB7AeAF17ecA87
     const oracleAddress = await contract.tokenOracle();
-    console.log('kGuilder Oracle Address', oracleAddress);
+    console.log('kGuilder Oracle Address', oracleAddress); //0xBd2aE2b8b8dbDA718A5B00090aad783aDCa90F67
     const oracleContract: Oracle = await this.contractService.getContract('monetary', 'Oracle', oracleAddress); //get the oracle contract for the given oracle address
     console.log('kGuilder Oracle Contact', oracleContract);
     const data = await oracleContract.getData(); // get the data from the oracle contract
@@ -251,6 +252,16 @@ export class ReserveStore {
       kCurPriceFloor: this.kCurPriceFloor,
     } as unknown as kCurPriceData);
     return valueOverTimeData;
+  }
+
+  public get lowRiskAssets(): Asset[] {
+    return this.reserveAssets?.filter((x) => x.type === AssetType.Low) ?? [];
+  }
+  public get moderateRiskAssets(): Asset[] {
+    return this.reserveAssets?.filter((x) => x.type === AssetType.Medium) ?? [];
+  }
+  public get highRiskAssets(): Asset[] {
+    return this.reserveAssets?.filter((x) => x.type === AssetType.High) ?? [];
   }
 
   public async getRiskOverTime(interval: Interval): Promise<RiskChartData[]> {

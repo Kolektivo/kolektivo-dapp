@@ -30,8 +30,8 @@ import type {
 export interface MentoexchangeInterface extends utils.Interface {
   functions: {
     "activateStable()": FunctionFragment;
-    "buy(uint256,uint256,bool)": FunctionFragment;
-    "exchange(uint256,uint256,bool)": FunctionFragment;
+    "buy(address,uint256,uint256,bool)": FunctionFragment;
+    "exchange(address,uint256,uint256,bool)": FunctionFragment;
     "getBuyAndSellBuckets(bool)": FunctionFragment;
     "getBuyTokenAmount(uint256,bool)": FunctionFragment;
     "getSellTokenAmount(uint256,bool)": FunctionFragment;
@@ -44,7 +44,7 @@ export interface MentoexchangeInterface extends utils.Interface {
     "registry()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "reserveFraction()": FunctionFragment;
-    "sell(uint256,uint256,bool)": FunctionFragment;
+    "sell(address,uint256,uint256,bool)": FunctionFragment;
     "setMinimumReports(uint256)": FunctionFragment;
     "setRegistry(address)": FunctionFragment;
     "setReserveFraction(uint256)": FunctionFragment;
@@ -98,6 +98,7 @@ export interface MentoexchangeInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "buy",
     values: [
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<boolean>
@@ -106,6 +107,7 @@ export interface MentoexchangeInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "exchange",
     values: [
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<boolean>
@@ -163,6 +165,7 @@ export interface MentoexchangeInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "sell",
     values: [
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<boolean>
@@ -451,6 +454,7 @@ export interface Mentoexchange extends BaseContract {
     ): Promise<ContractTransaction>;
 
     buy(
+      from: PromiseOrValue<string>,
       buyAmount: PromiseOrValue<BigNumberish>,
       maxSellAmount: PromiseOrValue<BigNumberish>,
       buyGold: PromiseOrValue<boolean>,
@@ -458,6 +462,7 @@ export interface Mentoexchange extends BaseContract {
     ): Promise<ContractTransaction>;
 
     exchange(
+      from: PromiseOrValue<string>,
       sellAmount: PromiseOrValue<BigNumberish>,
       minBuyAmount: PromiseOrValue<BigNumberish>,
       sellGold: PromiseOrValue<boolean>,
@@ -514,6 +519,7 @@ export interface Mentoexchange extends BaseContract {
     ): Promise<[BigNumber] & { value: BigNumber }>;
 
     sell(
+      from: PromiseOrValue<string>,
       sellAmount: PromiseOrValue<BigNumberish>,
       minBuyAmount: PromiseOrValue<BigNumberish>,
       sellGold: PromiseOrValue<boolean>,
@@ -573,6 +579,7 @@ export interface Mentoexchange extends BaseContract {
   ): Promise<ContractTransaction>;
 
   buy(
+    from: PromiseOrValue<string>,
     buyAmount: PromiseOrValue<BigNumberish>,
     maxSellAmount: PromiseOrValue<BigNumberish>,
     buyGold: PromiseOrValue<boolean>,
@@ -580,6 +587,7 @@ export interface Mentoexchange extends BaseContract {
   ): Promise<ContractTransaction>;
 
   exchange(
+    from: PromiseOrValue<string>,
     sellAmount: PromiseOrValue<BigNumberish>,
     minBuyAmount: PromiseOrValue<BigNumberish>,
     sellGold: PromiseOrValue<boolean>,
@@ -634,6 +642,7 @@ export interface Mentoexchange extends BaseContract {
   reserveFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
   sell(
+    from: PromiseOrValue<string>,
     sellAmount: PromiseOrValue<BigNumberish>,
     minBuyAmount: PromiseOrValue<BigNumberish>,
     sellGold: PromiseOrValue<boolean>,
@@ -689,6 +698,7 @@ export interface Mentoexchange extends BaseContract {
     activateStable(overrides?: CallOverrides): Promise<void>;
 
     buy(
+      from: PromiseOrValue<string>,
       buyAmount: PromiseOrValue<BigNumberish>,
       maxSellAmount: PromiseOrValue<BigNumberish>,
       buyGold: PromiseOrValue<boolean>,
@@ -696,6 +706,7 @@ export interface Mentoexchange extends BaseContract {
     ): Promise<BigNumber>;
 
     exchange(
+      from: PromiseOrValue<string>,
       sellAmount: PromiseOrValue<BigNumberish>,
       minBuyAmount: PromiseOrValue<BigNumberish>,
       sellGold: PromiseOrValue<boolean>,
@@ -748,6 +759,7 @@ export interface Mentoexchange extends BaseContract {
     reserveFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
     sell(
+      from: PromiseOrValue<string>,
       sellAmount: PromiseOrValue<BigNumberish>,
       minBuyAmount: PromiseOrValue<BigNumberish>,
       sellGold: PromiseOrValue<boolean>,
@@ -874,6 +886,7 @@ export interface Mentoexchange extends BaseContract {
     ): Promise<BigNumber>;
 
     buy(
+      from: PromiseOrValue<string>,
       buyAmount: PromiseOrValue<BigNumberish>,
       maxSellAmount: PromiseOrValue<BigNumberish>,
       buyGold: PromiseOrValue<boolean>,
@@ -881,6 +894,7 @@ export interface Mentoexchange extends BaseContract {
     ): Promise<BigNumber>;
 
     exchange(
+      from: PromiseOrValue<string>,
       sellAmount: PromiseOrValue<BigNumberish>,
       minBuyAmount: PromiseOrValue<BigNumberish>,
       sellGold: PromiseOrValue<boolean>,
@@ -933,6 +947,7 @@ export interface Mentoexchange extends BaseContract {
     reserveFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
     sell(
+      from: PromiseOrValue<string>,
       sellAmount: PromiseOrValue<BigNumberish>,
       minBuyAmount: PromiseOrValue<BigNumberish>,
       sellGold: PromiseOrValue<boolean>,
@@ -991,6 +1006,7 @@ export interface Mentoexchange extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     buy(
+      from: PromiseOrValue<string>,
       buyAmount: PromiseOrValue<BigNumberish>,
       maxSellAmount: PromiseOrValue<BigNumberish>,
       buyGold: PromiseOrValue<boolean>,
@@ -998,6 +1014,7 @@ export interface Mentoexchange extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     exchange(
+      from: PromiseOrValue<string>,
       sellAmount: PromiseOrValue<BigNumberish>,
       minBuyAmount: PromiseOrValue<BigNumberish>,
       sellGold: PromiseOrValue<boolean>,
@@ -1050,6 +1067,7 @@ export interface Mentoexchange extends BaseContract {
     reserveFraction(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sell(
+      from: PromiseOrValue<string>,
       sellAmount: PromiseOrValue<BigNumberish>,
       minBuyAmount: PromiseOrValue<BigNumberish>,
       sellGold: PromiseOrValue<boolean>,

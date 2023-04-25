@@ -8617,7 +8617,7 @@
       ]
     },
     "SortedOracles": {
-      "address": "0x48c501A5D2cb50f4F6F6181F6e59Fa2bA7510a84",
+      "address": "0xe2eeb028008f42Ca8d86e5CF2638F06F4651131C",
       "abi": [
         {
           "inputs": [
@@ -9316,7 +9316,7 @@
       ]
     },
     "KolektivoGuilder": {
-      "address": "0xA7631e5770B7c8B5BD02dEbfb0f3B0f70045C70F",
+      "address": "0x76658A30cEc19FA312781dB3e9AB7AeAF17ecA87",
       "abi": [
         {
           "inputs": [
@@ -10407,7 +10407,7 @@
       ]
     },
     "MentoExchange": {
-      "address": "0x1f09b9a17Bb3FAaB096a5517E3d007CEea0ab86b",
+      "address": "0x9f66Fc3C9608f5690fE878c9f6E73AEA389ac338",
       "abi": [
         {
           "inputs": [
@@ -10590,6 +10590,11 @@
         {
           "inputs": [
             {
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
               "internalType": "uint256",
               "name": "buyAmount",
               "type": "uint256"
@@ -10618,6 +10623,11 @@
         },
         {
           "inputs": [
+            {
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
             {
               "internalType": "uint256",
               "name": "sellAmount",
@@ -10871,6 +10881,11 @@
         {
           "inputs": [
             {
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
               "internalType": "uint256",
               "name": "sellAmount",
               "type": "uint256"
@@ -11056,7 +11071,7 @@
       ]
     },
     "MentoReserve": {
-      "address": "0xD182A31EAbb71776BCE5000A2714a5451177815C",
+      "address": "0x41032125C55E5C362c7E1c85b3183E7d4eB99e07",
       "abi": [
         {
           "inputs": [
@@ -12196,7 +12211,7 @@
       ]
     },
     "MentoRegistry": {
-      "address": "0x8c6f30915DB8DC01Dfc0De5e829781F611DDBc30",
+      "address": "0xE72ef442Edb4EF609A2d8F3731b16D29A5365b9c",
       "abi": [
         {
           "inputs": [
@@ -12446,7 +12461,7 @@
       ]
     },
     "Freezer": {
-      "address": "0x5f81cfAFe84E2148B216c221651ED21d60075E99",
+      "address": "0xBCE9d359b89Ab36744aF01785B016fB62aE24819",
       "abi": [
         {
           "inputs": [
