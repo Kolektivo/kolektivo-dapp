@@ -63,6 +63,7 @@ export class ContractService {
     const contracts = contractData.contracts;
     const contract = contracts[name as keyof typeof contracts] as unknown as { abi: string | ContractInterface; address: string };
     let abi = contract.abi;
+    if (!abi) abi = 'ERC20';
     if (typeof abi === 'string') {
       const key = abi as keyof ContractGroupsSharedJson;
       abi = (await this.getSharedAbi(contractType, key)) as ContractInterface;
@@ -72,7 +73,6 @@ export class ContractService {
     if (!overrideAddress) {
       throw new Error(`ContractService: requested contract has no address: ${name}`);
     }
-
     return new Contract(overrideAddress, abi, signerOrProvider ?? this.readOnlyProvider) as TResult;
   }
 

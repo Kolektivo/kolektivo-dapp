@@ -48,7 +48,7 @@ export default async (network, contractName) => {
             } else {
               abi = fileContents[contractName];
             }
-            if (typeof abi !== 'string') {
+            if (typeof abi !== 'string' && typeof abi !== 'undefined') {
               //some abis are only a string that references another abi so those we don't want to generate
               const fileName = contractName.toLowerCase().replaceAll(' ', '-').replaceAll('#', ''); // build the temp and final model file name
               if (!fileName) return;

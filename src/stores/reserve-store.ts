@@ -2,11 +2,10 @@ import { DI, IContainer, Registration } from 'aurelia';
 
 import { IConfiguration } from '../configurations/configuration';
 import { callOnce } from '../decorators/call-once';
-import { Asset, AssetType } from '../models/asset';
+import { Asset } from '../models/asset';
 import { BigNumberOverTimeData, kCurPriceData, kCurSupplyData, LeverageChartData, RiskChartData, ValueChartData } from '../models/chart-data';
 import { Erc20 } from '../models/generated/monetary/erc20';
 import { Interval } from '../models/interval';
-import { RiskClass } from '../models/risk-class';
 import { Transaction } from '../models/transaction';
 import { IContractService, INumberService } from '../services';
 import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from '../utils';
@@ -102,31 +101,10 @@ export class ReserveStore {
     return this.kCurPriceFloor * 1.9;
   }
 
-  public get lowRiskAssets(): Asset[] {
-    return this.reserveAssets?.filter((x) => x.type === AssetType.Stablecoin) ?? [];
-  }
-  public get moderateRiskAssets(): Asset[] {
-    return this.reserveAssets?.filter((x) => x.type === AssetType.NonStablecoin) ?? [];
-  }
-  public get highRiskAssets(): Asset[] {
-    return this.reserveAssets?.filter((x) => x.type === AssetType.Ecological) ?? [];
-  }
-
   public get kGuilderValueRatio(): number {
     if (!this.kCurPrice) return 0;
     //TODO get the kGuilder price and divide that by kCurPrice
     return 4 / this.kCurPrice;
-  }
-
-  public getRiskClass(assetType: AssetType): RiskClass {
-    switch (assetType) {
-      case AssetType.Ecological:
-        return RiskClass.high;
-      case AssetType.NonStablecoin:
-        return RiskClass.moderate;
-      case AssetType.Stablecoin:
-        return RiskClass.low;
-    }
   }
 
   @callOnce()
@@ -156,14 +134,18 @@ export class ReserveStore {
   @callOnce()
   public async loadkCur(): Promise<void> {
     await this.loadkCurData();
-    const contract = await this.getReserveContract(); // get reserve contract
     if (!this.kCurSupply) return; //can't get the distribution percentages without a total supply value so return if it's not there
+    const kCurSupply = this.numberService.fromString(fromWei(this.kCurSupply, 18));
+    //console.log(kCurSupply); //print kCurSupply
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    const kCurContract: Erc20 = await this.contractService.getContract('monetary', 'Kolektivo Curacao Reserve Token'); // get the kCur contract
-    const kCurInReserve = await kCurContract.balanceOf(contract.address); //get the balace of kCur in the reserve
-    this.kCurReserveDistribution = this.numberService.fromString(fromWei(kCurInReserve, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
+    const kCurContract: Erc20 = await this.contractService.getContract('monetary', 'CuracaoReserveToken'); // get the kCur contract
+    const multiSigContract: Erc20 = await this.contractService.getContract('monetary', 'KolektivoMultiSig'); // get the kCur contract
+    const kCurInReserve = await kCurContract.balanceOf(multiSigContract.address); //get the balace of kCur in the reserve
+    this.kCurReserveDistribution = this.numberService.fromString(fromWei(kCurInReserve, 18)) / kCurSupply;
     //TODO: Get the balances of kCur inside of the reserve, mento and the primary pool and set those values here
-    this.kCurMentoDistribution = 0;
+    const mentoReserveContract: Erc20 = await this.contractService.getContract('monetary', 'MentoReserve'); // get the kCur contract
+    const mentoInReserve = await kCurContract.balanceOf(mentoReserveContract.address);
+    this.kCurMentoDistribution = this.numberService.fromString(fromWei(mentoInReserve, 18)) / kCurSupply;
     this.kCurPrimaryPoolDistribution = 0;
   }
 
@@ -253,20 +235,26 @@ export class ReserveStore {
   }
 
   public async getRiskOverTime(interval: Interval): Promise<RiskChartData[]> {
-    const [valueOverTimeData, [reserveStatus, minBacking]] = await Promise.all([
+    const [valueOverTimeData, [reserveStatus, minBacking, contract]] = await Promise.all([
       this.getData<RiskChartData>('risk', interval),
-      this.getReserveContract().then((contract) => Promise.all([contract.reserveStatus(), contract.minBacking()])),
+      this.getReserveContract().then((contract) => Promise.all([contract.reserveStatus(), contract.minBacking(), contract])),
       this.loadAssets(),
     ]);
     this.kCurMarketCap = reserveStatus[1];
     this.minBacking = minBacking;
+
+    this.reserveAssets = await Promise.all(
+      this.reserveAssets?.map(async (x) => {
+        return { ...x, type: await contract.riskLevelOfERC20(x.token.address) };
+      }) ?? [],
+    );
     valueOverTimeData.push({
       createdAt: Number(new Date()),
       minCollateralValue: this.minCollateralizationValue,
       marketCap: this.kCurTotalValue,
-      lowRisk: this.lowRiskAssets.map((x) => x.total).sum(),
-      moderateRisk: this.moderateRiskAssets.map((x) => x.total).sum(),
-      highRisk: this.highRiskAssets.map((x) => x.total).sum(),
+      lowRisk: 0,
+      moderateRisk: 0,
+      highRisk: 0,
     } as unknown as RiskChartData);
     return valueOverTimeData;
   }

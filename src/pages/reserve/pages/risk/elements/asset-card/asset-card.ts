@@ -21,7 +21,7 @@ export class AssetCard implements ICustomElementViewModel {
         return {
           token: asset.token.name,
           tokenIcon: asset.token.logoURI,
-          riskClass: typeof asset.type !== 'undefined' ? this.reserveStore.getRiskClass(asset.type) : '',
+          riskClass: asset.type,
           collateralValue: asset.total,
           percentOfReserve: asset.total / this.numberService.fromString(fromWei(this.reserveStore.reserveValue ?? 0, 18)),
         };

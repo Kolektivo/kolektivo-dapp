@@ -33,12 +33,6 @@ export class PoolCard implements ICustomElementViewModel {
       },
       { headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.tvl'), field: 'tvl', width: '1fr', template: '${tvl | currency}' },
       { headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.fees'), field: 'fees', width: '1fr', template: '${fees | currency}' },
-      {
-        headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.range'),
-        field: 'range',
-        width: '1fr',
-        template: '${range | percentage}',
-      },
     ];
   }
 
@@ -51,7 +45,6 @@ export class PoolCard implements ICustomElementViewModel {
       volume: 55000,
       tvl: 87000,
       fees: 66,
-      range: -0.2,
     },
   ];
 }

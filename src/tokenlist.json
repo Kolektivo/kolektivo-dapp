@@ -20,20 +20,36 @@
             "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/ktt.svg"
         },
         {
-            "address": "0xf4cb43D02842c65101e5DA329ED01dFeC2280EdA",
+            "address": "0xeB22fD1Dc0F480faA0D5cce673364b31E5f1e772",
             "chainId": 42220,
-            "name": "Kolektivo Curacao Token",
+            "name": "CuracaoReserveToken",
             "symbol": "kCUR",
             "decimals": 18,
-            "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/kcur.svg"
+            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kG.svg"
         },
         {
-            "address": "0x4cB13ED364bd2c212B694921CdAca979DCA76054",
-            "chainId": 42229,
-            "name": "Test Token #1",
-            "symbol": "TT1",
+            "address": "0xA7631e5770B7c8B5BD02dEbfb0f3B0f70045C70F",
+            "chainId": 42220,
+            "name": "KolektivoGuilder",
+            "symbol": "kCUR",
             "decimals": 18,
-            "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/tt1.svg"
+            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kCUR.svg"
+        },
+        {
+            "address": "0xE858F83EB705F84aC7997839625D0Efd87cf60b5",
+            "chainId": 42229,
+            "name": "cUSD Mock",
+            "symbol": "cUSD-M",
+            "decimals": 18,
+            "logoURI": "https://assets.coingecko.com/coins/images/13161/small/icon-celo-dollar-color-1000-circle-cropped.png?1605771134"
+        },
+        {
+            "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+            "chainId": 42229,
+            "name": "Celo Dollar",
+            "symbol": "cUSD",
+            "decimals": 18,
+            "logoURI": "https://assets.coingecko.com/coins/images/13161/small/icon-celo-dollar-color-1000-circle-cropped.png?1605771134"
         },
         {
             "address": "0x5bFE78b0d15eF0cdcA4077336e0bEbEc15CFb142",

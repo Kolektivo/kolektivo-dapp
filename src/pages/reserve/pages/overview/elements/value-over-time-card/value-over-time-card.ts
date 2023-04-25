@@ -24,9 +24,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     @INumberService private readonly numberService: INumberService,
     @I18N private readonly i18n: I18N,
     @ICurrency private readonly currencyValueConverter?: ICurrency,
-  ) {
-    console.log(currencyValueConverter);
-  }
+  ) {}
 
   binding() {
     void this.intervalChanged();

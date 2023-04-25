@@ -1,13 +1,12 @@
-import fs from "fs-extra";
+import fs from 'fs-extra';
 
-const tokenListUri =
-  "https://cdn.jsdelivr.net/gh/Kolektivo/tokenlists@main/tokenlist.json";
+const tokenListUri = 'https://raw.githubusercontent.com/Kolektivo/tokenlists/main/tokenlist.json';
 
-export default async name => {
+export default async (name) => {
   const results = await fetch(tokenListUri, {
-    method: "GET",
-    headers: { accept: "application/json" }
-  }).then(async y => await y.json());
+    method: 'GET',
+    headers: { accept: 'application/json' },
+  }).then(async (y) => await y.json());
 
-  fs.writeFile("src/tokenlist.json", JSON.stringify(results, null, 4));
+  fs.writeFile('src/tokenlist.json', JSON.stringify(results, null, 4));
 };
