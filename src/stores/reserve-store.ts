@@ -174,7 +174,7 @@ export class ReserveStore {
     const mentoReserve: Mentoreserve = await this.contractService.getContract('monetary', 'MentoReserve'); // get the kCur contract
     const tobinTax = await mentoReserve.tobinTax();
     console.log('Tobin Tax', tobinTax);
-    this.kGuilderCurrentPrice = this.numberService.fromString(fromWei(data[0], 18));
+    this.kGuilderCurrentPrice = 0.558; //supposed to be hard coded for now per Marvin/Luuk
     this.kGuilderTotalSupply = totalSupply;
     this.kGuilderSpread = this.numberService.fromString(fromWei(spread, 18));
     this.kGuilderInflationRate = 0.01;
@@ -282,9 +282,9 @@ export class ReserveStore {
       createdAt: Number(new Date()),
       minCollateralValue: this.minCollateralizationValue,
       marketCap: this.kCurTotalValue,
-      lowRisk: 0,
-      moderateRisk: 0,
-      highRisk: 0,
+      lowRisk: this.lowRiskAssets.map((x) => x.total).sum(),
+      moderateRisk: this.moderateRiskAssets.map((x) => x.total).sum(),
+      highRisk: this.highRiskAssets.map((x) => x.total).sum(),
     } as unknown as RiskChartData);
     return valueOverTimeData;
   }
