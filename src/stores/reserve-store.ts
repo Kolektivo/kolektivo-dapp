@@ -126,6 +126,11 @@ export class ReserveStore {
     this.reserveAssets = (
       await Promise.all(addresses.map((address): Promise<Asset | undefined> => this.contractStore.getAsset(address.address, address.tokenId, contract, reserveAddress, this.transactions).catch()))
     ).filter(Boolean) as Asset[];
+    this.reserveAssets = await Promise.all(
+      this.reserveAssets.map(async (x) => {
+        return { ...x, type: await contract.riskLevelOfERC20(x.token.address) };
+      }),
+    );
     void this.loadkCurData();
     const reserveStatus = await contract.reserveStatus();
     this.reserveValue = reserveStatus[0];
@@ -264,23 +269,17 @@ export class ReserveStore {
   }
 
   public async getRiskOverTime(interval: Interval): Promise<RiskChartData[]> {
-    const [valueOverTimeData, [reserveStatus, minBacking, contract]] = await Promise.all([
+    const [valueOverTimeData, [reserveStatus, minBacking]] = await Promise.all([
       this.getData<RiskChartData>('risk', interval),
-      this.getReserveContract().then((contract) => Promise.all([contract.reserveStatus(), contract.minBacking(), contract])),
+      this.getReserveContract().then((contract) => Promise.all([contract.reserveStatus(), contract.minBacking()])),
       this.loadAssets(),
     ]);
     this.kCurMarketCap = reserveStatus[1];
     this.minBacking = minBacking;
-
-    this.reserveAssets = await Promise.all(
-      this.reserveAssets?.map(async (x) => {
-        return { ...x, type: await contract.riskLevelOfERC20(x.token.address) };
-      }) ?? [],
-    );
     valueOverTimeData.push({
       createdAt: Number(new Date()),
       minCollateralValue: this.minCollateralizationValue,
-      marketCap: this.kCurTotalValue,
+      marketCap: (this.kCurPrice ?? 0) * this.numberService.fromString(fromWei(this.kCurSupply ?? 0, 18)),
       lowRisk: this.lowRiskAssets.map((x) => x.total).sum(),
       moderateRisk: this.moderateRiskAssets.map((x) => x.total).sum(),
       highRisk: this.highRiskAssets.map((x) => x.total).sum(),

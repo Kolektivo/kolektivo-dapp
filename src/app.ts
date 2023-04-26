@@ -16,10 +16,7 @@ type WrongNetworkInfo = { connectedTo?: string; need: string };
 @customElement({ name: 'app', template, dependencies: [] })
 @route({
   fallback: { path: 'not-found', component: () => import('./pages/not-found/not-found') },
-  routes: [
-    { path: 'reserve', component: () => import('./pages/reserve/reserve') },
-    import.meta.env.KOL_SHOW_STORYBOOK ? { path: 'storybook', title: 'Storybook', component: () => import('./pages//storybook/storybook') } : {},
-  ],
+  routes: [{ path: 'reserve', component: () => import('./pages/reserve/reserve') }],
 })
 export class App {
   xl = false;

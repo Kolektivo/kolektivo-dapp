@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+'use strict';
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 
