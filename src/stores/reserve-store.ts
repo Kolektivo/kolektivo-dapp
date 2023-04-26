@@ -53,8 +53,7 @@ export class ReserveStore {
   ) {}
 
   public get kCurCirculatingDistribution(): number {
-    if (!this.kCurReserveDistribution || !this.kCurMentoDistribution || !this.kCurPrimaryPoolDistribution) return 0;
-    return 1 - (this.kCurReserveDistribution + this.kCurMentoDistribution + this.kCurPrimaryPoolDistribution);
+    return 1 - ((this.kCurReserveDistribution ?? 0) + (this.kCurMentoDistribution ?? 0) + (this.kCurPrimaryPoolDistribution ?? 0));
   }
 
   public get currentCollateralizationRatio(): number {
