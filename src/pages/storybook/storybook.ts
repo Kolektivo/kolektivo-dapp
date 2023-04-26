@@ -5,6 +5,7 @@ import { IValidationController } from '@aurelia/validation-html';
 
 import { IGridColumn } from '../../design-system/elements/k-data-grid/grid-column';
 import { INotificationService } from '../../design-system/services';
+import { seed } from '../../firebase';
 
 import template from './storybook.html';
 
@@ -38,6 +39,10 @@ export class Storybook {
   resetCountdowns(): void {
     this.showCountdowns = false;
     this.showCountdowns = true;
+  }
+
+  seed() {
+    void seed();
   }
 
   constructor(
