@@ -41,7 +41,7 @@ export class Storybook {
   }
 
   seed() {
-    void seed();
+    //void seed();
   }
 
   constructor(
