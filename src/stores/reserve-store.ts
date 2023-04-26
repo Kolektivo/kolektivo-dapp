@@ -9,8 +9,9 @@ import { Mentoexchange } from '../models/generated/monetary/mentoexchange';
 import { Mentoreserve } from '../models/generated/monetary/mentoreserve';
 import { Oracle } from '../models/generated/monetary/oracle';
 import { Interval } from '../models/interval';
+import { PrimaryPoolData, PrimaryPoolDataTokens } from '../models/primary-pool';
 import { Transaction } from '../models/transaction';
-import { IContractService, INumberService } from '../services';
+import { IContractService, INumberService, ISymmetricService } from '../services';
 import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from '../utils';
 
 import { Kolektivoguilder } from './../models/generated/monetary/kolektivoguilder/Kolektivoguilder';
@@ -40,6 +41,7 @@ export class ReserveStore {
   public kGuilderSpread?: number;
   public kGuilderInflationRate?: number;
   public kGuilderTobinTax?: number;
+  public primaryPoolData?: PrimaryPoolData[];
 
   public static register(container: IContainer): void {
     container.register(Registration.singleton(IReserveStore, ReserveStore));
@@ -48,6 +50,7 @@ export class ReserveStore {
     @IContractStore private readonly contractStore: IContractStore,
     @IContractService private readonly contractService: IContractService,
     @INumberService private readonly numberService: INumberService,
+    @ISymmetricService private readonly symmetricService: ISymmetricService,
     @IConfiguration private readonly configuration: IConfiguration,
     @IDataStore private readonly dataStore: IDataStore,
   ) {}
@@ -244,6 +247,21 @@ export class ReserveStore {
       kCurReserveDistribution: this.kCurReserveDistribution,
     } as unknown as kCurSupplyData);
     return valueOverTimeData;
+  }
+
+  public async loadPrimaryPoolData(): Promise<void> {
+    const poolData = await this.symmetricService.indexVolumeAndFees();
+    this.primaryPoolData = [
+      {
+        tokens: [
+          { symbol: 'kCUR', icon: 'https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg' } as PrimaryPoolDataTokens,
+          { symbol: 'cUSD', icon: 'https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png?1547042389' } as PrimaryPoolDataTokens,
+        ],
+        fees: Number(poolData.swapFeeParsed),
+        tvl: Number(poolData.tvl),
+        volume: Number(poolData.volumeParsed),
+      },
+    ];
   }
 
   public async getkCurPriceOverTime(interval: Interval): Promise<kCurPriceData[]> {
