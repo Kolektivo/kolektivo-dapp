@@ -5,16 +5,16 @@ import { callOnce } from '../decorators/call-once';
 import { Asset, AssetType } from '../models/asset';
 import { BigNumberOverTimeData, kCurPriceData, kCurSupplyData, LeverageChartData, RiskChartData, ValueChartData } from '../models/chart-data';
 import { Erc20 } from '../models/generated/monetary/erc20';
-import { Mentoexchange } from '../models/generated/monetary/mentoexchange';
+import { Exchange } from '../models/generated/monetary/exchange';
+import { Kolektivoguilder } from '../models/generated/monetary/kolektivoguilder/Kolektivoguilder';
 import { Mentoreserve } from '../models/generated/monetary/mentoreserve';
-import { Oracle } from '../models/generated/monetary/oracle';
+import { Oracle } from '../models/generated/monetary/oracle/Oracle';
 import { Interval } from '../models/interval';
 import { PrimaryPoolData, PrimaryPoolDataTokens } from '../models/primary-pool';
 import { Transaction } from '../models/transaction';
 import { IContractService, INumberService, ISymmetricService } from '../services';
 import { convertIntervalToRecordType, fromWei, getTimeMinusInterval } from '../utils';
 
-import { Kolektivoguilder } from './../models/generated/monetary/kolektivoguilder/Kolektivoguilder';
 import { Reserve } from './../models/generated/monetary/reserve/Reserve';
 import { IContractStore } from './contract-store';
 import { IDataStore } from './data-store';
@@ -162,6 +162,7 @@ export class ReserveStore {
 
   @callOnce()
   public async loadkGuilder(): Promise<void> {
+    this.kGuilderCurrentPrice = 0.558; //supposed to be hard coded for now per Marvin/Luuk
     const contract = await this.getReserveContract();
     const reserveAddress = contract.address;
     if (!reserveAddress) return;
@@ -175,16 +176,25 @@ export class ReserveStore {
     console.log('DATA', data);
     const totalSupply = await kGuilderContract.totalSupply();
     console.log('Total Supply', totalSupply);
-    const mentoExchange: Mentoexchange = await this.contractService.getContract('monetary', 'MentoExchange'); // get the kCur contract
+    const mentoExchange: Exchange = await this.contractService.getContract('monetary', 'Exchange'); // get the kCur contract
     const spread = await mentoExchange.spread();
-    console.log('Spread', spread);
+    console.log('Spread', this.numberService.fromString(fromWei(spread, 23)));
     const mentoReserve: Mentoreserve = await this.contractService.getContract('monetary', 'MentoReserve'); // get the kCur contract
     const tobinTax = await mentoReserve.tobinTax();
     console.log('Tobin Tax', tobinTax);
-    this.kGuilderCurrentPrice = 0.558; //supposed to be hard coded for now per Marvin/Luuk
+    const [kGSupply, kCurSupply] = await mentoExchange.getBuyAndSellBuckets(true);
+    console.log('kCUR Amount in MentoReserve', this.numberService.fromString(fromWei(kCurSupply, 18)));
+    console.log('total kG minted', this.numberService.fromString(fromWei(kGSupply, 18)));
+
+    const ratio = (this.kCurPrice ?? 0 * this.numberService.fromString(fromWei(kCurSupply, 18))) / (this.kGuilderCurrentPrice * this.numberService.fromString(fromWei(kGSupply, 18)));
+    console.log('current ratio', ratio);
+
+    const [inflationRate] = await kGuilderContract.getInflationParameters();
+    console.log('Inflation rate', inflationRate);
+
     this.kGuilderTotalSupply = totalSupply;
-    this.kGuilderSpread = this.numberService.fromString(fromWei(spread, 18));
-    this.kGuilderInflationRate = 0.01;
+    this.kGuilderSpread = this.numberService.fromString(fromWei(spread, 24));
+    this.kGuilderInflationRate = this.numberService.fromString(fromWei(inflationRate, 25));
     this.kGuilderTobinTax = this.numberService.fromString(fromWei(tobinTax, 18));
   }
 
@@ -207,6 +217,10 @@ export class ReserveStore {
   }
 
   public async getReserveValueOverTime(interval: Interval): Promise<BigNumberOverTimeData[]> {
+    const test = await this.getReserveContract();
+    console.log(test.address);
+    const test2 = await test.reserveStatus();
+    console.log(test2);
     const [valueOverTimeData, reserveStatus] = await Promise.all([this.getData<BigNumberOverTimeData>('reserve', interval), this.getReserveContract().then((contract) => contract.reserveStatus())]);
     valueOverTimeData.push({
       createdAt: Number(new Date()),

@@ -4,6 +4,7 @@ import { I18N } from '@aurelia/i18n';
 import { IGridColumn } from '../../../../../../design-system/elements/k-data-grid/grid-column';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
 
+import { IConfiguration } from './../../../../../../configurations/configuration';
 import template from './pool-card.html';
 
 import './pool-card.scss';
@@ -12,7 +13,7 @@ import './pool-card.scss';
 export class PoolCard implements ICustomElementViewModel {
   columns: IGridColumn[] = [];
 
-  constructor(@I18N private readonly i18n: I18N, @IReserveStore private readonly reserveStore: IReserveStore) {
+  constructor(@I18N private readonly i18n: I18N, @IReserveStore private readonly reserveStore: IReserveStore, @IConfiguration private readonly configuration: IConfiguration) {
     this.columns = [
       {
         headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.tokens'),

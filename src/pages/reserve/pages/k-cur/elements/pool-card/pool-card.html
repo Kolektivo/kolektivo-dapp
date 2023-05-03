@@ -5,9 +5,7 @@
       <k-text type="h5">${i18n.tr('navigation.reserve.k-cur.pool.title')}</k-text>
       <k-icon name="help_outline" size="20" tooltip="${i18n.tr('navigation.reserve.k-cur.pool.tooltip')}"></k-icon>
     </k-stack>
-    <k-button type="secondary" size="sm" link="https://celo.symm.fi/#/pool/0xfe4a8b11fd4735e96454b056cf6422aacad1c88000020000000000000000001b"
-      >${i18n.tr('navigation.reserve.k-cur.pool.button')}</k-button
-    >
+    <k-button type="secondary" size="sm" link="https://celo.symm.fi/#/pool/${configuration.kGcUSD}">${i18n.tr('navigation.reserve.k-cur.pool.button')}</k-button>
   </k-grid>
   <k-data-grid rows.bind="data" columns.bind="columns"></k-data-grid>
 </k-stack>

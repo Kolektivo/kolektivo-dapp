@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
-import type { Mentoexchange, MentoexchangeInterface } from "../Mentoexchange";
+import type { Exchange, ExchangeInterface } from "../Exchange";
 
 const _abi = [
   {
@@ -668,15 +668,15 @@ const _abi = [
   },
 ] as const;
 
-export class Mentoexchange__factory {
+export class Exchange__factory {
   static readonly abi = _abi;
-  static createInterface(): MentoexchangeInterface {
-    return new utils.Interface(_abi) as MentoexchangeInterface;
+  static createInterface(): ExchangeInterface {
+    return new utils.Interface(_abi) as ExchangeInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): Mentoexchange {
-    return new Contract(address, _abi, signerOrProvider) as Mentoexchange;
+  ): Exchange {
+    return new Contract(address, _abi, signerOrProvider) as Exchange;
   }
 }

@@ -975,6 +975,19 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "_reserveToken",
+        type: "address",
+      },
+    ],
+    name: "setReserveToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "uint256",
         name: "value",
         type: "uint256",

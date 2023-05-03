@@ -47,6 +47,7 @@ interface ImportMetaEnv {
   readonly KOL_TESTING?: string;
   readonly KOL_FIREBASE_COLLECTION?: string;
   readonly KOL_VERCEL_GIT_COMMIT_SHA?: string;
+  readonly KOL_KG_CUSD?: string;
 }
 
 declare module 'rollup-plugin-html';
