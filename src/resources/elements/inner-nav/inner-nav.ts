@@ -6,4 +6,5 @@ import './inner-nav.scss';
 @customElement({ name: 'inner-nav', template })
 export class InnerNav implements ICustomElementViewModel {
   @bindable routes = [];
+  location = window.location;
 }

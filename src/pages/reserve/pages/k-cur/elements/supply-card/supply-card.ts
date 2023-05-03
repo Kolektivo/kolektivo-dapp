@@ -9,6 +9,8 @@ import { getXLabelFormat } from '../../../../../../utils';
 
 import template from './supply-card.html';
 
+import './supply-card.scss';
+
 import type { TooltipOptions } from 'chart.js';
 
 @customElement({ name: 'supply-card', template })
