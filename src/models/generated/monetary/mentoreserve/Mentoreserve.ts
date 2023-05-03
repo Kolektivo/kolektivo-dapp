@@ -71,6 +71,7 @@ export interface MentoreserveInterface extends utils.Interface {
     "setDailySpendingRatio(uint256)": FunctionFragment;
     "setFrozenGold(uint256,uint256)": FunctionFragment;
     "setRegistry(address)": FunctionFragment;
+    "setReserveToken(address)": FunctionFragment;
     "setTobinTax(uint256)": FunctionFragment;
     "setTobinTaxReserveRatio(uint256)": FunctionFragment;
     "setTobinTaxStalenessThreshold(uint256)": FunctionFragment;
@@ -128,6 +129,7 @@ export interface MentoreserveInterface extends utils.Interface {
       | "setDailySpendingRatio"
       | "setFrozenGold"
       | "setRegistry"
+      | "setReserveToken"
       | "setTobinTax"
       | "setTobinTaxReserveRatio"
       | "setTobinTaxStalenessThreshold"
@@ -308,6 +310,10 @@ export interface MentoreserveInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setRegistry",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setReserveToken",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -494,6 +500,10 @@ export interface MentoreserveInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setRegistry",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setReserveToken",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -953,6 +963,11 @@ export interface Mentoreserve extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setReserveToken(
+      _reserveToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setTobinTax(
       value: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1165,6 +1180,11 @@ export interface Mentoreserve extends BaseContract {
 
   setRegistry(
     registryAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setReserveToken(
+    _reserveToken: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1382,6 +1402,11 @@ export interface Mentoreserve extends BaseContract {
 
     setRegistry(
       registryAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setReserveToken(
+      _reserveToken: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1722,6 +1747,11 @@ export interface Mentoreserve extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setReserveToken(
+      _reserveToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setTobinTax(
       value: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1953,6 +1983,11 @@ export interface Mentoreserve extends BaseContract {
 
     setRegistry(
       registryAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setReserveToken(
+      _reserveToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

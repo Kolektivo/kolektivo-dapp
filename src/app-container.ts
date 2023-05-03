@@ -12,7 +12,7 @@ import { IIpfsApi } from './services/ipfs/ipfs-interface';
 import { Services } from './services/services';
 import { imageMap } from './app-images';
 import { DesignSystemPlugin } from './design-system';
-import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_API_KEY, FIREBASE_COLLECTION, IPFS_GATEWAY, IS_DEV, SCAN_LINK, SHOW_STORYBOOK } from './environment-variables';
+import { CHAIN, CHAIN_ID, CHAIN_URL, FIREBASE_API_KEY, FIREBASE_COLLECTION, IPFS_GATEWAY, IS_DEV, KG_CUSD, SCAN_LINK, SHOW_STORYBOOK } from './environment-variables';
 import * as hooks from './hooks';
 import { CeloProviderFactory, IProviderFactory } from './provider-factory';
 import { IReadOnlyProvider } from './read-only-provider';
@@ -93,6 +93,7 @@ export const appContainer: IContainer = DI.createContainer()
       showStorybook: SHOW_STORYBOOK,
       scanLink: SCAN_LINK,
       firebaseCollection: FIREBASE_COLLECTION,
+      kGcUSD: KG_CUSD,
     }),
   )
   // .register(

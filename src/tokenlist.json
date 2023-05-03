@@ -25,21 +25,37 @@
             "name": "CuracaoReserveToken",
             "symbol": "kCUR",
             "decimals": 18,
-            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kG.svg"
+            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kCUR.svg"
+        },
+        {
+            "address": "0xcB15f505189076673a644609D8405BE3B29D77EF",
+            "chainId": 42220,
+            "name": "Curacao Reserve Token Test",
+            "symbol": "kCUR-T",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kCUR.svg"
         },
         {
             "address": "0xA7631e5770B7c8B5BD02dEbfb0f3B0f70045C70F",
             "chainId": 42220,
             "name": "KolektivoGuilder",
-            "symbol": "kCUR",
+            "symbol": "kG",
             "decimals": 18,
-            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kCUR.svg"
+            "logoURI": " https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kG.svg"
         },
         {
-            "address": "0xE858F83EB705F84aC7997839625D0Efd87cf60b5",
+            "address": "0x0872168119099959DD37ae05d9fD956dd3e7dB9B",
+            "chainId": 42220,
+            "name": "Kolektivo Guilder Test",
+            "symbol": "kG-T",
+            "decimals": 18,
+            "logoURI": " https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kG.svg"
+        },
+        {
+            "address": "0x6273EBfbC769D3CC88D7C9480f76D411647EF0Aa",
             "chainId": 42229,
-            "name": "cUSD Mock",
-            "symbol": "cUSD-M",
+            "name": "Celo Dollar Mock",
+            "symbol": "cUSD-T",
             "decimals": 18,
             "logoURI": "https://assets.coingecko.com/coins/images/13161/small/icon-celo-dollar-color-1000-circle-cropped.png?1605771134"
         },

@@ -27,7 +27,7 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface MentoexchangeInterface extends utils.Interface {
+export interface ExchangeInterface extends utils.Interface {
   functions: {
     "activateStable()": FunctionFragment;
     "buy(address,uint256,uint256,bool)": FunctionFragment;
@@ -422,12 +422,12 @@ export type UpdateFrequencySetEvent = TypedEvent<
 export type UpdateFrequencySetEventFilter =
   TypedEventFilter<UpdateFrequencySetEvent>;
 
-export interface Mentoexchange extends BaseContract {
+export interface Exchange extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MentoexchangeInterface;
+  interface: ExchangeInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

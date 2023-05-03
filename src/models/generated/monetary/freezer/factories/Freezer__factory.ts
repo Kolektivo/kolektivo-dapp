@@ -8,17 +8,6 @@ import type { Freezer, FreezerInterface } from "../Freezer";
 
 const _abi = [
   {
-    inputs: [
-      {
-        internalType: "bool",
-        name: "isImplementation",
-        type: "bool",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
     anonymous: false,
     inputs: [
       {
@@ -51,43 +40,17 @@ const _abi = [
     type: "event",
   },
   {
+    anonymous: false,
     inputs: [
       {
+        indexed: true,
         internalType: "address",
-        name: "target",
+        name: "registryAddress",
         type: "address",
       },
     ],
-    name: "freeze",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "initialize",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "isFrozen",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    name: "RegistrySet",
+    type: "event",
   },
   {
     inputs: [],
@@ -95,6 +58,19 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "registry",
+    outputs: [
+      {
+        internalType: "contract IRegistry",
         name: "",
         type: "address",
       },
@@ -113,11 +89,11 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "newOwner",
+        name: "registryAddress",
         type: "address",
       },
     ],
-    name: "transferOwnership",
+    name: "setRegistry",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -126,11 +102,11 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "target",
+        name: "newOwner",
         type: "address",
       },
     ],
-    name: "unfreeze",
+    name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

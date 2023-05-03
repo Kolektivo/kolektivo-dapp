@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { IConfiguration } from '../configurations/configuration';
+
 import * as ethers from 'ethers';
 import { gql, GraphQLClient } from 'graphql-request';
 type SwapData = {
@@ -16,10 +18,10 @@ export type ISymmetricService = SymmetricService;
 export const ISymmetricService = DI.createInterface<ISymmetricService>('SymmetricService');
 
 // for time being, you can use following pool ID
-const poolId = '0xfe4a8b11fd4735e96454b056cf6422aacad1c88000020000000000000000001b'; // SYMM-cUSD pool
 const cUSDAddress = '0x765de816845861e75a25fca122bb6898b8b1282a';
 
 export class SymmetricService {
+  constructor(@IConfiguration private readonly configuration: IConfiguration) {}
   public static register(container: IContainer) {
     Registration.singleton(ISymmetricService, SymmetricService).register(container);
   }
@@ -27,7 +29,7 @@ export class SymmetricService {
   // _poolId: poolid is constant and will be provided by backend.
   // ethers: just pass directly imported ethers
 
-  public indexVolumeAndFees = async (_poolId = poolId) => {
+  public indexVolumeAndFees = async () => {
     // graphql endpoint
     const endpoint = 'https://api.thegraph.com/subgraphs/name/centfinance/symmetric-v2-celo';
 
@@ -50,7 +52,7 @@ export class SymmetricService {
     `;
     // variables for swap query
     const swapVariables = {
-      poolId: _poolId,
+      poolId: this.configuration.kGcUSD,
       startTime: startTime,
     };
 
@@ -67,7 +69,7 @@ export class SymmetricService {
     `;
     // variables for fee query
     const feeVariables = {
-      poolId: _poolId,
+      poolId: this.configuration.kGcUSD,
     };
 
     // price query - this helps to fetch price of a token in terms of other token (mostly for our case we need to fetch price with pricing asset being cUSD)
