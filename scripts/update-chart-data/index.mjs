@@ -34845,7 +34845,6 @@ const SF = /* @__PURE__ */ Object.freeze(
   ),
 );
 export { LD as seed };
-
 function L5(n, e) {
   for (var t = 0; t < e.length; t++) {
     const i = e[t];
@@ -66204,7 +66203,7 @@ let Ta = class {
     console.log('DATA', s);
     const a = await t.totalSupply();
     console.log('Total Supply', a);
-    const o = await this.contractService.getContract('monetary', 'MentoExchange'),
+    const o = await this.contractService.getContract('monetary', 'Exchange'),
       u = await o.spread();
     console.log('Spread', this.numberService.fromString($e(u, 23)));
     const c = await (await this.contractService.getContract('monetary', 'MentoReserve')).tobinTax();
