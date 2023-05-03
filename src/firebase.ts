@@ -1,5 +1,6 @@
+import { SymmetricService } from './services/symmetric-service';
 /* eslint-disable no-console */
-'use strict';
+('use strict');
 import { DI, IEventAggregator, ILogger, IObserverLocator, Registration } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 
@@ -38,6 +39,7 @@ const container = DI.createContainer()
   .register(Registration.instance(IIpfsService, {}))
   .register(ContractService)
   .register(EthereumService)
+  .register(SymmetricService)
   .register(Registration.instance(IWalletProvider, {}))
   .register(Registration.instance(IWalletConnector, {}))
   .register(Registration.instance(IBrowserStorageService, { lsGet: () => '', lsSet: () => '' }))
@@ -45,6 +47,7 @@ const container = DI.createContainer()
   .register(ContractStore)
   .register(TokenService)
   .register(DataStore)
+
   .register(
     Registration.instance(
       IReadOnlyProvider,
@@ -84,6 +87,9 @@ const container = DI.createContainer()
     Registration.instance(IEventAggregator, {}),
     Registration.instance(ILogger, {
       scopeTo: () => {
+        // blah
+      },
+      error: () => {
         // blah
       },
     }),
