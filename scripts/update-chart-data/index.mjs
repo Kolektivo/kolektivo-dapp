@@ -1121,7 +1121,7 @@ const c5 = 'celo',
       ],
     },
     Reserve: {
-      address: '0x7B10bD71Bd400C6Cc349e1D7d24F7919CbE55a20',
+      address: '0x6314AD614C4009A8adDbaf49fbAc0F09510deE27',
       abi: [
         {
           inputs: [
@@ -3569,7 +3569,7 @@ const c5 = 'celo',
       ],
     },
     CuracaoReserveToken: {
-      address: '0x3d79A1a4DAcd8F850f9114773E2CEf6782320F46',
+      address: '0x39e32F9E23374509a2efD6eAF3073AAfD0Bb3085',
       abi: [
         {
           inputs: [
@@ -6977,7 +6977,7 @@ const c5 = 'celo',
       abi: 'ERC721',
     },
     'kGuilder Pool': {
-      address: '0x2FaAAE0FAB162bbbf84faED015B7475008012344',
+      address: '0xDf7249c3015F0878e78739cd391f37D7A1191fbA',
       abi: [
         {
           inputs: [
@@ -8064,7 +8064,7 @@ const c5 = 'celo',
       ],
     },
     'kCur Pool': {
-      address: '0x434FA5e8e6356D090ddDBc757DF2A62eBE86aA65',
+      address: '0x41711120bbf068cEA5aB08824Bda12FdFA39F5b4',
       abi: [
         {
           inputs: [
@@ -9004,7 +9004,7 @@ const c5 = 'celo',
       ],
     },
     TimeLockVault: {
-      address: '0xc0b32341Cce636B552c21FdBb11dC706181c852E',
+      address: '0x2257BBb95379d67ED67e82CB4B250dF9efF7A20c',
       abi: [
         {
           inputs: [],
@@ -9206,7 +9206,7 @@ const c5 = 'celo',
       ],
     },
     SortedOracles: {
-      address: '0xBa73BE26E09487CDBd815D281DB8703EC9224bAB',
+      address: '0x9AecaDB2a844fe34011a17A7D101472FA6A11BA1',
       abi: [
         {
           inputs: [
@@ -9905,7 +9905,7 @@ const c5 = 'celo',
       ],
     },
     BAC: {
-      address: '0x819d276524c659f7d039832e24470182651DBAE9',
+      address: '0x6442a212bB3F785Af8dA716A400fB871eb5E5579',
       abi: [
         {
           inputs: [
@@ -10679,7 +10679,7 @@ const c5 = 'celo',
       ],
     },
     KolektivoGuilder: {
-      address: '0x6CB2B42374b12D56a5979529cdab190E0A071A9a',
+      address: '0xf9F1F18910155dFf32f3B008D136fA586ef4F21f',
       abi: [
         {
           inputs: [
@@ -11770,7 +11770,7 @@ const c5 = 'celo',
       ],
     },
     Exchange: {
-      address: '0xe62BfF1D7F4A0F300eac067024f49E70ECeBe7E9',
+      address: '0xA08cD50Ac1814FC2830bE7B2cB3CcF40B33283B5',
       abi: [
         {
           inputs: [
@@ -12434,7 +12434,7 @@ const c5 = 'celo',
       ],
     },
     MentoReserve: {
-      address: '0x70950d238A2D4658310914aa9aA75d253F5ACC80',
+      address: '0xDD9D8C07D2947fd50104c290CB9844522f7B4C47',
       abi: [
         {
           inputs: [
@@ -13587,7 +13587,7 @@ const c5 = 'celo',
       ],
     },
     MentoRegistry: {
-      address: '0x5FCCa43EE1874F2d383908C355E2e6FBf1f259b5',
+      address: '0x034A7B47F1E92EC1b2b844e2641De4923B836501',
       abi: [
         {
           inputs: [
@@ -13837,7 +13837,7 @@ const c5 = 'celo',
       ],
     },
     Freezer: {
-      address: '0x330a965A420F25FDaa111A62f655A80Fc41D66f4',
+      address: '0xA823CBe7CfD85103359a39b634c034e654e4F8c3',
       abi: [
         {
           anonymous: !1,
@@ -13946,7 +13946,7 @@ const c5 = 'celo',
       ],
     },
     ProxyPool: {
-      address: '0x4c72B50B57c45FA48B79F27b41a51E8d0fb7b96E',
+      address: '0x556d9D973d9a0C085E6e724954b7645D387276eD',
       abi: [
         {
           inputs: [
@@ -14461,7 +14461,7 @@ const c5 = 'celo',
       ],
     },
     Badger: {
-      address: '0x4c72B50B57c45FA48B79F27b41a51E8d0fb7b96E',
+      address: '0x2B9Bf92BB16e2a9366329E2D66f7dC186171dee8',
       abi: [
         {
           inputs: [
