@@ -18,7 +18,13 @@ inner-nav {
   k-tab {
     margin-bottom: -1px;
 
-    &.active {
+    border-bottom: initial;
+
+    &::part(content) {
+      color: var(--san-juan-300);
+    }
+
+    &.route-active {
       border-bottom: 5px var(--primary) solid;
 
       &::part(content) {

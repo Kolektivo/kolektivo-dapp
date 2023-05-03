@@ -9,6 +9,8 @@ import { getXLabelFormat } from '../../../../../../utils';
 
 import template from './trend-card.html';
 
+import './trend-card.scss';
+
 import type { TooltipOptions } from 'chart.js';
 
 @customElement({ name: 'trend-card', template })
