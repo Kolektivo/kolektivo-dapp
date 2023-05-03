@@ -5,8 +5,8 @@ import { callOnce } from '../decorators/call-once';
 import { Asset, AssetType } from '../models/asset';
 import { BigNumberOverTimeData, kCurPriceData, kCurSupplyData, LeverageChartData, RiskChartData, ValueChartData } from '../models/chart-data';
 import { Erc20 } from '../models/generated/monetary/erc20';
+import { Exchange } from '../models/generated/monetary/exchange';
 import { Kolektivoguilder } from '../models/generated/monetary/kolektivoguilder/Kolektivoguilder';
-import { Mentoexchange } from '../models/generated/monetary/mentoexchange/Mentoexchange';
 import { Mentoreserve } from '../models/generated/monetary/mentoreserve';
 import { Oracle } from '../models/generated/monetary/oracle/Oracle';
 import { Interval } from '../models/interval';
@@ -176,7 +176,7 @@ export class ReserveStore {
     console.log('DATA', data);
     const totalSupply = await kGuilderContract.totalSupply();
     console.log('Total Supply', totalSupply);
-    const mentoExchange: Mentoexchange = await this.contractService.getContract('monetary', 'MentoExchange'); // get the kCur contract
+    const mentoExchange: Exchange = await this.contractService.getContract('monetary', 'Exchange'); // get the kCur contract
     const spread = await mentoExchange.spread();
     console.log('Spread', this.numberService.fromString(fromWei(spread, 23)));
     const mentoReserve: Mentoreserve = await this.contractService.getContract('monetary', 'MentoReserve'); // get the kCur contract
