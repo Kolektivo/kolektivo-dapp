@@ -30,6 +30,7 @@ export class SymmetricService {
   // ethers: just pass directly imported ethers
 
   public indexVolumeAndFees = async () => {
+    //console.log('Symmetric pool address: ', this.configuration.kGcUSD);
     // graphql endpoint
     const endpoint = 'https://api.thegraph.com/subgraphs/name/centfinance/symmetric-v2-celo';
 

@@ -4,6 +4,7 @@
   description="${i18n.tr('navigation.reserve.k-guilder.description')}"
   learn-more-link="${i18n.tr('navigation.reserve.k-guilder.learn-more-link')}"
 >
+  <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadkGuilder()"></k-loader>
   <k-stack gap="80">
     <k-stack gap="40">
       <token-info-card class="zoom-in"></token-info-card>
