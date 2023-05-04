@@ -28,7 +28,7 @@
             "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kCUR.svg"
         },
         {
-            "address": "0xcB15f505189076673a644609D8405BE3B29D77EF",
+            "address": "0x39e32F9E23374509a2efD6eAF3073AAfD0Bb3085",
             "chainId": 42220,
             "name": "Curacao Reserve Token Test",
             "symbol": "kCUR-T",
@@ -44,7 +44,7 @@
             "logoURI": " https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kG.svg"
         },
         {
-            "address": "0x0872168119099959DD37ae05d9fD956dd3e7dB9B",
+            "address": "0xf9F1F18910155dFf32f3B008D136fA586ef4F21f",
             "chainId": 42220,
             "name": "Kolektivo Guilder Test",
             "symbol": "kG-T",
@@ -52,7 +52,7 @@
             "logoURI": " https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kG.svg"
         },
         {
-            "address": "0x6273EBfbC769D3CC88D7C9480f76D411647EF0Aa",
+            "address": "0xC5d4786B74DC0966bE3D098eA026D37261693C50",
             "chainId": 42229,
             "name": "Celo Dollar Mock",
             "symbol": "cUSD-T",

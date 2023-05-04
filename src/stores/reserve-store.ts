@@ -140,6 +140,7 @@ export class ReserveStore {
   @callOnce()
   public async loadkCur(): Promise<void> {
     await this.loadAssets();
+    await this.loadkCurData();
     if (!this.kCurSupply) return; //can't get the distribution percentages without a total supply value so return if it's not there
     const kCurSupply = this.numberService.fromString(fromWei(this.kCurSupply, 18));
     //console.log(kCurSupply); //print kCurSupply
@@ -286,7 +287,6 @@ export class ReserveStore {
   public async getkCurPriceOverTime(interval: Interval): Promise<kCurPriceData[]> {
     const [valueOverTimeData] = await Promise.all([this.getData<kCurPriceData>('kCurPrice', interval), this.loadkCurData(), this.loadAssets(), this.loadkCur()]);
     //add last data point
-    console.log('eiojfweifj', this.kCurPriceCeiling);
     valueOverTimeData.push({
       createdAt: Number(new Date()),
       kCurPrice: this.kCurPrice,
