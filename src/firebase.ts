@@ -193,7 +193,7 @@ export const seed = async () => {
 
     //Get current kCur Price
     kCurPrice = reserveStore.kCurPrice ?? 0;
-    kCurPriceCeiling = reserveStore.kCurPriceCeiling;
+    kCurPriceCeiling = reserveStore.kCurPriceCeiling ?? 0;
     kCurPriceFloor = reserveStore.kCurPriceFloor;
 
     //Get current kCur Supply Distribution
