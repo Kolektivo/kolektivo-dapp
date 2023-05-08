@@ -12,7 +12,7 @@ export class Copy implements ICustomAttributeViewModel {
   }
   private copy = () => {
     if (!this.value) return;
-    void this.platform.navigator.clipboard.writeText(this.value).then(() => {
+    void this.platform.window.navigator.clipboard.writeText(this.value).then(() => {
       void this.notificationService.toast({ message: 'Copied to clipboard' });
     });
   };

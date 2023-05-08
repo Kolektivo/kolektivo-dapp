@@ -14,23 +14,23 @@ export class ValueByAssetTypeCard implements ICustomElementViewModel {
   constructor(@ITreasuryStore private readonly treasuryStore: ITreasuryStore, private readonly percentageValueConverter: Percentage) {}
 
   get chartData(): number[] {
-    return [this.nonStablecoinAssetPercentage() * 100, this.stablecoinAssetPercentage() * 100, this.ecologicalAssetPercentage() * 100];
+    return [this.highAssetPercentage() * 100, this.mediumAssetPercentage() * 100, this.lowAssetPercentage() * 100];
   }
 
   get isReady() {
     return this.treasuryStore.treasuryValue && this.treasuryStore.treasuryAssets?.length;
   }
 
-  ecologicalAssetPercentage(): number {
-    return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.Ecological) / this.treasuryStore.treasuryValue : 0;
+  lowAssetPercentage(): number {
+    return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.Low) / this.treasuryStore.treasuryValue : 0;
   }
 
-  stablecoinAssetPercentage(): number {
-    return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.Stablecoin) / this.treasuryStore.treasuryValue : 0;
+  mediumAssetPercentage(): number {
+    return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.Medium) / this.treasuryStore.treasuryValue : 0;
   }
 
-  nonStablecoinAssetPercentage(): number {
-    return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.NonStablecoin) / this.treasuryStore.treasuryValue : 0;
+  highAssetPercentage(): number {
+    return this.treasuryStore.treasuryValue ? this.getAssetPercentage(AssetType.High) / this.treasuryStore.treasuryValue : 0;
   }
 
   get tooltipOptions() {

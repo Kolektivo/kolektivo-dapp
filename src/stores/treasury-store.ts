@@ -83,7 +83,7 @@ export class TreasuryStore {
     //map data from datastore to what the UI needs
     const chartData = kttOverTimeData.map((x) => {
       return {
-        createdAt: new Date(x.createdAt),
+        createdAt: Number(new Date(x.createdAt)),
         value: this.numberService.fromString(fromWei(x.value, 18)),
       } as unknown as ValueChartData;
     });
@@ -96,7 +96,7 @@ export class TreasuryStore {
     const totalValuation = await contract.totalValuation();
     //add last data point
     chartData.push({
-      createdAt: new Date(),
+      createdAt: Number(new Date()),
       value: this.numberService.fromString(fromWei(totalValuation, 18)),
     } as unknown as ValueChartData);
     return chartData;

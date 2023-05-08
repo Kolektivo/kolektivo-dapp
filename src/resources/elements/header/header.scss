@@ -9,6 +9,11 @@ header {
   padding-bottom: 0;
   position: fixed;
 
+  @include sm-max {
+    padding-left: 10px;
+  }
+
+
   div {
     display: grid;
     align-items: center;
@@ -23,7 +28,7 @@ header {
   }
 
   @include xl {
-    k-app-bar > k-icon-button {
+    k-app-bar>k-icon-button {
       display: none;
     }
   }

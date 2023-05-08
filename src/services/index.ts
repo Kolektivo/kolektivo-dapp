@@ -13,3 +13,4 @@ export * from './contract/contract-service';
 export * from './token-service';
 export * from './transactions-service';
 export * from './ipfs';
+export * from './symmetric-service';

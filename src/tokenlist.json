@@ -20,20 +20,68 @@
             "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/ktt.svg"
         },
         {
-            "address": "0xf4cb43D02842c65101e5DA329ED01dFeC2280EdA",
+            "address": "0xeB22fD1Dc0F480faA0D5cce673364b31E5f1e772",
             "chainId": 42220,
-            "name": "Kolektivo Curacao Token",
+            "name": "CuracaoReserveToken",
             "symbol": "kCUR",
             "decimals": 18,
-            "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/kcur.svg"
+            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kCUR.svg"
         },
         {
-            "address": "0x4cB13ED364bd2c212B694921CdAca979DCA76054",
-            "chainId": 42229,
-            "name": "Test Token #1",
-            "symbol": "TT1",
+            "address": "0x4D06191a0eF5ECBD55eB5c4cc9CF4796f6138840",
+            "chainId": 42220,
+            "name": "Curacao Reserve Token Test",
+            "symbol": "kCUR-T",
             "decimals": 18,
-            "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/tt1.svg"
+            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kCUR.svg"
+        },
+        {
+            "address": "0xA7631e5770B7c8B5BD02dEbfb0f3B0f70045C70F",
+            "chainId": 42220,
+            "name": "KolektivoGuilder",
+            "symbol": "kG",
+            "decimals": 18,
+            "logoURI": " https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kG.svg"
+        },
+        {
+            "address": "0x757F26aCB41300F7e050E11FBBD3217318ca1eC7",
+            "chainId": 42220,
+            "name": "Kolektivo Guilder Test",
+            "symbol": "kG-T",
+            "decimals": 18,
+            "logoURI": " https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kG.svg"
+        },
+        {
+            "address": "0xEA8005c6a5d8D4A5Da391C5f2770dFA4FaeC4A19",
+            "chainId": 42229,
+            "name": "Celo Dollar Mock",
+            "symbol": "cUSD-T",
+            "decimals": 18,
+            "logoURI": "https://assets.coingecko.com/coins/images/13161/small/icon-celo-dollar-color-1000-circle-cropped.png?1605771134"
+        },
+        {
+            "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+            "chainId": 42229,
+            "name": "Celo Dollar",
+            "symbol": "cUSD",
+            "decimals": 18,
+            "logoURI": "https://assets.coingecko.com/coins/images/13161/small/icon-celo-dollar-color-1000-circle-cropped.png?1605771134"
+        },
+        {
+            "address": "0x995B93cdB405f5Fc842CE0cc99f1FcEC0709612d",
+            "chainId": 42220,
+            "name": "HighRiskToken",
+            "symbol": "HRT",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/geo1.svg"
+        },
+        {
+            "address": "0xc691AE78a7dC8ebba37250c5A0840BbbC45eC3eB",
+            "chainId": 42220,
+            "name": "MedRiskToken",
+            "symbol": "MRT",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/tt1.svg"
         },
         {
             "address": "0x5bFE78b0d15eF0cdcA4077336e0bEbEc15CFb142",

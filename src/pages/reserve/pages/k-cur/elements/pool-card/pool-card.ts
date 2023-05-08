@@ -2,7 +2,9 @@ import { customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 
 import { IGridColumn } from '../../../../../../design-system/elements/k-data-grid/grid-column';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
 
+import { IConfiguration } from './../../../../../../configurations/configuration';
 import template from './pool-card.html';
 
 import './pool-card.scss';
@@ -10,7 +12,8 @@ import './pool-card.scss';
 @customElement({ name: 'pool-card', template })
 export class PoolCard implements ICustomElementViewModel {
   columns: IGridColumn[] = [];
-  constructor(@I18N private readonly i18n: I18N) {
+
+  constructor(@I18N private readonly i18n: I18N, @IReserveStore private readonly reserveStore: IReserveStore, @IConfiguration private readonly configuration: IConfiguration) {
     this.columns = [
       {
         headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.tokens'),
@@ -33,25 +36,9 @@ export class PoolCard implements ICustomElementViewModel {
       },
       { headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.tvl'), field: 'tvl', width: '1fr', template: '${tvl | currency}' },
       { headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.fees'), field: 'fees', width: '1fr', template: '${fees | currency}' },
-      {
-        headerText: this.i18n.tr('navigation.reserve.k-cur.pool.grid-headers.range'),
-        field: 'range',
-        width: '1fr',
-        template: '${range | percentage}',
-      },
     ];
   }
-
-  data = [
-    {
-      tokens: [
-        { symbol: 'kCUR', icon: 'https://assets.website-files.com/5fcaa3a6fcb269f7778d1f87/60a957ee7011916564689917_LOGO_MARK_color.svg' },
-        { symbol: 'cUSD', icon: 'https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png?1547042389' },
-      ],
-      volume: 55000,
-      tvl: 87000,
-      fees: 66,
-      range: -0.2,
-    },
-  ];
+  get data() {
+    return this.reserveStore.primaryPoolData;
+  }
 }

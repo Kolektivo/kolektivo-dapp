@@ -77,7 +77,7 @@ export class ContractStore {
       assetType = await contract.assetTypeOfERC20(assetAddress);
       //if there is no id on the token, then it's not an NFT and we have to get more information about it
     } else {
-      assetType = AssetType.Ecological;
+      assetType = AssetType.Low;
     }
 
     if (transactions) {

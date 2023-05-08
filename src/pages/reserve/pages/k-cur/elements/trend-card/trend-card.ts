@@ -5,9 +5,11 @@ import { ICurrency } from '../../../../../../design-system/value-converters';
 import { kCurPriceData } from '../../../../../../models/chart-data';
 import { Interval } from '../../../../../../models/interval';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
-import { formatter, getXLabelFormat } from '../../../../../../utils';
+import { getXLabelFormat } from '../../../../../../utils';
 
 import template from './trend-card.html';
+
+import './trend-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
 
@@ -32,7 +34,7 @@ export class TrendCard implements ICustomElementViewModel {
     return current === value ? 'primary' : 'secondary';
   }
   get labels() {
-    return this.kCurPriceData.map((x) => formatter.format(x.createdAt).replace(',', ''));
+    return this.kCurPriceData.map((x) => x.createdAt);
   }
   get price(): number[] {
     return this.kCurPriceData.map((x) => x.kCurPrice);
@@ -46,7 +48,7 @@ export class TrendCard implements ICustomElementViewModel {
   get tooltipOptions() {
     return {
       callbacks: {
-        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
+        title: (x) => this.i18n.tr('timestamp', { date: new Date(Number(x[0].label)) }),
         label: (x) => {
           return `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(Number(x.raw).toString()) ?? ''}`;
         },

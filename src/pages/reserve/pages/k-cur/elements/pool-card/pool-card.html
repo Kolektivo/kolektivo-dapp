@@ -1,10 +1,11 @@
 <k-stack gap="var(--spacing-xl)">
+  <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadPrimaryPoolData()"></k-loader>
   <k-grid cols="1fr auto">
     <k-stack direction="row" gap="var(--spacing-sm)">
       <k-text type="h5">${i18n.tr('navigation.reserve.k-cur.pool.title')}</k-text>
       <k-icon name="help_outline" size="20" tooltip="${i18n.tr('navigation.reserve.k-cur.pool.tooltip')}"></k-icon>
     </k-stack>
-    <k-button type="secondary" size="sm" link="https://celo-pools.symmetric.exchange/#/pool/0xf3ce35b10d3c9e74b0e6084ce08fd576fd9ec221">${i18n.tr('navigation.reserve.k-cur.pool.button')}</k-button>
+    <k-button type="secondary" size="sm" link="https://celo.symm.fi/#/pool/${configuration.kGcUSD}">${i18n.tr('navigation.reserve.k-cur.pool.button')}</k-button>
   </k-grid>
   <k-data-grid rows.bind="data" columns.bind="columns"></k-data-grid>
 </k-stack>

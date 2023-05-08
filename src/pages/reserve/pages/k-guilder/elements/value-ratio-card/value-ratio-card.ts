@@ -5,7 +5,7 @@ import { watch } from '@aurelia/runtime-html';
 import { ValueChartData } from '../../../../../../models/chart-data';
 import { Interval } from '../../../../../../models/interval';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
-import { formatter, getXLabelFormat } from '../../../../../../utils';
+import { getXLabelFormat } from '../../../../../../utils';
 
 import { ICurrency } from './../../../../../../design-system/value-converters/currency';
 import template from './value-ratio-card.html';
@@ -36,7 +36,7 @@ export class ValueRatioCard implements ICustomElementViewModel {
     return current === value ? 'primary' : 'secondary';
   }
   get labels() {
-    return this.data.map((x) => formatter.format(x.createdAt).replace(',', ''));
+    return this.data.map((x) => x.createdAt);
   }
   get valueData(): number[] {
     return this.data.map((x) => x.value);
@@ -48,7 +48,7 @@ export class ValueRatioCard implements ICustomElementViewModel {
     return {
       itemSort: (a, b, data) => b.datasetIndex - a.datasetIndex,
       callbacks: {
-        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
+        title: (x) => this.i18n.tr('timestamp', { date: new Date(Number(x[0].label)) }),
         label: (x) => (x.dataset.label ? `${x.dataset.label}: ${this.currencyValueConverter?.toView(`${x.raw as string}`) ?? ''}` : ''),
         labelColor: (context) => {
           return {

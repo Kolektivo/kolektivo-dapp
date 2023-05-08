@@ -4,7 +4,7 @@ import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-
 import { RiskChartData } from '../../../../../../models/chart-data';
 import { Interval } from '../../../../../../models/interval';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
-import { formatter, getXLabelFormat } from '../../../../../../utils';
+import { getXLabelFormat } from '../../../../../../utils';
 
 import { ICurrency } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
@@ -33,7 +33,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return current === value ? 'primary' : 'secondary';
   }
   get labels() {
-    return this.riskData.map((x) => formatter.format(x.createdAt).replace(',', ''));
+    return this.riskData.map((x) => x.createdAt);
   }
   get minCollateralValue(): number[] {
     return this.riskData.map((x) => x.minCollateralValue);
@@ -62,7 +62,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return {
       itemSort: (a, b, data) => b.datasetIndex - a.datasetIndex,
       callbacks: {
-        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
+        title: (x) => this.i18n.tr('timestamp', { date: new Date(Number(x[0].label)) }),
         label: (x) => {
           let value = Number(x.raw);
           if (x.datasetIndex > 2) {

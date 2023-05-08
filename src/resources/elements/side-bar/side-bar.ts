@@ -1,6 +1,6 @@
 import { bindable, BindingMode, customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
-import { IRouter } from '@aurelia/router';
+import { IRouter } from '@aurelia/router-lite';
 
 import { IConfiguration } from '../../../configurations/configuration';
 import { ifExistsThenTrue } from '../../../design-system/common';
@@ -51,4 +51,7 @@ export class SideBar implements ICustomElementViewModel {
   getRoutes(location: RouteLink['location']): RouteLink[] {
     return this.routes.filter((y) => y.location === location);
   }
+  // seed() {
+  //   void seed();
+  // }
 }

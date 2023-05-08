@@ -9,6 +9,7 @@ export type IConfiguration = {
   showStorybook: boolean;
   scanLink: string;
   firebaseCollection: string;
+  kGcUSD: string;
 };
 
 export const IConfiguration = DI.createInterface<IConfiguration>();

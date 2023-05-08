@@ -288,6 +288,12 @@ const _abi = [
         name: "assetType",
         type: "uint8",
       },
+      {
+        indexed: false,
+        internalType: "enum IReserve.RiskLevel",
+        name: "riskLevel",
+        type: "uint8",
+      },
     ],
     name: "ERC20Registered",
     type: "event",
@@ -556,17 +562,17 @@ const _abi = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "oldVestingDuration",
+        name: "oldtimeLockDuration",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "newVestingDuration",
+        name: "newtimeLockDuration",
         type: "uint256",
       },
     ],
-    name: "SetERC20BondingVesting",
+    name: "SetERC20BondingTimeLock",
     type: "event",
   },
   {
@@ -668,17 +674,17 @@ const _abi = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "oldVestingDuration",
+        name: "oldtimeLockDuration",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "newVestingDuration",
+        name: "newtimeLockDuration",
         type: "uint256",
       },
     ],
-    name: "SetERC721IdBondingVesting",
+    name: "SetERC721IdBondingTimeLock",
     type: "event",
   },
   {
@@ -737,6 +743,25 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
+        name: "oldTimeLockVault",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newTimeLockVault",
+        type: "address",
+      },
+    ],
+    name: "SetTimeLockVault",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
         name: "oldOracle",
         type: "address",
       },
@@ -748,25 +773,6 @@ const _abi = [
       },
     ],
     name: "SetTokenOracle",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "oldVestingVault",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "newVestingVault",
-        type: "address",
-      },
-    ],
-    name: "SetVestingVault",
     type: "event",
   },
   {
@@ -1209,7 +1215,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "bondingVestingDurationPerERC20",
+    name: "bondingTimeLockDurationPerERC20",
     outputs: [
       {
         internalType: "uint256",
@@ -1233,7 +1239,7 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "bondingVestingDurationPerERC721Id",
+    name: "bondingTimeLockDurationPerERC721Id",
     outputs: [
       {
         internalType: "uint256",
@@ -1937,6 +1943,11 @@ const _abi = [
         name: "assetType",
         type: "uint8",
       },
+      {
+        internalType: "enum IReserve.RiskLevel",
+        name: "riskLevel",
+        type: "uint8",
+      },
     ],
     name: "registerERC20",
     outputs: [],
@@ -2036,6 +2047,25 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "riskLevelOfERC20",
+    outputs: [
+      {
+        internalType: "enum IReserve.RiskLevel",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "erc20",
         type: "address",
       },
@@ -2082,11 +2112,11 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "vestingDuration",
+        name: "timeLockDuration",
         type: "uint256",
       },
     ],
-    name: "setBondingVestingForERC20",
+    name: "setBondingTimeLockForERC20",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -2105,11 +2135,11 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "vestingDuration",
+        name: "timeLockDuration",
         type: "uint256",
       },
     ],
-    name: "setBondingVestingForERC721Id",
+    name: "setBondingTimeLockForERC721Id",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -2180,11 +2210,11 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "tokenOracle_",
+        name: "timeLockVault_",
         type: "address",
       },
     ],
-    name: "setTokenOracle",
+    name: "setTimeLockVault",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -2193,11 +2223,11 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "vestingVault_",
+        name: "tokenOracle_",
         type: "address",
       },
     ],
-    name: "setVestingVault",
+    name: "setTokenOracle",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -2221,7 +2251,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "vestingDuration",
+        name: "timeLockDuration",
         type: "uint256",
       },
     ],
@@ -2267,7 +2297,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "vestingDuration",
+        name: "timeLockDuration",
         type: "uint256",
       },
     ],
@@ -2292,6 +2322,19 @@ const _abi = [
     name: "setupAndListERC721IdRedemption",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "timeLockVault",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -2362,19 +2405,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "vestingVault",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "address",
@@ -2420,7 +2450,7 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;
 
 export class Reserve__factory {
   static readonly abi = _abi;

@@ -15,9 +15,6 @@
       outline: 0;
     }
 
-    &:active {
-      color: var(--san-juan-200);
-    }
   }
 }
 
@@ -26,10 +23,7 @@
 
   k-button::part(button) {
     padding-bottom: 0;
-    color: var(--white);
+    color: var(--primary);
 
-    &:active {
-      color: var(--san-juan-200);
-    }
   }
 }

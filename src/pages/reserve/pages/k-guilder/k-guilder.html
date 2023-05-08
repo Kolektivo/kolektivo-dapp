@@ -4,10 +4,11 @@
   description="${i18n.tr('navigation.reserve.k-guilder.description')}"
   learn-more-link="${i18n.tr('navigation.reserve.k-guilder.learn-more-link')}"
 >
+  <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadkGuilder()"></k-loader>
   <k-stack gap="80">
     <k-stack gap="40">
       <token-info-card class="zoom-in"></token-info-card>
-      <k-grid cols="1fr 1fr 1fr" gap="40">
+      <k-stack justify-content="space-around" direction="row" gap="40">
         <stat-card
           title="${i18n.tr('navigation.reserve.k-guilder.spread.title')}"
           tooltip-text="${i18n.tr('navigation.reserve.k-guilder.spread.tooltip')}"
@@ -23,7 +24,7 @@
           tooltip-text="${i18n.tr('navigation.reserve.k-guilder.tobin-tax.tooltip')}"
           stat="${reserveStore.kGuilderTobinTax | percentage}"
         ></stat-card>
-      </k-grid>
+      </k-stack>
     </k-stack>
     <value-ratio-card class="zoom-in"></value-ratio-card>
   </k-stack>

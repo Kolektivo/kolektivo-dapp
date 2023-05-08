@@ -1,7 +1,5 @@
 <k-app-bar>
   <k-tabs gap="32">
-    <k-tab ripple load="${route.path}" repeat.for="route of routes">
-      ${route.name}
-    </k-tab>
+    <k-tab class="${location.pathname.endsWith(route.path) ? 'active': ''}" ripple load="${route.path}" repeat.for="route of routes"> ${route.name} </k-tab>
   </k-tabs>
 </k-app-bar>

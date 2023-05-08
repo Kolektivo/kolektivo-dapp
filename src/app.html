@@ -1,5 +1,5 @@
 <div class="app">
-  <side-bar animate-out="true" animate-from="-275" animate-to="0" animate-duration="100" animate="left" if.bind="!xl && store.sideBarOpen"></side-bar>
+  <side-bar animate-out="true" animate-from="-275" animate-to="0" animate-duration="300" animate-easing="easeInOutCubic" animate="left" if.bind="!xl && store.sideBarOpen"></side-bar>
   <side-bar if.bind="xl && store.sideBarOpen"></side-bar>
   <main>
     <k-modal
@@ -15,7 +15,7 @@
     <k-backdrop if.bind="!xl && store.sideBarOpen" click.trigger="store.sideBarOpen = false" blur="10"></k-backdrop>
     <k-grid rows="auto 1fr">
       <header></header>
-      <au-viewport default="reserve" fallback="not-found"></au-viewport>
+      <au-viewport default="reserve"></au-viewport>
     </k-grid>
   </main>
 </div>

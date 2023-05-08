@@ -4,7 +4,7 @@ import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-
 import { LeverageChartData } from '../../../../../../models/chart-data';
 import { Interval } from '../../../../../../models/interval';
 import { IReserveStore } from '../../../../../../stores/reserve-store';
-import { formatter, getXLabelFormat } from '../../../../../../utils';
+import { getXLabelFormat } from '../../../../../../utils';
 
 import { Multiplier } from './../../../../../../resources/value-converters/multiplier';
 import template from './leverage-card.html';
@@ -34,7 +34,7 @@ export class LeverageCard implements ICustomElementViewModel {
     return current === value ? 'primary' : 'secondary';
   }
   get labels() {
-    return this.reserveData.map((x) => formatter.format(x.createdAt).replace(',', ''));
+    return this.reserveData.map((x) => x.createdAt);
   }
   get leverageRatioData(): number[] {
     return this.reserveData.map((x) => x.currentLeverageRatio);
@@ -54,7 +54,7 @@ export class LeverageCard implements ICustomElementViewModel {
   get tooltipOptions() {
     return {
       callbacks: {
-        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
+        title: (x) => this.i18n.tr('timestamp', { date: new Date(Number(x[0].label)) }),
         label: (x) => {
           if (x.datasetIndex === 0) return '';
           return `${x.dataset.label ?? ''}: ${this.multiplierValueConverter?.toView(Number(x.raw) / 100) ?? ''}`;
