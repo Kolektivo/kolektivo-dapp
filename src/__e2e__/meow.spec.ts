@@ -7,8 +7,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('test', async ({ page }) => {
-  await page.getByRole('link', { name: 'Treasury' }).click();
-  expect(page.locator('k-text:has-text("Current Price") span')).not.toBeNull();
-  expect(page.locator('k-text:has-text("Kolektivo Treasury Token (KTT)") span')).not.toBeNull();
-  expect(page.locator('k-text:has-text("Kolektivo Network Treasury") span')).not.toBeNull();
+  await page.getByRole('link', { name: 'Reserve' }).click();
+  expect(page.locator('k-text:has-text("Reserve Value") span')).not.toBeNull();
 });

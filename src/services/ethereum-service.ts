@@ -1,14 +1,14 @@
 import { DI, IContainer, IEventAggregator, ILogger, Registration } from 'aurelia';
 
+import { IConfiguration } from '../configurations/configuration';
+import { IReadOnlyProvider } from '../read-only-provider';
 import { formatString } from '../utils';
 import { IWalletConnector } from '../wallet-connector';
 
 import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { MetaMaskInpageProvider } from '@metamask/providers';
-import { IConfiguration } from 'configurations/configuration';
 import { Signer } from 'ethers';
-import { IReadOnlyProvider } from 'read-only-provider';
 
 export type IEthereumService = EthereumService;
 export const IEthereumService = DI.createInterface<IEthereumService>('EthereumService');
@@ -69,13 +69,7 @@ export class EthereumService {
     }
   }
 
-  public async addTokenToMetamask(
-    provider: MetaMaskInpageProvider,
-    tokenAddress: string,
-    tokenSymbol: string,
-    tokenDecimals: number,
-    tokenImage: string,
-  ) {
+  public async addTokenToMetamask(provider: MetaMaskInpageProvider, tokenAddress: string, tokenSymbol: string, tokenDecimals: number, tokenImage: string) {
     try {
       (await provider.request({
         method: 'wallet_watchAsset',

@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aur
 import { captureFilter } from '../../common';
 
 import template from './k-color.html';
-
-import css from './k-color.scss';
+import css from './k-color.scss?inline';
 
 @customElement({
   name: 'k-color',

@@ -1,10 +1,9 @@
 import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aurelia';
 
+import { captureFilter } from '../../../design-system/common';
+
 import template from './avatar-text.html';
-
-import css from './avatar-text.scss';
-
-import { captureFilter } from 'design-system/common';
+import css from './avatar-text.scss?inline';
 
 @customElement({
   name: 'avatar-text',
@@ -21,4 +20,6 @@ export class AvatarText implements ICustomElementViewModel {
   @bindable icon?: string;
   @bindable name?: string;
   @bindable color?: string;
+  @bindable textColor?: string;
+  @bindable textSize = 16;
 }

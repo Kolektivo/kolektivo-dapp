@@ -1,13 +1,13 @@
 import { I18N } from '@aurelia/i18n';
 import { customElement, ICustomElementViewModel, watch } from '@aurelia/runtime-html';
 
+import { BadgeType } from '../../../../../../models/badge-type';
+
 import { IAccountStore } from './../../../../../../stores/account-store';
 import template from './proposals-card.html';
 import * as tabs from './tabs';
 
 import './proposals-card.scss';
-
-import { BadgeType } from 'models/badge-type';
 
 @customElement({ name: 'proposals-card', template, dependencies: [tabs] })
 export class ProposalsCard implements ICustomElementViewModel {

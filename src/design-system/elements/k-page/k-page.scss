@@ -1,34 +1,43 @@
+@import "../../../design-system/styles/sizes";
+
 :host {
   display: grid;
   place-items: center;
-  padding: 40px 70px 150px;
-  
-  div.description{
-    max-width: 50%;
+  padding: 65px 70px 150px;
 
-    k-text::part(content){
-      font-size: 20px;
-      font-weight: 400;
-    }
+
+  @include sm-max {
+    padding: 65px 10px 150px;
   }
 
-  k-link.learn-more-link::part(link-text){
-    color: var(--white);
+  div.description {
+    max-width: 50%;
+
+    @include sm-max {
+      max-width: inherit;
+    }
+
+    padding: 40px 0;
+
+    k-text::part(content) {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+    }
   }
 
   >k-stack {
     max-width: 1200px;
     width: 100%;
-    
-    >slot[name='instruction-text'],
-    >slot[name='additional-text'],
+
+    >slot[name="instruction-text"],
+    >slot[name="additional-text"],
     >slot:last-of-type {
       grid-column: 1 / 2;
     }
 
     >k-stack::part(main) {
       justify-content: space-between;
-      margin-bottom: 40px;
     }
   }
 }

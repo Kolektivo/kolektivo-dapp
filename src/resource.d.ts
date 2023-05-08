@@ -41,10 +41,17 @@ interface ImportMetaEnv {
   readonly KOL_CHAIN_ID?: string;
   readonly KOL_CHAIN_URL?: string;
   readonly KOL_FIREBASE_API_KEY?: string;
+  readonly KOL_SHOW_STORYBOOK?: string;
   readonly KOL_CHAIN?: string;
   readonly KOL_SCAN_LINK?: string;
   readonly KOL_TESTING?: string;
   readonly KOL_FIREBASE_COLLECTION?: string;
+  readonly KOL_VERCEL_GIT_COMMIT_SHA?: string;
+  readonly KOL_KG_CUSD?: string;
 }
 
 declare module 'rollup-plugin-html';
+
+type DeepPartial<T> = {
+  [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
+};

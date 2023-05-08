@@ -1,9 +1,10 @@
 import { DI } from 'aurelia';
 
+import { IConfiguration } from './configurations/configuration';
+import { cache } from './decorators/cache';
+import { ICacheService } from './services';
+
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
-import { IConfiguration } from 'configurations/configuration';
-import { cache } from 'decorators/cache';
-import { ICacheService } from 'services/cache-service';
 
 export type IProviderFactory = CeloProviderFactory;
 export const IProviderFactory = DI.createInterface<IProviderFactory>();

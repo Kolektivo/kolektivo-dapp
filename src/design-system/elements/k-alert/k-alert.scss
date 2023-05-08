@@ -71,7 +71,7 @@
     }
   }
 
-  slot[part=close] {
+  slot[part="close"] {
     position: absolute;
     top: var(--spacing-close-top);
     right: var(--spacing-close-right);

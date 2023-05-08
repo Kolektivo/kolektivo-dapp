@@ -1,8 +1,7 @@
 import { I18N } from '@aurelia/i18n';
 
 import { IGridColumn } from './design-system/elements/k-data-grid/grid-column';
-
-import { appContainer } from 'app-container';
+import { appContainer } from './app-container';
 
 export const assetsColumns = () => {
   const i18n = appContainer.get(I18N);
@@ -11,7 +10,7 @@ export const assetsColumns = () => {
       headerText: i18n.tr('general.assets.grid-headers.token'),
       field: 'token',
       width: '1fr',
-      template: '<avatar-text name.bind="token.name" src.bind="token.logoURI"></avatar-text>',
+      template: '<avatar-text text-size="14" name.bind="token.name" src.bind="token.logoURI"></avatar-text>',
     },
     {
       headerText: i18n.tr('general.assets.grid-headers.price'),
@@ -41,7 +40,7 @@ export const transactionHistoryColumns = () => {
       headerText: i18n.tr('general.transaction-history.grid-headers.token'),
       field: 'token',
       width: '1fr',
-      template: '<avatar-text name.bind="token.name" src.bind="token.logoURI"></avatar-text>',
+      template: '<avatar-text text-size="14"  name.bind="token.name" src.bind="token.logoURI"></avatar-text>',
     },
     { headerText: i18n.tr('general.transaction-history.grid-headers.type'), field: 'type', width: '1fr' },
     {
@@ -78,7 +77,7 @@ export const riskAssetsColumns = () => {
       headerText: i18n.tr('navigation.reserve.risk.assets.grid-headers.token'),
       field: 'token',
       width: '1fr',
-      template: '<avatar-text name.bind="token" src.bind="tokenIcon"></avatar-text>',
+      template: '<avatar-text text-size="14" name.bind="token" src.bind="tokenIcon"></avatar-text>',
     },
     { headerText: i18n.tr('navigation.reserve.risk.assets.grid-headers.risk-class'), field: 'riskClass', width: '1fr' },
     {

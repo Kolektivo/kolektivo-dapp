@@ -21,6 +21,7 @@ import content_copy from '@material-design-icons/svg/outlined/content_copy.svg';
 import description from '@material-design-icons/svg/outlined/description.svg';
 import headset_mic from '@material-design-icons/svg/outlined/headset_mic.svg';
 import help_outline from '@material-design-icons/svg/outlined/help_outline.svg';
+import info from '@material-design-icons/svg/outlined/info.svg';
 import language from '@material-design-icons/svg/outlined/language.svg';
 import link from '@material-design-icons/svg/outlined/link.svg';
 import map from '@material-design-icons/svg/outlined/map.svg';
@@ -57,6 +58,7 @@ export const imageMap = new Map([
   ['expand_more', expand_more],
   ['headset_mic', headset_mic],
   ['info_filled', info_filled],
+  ['info', info],
   ['language', language],
   ['link', link],
   ['map', map],

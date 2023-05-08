@@ -2,18 +2,18 @@ import { customElement, ICustomElementViewModel } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
 import { watch } from '@aurelia/runtime-html';
 
-import { CurrencyValueConverter } from './../../../../../../design-system/value-converters/currency';
+import { BigNumberOverTimeData } from '../../../../../../models/chart-data';
+import { Interval } from '../../../../../../models/interval';
+import { INumberService } from '../../../../../../services';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
+import { fromWei, getXLabelFormat } from '../../../../../../utils';
+
+import { ICurrency } from './../../../../../../design-system/value-converters/currency';
 import template from './value-over-time-card.html';
 
 import './value-over-time-card.scss';
 
 import type { TooltipOptions } from 'chart.js';
-import type { _DeepPartialObject } from 'chart.js/types/utils';
-import { BigNumberOverTimeData } from 'models/chart-data';
-import { Interval } from 'models/interval';
-import { INumberService } from 'services';
-import { IReserveStore } from 'stores/reserve-store';
-import { formatter, fromWei, getXLabelFormat } from 'utils';
 @customElement({ name: 'value-over-time-card', template })
 export class ValueOverTimeCard implements ICustomElementViewModel {
   public loading = false;
@@ -21,9 +21,9 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   private reserveData: BigNumberOverTimeData[] = [];
   constructor(
     @IReserveStore private readonly reserveStore: IReserveStore,
-    private readonly currencyValueConverter: CurrencyValueConverter,
     @INumberService private readonly numberService: INumberService,
     @I18N private readonly i18n: I18N,
+    @ICurrency private readonly currencyValueConverter?: ICurrency,
   ) {}
 
   binding() {
@@ -40,13 +40,19 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return current === value ? 'primary' : 'secondary';
   }
 
-  get tooltipOptions(): _DeepPartialObject<TooltipOptions> {
+  get tooltipOptions() {
     return {
       callbacks: {
-        title: (x) => this.i18n.tr('timestamp', { date: new Date(x[0].label) }),
-        label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter.toView(`${x.raw as string}`)}`,
+        title: (x) => this.i18n.tr('timestamp', { date: new Date(Number(x[0].label)) }),
+        label: (x) => `${x.dataset.label ?? ''}: ${this.currencyValueConverter?.toView(String(x.raw)) ?? ''}`,
+        labelColor: (context) => {
+          return {
+            backgroundColor: context.dataset.borderColor,
+            borderColor: context.dataset.borderColor,
+          };
+        },
       },
-    };
+    } as TooltipOptions;
   }
   get yLabelFormat(): Record<string, unknown> {
     return {
@@ -57,7 +63,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
     return getXLabelFormat(this.currentInterval, this.i18n);
   }
   get labels() {
-    return this.reserveData.map((x) => formatter.format(x.createdAt).replace(',', ''));
+    return this.reserveData.map((x) => x.createdAt);
   }
   get data(): number[] {
     return this.reserveData.map((x) => this.numberService.fromString(fromWei(x.value, 18)));
@@ -70,10 +76,10 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
         data: data,
         fill: true,
         borderColor: 'rgba(69, 173, 168, 0.77)',
-        tension: 0.5,
+        tension: 0,
         pointRadius: 0,
-        pointBackgroundColor: '#F07C4B',
-        backgroundColor: 'rgba(75, 192, 192, .7)',
+        pointBackgroundColor: '#FFFFFF',
+        backgroundColor: 'transparent',
       },
     ];
   }

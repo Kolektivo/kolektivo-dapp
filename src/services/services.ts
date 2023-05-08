@@ -1,5 +1,7 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { IConfiguration } from '../configurations/configuration';
+
 import { ContractService, IContractService } from './contract/contract-service';
 import { IIpfsService, IpfsService } from './ipfs/ipfs-service';
 import { BrowserStorageService, IBrowserStorageService } from './browser-storage-service';
@@ -10,10 +12,9 @@ import { FirebaseService } from './firebase-service';
 import { HttpService, IHttpService } from './http-service';
 import { INumberService, NumberService } from './number-service';
 import { IObserverService, ObserverService } from './observer-service';
+import { ISymmetricService, SymmetricService } from './symmetric-service';
 import { ITimingService, TimingService } from './timing-service';
 import { ITokenService, TokenService } from './token-service';
-
-import { IConfiguration } from 'configurations/configuration';
 
 export type IServices = Services;
 export const IServices = DI.createInterface<Services>();
@@ -31,6 +32,7 @@ export class Services {
     @IContractService public readonly contractService: IContractService,
     @ITokenService public readonly tokenService: ITokenService,
     @IIpfsService public readonly ipfsService: IIpfsService,
+    @ISymmetricService public readonly symmetricService: ISymmetricService,
     @IConfiguration private readonly configuration: IConfiguration,
   ) {}
 
@@ -48,6 +50,7 @@ export class Services {
       .register(BrowserStorageService)
       .register(IpfsService)
       .register(ContractService)
+      .register(SymmetricService)
       .register(TokenService);
   }
 }

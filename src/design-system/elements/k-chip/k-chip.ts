@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aur
 import { captureFilter, ifExistsThenTrue } from '../../common';
 
 import template from './k-chip.html';
-
-import css from './k-chip.scss';
+import css from './k-chip.scss?inline';
 
 @customElement({
   name: 'k-chip',

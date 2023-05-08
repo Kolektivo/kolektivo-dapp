@@ -4,8 +4,7 @@ import { Grid } from '../../base/grid';
 import { captureFilter, gridTemplateRowSetterInterceptor } from '../../common';
 
 import template from './k-grid.html';
-
-import css from './k-grid.scss';
+import css from './k-grid.scss?inline';
 
 @customElement({
   name: 'k-grid',

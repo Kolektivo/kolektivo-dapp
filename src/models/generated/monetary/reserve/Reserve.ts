@@ -60,8 +60,8 @@ export interface ReserveInterface extends utils.Interface {
     "bondingDiscountPerERC20(address)": FunctionFragment;
     "bondingDiscountPerERC721Id(address,uint256)": FunctionFragment;
     "bondingLimitPerERC20(address)": FunctionFragment;
-    "bondingVestingDurationPerERC20(address)": FunctionFragment;
-    "bondingVestingDurationPerERC721Id(address,uint256)": FunctionFragment;
+    "bondingTimeLockDurationPerERC20(address)": FunctionFragment;
+    "bondingTimeLockDurationPerERC721Id(address,uint256)": FunctionFragment;
     "delistERC20AsBondable(address)": FunctionFragment;
     "delistERC20AsRedeemable(address)": FunctionFragment;
     "delistERC721IdAsBondable(address,uint256)": FunctionFragment;
@@ -98,30 +98,31 @@ export interface ReserveInterface extends utils.Interface {
     "redeemERC721IdFromTo(address,uint256,address,address)": FunctionFragment;
     "redeemERC721IdTo(address,uint256,address)": FunctionFragment;
     "redeemLimitPerERC20(address)": FunctionFragment;
-    "registerERC20(address,address,uint8)": FunctionFragment;
+    "registerERC20(address,address,uint8,uint8)": FunctionFragment;
     "registerERC721Id(address,uint256,address)": FunctionFragment;
     "registeredERC20s(uint256)": FunctionFragment;
     "registeredERC721Ids(uint256)": FunctionFragment;
     "reserveStatus()": FunctionFragment;
+    "riskLevelOfERC20(address)": FunctionFragment;
     "setBondingDiscountForERC20(address,uint256)": FunctionFragment;
     "setBondingDiscountForERC721Id(address,uint256,uint256)": FunctionFragment;
-    "setBondingVestingForERC20(address,uint256)": FunctionFragment;
-    "setBondingVestingForERC721Id(address,uint256,uint256)": FunctionFragment;
+    "setBondingTimeLockForERC20(address,uint256)": FunctionFragment;
+    "setBondingTimeLockForERC721Id(address,uint256,uint256)": FunctionFragment;
     "setERC20BondingLimit(address,uint256)": FunctionFragment;
     "setERC20RedeemLimit(address,uint256)": FunctionFragment;
     "setMinBacking(uint256)": FunctionFragment;
     "setPendingOwner(address)": FunctionFragment;
+    "setTimeLockVault(address)": FunctionFragment;
     "setTokenOracle(address)": FunctionFragment;
-    "setVestingVault(address)": FunctionFragment;
     "setupAndListERC20Bond(address,uint256,uint256,uint256)": FunctionFragment;
     "setupAndListERC20Redemption(address,uint256)": FunctionFragment;
     "setupAndListERC721IdBond(address,uint256,uint256,uint256)": FunctionFragment;
     "setupAndListERC721IdRedemption(address,uint256)": FunctionFragment;
+    "timeLockVault()": FunctionFragment;
     "token()": FunctionFragment;
     "tokenOracle()": FunctionFragment;
     "updateOracleForERC20(address,address)": FunctionFragment;
     "updateOracleForERC721Id(address,uint256,address)": FunctionFragment;
-    "vestingVault()": FunctionFragment;
     "withdrawERC20(address,address,uint256)": FunctionFragment;
     "withdrawERC721Id(address,uint256,address)": FunctionFragment;
   };
@@ -147,8 +148,8 @@ export interface ReserveInterface extends utils.Interface {
       | "bondingDiscountPerERC20"
       | "bondingDiscountPerERC721Id"
       | "bondingLimitPerERC20"
-      | "bondingVestingDurationPerERC20"
-      | "bondingVestingDurationPerERC721Id"
+      | "bondingTimeLockDurationPerERC20"
+      | "bondingTimeLockDurationPerERC721Id"
       | "delistERC20AsBondable"
       | "delistERC20AsRedeemable"
       | "delistERC721IdAsBondable"
@@ -190,25 +191,26 @@ export interface ReserveInterface extends utils.Interface {
       | "registeredERC20s"
       | "registeredERC721Ids"
       | "reserveStatus"
+      | "riskLevelOfERC20"
       | "setBondingDiscountForERC20"
       | "setBondingDiscountForERC721Id"
-      | "setBondingVestingForERC20"
-      | "setBondingVestingForERC721Id"
+      | "setBondingTimeLockForERC20"
+      | "setBondingTimeLockForERC721Id"
       | "setERC20BondingLimit"
       | "setERC20RedeemLimit"
       | "setMinBacking"
       | "setPendingOwner"
+      | "setTimeLockVault"
       | "setTokenOracle"
-      | "setVestingVault"
       | "setupAndListERC20Bond"
       | "setupAndListERC20Redemption"
       | "setupAndListERC721IdBond"
       | "setupAndListERC721IdRedemption"
+      | "timeLockVault"
       | "token"
       | "tokenOracle"
       | "updateOracleForERC20"
       | "updateOracleForERC721Id"
-      | "vestingVault"
       | "withdrawERC20"
       | "withdrawERC721Id"
   ): FunctionFragment;
@@ -320,11 +322,11 @@ export interface ReserveInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "bondingVestingDurationPerERC20",
+    functionFragment: "bondingTimeLockDurationPerERC20",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "bondingVestingDurationPerERC721Id",
+    functionFragment: "bondingTimeLockDurationPerERC721Id",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -508,6 +510,7 @@ export interface ReserveInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -532,6 +535,10 @@ export interface ReserveInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "riskLevelOfERC20",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setBondingDiscountForERC20",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -544,11 +551,11 @@ export interface ReserveInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBondingVestingForERC20",
+    functionFragment: "setBondingTimeLockForERC20",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBondingVestingForERC721Id",
+    functionFragment: "setBondingTimeLockForERC721Id",
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -572,11 +579,11 @@ export interface ReserveInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setTokenOracle",
+    functionFragment: "setTimeLockVault",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setVestingVault",
+    functionFragment: "setTokenOracle",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -605,6 +612,10 @@ export interface ReserveInterface extends utils.Interface {
     functionFragment: "setupAndListERC721IdRedemption",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "timeLockVault",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "token", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "tokenOracle",
@@ -621,10 +632,6 @@ export interface ReserveInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>
     ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "vestingVault",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawERC20",
@@ -717,11 +724,11 @@ export interface ReserveInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "bondingVestingDurationPerERC20",
+    functionFragment: "bondingTimeLockDurationPerERC20",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "bondingVestingDurationPerERC721Id",
+    functionFragment: "bondingTimeLockDurationPerERC721Id",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -874,6 +881,10 @@ export interface ReserveInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "riskLevelOfERC20",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setBondingDiscountForERC20",
     data: BytesLike
   ): Result;
@@ -882,11 +893,11 @@ export interface ReserveInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setBondingVestingForERC20",
+    functionFragment: "setBondingTimeLockForERC20",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setBondingVestingForERC721Id",
+    functionFragment: "setBondingTimeLockForERC721Id",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -906,11 +917,11 @@ export interface ReserveInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setTokenOracle",
+    functionFragment: "setTimeLockVault",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setVestingVault",
+    functionFragment: "setTokenOracle",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -929,6 +940,10 @@ export interface ReserveInterface extends utils.Interface {
     functionFragment: "setupAndListERC721IdRedemption",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "timeLockVault",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "tokenOracle",
@@ -940,10 +955,6 @@ export interface ReserveInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "updateOracleForERC721Id",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "vestingVault",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -966,7 +977,7 @@ export interface ReserveInterface extends utils.Interface {
     "ERC20Deregistered(address)": EventFragment;
     "ERC20ListedAsBondable(address)": EventFragment;
     "ERC20ListedAsRedeemable(address)": EventFragment;
-    "ERC20Registered(address,uint8)": EventFragment;
+    "ERC20Registered(address,uint8,uint8)": EventFragment;
     "ERC721IdDelistedAsBondable(address,uint256)": EventFragment;
     "ERC721IdDelistedAsRedeemable(address,uint256)": EventFragment;
     "ERC721IdDeregistered(address,uint256)": EventFragment;
@@ -979,15 +990,15 @@ export interface ReserveInterface extends utils.Interface {
     "RedeemedERC721Id(address,uint256,uint256)": EventFragment;
     "SetERC20BondingDiscount(address,uint256,uint256)": EventFragment;
     "SetERC20BondingLimit(address,uint256,uint256)": EventFragment;
-    "SetERC20BondingVesting(address,uint256,uint256)": EventFragment;
+    "SetERC20BondingTimeLock(address,uint256,uint256)": EventFragment;
     "SetERC20Oracle(address,address,address)": EventFragment;
     "SetERC20RedeemLimit(address,uint256,uint256)": EventFragment;
     "SetERC721IdBondingDiscount(address,uint256,uint256,uint256)": EventFragment;
-    "SetERC721IdBondingVesting(address,uint256,uint256,uint256)": EventFragment;
+    "SetERC721IdBondingTimeLock(address,uint256,uint256,uint256)": EventFragment;
     "SetERC721IdOracle(address,uint256,address,address)": EventFragment;
     "SetMinBacking(uint256,uint256)": EventFragment;
+    "SetTimeLockVault(address,address)": EventFragment;
     "SetTokenOracle(address,address)": EventFragment;
-    "SetVestingVault(address,address)": EventFragment;
     "WithdrewERC20(address,address,uint256)": EventFragment;
     "WithdrewERC721Id(address,uint256,address)": EventFragment;
   };
@@ -1017,15 +1028,15 @@ export interface ReserveInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "RedeemedERC721Id"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetERC20BondingDiscount"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetERC20BondingLimit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SetERC20BondingVesting"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetERC20BondingTimeLock"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetERC20Oracle"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetERC20RedeemLimit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetERC721IdBondingDiscount"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SetERC721IdBondingVesting"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetERC721IdBondingTimeLock"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetERC721IdOracle"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetMinBacking"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetTimeLockVault"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetTokenOracle"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SetVestingVault"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "WithdrewERC20"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "WithdrewERC721Id"): EventFragment;
 }
@@ -1140,9 +1151,10 @@ export type ERC20ListedAsRedeemableEventFilter =
 export interface ERC20RegisteredEventObject {
   erc20: string;
   assetType: number;
+  riskLevel: number;
 }
 export type ERC20RegisteredEvent = TypedEvent<
-  [string, number],
+  [string, number, number],
   ERC20RegisteredEventObject
 >;
 
@@ -1290,18 +1302,18 @@ export type SetERC20BondingLimitEvent = TypedEvent<
 export type SetERC20BondingLimitEventFilter =
   TypedEventFilter<SetERC20BondingLimitEvent>;
 
-export interface SetERC20BondingVestingEventObject {
+export interface SetERC20BondingTimeLockEventObject {
   erc20: string;
-  oldVestingDuration: BigNumber;
-  newVestingDuration: BigNumber;
+  oldtimeLockDuration: BigNumber;
+  newtimeLockDuration: BigNumber;
 }
-export type SetERC20BondingVestingEvent = TypedEvent<
+export type SetERC20BondingTimeLockEvent = TypedEvent<
   [string, BigNumber, BigNumber],
-  SetERC20BondingVestingEventObject
+  SetERC20BondingTimeLockEventObject
 >;
 
-export type SetERC20BondingVestingEventFilter =
-  TypedEventFilter<SetERC20BondingVestingEvent>;
+export type SetERC20BondingTimeLockEventFilter =
+  TypedEventFilter<SetERC20BondingTimeLockEvent>;
 
 export interface SetERC20OracleEventObject {
   erc20: string;
@@ -1342,19 +1354,19 @@ export type SetERC721IdBondingDiscountEvent = TypedEvent<
 export type SetERC721IdBondingDiscountEventFilter =
   TypedEventFilter<SetERC721IdBondingDiscountEvent>;
 
-export interface SetERC721IdBondingVestingEventObject {
+export interface SetERC721IdBondingTimeLockEventObject {
   erc721: string;
   id: BigNumber;
-  oldVestingDuration: BigNumber;
-  newVestingDuration: BigNumber;
+  oldtimeLockDuration: BigNumber;
+  newtimeLockDuration: BigNumber;
 }
-export type SetERC721IdBondingVestingEvent = TypedEvent<
+export type SetERC721IdBondingTimeLockEvent = TypedEvent<
   [string, BigNumber, BigNumber, BigNumber],
-  SetERC721IdBondingVestingEventObject
+  SetERC721IdBondingTimeLockEventObject
 >;
 
-export type SetERC721IdBondingVestingEventFilter =
-  TypedEventFilter<SetERC721IdBondingVestingEvent>;
+export type SetERC721IdBondingTimeLockEventFilter =
+  TypedEventFilter<SetERC721IdBondingTimeLockEvent>;
 
 export interface SetERC721IdOracleEventObject {
   erc721: string;
@@ -1381,6 +1393,18 @@ export type SetMinBackingEvent = TypedEvent<
 
 export type SetMinBackingEventFilter = TypedEventFilter<SetMinBackingEvent>;
 
+export interface SetTimeLockVaultEventObject {
+  oldTimeLockVault: string;
+  newTimeLockVault: string;
+}
+export type SetTimeLockVaultEvent = TypedEvent<
+  [string, string],
+  SetTimeLockVaultEventObject
+>;
+
+export type SetTimeLockVaultEventFilter =
+  TypedEventFilter<SetTimeLockVaultEvent>;
+
 export interface SetTokenOracleEventObject {
   oldOracle: string;
   newOracle: string;
@@ -1391,17 +1415,6 @@ export type SetTokenOracleEvent = TypedEvent<
 >;
 
 export type SetTokenOracleEventFilter = TypedEventFilter<SetTokenOracleEvent>;
-
-export interface SetVestingVaultEventObject {
-  oldVestingVault: string;
-  newVestingVault: string;
-}
-export type SetVestingVaultEvent = TypedEvent<
-  [string, string],
-  SetVestingVaultEventObject
->;
-
-export type SetVestingVaultEventFilter = TypedEventFilter<SetVestingVaultEvent>;
 
 export interface WithdrewERC20EventObject {
   erc20: string;
@@ -1566,12 +1579,12 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    bondingVestingDurationPerERC20(
+    bondingTimeLockDurationPerERC20(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    bondingVestingDurationPerERC721Id(
+    bondingTimeLockDurationPerERC721Id(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1784,6 +1797,7 @@ export interface Reserve extends BaseContract {
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
       assetType: PromiseOrValue<BigNumberish>,
+      riskLevel: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1808,6 +1822,11 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
+    riskLevelOfERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[number]>;
+
     setBondingDiscountForERC20(
       erc20: PromiseOrValue<string>,
       discount: PromiseOrValue<BigNumberish>,
@@ -1821,16 +1840,16 @@ export interface Reserve extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    setBondingVestingForERC20(
+    setBondingTimeLockForERC20(
       erc20: PromiseOrValue<string>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    setBondingVestingForERC721Id(
+    setBondingTimeLockForERC721Id(
       erc721: PromiseOrValue<string>,
       id: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1856,13 +1875,13 @@ export interface Reserve extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    setTokenOracle(
-      tokenOracle_: PromiseOrValue<string>,
+    setTimeLockVault(
+      timeLockVault_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    setVestingVault(
-      vestingVault_: PromiseOrValue<string>,
+    setTokenOracle(
+      tokenOracle_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1870,7 +1889,7 @@ export interface Reserve extends BaseContract {
       erc20: PromiseOrValue<string>,
       limit: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1884,7 +1903,7 @@ export interface Reserve extends BaseContract {
       erc721: PromiseOrValue<string>,
       id: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1893,6 +1912,8 @@ export interface Reserve extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    timeLockVault(overrides?: CallOverrides): Promise<[string]>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
 
@@ -1910,8 +1931,6 @@ export interface Reserve extends BaseContract {
       oracle: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    vestingVault(overrides?: CallOverrides): Promise<[string]>;
 
     withdrawERC20(
       erc20: PromiseOrValue<string>,
@@ -2039,12 +2058,12 @@ export interface Reserve extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  bondingVestingDurationPerERC20(
+  bondingTimeLockDurationPerERC20(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  bondingVestingDurationPerERC721Id(
+  bondingTimeLockDurationPerERC721Id(
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -2257,6 +2276,7 @@ export interface Reserve extends BaseContract {
     erc20: PromiseOrValue<string>,
     oracle: PromiseOrValue<string>,
     assetType: PromiseOrValue<BigNumberish>,
+    riskLevel: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2281,6 +2301,11 @@ export interface Reserve extends BaseContract {
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
+  riskLevelOfERC20(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<number>;
+
   setBondingDiscountForERC20(
     erc20: PromiseOrValue<string>,
     discount: PromiseOrValue<BigNumberish>,
@@ -2294,16 +2319,16 @@ export interface Reserve extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  setBondingVestingForERC20(
+  setBondingTimeLockForERC20(
     erc20: PromiseOrValue<string>,
-    vestingDuration: PromiseOrValue<BigNumberish>,
+    timeLockDuration: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  setBondingVestingForERC721Id(
+  setBondingTimeLockForERC721Id(
     erc721: PromiseOrValue<string>,
     id: PromiseOrValue<BigNumberish>,
-    vestingDuration: PromiseOrValue<BigNumberish>,
+    timeLockDuration: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2329,13 +2354,13 @@ export interface Reserve extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  setTokenOracle(
-    tokenOracle_: PromiseOrValue<string>,
+  setTimeLockVault(
+    timeLockVault_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  setVestingVault(
-    vestingVault_: PromiseOrValue<string>,
+  setTokenOracle(
+    tokenOracle_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2343,7 +2368,7 @@ export interface Reserve extends BaseContract {
     erc20: PromiseOrValue<string>,
     limit: PromiseOrValue<BigNumberish>,
     discount: PromiseOrValue<BigNumberish>,
-    vestingDuration: PromiseOrValue<BigNumberish>,
+    timeLockDuration: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2357,7 +2382,7 @@ export interface Reserve extends BaseContract {
     erc721: PromiseOrValue<string>,
     id: PromiseOrValue<BigNumberish>,
     discount: PromiseOrValue<BigNumberish>,
-    vestingDuration: PromiseOrValue<BigNumberish>,
+    timeLockDuration: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2366,6 +2391,8 @@ export interface Reserve extends BaseContract {
     id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  timeLockVault(overrides?: CallOverrides): Promise<string>;
 
   token(overrides?: CallOverrides): Promise<string>;
 
@@ -2383,8 +2410,6 @@ export interface Reserve extends BaseContract {
     oracle: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
-
-  vestingVault(overrides?: CallOverrides): Promise<string>;
 
   withdrawERC20(
     erc20: PromiseOrValue<string>,
@@ -2510,12 +2535,12 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    bondingVestingDurationPerERC20(
+    bondingTimeLockDurationPerERC20(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    bondingVestingDurationPerERC721Id(
+    bondingTimeLockDurationPerERC721Id(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -2728,6 +2753,7 @@ export interface Reserve extends BaseContract {
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
       assetType: PromiseOrValue<BigNumberish>,
+      riskLevel: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2752,6 +2778,11 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
+    riskLevelOfERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<number>;
+
     setBondingDiscountForERC20(
       erc20: PromiseOrValue<string>,
       discount: PromiseOrValue<BigNumberish>,
@@ -2765,16 +2796,16 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setBondingVestingForERC20(
+    setBondingTimeLockForERC20(
       erc20: PromiseOrValue<string>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setBondingVestingForERC721Id(
+    setBondingTimeLockForERC721Id(
       erc721: PromiseOrValue<string>,
       id: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2800,13 +2831,13 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setTokenOracle(
-      tokenOracle_: PromiseOrValue<string>,
+    setTimeLockVault(
+      timeLockVault_: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setVestingVault(
-      vestingVault_: PromiseOrValue<string>,
+    setTokenOracle(
+      tokenOracle_: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2814,7 +2845,7 @@ export interface Reserve extends BaseContract {
       erc20: PromiseOrValue<string>,
       limit: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2828,7 +2859,7 @@ export interface Reserve extends BaseContract {
       erc721: PromiseOrValue<string>,
       id: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2837,6 +2868,8 @@ export interface Reserve extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    timeLockVault(overrides?: CallOverrides): Promise<string>;
 
     token(overrides?: CallOverrides): Promise<string>;
 
@@ -2854,8 +2887,6 @@ export interface Reserve extends BaseContract {
       oracle: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    vestingVault(overrides?: CallOverrides): Promise<string>;
 
     withdrawERC20(
       erc20: PromiseOrValue<string>,
@@ -2945,13 +2976,15 @@ export interface Reserve extends BaseContract {
       erc20?: PromiseOrValue<string> | null
     ): ERC20ListedAsRedeemableEventFilter;
 
-    "ERC20Registered(address,uint8)"(
+    "ERC20Registered(address,uint8,uint8)"(
       erc20?: PromiseOrValue<string> | null,
-      assetType?: null
+      assetType?: null,
+      riskLevel?: null
     ): ERC20RegisteredEventFilter;
     ERC20Registered(
       erc20?: PromiseOrValue<string> | null,
-      assetType?: null
+      assetType?: null,
+      riskLevel?: null
     ): ERC20RegisteredEventFilter;
 
     "ERC721IdDelistedAsBondable(address,uint256)"(
@@ -3067,16 +3100,16 @@ export interface Reserve extends BaseContract {
       newLimit?: null
     ): SetERC20BondingLimitEventFilter;
 
-    "SetERC20BondingVesting(address,uint256,uint256)"(
+    "SetERC20BondingTimeLock(address,uint256,uint256)"(
       erc20?: PromiseOrValue<string> | null,
-      oldVestingDuration?: null,
-      newVestingDuration?: null
-    ): SetERC20BondingVestingEventFilter;
-    SetERC20BondingVesting(
+      oldtimeLockDuration?: null,
+      newtimeLockDuration?: null
+    ): SetERC20BondingTimeLockEventFilter;
+    SetERC20BondingTimeLock(
       erc20?: PromiseOrValue<string> | null,
-      oldVestingDuration?: null,
-      newVestingDuration?: null
-    ): SetERC20BondingVestingEventFilter;
+      oldtimeLockDuration?: null,
+      newtimeLockDuration?: null
+    ): SetERC20BondingTimeLockEventFilter;
 
     "SetERC20Oracle(address,address,address)"(
       erc20?: PromiseOrValue<string> | null,
@@ -3113,18 +3146,18 @@ export interface Reserve extends BaseContract {
       newDiscount?: null
     ): SetERC721IdBondingDiscountEventFilter;
 
-    "SetERC721IdBondingVesting(address,uint256,uint256,uint256)"(
+    "SetERC721IdBondingTimeLock(address,uint256,uint256,uint256)"(
       erc721?: null,
       id?: null,
-      oldVestingDuration?: null,
-      newVestingDuration?: null
-    ): SetERC721IdBondingVestingEventFilter;
-    SetERC721IdBondingVesting(
+      oldtimeLockDuration?: null,
+      newtimeLockDuration?: null
+    ): SetERC721IdBondingTimeLockEventFilter;
+    SetERC721IdBondingTimeLock(
       erc721?: null,
       id?: null,
-      oldVestingDuration?: null,
-      newVestingDuration?: null
-    ): SetERC721IdBondingVestingEventFilter;
+      oldtimeLockDuration?: null,
+      newtimeLockDuration?: null
+    ): SetERC721IdBondingTimeLockEventFilter;
 
     "SetERC721IdOracle(address,uint256,address,address)"(
       erc721?: null,
@@ -3148,6 +3181,15 @@ export interface Reserve extends BaseContract {
       newMinBacking?: null
     ): SetMinBackingEventFilter;
 
+    "SetTimeLockVault(address,address)"(
+      oldTimeLockVault?: PromiseOrValue<string> | null,
+      newTimeLockVault?: PromiseOrValue<string> | null
+    ): SetTimeLockVaultEventFilter;
+    SetTimeLockVault(
+      oldTimeLockVault?: PromiseOrValue<string> | null,
+      newTimeLockVault?: PromiseOrValue<string> | null
+    ): SetTimeLockVaultEventFilter;
+
     "SetTokenOracle(address,address)"(
       oldOracle?: PromiseOrValue<string> | null,
       newOracle?: PromiseOrValue<string> | null
@@ -3156,15 +3198,6 @@ export interface Reserve extends BaseContract {
       oldOracle?: PromiseOrValue<string> | null,
       newOracle?: PromiseOrValue<string> | null
     ): SetTokenOracleEventFilter;
-
-    "SetVestingVault(address,address)"(
-      oldVestingVault?: PromiseOrValue<string> | null,
-      newVestingVault?: PromiseOrValue<string> | null
-    ): SetVestingVaultEventFilter;
-    SetVestingVault(
-      oldVestingVault?: PromiseOrValue<string> | null,
-      newVestingVault?: PromiseOrValue<string> | null
-    ): SetVestingVaultEventFilter;
 
     "WithdrewERC20(address,address,uint256)"(
       erc20?: PromiseOrValue<string> | null,
@@ -3299,12 +3332,12 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    bondingVestingDurationPerERC20(
+    bondingTimeLockDurationPerERC20(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    bondingVestingDurationPerERC721Id(
+    bondingTimeLockDurationPerERC721Id(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -3517,6 +3550,7 @@ export interface Reserve extends BaseContract {
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
       assetType: PromiseOrValue<BigNumberish>,
+      riskLevel: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -3539,6 +3573,11 @@ export interface Reserve extends BaseContract {
 
     reserveStatus(overrides?: CallOverrides): Promise<BigNumber>;
 
+    riskLevelOfERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     setBondingDiscountForERC20(
       erc20: PromiseOrValue<string>,
       discount: PromiseOrValue<BigNumberish>,
@@ -3552,16 +3591,16 @@ export interface Reserve extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    setBondingVestingForERC20(
+    setBondingTimeLockForERC20(
       erc20: PromiseOrValue<string>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    setBondingVestingForERC721Id(
+    setBondingTimeLockForERC721Id(
       erc721: PromiseOrValue<string>,
       id: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -3587,13 +3626,13 @@ export interface Reserve extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    setTokenOracle(
-      tokenOracle_: PromiseOrValue<string>,
+    setTimeLockVault(
+      timeLockVault_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    setVestingVault(
-      vestingVault_: PromiseOrValue<string>,
+    setTokenOracle(
+      tokenOracle_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -3601,7 +3640,7 @@ export interface Reserve extends BaseContract {
       erc20: PromiseOrValue<string>,
       limit: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -3615,7 +3654,7 @@ export interface Reserve extends BaseContract {
       erc721: PromiseOrValue<string>,
       id: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -3624,6 +3663,8 @@ export interface Reserve extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    timeLockVault(overrides?: CallOverrides): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -3641,8 +3682,6 @@ export interface Reserve extends BaseContract {
       oracle: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
-
-    vestingVault(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawERC20(
       erc20: PromiseOrValue<string>,
@@ -3773,12 +3812,12 @@ export interface Reserve extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    bondingVestingDurationPerERC20(
+    bondingTimeLockDurationPerERC20(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    bondingVestingDurationPerERC721Id(
+    bondingTimeLockDurationPerERC721Id(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -3991,6 +4030,7 @@ export interface Reserve extends BaseContract {
       erc20: PromiseOrValue<string>,
       oracle: PromiseOrValue<string>,
       assetType: PromiseOrValue<BigNumberish>,
+      riskLevel: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -4013,6 +4053,11 @@ export interface Reserve extends BaseContract {
 
     reserveStatus(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    riskLevelOfERC20(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     setBondingDiscountForERC20(
       erc20: PromiseOrValue<string>,
       discount: PromiseOrValue<BigNumberish>,
@@ -4026,16 +4071,16 @@ export interface Reserve extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    setBondingVestingForERC20(
+    setBondingTimeLockForERC20(
       erc20: PromiseOrValue<string>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    setBondingVestingForERC721Id(
+    setBondingTimeLockForERC721Id(
       erc721: PromiseOrValue<string>,
       id: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -4061,13 +4106,13 @@ export interface Reserve extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    setTokenOracle(
-      tokenOracle_: PromiseOrValue<string>,
+    setTimeLockVault(
+      timeLockVault_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    setVestingVault(
-      vestingVault_: PromiseOrValue<string>,
+    setTokenOracle(
+      tokenOracle_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -4075,7 +4120,7 @@ export interface Reserve extends BaseContract {
       erc20: PromiseOrValue<string>,
       limit: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -4089,7 +4134,7 @@ export interface Reserve extends BaseContract {
       erc721: PromiseOrValue<string>,
       id: PromiseOrValue<BigNumberish>,
       discount: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
+      timeLockDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -4098,6 +4143,8 @@ export interface Reserve extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
+
+    timeLockVault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -4115,8 +4162,6 @@ export interface Reserve extends BaseContract {
       oracle: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
-
-    vestingVault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawERC20(
       erc20: PromiseOrValue<string>,

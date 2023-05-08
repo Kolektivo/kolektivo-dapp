@@ -1,11 +1,11 @@
 import { customElement, ICustomElementViewModel } from 'aurelia';
 
+import { Transaction } from '../../../stores/kolektivo-store';
+
 import { IStore } from './../../../stores/store';
 import template from './activity-menu.html';
 
 import './activity-menu.scss';
-
-import { Transaction } from 'stores/kolektivo-store';
 
 @customElement({
   name: 'activity-menu',

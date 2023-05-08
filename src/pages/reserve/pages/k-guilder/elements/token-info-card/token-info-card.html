@@ -1,19 +1,23 @@
-<k-card color="linear-gradient(to right, var(--primary), var(--ocean-blue-600))"
+<k-card
+  color="linear-gradient(to bottom, var(--primary), var(--ocean-blue-600))"
   title="${i18n.tr('navigation.reserve.k-guilder.token-info.title')}"
-  title-avatar="${i18n.tr('navigation.reserve.k-guilder.token-info.avatar-src')}">
+  tooltip-text="${i18n.tr('navigation.reserve.k-guilder.token-info.tooltip')}"
+  title-avatar.bind="kgImage"
+>
   <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadkGuilder()"></k-loader>
   <k-stack gap="var(--spacing-xl)">
-    <k-grid cols="3" id="r-kGuilder-tic-stats">
-      <label-value title="${i18n.tr('general.token-info-card.market-cap')}" value.bind="reserveStore.kGuilderMarketCap | currency"
-        tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}"></label-value>
-      <label-value title="${i18n.tr('general.token-info-card.current-price')}" value.bind="reserveStore.kGuilderCurrentPrice | currency"
-        tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}"></label-value>
-      <label-value title="${i18n.tr('general.token-info-card.total-supply')}" tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}">
-        <k-text type="h4">
-        <formatted-number show-tooltip decimals="0" commas value="${reserveStore.kGuilderTotalSupply | ethwei}">
-        </formatted-number>
-      </k-text>
+    <k-stack gap="var(--spacing-lg)" direction="row" justify-content="space-around" id="r-kGuilder-tic-stats">
+      <label-value title="${i18n.tr('general.token-info-card.current-price')}" tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}">
+        <k-text type="statistic"> ${reserveStore.kGuilderCurrentPrice | currency} </k-text>
       </label-value>
-    </k-grid>
+      <label-value title="${i18n.tr('general.token-info-card.total-supply')}" tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}">
+        <k-text type="statistic">
+          <formatted-number show-tooltip decimals="0" commas value="${reserveStore.kGuilderTotalSupply | ethwei}"> </formatted-number>
+        </k-text>
+      </label-value>
+      <label-value title="${i18n.tr('general.token-info-card.market-cap')}" tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}">
+        <k-text type="statistic"> ${reserveStore.kGuilderMarketCap | currency} </k-text>
+      </label-value>
+    </k-stack>
   </k-stack>
 </k-card>

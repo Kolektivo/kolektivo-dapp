@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, IPlatform, shadowCSS,
 import { captureFilter, ifExistsThenTrue, numberToPixels } from '../../common';
 
 import template from './k-countdown.html';
-
-import css from './k-countdown.scss';
+import css from './k-countdown.scss?inline';
 
 @customElement({
   name: 'k-countdown',

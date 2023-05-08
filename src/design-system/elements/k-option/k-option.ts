@@ -4,8 +4,7 @@ import { IPlatform, watch } from '@aurelia/runtime-html';
 import { captureFilter } from './../../common';
 import { KSelect } from './../k-select/k-select';
 import template from './k-option.html';
-
-import css from './k-option.scss';
+import css from './k-option.scss?inline';
 
 @customElement({
   name: 'k-option',

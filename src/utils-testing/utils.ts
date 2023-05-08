@@ -1,13 +1,14 @@
 import { IContainer, Registration } from 'aurelia';
 
+import { IConfiguration } from '../configurations/configuration';
+import { INotificationService } from '../design-system/services';
+import { CacheService, IBrowserStorageService, ICacheService } from '../services';
+import { IWalletConnector } from '../wallet-connector';
+import { IWalletProvider } from '../wallet-provider';
+
 import { EthereumService, IEthereumService } from './../services/ethereum-service';
 
-import { IConfiguration } from 'configurations/configuration';
-import { INotificationService } from 'design-system/services';
-import { CacheService, IBrowserStorageService, ICacheService } from 'services';
 import { mock } from 'vitest-mock-extended';
-import { IWalletConnector } from 'wallet-connector';
-import { IWalletProvider } from 'wallet-provider';
 
 /**
  * get or create a instance of IEthereumService in the given container

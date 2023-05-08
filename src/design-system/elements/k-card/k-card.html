@@ -1,9 +1,9 @@
 <k-paper part="paper" style.bind="style" ...$attrs>
-  <k-grid part="grid" gap="var(--spacing)" rows="auto 1fr auto">
+  <k-grid part="grid" gap="var(--spacing-xl)" rows="auto 1fr">
     <slot part="header" name="header">
       <k-stack direction="row" gap="var(--spacing-lg)">
-        <k-avatar if.bind="titleAvatar" src.bind="titleAvatar" size="32"></k-avatar>
-        <k-text type="h3">${title}</k-text>
+        <k-avatar if.bind="titleAvatar" src.bind="titleAvatar" size="40"></k-avatar>
+        <k-text type="h4">${title}</k-text>
         <k-icon if.bind="tooltipText" name="help_outline" size="28" tooltip="${tooltipText}"></k-icon>
       </k-stack>
     </slot>

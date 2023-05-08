@@ -1,17 +1,16 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { Badge } from '../models/badge';
+import { BadgeType } from '../models/badge-type';
+import { Badger } from '../models/generated/governance/badger';
 import { IProviderFactory } from '../provider-factory';
+import { IReadOnlyProvider } from '../read-only-provider';
+import { IContractService, IEthereumService } from '../services';
 
 import { allBadges } from './kolektivo-store';
 
 import { JsonRpcProvider, Provider, Web3Provider } from '@ethersproject/providers';
 import { BigNumber } from 'ethers';
-import { Badge } from 'models/badge';
-import { BadgeType } from 'models/badge-type';
-import { Badger } from 'models/generated/governance/badger';
-import { IReadOnlyProvider } from 'read-only-provider';
-import { IContractService } from 'services/contract/contract-service';
-import { IEthereumService } from 'services/ethereum-service';
 
 export type IAccountStore = AccountStore;
 export const IAccountStore = DI.createInterface<IAccountStore>();

@@ -6,10 +6,10 @@ import '../../../../../../../../utils-testing/setup-testing';
 
 import { Global } from '../../../../../../../../hooks';
 import { IStore } from '../../../../../../../../stores';
+import { IReserveStore } from '../../../../../../../../stores/reserve-store';
 
 import { Assets } from './assets';
 
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('assets', () => {

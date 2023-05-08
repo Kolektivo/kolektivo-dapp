@@ -35,6 +35,7 @@ export class Store {
     container.register(TreasuryStore);
     container.register(ReserveStore);
   }
-
+  pageTitle = '';
+  routes: { name: string; path: string }[] = [];
   sideBarOpen = false;
 }

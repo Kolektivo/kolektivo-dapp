@@ -1,10 +1,11 @@
 import { DI, IContainer, ILogger, Registration } from 'aurelia';
 
+import { IConfiguration } from '../configurations/configuration';
+import { BadgeType } from '../models/badge-type';
+
 import { EncryptionClient, IEncryptionClient } from './../encryption-client';
 
 import type { Web3Provider } from '@ethersproject/providers';
-import { IConfiguration } from 'configurations/configuration';
-import { BadgeType } from 'models/badge-type';
 
 export type IEncryptionService = EncryptionService;
 export const IEncryptionService = DI.createInterface<IEncryptionService>('EncryptionService');
@@ -20,11 +21,7 @@ export class EncryptionService {
   private authSig?: string;
   private encryptedSymmetricKey?: string;
 
-  constructor(
-    @ILogger private readonly logger: ILogger,
-    @IContainer private readonly container: IContainer,
-    @IConfiguration private readonly config: IConfiguration,
-  ) {
+  constructor(@ILogger private readonly logger: ILogger, @IContainer private readonly container: IContainer, @IConfiguration private readonly config: IConfiguration) {
     this.logger.scopeTo('EncryptionService');
   }
   private get chain() {

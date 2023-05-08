@@ -1,11 +1,9 @@
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import { Plugin, PluginOption, defineConfig, splitVendorChunkPlugin } from 'vite';
 import { au2, rawHtml } from './vite.plugins';
-import { visualizer } from 'rollup-plugin-visualizer';
+
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
-import svgLoader from 'vite-svg-loader';
-import swc from 'unplugin-swc';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig, Plugin, splitVendorChunkPlugin } from 'vite';
 
 export default defineConfig({
   server: {
@@ -23,15 +21,9 @@ export default defineConfig({
     target: 'es2022',
   },
   plugins: [
-    au2({ include: 'src/**/*.ts', pre: true }),
-    au2({ include: 'src/**/*.html' }),
-    swc.vite() as PluginOption,
+    au2({ include: 'src/**/*.ts', pre: true, hmr: true, enableConventions: false }),
     splitVendorChunkPlugin(),
-    tsconfigPaths(),
     rawHtml(),
-    svgLoader({
-      defaultImport: 'url',
-    }),
     visualizer({
       emitFile: true,
       gzipSize: true,

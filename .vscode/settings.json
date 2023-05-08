@@ -34,5 +34,11 @@
   ],
   "exportall.config.folderListener": [
     "/src/design-system/elements",
-  ]
+  ],
+  "[html]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  }
 }

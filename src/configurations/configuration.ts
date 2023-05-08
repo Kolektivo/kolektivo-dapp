@@ -6,8 +6,10 @@ export type IConfiguration = {
   chainUrl: string;
   chain: string;
   isDevelopment: boolean;
+  showStorybook: boolean;
   scanLink: string;
   firebaseCollection: string;
+  kGcUSD: string;
 };
 
 export const IConfiguration = DI.createInterface<IConfiguration>();

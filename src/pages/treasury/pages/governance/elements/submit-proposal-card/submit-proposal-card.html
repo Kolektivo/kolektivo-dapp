@@ -1,6 +1,5 @@
-<k-card tooltip-text="${i18n.tr('navigation.treasury.governance.submit-card.tooltip')}" id="t-g-submit-card"
-  title="${i18n.tr('navigation.treasury.governance.submit-card.title')}">
-  <k-stack gap="20">
+<k-card tooltip-text="${i18n.tr('navigation.treasury.governance.submit-card.tooltip')}" id="t-g-submit-card" title="${i18n.tr('navigation.treasury.governance.submit-card.title')}">
+  <k-stack gap="var(--spacing-sm)">
     <k-text type="h6">Encrypt Message</k-text>
     <k-input value.bind="messageToEncrypt"></k-input>
     <k-button click.trigger="encrypt">Encrypt</k-button>

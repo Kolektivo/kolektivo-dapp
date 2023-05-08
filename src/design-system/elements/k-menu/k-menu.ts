@@ -1,12 +1,9 @@
 import { bindable, customElement, ICustomElementViewModel, INode, IPlatform, shadowCSS } from 'aurelia';
 
-import { captureFilter, numberToPixels } from '../../common';
+import { captureFilter, ifExistsThenTrue, numberToPixels } from '../../common';
 
 import template from './k-menu.html';
-
-import css from './k-menu.scss';
-
-import { ifExistsThenTrue } from 'design-system/common';
+import css from './k-menu.scss?inline';
 
 @customElement({
   name: 'k-menu',

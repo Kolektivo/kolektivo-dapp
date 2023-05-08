@@ -40,6 +40,10 @@ export class Storybook {
     this.showCountdowns = true;
   }
 
+  seed() {
+    //void seed();
+  }
+
   constructor(
     @IValidationRules validationRules: IValidationRules,
     @newInstanceForScope(IValidationController) private controller: IValidationController,

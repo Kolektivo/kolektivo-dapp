@@ -8,30 +8,22 @@ import { Global } from '../../../../../../hooks';
 import { INumberService } from '../../../../../../services/number-service';
 import { IStore } from '../../../../../../stores';
 
-import { PercentageValueConverter } from './../../../../../../resources/value-converters/percentage';
+import { Percentage } from './../../../../../../resources/value-converters/percentage';
 import { PoolCard } from './pool-card';
 
 import { describe, expect, it } from 'vitest';
 
 describe('pool-card', () => {
-  it('should have a k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<pool-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    expect(appHost.querySelector('k-card')).exist;
-  });
-
   it('should have a title and button in the k-card component header', async () => {
     const { appHost } = await createFixture
       .html(`<pool-card>`)
       .deps(...getRegistrations())
       .build().started;
-    const card = appHost.querySelector('k-grid[slot="header"]');
-    expect(card).exist;
-    const title = card?.querySelector('k-text[type="h3"');
+    const stack = appHost.querySelector('k-stack');
+    expect(stack).exist;
+    const title = stack?.querySelector('k-text');
     expect(title).exist;
-    const button = card?.querySelector('k-button');
+    const button = stack?.querySelector('k-button');
     expect(button).exist;
   });
 
@@ -51,6 +43,6 @@ describe('pool-card', () => {
         tr: (s: string) => String(s),
       });
     const numberServiceRegistration = () => Registration.instance(INumberService, {});
-    return [PoolCard, PercentageValueConverter, Global, createMockStoreRegistration(), createMockI18nRegistration(), numberServiceRegistration()];
+    return [PoolCard, Percentage, Global, createMockStoreRegistration(), createMockI18nRegistration(), numberServiceRegistration()];
   }
 });

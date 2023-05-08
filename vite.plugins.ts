@@ -1,7 +1,8 @@
-import * as rollupPluginutils from 'rollup-pluginutils';
 import { IOptionalPreprocessOptions, preprocess } from '@aurelia/plugin-conventions';
-import { Plugin } from 'vite';
+
 import { createFilter } from '@rollup/pluginutils';
+import * as rollupPluginutils from 'rollup-pluginutils';
+import { Plugin } from 'vite';
 
 export function au2({ include, exclude, ...options }: { include?: string; exclude?: string; pre?: boolean } & IOptionalPreprocessOptions) {
   const filter = createFilter(include, exclude);

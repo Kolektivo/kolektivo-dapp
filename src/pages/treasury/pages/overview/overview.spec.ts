@@ -4,15 +4,15 @@ import { createFixture } from '@aurelia/testing';
 
 import 'utils-testing/setup-testing';
 
+import { IDesignSystemConfiguration } from '../../../../design-system';
+import { Global } from '../../../../hooks';
+import { Currency, Ethwei, Percentage } from '../../../../resources';
+import { IContractService, NumberService } from '../../../../services';
+import { IStore, ITreasuryStore } from '../../../../stores';
+
 import { RelativeTime } from './../../../../resources/value-converters/relative-time';
 import { Overview } from './overview';
 
-import { IDesignSystemConfiguration } from 'design-system';
-import { CurrencyValueConverter } from 'design-system/value-converters';
-import { Global } from 'hooks';
-import { EthweiValueConverter, PercentageValueConverter } from 'resources';
-import { IContractService, NumberService } from 'services';
-import { IStore, ITreasuryStore } from 'stores';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
@@ -93,12 +93,11 @@ describe('overview', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       Registration.instance(IPlatform, PLATFORM),
-      CurrencyValueConverter,
+      Currency,
       Overview,
-      EthweiValueConverter,
+      Ethwei,
       RelativeTime,
-      CurrencyValueConverter,
-      PercentageValueConverter,
+      Percentage,
       NumberService,
       Global,
       createMockTreasuryStoreRegistration(),

@@ -1,4 +1,8 @@
-<k-card title="${i18n.tr('navigation.reserve.risk.assets.title')}" tooltip-text="${i18n.tr('navigation.reserve.risk.assets.tooltip')}">
+<k-stack gap="var(--spacing-lg)">
+  <k-stack direction="row" gap="var(--spacing-sm)">
+    <k-text type="h5">${i18n.tr('navigation.reserve.risk.assets.title')}</k-text>
+    <k-icon name="help_outline" size="20" tooltip="${i18n.tr('navigation.reserve.risk.assets.tooltip')}"></k-icon>
+  </k-stack>
   <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadAssets()"></k-loader>
   <k-data-grid rows.bind="data" columns.bind="columns"></k-data-grid>
-</k-card>
+</k-stack>

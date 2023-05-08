@@ -6,41 +6,23 @@ import '../../../../../../utils-testing/setup-testing';
 
 import { IDesignSystemConfiguration } from '../../../../../../design-system/configuration';
 import { Global } from '../../../../../../hooks';
+import { Ethwei } from '../../../../../../resources';
+import { INumberService } from '../../../../../../services';
 import { IStore } from '../../../../../../stores';
+import { IReserveStore } from '../../../../../../stores/reserve-store';
 
 import { ValueOverTimeCard } from './value-over-time-card';
 
-import { INumberService } from 'services/number-service';
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 describe('value-over-time-card', () => {
-  it('should have a k-card component', async () => {
+  it('should have a k-stack component', async () => {
     const { appHost } = await createFixture
       .html(`<value-over-time-card>`)
       .deps(...getRegistrations())
       .build().started;
-    expect(appHost.querySelector('k-card')).exist;
-  });
-
-  it('should have a title and tooltip in the k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-over-time-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const card = appHost.querySelector('k-card');
-    expect(card?.getAttribute('title')).exist;
-    expect(card?.getAttribute('tooltip-text')).exist;
-  });
-
-  it('should have a line chart', async () => {
-    const { appHost } = await createFixture
-      .html(`<value-over-time-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const chart = appHost.querySelector('k-chart');
-    expect(chart).exist;
+    expect(appHost.querySelector('k-stack')).exist;
   });
 
   function getRegistrations() {
@@ -60,6 +42,7 @@ describe('value-over-time-card', () => {
           getReserveValueOverTime: () => new Promise((res) => res([])),
         }),
       ),
+      Ethwei,
       numberServiceRegistration(),
       createMockStoreRegistration(),
       createMockI18nRegistration(),

@@ -4,11 +4,12 @@ import { createFixture } from '@aurelia/testing';
 
 import 'utils-testing/setup-testing';
 
+import { Global } from '../../../../../../hooks';
+import { IStore } from '../../../../../../stores';
+
 import { ITreasuryStore } from './../../../../../../stores/treasury-store';
 import { AssetsCard } from './assets-card';
 
-import { Global } from 'hooks';
-import { IStore } from 'stores';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
@@ -19,15 +20,6 @@ describe('assets-card', () => {
       .deps(...getRegistrations())
       .build().started;
     expect(appHost.querySelector('#t-o-ac-card')).exist;
-  });
-
-  it('should have a title k-card component', async () => {
-    const { appHost } = await createFixture
-      .html(`<assets-card>`)
-      .deps(...getRegistrations())
-      .build().started;
-    const card = appHost.querySelector('#t-o-ac-card');
-    expect(card?.getAttribute('title')).exist;
   });
 
   it('should have a card nav component', async () => {

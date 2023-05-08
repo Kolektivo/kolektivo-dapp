@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aur
 import { captureFilter, numberToPixelsInterceptor } from '../../common';
 
 import template from './k-avatar.html';
-
-import css from './k-avatar.scss';
+import css from './k-avatar.scss?inline';
 
 @customElement({
   name: 'k-avatar',

@@ -4,13 +4,14 @@ import { createFixture } from '@aurelia/testing';
 
 import 'utils-testing/setup-testing';
 
+import { IDesignSystemConfiguration } from '../../../../../../design-system';
+import { Global } from '../../../../../../hooks';
+import { Currency, Ethwei, Percentage } from '../../../../../../resources';
+import { BrowserStorageService, IContractService, IEthereumService, NumberService } from '../../../../../../services';
+import { BlockChainStore, IStore, ITreasuryStore } from '../../../../../../stores';
+
 import { TokenInfoCard } from './token-info-card';
 
-import { IDesignSystemConfiguration } from 'design-system';
-import { Global } from 'hooks';
-import { CurrencyValueConverter, EthweiValueConverter, PercentageValueConverter } from 'resources';
-import { BrowserStorageService, IContractService, IEthereumService, NumberService } from 'services';
-import { BlockChainStore, IStore, ITreasuryStore } from 'stores';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
@@ -31,7 +32,7 @@ describe('token-info-card', () => {
     const kCard = appHost.querySelector('k-card');
     expect(kCard?.hasAttribute('color')).true;
     expect(kCard?.hasAttribute('title')).true;
-    expect(kCard?.hasAttribute('title-avatar')).true;
+    expect(kCard?.hasAttribute('title-avatar.bind')).true;
   });
 
   it('should have a 3 col k-grid with three labels and tooltips', async () => {
@@ -71,13 +72,13 @@ describe('token-info-card', () => {
     const designSystemConfiguration = () => Registration.instance(IDesignSystemConfiguration, {});
     return [
       TokenInfoCard,
-      CurrencyValueConverter,
+      Currency,
       createMockContractService(),
       createMockEthereumService(),
       BrowserStorageService,
       BlockChainStore,
-      PercentageValueConverter,
-      EthweiValueConverter,
+      Percentage,
+      Ethwei,
       NumberService,
       Global,
       createMockStoreRegistration(),

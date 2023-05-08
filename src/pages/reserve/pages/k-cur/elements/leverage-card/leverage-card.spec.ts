@@ -4,14 +4,14 @@ import { createFixture } from '@aurelia/testing';
 
 import 'utils-testing/setup-testing';
 
-import { MultiplierValueConverter } from './../../../../../../resources/value-converters/multiplier';
+import { Global } from '../../../../../../hooks';
+import { Percentage } from '../../../../../../resources';
+import { INumberService } from '../../../../../../services';
+import { IReserveStore, IStore } from '../../../../../../stores';
+
+import { Multiplier } from './../../../../../../resources/value-converters/multiplier';
 import { LeverageCard } from './leverage-card';
 
-import { Global } from 'hooks';
-import { PercentageValueConverter } from 'resources';
-import { INumberService } from 'services';
-import { IStore } from 'stores';
-import { IReserveStore } from 'stores/reserve-store';
 import { describe, expect, it } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
@@ -70,8 +70,8 @@ describe('leverage-card', () => {
           getkCurPriceOverTime: () => new Promise((res) => res([])),
         }),
       ),
-      MultiplierValueConverter,
-      PercentageValueConverter,
+      Multiplier,
+      Percentage,
       Global,
       createMockStoreRegistration(),
       createMockI18nRegistration(),

@@ -1,11 +1,11 @@
 import { containerless, customElement, ICustomElementViewModel } from 'aurelia';
 
+import { IConfiguration } from '../../../configurations/configuration';
+
 import { IStore } from './../../../stores/store';
 import template from './network-feedback.html';
 
 import './network-feedback.scss';
-
-import { IConfiguration } from 'configurations/configuration';
 
 @containerless
 @customElement({ template, name: 'network-feedback' })

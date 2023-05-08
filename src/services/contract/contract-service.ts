@@ -1,5 +1,6 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { cache } from '../../decorators/cache';
 import { IReadOnlyProvider } from '../../read-only-provider';
 import { ICacheService } from '../cache-service';
 
@@ -10,7 +11,6 @@ import { ContractGroupsSharedJson } from './types';
 import { Signer } from '@ethersproject/abstract-signer';
 import { BaseContract, Contract, ContractFunction, ContractInterface, PopulatedTransaction } from '@ethersproject/contracts';
 import { BaseProvider } from '@ethersproject/providers';
-import { cache } from 'decorators/cache';
 
 export type IContractService = ContractService;
 export const IContractService = DI.createInterface<IContractService>();
@@ -57,14 +57,13 @@ export class ContractService {
     signerOrProvider?: BaseProvider | Signer,
   ): Promise<TResult> {
     const contractData = (
-      IS_TESTING
-        ? ((await import(`../../contracts/${contractType}/celo-test.json`)) as unknown)
-        : ((await import(`../../contracts/${contractType}/celo.json`)) as unknown)
+      IS_TESTING ? ((await import(`../../contracts/${contractType}/celo-test.json`)) as unknown) : ((await import(`../../contracts/${contractType}/celo.json`)) as unknown)
     ) as ContractGroupsJsons[TContractType]['main'];
 
     const contracts = contractData.contracts;
     const contract = contracts[name as keyof typeof contracts] as unknown as { abi: string | ContractInterface; address: string };
     let abi = contract.abi;
+    if (!abi) abi = 'ERC20';
     if (typeof abi === 'string') {
       const key = abi as keyof ContractGroupsSharedJson;
       abi = (await this.getSharedAbi(contractType, key)) as ContractInterface;
@@ -74,14 +73,10 @@ export class ContractService {
     if (!overrideAddress) {
       throw new Error(`ContractService: requested contract has no address: ${name}`);
     }
-
     return new Contract(overrideAddress, abi, signerOrProvider ?? this.readOnlyProvider) as TResult;
   }
 
-  public async getSharedAbi<TContractType extends ContractGroupsAbis>(
-    contractType: TContractType,
-    key: keyof ContractGroupsJsons[TContractType]['shared'],
-  ) {
+  public async getSharedAbi<TContractType extends ContractGroupsAbis>(contractType: TContractType, key: keyof ContractGroupsJsons[TContractType]['shared']) {
     const contractData = (await import(`../../contracts/${contractType}/sharedAbis.json`)) as ContractGroupsJsons[TContractType]['shared'];
     return contractData[key];
   }

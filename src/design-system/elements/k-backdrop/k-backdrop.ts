@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aur
 import { captureFilter, numberToPixelsInterceptor } from '../../common';
 
 import template from './k-backdrop.html';
-
-import css from './k-backdrop.scss';
+import css from './k-backdrop.scss?inline';
 
 @customElement({
   name: 'k-backdrop',

@@ -1,6 +1,5 @@
-import { defineConfig } from 'vitest/config';
 import loadHtml from 'rollup-plugin-html';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
@@ -9,5 +8,5 @@ export default defineConfig({
     testTimeout: 200000,
   },
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  plugins: [tsconfigPaths(), loadHtml()],
+  plugins: [loadHtml()],
 });

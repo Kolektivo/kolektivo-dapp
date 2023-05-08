@@ -3,20 +3,9 @@
   "name": "kolektivo-dapp",
   "rewrites": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "destination": "/"
     }
   ],
-  "trailingSlash": false,
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers" : [
-        {
-          "key" : "Cache-Control",
-          "value" : "public, no-transform, immutable, max-age=31536000"
-        }
-      ]
-    }
-  ]
+  "trailingSlash": false
 }

@@ -3,8 +3,7 @@ import { bindable, customElement, ICustomElementViewModel, shadowCSS } from 'aur
 import { captureFilter, numberToPixels } from '../../common';
 
 import template from './k-text.html';
-
-import css from './k-text.scss';
+import css from './k-text.scss?inline';
 
 @customElement({
   name: 'k-text',

@@ -1,5 +1,6 @@
+import { ITokenInfo } from '../services/contract';
+
 import { BigNumber } from '@ethersproject/bignumber';
-import { ITokenInfo } from 'services/contract';
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface Asset {
   token: ITokenInfo;
@@ -9,7 +10,7 @@ export interface Asset {
   totalSupply?: BigNumber;
 }
 export enum AssetType {
-  NonStablecoin = 0,
-  Stablecoin = 1,
-  Ecological = 2,
+  Low = 0,
+  Medium = 1,
+  High = 2,
 }

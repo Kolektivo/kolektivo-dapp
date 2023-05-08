@@ -3,8 +3,7 @@ import { watch } from '@aurelia/runtime-html';
 
 import { captureFilter, ifExistsThenTrue, numberToPixelsInterceptor } from './../../common';
 import template from './k-select.html';
-
-import css from './k-select.scss';
+import css from './k-select.scss?inline';
 
 @customElement({
   name: 'k-select',

@@ -1,19 +1,23 @@
 import { customElement, IEventAggregator, ILogger, IPlatform } from 'aurelia';
 import { I18N } from '@aurelia/i18n';
+import { route } from '@aurelia/router-lite';
 
 import { INotificationService } from './design-system/services';
 import { IStore } from './stores/store';
 import template from './app.html';
+import { IObserverService } from './services';
+import { IBlockChainStore } from './stores';
 
 import './app.scss';
 import './shared.scss';
 
 import { Network } from '@ethersproject/providers';
-import { IObserverService } from 'services';
-import { IBlockChainStore } from 'stores/block-chain-store';
-
 type WrongNetworkInfo = { connectedTo?: string; need: string };
-@customElement({ name: 'app', template })
+@customElement({ name: 'app', template, dependencies: [] })
+@route({
+  fallback: { path: 'not-found', component: () => import('./pages/not-found/not-found') },
+  routes: [{ path: 'reserve', component: () => import('./pages/reserve/reserve') }],
+})
 export class App {
   xl = false;
   showConfirmChangeNetworkInfo = false;

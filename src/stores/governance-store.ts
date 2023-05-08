@@ -1,15 +1,15 @@
 import { DI, IContainer, Registration } from 'aurelia';
 
+import { callOnce } from '../decorators/call-once';
+import { BadgeType } from '../models/badge-type';
+import { Secretdelay } from '../models/generated/governance/secretdelay';
+import { IContractService } from '../services';
 import { delay } from '../utils';
 
 import { Bacroles } from './../models/generated/governance/bacroles/Bacroles';
 import { Proposal, ProposalStatus } from './../models/proposal';
 
-import { callOnce } from 'decorators/call-once';
 import { BigNumber, ContractTransaction, PopulatedTransaction } from 'ethers';
-import { BadgeType } from 'models/badge-type';
-import { Secretdelay } from 'models/generated/governance/secretdelay';
-import { IContractService } from 'services/contract';
 
 export type IGovernanceStore = GovernanceStore;
 export const IGovernanceStore = DI.createInterface<IGovernanceStore>('IGovernanceStore');
@@ -76,11 +76,7 @@ export class GovernanceStore {
     ] as Proposal[];
   }
 
-  public async submitDynamicMethod(
-    isPublicProposal: boolean,
-    data: PopulatedTransaction,
-    ipfsHash?: string,
-  ): Promise<ContractTransaction | undefined> {
+  public async submitDynamicMethod(isPublicProposal: boolean, data: PopulatedTransaction, ipfsHash?: string): Promise<ContractTransaction | undefined> {
     if (!data.to || !data.data) return;
     const secretDelayContract: Secretdelay = await this.contractService.getContract('governance', 'monetaryDelay');
 
@@ -95,13 +91,7 @@ export class GovernanceStore {
     }
     const bacContract: Bacroles = await this.contractService.getContract('governance', 'bacMD');
     if (!dataParamBAC.to || !dataParamBAC.value || !dataParamBAC.data) return;
-    const result = await bacContract.execTransactionFromModule(
-      dataParamBAC.to,
-      dataParamBAC.value,
-      dataParamBAC.data,
-      BigNumber.from(0),
-      BadgeType.ECOLOGY_DELEGATE,
-    );
+    const result = await bacContract.execTransactionFromModule(dataParamBAC.to, dataParamBAC.value, dataParamBAC.data, BigNumber.from(0), BadgeType.ECOLOGY_DELEGATE);
     return result;
   }
 }
