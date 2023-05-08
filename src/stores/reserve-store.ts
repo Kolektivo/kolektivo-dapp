@@ -43,6 +43,7 @@ export class ReserveStore {
   public kGuilderSpread?: number;
   public kGuilderInflationRate?: number;
   public kGuilderTobinTax?: number;
+  public kGuilderPriceParity?: number;
   public primaryPoolData?: PrimaryPoolData[];
 
   public static register(container: IContainer): void {
@@ -140,7 +141,6 @@ export class ReserveStore {
   @callOnce()
   public async loadkCur(): Promise<void> {
     await this.loadAssets();
-    await this.loadkCurData();
     if (!this.kCurSupply) return; //can't get the distribution percentages without a total supply value so return if it's not there
     const kCurSupply = this.numberService.fromString(fromWei(this.kCurSupply, 18));
     //console.log(kCurSupply); //print kCurSupply
@@ -149,15 +149,12 @@ export class ReserveStore {
     const multiSigContract: Erc20 = await this.contractService.getContract('monetary', 'KolektivoMultiSig'); // get the kCur contract
     const kCurInReserve = await kCurContract.balanceOf(multiSigContract.address); //get the balace of kCur in the reserve
     this.kCurReserveDistribution = this.numberService.fromString(fromWei(kCurInReserve, 18)) / kCurSupply;
-
     const proxyPool: Proxypool = await this.contractService.getContract('monetary', 'ProxyPool'); // get the kCur contract
     const priceCeilingMultiplier = this.numberService.fromString(fromWei(await proxyPool.ceilingMultiplier(), 4));
-    console.log('Price Ceiling Mult.', priceCeilingMultiplier);
-
-    console.log('kCur Price Floor', this.kCurPriceFloor);
+    //console.log('Price Ceiling Mult.', priceCeilingMultiplier);
+    //console.log('kCur Price Floor', this.kCurPriceFloor);
     this.kCurPriceCeiling = this.kCurPriceFloor * priceCeilingMultiplier;
-    console.log('kCur Price Ceiling', this.kCurPriceCeiling);
-
+    //console.log('kCur Price Ceiling', this.kCurPriceCeiling);
     const mentoReserveContract: Erc20 = await this.contractService.getContract('monetary', 'MentoReserve'); // get the kCur contract
     const mentoInReserve = await kCurContract.balanceOf(mentoReserveContract.address);
     this.kCurMentoDistribution = this.numberService.fromString(fromWei(mentoInReserve, 18)) / kCurSupply;
@@ -166,6 +163,7 @@ export class ReserveStore {
 
   @callOnce()
   public async loadkGuilder(): Promise<void> {
+    await this.loadkCurData();
     this.kGuilderCurrentPrice = 0.558; //supposed to be hard coded for now per Marvin/Luuk
     const contract = await this.getReserveContract();
     const reserveAddress = contract.address;
@@ -192,6 +190,10 @@ export class ReserveStore {
     console.log('kCUR Amount in MentoReserve', this.numberService.fromString(fromWei(kCurSupply, 18)));
     console.log('total kG minted', this.numberService.fromString(fromWei(kGSupply, 18)));
 
+    //Ratio is (total amount of kCUR * kCUR Price) / (total amount of kG * kgPrice)
+    console.log('total amount of kCur', this.numberService.fromString(fromWei(kCurSupply, 18)));
+    console.log('kCur price', this.kCurPrice);
+
     const ratio = (this.kCurPrice ?? 0 * this.numberService.fromString(fromWei(kCurSupply, 18))) / (this.kGuilderCurrentPrice * this.numberService.fromString(fromWei(kGSupply, 18)));
     console.log('current ratio', ratio);
 
@@ -199,9 +201,10 @@ export class ReserveStore {
     console.log('Inflation rate', inflationRate);
 
     this.kGuilderTotalSupply = totalSupply;
-    this.kGuilderSpread = this.numberService.fromString(fromWei(spread, 20));
+    this.kGuilderSpread = this.numberService.fromString(fromWei(spread, 25));
     this.kGuilderInflationRate = this.numberService.fromString(fromWei(inflationRate, 25));
     this.kGuilderTobinTax = this.numberService.fromString(fromWei(tobinTax, 18));
+    this.kGuilderPriceParity = 0;
   }
 
   private async loadkCurData(): Promise<void> {
@@ -214,6 +217,9 @@ export class ReserveStore {
     const oracleAddress = await contract.tokenOracle(); //get kCur oracle address
     if (!oracleAddress) return;
     const asset = await this.contractStore.getAsset(kCurAddress, undefined, contract, reserveAddress, undefined, oracleAddress);
+    //console.log('set kCurPrice', asset?.token.price);
+    const oracleContract: Oracle = await this.contractService.getContract('monetary', 'Oracle', oracleAddress);
+    //console.log('Set kCurPrice', await oracleContract.getData());
     this.kCurPrice = asset?.token.price;
     this.kCurSupply = asset?.totalSupply;
   }
@@ -223,10 +229,6 @@ export class ReserveStore {
   }
 
   public async getReserveValueOverTime(interval: Interval): Promise<BigNumberOverTimeData[]> {
-    const test = await this.getReserveContract();
-    console.log(test.address);
-    const test2 = await test.reserveStatus();
-    console.log(test2);
     const [valueOverTimeData, reserveStatus] = await Promise.all([this.getData<BigNumberOverTimeData>('reserve', interval), this.getReserveContract().then((contract) => contract.reserveStatus())]);
     valueOverTimeData.push({
       createdAt: Number(new Date()),
