@@ -34845,7 +34845,6 @@ const SF = /* @__PURE__ */ Object.freeze(
   ),
 );
 export { LD as seed };
-
 function L5(n, e) {
   for (var t = 0; t < e.length; t++) {
     const i = e[t];
@@ -73291,7 +73290,7 @@ const Gf = be
       },
       d = async () => (await (await Gf.get(Ew).getTreasuryContract()).totalValuation()).toHexString(),
       y = async () => {
-        await s.loadAssets(), await s.loadkCur();
+        await s.loadAssets(), await s.loadkCur(), await s.loadkGuilder();
       },
       g = (E) => {
         const M = /* @__PURE__ */ new Date();
@@ -73325,7 +73324,7 @@ const Gf = be
           (P = s.lowRiskAssets.map((E) => E.total).sum()),
           (N = s.moderateRiskAssets.map((E) => E.total).sum()),
           (U = s.highRiskAssets.map((E) => E.total).sum()),
-          (A = s.kGuilderValueRatio);
+          (A = s.kGuilderValueRatio ?? 0);
       };
     await Promise.all(
       Y.map(async (E) => {

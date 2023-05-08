@@ -164,6 +164,7 @@ export const seed = async () => {
   const loadReserveData = async (): Promise<void> => {
     await reserveStore.loadAssets(); //loads reserve value and assets
     await reserveStore.loadkCur(); //loads kCur and the supply distributions
+    await reserveStore.loadkGuilder(); //loads kG data
   };
   const getTimeMinusInterval = (period: Periods): number => {
     const now = new Date();
@@ -210,7 +211,7 @@ export const seed = async () => {
     highRisk = reserveStore.highRiskAssets.map((x) => x.total).sum();
 
     //Get and store current kGuilder-kCur Value Ratio
-    kGuilderValueRatio = reserveStore.kGuilderValueRatio;
+    kGuilderValueRatio = reserveStore.kGuilderValueRatio ?? 0;
   };
 
   //loop through each time period to determine if data needs to be collected for it
