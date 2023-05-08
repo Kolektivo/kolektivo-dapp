@@ -8,7 +8,7 @@
     </k-stack>
     <k-text type="statistic-lg"> ${treasuryStore.treasuryValue | currency} </k-text>
     <chart-time-filter current-filter.two-way="currentInterval">
-      <k-stack direction="row" gap="20">
+      <k-stack direction="row" gap="var(--spacing-sm)">
         <avatar-text size="10" text-size="14" color="var(--primary)" text-color="var(--don-juan-400)" name="${i18n.tr('navigation.treasury.overview.value.title')}"></avatar-text>
         <k-text color="var(--don-juan-400)" size="14">Last rebase: ${lastRebaseTime | relativeTime} </k-text>
       </k-stack>

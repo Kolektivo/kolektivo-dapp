@@ -18,20 +18,6 @@ inner-nav {
   k-tab {
     margin-bottom: -1px;
 
-    border-bottom: initial;
-
-    &::part(content) {
-      color: var(--san-juan-300);
-    }
-
-    &.route-active {
-      border-bottom: 5px var(--primary) solid;
-
-      &::part(content) {
-        color: var(--primary);
-      }
-    }
-
     &:hover::part(content) {
       color: var(--don-juan-500);
     }

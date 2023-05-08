@@ -7,7 +7,7 @@
 >
   <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadkCur()"></k-loader>
   <k-stack gap="var(--spacing-xl)">
-    <k-grid cols="3" id="r-kCur-tic-stats">
+    <k-stack direction="row" gap="var(--spacing-xl)" id="r-kCur-tic-stats" justify-content="space-around">
       <label-value title="${i18n.tr('general.token-info-card.current-price')}" tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}">
         <k-text type="statistic"> ${reserveStore.kCurPrice | currency} </k-text>
       </label-value>
@@ -21,15 +21,22 @@
           <formatted-number show-tooltip currency commas decimals="0" value="${reserveStore.kCurMarketCap | ethwei}"> </formatted-number>
         </k-text>
       </label-value>
-    </k-grid>
+    </k-stack>
     <label-value id="r-kCur-tic-supply" title="${i18n.tr('general.token-info-card.supply-distribution')}" tooltip-text="${i18n.tr('general.token-info-card.supply-distribution-tooltip')}">
-      <k-stack direction="row" gap="var(--spacing-xl)">
-        <k-text>${reserveStore.kCurReserveDistribution | percentage} ${i18n.tr('general.token-info-card.in-reserve')}</k-text>
-        <k-text color="rgba(255,255,255,0.6)">•</k-text>
-        <k-text>${reserveStore.kCurMentoDistribution | percentage} ${i18n.tr('general.token-info-card.in-mento')}</k-text>
-        <k-text color="rgba(255,255,255,0.6)">•</k-text>
-        <k-text>${reserveStore.kCurPrimaryPoolDistribution | percentage} ${i18n.tr('general.token-info-card.primary-pool')}</k-text>
-        <k-text color="rgba(255,255,255,0.6)">•</k-text>
+      <k-stack direction="row" gap="var(--spacing-xl)" justify-content="space-around">
+        <div>
+          <k-text>${reserveStore.kCurReserveDistribution | percentage} ${i18n.tr('general.token-info-card.in-reserve')}</k-text>
+          <k-text color="rgba(255,255,255,0.6)">•</k-text>
+        </div>
+        <div>
+          <k-text>${reserveStore.kCurMentoDistribution | percentage} ${i18n.tr('general.token-info-card.in-mento')}</k-text>
+          <k-text color="rgba(255,255,255,0.6)">•</k-text>
+        </div>
+        <div>
+          <k-text>${reserveStore.kCurPrimaryPoolDistribution | percentage} ${i18n.tr('general.token-info-card.primary-pool')}</k-text>
+          <k-text color="rgba(255,255,255,0.6)">•</k-text>
+        </div>
+
         <k-text>${reserveStore.kCurCirculatingDistribution | percentage} ${i18n.tr('general.token-info-card.external')}</k-text>
       </k-stack>
     </label-value>

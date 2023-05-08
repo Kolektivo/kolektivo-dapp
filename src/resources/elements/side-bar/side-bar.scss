@@ -2,7 +2,7 @@ side-bar {
   background-color: var(--white);
   height: 100%;
   width: 240px;
-  z-index: 99;
+  z-index: 999;
   position: fixed;
   box-shadow: 36px 0 60px rgba(0, 0, 0, 6%), 8px 0 14px rgba(0, 0, 0, 2.98%),
     2.5px 4px 4px rgba(0, 0, 0, 2.02%);
@@ -12,7 +12,7 @@ side-bar {
     margin-left: 30px;
     margin-right: 30px;
 
-    > img {
+    >img {
       height: auto;
       width: 100%;
     }

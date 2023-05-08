@@ -6,7 +6,7 @@
 >
   <k-loader fill="parent" color="var(--white)" loading.bind="reserveStore.loadkGuilder()"></k-loader>
   <k-stack gap="var(--spacing-xl)">
-    <k-grid cols="3" id="r-kGuilder-tic-stats">
+    <k-stack gap="var(--spacing-lg)" direction="row" justify-content="space-around" id="r-kGuilder-tic-stats">
       <label-value title="${i18n.tr('general.token-info-card.current-price')}" tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}">
         <k-text type="statistic"> ${reserveStore.kGuilderCurrentPrice | currency} </k-text>
       </label-value>
@@ -18,6 +18,6 @@
       <label-value title="${i18n.tr('general.token-info-card.market-cap')}" tooltip-text="${i18n.tr('general.token-info-card.market-cap-tooltip')}">
         <k-text type="statistic"> ${reserveStore.kGuilderMarketCap | currency} </k-text>
       </label-value>
-    </k-grid>
+    </k-stack>
   </k-stack>
 </k-card>

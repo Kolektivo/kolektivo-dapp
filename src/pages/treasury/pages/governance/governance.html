@@ -4,7 +4,7 @@
   description="${i18n.tr('navigation.treasury.governance.description')}"
   learn-more-link="${i18n.tr('navigation.treasury.governance.learn-more-link')}"
 >
-  <k-stack gap="20">
+  <k-stack gap="var(--spacing-sm)">
     <k-select placeholder="Please select your badge for testing" width="350" value.two-way="selectedBadge">
       <k-option value.bind="0">No wallet connected</k-option>
       <k-option value.bind="1">Local Kolektivo Multi-Sig Member</k-option>

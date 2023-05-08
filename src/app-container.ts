@@ -135,7 +135,7 @@ export const appContainer: IContainer = DI.createContainer()
     RouterConfiguration.customize({
       useUrlFragmentHash: false,
       basePath: '/',
-      activeClass: 'active',
+      activeClass: 'noop',
     }),
   )
   .register(
