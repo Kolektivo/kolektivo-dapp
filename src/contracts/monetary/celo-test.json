@@ -1052,7 +1052,7 @@
       ]
     },
     "Reserve": {
-      "address": "0x54beb8CfA8bD06453C8Fb81C1EDF438648ecC0dC",
+      "address": "0x27C5f567443991DE535E202a4a9B6Abf24e66Da9",
       "abi": [
         {
           "inputs": [
@@ -3500,7 +3500,7 @@
       ]
     },
     "CuracaoReserveToken": {
-      "address": "0x09411f067f1ad900D653d383a308c726E5A7D2cb",
+      "address": "0x4D06191a0eF5ECBD55eB5c4cc9CF4796f6138840",
       "abi": [
         {
           "inputs": [
@@ -6886,7 +6886,7 @@
       "abi": "ERC20"
     },
     "cUSD": {
-      "address": "0x06Dd5E65E26Bb273387695Ce769c923d0B16028D",
+      "address": "0xEA8005c6a5d8D4A5Da391C5f2770dFA4FaeC4A19",
       "abi": "ERC20"
     },
     "Test Token #2": {
@@ -6908,7 +6908,7 @@
       "abi": "ERC721"
     },
     "kGuilder Pool": {
-      "address": "0x2F9d9489194102318A5be71C4955AD9097958195",
+      "address": "0x0A6E9C14343F6273AEd659bef624A49fC0673efc",
       "abi": [
         {
           "inputs": [
@@ -7995,7 +7995,7 @@
       ]
     },
     "kCur Pool": {
-      "address": "0x482449EEd73D3215A6b469a8E0A1cea3c96c795D",
+      "address": "0x5d3b4D218cd421C1A03Eac4739AB3FA42C227a96",
       "abi": [
         {
           "inputs": [
@@ -8935,7 +8935,7 @@
       ]
     },
     "TimeLockVault": {
-      "address": "0x2872E14A459c809f7c0Ee9888f93Db486a04d533",
+      "address": "0x6165Db6659B39c816363aD643Ad54F472FD384d0",
       "abi": [
         {
           "inputs": [],
@@ -9137,7 +9137,7 @@
       ]
     },
     "SortedOracles": {
-      "address": "0x69CDC2E74646C3485a8C9F5264Bb92A002585C1f",
+      "address": "0x81D79eB26E81882a15aBf0d5B56019Cf66466E90",
       "abi": [
         {
           "inputs": [
@@ -9836,7 +9836,7 @@
       ]
     },
     "BAC": {
-      "address": "0x2fb282e70DBCDb23Dc2BD872f9A954f1553D7D92",
+      "address": "0xFD16456575188FAdC88F855d4cda6C339Fb5603f",
       "abi": [
         {
           "inputs": [
@@ -10610,7 +10610,7 @@
       ]
     },
     "KolektivoGuilder": {
-      "address": "0x0C5f74892F6EFBfF6D4265bB334e4f79358B1444",
+      "address": "0x757F26aCB41300F7e050E11FBBD3217318ca1eC7",
       "abi": [
         {
           "inputs": [
@@ -11701,7 +11701,7 @@
       ]
     },
     "Exchange": {
-      "address": "0x8dedAB14cc39571E6c8a0F8e8F44Bb917a08aF8F",
+      "address": "0xB3D5F944284846fF1B27635aF117fb11c7E9d1B1",
       "abi": [
         {
           "inputs": [
@@ -12365,7 +12365,7 @@
       ]
     },
     "MentoReserve": {
-      "address": "0xBbc2df20D5984E6d428B84FA34Aa34Bd48BA8E4c",
+      "address": "0x87944070f49108d062231a8cB15A2ce1CEe48Dd4",
       "abi": [
         {
           "inputs": [
@@ -13518,7 +13518,7 @@
       ]
     },
     "MentoRegistry": {
-      "address": "0x69fF63a5671439A457b0f1F5C16347fbd59317FE",
+      "address": "0xB66F7f6C7C08d6132b3052D973ED4f9B74681E70",
       "abi": [
         {
           "inputs": [
@@ -13768,7 +13768,7 @@
       ]
     },
     "Freezer": {
-      "address": "0x012E70f9AA7bAAbcc54eC6F13c968fA97459E209",
+      "address": "0x1132A29561cB4Caa425A9C3aCF21781Fa3bB3705",
       "abi": [
         {
           "anonymous": false,
@@ -13877,7 +13877,7 @@
       ]
     },
     "ProxyPool": {
-      "address": "0x96a80e8e514E2e3777cB8296FebDF477d1752627",
+      "address": "0xC8C7c0EF04493028b1697204b59Ce32D5599B35A",
       "abi": [
         {
           "inputs": [
@@ -14392,7 +14392,7 @@
       ]
     },
     "Badger": {
-      "address": "0xbBeB91057D848db7390D9C786807a9e5ed69eE9c",
+      "address": "0x8a41a586F66c74Ea0556242EC18eb4FA258d597C",
       "abi": [
         {
           "inputs": [
