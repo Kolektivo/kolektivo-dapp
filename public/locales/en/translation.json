@@ -267,7 +267,7 @@
       "market-cap": "Market Cap",
       "market-cap-tooltip": "Total value of all KTT existing.",
       "current-price": "Current Price",
-      "current-price-tooltip": "The current price of 1 KTT expressed in USD.",
+      "current-price-tooltip": "The current price of 1 kCur expressed in USD.",
       "total-supply": "Total Supply",
       "total-supply-tooltip": "The total amount of KTT tokens existing.",
       "supply-distribution": "Supply Distribution",

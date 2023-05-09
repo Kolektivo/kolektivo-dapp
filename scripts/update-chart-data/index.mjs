@@ -66115,6 +66115,7 @@ let Ta = class {
   kCurReserveDistribution;
   kCurMentoDistribution;
   kCurPrimaryPoolDistribution;
+  kCurPriceFloor;
   kCurPriceCeiling;
   minBacking;
   kGuilderCurrentPrice;
@@ -66155,9 +66156,6 @@ let Ta = class {
   get kGuilderMarketCap() {
     return this.kGuilderCurrentPrice ? this.kGuilderCurrentPrice * this.numberService.fromString(Ve(this.kGuilderTotalSupply ?? 0, 18)) : 0;
   }
-  get kCurPriceFloor() {
-    return !this.reserveValue || !this.kCurSupply ? 0 : this.numberService.fromString(Ve(this.reserveValue, 18)) / this.numberService.fromString(Ve(this.kCurSupply, 18));
-  }
   async loadAssets() {
     const n = await this.getReserveContract(),
       e = n.address;
@@ -66175,18 +66173,20 @@ let Ta = class {
     (this.reserveValue = i[0]), (this.kCurMarketCap = i[1]), (this.backing = i[2]), (this.minBacking = await n.minBacking());
   }
   async loadkCur() {
-    if ((await this.loadAssets(), !this.kCurSupply)) return;
+    if ((await this.loadAssets(), await this.loadkCurData(), !this.kCurSupply)) return;
     const n = this.numberService.fromString(Ve(this.kCurSupply, 18)),
       e = await this.contractService.getContract('monetary', 'CuracaoReserveToken'),
       t = await this.contractService.getContract('monetary', 'KolektivoMultiSig'),
       i = await e.balanceOf(t.address);
     this.kCurReserveDistribution = this.numberService.fromString(Ve(i, 18)) / n;
     const r = await this.contractService.getContract('monetary', 'ProxyPool'),
-      s = this.numberService.fromString(Ve(await r.ceilingMultiplier(), 4));
-    this.kCurPriceCeiling = this.kCurPriceFloor * s;
-    const a = await this.contractService.getContract('monetary', 'MentoReserve'),
-      o = await e.balanceOf(a.address);
-    (this.kCurMentoDistribution = this.numberService.fromString(Ve(o, 18)) / n), (this.kCurPrimaryPoolDistribution = 0);
+      s = this.numberService.fromString(Ve(await r.ceilingMultiplier(), 4)),
+      u = (await (await this.getReserveContract()).reserveStatus())[0],
+      l = this.numberService.fromString(Ve(u, 18)) / this.numberService.fromString(Ve(this.kCurSupply, 18));
+    (this.kCurPriceFloor = l), (this.kCurPriceCeiling = l * s);
+    const c = await this.contractService.getContract('monetary', 'MentoReserve'),
+      f = await e.balanceOf(c.address);
+    (this.kCurMentoDistribution = this.numberService.fromString(Ve(f, 18)) / n), (this.kCurPrimaryPoolDistribution = 0);
   }
   async loadkGuilder() {
     if ((await this.loadkCurData(), (this.kGuilderCurrentPrice = 0.558), !(await this.getReserveContract()).address)) return;
@@ -73313,8 +73313,8 @@ const Gf = be
           (o = s.currentLeverageRatio),
           (u = s.maxLeverageRatio),
           (l = s.kCurPrice ?? 0),
+          (f = s.kCurPriceFloor ?? 0),
           (c = s.kCurPriceCeiling ?? 0),
-          (f = s.kCurPriceFloor),
           (m = s.kCurReserveDistribution ?? 0),
           (w = s.kCurMentoDistribution ?? 0),
           (v = s.kCurPrimaryPoolDistribution ?? 0),

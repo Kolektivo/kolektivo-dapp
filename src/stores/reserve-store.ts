@@ -35,6 +35,7 @@ export class ReserveStore {
   public kCurReserveDistribution?: number;
   public kCurMentoDistribution?: number;
   public kCurPrimaryPoolDistribution?: number;
+  public kCurPriceFloor?: number;
   public kCurPriceCeiling?: number;
   public minBacking?: BigNumber;
   public kGuilderCurrentPrice?: number;
@@ -97,12 +98,6 @@ export class ReserveStore {
     return this.kGuilderCurrentPrice * this.numberService.fromString(fromWei(this.kGuilderTotalSupply ?? 0, 18));
   }
 
-  public get kCurPriceFloor(): number {
-    if (!this.reserveValue || !this.kCurSupply) return 0;
-    //price floor is defined in the BL as Reserve Value / kCUR Supply
-    return this.numberService.fromString(fromWei(this.reserveValue, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
-  }
-
   @callOnce()
   public async loadAssets(): Promise<void> {
     const contract = await this.getReserveContract();
@@ -135,6 +130,7 @@ export class ReserveStore {
   @callOnce()
   public async loadkCur(): Promise<void> {
     await this.loadAssets();
+    await this.loadkCurData();
     if (!this.kCurSupply) return; //can't get the distribution percentages without a total supply value so return if it's not there
     const kCurSupply = this.numberService.fromString(fromWei(this.kCurSupply, 18));
     //console.log(kCurSupply); //print kCurSupply
@@ -145,9 +141,14 @@ export class ReserveStore {
     this.kCurReserveDistribution = this.numberService.fromString(fromWei(kCurInReserve, 18)) / kCurSupply;
     const proxyPool: Proxypool = await this.contractService.getContract('monetary', 'ProxyPool'); // get the kCur contract
     const priceCeilingMultiplier = this.numberService.fromString(fromWei(await proxyPool.ceilingMultiplier(), 4));
-    //console.log('Price Ceiling Mult.', priceCeilingMultiplier);
     //console.log('kCur Price Floor', this.kCurPriceFloor);
-    this.kCurPriceCeiling = this.kCurPriceFloor * priceCeilingMultiplier;
+    const contract = await this.getReserveContract();
+    const reserveStatus = await contract.reserveStatus();
+    const reserveValue = reserveStatus[0];
+    const kCurPriceFloor = this.numberService.fromString(fromWei(reserveValue, 18)) / this.numberService.fromString(fromWei(this.kCurSupply, 18));
+    this.kCurPriceFloor = kCurPriceFloor;
+    this.kCurPriceCeiling = kCurPriceFloor * priceCeilingMultiplier;
+
     //console.log('kCur Price Ceiling', this.kCurPriceCeiling);
     const mentoReserveContract: Erc20 = await this.contractService.getContract('monetary', 'MentoReserve'); // get the kCur contract
     const mentoInReserve = await kCurContract.balanceOf(mentoReserveContract.address);
