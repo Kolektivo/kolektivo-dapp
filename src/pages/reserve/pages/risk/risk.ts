@@ -11,6 +11,6 @@ import './risk.scss';
 @customElement({ name: 'risk', template, dependencies: [elements] })
 export class Risk implements ICustomElementViewModel {
   constructor(@I18N private readonly i18n: I18N, @IStore private readonly store: IStore) {
-    this.store.pageTitle = this.i18n.tr('navigation.reserve.risk.title');
+    this.store.pageTitle = this.i18n.tr('navigation.reserve.overview.title');
   }
 }

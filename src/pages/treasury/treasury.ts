@@ -11,7 +11,7 @@ import './treasury.scss';
 @customElement({ name: 'treasury', template, dependencies: [pages] })
 export class Treasury implements ICustomElementViewModel {
   constructor(@I18N private readonly i18n: I18N, @IStore private readonly store: IStore) {
-    this.store.pageTitle = this.i18n.tr('navigation.treasury.title');
+    this.store.pageTitle = this.i18n.tr('navigation.reserve.overview.title');
     this.store.routes = [];
   }
 

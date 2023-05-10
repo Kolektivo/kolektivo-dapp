@@ -183,13 +183,13 @@
         }
       },
       "k-guilder": {
-        "menu": "kG",
-        "title": "kG",
+        "menu": "kGuilder",
+        "title": "kGuilder",
         "learn-more-link": "/",
-        "description": "What is kG? Why does it exist? Which blockchain does it live on? Basic & accessible description for the general public.",
+        "description": "What is kGuilder? Why does it exist? Which blockchain does it live on? Basic & accessible description for the general public.",
         "token-info": {
           "title": "Kolektivo Guilder (kG)",
-          "tooltip": "This is a tooltip that explains what kG is"
+          "tooltip": "This is a tooltip that explains what kGuilder is"
         },
         "value-ratio": {
           "title": "kCUR-kG Value Ratio (USD)",
