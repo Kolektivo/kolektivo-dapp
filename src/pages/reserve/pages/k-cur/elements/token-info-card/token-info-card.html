@@ -22,21 +22,19 @@
         </k-text>
       </label-value>
     </k-stack>
-    <label-value id="r-kCur-tic-supply" title="${i18n.tr('general.token-info-card.supply-distribution')}" tooltip-text="${i18n.tr('general.token-info-card.supply-distribution-tooltip')}">
-      <k-stack direction="row" gap="var(--spacing-xl)" justify-content="space-between">
-        <div>
-          <k-text>${reserveStore.kCurReserveDistribution | percentage} ${i18n.tr('general.token-info-card.in-reserve')}</k-text>
-          <k-text color="rgba(255,255,255,0.6)">•</k-text>
-        </div>
-        <div>
-          <k-text>${reserveStore.kCurMentoDistribution | percentage} ${i18n.tr('general.token-info-card.in-mento')}</k-text>
-          <k-text color="rgba(255,255,255,0.6)">•</k-text>
-        </div>
-        <div>
-          <k-text>${reserveStore.kCurPrimaryPoolDistribution | percentage} ${i18n.tr('general.token-info-card.primary-pool')}</k-text>
-          <k-text color="rgba(255,255,255,0.6)">•</k-text>
-        </div>
-
+    <label-value
+      id="r-kCur-ticg
+    -supply"
+      title="${i18n.tr('general.token-info-card.supply-distribution')}"
+      tooltip-text="${i18n.tr('general.token-info-card.supply-distribution-tooltip')}"
+    >
+      <k-stack direction="row" gap="var(--spacing-xl)">
+        <k-text>${reserveStore.kCurReserveDistribution | percentage} ${i18n.tr('general.token-info-card.in-reserve')}</k-text>
+        <k-text color="rgba(255,255,255,0.6)">•</k-text>
+        <k-text>${reserveStore.kCurMentoDistribution | percentage} ${i18n.tr('general.token-info-card.in-mento')}</k-text>
+        <k-text color="rgba(255,255,255,0.6)">•</k-text>
+        <k-text>${reserveStore.kCurPrimaryPoolDistribution | percentage} ${i18n.tr('general.token-info-card.primary-pool')}</k-text>
+        <k-text color="rgba(255,255,255,0.6)">•</k-text>
         <k-text>${reserveStore.kCurCirculatingDistribution | percentage} ${i18n.tr('general.token-info-card.external')}</k-text>
       </k-stack>
     </label-value>

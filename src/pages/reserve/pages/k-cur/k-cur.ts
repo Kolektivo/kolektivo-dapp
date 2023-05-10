@@ -11,6 +11,6 @@ import './k-cur.scss';
 @customElement({ name: 'k-cur', template, dependencies: [elements] })
 export class KCur implements ICustomElementViewModel {
   constructor(@I18N private readonly i18n: I18N, @IStore private readonly store: IStore) {
-    this.store.pageTitle = this.i18n.tr('navigation.reserve.k-cur.title');
+    this.store.pageTitle = this.i18n.tr('navigation.reserve.overview.title');
   }
 }

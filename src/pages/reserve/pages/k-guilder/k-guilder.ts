@@ -12,6 +12,6 @@ import './k-guilder.scss';
 @customElement({ name: 'k-guilder', template, dependencies: [elements] })
 export class KGuilder implements ICustomElementViewModel {
   constructor(@IReserveStore private readonly reserveStore: IReserveStore, @I18N private readonly i18n: I18N, @IStore private readonly store: IStore) {
-    this.store.pageTitle = this.i18n.tr('navigation.reserve.k-guilder.title');
+    this.store.pageTitle = this.i18n.tr('navigation.reserve.overview.title');
   }
 }

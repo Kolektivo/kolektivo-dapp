@@ -52,7 +52,7 @@ const container = DI.createContainer()
     Registration.instance(
       IReadOnlyProvider,
       new CeloProvider(
-        { url: CHAIN_URL, skipFetchSetup: true },
+        { url: 'https://celo-mainnet.infura.io/v3/724935fba337407c8f49b12c9a240b7a', skipFetchSetup: true },
         {
           name: CHAIN.toLowerCase(),
           chainId: CHAIN_ID,
