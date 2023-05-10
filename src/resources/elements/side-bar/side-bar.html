@@ -6,7 +6,7 @@
     <nav id="main-nav" part="nav">
       <a load="${route.path}" class="active" repeat.for="route  of getRoutes('top')">
         <k-stack direction="row" column-gap="15">
-          <k-icon size="20" name.bind="route.icon"></k-icon>
+          <k-icon color="var(--primary)" size="20" name.bind="route.icon"></k-icon>
           <k-text type="label">${route.name}</k-text>
         </k-stack>
       </a>
