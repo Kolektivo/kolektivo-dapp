@@ -92,7 +92,7 @@ export class ValueOverTimeCard implements ICustomElementViewModel {
   }
   get yLabelFormat(): Record<string, unknown> {
     return {
-      callback: (value: number) => `$${(Number(value) / 1000000).toFixed(2)}M`,
+      callback: (value: number) => `$${Number(value).toFixed(2)}`,
     };
   }
   get xLabelFormat(): Record<string, unknown> {
