@@ -50,7 +50,7 @@ export const transactionHistoryColumns = () => {
       template: '<formatted-number show-tooltip value="${amount | ethwei}"></formatted-number>',
     },
     {
-      headerText: 'TxId',
+      headerText: i18n.tr('general.transaction-history.grid-headers.txid'),
       field: 'id',
       width: '1fr',
       template: '<user-address address.bind="id" is-transaction></user-address>',

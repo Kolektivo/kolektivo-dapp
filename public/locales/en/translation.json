@@ -257,6 +257,7 @@
         "type": "Type",
         "amount": "Amount",
         "address": "Address",
+        "txid": "TxID",
         "age": "Age"
       }
     },
