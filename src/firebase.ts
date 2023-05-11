@@ -100,7 +100,7 @@ export const seed = async () => {
   const minuteInterval = 5;
   const hourInterval = 1;
   const dayInterval = 1;
-  let kttValue = '';
+  const kttValue = '';
   // const numberService: INumberService = container.get(INumberService);
   const reserveStore: IReserveStore = container.get(IReserveStore);
   let reserveValue = '';
@@ -182,7 +182,7 @@ export const seed = async () => {
   };
   const captureData = async () => {
     //Get current KTT (Treasury) value
-    kttValue = await getTreasuryValue();
+    // kttValue = await getTreasuryValue();
 
     //Get current Reserve value
     await loadReserveData();
@@ -266,7 +266,7 @@ export const seed = async () => {
             kCurCirculatingDistribution,
           });
 
-          await addData('ktt', Periods[period], newSyncTime.getTime(), kttValue);
+          // await addData('ktt', Periods[period], newSyncTime.getTime(), kttValue);
           await addData('reserve', Periods[period], newSyncTime.getTime(), reserveValue);
           await addData('risk', Periods[period], newSyncTime.getTime(), {
             minCollateralValue,
