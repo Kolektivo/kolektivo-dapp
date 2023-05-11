@@ -118,11 +118,11 @@
         "description": "The Kolektivo Reserve mints the Kolektivo Curaçao Reserve Token (kCUR) token by collateralizing KTT and other assets in the reserve.",
         "token-info": {
           "title": "Kolektivo Curaçao Reserve Token (kCUR)",
-          "tooltip": "This is the content that will go into the tooltip of the kCUR token info card"
+          "tooltip": "The native reserve token for Kolektivo Cuaçao. kCUR is used to back the community currency, kG."
         },
         "pool": {
           "title": "Primary Pool (kCUR-cUSD)",
-          "tooltip": "This is the tooltip for the Primary Pool (kCUR-cUSD) section",
+          "tooltip": "The Symmetric pool to swap kCUR and kG. The primary pool sets the price ceiling and price floor for kG.",
           "button": "Go to Symmetric Pool",
           "grid-headers": {
             "tokens": "Token",
@@ -189,7 +189,7 @@
         "description": "What is kGuilder? Why does it exist? Which blockchain does it live on? Basic & accessible description for the general public.",
         "token-info": {
           "title": "Kolektivo Guilder (kG)",
-          "tooltip": "This is a tooltip that explains what kGuilder is"
+          "tooltip": "The community currency for Kolektivo Curaçao."
         },
         "value-ratio": {
           "title": "kCUR-kG Value Ratio (USD)",
