@@ -20,7 +20,7 @@
             "logoURI": "https://gateway.pinata.cloud/ipfs/QmcRYtXPMK54EtwzPqP3Bs59x7oQzNN8X5X3oMZFHe1SBj/ktt.svg"
         },
         {
-            "address": "0xeB22fD1Dc0F480faA0D5cce673364b31E5f1e772",
+            "address": "0x5532D39523124A8eE37493DB5F30Ccba0722Ac54",
             "chainId": 42220,
             "name": "CuracaoReserveToken",
             "symbol": "kCUR",
@@ -36,7 +36,7 @@
             "logoURI": "https://raw.githubusercontent.com/Kolektivo/tokenlists/main/logos/kCUR.svg"
         },
         {
-            "address": "0xA7631e5770B7c8B5BD02dEbfb0f3B0f70045C70F",
+            "address": "0x391B047a8dde3fa4A13B0d45CcA76f2F4e0A5230",
             "chainId": 42220,
             "name": "KolektivoGuilder",
             "symbol": "kG",
