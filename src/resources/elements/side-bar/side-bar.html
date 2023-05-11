@@ -13,12 +13,20 @@
     </nav>
   </div>
   <nav id="footer-nav" part="footer-nav">
-    <a load="${route.path}" repeat.for="route  of getRoutes('bottom')">
-      <k-stack direction="row" column-gap="10">
-        <k-icon size="20" name.bind="route.icon"></k-icon>
-        <k-text type="label">${route.name}</k-text>
-      </k-stack>
-    </a>
+    <template repeat.for="route  of getRoutes('bottom')">
+      <a if.bind="!route.external" load="${route.path}">
+        <k-stack direction="row" column-gap="10">
+          <k-icon size="20" name.bind="route.icon"></k-icon>
+          <k-text type="label">${route.name}</k-text>
+        </k-stack>
+      </a>
+      <a else href="${route.path}" target="_blank">
+        <k-stack direction="row" column-gap="10">
+          <k-icon size="20" name.bind="route.icon"></k-icon>
+          <k-text type="label">${route.name}</k-text>
+        </k-stack>
+      </a>
+    </template>
     <!-- <k-button type="outlined" color="secondary" click.trigger="seed()">Seed Data</k-button> -->
   </nav>
 </k-grid>

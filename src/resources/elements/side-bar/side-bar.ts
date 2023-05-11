@@ -25,20 +25,29 @@ export class SideBar implements ICustomElementViewModel {
       // { name: this.i18n.tr('navigation.swap.link-text'), path: 'swap', location: 'top', icon: this.i18n.tr('navigation.swap.link-icon') },
       {
         name: this.i18n.tr('navigation.documentation.link-text'),
-        path: 'documentation',
+        path: this.i18n.tr('navigation.documentation.link-href'),
+        external: true,
         location: 'bottom',
         icon: this.i18n.tr('navigation.documentation.link-icon'),
       },
-      { name: this.i18n.tr('navigation.contact.link-text'), path: 'contact', location: 'bottom', icon: this.i18n.tr('navigation.contact.link-icon') },
+      {
+        name: this.i18n.tr('navigation.contact.link-text'),
+        path: this.i18n.tr('navigation.contact.link-href'),
+        external: true,
+        location: 'bottom',
+        icon: this.i18n.tr('navigation.contact.link-icon'),
+      },
       {
         name: this.i18n.tr('navigation.download-wallet.link-text'),
-        path: 'download',
+        path: this.i18n.tr('navigation.download-wallet.link-href'),
         location: 'bottom',
+        external: true,
         icon: this.i18n.tr('navigation.download-wallet.link-icon'),
       },
       {
         name: this.i18n.tr('navigation.external-site.link-text'),
-        path: 'cw',
+        path: this.i18n.tr('navigation.external-site.link-href'),
+        external: true,
         location: 'bottom',
         icon: this.i18n.tr('navigation.external-site.link-icon'),
       },
@@ -51,7 +60,4 @@ export class SideBar implements ICustomElementViewModel {
   getRoutes(location: RouteLink['location']): RouteLink[] {
     return this.routes.filter((y) => y.location === location);
   }
-  // seed() {
-  //   void seed();
-  // }
 }

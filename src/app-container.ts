@@ -136,6 +136,7 @@ export const appContainer: IContainer = DI.createContainer()
       useUrlFragmentHash: false,
       basePath: '/',
       activeClass: 'noop',
+      useHref: false,
     }),
   )
   .register(
