@@ -1055,7 +1055,7 @@
       ]
     },
     "Reserve": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xbFaf9774fcF4BE8B7372C92107F7035825c64503",
       "abi": [
         {
           "inputs": [
@@ -3503,7 +3503,7 @@
       ]
     },
     "CuracaoReserveToken": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x5532D39523124A8eE37493DB5F30Ccba0722Ac54",
       "abi": [
         {
           "inputs": [
@@ -6133,7 +6133,7 @@
       "abi": "ERC20"
     },
     "Exchange": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x447F9cabb56855eD0725FC20214eE2565ece6f3e",
       "abi": [
         {
           "inputs": [
@@ -6797,7 +6797,7 @@
       ]
     },
     "MentoReserve": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x4c21e92FAa09CF6CC6587C0480f464012820E60d",
       "abi": [
         {
           "inputs": [
@@ -7950,7 +7950,7 @@
       ]
     },
     "kGuilder Pool": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xE62A9b63f1d85cD072b792E51e9e18ec9cf26285",
       "abi": [
         {
           "inputs": [
@@ -9037,7 +9037,7 @@
       ]
     },
     "kCur Pool": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xE33787c1557eBEF5DE0b4ee14bE72d5b4D8995C4",
       "abi": [
         {
           "inputs": [
@@ -9977,7 +9977,7 @@
       ]
     },
     "TimeLockVault": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xe2DFdF6c1EE6b2D2CD856638343Ba0F94e2a3b09",
       "abi": [
         {
           "inputs": [],
@@ -10179,7 +10179,7 @@
       ]
     },
     "SortedOracles": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x5eCaA606ed02D5fb541a5A107Ae288d8a8993469",
       "abi": [
         {
           "inputs": [
@@ -10878,7 +10878,7 @@
       ]
     },
     "BAC": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xc9Ad7747E66DcA343618995B9ee3d96844503c6D",
       "abi": [
         {
           "inputs": [
@@ -11652,7 +11652,7 @@
       ]
     },
     "KolektivoGuilder": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x391B047a8dde3fa4A13B0d45CcA76f2F4e0A5230",
       "abi": [
         {
           "inputs": [
@@ -12744,7 +12744,7 @@
     },
 
     "Vault": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xD25E02047E76b688445ab154785F2642c6fe3f73",
       "abi": [
         {
           "anonymous": false,
@@ -13493,7 +13493,7 @@
       ]
     },
     "MentoRegistry": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x9C466172eF3Ea77D439deBc4998F706708746C6f",
       "abi": [
         {
           "inputs": [
@@ -13743,7 +13743,7 @@
       ]
     },
     "Freezer": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x201AbB71C320915EFDdd0dAB95D4E77f1f36B830",
       "abi": [
         {
           "anonymous": false,
@@ -13852,7 +13852,7 @@
       ]
     },
     "ProxyPool": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x2BdE6D6d622226b48A0d9F9066A0a3e38158FCD4",
       "abi": [
         {
           "inputs": [
@@ -14367,7 +14367,7 @@
       ]
     },
     "Badger": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xC5d799c3Efbca27195cE7dEEe1590546cfE1e508",
       "abi": [
         {
           "inputs": [

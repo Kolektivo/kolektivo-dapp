@@ -7,7 +7,8 @@
       <div class="description">
         <k-text>${description}</k-text>
         <slot name="learn-more">
-          <k-link class="learn-more-link" if.bind="learnMoreLink" path.bind="learnMoreLink">Learn More</k-link>
+          <k-link class="learn-more-link" if.bind="learnMoreLink?.startsWith('http')" src.bind="learnMoreLink">Learn More</k-link>
+          <k-link class="learn-more-link" if.bind="learnMoreLink && !learnMoreLink?.startsWith('http')" path.bind="learnMoreLink">Learn More</k-link>
         </slot>
       </div>
     </slot>
