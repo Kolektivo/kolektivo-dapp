@@ -7,7 +7,7 @@ export interface IDesignSystemConfiguration {
   components?: [];
   includeAllComponents?: boolean;
   formatNumber?: (value?: string | number | bigint) => string;
-  formatCurrency?: (value?: string | number | bigint) => string;
+  formatCurrency?: (value?: string | number | bigint, decimals?: number) => string;
   formatPercent?: (value?: string | number | bigint) => string;
   formatDateTime?: (value?: string | number | Date) => string;
   formatDate?: (value?: string | number | Date) => string;

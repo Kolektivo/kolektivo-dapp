@@ -8,7 +8,7 @@
   <k-stack gap="var(--spacing-xl)">
     <k-stack gap="var(--spacing-lg)" direction="row" justify-content="space-between" id="r-kGuilder-tic-stats">
       <label-value title="${i18n.tr('general.token-info-card.current-price')}" tooltip-text="${i18n.tr('general.token-info-card.current-price-tooltip')}">
-        <k-text type="statistic"> ${reserveStore.kGuilderCurrentPrice | currency} </k-text>
+        <k-text type="statistic"> ${reserveStore.kGuilderCurrentPrice | currency:fractionDigits=3} </k-text>
       </label-value>
       <label-value title="${i18n.tr('general.token-info-card.total-supply')}" tooltip-text="${i18n.tr('general.token-info-card.total-supply-tooltip')}">
         <k-text type="statistic">

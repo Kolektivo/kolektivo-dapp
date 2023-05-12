@@ -49,7 +49,7 @@ export class ValueRatioCard implements ICustomElementViewModel {
       itemSort: (a, b, data) => b.datasetIndex - a.datasetIndex,
       callbacks: {
         title: (x) => this.i18n.tr('timestamp', { date: new Date(Number(x[0].label)) }),
-        label: (x) => (x.dataset.label ? `${x.dataset.label}: ${this.currencyValueConverter?.toView(`${x.raw as string}`) ?? ''}` : ''),
+        label: (x) => (x.dataset.label ? `${x.dataset.label}: ${this.currencyValueConverter?.toView(`${x.raw as string}`, 4) ?? ''}` : ''),
         labelColor: (context) => {
           return {
             backgroundColor: context.dataset.pointBorderColor,
@@ -66,7 +66,7 @@ export class ValueRatioCard implements ICustomElementViewModel {
   }
   get yLabelFormat(): Record<string, unknown> {
     return {
-      callback: (value: number) => this.currencyValueConverter?.toView(value.toString()) ?? '',
+      callback: (value: number) => this.currencyValueConverter?.toView(value.toString(), 4) ?? '',
     };
   }
   get xLabelFormat(): Record<string, unknown> {
