@@ -38,8 +38,8 @@ export class DesignSystemPlugin implements IRegistry {
     }
 
     if (!instance.#configuration.formatCurrency) {
-      instance.#configuration.formatCurrency = (number?: string | number | bigint) =>
-        new Intl.NumberFormat('default', { style: 'currency', currency: 'usd' }).format(number == null ? 0 : Number(number));
+      instance.#configuration.formatCurrency = (number?: string | number | bigint, decimals = 2) =>
+        new Intl.NumberFormat('default', { style: 'currency', currency: 'usd', minimumFractionDigits: decimals, maximumFractionDigits: decimals }).format(number == null ? 0 : Number(number));
     }
 
     if (!instance.#configuration.formatPercent) {

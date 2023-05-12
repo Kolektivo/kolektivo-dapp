@@ -8,7 +8,7 @@ export type ICurrency = Currency;
 export class Currency {
   constructor(@IDesignSystemConfiguration private readonly configuration: IDesignSystemConfiguration) {}
 
-  public toView(value: string): string | number {
-    return this.configuration.formatCurrency?.(value) ?? '';
+  public toView(value: string, decimals?: number): string | number {
+    return this.configuration.formatCurrency?.(value, decimals) ?? '';
   }
 }
